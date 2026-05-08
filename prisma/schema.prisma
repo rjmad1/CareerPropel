@@ -1,0 +1,149 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Candidate {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  jobs              Job[]
+  profileData       ProfileData[]
+  skills            Skill[]
+  achievements      Achievement[]
+  documents         Document[]
+  interviewFeedback InterviewFeedback[]
+  offers            Offer[]
+}
+
+model Job {
+  id          String   @id @default(cuid())
+  candidateId String
+  title       String
+  company     String
+  description String?
+  url         String?
+  stage       String   @default("sourced") // sourced, interested, resume_tailoring, applied, recruiter_screen, hiring_manager, technical_interview, system_design, behavioral, final_round, offer, negotiation, rejected, archived
+  appliedAt   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  candidate         Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  activities        JobActivity[]
+  interviewFeedback InterviewFeedback[]
+  offers            Offer[]
+
+  @@index([candidateId])
+  @@index([stage])
+}
+
+model JobActivity {
+  id        String   @id @default(cuid())
+  jobId     String
+  action    String // applied, progressed, rejected, etc.
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  job Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([jobId])
+}
+
+model ProfileData {
+  id          String   @id @default(cuid())
+  candidateId String
+  type        String   // resume, cover_letter, linkedin_export, notes, etc.
+  content     Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+}
+
+model Skill {
+  id          String   @id @default(cuid())
+  candidateId String
+  name        String
+  proficiency Int      @default(1) // 1-5 scale
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@unique([candidateId, name])
+  @@index([candidateId])
+}
+
+model Achievement {
+  id          String   @id @default(cuid())
+  candidateId String
+  title       String
+  description String
+  metrics     Json?    // quantifiable results
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+}
+
+model Document {
+  id          String   @id @default(cuid())
+  candidateId String
+  name        String
+  type        String   // pdf, docx, txt, etc.
+  url         String
+  uploadedAt  DateTime @default(now())
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+}
+
+model InterviewFeedback {
+  id          String   @id @default(cuid())
+  candidateId String
+  jobId       String
+  type        String   // behavioral, technical, system_design, other
+  selfRating  Int?     // 1-5 scale
+  notes       String?
+  createdAt   DateTime @default(now())
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([jobId])
+}
+
+model Offer {
+  id          String   @id @default(cuid())
+  candidateId String
+  jobId       String
+  salary      Int?
+  equity      String?
+  bonus       Int?
+  startDate   DateTime?
+  status      String   @default("pending") // pending, accepted, rejected, negotiating
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([jobId])
+}
