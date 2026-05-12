@@ -1,3 +1,6 @@
+<img width="2752" height="1536" alt="image-1778550826966" src="https://github.com/user-attachments/assets/1736bafc-6c9e-4c72-bb52-4db328bd9174" />
+
+
 # Career-Ops: AI-Native Career Management Platform
 
 An intelligent job application automation and career orchestration system featuring:
