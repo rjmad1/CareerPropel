@@ -2,231 +2,215 @@
 
 import React from 'react';
 import { Agent } from '@/lib/websocket/types';
-import { AGENT_CONFIGS, getAgentColor, getAgentStatusLabel } from '@/types/agent';
+import { cn } from '@/lib/utils';
 
 interface AgentCardProps {
   agent: Agent;
   isCompact?: boolean;
   isSelected?: boolean;
   onSelect?: () => void;
+  onPause?: () => void;
+  onResume?: () => void;
+  onCancel?: () => void;
+  isPauseLoading?: boolean;
 }
 
-/**
- * AgentCard - Renders a single agent with status indicator and progress
- * 
- * Used by AgentRail in both:
- * - Compact mode: Just name, status, progress bar
- * - Full mode: Expanded details with metrics
- * 
- * Props:
- * - agent: Agent state object with id, type, status, progress, etc.
- * - isCompact?: boolean - If true, show minimal layout (for list view), else show full (for detail view)
- * - isSelected?: boolean - Highlight if selected
- * - onSelect?: () => void - Callback when card is clicked
- */
+const statusColors = {
+  idle: 'bg-gray-100 text-gray-700',
+  running: 'bg-green-100 text-green-700',
+  waiting: 'bg-yellow-100 text-yellow-700',
+  failed: 'bg-red-100 text-red-700',
+  completed: 'bg-blue-100 text-blue-700',
+  paused: 'bg-orange-100 text-orange-700',
+};
+
+const statusBgColors = {
+  idle: 'bg-white border-gray-200',
+  running: 'bg-green-50 border-green-200',
+  waiting: 'bg-yellow-50 border-yellow-200',
+  failed: 'bg-red-50 border-red-200',
+  completed: 'bg-blue-50 border-blue-200',
+  paused: 'bg-orange-50 border-orange-200',
+};
+
 export const AgentCard: React.FC<AgentCardProps> = ({
   agent,
   isCompact = true,
   isSelected = false,
   onSelect,
+  onPause,
+  onResume,
+  onCancel,
+  isPauseLoading = false,
 }) => {
-  const config = AGENT_CONFIGS[agent.type];
-  const statusColor = getAgentColor(agent.status);
-  const statusLabel = getAgentStatusLabel(agent.status);
+  const confidencePercent = Math.round((agent.confidence || 0.8) * 100);
+  const bgColor = statusBgColors[agent.status as keyof typeof statusBgColors] || 'bg-white border-gray-200';
 
-  // Compact view - for list items in AgentRail left sidebar
   if (isCompact) {
     return (
       <div
         onClick={onSelect}
-        className={`
-          px-3 py-2 rounded cursor-pointer transition-colors
-          border-l-4 border-transparent
-          ${isSelected 
-            ? 'bg-blue-50 border-l-blue-500' 
-            : 'hover:bg-gray-50'
-          }
-        `}
+        className={cn(
+          'p-3 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors',
+          isSelected && 'bg-blue-50 border-l-4 border-l-blue-500'
+        )}
         data-cy={`agent-rail-item-${agent.id}`}
       >
-        {/* Header: Icon + Name + Status Dot */}
-        <div className="flex items-center gap-2 mb-1">
-          <span className="text-lg">{config.icon}</span>
-          <span className="flex-1 text-sm font-medium text-gray-900">
-            {config.name}
-          </span>
-          <div
-            className={`w-2 h-2 rounded-full ${statusColor}`}
-            title={statusLabel}
-          />
-        </div>
-
-        {/* Progress Bar (if running) */}
-        {agent.progress > 0 && agent.progress < 100 && (
-          <div className="mb-2">
-            <div className="w-full bg-gray-200 rounded-full h-1.5">
-              <div
-                className="bg-blue-500 h-1.5 rounded-full transition-all"
-                style={{ width: `${agent.progress}%` }}
-                data-cy="agent-progress-bar"
-              />
+        <div className="flex items-start gap-2">
+          <div className="flex-1 min-w-0">
+            <h3 className="font-medium text-sm text-gray-900 truncate">{agent.name}</h3>
+            <div className="flex items-center gap-2 mt-1">
+              <span className={cn('text-xs px-2 py-1 rounded-full font-medium', statusColors[agent.status as keyof typeof statusColors])}>
+                {agent.status}
+              </span>
+              {agent.queueDepth > 0 && (
+                <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full">
+                  Queue: {agent.queueDepth}
+                </span>
+              )}
             </div>
-            <div className="text-xs text-gray-500 mt-0.5">
-              {Math.round(agent.progress)}%
-            </div>
+            {agent.status === 'running' && agent.progress !== undefined && (
+              <div className="mt-2">
+                <div className="w-full bg-gray-200 rounded-full h-1.5">
+                  <div
+                    className="bg-green-500 h-1.5 rounded-full transition-all duration-300"
+                    style={{ width: `${Math.min(agent.progress, 100)}%` }}
+                    data-cy="agent-progress-bar"
+                  />
+                </div>
+                <p className="text-xs text-gray-500 mt-1">{agent.progress}%</p>
+              </div>
+            )}
+            {agent.currentTask && (
+              <p className="text-xs text-gray-600 mt-2 truncate">Task: {agent.currentTask}</p>
+            )}
+            {agent.lastActivity && (
+              <p className="text-xs text-gray-500 mt-1">
+                Last: {new Date(agent.lastActivity).toLocaleTimeString()}
+              </p>
+            )}
           </div>
-        )}
-
-        {/* Status Label */}
-        <div className="text-xs text-gray-600">
-          {statusLabel}
         </div>
       </div>
     );
   }
 
-  // Full view - for detail panel on AgentRail right side
+  // Expanded view
   return (
-    <div className="p-4 space-y-4">
-      {/* Header */}
-      <div className="border-b pb-4">
-        <div className="flex items-center gap-3 mb-2">
-          <span className="text-2xl">{config.icon}</span>
-          <div className="flex-1">
-            <h3 className="font-semibold text-gray-900">
-              {config.name}
-            </h3>
-            <p className="text-xs text-gray-500">
-              {config.description}
-            </p>
-          </div>
-          <div
-            className={`w-3 h-3 rounded-full ${statusColor}`}
-            title={statusLabel}
-          />
-        </div>
+    <div className={cn('border rounded-lg p-4 m-4', bgColor)}>
+      <div className="mb-4">
+        <h2 className="text-lg font-semibold text-gray-900">{agent.name}</h2>
+        <p className="text-sm text-gray-600 mt-1">{`Type: ${agent.type}`}</p>
       </div>
 
-      {/* Status & Current Task */}
-      <div className="space-y-2">
-        <div className="flex justify-between">
-          <span className="text-sm text-gray-600">Status</span>
-          <span className="text-sm font-medium text-gray-900">
-            {statusLabel}
+      {/* Status Section */}
+      <div className="mb-4 grid grid-cols-2 gap-4">
+        <div>
+          <p className="text-xs text-gray-600 font-semibold">Status</p>
+          <span className={cn('inline-block text-sm px-3 py-1 rounded-full font-medium mt-1', statusColors[agent.status as keyof typeof statusColors])}>
+            {agent.status}
           </span>
         </div>
 
-        {agent.currentTask && (
-          <div className="flex justify-between">
-            <span className="text-sm text-gray-600">Current Task</span>
-            <span className="text-sm font-medium text-gray-900">
-              {agent.currentTask}
-            </span>
+        <div>
+          <p className="text-xs text-gray-600 font-semibold">Confidence</p>
+          <div className="mt-1 flex items-center gap-2">
+            <div className="w-16 bg-gray-200 rounded-full h-2">
+              <div
+                className={cn('h-2 rounded-full', confidencePercent >= 80 ? 'bg-green-500' : confidencePercent >= 50 ? 'bg-yellow-500' : 'bg-red-500')}
+                style={{ width: `${confidencePercent}%` }}
+              />
+            </div>
+            <span className="text-xs font-medium text-gray-700">{confidencePercent}%</span>
           </div>
-        )}
+        </div>
       </div>
 
-      {/* Progress Bar (if running) */}
-      {agent.progress > 0 && (
-        <div className="space-y-1">
-          <div className="flex justify-between">
-            <span className="text-sm text-gray-600">Progress</span>
-            <span className="text-sm font-medium text-gray-900">
-              {Math.round(agent.progress)}%
-            </span>
+      {/* Progress Section */}
+      {agent.status === 'running' && agent.progress !== undefined && (
+        <div className="mb-4">
+          <div className="flex justify-between items-center mb-2">
+            <p className="text-xs text-gray-600 font-semibold">Progress</p>
+            <span className="text-sm font-medium text-gray-900">{agent.progress}%</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div
-              className="bg-blue-500 h-2 rounded-full transition-all"
-              style={{ width: `${agent.progress}%` }}
+              className="bg-green-500 h-2 rounded-full transition-all duration-300"
+              style={{ width: `${Math.min(agent.progress, 100)}%` }}
             />
           </div>
         </div>
       )}
 
       {/* Metrics Grid */}
-      <div className="grid grid-cols-2 gap-4 pt-2">
-        <div className="bg-gray-50 p-3 rounded">
-          <div className="text-xs text-gray-500 mb-1">Queue Depth</div>
-          <div className="text-lg font-semibold text-gray-900">
-            {agent.queueDepth}
-          </div>
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className="bg-white rounded p-3 border border-gray-200">
+          <p className="text-xs text-gray-600 font-semibold">Queue Depth</p>
+          <p className="text-lg font-bold text-gray-900 mt-1">{agent.queueDepth}</p>
         </div>
 
-        <div className="bg-gray-50 p-3 rounded">
-          <div className="text-xs text-gray-500 mb-1">Confidence</div>
-          <div className="text-lg font-semibold text-gray-900">
-            {Math.round((agent.confidence ?? 0) * 100)}%
-          </div>
-        </div>
-
-        <div className="bg-gray-50 p-3 rounded">
-          <div className="text-xs text-gray-500 mb-1">Tokens Used</div>
-          <div className="text-lg font-semibold text-gray-900">
-            {(agent.tokensUsed ?? 0).toLocaleString()}
-          </div>
-        </div>
-
-        <div className="bg-gray-50 p-3 rounded">
-          <div className="text-xs text-gray-500 mb-1">Last Activity</div>
-          <div className="text-xs font-semibold text-gray-900">
-            {formatLastActivity(agent.lastActivity)}
-          </div>
+        <div className="bg-white rounded p-3 border border-gray-200">
+          <p className="text-xs text-gray-600 font-semibold">Tokens Used</p>
+          <p className="text-lg font-bold text-gray-900 mt-1">{agent.tokensUsed?.toLocaleString() || '0'}</p>
         </div>
       </div>
 
-      {/* Error Message (if error state) */}
-      {agent.status === 'error' && agent.errorMessage && (
-        <div className="bg-red-50 border border-red-200 rounded p-3">
-          <div className="text-xs font-semibold text-red-900 mb-1">
-            Error
-          </div>
-          <div className="text-xs text-red-700">
-            {agent.errorMessage}
-          </div>
+      {/* Current Task */}
+      {agent.currentTask && (
+        <div className="mb-4 p-3 bg-white rounded border border-gray-200">
+          <p className="text-xs text-gray-600 font-semibold mb-1">Current Task</p>
+          <p className="text-sm text-gray-900">{agent.currentTask}</p>
         </div>
       )}
 
-      {/* Completed Tasks - TODO: Add to Agent interface if needed */}
-      {/* {agent.completedTasks > 0 && (
-        <div className="flex justify-between">
-          <span className="text-sm text-gray-600">Tasks Completed</span>
-          <span className="text-sm font-medium text-green-600">
-            {agent.completedTasks}
-          </span>
+      {/* Error Message */}
+      {agent.errorMessage && (
+        <div className="mb-4 p-3 bg-red-50 rounded border border-red-200">
+          <p className="text-xs text-red-600 font-semibold mb-1">Error</p>
+          <p className="text-sm text-red-700">{agent.errorMessage}</p>
         </div>
       )}
 
-      {/* Failed Tasks */}
-      {/* {agent.failedTasks > 0 && (
-        <div className="flex justify-between">
-          <span className="text-sm text-gray-600">Tasks Failed</span>
-          <span className="text-sm font-medium text-red-600">
-            {agent.failedTasks}
-          </span>
+      {/* Last Activity */}
+      {agent.lastActivity && (
+        <div className="mb-4 text-xs text-gray-500">
+          Last activity: {new Date(agent.lastActivity).toLocaleString()}
         </div>
-      )} */}
+      )}
+
+      {/* Action Buttons */}
+      <div className="flex gap-2">
+        {agent.status === 'running' && (
+          <button
+            onClick={onPause}
+            disabled={isPauseLoading}
+            className="flex-1 px-3 py-2 text-sm font-medium bg-yellow-500 hover:bg-yellow-600 disabled:bg-gray-300 text-white rounded-md transition-colors"
+          >
+            {isPauseLoading ? 'Pausing...' : 'Pause'}
+          </button>
+        )}
+
+        {agent.status === 'paused' && (
+          <button
+            onClick={onResume}
+            disabled={isPauseLoading}
+            className="flex-1 px-3 py-2 text-sm font-medium bg-green-500 hover:bg-green-600 disabled:bg-gray-300 text-white rounded-md transition-colors"
+          >
+            {isPauseLoading ? 'Resuming...' : 'Resume'}
+          </button>
+        )}
+
+        {(agent.status === 'running' || agent.status === 'paused') && (
+          <button
+            onClick={onCancel}
+            className="flex-1 px-3 py-2 text-sm font-medium bg-red-500 hover:bg-red-600 text-white rounded-md transition-colors"
+          >
+            Cancel
+          </button>
+        )}
+      </div>
     </div>
   );
 };
 
-/**
- * Format lastActivity timestamp to relative time string
- * e.g., "2 minutes ago", "just now"
- */
-function formatLastActivity(timestamp: number | Date): string {
-  const now = Date.now();
-  const lastTime = typeof timestamp === 'number' ? timestamp : timestamp.getTime();
-  const diffMs = now - lastTime;
-  const diffSecs = Math.floor(diffMs / 1000);
-  const diffMins = Math.floor(diffSecs / 60);
-  const diffHours = Math.floor(diffMins / 60);
-  const diffDays = Math.floor(diffHours / 24);
-
-  if (diffSecs < 30) return 'just now';
-  if (diffSecs < 60) return `${diffSecs}s ago`;
-  if (diffMins < 60) return `${diffMins}m ago`;
-  if (diffHours < 24) return `${diffHours}h ago`;
-  if (diffDays === 1) return 'yesterday';
-  return `${diffDays}d ago`;
-}
+export default AgentCard;
