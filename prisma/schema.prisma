@@ -256,6 +256,7 @@ model AgentExecution {
   metadata    Json?    // task-specific data
   
   toolCalls   ToolCall[] // individual tool invocations
+  eventLogs  EventLog[]    // execution events and logs
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -391,7 +392,7 @@ model CompanyResearch {
   
   culture     String?  // culture summary
   recentNews  Json?    // array of news items
-  technicalStack String[]? // technologies they use
+  technicalStack String[] @default([]) // technologies they use
   
   competitorsAndContext String?
   fundingStatus String?

@@ -7,7 +7,6 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { generateInterviewPrep } from '@/lib/interview/prepService';
 
 interface GenerateRequest {
   force?: boolean;

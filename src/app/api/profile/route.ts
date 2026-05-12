@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/db';
 
 /**
  * GET /api/profile?candidateId={id}
@@ -15,47 +16,39 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // TODO: Wire to Prisma
-    // const candidate = await prisma.candidate.findUnique({
-    //   where: { id: candidateId },
-    //   include: {
-    //     profileScore: true,
-    //     profileEntities: true,
-    //     skills: true,
-    //     achievements: true,
-    //   },
-    // });
-
-    // Mock response
-    const profile = {
-      candidateId,
-      name: 'John Doe',
-      email: 'john@example.com',
-      phone: '+1 (555) 123-4567',
-      location: 'San Francisco, CA',
-      completenessScore: {
-        totalScore: 65,
-        personalInfoScore: 90,
-        resumeScore: 70,
-        skillsScore: 60,
-        experienceScore: 50,
-        educationScore: 80,
-        goalsScore: 40,
-        portfolioScore: 30,
-        completeness: 0.65,
+    const candidate = await prisma.candidate.findUnique({
+      where: { id: candidateId },
+      include: {
+        profileScore: true,
+        profileEntities: true,
+        skills: true,
+        achievements: true,
       },
-      topSkills: [
-        { name: 'React', category: 'technical', proficiency: 'expert' },
-        { name: 'TypeScript', category: 'technical', proficiency: 'proficient' },
-      ],
-      recentAchievements: [
-        { title: 'Led team to 50% performance improvement', date: new Date() },
-      ],
+    });
+
+    if (!candidate) {
+      return NextResponse.json(
+        { error: 'Candidate not found' },
+        { status: 404 }
+      );
+    }
+
+    const profile = {
+      candidateId: candidate.id,
+      name: candidate.name,
+      email: candidate.email,
+      completenessScore: candidate.profileScore,
+      topSkills: candidate.skills.slice(0, 5),
+      recentAchievements: candidate.achievements.slice(0, 5),
       extractionQuality: {
-        totalEntities: 45,
-        averageConfidence: 0.87,
-        documentCount: 3,
-        lastExtraction: new Date(),
+        totalEntities: candidate.profileEntities.length,
+        averageConfidence: candidate.profileEntities.length > 0
+          ? candidate.profileEntities.reduce((sum: number, e: any) => sum + e.confidence, 0) / candidate.profileEntities.length
+          : 0,
+        documentCount: await prisma.profileData.count({
+          where: { candidateId },
+        }),
+        lastExtraction: candidate.updatedAt,
       },
     };
 
@@ -85,13 +78,10 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    // TODO: Wire to Prisma
-    // const updated = await prisma.candidate.update({
-    //   where: { id: candidateId },
-    //   data: body,
-    // });
-
-    const updated = { candidateId, ...body, updatedAt: new Date() };
+    const updated = await prisma.candidate.update({
+      where: { id: candidateId },
+      data: body,
+    });
 
     return NextResponse.json({ profile: updated }, { status: 200 });
   } catch (error) {

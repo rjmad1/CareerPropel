@@ -1,43 +1,36 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/db';
 
 /**
  * POST /api/agent/execution/[executionId]/resume
  * Resume a paused execution
  */
 export async function POST(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { executionId: string } }
 ) {
   try {
     const executionId = params.executionId;
 
-    // TODO: Wire to Prisma and message queue
-    // const execution = await prisma.agentExecution.findUnique({
-    //   where: { id: executionId },
-    // });
-    //
-    // if (!execution) {
-    //   return NextResponse.json({ error: 'Execution not found' }, { status: 404 });
-    // }
-    //
-    // if (execution.status !== 'paused') {
-    //   return NextResponse.json(
-    //     { error: 'Execution is not paused' },
-    //     { status: 400 }
-    //   );
-    // }
-    //
-    // const updated = await prisma.agentExecution.update({
-    //   where: { id: executionId },
-    //   data: { status: 'running' },
-    // });
+    const execution = await prisma.agentExecution.findUnique({
+      where: { id: executionId },
+    });
 
-    // Mock response
-    const updated = {
-      id: executionId,
-      status: 'running',
-      updatedAt: new Date(),
-    };
+    if (!execution) {
+      return NextResponse.json({ error: 'Execution not found' }, { status: 404 });
+    }
+
+    if (execution.status !== 'paused') {
+      return NextResponse.json(
+        { error: 'Execution is not paused' },
+        { status: 400 }
+      );
+    }
+
+    const updated = await prisma.agentExecution.update({
+      where: { id: executionId },
+      data: { status: 'running' },
+    });
 
     return NextResponse.json(
       { execution: updated, message: 'Execution resumed' },

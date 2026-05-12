@@ -27,7 +27,7 @@ export const AgentLog: React.FC<AgentLogComponentProps> = ({ log }) => {
   const level = log.level || 'INFO';
   const levelColor = levelColors[level as keyof typeof levelColors] || levelColors.INFO;
   const emoji = levelEmojis[level as keyof typeof levelEmojis] || '📝';
-  const hasData = log.data && Object.keys(log.data).length > 0;
+  const hasData = log.metadata && Object.keys(log.metadata).length > 0;
 
   return (
     <div className="font-mono text-xs border-l-2 border-gray-200 pl-3 py-2">
@@ -54,7 +54,7 @@ export const AgentLog: React.FC<AgentLogComponentProps> = ({ log }) => {
           {hasData && expanded && (
             <div className="mt-2 p-2 bg-gray-100 rounded border border-gray-300 text-xs text-gray-700 max-h-48 overflow-y-auto">
               <pre className="whitespace-pre-wrap break-words">
-                {JSON.stringify(log.data, null, 2)}
+                {JSON.stringify(log.metadata, null, 2)}
               </pre>
             </div>
           )}
@@ -62,7 +62,7 @@ export const AgentLog: React.FC<AgentLogComponentProps> = ({ log }) => {
           {hasData && !expanded && (
             <div className="mt-1 text-xs text-gray-500 flex items-center gap-1">
               <span>▶</span>
-              <span>View details ({Object.keys(log.data).length} fields)</span>
+              <span>View details ({Object.keys(log.metadata || {}).length} fields)</span>
             </div>
           )}
         </div>

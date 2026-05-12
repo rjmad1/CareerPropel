@@ -5,7 +5,7 @@ import { Agent, AgentLog as AgentLogType } from '@/lib/websocket/types';
 import { AGENT_CONFIGS } from '@/types/agent-configs';
 import { useRealTime } from '@/hooks/useRealTime';
 import { AgentCard } from './AgentCard';
-import { AgentLogComponent } from './AgentLog';
+import AgentLog from './AgentLog';
 
 /**
  * AgentRail - Real-time sidebar showing all agents and their status
@@ -184,7 +184,7 @@ export const AgentRail: React.FC = () => {
                   {selectedAgentLogs.length > 0 ? (
                     <div className="space-y-1 p-3">
                       {selectedAgentLogs.map((log, idx) => (
-                        <AgentLogComponent
+                        <AgentLog
                           key={`${log.timestamp}-${idx}`}
                           log={log}
                         />

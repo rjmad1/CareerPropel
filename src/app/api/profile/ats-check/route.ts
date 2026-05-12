@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
  */
 export async function POST(request: NextRequest) {
   try {
-    const { candidateId, resumeContent } = await request.json();
+    const { resumeContent } = await request.json();
 
     if (!resumeContent) {
       return NextResponse.json(

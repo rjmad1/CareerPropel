@@ -9,7 +9,6 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { generateInterviewPrep } from '@/lib/interview/prepService';
-import { InterviewPrep } from '@/types/interview';
 
 interface PrepRequest {
   jobId: string;

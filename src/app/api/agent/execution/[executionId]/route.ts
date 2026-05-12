@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/db';
 
 /**
  * GET /api/agent/execution/[executionId]
@@ -13,74 +14,26 @@ export async function GET(
     const includeToolCalls = request.nextUrl.searchParams.get('excludeTools') !== 'true';
     const includeEvents = request.nextUrl.searchParams.get('excludeEvents') !== 'true';
 
-    // TODO: Wire to Prisma
-    // const execution = await prisma.agentExecution.findUnique({
-    //   where: { id: executionId },
-    //   include: {
-    //     toolCalls: includeToolCalls,
-    //     // events: includeEvents,
-    //   },
-    // });
+    const execution = await prisma.agentExecution.findUnique({
+      where: { id: executionId },
+      include: {
+        toolCalls: includeToolCalls,
+        eventLogs: includeEvents,
+      },
+    });
 
-    // Mock response for development
-    const execution = {
-      id: executionId,
-      candidateId: 'cand_123',
-      jobId: null,
-      agentType: 'resume-tailor',
-      status: 'completed',
-      startedAt: new Date(Date.now() - 300000), // 5 minutes ago
-      completedAt: new Date(),
-      duration: 300000,
-      currentTask: null,
-      progress: 100,
-      tokenUsage: 1500,
-      errorMessage: null,
-      metadata: { jobTitle: 'Senior Engineer' },
-      createdAt: new Date(Date.now() - 300000),
-      updatedAt: new Date(),
-    };
-
-    const toolCalls = includeToolCalls
-      ? [
-          {
-            id: 'tool_1',
-            executionId: executionId,
-            toolName: 'extract_job_requirements',
-            status: 'success',
-            input: { jobDescription: 'Senior Engineer role...' },
-            output: { requirements: ['React', 'Node.js', 'TypeScript'] },
-            error: null,
-            startedAt: new Date(Date.now() - 300000),
-            completedAt: new Date(Date.now() - 240000),
-            duration: 60000,
-            tokens: 500,
-            metadata: null,
-          },
-          {
-            id: 'tool_2',
-            executionId: executionId,
-            toolName: 'tailor_resume',
-            status: 'success',
-            input: { resume: 'Original resume...', keywords: ['React', 'Node.js'] },
-            output: { tailoredResume: 'Tailored resume...' },
-            error: null,
-            startedAt: new Date(Date.now() - 240000),
-            completedAt: new Date(),
-            duration: 60000,
-            tokens: 1000,
-            metadata: null,
-          },
-        ]
-      : [];
-
-    const logs = includeEvents ? [] : [];
+    if (!execution) {
+      return NextResponse.json(
+        { error: 'Execution not found' },
+        { status: 404 }
+      );
+    }
 
     return NextResponse.json(
       {
         execution,
-        toolCalls,
-        logs,
+        toolCalls: execution.toolCalls || [],
+        logs: execution.eventLogs || [],
       },
       { status: 200 }
     );
@@ -105,18 +58,10 @@ export async function PUT(
     const executionId = params.executionId;
     const body = await request.json();
 
-    // TODO: Wire to Prisma
-    // const updated = await prisma.agentExecution.update({
-    //   where: { id: executionId },
-    //   data: body,
-    // });
-
-    // Mock response
-    const updated = {
-      id: executionId,
-      status: body.status || 'running',
-      ...body,
-    };
+    const updated = await prisma.agentExecution.update({
+      where: { id: executionId },
+      data: body,
+    });
 
     return NextResponse.json({ execution: updated }, { status: 200 });
   } catch (error) {
@@ -133,16 +78,15 @@ export async function PUT(
  * Delete execution and all related data
  */
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { executionId: string } }
 ) {
   try {
     const executionId = params.executionId;
 
-    // TODO: Wire to Prisma
-    // await prisma.agentExecution.delete({
-    //   where: { id: executionId },
-    // });
+    await prisma.agentExecution.delete({
+      where: { id: executionId },
+    });
 
     return NextResponse.json(
       { success: true, message: 'Execution deleted' },

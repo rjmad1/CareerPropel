@@ -1,13 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/db';
 
 /**
  * GET /api/agent/execution/[executionId]/logs
- * Fetch paginated logs for an execution
- * 
- * Query params:
- * - page: number (default: 0)
- * - pageSize: number (default: 50)
- * - level: 'INFO' | 'WARN' | 'ERROR' | 'DEBUG' (optional)
+ * Fetch execution logs
  */
 export async function GET(
   request: NextRequest,
@@ -15,74 +11,26 @@ export async function GET(
 ) {
   try {
     const executionId = params.executionId;
-    const page = parseInt(request.nextUrl.searchParams.get('page') || '0');
-    const pageSize = parseInt(request.nextUrl.searchParams.get('pageSize') || '50');
-    const level = request.nextUrl.searchParams.get('level');
+    const limit = parseInt(request.nextUrl.searchParams.get('limit') || '50');
+    const offset = parseInt(request.nextUrl.searchParams.get('offset') || '0');
 
-    // TODO: Wire to Prisma
-    // const logs = await prisma.eventLog.findMany({
-    //   where: {
-    //     executionId,
-    //     ...(level && { level }),
-    //   },
-    //   orderBy: { timestamp: 'desc' },
-    //   skip: page * pageSize,
-    //   take: pageSize,
-    // });
-    //
-    // const total = await prisma.eventLog.count({
-    //   where: {
-    //     executionId,
-    //     ...(level && { level }),
-    //   },
-    // });
+    const logs = await prisma.eventLog.findMany({
+      where: { executionId },
+      orderBy: { timestamp: 'desc' },
+      take: limit,
+      skip: offset,
+    });
 
-    // Mock response
-    const mockLogs = [
-      {
-        id: 'log_1',
-        executionId,
-        level: 'INFO',
-        message: 'Execution started',
-        data: { startedBy: 'user_123' },
-        timestamp: new Date(Date.now() - 300000),
-      },
-      {
-        id: 'log_2',
-        executionId,
-        level: 'INFO',
-        message: 'Tool call: extract_job_requirements',
-        data: { tool: 'extract_job_requirements', duration: 60000 },
-        timestamp: new Date(Date.now() - 240000),
-      },
-      {
-        id: 'log_3',
-        executionId,
-        level: 'INFO',
-        message: 'Tool call: tailor_resume completed successfully',
-        data: { tool: 'tailor_resume', duration: 60000, status: 'success' },
-        timestamp: new Date(Date.now() - 1000),
-      },
-    ];
-
-    const filteredLogs = level
-      ? mockLogs.filter((log) => log.level === level)
-      : mockLogs;
-
-    const total = filteredLogs.length;
-    const paginatedLogs = filteredLogs.slice(
-      page * pageSize,
-      (page + 1) * pageSize
-    );
-    const hasMore = (page + 1) * pageSize < total;
+    const total = await prisma.eventLog.count({
+      where: { executionId },
+    });
 
     return NextResponse.json(
       {
-        logs: paginatedLogs,
+        logs,
         total,
-        page,
-        pageSize,
-        hasMore,
+        limit,
+        offset,
       },
       { status: 200 }
     );

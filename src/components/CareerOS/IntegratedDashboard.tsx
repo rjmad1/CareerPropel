@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { AgentRail } from '@/components/Agent/AgentRail';
-import { ProfileCompleteness } from '@/components/Profile/ProfileCompleteness';
 import { useProfile } from '@/hooks/useProfile';
 import { useProfileCompletion } from '@/hooks/useProfileCompletion';
 
@@ -20,9 +19,9 @@ export const IntegratedDashboard: React.FC<{ candidateId: string }> = ({
   candidateId,
 }) => {
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
-  const [selectedAgentId, setSelectedAgentId] = useState<string | null>(null);
+  const [_selectedAgentId, _setSelectedAgentId] = useState<string | null>(null);
 
-  const { score: profileScore, recommendations } = useProfile(candidateId);
+  const { score: profileScore, recommendations: _recommendations } = useProfile(candidateId);
   const { completeness, breakdown } = useProfileCompletion(candidateId);
 
   return (

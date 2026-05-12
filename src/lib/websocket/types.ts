@@ -4,7 +4,7 @@
  */
 
 // Agent-related types
-export type AgentStatus = 'running' | 'waiting' | 'error' | 'completed' | 'idle';
+export type AgentStatus = 'running' | 'waiting' | 'error' | 'completed' | 'idle' | 'paused' | 'failed';
 
 export interface Agent {
   id: string;

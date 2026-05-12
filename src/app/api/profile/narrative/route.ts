@@ -4,9 +4,9 @@ import { NextRequest, NextResponse } from 'next/server';
  * POST /api/profile/narrative
  * Generate AI career narrative
  */
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
-    const { candidateId, focusAreas } = await request.json();
+    // const { candidateId, focusAreas } = await request.json();
 
     // TODO: Integrate Claude API for narrative generation
     // const narrative = await generateNarrativeWithClaude(candidateId, focusAreas);

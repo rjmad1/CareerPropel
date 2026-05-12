@@ -10,7 +10,6 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { generateInterviewPrep } from '@/lib/interview/prepService';
 
 interface RouteParams {
   params: {
@@ -22,7 +21,7 @@ interface RouteParams {
  * GET /api/interview-prep/{jobId}
  * Fetch interview prep for a specific job
  */
-export async function GET(request: NextRequest, { params }: RouteParams) {
+export async function GET(_request: NextRequest, { params }: RouteParams) {
   try {
     const { jobId } = params;
 
@@ -71,10 +70,10 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
  * PUT /api/interview-prep/{jobId}
  * Update interview prep
  */
-export async function PUT(request: NextRequest, { params }: RouteParams) {
+export async function PUT(_request: NextRequest, { params }: RouteParams) {
   try {
     const { jobId } = params;
-    const updates = await request.json();
+    // const updates = await request.json();
 
     if (!jobId) {
       return NextResponse.json(
@@ -117,7 +116,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
  * DELETE /api/interview-prep/{jobId}
  * Delete interview prep
  */
-export async function DELETE(request: NextRequest, { params }: RouteParams) {
+export async function DELETE(_request: NextRequest, { params }: RouteParams) {
   try {
     const { jobId } = params;
 

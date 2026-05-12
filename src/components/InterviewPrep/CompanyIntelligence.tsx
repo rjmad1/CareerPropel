@@ -9,7 +9,6 @@ import {
   Target,
   Globe,
   DollarSign,
-  TrendingDown
 } from 'lucide-react';
 import { InterviewPrep } from '../../types/interview';
 import { CompanyProfile } from '../../types/company';
@@ -35,14 +34,15 @@ export const CompanyIntelligence: React.FC<CompanyIntelligenceProps> = ({
   companyData,
 }) => {
   const sections = useMemo(() => {
+  const sections = useMemo(() => {
     return {
-      overview: prep.companyResearch?.overview || '',
+      overview: prep.companyResearch?.competitorsAndContext || '',
       industry: prep.companyResearch?.industry || '',
-      culture: prep.companyResearch?.culture || [],
-      techStack: prep.companyResearch?.techStack || [],
+      culture: prep.companyResearch?.culture || '',
+      techStack: (prep.companyResearch?.technicalStack || []).join(', '),
       recentNews: prep.companyResearch?.recentNews || [],
-      hiringPatterns: prep.companyResearch?.hiringPatterns || {},
-      competitors: prep.companyResearch?.competitors || [],
+      hiringPatterns: {},
+      competitors: prep.companyResearch?.competitorsAndContext || '',
     };
   }, [prep]);
 

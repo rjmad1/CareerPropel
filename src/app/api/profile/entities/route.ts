@@ -1,65 +1,37 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/db';
 
 /**
- * GET /api/profile/entities?candidateId={id}&type={type}
- * Fetch profile entities with optional filtering
+ * GET /api/profile/entities?candidateId={id}&type={type}&source={source}
+ * Fetch extracted profile entities
  */
 export async function GET(request: NextRequest) {
   try {
     const candidateId = request.nextUrl.searchParams.get('candidateId');
     const type = request.nextUrl.searchParams.get('type');
     const source = request.nextUrl.searchParams.get('source');
-    const confidence = parseFloat(request.nextUrl.searchParams.get('confidence') || '0');
 
     if (!candidateId) {
-      return NextResponse.json({ error: 'candidateId is required' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'candidateId is required' },
+        { status: 400 }
+      );
     }
 
-    // TODO: Wire to Prisma
-    // const entities = await prisma.profileEntity.findMany({
-    //   where: {
-    //     candidateId,
-    //     ...(type && { type }),
-    //     ...(source && { source }),
-    //     ...(confidence && { confidence: { gte: confidence } }),
-    //   },
-    // });
+    const where: any = { candidateId };
+    if (type) where.type = type;
+    if (source) where.source = source;
 
-    // Mock response
-    const entities = [
-      {
-        id: 'entity_1',
-        candidateId,
-        type: 'skill',
-        content: 'React',
-        confidence: 0.95,
-        source: 'resume',
-        tags: ['frontend', 'javascript'],
-        relatedEntityIds: [],
-        extractedAt: new Date(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        id: 'entity_2',
-        candidateId,
-        type: 'achievement',
-        content: 'Led 50% performance improvement',
-        confidence: 0.88,
-        source: 'resume',
-        tags: ['leadership', 'impact'],
-        relatedEntityIds: [],
-        extractedAt: new Date(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ];
+    const entities = await prisma.profileEntity.findMany({
+      where,
+      orderBy: { extractedAt: 'desc' },
+    });
 
-    return NextResponse.json({ entities }, { status: 200 });
+    return NextResponse.json({ entities, total: entities.length }, { status: 200 });
   } catch (error) {
-    console.error('Error fetching entities:', error);
+    console.error('Error fetching profile entities:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch entities' },
+      { error: 'Failed to fetch profile entities' },
       { status: 500 }
     );
   }
@@ -67,29 +39,21 @@ export async function GET(request: NextRequest) {
 
 /**
  * POST /api/profile/entities
- * Create profile entity
+ * Create a new profile entity
  */
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    // TODO: Wire to Prisma
-    // const entity = await prisma.profileEntity.create({
-    //   data: body,
-    // });
-
-    const entity = {
-      id: 'entity_' + Date.now(),
-      ...body,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+    const entity = await prisma.profileEntity.create({
+      data: body,
+    });
 
     return NextResponse.json(entity, { status: 201 });
   } catch (error) {
-    console.error('Error creating entity:', error);
+    console.error('Error creating profile entity:', error);
     return NextResponse.json(
-      { error: 'Failed to create entity' },
+      { error: 'Failed to create profile entity' },
       { status: 500 }
     );
   }
