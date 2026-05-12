@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { axiosClient } from '@/lib/api/axiosClient';
+
 
 // ============================================================================
 // Interview Mutations
@@ -21,7 +21,8 @@ export function useCreateInterview() {
 
   return useMutation({
     mutationFn: async (input: CreateInterviewInput) => {
-      const { data } = await axiosClient.post('/api/interviews', input);
+      const { data } = // TODO: API call in Phase 2
+      // await apiClient.post('/api/interviews', input);
       return data;
     },
     onSuccess: (_, variables) => {
@@ -38,7 +39,8 @@ export function useDeleteInterview() {
 
   return useMutation({
     mutationFn: async (interviewId: string) => {
-      await axiosClient.delete(`/api/interviews/${interviewId}`);
+      // TODO: API call in Phase 2
+      // await apiClient.delete(`/api/interviews/${interviewId}`);
     },
     onSuccess: (_, interviewId) => {
       // Invalidate all interviews queries (we don't know which job it belonged to)
@@ -58,7 +60,8 @@ export function useUpdateInterview() {
 
   return useMutation({
     mutationFn: async ({ id, updates }: Omit<UpdateInterviewInput, 'jobId'> & { id: string }) => {
-      const { data } = await axiosClient.patch(`/api/interviews/${id}`, updates);
+      const { data } = // TODO: API call in Phase 2
+      // await apiClient.patch(`/api/interviews/${id}`, updates);
       return data;
     },
     onSuccess: (_, variables) => {
@@ -85,7 +88,8 @@ export function useCreateOffer() {
 
   return useMutation({
     mutationFn: async (input: CreateOfferInput) => {
-      const { data } = await axiosClient.post('/api/offers', input);
+      const { data } = // TODO: API call in Phase 2
+      // await apiClient.post('/api/offers', input);
       return data;
     },
     onSuccess: (_, variables) => {
@@ -102,7 +106,8 @@ export function useDeleteOffer() {
 
   return useMutation({
     mutationFn: async (offerId: string) => {
-      await axiosClient.delete(`/api/offers/${offerId}`);
+      // TODO: API call in Phase 2
+      // await apiClient.delete(`/api/offers/${offerId}`);
     },
     onSuccess: () => {
       // Invalidate all offers queries
@@ -121,7 +126,8 @@ export function useUpdateOffer() {
 
   return useMutation({
     mutationFn: async ({ id, updates }: UpdateOfferInput) => {
-      const { data } = await axiosClient.patch(`/api/offers/${id}`, updates);
+      const { data } = // TODO: API call in Phase 2
+      // await apiClient.patch(`/api/offers/${id}`, updates);
       return data;
     },
     onSuccess: () => {
@@ -144,7 +150,8 @@ export function useUpdateJobNotes() {
 
   return useMutation({
     mutationFn: async ({ jobId, notes }: UpdateJobNotesInput) => {
-      const { data } = await axiosClient.patch(`/api/jobs/${jobId}`, { notes });
+      const { data } = // TODO: API call in Phase 2
+      // await apiClient.patch(`/api/jobs/${jobId}`, { notes });
       return data;
     },
     onSuccess: (_, variables) => {

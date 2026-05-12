@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Trash2, DollarSign, TrendingUp } from 'lucide-react';
+import { Plus, Trash2, TrendingUp } from 'lucide-react';
 import { useOffers } from '../../hooks/useOffers';
 import { useCreateOffer, useDeleteOffer } from '../../hooks/useMutations';
 
@@ -18,7 +18,7 @@ interface Offer {
 }
 
 export default function OffersTab({ jobId }: OffersTabProps) {
-  const { data: offers = [], isLoading, error } = useOffers(jobId);
+  const { data: offers = [], isLoading } = useOffers(jobId);
   const { mutate: createOffer, isPending: isCreating } = useCreateOffer();
   const { mutate: deleteOffer, isPending: isDeleting } = useDeleteOffer();
   const [isAddingOffer, setIsAddingOffer] = useState(false);

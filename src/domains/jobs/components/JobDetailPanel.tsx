@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
-import { Job } from '../types';
 import { useJob } from '../hooks/useJob';
 import OverviewTab from './tabs/OverviewTab';
-import TimelineTab from './tabs/TimelineTab';
-import InterviewsTab from './tabs/InterviewsTab';
-import PrepTab from './tabs/PrepTab';
-import OffersTab from './tabs/OffersTab';
 
 interface JobDetailPanelProps {
   jobId: string;
@@ -67,7 +62,7 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
       <div className="sticky top-0 bg-white border-b border-gray-200 p-6 z-50" data-testid="detail-panel-header">
         <div className="flex items-start justify-between mb-4">
           <div className="flex-1">
-            <h2 className="text-xl font-bold text-gray-900">{job.title}</h2>
+            <h2 className="text-xl font-bold text-gray-900">{job.role}</h2>
             <p className="text-sm text-gray-600 mt-1">{job.company}</p>
           </div>
           <button
@@ -82,31 +77,30 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
         <div className="grid grid-cols-3 gap-2 mb-4">
           <div className="bg-gray-50 rounded-lg p-2">
             <p className="text-xs text-gray-600">Match Score</p>
-            <p className={`text-sm font-bold rounded px-2 py-1 inline-block ${getMatchScoreColor(job.matchScore)}`}>
-              {Math.round(job.matchScore * 100)}%
+            <p className={`text-sm font-bold rounded px-2 py-1 inline-block ${getMatchScoreColor(job.matchScore / 100)}`}>
+              {Math.round(job.matchScore)}%
             </p>
           </div>
           <div className="bg-gray-50 rounded-lg p-2">
             <p className="text-xs text-gray-600">Stage</p>
-            <p className="text-sm font-semibold text-gray-900">{job.stage}</p>
+            <p className="text-sm font-semibold text-gray-900 capitalize">{job.stage.replace(/_/g, ' ')}</p>
           </div>
           <div className="bg-gray-50 rounded-lg p-2">
-            <p className="text-xs text-gray-600">Salary</p>
-            <p className="text-sm font-semibold text-gray-900">${job.salaryMin}-${job.salaryMax}k</p>
+            <p className="text-xs text-gray-600">Priority</p>
+            <p className="text-sm font-semibold text-gray-900 capitalize">{job.priority}</p>
           </div>
         </div>
 
         {/* Tabs */}
         <div className="flex gap-1 border-b border-gray-200">
-          {(Object.keys(TAB_LABELS) as TabType[]).map((tab) => (
+          {(['overview'] as TabType[]).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              data-testid={`tab-${tab}`}
-              className={`px-3 py-2 text-sm font-medium border-b-2 transition ${
+              className={`px-3 py-2 text-sm font-medium transition ${
                 activeTab === tab
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-gray-600 hover:text-gray-900'
+                  ? 'text-blue-600 border-b-2 border-blue-600'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               {TAB_LABELS[tab]}
@@ -115,13 +109,9 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
         </div>
       </div>
 
-      {/* Tab Content */}
+      {/* Content */}
       <div className="flex-1 overflow-y-auto">
-        {activeTab === 'overview' && <div data-testid="overview-content"><OverviewTab job={job} /></div>}
-        {activeTab === 'timeline' && <div data-testid="timeline-content"><TimelineTab jobId={jobId} /></div>}
-        {activeTab === 'interviews' && <div data-testid="interviews-content"><InterviewsTab jobId={jobId} /></div>}
-        {activeTab === 'prep' && <div data-testid="prep-content"><PrepTab jobId={jobId} /></div>}
-        {activeTab === 'offers' && <div data-testid="offers-content"><OffersTab jobId={jobId} /></div>}
+        {activeTab === 'overview' && <OverviewTab job={job} />}
       </div>
     </div>
   );

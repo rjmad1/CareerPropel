@@ -2527,3 +2527,18 @@ Require stack:
  ✓ Compiled in 142ms (454 modules)
  ✓ Compiled in 150ms (454 modules)
  ✓ Compiled in 154ms (454 modules)
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\Users\rajaj\career-ops\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ✓ Compiled in 403ms (454 modules)
+ ✓ Compiled in 244ms (454 modules)
+ ✓ Compiled in 234ms (454 modules)
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\Users\rajaj\career-ops\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ✓ Compiled in 185ms (454 modules)
+ ⚠ Found a change in next.config.js. Restarting the server to apply the changes...
+ ⚠ Port 3000 is in use, trying 3001 instead.
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3001
+  - Environments: .env.local
+
+ ✓ Starting...
+<w> [webpack.cache.PackFileCacheStrategy] Restoring pack from C:\Users\rajaj\career-ops\.next\cache\webpack\client-development.pack.gz failed: TypeError: Cannot read properties of undefined (reading 'hasStartTime')
+ ✓ Ready in 1992ms

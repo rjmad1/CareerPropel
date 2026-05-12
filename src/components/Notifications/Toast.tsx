@@ -38,9 +38,10 @@ export const Toast: React.FC<ToastProps> = ({
     }
 
     const startTime = Date.now();
+    const duration = notification.duration;
     const interval = setInterval(() => {
       const elapsed = Date.now() - startTime;
-      const remaining = Math.max(0, 100 - (elapsed / notification.duration) * 100);
+      const remaining = Math.max(0, 100 - (elapsed / duration) * 100);
       setProgress(remaining);
 
       if (remaining <= 0) {

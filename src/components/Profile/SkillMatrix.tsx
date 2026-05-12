@@ -32,7 +32,6 @@ const proficiencyStars = {
 
 export const SkillMatrix: React.FC<SkillMatrixProps> = ({
   skills,
-  onSkillUpdate,
   onSkillDelete,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Job, getSwimlaneConfig } from '@/types/job';
 import { useRealTime } from '@/hooks/useRealTime';
 
-interface JobCardProps {
+export interface JobCardProps {
   job: Job;
   onClick?: () => void;
   onDragStart?: (e: React.DragEvent<HTMLDivElement>) => void;

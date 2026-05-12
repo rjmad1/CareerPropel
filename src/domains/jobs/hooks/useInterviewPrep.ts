@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { axiosClient } from '@/lib/api/axiosClient';
 
 export interface PrepData {
   starStories: Array<{
@@ -25,8 +24,19 @@ export function useInterviewPrep(jobId: string) {
   return useQuery<PrepData, Error>({
     queryKey: ['interview-prep', jobId],
     queryFn: async () => {
-      const { data } = await axiosClient.get(`/api/interview-prep/${jobId}`);
-      return data;
+      // TODO: Implement API call in Phase 2
+      // const response = await apiClient.get(`/api/interview-prep/${jobId}`);
+      // return response as unknown as PrepData;
+      return {
+        starStories: [],
+        technicalConcepts: [],
+        companyIntelligence: {
+          mission: '',
+          recentNews: [],
+          culture: '',
+        },
+        likelyQuestions: [],
+      } as PrepData;
     },
     enabled: !!jobId,
     staleTime: 10 * 60 * 1000, // 10 minutes

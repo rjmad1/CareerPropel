@@ -2,7 +2,6 @@ import React, { useMemo } from 'react';
 import {
   CheckCircle2,
   AlertCircle,
-  FileText,
   Zap,
   TrendingUp,
   BarChart3,
@@ -33,7 +32,7 @@ export const ResumeAlignment: React.FC<ResumeAlignmentProps> = ({ prep }) => {
   }, [alignmentData]);
 
   const matchedKeywords = useMemo(() => {
-    return alignmentData.matchedKeywords || [];
+    return alignmentData.keywordMatches || [];
   }, [alignmentData]);
 
   const missingKeywords = useMemo(() => {
@@ -41,7 +40,7 @@ export const ResumeAlignment: React.FC<ResumeAlignmentProps> = ({ prep }) => {
   }, [alignmentData]);
 
   const recommendations = useMemo(() => {
-    return alignmentData.recommendations || [];
+    return alignmentData.suggestedResumeUpdates || [];
   }, [alignmentData]);
 
   const skillGaps = useMemo(() => {
@@ -193,13 +192,13 @@ export const ResumeAlignment: React.FC<ResumeAlignmentProps> = ({ prep }) => {
           Matched Keywords ({matchedKeywords.length})
         </h3>
         <div className="flex flex-wrap gap-2">
-          {matchedKeywords.map((keyword, idx) => (
+          {matchedKeywords.map((keywordMatch, idx) => (
             <span
               key={idx}
               className="bg-emerald-100 text-emerald-800 text-sm font-medium px-3 py-1.5 rounded-full flex items-center gap-1"
               data-cy={`matched-keyword-${idx}`}
             >
-              ✓ {keyword}
+              ✓ {keywordMatch.keyword}
             </span>
           ))}
         </div>
@@ -414,7 +413,10 @@ export const ResumeAlignment: React.FC<ResumeAlignmentProps> = ({ prep }) => {
             {recommendations.slice(0, 5).map((rec, idx) => (
               <li key={idx} className="text-sm text-emerald-900 flex items-start gap-2">
                 <span className="font-bold text-emerald-700 flex-shrink-0">{idx + 1}.</span>
-                <span>{rec}</span>
+                <div>
+                  <p className="font-medium">{rec.section}</p>
+                  <p className="text-xs text-emerald-800 mt-1">{rec.reason}</p>
+                </div>
               </li>
             ))}
           </ol>

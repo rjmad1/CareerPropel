@@ -1,14 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import {
   Mic,
-  Play,
   Square,
   SkipForward,
   CheckCircle2,
   AlertCircle,
-  TrendingUp,
-  Clock,
-  Lightbulb,
   RefreshCw,
 } from 'lucide-react';
 import { InterviewPrep } from '../../types/interview';

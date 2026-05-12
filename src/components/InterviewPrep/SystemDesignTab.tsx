@@ -2,7 +2,6 @@ import React, { useMemo, useState } from 'react';
 import {
   Boxes,
   GitBranch,
-  Database,
   Zap,
   TrendingUp,
   AlertCircle,
@@ -28,14 +27,6 @@ interface SystemDesignTabProps {
  */
 export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
   const [expandedSection, setExpandedSection] = useState<string | null>('approach');
-
-  const systemDesignPrep = useMemo(() => {
-    return prep.systemDesignPrep || {};
-  }, [prep]);
-
-  const designPatterns = useMemo(() => {
-    return systemDesignPrep.patterns || [];
-  }, [systemDesignPrep]);
 
   const scalingConcepts = useMemo(() => {
     return [

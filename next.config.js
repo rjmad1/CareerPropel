@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  typescript: {
-    strictNullChecks: true,
-  },
   eslint: {
     dirs: ['src'],
   },
