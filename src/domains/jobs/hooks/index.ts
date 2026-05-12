@@ -3,3 +3,12 @@ export { useJobActivities } from './useJobActivities';
 export { useInterviews } from './useInterviews';
 export { useInterviewPrep } from './useInterviewPrep';
 export { useOffers } from './useOffers';
+export {
+  useCreateInterview,
+  useDeleteInterview,
+  useUpdateInterview,
+  useCreateOffer,
+  useDeleteOffer,
+  useUpdateOffer,
+  useUpdateJobNotes,
+} from './useMutations';

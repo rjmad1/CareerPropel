@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Plus, Trash2, DollarSign, TrendingUp } from 'lucide-react';
 import { useOffers } from '../../hooks/useOffers';
+import { useCreateOffer, useDeleteOffer } from '../../hooks/useMutations';
 
 interface OffersTabProps {
   jobId: string;
@@ -18,6 +19,8 @@ interface Offer {
 
 export default function OffersTab({ jobId }: OffersTabProps) {
   const { data: offers = [], isLoading, error } = useOffers(jobId);
+  const { mutate: createOffer, isPending: isCreating } = useCreateOffer();
+  const { mutate: deleteOffer, isPending: isDeleting } = useDeleteOffer();
   const [isAddingOffer, setIsAddingOffer] = useState(false);
   const [formData, setFormData] = useState({
     baseSalary: 0,
@@ -28,19 +31,38 @@ export default function OffersTab({ jobId }: OffersTabProps) {
   });
 
   const handleAddOffer = async () => {
-    // TODO: Call API to create offer
-    setIsAddingOffer(false);
-    setFormData({
-      baseSalary: 0,
-      bonusPercent: 0,
-      equity: '',
-      startDate: '',
-      notes: '',
-    });
+    if (!formData.baseSalary || !formData.startDate) {
+      return; // Validation
+    }
+
+    createOffer(
+      {
+        jobId,
+        baseSalary: formData.baseSalary,
+        bonusPercent: formData.bonusPercent,
+        equity: formData.equity || '',
+        startDate: formData.startDate,
+        notes: formData.notes || undefined,
+      },
+      {
+        onSuccess: () => {
+          setIsAddingOffer(false);
+          setFormData({
+            baseSalary: 0,
+            bonusPercent: 0,
+            equity: '',
+            startDate: '',
+            notes: '',
+          });
+        },
+      }
+    );
   };
 
   const handleDeleteOffer = async (offerId: string) => {
-    // TODO: Call API to delete offer
+    if (window.confirm('Are you sure you want to delete this offer?')) {
+      deleteOffer(offerId);
+    }
   };
 
   if (isLoading) {
@@ -105,13 +127,15 @@ export default function OffersTab({ jobId }: OffersTabProps) {
           <div className="flex gap-2">
             <button
               onClick={handleAddOffer}
-              className="flex-1 px-3 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition"
+              disabled={isCreating}
+              className="flex-1 px-3 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 disabled:bg-green-400 disabled:cursor-not-allowed transition"
             >
-              Log Offer
+              {isCreating ? 'Logging...' : 'Log Offer'}
             </button>
             <button
               onClick={() => setIsAddingOffer(false)}
-              className="flex-1 px-3 py-2 bg-gray-200 text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-300 transition"
+              disabled={isCreating}
+              className="flex-1 px-3 py-2 bg-gray-200 text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed transition"
             >
               Cancel
             </button>
@@ -159,7 +183,8 @@ export default function OffersTab({ jobId }: OffersTabProps) {
                   </span>
                   <button
                     onClick={() => handleDeleteOffer(offer.id)}
-                    className="p-1 hover:bg-red-100 rounded transition"
+                    disabled={isDeleting}
+                    className="p-1 hover:bg-red-100 disabled:bg-gray-100 disabled:cursor-not-allowed rounded transition"
                   >
                     <Trash2 size={14} className="text-red-600" />
                   </button>

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ExternalLink, MapPin, Briefcase, DollarSign, Calendar } from 'lucide-react';
 import { Job } from '../../types';
+import { useUpdateJobNotes } from '../../hooks/useMutations';
 
 interface OverviewTabProps {
   job: Job;
@@ -9,6 +10,12 @@ interface OverviewTabProps {
 export default function OverviewTab({ job }: OverviewTabProps) {
   const [notes, setNotes] = useState(job.notes || '');
   const [isEditingNotes, setIsEditingNotes] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const { mutate: updateNotes } = useUpdateJobNotes();
+
+  useEffect(() => {
+    setNotes(job.notes || '');
+  }, [job.notes]);
 
   const formattedDate = new Date(job.appliedAt).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -116,17 +123,37 @@ export default function OverviewTab({ job }: OverviewTabProps) {
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-semibold text-gray-900">Notes</h3>
           <button
-            onClick={() => setIsEditingNotes(!isEditingNotes)}
-            className="text-xs text-blue-600 hover:text-blue-700 font-medium"
+            onClick={() => {
+              if (isEditingNotes) {
+                setIsSaving(true);
+                updateNotes(
+                  { jobId: job.id, notes },
+                  {
+                    onSuccess: () => {
+                      setIsSaving(false);
+                      setIsEditingNotes(false);
+                    },
+                    onError: () => {
+                      setIsSaving(false);
+                    },
+                  }
+                );
+              } else {
+                setIsEditingNotes(true);
+              }
+            }}
+            disabled={isSaving}
+            className="text-xs text-blue-600 hover:text-blue-700 disabled:text-gray-400 disabled:cursor-not-allowed font-medium"
           >
-            {isEditingNotes ? 'Save' : 'Edit'}
+            {isSaving ? 'Saving...' : isEditingNotes ? 'Save' : 'Edit'}
           </button>
         </div>
         {isEditingNotes ? (
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            disabled={isSaving}
+            className="w-full p-3 border border-gray-300 rounded-lg text-sm disabled:bg-gray-100 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500"
             rows={4}
             placeholder="Add notes about this job..."
           />

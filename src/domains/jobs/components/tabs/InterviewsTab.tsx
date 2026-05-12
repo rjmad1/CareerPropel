@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, MapPin, User, Trash2, Plus } from 'lucide-react';
 import { useInterviews } from '../../hooks/useInterviews';
+import { useCreateInterview, useDeleteInterview } from '../../hooks/useMutations';
 
 interface InterviewsTabProps {
   jobId: string;
@@ -29,6 +30,8 @@ const INTERVIEW_TYPES = {
 
 export default function InterviewsTab({ jobId }: InterviewsTabProps) {
   const { data: interviews = [], isLoading, error } = useInterviews(jobId);
+  const { mutate: createInterview, isPending: isCreating } = useCreateInterview();
+  const { mutate: deleteInterview, isPending: isDeleting } = useDeleteInterview();
   const [isAddingInterview, setIsAddingInterview] = useState(false);
   const [formData, setFormData] = useState({
     type: 'phone_screen' as Interview['type'],
@@ -41,21 +44,42 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
   });
 
   const handleAddInterview = async () => {
-    // TODO: Call API to create interview
-    setIsAddingInterview(false);
-    setFormData({
-      type: 'phone_screen',
-      date: '',
-      time: '',
-      interviewer: '',
-      location: '',
-      meetingLink: '',
-      notes: '',
-    });
+    if (!formData.date || !formData.time) {
+      return; // Validation
+    }
+
+    createInterview(
+      {
+        jobId,
+        type: formData.type,
+        date: formData.date,
+        time: formData.time,
+        interviewer: formData.interviewer || undefined,
+        location: formData.location || undefined,
+        meetingLink: formData.meetingLink || undefined,
+        notes: formData.notes || undefined,
+      },
+      {
+        onSuccess: () => {
+          setIsAddingInterview(false);
+          setFormData({
+            type: 'phone_screen',
+            date: '',
+            time: '',
+            interviewer: '',
+            location: '',
+            meetingLink: '',
+            notes: '',
+          });
+        },
+      }
+    );
   };
 
   const handleDeleteInterview = async (interviewId: string) => {
-    // TODO: Call API to delete interview
+    if (window.confirm('Are you sure you want to delete this interview?')) {
+      deleteInterview(interviewId);
+    }
   };
 
   if (isLoading) {
@@ -137,14 +161,16 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
           <div className="flex gap-2">
             <button
               onClick={handleAddInterview}
+              disabled={isCreating}
               data-testid="schedule-submit"
-              className="flex-1 px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition"
+              className="flex-1 px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed transition"
             >
-              Schedule
+              {isCreating ? 'Scheduling...' : 'Schedule'}
             </button>
             <button
               onClick={() => setIsAddingInterview(false)}
-              className="flex-1 px-3 py-2 bg-gray-200 text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-300 transition"
+              disabled={isCreating}
+              className="flex-1 px-3 py-2 bg-gray-200 text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed transition"
             >
               Cancel
             </button>
@@ -180,7 +206,8 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
                   </p>
                   <button
                     onClick={() => handleDeleteInterview(interview.id)}
-                    className="p-1 hover:bg-red-100 rounded transition"
+                    disabled={isDeleting}
+                    className="p-1 hover:bg-red-100 disabled:bg-gray-100 disabled:cursor-not-allowed rounded transition"
                   >
                     <Trash2 size={14} className="text-red-600" />
                   </button>
@@ -236,7 +263,8 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
                   </p>
                   <button
                     onClick={() => handleDeleteInterview(interview.id)}
-                    className="p-1 hover:bg-red-100 rounded transition"
+                    disabled={isDeleting}
+                    className="p-1 hover:bg-red-100 disabled:bg-gray-100 disabled:cursor-not-allowed rounded transition"
                   >
                     <Trash2 size={14} className="text-red-600" />
                   </button>
