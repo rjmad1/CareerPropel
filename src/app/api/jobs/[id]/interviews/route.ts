@@ -1,6 +1,6 @@
 /**
- * GET /api/jobs/[id]
- * Fetch full job details including description and metadata
+ * GET /api/jobs/[id]/interviews
+ * Fetch interviews for a specific job
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -13,11 +13,13 @@ export async function GET(
   try {
     const { id } = params;
 
-    // Fetch job from database
+    // Fetch job and its interviews
     const job = await prisma.job.findUnique({
       where: { id },
       include: {
-        interviews: true,
+        interviews: {
+          orderBy: { date: 'asc' },
+        },
       },
     });
 
@@ -28,12 +30,12 @@ export async function GET(
       );
     }
 
-    return NextResponse.json(job);
+    return NextResponse.json(job.interviews || []);
   } catch (error) {
-    console.error('[Jobs API] Error:', error);
+    console.error('[Interviews API] Error:', error);
     return NextResponse.json(
       {
-        error: error instanceof Error ? error.message : 'Failed to fetch job',
+        error: error instanceof Error ? error.message : 'Failed to fetch interviews',
       },
       { status: 500 }
     );

@@ -12,17 +12,25 @@ export interface Interview {
   status: 'scheduled' | 'completed' | 'cancelled';
 }
 
+/**
+ * Fetch interviews for a specific job
+ */
 export function useInterviews(jobId: string) {
   return useQuery<Interview[], Error>({
     queryKey: ['interviews', jobId],
     queryFn: async () => {
-      // TODO: Implement API call in Phase 2
-      // const { data } = await apiClient.get(`/api/interviews?jobId=${jobId}`);
-      // return data;
-      return [];
+      const response = await fetch(`/api/jobs/${jobId}/interviews`);
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to fetch interviews');
+      }
+
+      return response.json();
     },
     enabled: !!jobId,
     staleTime: 2 * 60 * 1000, // 2 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
+    retry: 1,
   });
 }
