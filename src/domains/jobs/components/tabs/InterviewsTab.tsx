@@ -1,0 +1,265 @@
+import React, { useState } from 'react';
+import { Calendar, MapPin, User, Trash2, Plus } from 'lucide-react';
+import { useInterviews } from '../../hooks/useInterviews';
+
+interface InterviewsTabProps {
+  jobId: string;
+}
+
+interface Interview {
+  id: string;
+  type: 'phone_screen' | 'technical' | 'system_design' | 'behavioral' | 'final_round' | 'offer_discussion';
+  date: string;
+  time: string;
+  interviewer?: string;
+  location?: string;
+  meetingLink?: string;
+  notes?: string;
+  status: 'scheduled' | 'completed' | 'cancelled';
+}
+
+const INTERVIEW_TYPES = {
+  phone_screen: 'Phone Screen',
+  technical: 'Technical Interview',
+  system_design: 'System Design',
+  behavioral: 'Behavioral Interview',
+  final_round: 'Final Round',
+  offer_discussion: 'Offer Discussion',
+};
+
+export default function InterviewsTab({ jobId }: InterviewsTabProps) {
+  const { data: interviews = [], isLoading, error } = useInterviews(jobId);
+  const [isAddingInterview, setIsAddingInterview] = useState(false);
+  const [formData, setFormData] = useState({
+    type: 'phone_screen' as Interview['type'],
+    date: '',
+    time: '',
+    interviewer: '',
+    location: '',
+    meetingLink: '',
+    notes: '',
+  });
+
+  const handleAddInterview = async () => {
+    // TODO: Call API to create interview
+    setIsAddingInterview(false);
+    setFormData({
+      type: 'phone_screen',
+      date: '',
+      time: '',
+      interviewer: '',
+      location: '',
+      meetingLink: '',
+      notes: '',
+    });
+  };
+
+  const handleDeleteInterview = async (interviewId: string) => {
+    // TODO: Call API to delete interview
+  };
+
+  if (isLoading) {
+    return (
+      <div className="p-6 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  const now = new Date();
+  const upcomingInterviews = interviews.filter((int: Interview) => {
+    const intDate = new Date(`${int.date}T${int.time}`);
+    return intDate > now;
+  });
+  const pastInterviews = interviews.filter((int: Interview) => {
+    const intDate = new Date(`${int.date}T${int.time}`);
+    return intDate <= now;
+  });
+
+  return (
+    <div className="p-6">
+      {/* Add Interview Form */}
+      {isAddingInterview && (
+        <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4 space-y-3">
+          <h3 className="text-sm font-semibold text-gray-900">Schedule Interview</h3>
+
+          <select
+            value={formData.type}
+            onChange={(e) => setFormData({ ...formData, type: e.target.value as Interview['type'] })}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            {Object.entries(INTERVIEW_TYPES).map(([key, label]) => (
+              <option key={key} value={key}>
+                {label}
+              </option>
+            ))}
+          </select>
+
+          <div className="grid grid-cols-2 gap-2">
+            <input
+              type="date"
+              value={formData.date}
+              onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+              className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              type="time"
+              value={formData.time}
+              onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+              className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <input
+            type="text"
+            placeholder="Interviewer name"
+            value={formData.interviewer}
+            onChange={(e) => setFormData({ ...formData, interviewer: e.target.value })}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+
+          <input
+            type="text"
+            placeholder="Location or meeting link"
+            value={formData.location || formData.meetingLink}
+            onChange={(e) => setFormData({ ...formData, location: e.target.value, meetingLink: e.target.value })}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+
+          <textarea
+            placeholder="Notes"
+            value={formData.notes}
+            onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            rows={2}
+          />
+
+          <div className="flex gap-2">
+            <button
+              onClick={handleAddInterview}
+              data-testid="schedule-submit"
+              className="flex-1 px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition"
+            >
+              Schedule
+            </button>
+            <button
+              onClick={() => setIsAddingInterview(false)}
+              className="flex-1 px-3 py-2 bg-gray-200 text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-300 transition"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Schedule Button */}
+      {!isAddingInterview && (
+        <button
+          onClick={() => setIsAddingInterview(true)}
+          data-testid="schedule-btn"
+          className="w-full mb-6 flex items-center justify-center gap-2 px-3 py-2 border-2 border-dashed border-blue-300 text-blue-600 rounded-lg hover:bg-blue-50 transition text-sm font-medium"
+        >
+          <Plus size={16} />
+          Schedule Interview
+        </button>
+      )}
+
+      {/* Upcoming Interviews */}
+      {upcomingInterviews.length > 0 && (
+        <div className="mb-6">
+          <h3 className="text-sm font-semibold text-gray-900 mb-3">Upcoming</h3>
+          <div className="space-y-3">
+            {upcomingInterviews.map((interview: Interview) => (
+              <div
+                key={interview.id}
+                className="bg-green-50 border border-green-200 rounded-lg p-3"
+              >
+                <div className="flex items-start justify-between mb-2">
+                  <p className="text-sm font-semibold text-gray-900">
+                    {INTERVIEW_TYPES[interview.type]}
+                  </p>
+                  <button
+                    onClick={() => handleDeleteInterview(interview.id)}
+                    className="p-1 hover:bg-red-100 rounded transition"
+                  >
+                    <Trash2 size={14} className="text-red-600" />
+                  </button>
+                </div>
+
+                <div className="space-y-1 text-xs text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <Calendar size={14} />
+                    {new Date(`${interview.date}T${interview.time}`).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: '2-digit',
+                    })}
+                  </div>
+                  {interview.interviewer && (
+                    <div className="flex items-center gap-2">
+                      <User size={14} />
+                      {interview.interviewer}
+                    </div>
+                  )}
+                  {interview.meetingLink && (
+                    <div className="flex items-center gap-2">
+                      <MapPin size={14} />
+                      <a href={interview.meetingLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+                        {interview.meetingLink}
+                      </a>
+                    </div>
+                  )}
+                  {interview.location && !interview.meetingLink && (
+                    <div className="flex items-center gap-2">
+                      <MapPin size={14} />
+                      {interview.location}
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Past Interviews */}
+      {pastInterviews.length > 0 && (
+        <div>
+          <h3 className="text-sm font-semibold text-gray-900 mb-3">Past</h3>
+          <div className="space-y-3">
+            {pastInterviews.map((interview: Interview) => (
+              <div key={interview.id} className="bg-gray-50 border border-gray-200 rounded-lg p-3 opacity-75">
+                <div className="flex items-start justify-between mb-2">
+                  <p className="text-sm font-semibold text-gray-900">
+                    {INTERVIEW_TYPES[interview.type]}
+                  </p>
+                  <button
+                    onClick={() => handleDeleteInterview(interview.id)}
+                    className="p-1 hover:bg-red-100 rounded transition"
+                  >
+                    <Trash2 size={14} className="text-red-600" />
+                  </button>
+                </div>
+
+                <div className="space-y-1 text-xs text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <Calendar size={14} />
+                    {new Date(`${interview.date}T${interview.time}`).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {interviews.length === 0 && !isAddingInterview && (
+        <p className="text-sm text-gray-600 text-center py-4">No interviews scheduled yet</p>
+      )}
+    </div>
+  );
+}

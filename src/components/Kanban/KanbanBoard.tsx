@@ -3,6 +3,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Job, JobStage, getAllSwimlaneStages, isValidTransition } from '@/types/job';
 import { Swimlane } from './Swimlane';
+import { JobDetailPanel } from '@/domains/jobs';
 import { useRealTime } from '@/hooks/useRealTime';
 
 interface KanbanBoardProps {
@@ -49,6 +50,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
   >({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
   // WebSocket connection
   const { connected, subscribe } = useRealTime({
@@ -280,7 +282,10 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
               jobs={groupedJobs[stage]}
               isLoading={isLoading}
               onJobDrop={handleJobDrop}
-              onJobClick={onJobClick}
+              onJobClick={(job) => {
+                setSelectedJobId(job.id);
+                onJobClick?.(job);
+              }}
             />
           ))}
         </div>
@@ -293,6 +298,14 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
             <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full" />
           </div>
         </div>
+      )}
+
+      {/* Job Detail Panel */}
+      {selectedJobId && (
+        <JobDetailPanel
+          jobId={selectedJobId}
+          onClose={() => setSelectedJobId(null)}
+        />
       )}
     </div>
   );
