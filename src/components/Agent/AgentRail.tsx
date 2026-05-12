@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Agent, AgentLog as AgentLogType } from '@/lib/websocket/types';
 import { AGENT_CONFIGS } from '@/types/agent';
 import { useRealTime } from '@/hooks/useRealTime';
@@ -53,12 +53,10 @@ export const AgentRail: React.FC = () => {
         status: 'idle',
         progress: 0,
         queueDepth: 0,
-        lastActivity: Date.now(),
+        lastActivity: new Date(),
         tokensUsed: 0,
         confidence: 0.8,
         errorMessage: undefined,
-        completedTasks: 0,
-        failedTasks: 0,
         currentTask: undefined,
       };
     });

@@ -21,7 +21,7 @@ interface AgentLogProps {
  */
 export const AgentLogComponent: React.FC<AgentLogProps> = ({
   log,
-  isExpanded = false,
+  isExpanded: _isExpanded = false,
 }) => {
   // Color and icon based on log level
   const levelConfig = getLevelConfig(log.level);

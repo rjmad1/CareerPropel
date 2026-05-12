@@ -1,0 +1,33 @@
+
+> career-ops@1.0.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env.local
+
+ ✓ Starting...
+ ⚠ Invalid next.config.js options detected: 
+ ⚠     Unrecognized key(s) in object: 'strictNullChecks' at "typescript"
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+ ✓ Ready in 2.5s
+ ○ Compiling / ...
+ ✓ Compiled / in 1609ms (443 modules)
+ GET / 200 in 1747ms
+ ✓ Compiled /_not-found in 251ms (441 modules)
+ GET /login 404 in 370ms
+ GET /api/jobs?limit=1000 404 in 59ms
+ GET /login 404 in 33ms
+ GET /api/jobs?limit=1000 404 in 77ms
+ GET /login 404 in 60ms
+ GET /api/jobs?limit=1000 404 in 71ms
+ GET /login 404 in 58ms
+ GET /api/jobs?limit=1000 404 in 40ms
+ GET /login 404 in 80ms
+ GET /api/jobs?limit=1000 404 in 69ms
+ GET /login 404 in 64ms
+ GET /api/jobs?limit=1000 404 in 46ms
+ GET /login 404 in 50ms
+ GET /api/jobs?limit=1000 404 in 81ms
+ GET /login 404 in 60ms
+ GET /api/jobs?limit=1000 404 in 74ms

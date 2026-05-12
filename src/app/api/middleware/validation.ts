@@ -4,11 +4,12 @@ import { ValidationError } from './auth';
 
 /**
  * Validate request body against Zod schema
+ * Returns properly typed data based on schema
  */
-export async function validateRequest<T>(
+export async function validateRequest<T extends ZodSchema>(
   req: NextRequest,
-  schema: ZodSchema
-): Promise<{ valid: true; data: T } | { valid: false; error: ValidationError }> {
+  schema: T
+): Promise<{ valid: true; data: ReturnType<T['_output']> } | { valid: false; error: ValidationError }> {
   try {
     const body = await req.json();
     const result = schema.safeParse(body);
@@ -28,7 +29,7 @@ export async function validateRequest<T>(
       };
     }
 
-    return { valid: true, data: result.data as T };
+    return { valid: true, data: result.data as any };
   } catch (error) {
     return {
       valid: false,
@@ -54,11 +55,17 @@ export function validationErrorResponse(error: ValidationError) {
 }
 
 /**
- * Format error response
+ * Success response formatter
+ */
+export function successResponse(data: any, statusCode: number = 200) {
+  return NextResponse.json(data, { status: statusCode });
+}
+
+/**
+ * Error response formatter
  */
 export function errorResponse(error: any, statusCode: number = 500) {
-  console.error('API Error:', error);
-
+  // Handle custom error classes
   if (error.name === 'UnauthorizedError') {
     return NextResponse.json(
       {
@@ -96,11 +103,4 @@ export function errorResponse(error: any, statusCode: number = 500) {
     },
     { status: statusCode }
   );
-}
-
-/**
- * Success response formatter
- */
-export function successResponse(data: any, statusCode: number = 200) {
-  return NextResponse.json(data, { status: statusCode });
 }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { requireAuth } from '@/app/api/middleware/auth';
 import { validateRequest, successResponse, validationErrorResponse, errorResponse } from '@/app/api/middleware/validation';
+import { ValidationError } from '@/app/api/middleware/auth';
 import { uploadDocumentSchema, listDocumentsQuerySchema } from '@/lib/validation/schemas';
 import { getDocuments, uploadDocument } from '@/lib/db/documents';
 
@@ -32,7 +33,15 @@ export async function GET(req: NextRequest) {
     // Validate query
     const validation = listDocumentsQuerySchema.safeParse(queryData);
     if (!validation.success) {
-      return validationErrorResponse(new Error('Invalid query parameters'));
+      const details: Record<string, string[]> = {};
+      validation.error.errors.forEach((error) => {
+        const path = error.path.join('.');
+        if (!details[path]) {
+          details[path] = [];
+        }
+        details[path].push(error.message);
+      });
+      return validationErrorResponse(new ValidationError('Invalid query parameters', details));
     }
 
     const result = await getDocuments(user.id, validation.data);

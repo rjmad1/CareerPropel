@@ -123,7 +123,7 @@ export interface TechStackItem {
 export interface HiringPattern {
   averageTimeToHire?: number; // days
   hiringFrequency: 'constant' | 'seasonal' | 'sporadic';
-  rolesFrequently Hired: string[];
+  rolesFrequentlyHired: string[];
   growingDepartments: string[];
   turnoverRate?: number; // annual percentage
   internshipProgram: boolean;
@@ -207,7 +207,7 @@ export interface TeamInfo {
   name: string;
   size: number;
   manager: Manager;
-  sibling Teams: string[]; // Related teams
+  siblingTeams: string[]; // Related teams
   organizationLevel: number; // depth in org chart
 }
 
@@ -288,7 +288,7 @@ export interface CompanyResearchResponse {
   research: ResearchSummary;
   highlights: string[];
   redFlags: string[];
-  questions ToAsk: string[];
+  questionsToAsk: string[];
 }
 
 export interface ResearchSummary {

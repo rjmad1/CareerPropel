@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAuth } from '@/app/api/middleware/auth';
+import { requireAuth, ValidationError } from '@/app/api/middleware/auth';
 import { validateRequest, successResponse, validationErrorResponse, errorResponse } from '@/app/api/middleware/validation';
 import { createJobSchema, listJobsQuerySchema } from '@/lib/validation/schemas';
 import { getJobs, createJob } from '@/lib/db/jobs';
@@ -41,7 +41,15 @@ export async function GET(req: NextRequest) {
     // Validate query
     const validation = listJobsQuerySchema.safeParse(queryData);
     if (!validation.success) {
-      return validationErrorResponse(new Error('Invalid query parameters'));
+      const details: Record<string, string[]> = {};
+      validation.error.errors.forEach((error) => {
+        const path = error.path.join('.');
+        if (!details[path]) {
+          details[path] = [];
+        }
+        details[path].push(error.message);
+      });
+      return validationErrorResponse(new ValidationError('Invalid query parameters', details));
     }
 
     const result = await getJobs(user.id, validation.data);

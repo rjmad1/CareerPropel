@@ -110,7 +110,7 @@ export const AnalyticsExportButtons: React.FC<
         <Button
           onClick={handleExportCSV}
           disabled={disabled || isLoading}
-          variant="outline"
+          variant="secondary"
           size="sm"
           title="Export analytics data in CSV format"
         >
@@ -120,7 +120,7 @@ export const AnalyticsExportButtons: React.FC<
         <Button
           onClick={handleExportJSON}
           disabled={disabled || isLoading}
-          variant="outline"
+          variant="secondary"
           size="sm"
           title="Export analytics data in JSON format"
         >
@@ -130,7 +130,7 @@ export const AnalyticsExportButtons: React.FC<
         <Button
           onClick={handleExportHTML}
           disabled={disabled || isLoading}
-          variant="outline"
+          variant="secondary"
           size="sm"
           title="Export analytics data as HTML report"
         >
@@ -140,7 +140,7 @@ export const AnalyticsExportButtons: React.FC<
         <Button
           onClick={handleExportPDF}
           disabled={disabled || isLoading}
-          variant="outline"
+          variant="secondary"
           size="sm"
           title="Export analytics data as PDF (via HTML)"
         >

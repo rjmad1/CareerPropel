@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Agent, AgentStatus } from '@/lib/websocket/types';
+import { Agent } from '@/lib/websocket/types';
 import { AGENT_CONFIGS, getAgentColor, getAgentStatusLabel } from '@/types/agent';
 
 interface AgentCardProps {
@@ -156,14 +156,14 @@ export const AgentCard: React.FC<AgentCardProps> = ({
         <div className="bg-gray-50 p-3 rounded">
           <div className="text-xs text-gray-500 mb-1">Confidence</div>
           <div className="text-lg font-semibold text-gray-900">
-            {Math.round(agent.confidence * 100)}%
+            {Math.round((agent.confidence ?? 0) * 100)}%
           </div>
         </div>
 
         <div className="bg-gray-50 p-3 rounded">
           <div className="text-xs text-gray-500 mb-1">Tokens Used</div>
           <div className="text-lg font-semibold text-gray-900">
-            {agent.tokensUsed.toLocaleString()}
+            {(agent.tokensUsed ?? 0).toLocaleString()}
           </div>
         </div>
 
@@ -187,8 +187,8 @@ export const AgentCard: React.FC<AgentCardProps> = ({
         </div>
       )}
 
-      {/* Completed Tasks */}
-      {agent.completedTasks > 0 && (
+      {/* Completed Tasks - TODO: Add to Agent interface if needed */}
+      {/* {agent.completedTasks > 0 && (
         <div className="flex justify-between">
           <span className="text-sm text-gray-600">Tasks Completed</span>
           <span className="text-sm font-medium text-green-600">
@@ -198,14 +198,14 @@ export const AgentCard: React.FC<AgentCardProps> = ({
       )}
 
       {/* Failed Tasks */}
-      {agent.failedTasks > 0 && (
+      {/* {agent.failedTasks > 0 && (
         <div className="flex justify-between">
           <span className="text-sm text-gray-600">Tasks Failed</span>
           <span className="text-sm font-medium text-red-600">
             {agent.failedTasks}
           </span>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

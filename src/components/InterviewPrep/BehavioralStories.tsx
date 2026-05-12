@@ -9,7 +9,7 @@ import {
   ChevronUp,
   Lightbulb
 } from 'lucide-react';
-import { InterviewPrep, BehavioralStory } from '../../types/interview';
+import { InterviewPrep } from '../../types/interview';
 
 interface BehavioralStoriesProps {
   prep: InterviewPrep;

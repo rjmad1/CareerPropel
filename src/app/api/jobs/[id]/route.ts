@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAuth, ForbiddenError } from '@/app/api/middleware/auth';
+import { requireAuth } from '@/app/api/middleware/auth';
 import { validateRequest, successResponse, validationErrorResponse, errorResponse } from '@/app/api/middleware/validation';
 import { updateJobSchema } from '@/lib/validation/schemas';
 import { getJobById, updateJob, deleteJob } from '@/lib/db/jobs';

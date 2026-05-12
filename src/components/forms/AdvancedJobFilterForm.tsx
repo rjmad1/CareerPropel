@@ -246,7 +246,7 @@ export const AdvancedJobFilterForm: React.FC<
             <h3 className="font-semibold text-sm">Saved Presets</h3>
             <Button
               size="sm"
-              variant="outline"
+              variant="secondary"
               onClick={() => setShowPresetModal(true)}
             >
               Save Current
@@ -292,7 +292,7 @@ export const AdvancedJobFilterForm: React.FC<
               </Button>
               <Button
                 size="sm"
-                variant="outline"
+                variant="secondary"
                 onClick={() => setShowPresetModal(false)}
               >
                 Cancel
@@ -457,7 +457,7 @@ export const AdvancedJobFilterForm: React.FC<
             <Badge
               key={priority}
               variant={
-                filters.priority.includes(priority) ? 'default' : 'outline'
+                filters.priority.includes(priority) ? 'primary' : 'gray'
               }
               className="cursor-pointer"
               onClick={() => handlePriorityToggle(priority)}
@@ -479,7 +479,7 @@ export const AdvancedJobFilterForm: React.FC<
             <Badge
               key={status}
               variant={
-                filters.status.includes(status) ? 'default' : 'outline'
+                filters.status.includes(status) ? 'primary' : 'gray'
               }
               className="cursor-pointer"
               onClick={() => handleStatusToggle(status)}
@@ -521,7 +521,7 @@ export const AdvancedJobFilterForm: React.FC<
                   key={order}
                   size="sm"
                   variant={
-                    filters.sortOrder === order ? 'default' : 'outline'
+                    filters.sortOrder === order ? 'primary' : 'ghost'
                   }
                   onClick={() =>
                     handleFilterChange('sortOrder', order)
@@ -539,21 +539,21 @@ export const AdvancedJobFilterForm: React.FC<
       <div className="flex flex-wrap gap-2">
         <Button
           size="sm"
-          variant="outline"
+          variant="secondary"
           onClick={exportFilters}
         >
           Export Filters
         </Button>
         <Button
           size="sm"
-          variant="outline"
+          variant="secondary"
           onClick={importFilters}
         >
           Import Filters
         </Button>
         <Button
           size="sm"
-          variant="outline"
+          variant="secondary"
           onClick={clearFilters}
           className="text-red-600 hover:text-red-700"
         >
