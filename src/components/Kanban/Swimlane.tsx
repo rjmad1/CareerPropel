@@ -1,93 +1,156 @@
-import React from 'react'
-import { cn } from '@/lib/utils'
-import { JobCard } from './JobCard'
-import { Job } from './KanbanBoard'
-import type { StageId } from '@/lib/design-tokens'
+'use client';
 
-interface Stage {
-  id: StageId
-  label: string
-  color: string
-}
+import React, { useState, useRef } from 'react';
+import { Job, JobStage, SwimlaneConfig } from '@/types/job';
+import { JobCard } from './JobCard';
 
-export interface SwimlaneProps {
-  stage: Stage
-  jobs: Job[]
-  onJobSelect?: (job: Job) => void
-  onJobMove?: (jobId: string, newStage: StageId) => void
-  onJobDelete?: (jobId: string) => void
-  selectedJobId?: string | null
-  isHovered?: boolean
-  onHover?: () => void
-  onHoverLeave?: () => void
+interface SwimlaneProps {
+  stage: JobStage;
+  config: SwimlaneConfig;
+  jobs: Job[];
+  isLoading?: boolean;
+  onJobDrop?: (jobId: string, targetStage: JobStage) => void;
+  onJobClick?: (job: Job) => void;
 }
 
 /**
- * Swimlane Component
- * Vertical column for a single job application stage.
+ * Swimlane - A vertical column representing one job application stage
+ * 
+ * Features:
+ * - Displays all jobs in a specific stage
+ * - Drag-and-drop support for moving jobs between stages
+ * - Real-time updates from WebSocket
+ * - Visual indicators (count, stage icon, color)
+ * - Scrollable job list
+ * 
+ * Props:
+ * - stage: The job stage this swimlane represents
+ * - config: Visual configuration (color, icon, label)
+ * - jobs: Array of jobs in this stage
+ * - isLoading?: Whether data is loading
+ * - onJobDrop?: Callback when job is dropped on this swimlane
+ * - onJobClick?: Callback when job card is clicked
  */
 export const Swimlane: React.FC<SwimlaneProps> = ({
   stage,
+  config,
   jobs,
-  onJobSelect,
-  onJobMove,
-  onJobDelete,
-  selectedJobId,
-  isHovered,
-  onHover,
-  onHoverLeave,
+  isLoading = false,
+  onJobDrop,
+  onJobClick,
 }) => {
+  const [dragOverJob, setDragOverJob] = useState<string | null>(null);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // Only set to false if we're leaving the swimlane entirely
+    if (e.currentTarget === scrollContainerRef.current) {
+      setIsDragOver(false);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragOver(false);
+    setDragOverJob(null);
+
+    const jobId = e.dataTransfer.getData('jobId');
+    if (jobId && onJobDrop) {
+      onJobDrop(jobId, stage);
+    }
+  };
+
   return (
     <div
-      className="flex flex-col flex-shrink-0 w-80 bg-white border border-gray-200 rounded-lg overflow-hidden"
-      onMouseEnter={onHover}
-      onMouseLeave={onHoverLeave}
+      className={`flex flex-col min-h-0 w-96 ${config.color} border-r ${config.borderColor} flex-shrink-0`}
+      data-cy={`swimlane-${stage}`}
     >
-      {/* Stage Header */}
-      <div
-        className="px-4 py-3 border-b border-gray-200 flex items-center justify-between gap-2"
-        style={{ backgroundColor: stage.color + '10' }}
-      >
-        <div className="flex items-center gap-2 flex-1">
-          <div
-            className="w-3 h-3 rounded-full flex-shrink-0"
-            style={{ backgroundColor: stage.color }}
-            aria-hidden="true"
-          />
-          <h3 className="font-semibold text-sm text-gray-900">{stage.label}</h3>
+      {/* Header */}
+      <div className={`px-4 py-3 border-b ${config.borderColor} flex-shrink-0`}>
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-xl">{config.icon}</span>
+          <div className="flex-1">
+            <h3 className="font-semibold text-gray-900">{config.label}</h3>
+            <p className="text-xs text-gray-600">{config.description}</p>
+          </div>
+          <div className="bg-white px-2 py-1 rounded-full text-sm font-semibold text-gray-900">
+            {jobs.length}
+          </div>
         </div>
-        <Badge variant="gray" size="sm">
-          {jobs.length}
-        </Badge>
       </div>
 
       {/* Jobs Container */}
-      <div className="flex-1 overflow-y-auto p-3 flex flex-col gap-2">
-        {jobs.length === 0 ? (
-          <div className="flex items-center justify-center py-8 text-center">
-            <p className="text-sm text-gray-400">No jobs in this stage</p>
+      <div
+        ref={scrollContainerRef}
+        className={`flex-1 overflow-y-auto min-h-0 p-3 space-y-2 transition-colors ${
+          isDragOver ? 'bg-opacity-75' : ''
+        }`}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        data-cy={`swimlane-jobs-${stage}`}
+      >
+        {isLoading ? (
+          // Loading skeleton
+          <div className="space-y-2">
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="h-24 bg-white rounded shadow animate-pulse"
+              />
+            ))}
           </div>
-        ) : (
+        ) : jobs.length > 0 ? (
+          // Job cards
           jobs.map((job) => (
             <JobCard
               key={job.id}
               job={job}
-              isSelected={selectedJobId === job.id}
-              onSelect={() => onJobSelect?.(job)}
-              onDelete={() => onJobDelete?.(job.id)}
+              onClick={() => onJobClick?.(job)}
+              onDragStart={(e) => {
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('jobId', job.id);
+              }}
+              isDraggedOver={dragOverJob === job.id}
             />
           ))
+        ) : (
+          // Empty state
+          <div className="flex items-center justify-center h-32 text-gray-500 text-sm">
+            <div className="text-center">
+              <div className="text-2xl mb-1">✨</div>
+              <p>No jobs here</p>
+            </div>
+          </div>
         )}
       </div>
 
-      {/* Drop Zone Hint (when dragging) */}
-      {isHovered && (
-        <div className="border-t border-dashed border-gray-300 p-2 text-center text-xs text-gray-400">
-          Drop here
+      {/* Footer: Stage info */}
+      <div className={`px-4 py-2 border-t ${config.borderColor} text-xs text-gray-600 flex-shrink-0`}>
+        <div className="flex justify-between">
+          <span>Average match score:</span>
+          <span className="font-semibold">
+            {jobs.length > 0
+              ? Math.round(
+                  jobs.reduce((sum, j) => sum + j.matchScore, 0) / jobs.length
+                )
+              : '-'}
+            %
+          </span>
         </div>
-      )}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-Swimlane.displayName = 'Swimlane'
+export default Swimlane;
