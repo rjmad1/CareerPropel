@@ -86,8 +86,8 @@ export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
     const components = [
       prep.companyResearch ? 20 : 0,
       prep.roleBreakdown ? 20 : 0,
-      prep.behavioralPrep?.stories?.length ? Math.min(15, (prep.behavioralPrep.stories.length / 5) * 15) : 0,
-      prep.technicalPrep?.practiceProblemsByDifficulty ? 20 : 0,
+      prep.behavioralStories?.length ? Math.min(15, (prep.behavioralStories.length / 5) * 15) : 0,
+      prep.technicalPrep?.practiceProblems?.length ? 20 : 0,
       prep.systemDesignPrep ? 15 : 0,
       prep.resumeAlignment?.overallMatch ? (prep.resumeAlignment.overallMatch / 100) * 10 : 0,
     ];
@@ -99,7 +99,7 @@ export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
     return [
       {
         title: 'Key Story',
-        content: prep.behavioralPrep?.stories?.[0]?.title || 'No story prepared yet',
+        content: prep.behavioralStories?.[0]?.title || 'No story prepared yet',
         time: '2 min',
       },
       {
@@ -109,7 +109,7 @@ export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
       },
       {
         title: 'Technical Topic',
-        content: prep.technicalPrep?.languages?.[0] || 'Review algorithms',
+        content: prep.technicalPrep?.programmingLanguages?.[0]?.language || 'Review algorithms',
         time: '5 min',
       },
     ];

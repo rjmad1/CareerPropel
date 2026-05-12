@@ -104,15 +104,19 @@ export interface Skill {
 export interface BehavioralStory {
   id: string;
   competency: string; // 'leadership', 'problem-solving', etc.
+  competencies?: string[]; // Array of related competencies
+  title?: string; // Story title/name
+  summary?: string; // Brief summary of the story
   situation: string;
   task: string;
   action: string;
   result: string;
-  metrics?: string[]; // Quantifiable outcomes
+  metrics?: string | string[]; // Quantifiable outcomes
   sourceProject?: string; // Which project from resume
   relevanceScore: number; // 0-1, how relevant to this role
-  timeToTell: number; // seconds
-  interviewQuestions: string[]; // Which questions this answers
+  timeToTell?: number; // seconds
+  confidence?: number; // 1-5 or percentage confidence
+  interviewQuestions?: string[]; // Which questions this answers
   variations?: BehavioralStory[]; // Alternative versions for different angles
 }
 

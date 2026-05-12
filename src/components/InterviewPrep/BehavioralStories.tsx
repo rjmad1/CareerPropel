@@ -28,7 +28,7 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
   const [expandedStories, setExpandedStories] = useState<Set<number>>(new Set([0]));
 
   const stories = useMemo(() => {
-    return prep.behavioralPrep?.stories || [];
+    return prep.behavioralStories || [];
   }, [prep]);
 
   const competencies = useMemo(() => {

@@ -1,337 +1,381 @@
 'use client';
 
+/**
+ * useInterviewPrep Hook
+ *
+ * Manages fetching, caching, and regenerating interview preparation materials.
+ * Handles loading states, errors, and manual content generation triggers.
+ */
+
 import { useState, useCallback, useEffect } from 'react';
-import { InterviewPrep, PrepGenerationRequest, PrepGenerationResponse } from '@/types/interview';
-import { useRealTime } from './useRealTime';
+import { InterviewPrep } from '@/types/interview';
 
 interface UseInterviewPrepOptions {
-  autoGenerate?: boolean;
-  jobId?: string;
+  autoFetch?: boolean;
+  cacheTime?: number; // milliseconds
 }
 
+interface UseInterviewPrepResult {
+  prep: InterviewPrep | null;
+  loading: boolean;
+  error: Error | null;
+  refetch: () => Promise<void>;
+  regenerate: (force?: boolean) => Promise<void>;
+  updateContent: (section: keyof InterviewPrep, content: any) => Promise<void>;
+  isStale: boolean;
+}
+
+const CACHE_TIME = 30 * 60 * 1000; // 30 minutes
+
 /**
- * useInterviewPrep - Hook for managing interview preparation
- * 
- * Features:
- * - Auto-generate interview prep from job description + resume
- * - Real-time updates to prep content
- * - Progress tracking
- * - Caching
- * 
- * Usage:
- * ```
- * const { prep, isGenerating, error, generatePrep } = useInterviewPrep({
- *   jobId: 'job-123',
- *   autoGenerate: true,
- * });
- * ```
+ * Hook for managing interview preparation data
  */
-export const useInterviewPrep = (options: UseInterviewPrepOptions = {}) => {
-  const { autoGenerate = false, jobId } = options;
+export function useInterviewPrep(
+  jobId: string,
+  userId: string,
+  options: UseInterviewPrepOptions = {}
+): UseInterviewPrepResult {
+  const { autoFetch = true, cacheTime = CACHE_TIME } = options;
 
-  // State
   const [prep, setPrep] = useState<InterviewPrep | null>(null);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [generationProgress, setGenerationProgress] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const [lastFetchTime, setLastFetchTime] = useState<number>(0);
 
-  // Real-time connection
-  const { subscribe, send } = useRealTime({
-    autoConnect: true,
-    channels: ['interview_prep:generate', 'interview_prep:update'],
-  });
+  // Check if prep is stale
+  const isStale = useCallback(() => {
+    if (!prep) return true;
+    if (Date.now() - lastFetchTime > cacheTime) return true;
+    return prep.prepStatus === 'stale';
+  }, [prep, lastFetchTime, cacheTime]);
 
-  /**
-   * Generate interview prep from job description and resume
-   */
-  const generatePrep = useCallback(
-    async (request: PrepGenerationRequest): Promise<InterviewPrep | null> => {
-      try {
-        setIsGenerating(true);
-        setError(null);
-        setGenerationProgress(0);
-
-        // Subscribe to generation progress
-        const unsubscribeProgress = subscribe('interview_prep:generate', (message: any) => {
-          if (message.type === 'interview_prep:generate' && message.data.jobId === request.jobId) {
-            setGenerationProgress(message.data.progress || 0);
-          }
-        });
-
-        // Send generation request to backend
-        send({
-          type: 'interview_prep:generate_request',
-          data: request,
-        });
-
-        // Wait for generation to complete (via WebSocket)
-        // In a real implementation, would wait for 'interview_prep:generate_complete' message
-        const prepResult = await waitForPrepGeneration(request.jobId);
-
-        if (prepResult) {
-          setPrep(prepResult);
-          setGenerationProgress(100);
-        }
-
-        unsubscribeProgress();
-        return prepResult;
-      } catch (err) {
-        const errorMsg = err instanceof Error ? err.message : 'Failed to generate prep';
-        setError(errorMsg);
-        console.error('Interview prep generation error:', err);
-        return null;
-      } finally {
-        setIsGenerating(false);
-      }
-    },
-    [subscribe, send]
-  );
-
-  /**
-   * Update existing prep content
-   */
-  const updatePrep = useCallback(
-    async (updates: Partial<InterviewPrep>): Promise<boolean> => {
-      try {
-        setError(null);
-
-        if (!prep) {
-          setError('No prep loaded');
-          return false;
-        }
-
-        // Send update request
-        send({
-          type: 'interview_prep:update_request',
-          data: {
-            prepId: prep.id,
-            updates,
-          },
-        });
-
-        return true;
-      } catch (err) {
-        const errorMsg = err instanceof Error ? err.message : 'Failed to update prep';
-        setError(errorMsg);
-        console.error('Interview prep update error:', err);
-        return false;
-      }
-    },
-    [prep, send]
-  );
-
-  /**
-   * Refresh prep from server (refetch latest)
-   */
-  const refreshPrep = useCallback(async (): Promise<boolean> => {
+  // Fetch interview prep from API
+  const fetchPrep = useCallback(async () => {
     if (!jobId) {
-      setError('No job ID provided');
-      return false;
+      setError(new Error('Job ID is required'));
+      return;
     }
 
     try {
+      setLoading(true);
       setError(null);
 
-      send({
-        type: 'interview_prep:fetch_request',
-        data: { jobId },
+      const response = await fetch(`/api/interview-prep/${jobId}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
       });
 
-      return true;
+      if (!response.ok) {
+        if (response.status === 404) {
+          setPrep(null);
+          return;
+        }
+        throw new Error(`Failed to fetch interview prep: ${response.statusText}`);
+      }
+
+      const data: InterviewPrep = await response.json();
+      setPrep(data);
+      setLastFetchTime(Date.now());
+      setError(null);
     } catch (err) {
-      const errorMsg = err instanceof Error ? err.message : 'Failed to refresh prep';
-      setError(errorMsg);
-      return false;
+      const error = err instanceof Error ? err : new Error(String(err));
+      setError(error);
+      setPrep(null);
+    } finally {
+      setLoading(false);
     }
-  }, [jobId, send]);
+  }, [jobId]);
 
-  /**
-   * Mark a study session as complete
-   */
-  const markStudyComplete = useCallback(
-    async (studyType: string): Promise<boolean> => {
-      if (!prep) {
-        setError('No prep loaded');
-        return false;
+  // Regenerate interview prep (force new generation)
+  const regenerate = useCallback(
+    async (force = false) => {
+      if (!jobId || !userId) {
+        setError(new Error('Job ID and User ID are required'));
+        return;
       }
 
       try {
-        send({
-          type: 'interview_prep:mark_complete',
-          data: {
-            prepId: prep.id,
-            studyType,
-            completedAt: new Date(),
-          },
+        setLoading(true);
+        setError(null);
+
+        const response = await fetch(`/api/interview-prep/${jobId}/generate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ force, userId }),
         });
 
-        return true;
+        if (!response.ok) {
+          throw new Error(`Failed to generate interview prep: ${response.statusText}`);
+        }
+
+        const data: InterviewPrep = await response.json();
+        setPrep(data);
+        setLastFetchTime(Date.now());
+        setError(null);
       } catch (err) {
-        const errorMsg = err instanceof Error ? err.message : 'Failed to mark complete';
-        setError(errorMsg);
-        return false;
+        const error = err instanceof Error ? err : new Error(String(err));
+        setError(error);
+      } finally {
+        setLoading(false);
       }
     },
-    [prep, send]
+    [jobId, userId]
   );
 
-  /**
-   * Add custom study note to prep
-   */
-  const addStudyNote = useCallback(
-    async (note: string, category: string): Promise<boolean> => {
-      if (!prep) {
-        setError('No prep loaded');
-        return false;
+  // Update specific section of interview prep
+  const updateContent = useCallback(
+    async (section: keyof InterviewPrep, content: any) => {
+      if (!jobId) {
+        setError(new Error('Job ID is required'));
+        return;
       }
 
       try {
-        send({
-          type: 'interview_prep:add_note',
-          data: {
-            prepId: prep.id,
-            note,
-            category,
-            timestamp: new Date(),
-          },
+        setLoading(true);
+        setError(null);
+
+        const response = await fetch(`/api/interview-prep/${jobId}/${section}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ content }),
         });
 
-        return true;
+        if (!response.ok) {
+          throw new Error(`Failed to update interview prep: ${response.statusText}`);
+        }
+
+        const data: InterviewPrep = await response.json();
+        setPrep(data);
+        setLastFetchTime(Date.now());
+        setError(null);
       } catch (err) {
-        const errorMsg = err instanceof Error ? err.message : 'Failed to add note';
-        setError(errorMsg);
-        return false;
+        const error = err instanceof Error ? err : new Error(String(err));
+        setError(error);
+      } finally {
+        setLoading(false);
       }
     },
-    [prep, send]
+    [jobId]
   );
 
-  // Subscribe to real-time prep updates
-  useEffect(() => {
-    const unsubscribe = subscribe('interview_prep:update', (message: any) => {
-      if (message.type === 'interview_prep:update' && prep && message.data.prepId === prep.id) {
-        setPrep((prev) =>
-          prev
-            ? {
-                ...prev,
-                ...message.data.updates,
-                lastUpdated: new Date(),
-              }
-            : null
-        );
-      }
-    });
+  // Refetch prep data
+  const refetch = useCallback(async () => {
+    await fetchPrep();
+  }, [fetchPrep]);
 
-    return unsubscribe;
-  }, [subscribe, prep?.id]);
-
-  // Auto-generate on mount if jobId provided
+  // Auto-fetch on mount or when jobId changes
   useEffect(() => {
-    if (autoGenerate && jobId && !prep && !isGenerating) {
-      // In real implementation, would fetch job data and user resume first
-      // For now, just trigger a fetch
-      refreshPrep();
+    if (autoFetch && jobId) {
+      fetchPrep();
     }
-  }, [autoGenerate, jobId, prep, isGenerating, refreshPrep]);
+  }, [jobId, autoFetch, fetchPrep]);
+
+  // Auto-regenerate if prep is stale and component is visible
+  useEffect(() => {
+    if (prep && isStale() && typeof window !== 'undefined') {
+      // Only auto-regenerate if user has been idle for a while
+      const timer = setTimeout(() => {
+        regenerate(false);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [prep, isStale, regenerate]);
 
   return {
     prep,
-    isGenerating,
+    loading,
     error,
-    generationProgress,
-    generatePrep,
-    updatePrep,
-    refreshPrep,
-    markStudyComplete,
-    addStudyNote,
+    refetch,
+    regenerate,
+    updateContent,
+    isStale: isStale(),
   };
-};
-
-/**
- * Hook for interview prep with company research integration
- */
-export const useInterviewPrepWithResearch = (jobId?: string) => {
-  const interviewPrep = useInterviewPrep({ jobId, autoGenerate: false });
-  const [companyData, setCompanyData] = useState<any>(null);
-  const [isLoadingCompany, setIsLoadingCompany] = useState(false);
-
-  /**
-   * Fetch company research
-   */
-  const fetchCompanyResearch = useCallback(async (companyName: string) => {
-    try {
-      setIsLoadingCompany(true);
-      // In real implementation, would fetch from API or WebSocket
-      // For now, placeholder
-      console.log('Fetching company research for:', companyName);
-    } catch (err) {
-      console.error('Failed to fetch company research:', err);
-    } finally {
-      setIsLoadingCompany(false);
-    }
-  }, []);
-
-  return {
-    ...interviewPrep,
-    companyData,
-    isLoadingCompany,
-    fetchCompanyResearch,
-  };
-};
-
-/**
- * Hook for tracking interview prep readiness
- */
-export const useInterviewReadiness = (jobId?: string) => {
-  const [readiness, setReadiness] = useState({
-    behavioral: 0,
-    technical: 0,
-    systemDesign: 0,
-    companyResearch: 0,
-    overall: 0,
-  });
-
-  const { subscribe } = useRealTime();
-
-  // Subscribe to readiness updates
-  useEffect(() => {
-    const unsubscribe = subscribe('interview_readiness:update', (message: any) => {
-      if (message.type === 'interview_readiness:update' && message.data.jobId === jobId) {
-        setReadiness(message.data.readiness);
-      }
-    });
-
-    return unsubscribe;
-  }, [jobId, subscribe]);
-
-  const isReadyForInterview = readiness.overall >= 80;
-
-  return {
-    readiness,
-    isReadyForInterview,
-    weakAreas: Object.entries(readiness)
-      .filter(([, score]) => score < 70)
-      .map(([area]) => area),
-  };
-};
-
-/**
- * Helper to wait for prep generation to complete
- * In a real implementation, would use a Promise that resolves when
- * the 'interview_prep:generate_complete' message arrives
- */
-async function waitForPrepGeneration(jobId: string): Promise<InterviewPrep | null> {
-  // Placeholder - would be implemented with proper messaging
-  return new Promise((resolve) => {
-    const timeout = setTimeout(() => {
-      resolve(null);
-    }, 30000); // 30 second timeout
-
-    // In real implementation, would listen for completion message
-    // and resolve with actual prep data
-
-    return () => clearTimeout(timeout);
-  });
 }
 
-export default useInterviewPrep;
+/**
+ * Hook for listening to interview prep generation progress
+ * (for real-time updates via WebSocket)
+ */
+export function useInterviewPrepProgress(jobId: string) {
+  const [progress, setProgress] = useState(0);
+  const [status, setStatus] = useState<'idle' | 'generating' | 'complete' | 'error'>('idle');
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    if (!jobId) return;
+
+    // TODO: Connect to WebSocket for real-time progress updates
+    // This would subscribe to interview-prep:generate:{jobId} channel
+    // and update progress, status, and message as they come in
+
+    // Placeholder implementation
+    const handleProgress = (data: any) => {
+      setProgress(data.progress);
+      setStatus(data.status);
+      setMessage(data.message);
+    };
+
+    // Simulated progress (remove when WebSocket is integrated)
+    if (status === 'generating') {
+      const timer = setInterval(() => {
+        setProgress(prev => Math.min(prev + 10, 90));
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+  }, [jobId, status]);
+
+  return { progress, status, message };
+}
+
+/**
+ * Hook for managing mock interview simulation state
+ */
+export interface MockInterviewQuestion {
+  id: string;
+  text: string;
+  expectedDuration: number; // seconds
+  category: string;
+  difficulty: 'easy' | 'medium' | 'hard';
+}
+
+export interface MockInterviewSession {
+  id: string;
+  startedAt: Date;
+  currentQuestionIndex: number;
+  questions: MockInterviewQuestion[];
+  userResponses: Map<string, string>;
+  timeRemaining: number;
+  isComplete: boolean;
+}
+
+export function useMockInterview(prep: InterviewPrep | null) {
+  const [session, setSession] = useState<MockInterviewSession | null>(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [feedback, setFeedback] = useState<string | null>(null);
+
+  const startSession = useCallback(() => {
+    if (!prep) return;
+
+    const questions: MockInterviewQuestion[] = [
+      {
+        id: '1',
+        text: 'Tell me about yourself',
+        expectedDuration: 120,
+        category: 'behavioral',
+        difficulty: 'easy',
+      },
+      {
+        id: '2',
+        text: 'Why do you want to work here?',
+        expectedDuration: 90,
+        category: 'motivation',
+        difficulty: 'easy',
+      },
+      {
+        id: '3',
+        text: 'Describe a technical challenge and how you solved it',
+        expectedDuration: 180,
+        category: 'technical',
+        difficulty: 'medium',
+      },
+    ];
+
+    const newSession: MockInterviewSession = {
+      id: `session_${Date.now()}`,
+      startedAt: new Date(),
+      currentQuestionIndex: 0,
+      questions,
+      userResponses: new Map(),
+      timeRemaining: questions.reduce((sum, q) => sum + q.expectedDuration, 0),
+      isComplete: false,
+    };
+
+    setSession(newSession);
+    setIsRecording(false);
+    setFeedback(null);
+  }, [prep]);
+
+  const recordResponse = useCallback((response: string) => {
+    setSession(prev => {
+      if (!prev) return null;
+
+      const newSession = { ...prev };
+      newSession.userResponses.set(
+        prev.questions[prev.currentQuestionIndex].id,
+        response
+      );
+
+      return newSession;
+    });
+  }, []);
+
+  const nextQuestion = useCallback(() => {
+    setSession(prev => {
+      if (!prev) return null;
+
+      const newIndex = prev.currentQuestionIndex + 1;
+      if (newIndex >= prev.questions.length) {
+        return { ...prev, currentQuestionIndex: newIndex, isComplete: true };
+      }
+
+      return { ...prev, currentQuestionIndex: newIndex };
+    });
+
+    setIsRecording(false);
+    setFeedback(null);
+  }, []);
+
+  const previousQuestion = useCallback(() => {
+    setSession(prev => {
+      if (!prev || prev.currentQuestionIndex === 0) return prev;
+      return { ...prev, currentQuestionIndex: prev.currentQuestionIndex - 1 };
+    });
+
+    setIsRecording(false);
+    setFeedback(null);
+  }, []);
+
+  const endSession = useCallback(() => {
+    setSession(null);
+    setIsRecording(false);
+    setFeedback(null);
+  }, []);
+
+  const generateFeedback = useCallback(async () => {
+    if (!session) return;
+
+    try {
+      // TODO: Call API to generate AI feedback on user responses
+      const response = await fetch(`/api/interview-prep/mock/feedback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId: session.id,
+          responses: Array.from(session.userResponses.entries()),
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setFeedback(data.feedback);
+      }
+    } catch (err) {
+      setFeedback('Unable to generate feedback at this time');
+    }
+  }, [session]);
+
+  return {
+    session,
+    isRecording,
+    feedback,
+    startSession,
+    recordResponse,
+    nextQuestion,
+    previousQuestion,
+    endSession,
+    generateFeedback,
+    toggleRecording: () => setIsRecording(prev => !prev),
+  };
+}

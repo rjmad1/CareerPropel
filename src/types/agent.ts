@@ -1,144 +1,157 @@
 /**
- * Agent Types for CareerPropel Real-Time System
- * Types for agents, their status, and operations
+ * Agent Execution and Monitoring Types
+ *
+ * Data structures for tracking agent status, tool execution,
+ * and real-time operational visibility.
  */
 
-export type AgentType =
-  | 'resume_tailor'
-  | 'job_matching'
-  | 'application'
-  | 'research'
-  | 'interview_prep'
-  | 'networking'
-  | 'follow_up'
-  | 'analytics';
-
-export type AgentStatus = 'idle' | 'running' | 'waiting' | 'completed' | 'error';
-
-export interface AgentConfig {
+/**
+ * Agent execution record - tracks individual agent runs
+ */
+export interface AgentExecution {
   id: string;
-  name: string;
-  type: AgentType;
-  description: string;
-  icon: string;
-}
+  candidateId: string;
+  jobId?: string;
+  agentType: AgentType;
 
-export interface AgentState {
-  id: string;
-  status: AgentStatus;
+  status: 'idle' | 'running' | 'completed' | 'failed' | 'paused';
+  startedAt?: Date;
+  completedAt?: Date;
+  duration?: number; // milliseconds
+
   currentTask?: string;
   progress: number; // 0-100
+  eta?: number; // estimated seconds to completion
+
+  tokenUsage?: number;
+  errorMessage?: string;
+  metadata?: Record<string, any>;
+
+  toolCalls: ToolCall[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+/**
+ * Agent types in the system
+ */
+export type AgentType =
+  | 'resume-tailor'
+  | 'job-match'
+  | 'application'
+  | 'research'
+  | 'interview-prep'
+  | 'networking'
+  | 'follow-up'
+  | 'analytics';
+
+/**
+ * Tool invocation within an agent execution
+ */
+export interface ToolCall {
+  id: string;
+  executionId: string;
+  toolName: string;
+
+  status: 'pending' | 'running' | 'success' | 'failed';
+  input?: Record<string, any>;
+  output?: Record<string, any>;
+  error?: string;
+
+  startedAt: Date;
+  completedAt?: Date;
+  duration?: number; // milliseconds
+
+  tokens?: number;
+  metadata?: Record<string, any>;
+}
+
+/**
+ * Event log entry from agent execution
+ */
+export interface EventLog {
+  id: string;
+  executionId: string;
+  level: 'INFO' | 'WARN' | 'ERROR' | 'DEBUG';
+  message: string;
+  data?: Record<string, any>;
+  timestamp: Date;
+}
+
+/**
+ * Agent configuration
+ */
+export interface AgentConfig {
+  type: AgentType;
+  name: string;
+  description: string;
+  icon: string; // emoji or icon name
+  color: string; // hex or CSS color
+  timeout: number; // milliseconds
+  retryPolicy: {
+    maxAttempts: number;
+    backoffMultiplier: number;
+    initialDelay: number; // milliseconds
+  };
+  queueDepth: number;
+}
+
+/**
+ * Real-time agent status (WebSocket update)
+ */
+export interface AgentStatus {
+  id: AgentType;
+  name: string;
+  status: 'idle' | 'running' | 'waiting' | 'error';
+  progress: number; // 0-100
+  currentTask?: string;
+  eta?: number; // seconds
   queueDepth: number;
   lastActivity: Date;
-  tokensUsed?: number;
-  confidence?: number;
-  errorMessage?: string;
-  completedTasks?: number;
-  failedTasks?: number;
+  tokensUsed: number;
+  confidence: number; // 0-1
+  lastError?: string;
+  uptime?: number; // milliseconds since last restart
 }
 
+/**
+ * Agent performance metrics
+ */
 export interface AgentMetrics {
-  agentId: string;
-  successRate: number; // 0-100
-  averageProcessingTime: number; // milliseconds
-  totalTasksCompleted: number;
-  totalTasksFailed: number;
-  lastRunTime: Date;
+  type: AgentType;
+  totalExecutions: number;
+  successCount: number;
+  failureCount: number;
+  averageDuration: number; // milliseconds
+  successRate: number; // 0-1
+  averageTokensUsed: number;
+  currentQueueDepth: number;
+  lastRun?: Date;
 }
 
-export const AGENT_CONFIGS: Record<AgentType, AgentConfig> = {
-  resume_tailor: {
-    id: 'agent-resume-tailor',
-    name: 'Resume Tailor',
-    type: 'resume_tailor',
-    description: 'Customizes resume for each job application',
-    icon: '📄',
-  },
-  job_matching: {
-    id: 'agent-job-matching',
-    name: 'Job Matcher',
-    type: 'job_matching',
-    description: 'Scores and ranks job opportunities',
-    icon: '🎯',
-  },
-  application: {
-    id: 'agent-application',
-    name: 'Application',
-    type: 'application',
-    description: 'Submits job applications automatically',
-    icon: '✉️',
-  },
-  research: {
-    id: 'agent-research',
-    name: 'Researcher',
-    type: 'research',
-    description: 'Gathers company and role information',
-    icon: '🔍',
-  },
-  interview_prep: {
-    id: 'agent-interview-prep',
-    name: 'Interview Prep',
-    type: 'interview_prep',
-    description: 'Generates interview questions and tips',
-    icon: '💬',
-  },
-  networking: {
-    id: 'agent-networking',
-    name: 'Networking',
-    type: 'networking',
-    description: 'Identifies and tracks referral contacts',
-    icon: '🤝',
-  },
-  follow_up: {
-    id: 'agent-follow-up',
-    name: 'Follow-up',
-    type: 'follow_up',
-    description: 'Manages application follow-ups',
-    icon: '📞',
-  },
-  analytics: {
-    id: 'agent-analytics',
-    name: 'Analytics',
-    type: 'analytics',
-    description: 'Analyzes application performance',
-    icon: '📊',
-  },
-};
-
-export function getAgentConfig(type: AgentType): AgentConfig {
-  return AGENT_CONFIGS[type];
+/**
+ * Agent execution timeline event
+ */
+export interface ExecutionTimelineEvent {
+  type: 'started' | 'tool_executed' | 'progress_update' | 'completed' | 'failed' | 'paused' | 'resumed';
+  timestamp: Date;
+  agent: AgentType;
+  jobId?: string;
+  data: Record<string, any>;
 }
 
-export function getAgentColor(status: AgentStatus): string {
-  switch (status) {
-    case 'idle':
-      return '#9CA3AF'; // gray
-    case 'running':
-      return '#3B82F6'; // blue
-    case 'waiting':
-      return '#F59E0B'; // amber
-    case 'completed':
-      return '#10B981'; // green
-    case 'error':
-      return '#EF4444'; // red
-    default:
-      return '#6B7280'; // default gray
-  }
-}
-
-export function getAgentStatusLabel(status: AgentStatus): string {
-  switch (status) {
-    case 'idle':
-      return 'Idle';
-    case 'running':
-      return 'Running';
-    case 'waiting':
-      return 'Waiting';
-    case 'completed':
-      return 'Completed';
-    case 'error':
-      return 'Error';
-    default:
-      return 'Unknown';
-  }
+/**
+ * Execution summary
+ */
+export interface ExecutionSummary {
+  executionId: string;
+  agentType: AgentType;
+  status: 'completed' | 'failed';
+  duration: number; // milliseconds
+  tokensUsed: number;
+  toolsCalled: number;
+  successfulTools: number;
+  failedTools: number;
+  errorMessage?: string;
+  output?: Record<string, any>;
 }
