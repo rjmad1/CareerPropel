@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { Achievement } from '@/types/profile';
-import { cn } from '@/lib/utils';
 
 interface AchievementExtractorProps {
   achievements: Achievement[];
@@ -15,7 +14,6 @@ interface AchievementExtractorProps {
 export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
   achievements,
   onAddAchievement,
-  onUpdateAchievement,
   onDeleteAchievement,
   onExtractFromResume,
 }) => {

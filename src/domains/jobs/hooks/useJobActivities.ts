@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { axiosClient } from '@/lib/api/axiosClient';
+
 
 export interface Activity {
   id: string;
@@ -13,8 +13,10 @@ export function useJobActivities(jobId: string) {
   return useQuery<Activity[], Error>({
     queryKey: ['job-activities', jobId],
     queryFn: async () => {
-      const { data } = await axiosClient.get(`/api/jobs/${jobId}/activities`);
-      return data;
+      // TODO: Implement API call in Phase 2
+      // const { data } = await apiClient.get(`/api/jobs/${jobId}/activities`);
+      // return data;
+      return [];
     },
     enabled: !!jobId,
     staleTime: 2 * 60 * 1000, // 2 minutes

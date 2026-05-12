@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ExternalLink, MapPin, Briefcase, DollarSign, Calendar } from 'lucide-react';
-import { Job } from '../../types';
+import { Briefcase, Calendar } from 'lucide-react';
+import { Job } from '@/types/job';
 import { useUpdateJobNotes } from '../../hooks/useMutations';
 
 interface OverviewTabProps {
@@ -17,50 +17,49 @@ export default function OverviewTab({ job }: OverviewTabProps) {
     setNotes(job.notes || '');
   }, [job.notes]);
 
-  const formattedDate = new Date(job.appliedAt).toLocaleDateString('en-US', {
+  const formattedDate = new Date(job.applicationDate).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
   });
 
+  const handleSaveNotes = () => {
+    if (isSaving) return;
+    setIsSaving(true);
+    updateNotes(
+      { jobId: job.id, notes },
+      {
+        onSuccess: () => {
+          setIsEditingNotes(false);
+          setIsSaving(false);
+        },
+        onError: () => {
+          setIsSaving(false);
+        },
+      }
+    );
+  };
+
   return (
     <div className="p-6 space-y-6">
-      {/* Job Description */}
+      {/* Key Details */}
       <div>
-        <h3 className="text-sm font-semibold text-gray-900 mb-3">Job Description</h3>
-        <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-700 max-h-40 overflow-y-auto">
-          {job.description}
-        </div>
-      </div>
-
-      {/* Key Details Grid */}
-      <div>
-        <h3 className="text-sm font-semibold text-gray-900 mb-3">Key Details</h3>
+        <h3 className="text-sm font-semibold text-gray-900 mb-3">Position Details</h3>
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-gray-50 rounded-lg p-3">
             <div className="flex items-center gap-2 mb-1">
-              <MapPin size={16} className="text-gray-500" />
-              <p className="text-xs text-gray-600">Location</p>
+              <Briefcase size={16} className="text-gray-500" />
+              <p className="text-xs text-gray-600">Role</p>
             </div>
-            <p className="text-sm font-medium text-gray-900">{job.location || 'Remote'}</p>
+            <p className="text-sm font-medium text-gray-900">{job.role}</p>
           </div>
 
           <div className="bg-gray-50 rounded-lg p-3">
             <div className="flex items-center gap-2 mb-1">
               <Briefcase size={16} className="text-gray-500" />
-              <p className="text-xs text-gray-600">Job Type</p>
+              <p className="text-xs text-gray-600">Company</p>
             </div>
-            <p className="text-sm font-medium text-gray-900">{job.jobType || 'Full-time'}</p>
-          </div>
-
-          <div className="bg-gray-50 rounded-lg p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <DollarSign size={16} className="text-gray-500" />
-              <p className="text-xs text-gray-600">Salary Range</p>
-            </div>
-            <p className="text-sm font-medium text-gray-900">
-              ${job.salaryMin}-${job.salaryMax}k
-            </p>
+            <p className="text-sm font-medium text-gray-900">{job.company}</p>
           </div>
 
           <div className="bg-gray-50 rounded-lg p-3">
@@ -70,99 +69,76 @@ export default function OverviewTab({ job }: OverviewTabProps) {
             </div>
             <p className="text-sm font-medium text-gray-900">{formattedDate}</p>
           </div>
-        </div>
-      </div>
 
-      {/* Recruiter Info */}
-      {job.recruiter && (
-        <div>
-          <h3 className="text-sm font-semibold text-gray-900 mb-3">Recruiter</h3>
-          <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
-            <p className="text-sm font-medium text-gray-900">{job.recruiter}</p>
-            {job.recruiterEmail && (
-              <p className="text-xs text-blue-600 mt-1">{job.recruiterEmail}</p>
-            )}
-            {job.recruiterPhone && (
-              <p className="text-xs text-blue-600">{job.recruiterPhone}</p>
-            )}
+          <div className="bg-gray-50 rounded-lg p-3">
+            <p className="text-xs text-gray-600 mb-1">Stage</p>
+            <p className="text-sm font-medium text-gray-900 capitalize">{job.stage.replace(/_/g, ' ')}</p>
           </div>
         </div>
-      )}
-
-      {/* External Links */}
-      <div>
-        <h3 className="text-sm font-semibold text-gray-900 mb-3">Links</h3>
-        <div className="space-y-2">
-          {job.jobUrl && (
-            <a
-              href={job.jobUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition"
-            >
-              <ExternalLink size={16} className="text-blue-600" />
-              <span className="text-sm text-blue-600 font-medium">Job Listing</span>
-            </a>
-          )}
-          {job.companyUrl && (
-            <a
-              href={job.companyUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition"
-            >
-              <ExternalLink size={16} className="text-blue-600" />
-              <span className="text-sm text-blue-600 font-medium">Company Website</span>
-            </a>
-          )}
-        </div>
       </div>
 
-      {/* Notes */}
+      {/* Notes Section */}
       <div>
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-semibold text-gray-900">Notes</h3>
-          <button
-            onClick={() => {
-              if (isEditingNotes) {
-                setIsSaving(true);
-                updateNotes(
-                  { jobId: job.id, notes },
-                  {
-                    onSuccess: () => {
-                      setIsSaving(false);
-                      setIsEditingNotes(false);
-                    },
-                    onError: () => {
-                      setIsSaving(false);
-                    },
-                  }
-                );
-              } else {
-                setIsEditingNotes(true);
-              }
-            }}
-            disabled={isSaving}
-            className="text-xs text-blue-600 hover:text-blue-700 disabled:text-gray-400 disabled:cursor-not-allowed font-medium"
-          >
-            {isSaving ? 'Saving...' : isEditingNotes ? 'Save' : 'Edit'}
-          </button>
+          {!isEditingNotes && (
+            <button
+              onClick={() => setIsEditingNotes(true)}
+              className="text-xs text-blue-600 hover:text-blue-700"
+            >
+              Edit
+            </button>
+          )}
         </div>
         {isEditingNotes ? (
-          <textarea
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            disabled={isSaving}
-            className="w-full p-3 border border-gray-300 rounded-lg text-sm disabled:bg-gray-100 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-blue-500"
-            rows={4}
-            placeholder="Add notes about this job..."
-          />
+          <div className="space-y-2">
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              rows={4}
+              placeholder="Add notes about this opportunity..."
+            />
+            <div className="flex gap-2">
+              <button
+                onClick={handleSaveNotes}
+                disabled={isSaving}
+                className="px-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:bg-gray-400"
+              >
+                {isSaving ? 'Saving...' : 'Save'}
+              </button>
+              <button
+                onClick={() => {
+                  setIsEditingNotes(false);
+                  setNotes(job.notes || '');
+                }}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         ) : (
-          <div className="bg-gray-50 rounded-lg p-3 text-sm text-gray-700 min-h-20">
-            {notes || 'No notes yet. Click Edit to add notes.'}
+          <div className="bg-gray-50 rounded-lg p-3 text-sm text-gray-700 whitespace-pre-wrap">
+            {notes || 'No notes yet'}
           </div>
         )}
       </div>
+
+      {/* Job URL if available */}
+      {job.jobUrl && (
+        <div>
+          <h3 className="text-sm font-semibold text-gray-900 mb-2">Job Listing</h3>
+          <a
+            href={job.jobUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-blue-600 hover:text-blue-700 underline"
+          >
+            View Job Posting
+          </a>
+        </div>
+      )}
     </div>
   );
 }

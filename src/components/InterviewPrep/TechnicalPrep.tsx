@@ -1,11 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import {
   Code2,
-  CheckCircle2,
-  Circle,
   Zap,
   BarChart3,
-  ArrowRight,
   BookOpen,
   AlertCircle,
   TrendingUp,
@@ -34,24 +31,15 @@ export const TechnicalPrep: React.FC<TechnicalPrepProps> = ({ prep }) => {
   }, [prep]);
 
   const languages = useMemo(() => {
-    return technicalData.languages || [];
-  }, [technicalData]);
-
-  const algorithms = useMemo(() => {
-    return technicalData.algorithms || [];
-  }, [technicalData]);
-
-  const dataStructures = useMemo(() => {
-    return technicalData.dataStructures || [];
+    return technicalData.programmingLanguages || [];
   }, [technicalData]);
 
   const practiceProblemsByDifficulty = useMemo(() => {
-    const problems = technicalData.practiceProblemsByDifficulty || {};
-    return {
-      easy: (problems.easy || []).length,
-      medium: (problems.medium || []).length,
-      hard: (problems.hard || []).length,
-    };
+    const problems = technicalData.practiceProblems || [];
+    const easy = problems.filter(p => p.difficulty === 'easy').length;
+    const medium = problems.filter(p => p.difficulty === 'medium').length;
+    const hard = problems.filter(p => p.difficulty === 'hard').length;
+    return { easy, medium, hard };
   }, [technicalData]);
 
   const commonTopics = useMemo(() => {
@@ -201,7 +189,7 @@ export const TechnicalPrep: React.FC<TechnicalPrepProps> = ({ prep }) => {
                 className="bg-blue-50 border border-blue-200 rounded-lg p-3"
                 data-cy={`language-${idx}`}
               >
-                <div className="text-sm font-semibold text-blue-900 mb-1">{lang}</div>
+                <div className="text-sm font-semibold text-blue-900 mb-1">{lang.language}</div>
                 <div className="text-xs text-blue-700">
                   Have working knowledge of this language
                 </div>

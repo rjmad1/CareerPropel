@@ -29,7 +29,7 @@ const INTERVIEW_TYPES = {
 };
 
 export default function InterviewsTab({ jobId }: InterviewsTabProps) {
-  const { data: interviews = [], isLoading, error } = useInterviews(jobId);
+  const { data: interviews = [], isLoading } = useInterviews(jobId);
   const { mutate: createInterview, isPending: isCreating } = useCreateInterview();
   const { mutate: deleteInterview, isPending: isDeleting } = useDeleteInterview();
   const [isAddingInterview, setIsAddingInterview] = useState(false);

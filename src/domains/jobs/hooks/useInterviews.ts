@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { axiosClient } from '@/lib/api/axiosClient';
 
 export interface Interview {
   id: string;
@@ -17,8 +16,10 @@ export function useInterviews(jobId: string) {
   return useQuery<Interview[], Error>({
     queryKey: ['interviews', jobId],
     queryFn: async () => {
-      const { data } = await axiosClient.get(`/api/interviews?jobId=${jobId}`);
-      return data;
+      // TODO: Implement API call in Phase 2
+      // const { data } = await apiClient.get(`/api/interviews?jobId=${jobId}`);
+      // return data;
+      return [];
     },
     enabled: !!jobId,
     staleTime: 2 * 60 * 1000, // 2 minutes

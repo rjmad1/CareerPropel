@@ -4,7 +4,7 @@ import React, { useState, useRef } from 'react';
 import { Job, JobStage, SwimlaneConfig } from '@/types/job';
 import { JobCard } from './JobCard';
 
-interface SwimlaneProps {
+export interface SwimlaneProps {
   stage: JobStage;
   config: SwimlaneConfig;
   jobs: Job[];

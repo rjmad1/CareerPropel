@@ -8,7 +8,6 @@ import {
   AlertCircle,
   Play,
 } from 'lucide-react';
-import { InterviewPrep } from '../../types/interview';
 import { useRealTime } from '../../hooks/useRealTime';
 import { useInterviewPrep } from '../../hooks/useInterviewPrep';
 import CompanyIntelligence from './CompanyIntelligence';
@@ -47,22 +46,20 @@ export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
   const [showQuickRevision, setShowQuickRevision] = useState(false);
 
   // Real-time WebSocket connection
-  const { connected: wsConnected } = useRealTime('interview-prep', (message) => {
-    if (message.type === 'prep:updated') {
-      // Prep data updated in real-time
-      refreshPrepData();
-    }
+  const { connected: wsConnected } = useRealTime({
+    autoConnect: true,
+    channels: ['interview-prep'],
   });
 
   // Interview prep hook for data management
-  const { prep, loading, error, generatePrep, refreshPrepData } = useInterviewPrep(jobId);
+  const { prep, loading, error, regenerate, refetch } = useInterviewPrep(jobId, 'current-user'); // TODO: Get actual userId
 
   // Initialize prep generation on mount
   useEffect(() => {
     if (!prep && !loading) {
-      generatePrep();
+      regenerate();
     }
-  }, [jobId, prep, loading, generatePrep]);
+  }, [jobId, prep, loading, regenerate]);
 
   const tabs = useMemo(
     () => [
@@ -76,10 +73,6 @@ export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
     ] as const,
     []
   );
-
-  const currentTabLabel = useMemo(() => {
-    return tabs.find(t => t.id === activeTab)?.label || 'Interview Prep';
-  }, [activeTab, tabs]);
 
   const readinessScore = useMemo(() => {
     if (!prep) return 0;
@@ -145,12 +138,12 @@ export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
             <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
             <div>
               <div className="font-semibold text-slate-900">Error Loading Prep</div>
-              <p className="text-sm text-slate-600 mt-1">{error}</p>
+              <p className="text-sm text-slate-600 mt-1">{error.message}</p>
             </div>
           </div>
           <div className="flex gap-3">
             <button
-              onClick={refreshPrepData}
+              onClick={refetch}
               className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors"
             >
               Retry
@@ -178,7 +171,7 @@ export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
           <div>
             <h2 className="text-xl font-bold text-slate-900">Interview Preparation</h2>
             <p className="text-sm text-slate-600 mt-1">
-              {prep?.jobData?.title} at {prep?.jobData?.company}
+              {prep?.role} at {prep?.company}
             </p>
           </div>
           <button
@@ -245,7 +238,7 @@ export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={refreshPrepData}
+              onClick={refetch}
               className="p-1.5 hover:bg-slate-300 rounded transition-colors text-slate-600"
               data-cy="refresh-prep-button"
               disabled={loading}

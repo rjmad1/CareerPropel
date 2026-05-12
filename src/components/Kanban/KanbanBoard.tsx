@@ -6,7 +6,7 @@ import { Swimlane } from './Swimlane';
 import { JobDetailPanel } from '@/domains/jobs';
 import { useRealTime } from '@/hooks/useRealTime';
 
-interface KanbanBoardProps {
+export interface KanbanBoardProps {
   initialJobs?: Job[];
   onJobUpdate?: (jobId: string, updates: Partial<Job>) => Promise<void>;
   onJobClick?: (job: Job) => void;
@@ -45,12 +45,9 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
 }) => {
   // State
   const [jobs, setJobs] = useState<Job[]>(initialJobs);
-  const [optimisticUpdates, setOptimisticUpdates] = useState<
-    Record<string, Partial<Job>>
-  >({});
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
+  const isLoading = false;
 
   // WebSocket connection
   const { connected, subscribe } = useRealTime({
@@ -68,12 +65,6 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
             job.id === jobId ? { ...job, ...changes } : job
           )
         );
-        // Clear optimistic update after real update received
-        setOptimisticUpdates((prev) => {
-          const updated = { ...prev };
-          delete updated[jobId];
-          return updated;
-        });
       }
     });
 
@@ -120,10 +111,6 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
       try {
         // Optimistic update
         const updates = { stage: targetStage };
-        setOptimisticUpdates((prev) => ({
-          ...prev,
-          [jobId]: updates,
-        }));
         setJobs((prev) =>
           prev.map((j) => (j.id === jobId ? { ...j, ...updates } : j))
         );
@@ -139,11 +126,6 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
             j.id === jobId ? { ...j, stage: job.stage } : j
           )
         );
-        setOptimisticUpdates((prev) => {
-          const updated = { ...prev };
-          delete updated[jobId];
-          return updated;
-        });
         setError('Failed to update job');
       }
     },

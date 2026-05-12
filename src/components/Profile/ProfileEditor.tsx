@@ -23,7 +23,6 @@ const tabs = [
 export const ProfileEditor: React.FC<ProfileEditorProps> = ({
   candidateId,
   onSave,
-  loading = false,
 }) => {
   const [activeTab, setActiveTab] = useState('overview');
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
@@ -337,9 +336,7 @@ const LanguagesTab: React.FC<{ candidateId: string; onChangesMade: () => void }>
   </div>
 );
 
-const DocumentsTab: React.FC<{ candidateId: string; onChangesMade: () => void }> = ({
-  onChangesMade,
-}) => (
+const DocumentsTab: React.FC<{ candidateId: string; onChangesMade: () => void }> = () => (
   <div className="max-w-2xl">
     <div className="mb-6 p-6 border-2 border-dashed border-gray-300 rounded-lg text-center hover:border-blue-400 transition-colors cursor-pointer">
       <p className="text-gray-600 font-medium">📁 Drag and drop files here</p>

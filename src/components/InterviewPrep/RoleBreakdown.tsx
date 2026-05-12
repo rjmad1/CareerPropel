@@ -28,28 +28,26 @@ interface RoleBreakdownProps {
 export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
   const roleData = useMemo(() => {
     return {
-      title: prep.jobData?.title || 'Role Title',
-      seniority: prep.jobData?.seniority || 'Unknown',
-      description: prep.jobData?.description || '',
-      requirements: prep.jobData?.requirements || [],
-      niceToHaves: prep.jobData?.niceToHaves || [],
+      title: prep.role || 'Role Title',
+      seniority: prep.roleBreakdown?.seniority || 'Unknown',
+      reportingLine: prep.roleBreakdown?.reportingLine || '',
+      responsibilities: prep.roleBreakdown?.responsibilities || [],
+      requiredSkills: prep.roleBreakdown?.requiredSkills || [],
+      preferredSkills: prep.roleBreakdown?.preferredSkills || [],
     };
   }, [prep]);
 
   const responsibilities = useMemo(() => {
-    // Extract responsibilities from job description
-    const desc = roleData.description;
-    const lines = desc.split('\n').filter(line => line.trim());
-    return lines.slice(0, 8); // First 8 bullet points
-  }, [roleData.description]);
+    return roleData.responsibilities.slice(0, 8);
+  }, [roleData.responsibilities]);
 
   const requiredSkills = useMemo(() => {
-    return roleData.requirements.slice(0, 8);
-  }, [roleData.requirements]);
+    return roleData.requiredSkills.slice(0, 8);
+  }, [roleData.requiredSkills]);
 
   const niceToHaveSkills = useMemo(() => {
-    return roleData.niceToHaves.slice(0, 6);
-  }, [roleData.niceToHaves]);
+    return roleData.preferredSkills.slice(0, 6);
+  }, [roleData.preferredSkills]);
 
   const seniorityMetadata = useMemo(() => {
     const metadata: Record<string, { yearsMin: number; yearsMax: number; level: string }> = {
@@ -77,7 +75,7 @@ export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
       },
       {
         area: 'Technical Skills',
-        topics: requiredSkills.slice(0, 4),
+        topics: requiredSkills.slice(0, 4).map((s) => s.name),
         emphasis: 'High',
       },
       {
@@ -162,7 +160,10 @@ export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
                 data-cy={`responsibility-${idx}`}
               >
                 <span className="text-orange-600 flex-shrink-0 mt-0.5">✓</span>
-                <span className="text-sm text-slate-800">{resp}</span>
+                <div>
+                  <p className="text-sm font-medium text-slate-900">{resp.title}</p>
+                  <p className="text-xs text-slate-600 mt-1">{resp.description}</p>
+                </div>
               </li>
             ))}
           </ul>
@@ -182,8 +183,8 @@ export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
               className="bg-emerald-50 border border-emerald-200 rounded-lg p-3"
               data-cy={`required-skill-${idx}`}
             >
-              <div className="text-sm font-medium text-emerald-900">{skill}</div>
-              <div className="text-xs text-emerald-700 mt-1">Required for role</div>
+              <div className="text-sm font-medium text-emerald-900">{skill.name}</div>
+              <div className="text-xs text-emerald-700 mt-1">{skill.proficiency}</div>
             </div>
           ))}
         </div>
@@ -209,8 +210,8 @@ export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
                 className="bg-blue-50 border border-blue-200 rounded-lg p-3"
                 data-cy={`nice-to-have-skill-${idx}`}
               >
-                <div className="text-sm font-medium text-blue-900">{skill}</div>
-                <div className="text-xs text-blue-700 mt-1">Bonus qualification</div>
+                <div className="text-sm font-medium text-blue-900">{skill.name}</div>
+                <div className="text-xs text-blue-700 mt-1">{skill.proficiency}</div>
               </div>
             ))}
           </div>
