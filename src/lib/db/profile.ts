@@ -1,0 +1,125 @@
+import { PrismaClient } from '@prisma/client';
+import type { UpdateProfileInput } from '@/lib/validation/schemas';
+
+const prisma = new PrismaClient();
+
+/**
+ * Get user profile
+ */
+export async function getProfile(userId: string) {
+  return prisma.candidate.findUnique({
+    where: { id: userId },
+  });
+}
+
+/**
+ * Update user profile
+ */
+export async function updateProfile(userId: string, data: UpdateProfileInput) {
+  const updateData: any = {};
+
+  if (data.name !== undefined) updateData.name = data.name;
+  if (data.email !== undefined) updateData.email = data.email;
+  if (data.phone !== undefined) updateData.phone = data.phone;
+  if (data.location !== undefined) updateData.location = data.location;
+  if (data.summary !== undefined) updateData.summary = data.summary;
+  if (data.skills !== undefined) updateData.skills = data.skills;
+  if (data.experience !== undefined) updateData.experience = data.experience;
+  if (data.preferences !== undefined) updateData.preferences = data.preferences;
+
+  return prisma.candidate.update({
+    where: { id: userId },
+    data: updateData,
+  });
+}
+
+/**
+ * Create or update profile field
+ */
+export async function createOrUpdateProfileField(
+  userId: string,
+  fieldType: string,
+  content: Record<string, any>
+) {
+  return prisma.profileData.upsert({
+    where: {
+      candidateId_type: {
+        candidateId: userId,
+        type: fieldType,
+      },
+    },
+    update: { content },
+    create: {
+      candidateId: userId,
+      type: fieldType,
+      content,
+    },
+  });
+}
+
+/**
+ * Get profile fields
+ */
+export async function getProfileFields(userId: string, type?: string) {
+  const where: any = { candidateId: userId };
+
+  if (type) {
+    where.type = type;
+  }
+
+  return prisma.profileData.findMany({
+    where,
+  });
+}
+
+/**
+ * Add skill to profile
+ */
+export async function addSkill(userId: string, name: string, proficiency: string = 'intermediate') {
+  return prisma.skill.create({
+    data: {
+      candidateId: userId,
+      name,
+      proficiency,
+    },
+  });
+}
+
+/**
+ * Get user skills
+ */
+export async function getSkills(userId: string) {
+  return prisma.skill.findMany({
+    where: { candidateId: userId },
+    orderBy: { createdAt: 'desc' },
+  });
+}
+
+/**
+ * Add achievement to profile
+ */
+export async function addAchievement(
+  userId: string,
+  title: string,
+  description: string,
+  metrics?: Record<string, any>
+) {
+  return prisma.achievement.create({
+    data: {
+      candidateId: userId,
+      title,
+      description,
+      metrics,
+    },
+  });
+}
+
+/**
+ * Get user achievements
+ */
+export async function getAchievements(userId: string) {
+  return prisma.achievement.findMany({
+    where: { candidateId: userId },
+    orderBy: { createdAt: 'desc' },
+  });
+}
