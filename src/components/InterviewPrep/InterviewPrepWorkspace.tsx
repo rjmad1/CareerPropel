@@ -1,337 +1,198 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import {
-  X,
-  RefreshCw,
-  Moon,
-  BarChart3,
-  Loader2,
-  AlertCircle,
-  Play,
-} from 'lucide-react';
-import { useRealTime } from '../../hooks/useRealTime';
-import { useInterviewPrep } from '../../hooks/useInterviewPrep';
-import CompanyIntelligence from './CompanyIntelligence';
-import RoleBreakdown from './RoleBreakdown';
-import BehavioralStories from './BehavioralStories';
-import TechnicalPrep from './TechnicalPrep';
-import SystemDesignTab from './SystemDesignTab';
-import ResumeAlignment from './ResumeAlignment';
-import MockInterview from './MockInterview';
+'use client';
+
+import React, { useState } from 'react';
+import { X, RefreshCw, Loader2, AlertCircle } from 'lucide-react';
+import { useJob, useInterviewPrep } from '@/domains/jobs/hooks';
 
 interface InterviewPrepWorkspaceProps {
   jobId: string;
   onClose: () => void;
 }
 
-type TabType = 'company' | 'role' | 'behavioral' | 'technical' | 'system-design' | 'resume' | 'mock';
+type TabType = 'company' | 'role' | 'behavioral' | 'technical' | 'resume' | 'mock';
 
-/**
- * InterviewPrepWorkspace
- * Main container for the interview preparation experience.
- *
- * Features:
- * - 7 tabbed interface for different prep aspects
- * - Real-time WebSocket sync for preparation progress
- * - Night-Before Mode for quick revision
- * - Quick Revision Cards for key talking points
- * - Preparation status tracking with readiness percentage
- * - Error handling with retry capability
- */
 export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
   jobId,
   onClose,
 }) => {
   const [activeTab, setActiveTab] = useState<TabType>('company');
-  const [nightBeforeMode, setNightBeforeMode] = useState(false);
-  const [showQuickRevision, setShowQuickRevision] = useState(false);
 
-  // Real-time WebSocket connection
-  const { connected: wsConnected } = useRealTime({
-    autoConnect: true,
-    channels: ['interview-prep'],
-  });
+  // Fetch job details
+  const { data: job, isLoading: jobLoading, error: jobError } = useJob(jobId);
 
-  // Interview prep hook for data management
-  const { prep, loading, error, regenerate, refetch } = useInterviewPrep(jobId, 'current-user'); // TODO: Get actual userId
+  // Fetch interview prep (triggers agent execution)
+  const { data: prep, isLoading: prepLoading, error: prepError, refetch } = useInterviewPrep(jobId, job);
 
-  // Initialize prep generation on mount
-  useEffect(() => {
-    if (!prep && !loading) {
-      regenerate();
-    }
-  }, [jobId, prep, loading, regenerate]);
+  const isLoading = jobLoading || prepLoading;
+  const error = jobError || prepError;
 
-  const tabs = useMemo(
-    () => [
-      { id: 'company', label: '🏢 Company', icon: 'Building' },
-      { id: 'role', label: '💼 Role', icon: 'Briefcase' },
-      { id: 'behavioral', label: '💬 Behavioral', icon: 'Users' },
-      { id: 'technical', label: '🔧 Technical', icon: 'Code' },
-      { id: 'system-design', label: '📐 System Design', icon: 'Boxes' },
-      { id: 'resume', label: '📄 Resume', icon: 'FileText' },
-      { id: 'mock', label: '🎤 Mock Interview', icon: 'Mic' },
-    ] as const,
-    []
-  );
-
-  const readinessScore = useMemo(() => {
-    if (!prep) return 0;
-    const components = [
-      prep.companyResearch ? 20 : 0,
-      prep.roleBreakdown ? 20 : 0,
-      prep.behavioralStories?.length ? Math.min(15, (prep.behavioralStories.length / 5) * 15) : 0,
-      prep.technicalPrep?.practiceProblems?.length ? 20 : 0,
-      prep.systemDesignPrep ? 15 : 0,
-      prep.resumeAlignment?.overallMatch ? (prep.resumeAlignment.overallMatch / 100) * 10 : 0,
-    ];
-    return Math.round(components.reduce((a, b) => a + b, 0));
-  }, [prep]);
-
-  const quickRevisionCards = useMemo(() => {
-    if (!prep) return [];
-    return [
-      {
-        title: 'Key Story',
-        content: prep.behavioralStories?.[0]?.title || 'No story prepared yet',
-        time: '2 min',
-      },
-      {
-        title: 'Company Focus',
-        content: prep.companyResearch?.industry || 'Research company',
-        time: '3 min',
-      },
-      {
-        title: 'Technical Topic',
-        content: prep.technicalPrep?.programmingLanguages?.[0]?.language || 'Review algorithms',
-        time: '5 min',
-      },
-    ];
-  }, [prep]);
-
-  if (loading && !prep) {
-    return (
-      <div
-        className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-        data-cy="interview-prep-loading"
-      >
-        <div className="bg-white rounded-lg p-8 space-y-4">
-          <Loader2 className="w-8 h-8 text-blue-600 animate-spin mx-auto" />
-          <div className="text-center">
-            <div className="font-semibold text-slate-900">Generating Interview Prep</div>
-            <p className="text-sm text-slate-600 mt-1">
-              Analyzing role, company, and your background...
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div
-        className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-        data-cy="interview-prep-error"
-      >
-        <div className="bg-white rounded-lg p-8 space-y-4 max-w-md">
-          <div className="flex items-start gap-3">
-            <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
-            <div>
-              <div className="font-semibold text-slate-900">Error Loading Prep</div>
-              <p className="text-sm text-slate-600 mt-1">{error.message}</p>
-            </div>
-          </div>
-          <div className="flex gap-3">
-            <button
-              onClick={refetch}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors"
-            >
-              Retry
-            </button>
-            <button
-              onClick={onClose}
-              className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-900 font-semibold py-2 px-4 rounded transition-colors"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const tabs: { id: TabType; label: string }[] = [
+    { id: 'company', label: '🏢 Company Intelligence' },
+    { id: 'role', label: '💼 Role Breakdown' },
+    { id: 'behavioral', label: '💬 STAR Stories' },
+    { id: 'technical', label: '🔧 Technical Prep' },
+    { id: 'resume', label: '📄 Resume Alignment' },
+    { id: 'mock', label: '🎤 Mock Interview' },
+  ];
 
   return (
-    <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
-      data-cy="interview-prep-workspace"
-    >
-      <div className="bg-white rounded-lg shadow-xl max-w-5xl w-full max-h-[90vh] flex flex-col overflow-hidden">
-        {/* Header */}
-        <div className="border-b border-slate-200 px-6 py-4 flex items-start justify-between flex-shrink-0">
-          <div>
-            <h2 className="text-xl font-bold text-slate-900">Interview Preparation</h2>
-            <p className="text-sm text-slate-600 mt-1">
-              {prep?.role} at {prep?.company}
-            </p>
+    <div className="fixed right-0 top-0 h-screen w-full max-w-2xl bg-white border-l border-gray-200 shadow-lg z-40 flex flex-col overflow-hidden">
+      {/* Header */}
+      <div className="sticky top-0 bg-white border-b border-gray-200 p-6 z-50">
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex-1">
+            <h2 className="text-2xl font-bold text-gray-900">Interview Prep</h2>
+            {job && <p className="text-sm text-gray-600 mt-1">{job.role} at {job.company}</p>}
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 transition-colors"
-            data-cy="close-interview-prep"
+            className="p-1 hover:bg-gray-100 rounded-lg transition ml-2"
           >
-            <X className="w-6 h-6" />
+            <X size={20} />
           </button>
         </div>
 
-        {/* Readiness Bar */}
-        <div className="border-b border-slate-200 px-6 py-3 flex items-center justify-between bg-gradient-to-r from-blue-50 to-indigo-50 flex-shrink-0">
-          <div className="flex items-center gap-4 flex-1">
-            <div className="flex-1">
-              <div className="text-xs font-medium text-slate-600 mb-1">Overall Readiness</div>
-              <div className="w-full h-2 bg-slate-300 rounded-full overflow-hidden">
-                <div
-                  className={`h-full rounded-full transition-all ${
-                    readinessScore >= 80
-                      ? 'bg-emerald-500'
-                      : readinessScore >= 60
-                      ? 'bg-yellow-500'
-                      : 'bg-orange-500'
-                  }`}
-                  style={{ width: `${readinessScore}%` }}
-                ></div>
-              </div>
-            </div>
-            <div className="text-lg font-bold text-slate-900">{readinessScore}%</div>
-          </div>
-          <div className="text-xs text-slate-600 ml-4">
-            Last updated: {prep?.lastUpdated ? new Date(prep.lastUpdated).toLocaleTimeString() : 'Now'}
-          </div>
-        </div>
-
-        {/* Controls */}
-        <div className="border-b border-slate-200 px-6 py-3 flex items-center justify-between bg-slate-50 flex-shrink-0">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setNightBeforeMode(!nightBeforeMode)}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded text-sm font-medium transition-colors ${
-                nightBeforeMode
-                  ? 'bg-amber-100 text-amber-900'
-                  : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
-              }`}
-              data-cy="night-before-mode-toggle"
-            >
-              <Moon className="w-4 h-4" />
-              Night Before
-            </button>
-            <button
-              onClick={() => setShowQuickRevision(!showQuickRevision)}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded text-sm font-medium transition-colors ${
-                showQuickRevision
-                  ? 'bg-blue-100 text-blue-900'
-                  : 'bg-slate-200 text-slate-700 hover:bg-slate-300'
-              }`}
-              data-cy="quick-revision-toggle"
-            >
-              <BarChart3 className="w-4 h-4" />
-              Quick Cards
-            </button>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={refetch}
-              className="p-1.5 hover:bg-slate-300 rounded transition-colors text-slate-600"
-              data-cy="refresh-prep-button"
-              disabled={loading}
-            >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-            </button>
-            {wsConnected && (
-              <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
-                <span className="text-xs text-emerald-700">Live</span>
-              </div>
-            )}
-          </div>
-        </div>
-
         {/* Tabs */}
-        <div className="border-b border-slate-200 px-6 flex gap-1 overflow-x-auto flex-shrink-0 bg-slate-50">
-          {tabs.map(tab => (
+        <div className="flex gap-1 border-b border-gray-200 overflow-x-auto">
+          {tabs.map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as TabType)}
-              className={`py-3 px-4 font-medium text-sm border-b-2 transition-colors whitespace-nowrap ${
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-3 py-2 text-sm font-medium whitespace-nowrap transition ${
                 activeTab === tab.id
-                  ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-slate-600 hover:text-slate-900'
+                  ? 'text-blue-600 border-b-2 border-blue-600'
+                  : 'text-gray-600 hover:text-gray-900'
               }`}
-              data-cy={`tab-${tab.id}`}
             >
               {tab.label}
             </button>
           ))}
         </div>
+      </div>
 
-        {/* Content Area */}
-        <div className="flex-1 overflow-y-auto px-6">
-          {prep && (
-            <>
-              {activeTab === 'company' && <CompanyIntelligence prep={prep} />}
-              {activeTab === 'role' && <RoleBreakdown prep={prep} />}
-              {activeTab === 'behavioral' && <BehavioralStories prep={prep} />}
-              {activeTab === 'technical' && <TechnicalPrep prep={prep} />}
-              {activeTab === 'system-design' && <SystemDesignTab prep={prep} />}
-              {activeTab === 'resume' && <ResumeAlignment prep={prep} />}
-              {activeTab === 'mock' && <MockInterview prep={prep} />}
-            </>
-          )}
-        </div>
-
-        {/* Quick Revision Cards (Sidebar) */}
-        {showQuickRevision && (
-          <div className="fixed right-0 top-0 bottom-0 w-64 bg-white border-l border-slate-200 shadow-lg z-40 overflow-y-auto">
-            <div className="p-4 space-y-3">
-              <button
-                onClick={() => setShowQuickRevision(false)}
-                className="w-full text-right text-slate-400 hover:text-slate-600"
-              >
-                <X className="w-5 h-5 ml-auto" />
-              </button>
-              <h3 className="font-semibold text-slate-900">Quick Revision</h3>
-              {quickRevisionCards.map((card, idx) => (
-                <div
-                  key={idx}
-                  className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-3"
-                  data-cy={`quick-revision-card-${idx}`}
-                >
-                  <div className="text-xs font-semibold text-blue-700 mb-1">{card.title}</div>
-                  <p className="text-sm text-blue-900 mb-2">{card.content}</p>
-                  <div className="text-xs text-blue-600 flex items-center gap-1">
-                    <span>⏱️ {card.time}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+      {/* Content */}
+      <div className="flex-1 overflow-y-auto p-6">
+        {isLoading && (
+          <div className="flex flex-col items-center justify-center h-full">
+            <Loader2 className="animate-spin text-blue-600 mb-4" size={32} />
+            <p className="text-gray-600">Generating interview preparation...</p>
+            <p className="text-sm text-gray-500 mt-2">This may take a moment as we use AI to generate personalized content.</p>
           </div>
         )}
 
-        {/* Footer */}
-        <div className="border-t border-slate-200 px-6 py-4 bg-slate-50 flex items-center justify-between flex-shrink-0">
-          <p className="text-xs text-slate-600">
-            {nightBeforeMode && '🌙 Night Before Mode: Quick, focused content only'}
-          </p>
-          <button
-            onClick={() => setActiveTab('mock')}
-            className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
-            data-cy="start-mock-interview"
-          >
-            <Play className="w-4 h-4" />
-            Start Mock Interview
-          </button>
-        </div>
+        {error && (
+          <div className="flex flex-col items-center justify-center h-full">
+            <AlertCircle className="text-red-600 mb-4" size={32} />
+            <p className="text-red-600 font-medium">Error generating prep</p>
+            <p className="text-sm text-gray-600 mt-2">{error.message}</p>
+            <button
+              onClick={() => refetch()}
+              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center gap-2"
+            >
+              <RefreshCw size={16} />
+              Retry
+            </button>
+          </div>
+        )}
+
+        {prep && (
+          <div className="space-y-6">
+            {activeTab === 'company' && (
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Company Intelligence</h3>
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Mission</h4>
+                    <p className="text-gray-600">{prep.companyIntelligence?.mission || 'Not available'}</p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Recent News</h4>
+                    <ul className="space-y-2">
+                      {(prep.companyIntelligence?.recentNews || []).map((news, i) => (
+                        <li key={i} className="text-gray-600">• {news}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Culture</h4>
+                    <p className="text-gray-600">{prep.companyIntelligence?.culture || 'Not available'}</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'behavioral' && (
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-4">STAR Stories</h3>
+                <div className="space-y-4">
+                  {(prep.starStories || []).map((story, i) => (
+                    <div key={i} className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-semibold text-gray-900 mb-3">{story.title}</h4>
+                      <div className="space-y-2 text-sm text-gray-600">
+                        <p><span className="font-medium">Situation:</span> {story.situation}</p>
+                        <p><span className="font-medium">Task:</span> {story.task}</p>
+                        <p><span className="font-medium">Action:</span> {story.action}</p>
+                        <p><span className="font-medium">Result:</span> {story.result}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'technical' && (
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Technical Concepts</h3>
+                <div className="space-y-4">
+                  {(prep.technicalConcepts || []).map((concept, i) => (
+                    <div key={i} className="bg-gray-50 p-4 rounded-lg">
+                      <h4 className="font-semibold text-gray-900 mb-2">{concept.topic}</h4>
+                      <ul className="space-y-1 text-sm text-gray-600">
+                        {(concept.keyPoints || []).map((point, j) => (
+                          <li key={j}>• {point}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'resume' && (
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Resume Alignment</h3>
+                <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg">
+                  <p className="text-sm text-blue-900">Resume alignment data will be generated based on job requirements and your experience.</p>
+                </div>
+              </div>
+            )}
+
+            {activeTab === 'mock' && (
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Mock Interview</h3>
+                <div className="bg-purple-50 border border-purple-200 p-4 rounded-lg">
+                  <p className="text-sm text-purple-900">Interactive mock interview practice coming soon.</p>
+                </div>
+              </div>
+            )}
+
+            {(activeTab === 'role' || activeTab === 'mock') && (
+              <div className="bg-gray-50 p-4 rounded-lg">
+                <p className="text-sm text-gray-600">This section is being populated with AI-generated content.</p>
+              </div>
+            )}
+
+            {prep.confidence && (
+              <div className="border-t border-gray-200 pt-4 mt-6">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-700">Confidence Score</span>
+                  <span className="text-lg font-bold text-blue-600">{Math.round(prep.confidence)}%</span>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
 };
-
-export default InterviewPrepWorkspace;

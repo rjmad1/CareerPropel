@@ -1,9 +1,5 @@
-// Export components
-export { ProfileEditor } from './components/ProfileEditor';
-export { SkillsMatrix } from './components/SkillsMatrix';
-
-// Export hooks
-export { useProfile } from './hooks/useProfile';
-
-// Export types
-export type * from './types';
+// Export components from the correct location
+export { ProfileEditor } from '@/components/Profile/ProfileEditor';
+export { SkillMatrix } from '@/components/Profile/SkillMatrix';
+export { ProfileCompleteness } from '@/components/Profile/ProfileCompleteness';
+export { RecommendationPanel } from '@/components/Profile/RecommendationPanel';

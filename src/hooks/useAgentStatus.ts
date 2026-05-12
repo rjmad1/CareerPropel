@@ -111,12 +111,6 @@ export function useAgentStatus(autoConnect: boolean = true) {
         break;
       }
 
-      case 'initial_state': {
-        // Initialize agents from server state
-        const initialAgents = (event as any).agents || {};
-        setAgents(initialAgents);
-        break;
-      }
 
       case 'agent:started': {
         const { agentType } = event as any;

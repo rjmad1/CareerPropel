@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { AgentExecution, ToolCall, EventLog } from '@/types/agent';
 import {
@@ -8,10 +9,7 @@ import {
   cancelAgentExecution,
   subscribeToAgentExecution,
   pollAgentExecution,
-  AgentExecutionResponse,
-  LogsResponse,
 } from '@/lib/agent/agentService';
-
 export interface UseAgentExecutionResult {
   execution: AgentExecution | null;
   toolCalls: ToolCall[];

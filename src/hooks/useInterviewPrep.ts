@@ -197,36 +197,6 @@ export function useInterviewPrep(
  * Hook for listening to interview prep generation progress
  * (for real-time updates via WebSocket)
  */
-export function useInterviewPrepProgress(jobId: string) {
-  const [progress, setProgress] = useState(0);
-  const [status, setStatus] = useState<'idle' | 'generating' | 'complete' | 'error'>('idle');
-  const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    if (!jobId) return;
-
-    // TODO: Connect to WebSocket for real-time progress updates
-    // This would subscribe to interview-prep:generate:{jobId} channel
-    // and update progress, status, and message as they come in
-
-    // Placeholder implementation
-    const handleProgress = (data: any) => {
-      setProgress(data.progress);
-      setStatus(data.status);
-      setMessage(data.message);
-    };
-
-    // Simulated progress (remove when WebSocket is integrated)
-    if (status === 'generating') {
-      const timer = setInterval(() => {
-        setProgress(prev => Math.min(prev + 10, 90));
-      }, 1000);
-
-      return () => clearInterval(timer);
-    }
-  }, [jobId, status]);
-
-  return { progress, status, message };
 }
 
 /**

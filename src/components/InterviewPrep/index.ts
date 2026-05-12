@@ -15,14 +15,14 @@
  * - MockInterview: Interview simulation with feedback and scoring
  */
 
-export { InterviewPrepWorkspace, default as InterviewPrepWorkspaceDefault } from './InterviewPrepWorkspace';
-export { CompanyIntelligence, default as CompanyIntelligenceDefault } from './CompanyIntelligence';
-export { RoleBreakdown, default as RoleBreakdownDefault } from './RoleBreakdown';
-export { BehavioralStories, default as BehavioralStoriesDefault } from './BehavioralStories';
-export { TechnicalPrep, default as TechnicalPrepDefault } from './TechnicalPrep';
-export { SystemDesignTab, default as SystemDesignTabDefault } from './SystemDesignTab';
-export { ResumeAlignment, default as ResumeAlignmentDefault } from './ResumeAlignment';
-export { MockInterview, default as MockInterviewDefault } from './MockInterview';
+export { InterviewPrepWorkspace } from './InterviewPrepWorkspace';
+export { CompanyIntelligence } from './CompanyIntelligence';
+export { RoleBreakdown } from './RoleBreakdown';
+export { BehavioralStories } from './BehavioralStories';
+export { TechnicalPrep } from './TechnicalPrep';
+export { SystemDesignTab } from './SystemDesignTab';
+export { ResumeAlignment } from './ResumeAlignment';
+export { MockInterview } from './MockInterview';
 
 // Default export for convenience
 export { InterviewPrepWorkspace as default } from './InterviewPrepWorkspace';
