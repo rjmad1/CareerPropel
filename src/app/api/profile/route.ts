@@ -1,59 +1,104 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAuth } from '@/app/api/middleware/auth';
-import { validateRequest, successResponse, validationErrorResponse, errorResponse } from '@/app/api/middleware/validation';
-import { updateProfileSchema } from '@/lib/validation/schemas';
-import { getProfile, updateProfile } from '@/lib/db/profile';
 
 /**
- * GET /api/profile
- * Get user profile
+ * GET /api/profile?candidateId={id}
+ * Fetch complete profile summary
  */
-export async function GET(req: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const user = await requireAuth(req);
-    if (!user) {
+    const candidateId = request.nextUrl.searchParams.get('candidateId');
+
+    if (!candidateId) {
       return NextResponse.json(
-        { error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
-        { status: 401 }
+        { error: 'candidateId is required' },
+        { status: 400 }
       );
     }
 
-    const profile = await getProfile(user.id);
-    if (!profile) {
-      return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Profile not found' } }, { status: 404 });
-    }
+    // TODO: Wire to Prisma
+    // const candidate = await prisma.candidate.findUnique({
+    //   where: { id: candidateId },
+    //   include: {
+    //     profileScore: true,
+    //     profileEntities: true,
+    //     skills: true,
+    //     achievements: true,
+    //   },
+    // });
 
-    return successResponse(profile);
+    // Mock response
+    const profile = {
+      candidateId,
+      name: 'John Doe',
+      email: 'john@example.com',
+      phone: '+1 (555) 123-4567',
+      location: 'San Francisco, CA',
+      completenessScore: {
+        totalScore: 65,
+        personalInfoScore: 90,
+        resumeScore: 70,
+        skillsScore: 60,
+        experienceScore: 50,
+        educationScore: 80,
+        goalsScore: 40,
+        portfolioScore: 30,
+        completeness: 0.65,
+      },
+      topSkills: [
+        { name: 'React', category: 'technical', proficiency: 'expert' },
+        { name: 'TypeScript', category: 'technical', proficiency: 'proficient' },
+      ],
+      recentAchievements: [
+        { title: 'Led team to 50% performance improvement', date: new Date() },
+      ],
+      extractionQuality: {
+        totalEntities: 45,
+        averageConfidence: 0.87,
+        documentCount: 3,
+        lastExtraction: new Date(),
+      },
+    };
+
+    return NextResponse.json(profile, { status: 200 });
   } catch (error) {
-    console.error('GET /api/profile error:', error);
-    return errorResponse(error);
+    console.error('Error fetching profile:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch profile' },
+      { status: 500 }
+    );
   }
 }
 
 /**
- * PATCH /api/profile
- * Update user profile
+ * PUT /api/profile?candidateId={id}
+ * Update profile data
  */
-export async function PATCH(req: NextRequest) {
+export async function PUT(request: NextRequest) {
   try {
-    const user = await requireAuth(req);
-    if (!user) {
+    const candidateId = request.nextUrl.searchParams.get('candidateId');
+    const body = await request.json();
+
+    if (!candidateId) {
       return NextResponse.json(
-        { error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
-        { status: 401 }
+        { error: 'candidateId is required' },
+        { status: 400 }
       );
     }
 
-    // Validate request body
-    const validation = await validateRequest(req, updateProfileSchema);
-    if (!validation.valid) {
-      return validationErrorResponse(validation.error);
-    }
+    // TODO: Wire to Prisma
+    // const updated = await prisma.candidate.update({
+    //   where: { id: candidateId },
+    //   data: body,
+    // });
 
-    const profile = await updateProfile(user.id, validation.data);
-    return successResponse(profile);
+    const updated = { candidateId, ...body, updatedAt: new Date() };
+
+    return NextResponse.json({ profile: updated }, { status: 200 });
   } catch (error) {
-    console.error('PATCH /api/profile error:', error);
-    return errorResponse(error);
+    console.error('Error updating profile:', error);
+    return NextResponse.json(
+      { error: 'Failed to update profile' },
+      { status: 500 }
+    );
   }
 }
