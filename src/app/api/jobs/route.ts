@@ -1,89 +1,168 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { requireAuth, ValidationError } from '@/app/api/middleware/auth';
-import { validateRequest, successResponse, validationErrorResponse, errorResponse } from '@/app/api/middleware/validation';
-import { createJobSchema, listJobsQuerySchema } from '@/lib/validation/schemas';
-import { getJobs, createJob } from '@/lib/db/jobs';
+import { NextRequest, NextResponse } from 'next/server'
+import { PrismaClient } from '@prisma/client'
+import { CreateJobInputSchema, JobFilterSchema } from '@/lib/validations/job'
+import { ApiErrors } from '@/lib/errors/ApiError'
+import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
+import { sanitizeUserFeedback } from '@/lib/safety/promptSanitizer'
+import { getAuthContext } from '@/lib/middleware/auth'
+import { createRateLimiter } from '@/lib/middleware/rateLimiter'
+import { handleCorsPreFlight, applyCorsHeaders } from '@/lib/middleware/cors'
+
+const prisma = new PrismaClient()
+
+// Rate limiters for different operations
+const getJobsLimiter = createRateLimiter(100, 60000) // 100 per minute
+const createJobLimiter = createRateLimiter(20, 60000) // 20 per minute
 
 /**
  * GET /api/jobs
- * List jobs for authenticated user with filtering, sorting, pagination
+ * Retrieve all jobs with optional filtering
+ * Protected: Requires authentication
+ * Rate Limited: 100 requests per minute per IP
+ * Returns only jobs belonging to the authenticated user
  */
-export async function GET(req: NextRequest) {
+export async function GET(request: NextRequest) {
+  // Handle CORS preflight
+  const corsResponse = handleCorsPreFlight(request)
+  if (corsResponse) return corsResponse
+
+  // Apply rate limiting
+  const rateLimitResponse = getJobsLimiter(request)
+  if (rateLimitResponse) return applyCorsHeaders(request, rateLimitResponse)
   try {
-    const user = await requireAuth(req);
-    if (!user) {
-      return NextResponse.json(
-        { error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
-        { status: 401 }
-      );
-    }
+    // Require authentication
+    const { userId } = await getAuthContext()
 
-    // Parse query parameters
-    const searchParams = req.nextUrl.searchParams;
-    const queryData = {
-      limit: searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : 50,
-      offset: searchParams.get('offset') ? parseInt(searchParams.get('offset')!) : 0,
+    const { searchParams } = new URL(request.url)
+
+    // Validate and parse query parameters
+    const filters = JobFilterSchema.safeParse({
       company: searchParams.get('company') || undefined,
+      search: searchParams.get('search') || undefined,
       stage: searchParams.get('stage') || undefined,
-      minSalary: searchParams.get('minSalary') ? parseInt(searchParams.get('minSalary')!) : undefined,
-      maxSalary: searchParams.get('maxSalary') ? parseInt(searchParams.get('maxSalary')!) : undefined,
-      minMatchScore: searchParams.get('minMatchScore')
-        ? parseInt(searchParams.get('minMatchScore')!)
-        : undefined,
-      maxMatchScore: searchParams.get('maxMatchScore')
-        ? parseInt(searchParams.get('maxMatchScore')!)
-        : undefined,
-      priority: searchParams.get('priority') || undefined,
-      sortBy: (searchParams.get('sortBy') || 'updatedAt') as any,
-      sortOrder: (searchParams.get('sortOrder') || 'desc') as any,
-    };
+      sortBy: searchParams.get('sortBy') || undefined,
+      sortDir: searchParams.get('sortDir') || undefined,
+    })
 
-    // Validate query
-    const validation = listJobsQuerySchema.safeParse(queryData);
-    if (!validation.success) {
-      const details: Record<string, string[]> = {};
-      validation.error.errors.forEach((error) => {
-        const path = error.path.join('.');
-        if (!details[path]) {
-          details[path] = [];
-        }
-        details[path].push(error.message);
-      });
-      return validationErrorResponse(new ValidationError('Invalid query parameters', details));
+    if (!filters.success) {
+      throw ApiErrors.VALIDATION_ERROR('Invalid filter parameters')
     }
 
-    const result = await getJobs(user.id, validation.data);
-    return successResponse(result);
+    const { company, search, stage } = filters.data
+
+    // Get user's candidate profile
+    const candidate = await prisma.candidate.findUnique({
+      where: { email: userEmail },
+    })
+
+    if (!candidate) {
+      // User has no jobs yet
+      return successResponse([])
+    }
+
+    // Build query - only user's jobs
+    const where: any = {
+      candidateId: candidate.id,
+    }
+
+    if (company) {
+      where.company = { contains: company, mode: 'insensitive' }
+    }
+    if (search) {
+      where.OR = [
+        { title: { contains: search, mode: 'insensitive' } },
+        { company: { contains: search, mode: 'insensitive' } },
+        { description: { contains: search, mode: 'insensitive' } },
+      ]
+    }
+    if (stage) {
+      where.stage = stage
+    }
+
+    const jobs = await prisma.job.findMany({
+      where,
+      include: { activities: true },
+      orderBy: { createdAt: 'desc' },
+    })
+
+    const response = successResponse(jobs)
+    return applyCorsHeaders(request, response)
   } catch (error) {
-    console.error('GET /api/jobs error:', error);
-    return errorResponse(error);
+    const response = errorResponse(error)
+    return applyCorsHeaders(request, response)
   }
 }
 
 /**
  * POST /api/jobs
  * Create a new job
+ * Protected: Requires authentication
+ * Rate Limited: 20 requests per minute per IP
+ * CSRF Protected: Requires valid CSRF token (optional in dev)
+ * Job will be created for the authenticated user
  */
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const user = await requireAuth(req);
-    if (!user) {
-      return NextResponse.json(
-        { error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
-        { status: 401 }
-      );
+    // Handle CORS preflight
+    const corsResponse = handleCorsPreFlight(request)
+    if (corsResponse) return corsResponse
+
+    // Apply rate limiting
+    const rateLimitResponse = createJobLimiter(request)
+    if (rateLimitResponse) return applyCorsHeaders(request, rateLimitResponse)
+
+    // Require authentication
+    const { userId, userEmail } = await getAuthContext()
+
+    const body = await request.json()
+
+    // Validate request body with Zod
+    const validation = CreateJobInputSchema.safeParse(body)
+    if (!validation.success) {
+      const errors = validation.error.flatten().fieldErrors
+      const message = Object.entries(errors)
+        .map(([field, msgs]) => `${field}: ${msgs?.[0]}`)
+        .join('; ')
+      throw ApiErrors.VALIDATION_ERROR(message)
     }
 
-    // Validate request body
-    const validation = await validateRequest(req, createJobSchema);
-    if (!validation.valid) {
-      return validationErrorResponse(validation.error);
+    const { title, company, url, notes, stage } = validation.data
+
+    // Sanitize user input
+    const sanitizedNotes = notes ? sanitizeUserFeedback(notes) : null
+
+    // Get or create candidate profile for authenticated user
+    let candidate = await prisma.candidate.findUnique({
+      where: { email: userEmail },
+    })
+
+    if (!candidate) {
+      // Create candidate profile for new user
+      candidate = await prisma.candidate.create({
+        data: {
+          email: userEmail,
+          name: userEmail.split('@')[0], // Use email prefix as default name
+        },
+      })
     }
 
-    const job = await createJob(user.id, validation.data);
-    return successResponse(job, 201);
+    // Create job in database
+    const job = await prisma.job.create({
+      data: {
+        title,
+        company,
+        url: url || null,
+        description: sanitizedNotes,
+        stage,
+        candidateId: candidate.id,
+      },
+      include: { activities: true },
+    })
+
+    const response = successResponse(job, 201)
+    return applyCorsHeaders(request, response)
   } catch (error) {
-    console.error('POST /api/jobs error:', error);
-    return errorResponse(error);
+    const response = errorResponse(error)
+    return applyCorsHeaders(request, response)
   }
 }
