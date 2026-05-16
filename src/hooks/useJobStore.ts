@@ -1,0 +1,168 @@
+/**
+ * Job State Store
+ * Zustand store for managing job application data
+ */
+
+import { create } from 'zustand';
+import { Job, JobStage, JobFilter, JobSort } from '@/types/job';
+
+interface JobStoreState {
+  // State
+  jobs: Job[];
+  filteredJobs: Job[];
+  selectedJobId: string | null;
+  filters: JobFilter;
+  sort: JobSort;
+  isLoading: boolean;
+  error: string | null;
+
+  // Actions
+  setJobs: (jobs: Job[]) => void;
+  addJob: (job: Job) => void;
+  updateJob: (jobId: string, data: Partial<Job>) => void;
+  deleteJob: (jobId: string) => void;
+  moveJob: (jobId: string, newStage: JobStage) => void;
+  selectJob: (jobId: string | null) => void;
+  setFilters: (filters: JobFilter) => void;
+  setSort: (sort: JobSort) => void;
+  clearFilters: () => void;
+  setLoading: (isLoading: boolean) => void;
+  setError: (error: string | null) => void;
+  getJobsByStage: (stage: JobStage) => Job[];
+  applyFiltersAndSort: () => void;
+}
+
+const defaultSort: JobSort = {
+  field: 'appliedAt',
+  direction: 'desc',
+};
+
+export const useJobStore = create<JobStoreState>((set, get) => ({
+  // Initial state
+  jobs: [],
+  filteredJobs: [],
+  selectedJobId: null,
+  filters: {},
+  sort: defaultSort,
+  isLoading: false,
+  error: null,
+
+  // Actions
+  setJobs: (jobs) => {
+    set({ jobs });
+    get().applyFiltersAndSort();
+  },
+
+  addJob: (job) => {
+    set((state) => ({ jobs: [job, ...state.jobs] }));
+    get().applyFiltersAndSort();
+  },
+
+  updateJob: (jobId, data) => {
+    set((state) => ({
+      jobs: state.jobs.map((job) =>
+        job.id === jobId ? { ...job, ...data, updatedAt: new Date() } : job
+      ),
+    }));
+    get().applyFiltersAndSort();
+  },
+
+  deleteJob: (jobId) => {
+    set((state) => ({
+      jobs: state.jobs.filter((job) => job.id !== jobId),
+      selectedJobId: state.selectedJobId === jobId ? null : state.selectedJobId,
+    }));
+    get().applyFiltersAndSort();
+  },
+
+  moveJob: (jobId, newStage) => {
+    get().updateJob(jobId, { stage: newStage });
+  },
+
+  selectJob: (jobId) => {
+    set({ selectedJobId: jobId });
+  },
+
+  setFilters: (filters) => {
+    set({ filters });
+    get().applyFiltersAndSort();
+  },
+
+  setSort: (sort) => {
+    set({ sort });
+    get().applyFiltersAndSort();
+  },
+
+  clearFilters: () => {
+    set({ filters: {}, sort: defaultSort });
+    get().applyFiltersAndSort();
+  },
+
+  setLoading: (isLoading) => {
+    set({ isLoading });
+  },
+
+  setError: (error) => {
+    set({ error });
+  },
+
+  getJobsByStage: (stage) => {
+    return get().filteredJobs.filter((job) => job.stage === stage);
+  },
+
+  applyFiltersAndSort: () => {
+    const { jobs, filters, sort } = get();
+    let filtered = [...jobs];
+
+    // Apply filters
+    if (filters.company) {
+      filtered = filtered.filter((job) =>
+        job.company.toLowerCase().includes(filters.company!.toLowerCase())
+      );
+    }
+
+    if (filters.searchText) {
+      const search = filters.searchText.toLowerCase();
+      filtered = filtered.filter((job) =>
+        job.title.toLowerCase().includes(search) ||
+        job.company.toLowerCase().includes(search) ||
+        job.location.toLowerCase().includes(search)
+      );
+    }
+
+    if (filters.stages && filters.stages.length > 0) {
+      filtered = filtered.filter((job) => filters.stages!.includes(job.stage));
+    }
+
+    if (filters.salaryMin !== undefined) {
+      filtered = filtered.filter((job) => job.salary?.min !== undefined && job.salary.min >= filters.salaryMin!);
+    }
+
+    if (filters.salaryMax !== undefined) {
+      filtered = filtered.filter((job) => job.salary?.max !== undefined && job.salary.max <= filters.salaryMax!);
+    }
+
+    // Apply sort
+    filtered.sort((a, b) => {
+      let aVal: any = a[sort.field];
+      let bVal: any = b[sort.field];
+
+      if (sort.field === 'matchScore') {
+        aVal = a.matchScore || 0;
+        bVal = b.matchScore || 0;
+      } else if (sort.field === 'appliedAt') {
+        aVal = new Date(a.appliedAt).getTime();
+        bVal = new Date(b.appliedAt).getTime();
+      } else if (sort.field === 'salary') {
+        aVal = a.salary?.max || 0;
+        bVal = b.salary?.max || 0;
+      }
+
+      if (aVal < bVal) return sort.direction === 'asc' ? -1 : 1;
+      if (aVal > bVal) return sort.direction === 'asc' ? 1 : -1;
+      return 0;
+    });
+
+    set({ filteredJobs: filtered });
+  },
+}));

@@ -147,3 +147,142 @@ model Offer {
   @@index([candidateId])
   @@index([jobId])
 }
+
+// Phase 3: Role-Based Access Control (RBAC)
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique // "admin", "recruiter", "candidate", etc.
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  permissions    RolePermission[]
+  userRoles      UserRole[]
+}
+
+model Permission {
+  id          String   @id @default(cuid())
+  name        String   @unique // "jobs.create", "jobs.read", "jobs.update", "jobs.delete", etc.
+  description String?
+  resource    String   // "jobs", "users", "audit", etc.
+  action      String   // "create", "read", "update", "delete", "manage"
+  createdAt   DateTime @default(now())
+
+  roles RolePermission[]
+
+  @@unique([resource, action])
+}
+
+model RolePermission {
+  id           String   @id @default(cuid())
+  roleId       String
+  permissionId String
+  createdAt    DateTime @default(now())
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+  @@index([roleId])
+  @@index([permissionId])
+}
+
+model UserRole {
+  id        String   @id @default(cuid())
+  email     String   // Links to Candidate email
+  roleId    String
+  grantedBy String?  // Email of admin who granted
+  grantedAt DateTime @default(now())
+  expiresAt DateTime? // Optional role expiration
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([email, roleId])
+  @@index([email])
+  @@index([roleId])
+}
+
+// Phase 3: Two-Factor Authentication
+model TwoFactorSecret {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  secret    String   // Encrypted TOTP secret
+  backupCodes String[] // Encrypted backup codes
+  enabled   Boolean  @default(false)
+  enabledAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+}
+
+// Phase 3: API Key Management
+model ApiKey {
+  id        String   @id @default(cuid())
+  email     String   // Links to Candidate email
+  keyHash   String   // Hash of the actual key (key itself never stored)
+  name      String   // User-defined name
+  prefix    String   @unique // "sk_" prefix for identification
+  createdAt DateTime @default(now())
+  expiresAt DateTime? // When the key expires
+  lastUsedAt DateTime?
+  revokedAt DateTime? // When the key was revoked
+  usageCount Int      @default(0)
+
+  @@unique([email, name])
+  @@index([email])
+  @@index([prefix])
+  @@index([expiresAt])
+}
+
+// Phase 3: Audit Logging
+model AuditLog {
+  id        String   @id @default(cuid())
+  email     String   // User email
+  action    String   // LOGIN, JOB_CREATED, JOB_DELETED, API_KEY_CREATED, etc.
+  resource  String   // What was affected (job, user, settings, etc.)
+  resourceId String? // ID of the affected resource
+  details   Json?    // Additional context/metadata
+  ipAddress String?
+  userAgent String?
+  status    String   // "success" or "failure"
+  severity  String   @default("info") // "info", "warning", "error", "critical"
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@index([action])
+  @@index([createdAt])
+  @@index([severity])
+}
+
+// Phase 3: Advanced Threat Detection
+model LoginAttempt {
+  id        String   @id @default(cuid())
+  email     String
+  success   Boolean
+  ipAddress String?
+  userAgent String?
+  timestamp DateTime @default(now())
+
+  @@index([email])
+  @@index([timestamp])
+  @@index([success])
+}
+
+model SessionActivity {
+  id        String   @id @default(cuid())
+  email     String
+  sessionId String
+  action    String   // "login", "logout", "api_call", "data_access", etc.
+  ipAddress String?
+  userAgent String?
+  riskScore Int      @default(0) // 0-100, higher = more suspicious
+  timestamp DateTime @default(now())
+
+  @@index([email])
+  @@index([sessionId])
+  @@index([timestamp])
+  @@index([riskScore])
+}
