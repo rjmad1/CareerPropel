@@ -15,7 +15,7 @@ const CreateAPIKeySchema = z.object({
  * List all API keys for the authenticated user
  * Protected: Requires authentication
  */
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     const { userEmail } = await getAuthContext()
 

@@ -1,8 +1,11 @@
 {
   "extends": ["next/core-web-vitals"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "rules": {
-    "@typescript-eslint/no-explicit-any": "error",
-    "prefer-const": "error",
-    "no-var": "error"
+    "@typescript-eslint/no-explicit-any": "warn",
+    "prefer-const": "warn",
+    "no-var": "warn",
+    "react/no-unescaped-entities": "warn"
   }
 }

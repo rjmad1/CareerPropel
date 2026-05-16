@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import { getAuthContext } from '@/lib/middleware/auth'
 import { hasPermission } from '@/lib/security/rbac'
-import { assignRoleToUser, removeRoleFromUser, getUserRoles } from '@/lib/security/rbac'
+import { assignRoleToUser, removeRoleFromUser } from '@/lib/security/rbac'
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
 import { ApiErrors } from '@/lib/errors/ApiError'
 import { PrismaClient } from '@prisma/client'
@@ -10,11 +10,6 @@ import { z } from 'zod'
 const prisma = new PrismaClient()
 
 const AssignRoleSchema = z.object({
-  email: z.string().email(),
-  role: z.string().min(1),
-})
-
-const RemoveRoleSchema = z.object({
   email: z.string().email(),
   role: z.string().min(1),
 })

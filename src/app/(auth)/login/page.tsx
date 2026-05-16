@@ -3,6 +3,44 @@
 import { FormEvent, useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import {
+  Container,
+  Paper,
+  TextField,
+  Button,
+  Box,
+  Typography,
+  Alert,
+  CircularProgress,
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  padding: theme.spacing(4),
+  marginTop: theme.spacing(8),
+  boxShadow: theme.shadows[5],
+}))
+
+const IconWrapper = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 56,
+  height: 56,
+  borderRadius: '50%',
+  backgroundColor: theme.palette.primary.main,
+  color: theme.palette.primary.contrastText,
+  marginBottom: theme.spacing(2),
+}))
+
+const StyledForm = styled('form')(({ theme }) => ({
+  width: '100%',
+  marginTop: theme.spacing(3),
+}))
 
 export default function LoginPage() {
   const router = useRouter()
@@ -39,70 +77,80 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            CareerPropel
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Sign in to your account
-          </p>
-        </div>
+    <Container component="main" maxWidth="sm">
+      <StyledPaper elevation={6}>
+        <IconWrapper>
+          <LockOutlinedIcon sx={{ fontSize: 32 }} />
+        </IconWrapper>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {error && (
-            <div className="rounded-md bg-red-50 p-4">
-              <p className="text-sm font-medium text-red-800">{error}</p>
-            </div>
-          )}
+        <Typography component="h1" variant="h4" sx={{ fontWeight: 600, mb: 1 }}>
+          CareerPropel
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+          AI-Native Career Management
+        </Typography>
 
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-          </div>
+        {error && (
+          <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
+            {error}
+          </Alert>
+        )}
 
-          <button
-            type="submit"
+        <StyledForm
+          onSubmit={handleSubmit}
+          noValidate
+          autoComplete="off"
+        >
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             disabled={isLoading}
-            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-gray-400"
-          >
-            {isLoading ? 'Signing in...' : 'Sign in'}
-          </button>
+            variant="outlined"
+          />
 
-          <p className="text-center text-sm text-gray-600">
-            For development: Use any email and password to create an account
-          </p>
-        </form>
-      </div>
-    </div>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            disabled={isLoading}
+            variant="outlined"
+          />
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            size="large"
+            sx={{ mt: 3, mb: 2, py: 1.5 }}
+            disabled={isLoading}
+            startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
+          >
+            {isLoading ? 'Signing In...' : 'Sign In'}
+          </Button>
+
+          <Box sx={{ mt: 2, textAlign: 'center' }}>
+            <Typography variant="body2" color="text.secondary">
+              For development: Use any email and password to create an account
+            </Typography>
+          </Box>
+        </StyledForm>
+      </StyledPaper>
+    </Container>
   )
 }

@@ -1,9 +1,6 @@
 import { NextRequest } from 'next/server'
 import { getAuthContext } from '@/lib/middleware/auth'
-import { getUserAuditLogs } from '@/lib/logging/auditLog'
-import { hasPermission } from '@/lib/security/rbac'
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
-import { ApiErrors } from '@/lib/errors/ApiError'
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
