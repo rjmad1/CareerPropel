@@ -1,5 +1,3 @@
-'use server';
-
 /**
  * Interview Prep Dynamic Routes
  *

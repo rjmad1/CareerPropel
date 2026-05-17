@@ -1,5 +1,3 @@
-'use server';
-
 /**
  * Mock Interview Routes
  *
