@@ -4,13 +4,11 @@ import { hasPermission } from '@/lib/security/rbac'
 import { assignRoleToUser, removeRoleFromUser } from '@/lib/security/rbac'
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
 import { ApiErrors } from '@/lib/errors/ApiError'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/db'
 import { z } from 'zod'
 
 // Mark as dynamic to prevent build-time static generation of protected endpoint
 export const dynamic = 'force-dynamic'
-
-const prisma = new PrismaClient()
 
 const AssignRoleSchema = z.object({
   email: z.string().email(),

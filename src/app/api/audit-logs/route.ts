@@ -1,12 +1,10 @@
 import { NextRequest } from 'next/server'
 import { getAuthContext } from '@/lib/middleware/auth'
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/db'
 
 // Mark as dynamic to prevent build-time static generation of protected endpoint
 export const dynamic = 'force-dynamic'
-
-const prisma = new PrismaClient()
 
 /**
  * GET /api/audit-logs

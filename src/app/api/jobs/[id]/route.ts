@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/db'
 import { UpdateJobInputSchema } from '@/lib/validations/job'
 import { ApiErrors } from '@/lib/errors/ApiError'
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
@@ -10,8 +10,6 @@ import { handleCorsPreFlight, applyCorsHeaders } from '@/lib/middleware/cors'
 
 // Mark as dynamic to prevent build-time static generation of protected endpoint
 export const dynamic = 'force-dynamic'
-
-const prisma = new PrismaClient()
 
 // Rate limiters for individual job operations
 const getJobLimiter = createRateLimiter(100, 60000) // 100 per minute

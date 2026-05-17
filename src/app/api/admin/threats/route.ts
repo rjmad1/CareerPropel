@@ -4,12 +4,10 @@ import { hasPermission } from '@/lib/security/rbac'
 import { getSuspiciousActivitySummary } from '@/lib/security/threatDetection'
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
 import { ApiErrors } from '@/lib/errors/ApiError'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/db'
 
 // Mark as dynamic to prevent build-time static generation of protected endpoint
 export const dynamic = 'force-dynamic'
-
-const prisma = new PrismaClient()
 
 /**
  * GET /api/admin/threats
