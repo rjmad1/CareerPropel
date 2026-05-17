@@ -33,33 +33,51 @@ export const authOptions: NextAuthOptions = {
         // For development: accept any email/password combination
         // In production: validate against database with hashed passwords
         if (!credentials?.email) {
+          console.error("[AUTH] No email provided in credentials")
           return null
         }
 
         try {
+          console.log("[AUTH] Attempting to authenticate user:", credentials.email)
+          
+          // Verify database is accessible
+          const userEmail = credentials.email as string
+          console.log("[AUTH] Looking up candidate with email:", userEmail)
+          
           // Create or get user by email
           let candidate = await prisma.candidate.findUnique({
-            where: { email: credentials.email as string }
+            where: { email: userEmail }
           })
 
           if (!candidate) {
+            console.log("[AUTH] Candidate not found, creating new account for:", userEmail)
             // Auto-create candidate on first login
             candidate = await prisma.candidate.create({
               data: {
-                email: credentials.email as string,
-                name: (credentials.email as string).split('@')[0]
+                email: userEmail,
+                name: userEmail.split('@')[0]
               }
             })
+            console.log("[AUTH] Successfully created candidate:", candidate.id)
+          } else {
+            console.log("[AUTH] Found existing candidate:", candidate.id)
           }
 
           // Return user object with email and ID
-          return {
+          const result = {
             id: candidate.id,
             email: candidate.email,
             name: candidate.name
           }
+          console.log("[AUTH] Login successful for:", candidate.email)
+          return result
         } catch (error) {
-          console.error("Auth error:", error)
+          console.error("[AUTH] Authorization error:", error)
+          console.error("[AUTH] Error details:", {
+            message: error instanceof Error ? error.message : "Unknown error",
+            stack: error instanceof Error ? error.stack : "No stack trace",
+            credentials_email: credentials?.email
+          })
           return null
         }
       }
@@ -100,25 +118,18 @@ export const authOptions: NextAuthOptions = {
           return false
         }
       }
-
-      // Credentials provider (already handled in authorize)
       return true
     },
-    async jwt({ token, user, account }) {
+    jwt({ token, user }) {
       if (user) {
         token.id = user.id
-        token.email = user.email
-        // Store provider info for session
-        if (account) {
-          token.provider = account.provider
-        }
       }
       return token
     },
     async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string
-        session.user.email = token.email as string
+      session.user = {
+        ...session.user,
+        id: token.id as string
       }
       return session
     }
