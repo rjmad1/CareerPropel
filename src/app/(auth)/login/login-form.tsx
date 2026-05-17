@@ -58,20 +58,62 @@ export default function LoginForm() {
     setIsLoading(true)
 
     try {
+      // Validate input
+      if (!email.trim()) {
+        setError('Email is required')
+        setIsLoading(false)
+        return
+      }
+      if (!password) {
+        setError('Password is required')
+        setIsLoading(false)
+        return
+      }
+
+      console.log('[LoginForm] Attempting authentication...')
+
       const result = await signIn('credentials', {
-        email,
+        email: email.trim().toLowerCase(),
         password,
         redirect: false,
       })
 
-      if (result?.error) {
+      console.log('[LoginForm] SignIn response:', {
+        ok: result?.ok,
+        error: result?.error,
+        status: result?.status,
+      })
+
+      // Handle response
+      if (!result) {
+        console.error('[LoginForm] No response from signIn()')
+        setError('Authentication service error. Please try again.')
+        setIsLoading(false)
+        return
+      }
+
+      if (result.error) {
+        console.warn('[LoginForm] Authentication error:', result.error)
         setError('Invalid email or password')
         setIsLoading(false)
-      } else if (result?.ok) {
-        router.push(callbackUrl)
+        return
       }
+
+      if (result.ok) {
+        console.log('[LoginForm] ✅ Authentication successful, redirecting...')
+        router.push(callbackUrl)
+        return
+      }
+
+      // If we get here, something unexpected happened
+      console.error('[LoginForm] Unexpected response state:', result)
+      setError('An unexpected error occurred. Please try again.')
+      setIsLoading(false)
+
     } catch (err) {
-      setError('An error occurred. Please try again.')
+      console.error('[LoginForm] Exception during authentication:', err)
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error'
+      setError(`Authentication failed: ${errorMessage}`)
       setIsLoading(false)
     }
   }

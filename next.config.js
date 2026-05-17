@@ -12,9 +12,10 @@ const nextConfig = {
     // ESLint can be run separately with 'npm run lint'
     ignoreDuringBuilds: true,
   },
-  env: {
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL || 'http://localhost:3000',
-  },
+  // NOTE: Do NOT expose NEXTAUTH_URL or NEXTAUTH_SECRET as public env vars
+  // These are server-side only and must be set in environment
+  // For local dev, set in .env.local
+  // For Vercel, set in Project Settings > Environment Variables
 }
 
 module.exports = nextConfig
