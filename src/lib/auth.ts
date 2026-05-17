@@ -4,11 +4,11 @@ import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 
 // Simple in-memory user store for development
-const devUsers = new Map<string, { id: string; email: string; name: string }>()
+const devUsers = new Map<string, any>()
 
 export const authOptions: NextAuthOptions = {
   providers: [
-    // GitHub OAuth (optional - requires GITHUB_ID and GITHUB_SECRET in .env.local)
+    // GitHub OAuth (optional)
     ...(process.env.GITHUB_ID && process.env.GITHUB_SECRET ? [
       GithubProvider({
         clientId: process.env.GITHUB_ID,
@@ -16,7 +16,7 @@ export const authOptions: NextAuthOptions = {
       })
     ] : []),
 
-    // Google OAuth (optional - requires GOOGLE_ID and GOOGLE_SECRET in .env.local)
+    // Google OAuth (optional)
     ...(process.env.GOOGLE_ID && process.env.GOOGLE_SECRET ? [
       GoogleProvider({
         clientId: process.env.GOOGLE_ID,
@@ -24,46 +24,30 @@ export const authOptions: NextAuthOptions = {
       })
     ] : []),
 
-    // Credentials provider (always available for dev)
+    // Credentials provider - pure development mode
     CredentialsProvider({
-      name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email", placeholder: "you@example.com" },
+        email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        if (!credentials?.email) {
-          return null
+        if (!credentials?.email) return null
+        
+        const email = credentials.email
+        if (devUsers.has(email)) {
+          return devUsers.get(email)
         }
-
-        const userEmail = credentials.email as string
-        const userName = userEmail.split('@')[0]
-        const userId = `dev-${userEmail.replace(/[^a-z0-9]/g, '')}`
-
-        // Check if user exists in dev store
-        if (devUsers.has(userEmail)) {
-          return devUsers.get(userEmail)!
+        
+        const user = {
+          id: email.split('@')[0],
+          email: email,
+          name: email.split('@')[0]
         }
-
-        // Create new user in dev store
-        const newUser = { id: userId, email: userEmail, name: userName }
-        devUsers.set(userEmail, newUser)
-        return newUser
+        devUsers.set(email, user)
+        return user
       }
     })
   ],
-  session: {
-    strategy: "jwt"
-  },
-  pages: {
-    signIn: "/login"
-  },
-  callbacks: {
-    jwt({ token, user }) {
-      if (user) {
-        token.sub = user.id
-      }
-      return token
-    }
-  }
+  session: { strategy: "jwt" },
+  pages: { signIn: "/login" }
 }
