@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(chmod +x .claude/hooks/*.sh)",
+      "Bash(npm install *)",
+      "Bash(npm run lint)",
+      "Bash(npm run lint:file *)",
+      "Bash(npm run typecheck)",
+      "Bash(npm run test)",
+      "Bash(npm run test:run)",
+      "Bash(npx vitest run *)",
+      "Read(./**)",
+      "Edit(./**)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)"
+    ]
+  },
+  "hooks": {
+    "SubagentStart": [
+      {
+        "matcher": "code-builder|code-validator|validation-orchestrator",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "mkdir -p .claude/logs && printf '%s | START | %s\\n' \"$(date -Iseconds)\" \"$CLAUDE_AGENT_TYPE\" >> .claude/logs/subagents.log"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "code-builder|code-validator|validation-orchestrator",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/log-subagent-stop.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
