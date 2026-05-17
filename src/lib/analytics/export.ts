@@ -4,12 +4,12 @@
  * Supports: CSV, JSON, HTML, and PDF formats
  */
 
-import { Job, ApplicationStage } from '@prisma/client';
+import { Job } from '@prisma/client';
 
 export interface AnalyticsMetrics {
   totalApplications: number;
   successRate: number;
-  stageBreakdown: Record<ApplicationStage, number>;
+  stageBreakdown: Record<string, number>;
   salaryMetrics: {
     min: number;
     max: number;
@@ -50,14 +50,14 @@ export function calculateAnalytics(jobs: Job[]): AnalyticsMetrics {
       acc[job.stage] = (acc[job.stage] || 0) + 1;
       return acc;
     },
-    {} as Record<ApplicationStage, number>
+    {} as Record<string, number>
   );
 
   const salaries = jobs
-    .filter((job) => job.minSalary && job.maxSalary)
+    .filter((job) => job.salary != null)
     .map((job) => ({
-      min: job.minSalary || 0,
-      max: job.maxSalary || 0,
+      min: job.salary || 0,
+      max: job.salary || 0,
     }));
 
   const salaryValues = salaries.flatMap((s) => [s.min, s.max]);

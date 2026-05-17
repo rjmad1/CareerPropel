@@ -1,8 +1,8 @@
-# Career-Ops Development Environment - Setup Complete ✓
+# Career Propel Development Environment - Setup Complete ✓
 
 ## Project Location
 ```
-C:\Users\rajaj\career-ops
+C:\Users\rajaj\career-propel
 ```
 
 ## What Has Been Set Up
@@ -26,7 +26,7 @@ C:\Users\rajaj\career-ops
 
 ### 3. Directory Structure ✓
 ```
-career-ops/
+career-propel/
 ├── src/
 │   ├── app/                 # Next.js App Router (main page, API routes)
 │   ├── components/          # React components (Kanban, InterviewPrep, etc.)
@@ -199,7 +199,7 @@ Edit `.env.local` with:
 
 ```bash
 # Terminal navigation
-cd ~/career-ops                 # Enter project
+cd ~/career-propel                 # Enter project
 code .                          # Open in VSCode
 
 # Development

@@ -20,10 +20,9 @@ export function useCreateInterview() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (input: CreateInterviewInput) => {
-      const { data } = // TODO: API call in Phase 2
-      // await apiClient.post('/api/interviews', input);
-      return data;
+    mutationFn: async (_input: CreateInterviewInput): Promise<unknown> => {
+      // TODO: Phase 2 — await apiClient.post('/api/interviews', _input)
+      throw new Error('Interview creation API not yet implemented');
     },
     onSuccess: (_, variables) => {
       // Invalidate interviews query for this job
@@ -38,12 +37,10 @@ export function useDeleteInterview() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (interviewId: string) => {
-      // TODO: API call in Phase 2
-      // await apiClient.delete(`/api/interviews/${interviewId}`);
+    mutationFn: async (_interviewId: string) => {
+      // TODO: Phase 2 — await apiClient.delete(`/api/interviews/${_interviewId}`)
     },
-    onSuccess: (_, interviewId) => {
-      // Invalidate all interviews queries (we don't know which job it belonged to)
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['interviews'] });
     },
   });
@@ -59,12 +56,11 @@ export function useUpdateInterview() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, updates }: Omit<UpdateInterviewInput, 'jobId'> & { id: string }) => {
-      const { data } = // TODO: API call in Phase 2
-      // await apiClient.patch(`/api/interviews/${id}`, updates);
-      return data;
+    mutationFn: async ({ id: _id, updates: _updates }: Omit<UpdateInterviewInput, 'jobId'> & { id: string }): Promise<unknown> => {
+      // TODO: Phase 2 — await apiClient.patch(`/api/interviews/${_id}`, _updates)
+      throw new Error('Interview update API not yet implemented');
     },
-    onSuccess: (_, variables) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['interviews'] });
     },
   });
@@ -87,10 +83,9 @@ export function useCreateOffer() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (input: CreateOfferInput) => {
-      const { data } = // TODO: API call in Phase 2
-      // await apiClient.post('/api/offers', input);
-      return data;
+    mutationFn: async (_input: CreateOfferInput): Promise<unknown> => {
+      // TODO: Phase 2 — await apiClient.post('/api/offers', _input)
+      throw new Error('Offer creation API not yet implemented');
     },
     onSuccess: (_, variables) => {
       // Invalidate offers query for this job
@@ -105,9 +100,8 @@ export function useDeleteOffer() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (offerId: string) => {
-      // TODO: API call in Phase 2
-      // await apiClient.delete(`/api/offers/${offerId}`);
+    mutationFn: async (_offerId: string) => {
+      // TODO: Phase 2 — await apiClient.delete(`/api/offers/${_offerId}`)
     },
     onSuccess: () => {
       // Invalidate all offers queries
@@ -125,10 +119,9 @@ export function useUpdateOffer() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, updates }: UpdateOfferInput) => {
-      const { data } = // TODO: API call in Phase 2
-      // await apiClient.patch(`/api/offers/${id}`, updates);
-      return data;
+    mutationFn: async ({ id: _id, updates: _updates }: UpdateOfferInput): Promise<unknown> => {
+      // TODO: Phase 2 — await apiClient.patch(`/api/offers/${_id}`, _updates)
+      throw new Error('Offer update API not yet implemented');
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['offers'] });
@@ -149,10 +142,9 @@ export function useUpdateJobNotes() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ jobId, notes }: UpdateJobNotesInput) => {
-      const { data } = // TODO: API call in Phase 2
-      // await apiClient.patch(`/api/jobs/${jobId}`, { notes });
-      return data;
+    mutationFn: async ({ jobId: _jobId, notes: _notes }: UpdateJobNotesInput): Promise<unknown> => {
+      // TODO: Phase 2 — await apiClient.patch(`/api/jobs/${_jobId}`, { notes: _notes })
+      throw new Error('Job notes update API not yet implemented');
     },
     onSuccess: (_, variables) => {
       // Invalidate job query

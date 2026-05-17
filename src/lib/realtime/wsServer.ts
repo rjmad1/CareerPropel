@@ -49,7 +49,7 @@ export async function subscribeToAgentUpdates(
   try {
     const redisSubscriber = redis.duplicate();
     
-    redisSubscriber.on('message', (channel: string, message: string) => {
+    redisSubscriber.on('message', (_channel: string, message: string) => {
       // Only send to the correct user's connections
       const event = parseEvent(message);
       if (event) {
@@ -183,7 +183,7 @@ export async function sendHeartbeats(): Promise<void> {
   };
 
   let sentCount = 0;
-  for (const [clientId, connection] of activeConnections) {
+  for (const [_clientId, connection] of activeConnections) {
     try {
       connection.socket.send(JSON.stringify(heartbeat));
       connection.lastHeartbeat = new Date();

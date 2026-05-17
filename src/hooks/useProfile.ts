@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { ProfileScore, ProfileEntity, ProfileSummary, ProfileRecommendation } from '@/types/profile';
+import { ProfileScore, ProfileEntity, ProfileRecommendation } from '@/types/profile';
 import {
   getProfileSummary,
   getProfileScore,
@@ -101,7 +101,7 @@ export function useProfile(
       setUnsavedChanges(true);
 
       // Auto-save after 2 seconds of inactivity
-      const timeoutId = setTimeout(async () => {
+      setTimeout(async () => {
         try {
           await updateProfile(candidateId, pendingChangesRef.current);
           pendingChangesRef.current = {};
@@ -112,7 +112,6 @@ export function useProfile(
         }
       }, 2000);
 
-      return () => clearTimeout(timeoutId);
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Update failed'));
     }

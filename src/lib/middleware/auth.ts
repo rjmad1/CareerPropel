@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 import { ApiErrors } from '@/lib/errors/ApiError'
+import { authOptions } from '@/lib/auth'
 
 /**
  * Authentication Middleware
@@ -13,7 +14,7 @@ import { ApiErrors } from '@/lib/errors/ApiError'
  */
 export async function getAuthSession() {
   try {
-    const session = await getServerSession()
+    const session = await getServerSession(authOptions)
     if (!session?.user?.email) {
       throw ApiErrors.UNAUTHORIZED()
     }
@@ -31,7 +32,7 @@ export async function getAuthSession() {
  * Usage:
  *   const session = await requireAuth(request)
  */
-export async function requireAuth(request: NextRequest) {
+export async function requireAuth(_request: NextRequest) {
   return await getAuthSession()
 }
 

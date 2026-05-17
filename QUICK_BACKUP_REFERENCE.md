@@ -4,7 +4,7 @@
 
 ### End of Week (Friday EOD)
 ```bash
-cd ~/career-ops
+cd ~/career-propel
 ./scripts/weekly-backup.sh "Week 6: Description of changes"
 ```
 

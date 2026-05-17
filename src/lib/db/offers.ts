@@ -78,11 +78,12 @@ export async function logOffer(userId: string, data: LogOfferInput) {
 
   const offer = await prisma.offer.create({
     data: {
+      candidateId: job.candidateId,
       jobId: data.jobId,
       salary: data.salary,
-      equity: data.equity,
-      bonus: data.bonus,
-      benefits: data.benefits,
+      equity: data.equity ? JSON.stringify(data.equity) : null,
+      bonus: data.bonus?.amount ?? null,
+      benefits: data.benefits ? JSON.stringify(data.benefits) : null,
       startDate: data.startDate ? new Date(data.startDate) : undefined,
       status: data.status || 'received',
       negotiated: data.negotiated || false,
@@ -117,7 +118,14 @@ export async function updateOffer(userId: string, offerId: string, data: UpdateO
 
   const updated = await prisma.offer.update({
     where: { id: offerId },
-    data,
+    data: {
+      salary: data.salary,
+      status: data.status,
+      negotiated: data.negotiated,
+      notes: data.notes,
+      equity: data.equity !== undefined ? JSON.stringify(data.equity) : undefined,
+      bonus: data.bonus !== undefined ? (data.bonus?.amount ?? null) : undefined,
+    },
     include: { job: true },
   });
 

@@ -11,6 +11,7 @@ const { createServer } = require('http')
 const { parse } = require('url')
 const next = require('next')
 const { Server } = require('socket.io')
+const { getToken } = require('next-auth/jwt')
 
 const dev = process.env.NODE_ENV !== 'production'
 const hostname = process.env.HOSTNAME || 'localhost'
@@ -44,32 +45,24 @@ app.prepare().then(() => {
     transports: ['websocket', 'polling']
   })
 
-  // Authentication middleware
+  // Authentication middleware — verifies NextAuth JWT from cookie
   io.use(async (socket, next) => {
     try {
-      const token = socket.handshake.query.token || 
-                   socket.handshake.headers.authorization?.replace('Bearer ', '')
+      const cookieHeader = socket.handshake.headers.cookie || ''
+      const mockReq = { headers: { cookie: cookieHeader } }
 
-      if (!token) {
+      const jwtToken = await getToken({
+        req: mockReq,
+        secret: process.env.NEXTAUTH_SECRET,
+      })
+
+      if (!jwtToken?.email) {
         return next(new Error('Authentication required'))
       }
 
-      // Verify token (implement your token validation here)
-      // For now, accept any token and extract email
-      try {
-        const decoded = Buffer.from(token, 'base64').toString('utf-8')
-        const [userEmail, userId] = decoded.split(':')
-        
-        if (!userEmail) {
-          return next(new Error('Invalid token format'))
-        }
-
-        socket.data.userEmail = userEmail
-        socket.data.userId = userId
-        next()
-      } catch (err) {
-        next(new Error('Invalid token'))
-      }
+      socket.data.userEmail = jwtToken.email
+      socket.data.userId = jwtToken.sub
+      next()
     } catch (error) {
       next(new Error('Authentication failed'))
     }

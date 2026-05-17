@@ -143,6 +143,13 @@ export interface StoryFeedback {
   timestamp: Date;
 }
 
+export interface LanguageProficiency {
+  language: string;
+  level: 'beginner' | 'intermediate' | 'advanced' | 'expert';
+  yearsOfExperience: number;
+  lastUsed?: Date;
+}
+
 /**
  * Technical prep tracker
  */
@@ -176,7 +183,7 @@ export interface PracticeProblemProgress {
   bestTime?: number; // seconds
   targetTime: number; // seconds
   userSolutions: CodeSolution[];
-  feedback?: ProbleFeedback;
+  feedback?: ProblemFeedback;
 }
 
 export interface CodeSolution {

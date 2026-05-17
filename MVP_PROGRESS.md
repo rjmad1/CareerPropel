@@ -1,4 +1,4 @@
-# Career Ops Frontend — MVP Progress Tracker
+# Career Propel Frontend — MVP Progress Tracker
 
 ## v0.1 MVP — CURRENT FOCUS
 

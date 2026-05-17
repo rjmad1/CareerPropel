@@ -17,7 +17,7 @@ export default function OverviewTab({ job }: OverviewTabProps) {
     setNotes(job.notes || '');
   }, [job.notes]);
 
-  const formattedDate = new Date(job.applicationDate).toLocaleDateString('en-US', {
+  const formattedDate = new Date(job.appliedAt || job.createdAt).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
@@ -51,7 +51,7 @@ export default function OverviewTab({ job }: OverviewTabProps) {
               <Briefcase size={16} className="text-gray-500" />
               <p className="text-xs text-gray-600">Role</p>
             </div>
-            <p className="text-sm font-medium text-gray-900">{job.role}</p>
+            <p className="text-sm font-medium text-gray-900">{job.title}</p>
           </div>
 
           <div className="bg-gray-50 rounded-lg p-3">
@@ -126,11 +126,11 @@ export default function OverviewTab({ job }: OverviewTabProps) {
       </div>
 
       {/* Job URL if available */}
-      {job.jobUrl && (
+      {job.url && (
         <div>
           <h3 className="text-sm font-semibold text-gray-900 mb-2">Job Listing</h3>
           <a
-            href={job.jobUrl}
+            href={job.url}
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-blue-600 hover:text-blue-700 underline"

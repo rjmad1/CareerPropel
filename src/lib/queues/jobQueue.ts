@@ -217,7 +217,7 @@ export class JobQueue {
       }
     });
 
-    subscriber.on('message', (channel, message) => {
+    subscriber.on('message', (_channel, message) => {
       try {
         const job = JSON.parse(message) as QueuedJob;
         callback(job);

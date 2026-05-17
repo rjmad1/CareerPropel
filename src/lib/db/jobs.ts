@@ -128,13 +128,15 @@ export async function createJob(userId: string, data: CreateJobInput) {
       appliedAt: new Date(),
       stage: 'sourced',
       priority: 'medium',
-      recruiter: data.recruiter,
+      recruiterName: data.recruiter?.name,
+      recruiterEmail: data.recruiter?.email,
+      recruiterPhone: data.recruiter?.phone,
       notes: data.notes,
     },
   });
 
   // Log activity
-  await createActivity(jobId, 'CREATED', {
+  await createActivity(job.id, 'CREATED', {
     title: data.title,
     company: data.company,
   });

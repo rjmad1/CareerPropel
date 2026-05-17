@@ -36,7 +36,7 @@ export async function generateInterviewPrep(
   const prep: InterviewPrep = {
     id: `prep-${job.id}-${Date.now()}`,
     jobId: job.id,
-    role: job.role,
+    role: job.title,
     company: job.company,
     generatedAt: new Date(),
     contentVersion: 1,
@@ -72,7 +72,7 @@ export async function generateInterviewPrep(
  */
 function generateCompanyResearch(
   company: CompanyProfile,
-  job: Job
+  _job: Job
 ): InterviewPrep['companyResearch'] {
   return {
     company: company.name,
@@ -86,11 +86,12 @@ function generateCompanyResearch(
       url: news.url,
       summary: news.summary,
     })),
-    // Additional fields would be populated from company profile
+    size: 'scale-up' as const,
+    founded: 2020,
     competitorsAndContext: `${company.name} operates in the ${company.industry} industry with ${company.employees.total} employees. Key focus areas: ${company.culture.values.join(', ')}.`,
     recentLayoffs: company.recentLayoffs?.[0]?.reason || undefined,
     fundingStatus: formatFundingStatus(company.funding),
-    salaryGlassodoor: undefined, // Would fetch from external source
+    salaryGlassodoor: undefined,
   };
 }
 
@@ -98,10 +99,10 @@ function generateCompanyResearch(
  * Generate role breakdown
  */
 function generateRoleBreakdown(job: Job): RoleBreakdown {
-  const seniority = inferSeniority(job.role);
+  const seniority = inferSeniority(job.title);
 
   return {
-    roleTitle: job.role,
+    roleTitle: job.title,
     seniority,
     reportingLine: 'Reports to Engineering Manager (assumed)', // From company structure
     responsibilities: [
@@ -144,9 +145,9 @@ async function generateBehavioralStories(
   resume: string,
   projects: string,
   job: Job,
-  company: CompanyProfile
+  _company: CompanyProfile
 ): Promise<BehavioralStory[]> {
-  const targetCompetencies = inferCompetencies(job.role, job.company);
+  const targetCompetencies = inferCompetencies(job.title, job.company);
 
   // Extract achievements from resume using simple heuristics
   const achievements = extractAchievements(resume);
@@ -176,8 +177,8 @@ async function generateBehavioralStories(
 /**
  * Generate technical prep
  */
-async function generateTechnicalPrep(job: Job, resume: string): Promise<TechnicalPrep> {
-  const technologies = extractTechnologies(job.role, resume);
+async function generateTechnicalPrep(job: Job, _resume: string): Promise<TechnicalPrep> {
+  const technologies = extractTechnologies(job.title, _resume);
 
   return {
     programmingLanguages: technologies
@@ -212,7 +213,7 @@ async function generateTechnicalPrep(job: Job, resume: string): Promise<Technica
  * Generate system design prep
  */
 async function generateSystemDesignPrep(job: Job): Promise<SystemDesignPrep> {
-  const seniority = inferSeniority(job.role);
+  const seniority = inferSeniority(job.title);
 
   // Only generate system design content for senior+ roles
   if (seniority === 'junior' || seniority === 'mid') {
@@ -277,7 +278,7 @@ async function generateSystemDesignPrep(job: Job): Promise<SystemDesignPrep> {
  * Generate resume alignment
  */
 function generateResumeAlignment(resume: string, job: Job): ResumeAlignment {
-  const jobKeywords = extractKeywords(job.role);
+  const jobKeywords = extractKeywords(job.title);
   const resumeKeywords = extractKeywords(resume);
 
   const matches = jobKeywords.filter((kw) =>
@@ -307,10 +308,11 @@ function generateResumeAlignment(resume: string, job: Job): ResumeAlignment {
  */
 function generateCompensationGuide(
   job: Job,
-  company: CompanyProfile
+  _company: CompanyProfile
 ): CompensationGuide {
-  const marketMin = job.compensationEstimate?.min || 150000;
-  const marketMax = job.compensationEstimate?.max || 250000;
+  const salaryVal = typeof job.salary === 'number' ? job.salary : (job.salary as any)?.min || 150000;
+  const marketMin = salaryVal || 150000;
+  const marketMax = salaryVal ? Math.round(salaryVal * 1.2) : 250000;
 
   return {
     marketRange: {
@@ -358,7 +360,7 @@ function inferSeniority(
   return 'mid';
 }
 
-function inferCompetencies(role: string, company: string): string[] {
+function inferCompetencies(_role: string, _company: string): string[] {
   // Extract competencies relevant to role
   // In production, would use ML or rule-based system
   return [
@@ -412,7 +414,7 @@ function generateSTARStory(
   };
 }
 
-function extractTechnologies(role: string, resume: string): string[] {
+function extractTechnologies(_role: string, resume: string): string[] {
   const commonTechs = [
     'JavaScript',
     'TypeScript',

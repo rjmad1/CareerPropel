@@ -44,11 +44,8 @@ export function useAgentRealTime(
   const subscriptionsRef = useRef<Map<string, Set<(data: any) => void>>>(
     new Map()
   );
-  const updateTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pollIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const pendingUpdatesRef = useRef<Map<string, any>>(new Map());
 
-  const batchDelay = options?.batchDelay || 100;
   const refreshInterval = options?.refreshInterval || 5000;
 
   /**
@@ -67,12 +64,14 @@ export function useAgentRealTime(
       const updatedAgents: Record<string, Agent> = { ...agents };
       response.executions.forEach((exec) => {
         if (exec.agentType) {
+          const execStatusMap: Record<string, 'idle' | 'running' | 'waiting' | 'error'> = {
+            queued: 'waiting', running: 'running', completed: 'idle', failed: 'error',
+          };
           updatedAgents[exec.agentType] = {
             ...agents[exec.agentType],
-            status: exec.status,
+            status: execStatusMap[exec.status] ?? 'idle',
             progress: exec.progress,
-            currentTask: exec.currentTask,
-            tokensUsed: exec.tokenUsage,
+            tokensUsed: exec.tokenCount ?? 0,
             errorMessage: exec.errorMessage,
             lastActivity: exec.updatedAt,
           };
@@ -85,43 +84,6 @@ export function useAgentRealTime(
       setIsLoading(false);
     }
   }, [candidateId, agents]);
-
-  /**
-   * Process batched updates
-   */
-  const processBatchedUpdates = useCallback(() => {
-    if (pendingUpdatesRef.current.size === 0) return;
-
-    setAgents((prev) => {
-      const updated = { ...prev };
-      pendingUpdatesRef.current.forEach((update, agentId) => {
-        updated[agentId] = {
-          ...updated[agentId],
-          ...update,
-        };
-      });
-      return updated;
-    });
-
-    pendingUpdatesRef.current.clear();
-    updateTimeoutRef.current = null;
-  }, []);
-
-  /**
-   * Queue an agent update (batched)
-   */
-  const queueUpdate = useCallback(
-    (agentId: string, update: Partial<Agent>) => {
-      pendingUpdatesRef.current.set(agentId, {
-        ...pendingUpdatesRef.current.get(agentId),
-        ...update,
-      });
-
-      if (updateTimeoutRef.current) clearTimeout(updateTimeoutRef.current);
-      updateTimeoutRef.current = setTimeout(processBatchedUpdates, batchDelay);
-    },
-    [batchDelay, processBatchedUpdates]
-  );
 
   /**
    * Subscribe to a channel
@@ -144,21 +106,6 @@ export function useAgentRealTime(
     subscriptionsRef.current.delete(channel);
   }, []);
 
-  /**
-   * Publish to a channel
-   */
-  const publish = useCallback((channel: string, data: any) => {
-    const subscribers = subscriptionsRef.current.get(channel);
-    if (subscribers) {
-      subscribers.forEach((callback) => {
-        try {
-          callback(data);
-        } catch (err) {
-          console.error('Subscription callback error:', err);
-        }
-      });
-    }
-  }, []);
 
   /**
    * Setup WebSocket connection (mock for now)

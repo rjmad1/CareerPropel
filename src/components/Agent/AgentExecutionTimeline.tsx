@@ -29,7 +29,7 @@ export const AgentExecutionTimeline: React.FC<AgentExecutionTimelineProps> = ({
   });
 
   const totalDuration =
-    execution.duration || sortedToolCalls.reduce((acc, tc) => acc + (tc.duration || 0), 0);
+    execution.durationMs || sortedToolCalls.reduce((acc, tc) => acc + (tc.duration || 0), 0);
 
   const getToolStatusColor = (status: string) => {
     switch (status) {
@@ -67,7 +67,7 @@ export const AgentExecutionTimeline: React.FC<AgentExecutionTimelineProps> = ({
         </div>
         <div className="bg-white p-3 rounded border border-gray-200">
           <p className="text-xs text-gray-600 font-semibold">Tokens</p>
-          <p className="text-sm font-medium text-gray-900 mt-1">{execution.tokenUsage || 0}</p>
+          <p className="text-sm font-medium text-gray-900 mt-1">{execution.tokenCount || 0}</p>
         </div>
       </div>
 

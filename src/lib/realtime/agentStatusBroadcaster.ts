@@ -14,6 +14,7 @@ import {
   ToolExecutionEvent,
   AgentType,
   AgentStatus,
+  QueueStatsEvent,
 } from './events';
 
 /**
@@ -202,7 +203,7 @@ export async function broadcastQueueStats(
   avgProcessingTime: number,
   throughputPerMin: number
 ): Promise<void> {
-  const event = {
+  const event: QueueStatsEvent = {
     type: 'queue:stats',
     userId,
     pending,

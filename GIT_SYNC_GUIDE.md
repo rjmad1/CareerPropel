@@ -35,7 +35,7 @@ git log --oneline origin/main -1  # Remote commit
 Your repository is configured as follows:
 
 ```
-Local:   /c/Users/rajaj/career-ops
+Local:   /c/Users/rajaj/career-propel
 Remote:  https://github.com/rjmad1/CareerPropel.git
 Branch:  main (default)
 Status:  ✅ In sync (local = remote)
@@ -80,7 +80,7 @@ Push to GitHub with: git push origin main
 
 #### Step 1: Verify All Work is Committed (5 min)
 ```bash
-cd ~/career-ops
+cd ~/career-propel
 
 # Check status
 git status
@@ -181,7 +181,7 @@ git pull origin main  # Pull any remote changes
 
 ### Morning - Start Day
 ```bash
-cd ~/career-ops
+cd ~/career-propel
 
 # Ensure you have latest from GitHub
 git pull origin main
@@ -291,12 +291,12 @@ git restore .
 ### Scenario 3: "Local repo is corrupted"
 ```bash
 # Backup current state
-cp -r ~/career-ops ~/career-ops-backup
+cp -r ~/career-propel ~/career-propel-backup
 
 # Clone fresh from GitHub
-rm -rf ~/career-ops
-git clone https://github.com/rjmad1/CareerPropel.git ~/career-ops
-cd ~/career-ops
+rm -rf ~/career-propel
+git clone https://github.com/rjmad1/CareerPropel.git ~/career-propel
+cd ~/career-propel
 npm install
 npm run dev
 ```
@@ -349,13 +349,13 @@ curl -s https://api.github.com/repos/rjmad1/CareerPropel | head -5
 Windows Task Scheduler:
 ```
 Trigger: Friday 6:00 PM
-Action: Run C:\Users\rajaj\career-ops\scripts\weekly-backup.sh "Auto-backup Week X"
+Action: Run C:\Users\rajaj\career-propel\scripts\weekly-backup.sh "Auto-backup Week X"
 ```
 
 Or macOS/Linux crontab:
 ```bash
 # Add to crontab -e
-0 18 * * 5 cd ~/career-ops && ./scripts/weekly-backup.sh "Auto-backup $(date +%V)"
+0 18 * * 5 cd ~/career-propel && ./scripts/weekly-backup.sh "Auto-backup $(date +%V)"
 ```
 
 ---
@@ -371,7 +371,7 @@ git status && echo "---" && git log --oneline -1 && echo "---" && git log --onel
 ### Export Sync Status
 ```bash
 # Creates a backup report
-cat > ~/career-ops/SYNC_STATUS.txt << 'EOF'
+cat > ~/career-propel/SYNC_STATUS.txt << 'EOF'
 Sync Status Report
 ==================
 Local Commit:  $(git rev-parse HEAD)

@@ -1,118 +1,86 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { redis } from '@/lib/redis/redisClient'
 
-// In-memory store for rate limiting (for development)
-// In production, use Redis
-const requestCounts = new Map<string, { count: number; resetTime: number }>()
+const RATE_LIMIT_WINDOW = 60 // seconds
+const RATE_LIMIT_MAX_REQUESTS = 100
 
-const RATE_LIMIT_WINDOW = 60 * 1000 // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 100 // requests per window
+// Lua script: atomically increments counter and sets TTL only on first call.
+// Returns [count, ttl]. Using SET NX + INCR avoids a race where incr runs
+// but expire never does (e.g. process crash between the two calls).
+const RATE_LIMIT_SCRIPT = `
+local key = KEYS[1]
+local window = tonumber(ARGV[1])
+local current = redis.call('INCR', key)
+if current == 1 then
+  redis.call('EXPIRE', key, window)
+end
+local ttl = redis.call('TTL', key)
+return {current, ttl}
+`
 
-/**
- * Rate limiter middleware
- * Tracks requests per IP address
- */
-export function rateLimitMiddleware(request: NextRequest) {
-  // Get client IP
-  const ip =
+async function checkRateLimit(
+  key: string,
+  maxRequests: number,
+  windowSecs: number
+): Promise<{ allowed: boolean; retryAfter: number }> {
+  const result = await redis.eval(RATE_LIMIT_SCRIPT, 1, key, String(windowSecs)) as [number, number]
+  const [count, ttl] = result
+  return { allowed: count <= maxRequests, retryAfter: Math.max(ttl, 1) }
+}
+
+function clientIp(request: NextRequest): string {
+  return (
     request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
     request.headers.get('x-real-ip') ||
     'unknown'
-
-  const now = Date.now()
-  const record = requestCounts.get(ip)
-
-  // Initialize or reset if window expired
-  if (!record || now > record.resetTime) {
-    requestCounts.set(ip, {
-      count: 1,
-      resetTime: now + RATE_LIMIT_WINDOW
-    })
-    return null // Request allowed
-  }
-
-  // Increment counter
-  record.count++
-
-  // Check if limit exceeded
-  if (record.count > RATE_LIMIT_MAX_REQUESTS) {
-    return new NextResponse(
-      JSON.stringify({
-        error: {
-          code: 'RATE_LIMIT_EXCEEDED',
-          message: `Rate limit exceeded. Maximum ${RATE_LIMIT_MAX_REQUESTS} requests per minute allowed.`,
-          retryAfter: Math.ceil((record.resetTime - now) / 1000)
-        }
-      }),
-      {
-        status: 429,
-        headers: {
-          'Content-Type': 'application/json',
-          'Retry-After': Math.ceil((record.resetTime - now) / 1000).toString()
-        }
-      }
-    )
-  }
-
-  return null // Request allowed
+  )
 }
 
-/**
- * Per-endpoint rate limiter with custom limits
- * Useful for protecting expensive operations
- */
-export function createRateLimiter(maxRequests: number = 10, windowMs: number = 60000) {
-  const store = new Map<string, { count: number; resetTime: number }>()
-
-  return (request: NextRequest) => {
-    const ip =
-      request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
-      request.headers.get('x-real-ip') ||
-      'unknown'
-
-    const now = Date.now()
-    const record = store.get(ip)
-
-    if (!record || now > record.resetTime) {
-      store.set(ip, {
-        count: 1,
-        resetTime: now + windowMs
-      })
-      return null
+function rateLimitResponse(maxRequests: number, windowSecs: number, retryAfter: number): NextResponse {
+  return new NextResponse(
+    JSON.stringify({
+      error: {
+        code: 'RATE_LIMIT_EXCEEDED',
+        message: `Rate limit exceeded. Maximum ${maxRequests} requests per ${windowSecs} seconds allowed.`,
+        retryAfter,
+      },
+    }),
+    {
+      status: 429,
+      headers: {
+        'Content-Type': 'application/json',
+        'Retry-After': String(retryAfter),
+      },
     }
+  )
+}
 
-    record.count++
+export async function rateLimitMiddleware(
+  request: NextRequest
+): Promise<NextResponse | null> {
+  const ip = clientIp(request)
+  const { allowed, retryAfter } = await checkRateLimit(
+    `rl:global:${ip}`,
+    RATE_LIMIT_MAX_REQUESTS,
+    RATE_LIMIT_WINDOW
+  )
+  if (!allowed) {
+    return rateLimitResponse(RATE_LIMIT_MAX_REQUESTS, RATE_LIMIT_WINDOW, retryAfter)
+  }
+  return null
+}
 
-    if (record.count > maxRequests) {
-      return new NextResponse(
-        JSON.stringify({
-          error: {
-            code: 'RATE_LIMIT_EXCEEDED',
-            message: `Rate limit exceeded. Maximum ${maxRequests} requests per ${Math.ceil(windowMs / 1000)} seconds allowed.`,
-            retryAfter: Math.ceil((record.resetTime - now) / 1000)
-          }
-        }),
-        {
-          status: 429,
-          headers: {
-            'Content-Type': 'application/json',
-            'Retry-After': Math.ceil((record.resetTime - now) / 1000).toString()
-          }
-        }
-      )
+export function createRateLimiter(maxRequests: number = 10, windowSecs: number = 60) {
+  return async (request: NextRequest): Promise<NextResponse | null> => {
+    const ip = clientIp(request)
+    const { allowed, retryAfter } = await checkRateLimit(
+      `rl:custom:${maxRequests}:${windowSecs}:${ip}`,
+      maxRequests,
+      windowSecs
+    )
+    if (!allowed) {
+      return rateLimitResponse(maxRequests, windowSecs, retryAfter)
     }
-
     return null
   }
 }
-
-/**
- * Clean up old entries periodically to prevent memory leaks
- */
-setInterval(() => {
-  const now = Date.now()
-  for (const [key, value] of requestCounts.entries()) {
-    if (now > value.resetTime) {
-      requestCounts.delete(key)
-    }
-  }
-}, 60000) // Cleanup every minute

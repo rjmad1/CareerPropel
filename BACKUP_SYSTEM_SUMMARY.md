@@ -78,7 +78,7 @@ Or use: ./scripts/weekly-backup.sh "Week X: ..."
 
 ### ✅ Repository Sync
 ```
-Local:   /c/Users/rajaj/career-ops
+Local:   /c/Users/rajaj/career-propel
 Remote:  https://github.com/rjmad1/CareerPropel
 Status:  IN SYNC (both at commit 6e03883)
 Branch:  main
@@ -109,7 +109,7 @@ Branch:  main
 ### **Simple Version (Recommended)**
 Every Friday EOD, run one command:
 ```bash
-cd ~/career-ops
+cd ~/career-propel
 ./scripts/weekly-backup.sh "Week X: Brief description of changes"
 ```
 
@@ -123,7 +123,7 @@ cd ~/career-ops
 
 ### **Manual Version (If Preferred)**
 ```bash
-cd ~/career-ops
+cd ~/career-propel
 
 # See what changed
 git status
@@ -182,12 +182,12 @@ git checkout main
 ### If local repo is corrupted:
 ```bash
 # Backup current state
-cp -r ~/career-ops ~/career-ops-backup
+cp -r ~/career-propel ~/career-propel-backup
 
 # Clone fresh from GitHub
-rm -rf ~/career-ops
-git clone https://github.com/rjmad1/CareerPropel.git ~/career-ops
-cd ~/career-ops
+rm -rf ~/career-propel
+git clone https://github.com/rjmad1/CareerPropel.git ~/career-propel
+cd ~/career-propel
 npm install
 npm run dev
 ```
@@ -197,7 +197,7 @@ npm run dev
 ## File Structure
 
 ```
-career-ops/
+career-propel/
 ├── BACKUP_PROCESS.md                 # Detailed backup guide (600+ lines)
 ├── GIT_SYNC_GUIDE.md                # Complete sync guide (500+ lines)
 ├── QUICK_BACKUP_REFERENCE.md        # Quick reference card

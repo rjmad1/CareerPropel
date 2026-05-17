@@ -10,10 +10,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ─── Identity & Candidate Profile ───────────────────────────────────────────
+
 model Candidate {
   id        String   @id @default(cuid())
   email     String   @unique
   name      String
+  phone     String?
+  location  String?
+  summary   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -24,24 +29,40 @@ model Candidate {
   documents         Document[]
   interviewFeedback InterviewFeedback[]
   offers            Offer[]
+  interviews        Interview[]
+  profileEntities   ProfileEntity[]
+  profileScore      ProfileScore?
 }
 
-model Job {
-  id          String   @id @default(cuid())
-  candidateId String
-  title       String
-  company     String
-  description String?
-  url         String?
-  stage       String   @default("sourced") // sourced, interested, resume_tailoring, applied, recruiter_screen, hiring_manager, technical_interview, system_design, behavioral, final_round, offer, negotiation, rejected, archived
-  appliedAt   DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+// ─── Job Pipeline ────────────────────────────────────────────────────────────
 
-  candidate         Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+model Job {
+  id             String   @id @default(cuid())
+  candidateId    String
+  title          String
+  company        String
+  description    String?
+  url            String?
+  location       String?
+  salary         Int?
+  matchScore     Float?   @default(0)
+  priority       String   @default("medium") // low, medium, high
+  recruiterName  String?
+  recruiterEmail String?
+  recruiterPhone String?
+  notes          String?
+  tags           String[]
+  stage          String   @default("sourced") // sourced, interested, resume_tailoring, applied, recruiter_screen, hiring_manager, technical_interview, system_design, behavioral, final_round, offer, negotiation, rejected, archived
+  appliedAt      DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  candidate         Candidate           @relation(fields: [candidateId], references: [id], onDelete: Cascade)
   activities        JobActivity[]
   interviewFeedback InterviewFeedback[]
   offers            Offer[]
+  interviews        Interview[]
+  documents         Document[]
 
   @@index([candidateId])
   @@index([stage])
@@ -50,7 +71,7 @@ model Job {
 model JobActivity {
   id        String   @id @default(cuid())
   jobId     String
-  action    String // applied, progressed, rejected, etc.
+  action    String   // applied, progressed, rejected, etc.
   metadata  Json?
   createdAt DateTime @default(now())
 
@@ -58,6 +79,66 @@ model JobActivity {
 
   @@index([jobId])
 }
+
+model Interview {
+  id          String    @id @default(cuid())
+  candidateId String
+  jobId       String
+  type        String    // phone, video, onsite, panel, technical, behavioral
+  scheduledAt DateTime
+  duration    Int?      // minutes
+  location    String?
+  notes       String?
+  status      String    @default("scheduled") // scheduled, completed, cancelled, rescheduled
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([jobId])
+}
+
+model InterviewFeedback {
+  id          String   @id @default(cuid())
+  candidateId String
+  jobId       String
+  type        String   // behavioral, technical, system_design, other
+  selfRating  Int?     // 1-5 scale
+  notes       String?
+  createdAt   DateTime @default(now())
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([jobId])
+}
+
+model Offer {
+  id          String    @id @default(cuid())
+  candidateId String
+  jobId       String
+  salary      Int?
+  equity      String?
+  bonus       Int?
+  benefits    String?
+  startDate   DateTime?
+  status      String    @default("pending") // pending, received, accepted, rejected, negotiating
+  negotiated  Boolean   @default(false)
+  notes       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([jobId])
+}
+
+// ─── Profile Intelligence ────────────────────────────────────────────────────
 
 model ProfileData {
   id          String   @id @default(cuid())
@@ -69,6 +150,7 @@ model ProfileData {
 
   candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
 
+  @@unique([candidateId, type])
   @@index([candidateId])
 }
 
@@ -76,7 +158,7 @@ model Skill {
   id          String   @id @default(cuid())
   candidateId String
   name        String
-  proficiency Int      @default(1) // 1-5 scale
+  proficiency String   @default("beginner") // beginner, intermediate, advanced, expert
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -103,52 +185,110 @@ model Achievement {
 model Document {
   id          String   @id @default(cuid())
   candidateId String
+  jobId       String?
   name        String
-  type        String   // pdf, docx, txt, etc.
-  url         String
+  type        String   // resume, cover_letter, pdf, docx, txt, etc.
+  url         String?
+  content     String?
+  version     String?
+  tags        String[]
   uploadedAt  DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
-
-  @@index([candidateId])
-}
-
-model InterviewFeedback {
-  id          String   @id @default(cuid())
-  candidateId String
-  jobId       String
-  type        String   // behavioral, technical, system_design, other
-  selfRating  Int?     // 1-5 scale
-  notes       String?
-  createdAt   DateTime @default(now())
-
-  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
-  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  job       Job?      @relation(fields: [jobId], references: [id], onDelete: SetNull)
 
   @@index([candidateId])
   @@index([jobId])
 }
 
-model Offer {
+model ProfileEntity {
   id          String   @id @default(cuid())
   candidateId String
-  jobId       String
-  salary      Int?
-  equity      String?
-  bonus       Int?
-  startDate   DateTime?
-  status      String   @default("pending") // pending, accepted, rejected, negotiating
+  type        String   // skill, experience, education, certification, project, etc.
+  data        Json
+  source      String?  // which document or profile data it was extracted from
+  confidence  Float?   // AI extraction confidence score (0-1)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
-  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
 
   @@index([candidateId])
-  @@index([jobId])
+  @@index([type])
 }
 
-// Phase 3: Role-Based Access Control (RBAC)
+model ProfileScore {
+  id              String   @id @default(cuid())
+  candidateId     String   @unique
+  overall         Int      @default(0) // 0-100
+  sections        Json?    // per-section breakdown
+  recommendations Json?    // improvement suggestions
+  calculatedAt    DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+}
+
+// ─── Agent Operations ────────────────────────────────────────────────────────
+
+model AgentExecution {
+  id           String    @id @default(cuid())
+  userId       String    // NextAuth user ID or email — not a FK
+  agentType    String    // resume-tailor, job-match, interview-prep, research, follow-up, networking
+  status       String    @default("queued") // queued, running, completed, failed
+  input        String?   // JSON-serialised AgentPromptContext
+  output       String?   // JSON-serialised result
+  tokenCount   Int?
+  durationMs   Int?
+  errorMessage String?
+  startedAt    DateTime?
+  completedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  toolCalls ToolCall[]
+  eventLogs EventLog[]
+
+  @@index([userId])
+  @@index([status])
+}
+
+model ToolCall {
+  id          String    @id @default(cuid())
+  executionId String
+  tool        String    // tool name/identifier
+  input       Json?
+  output      Json?
+  error       String?
+  status      String    @default("pending") // pending, running, completed, failed
+  startedAt   DateTime?
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  execution AgentExecution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+
+  @@index([executionId])
+}
+
+model EventLog {
+  id          String   @id @default(cuid())
+  executionId String
+  level       String   // INFO, WARN, ERROR
+  message     String
+  metadata    Json?
+  timestamp   DateTime @default(now())
+
+  execution AgentExecution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+
+  @@index([executionId])
+  @@index([timestamp])
+}
+
+// ─── Security & Admin ────────────────────────────────────────────────────────
+
 model Role {
   id          String   @id @default(cuid())
   name        String   @unique // "admin", "recruiter", "candidate", etc.
@@ -156,8 +296,8 @@ model Role {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  permissions    RolePermission[]
-  userRoles      UserRole[]
+  permissions RolePermission[]
+  userRoles   UserRole[]
 }
 
 model Permission {
@@ -188,14 +328,14 @@ model RolePermission {
 }
 
 model UserRole {
-  id        String   @id @default(cuid())
-  email     String   // Links to Candidate email
+  id        String    @id @default(cuid())
+  email     String    // Links to Candidate email
   roleId    String
-  grantedBy String?  // Email of admin who granted
-  grantedAt DateTime @default(now())
+  grantedBy String?   // Email of admin who granted
+  grantedAt DateTime  @default(now())
   expiresAt DateTime? // Optional role expiration
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
@@ -204,32 +344,30 @@ model UserRole {
   @@index([roleId])
 }
 
-// Phase 3: Two-Factor Authentication
 model TwoFactorSecret {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  secret    String   // Encrypted TOTP secret
-  backupCodes String[] // Encrypted backup codes
-  enabled   Boolean  @default(false)
-  enabledAt DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String    @id @default(cuid())
+  email       String    @unique
+  secret      String    // Encrypted TOTP secret
+  backupCodes String[]  // Encrypted backup codes
+  enabled     Boolean   @default(false)
+  enabledAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@index([email])
 }
 
-// Phase 3: API Key Management
 model ApiKey {
-  id        String   @id @default(cuid())
-  email     String   // Links to Candidate email
-  keyHash   String   // Hash of the actual key (key itself never stored)
-  name      String   // User-defined name
-  prefix    String   @unique // "sk_" prefix for identification
-  createdAt DateTime @default(now())
-  expiresAt DateTime? // When the key expires
+  id         String    @id @default(cuid())
+  email      String    // Links to Candidate email
+  keyHash    String    // Hash of the actual key (key itself never stored)
+  name       String    // User-defined name
+  prefix     String    @unique // "sk_" prefix for identification
+  createdAt  DateTime  @default(now())
+  expiresAt  DateTime?
   lastUsedAt DateTime?
-  revokedAt DateTime? // When the key was revoked
-  usageCount Int      @default(0)
+  revokedAt  DateTime?
+  usageCount Int       @default(0)
 
   @@unique([email, name])
   @@index([email])
@@ -237,19 +375,18 @@ model ApiKey {
   @@index([expiresAt])
 }
 
-// Phase 3: Audit Logging
 model AuditLog {
-  id        String   @id @default(cuid())
-  email     String   // User email
-  action    String   // LOGIN, JOB_CREATED, JOB_DELETED, API_KEY_CREATED, etc.
-  resource  String   // What was affected (job, user, settings, etc.)
-  resourceId String? // ID of the affected resource
-  details   Json?    // Additional context/metadata
-  ipAddress String?
-  userAgent String?
-  status    String   // "success" or "failure"
-  severity  String   @default("info") // "info", "warning", "error", "critical"
-  createdAt DateTime @default(now())
+  id         String   @id @default(cuid())
+  email      String
+  action     String   // LOGIN, JOB_CREATED, JOB_DELETED, API_KEY_CREATED, etc.
+  resource   String
+  resourceId String?
+  details    Json?
+  ipAddress  String?
+  userAgent  String?
+  status     String   // "success" or "failure"
+  severity   String   @default("info") // "info", "warning", "error", "critical"
+  createdAt  DateTime @default(now())
 
   @@index([email])
   @@index([action])
@@ -257,7 +394,6 @@ model AuditLog {
   @@index([severity])
 }
 
-// Phase 3: Advanced Threat Detection
 model LoginAttempt {
   id        String   @id @default(cuid())
   email     String

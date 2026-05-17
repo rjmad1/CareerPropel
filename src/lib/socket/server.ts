@@ -180,7 +180,7 @@ export function initializeSocketServer(io: SocketServer): void {
       // Notify all rooms that user left
       for (const room of socket.rooms) {
         if (room.startsWith('job:')) {
-          const jobId = room.replace('job:', '')
+          room.replace('job:', '') // jobId extracted if needed later
           io.to(room).emit('user:left', {
             userEmail: socket.data.userEmail,
             timestamp: new Date().toISOString()

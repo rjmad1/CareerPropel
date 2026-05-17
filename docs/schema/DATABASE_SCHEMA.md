@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Career-Ops database uses PostgreSQL with Prisma ORM. The schema is organized into 4 layers:
+The Career Propel database uses PostgreSQL with Prisma ORM. The schema is organized into 4 layers:
 
 1. **Core Models (Week 1-5)** — Candidate, Job, Skill, Achievement, Document, Interview Feedback, Offer
 2. **Profile Intelligence (Week 6)** — ProfileEntity, ExtractionLog, ProfileScore

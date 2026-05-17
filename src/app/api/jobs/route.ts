@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
   if (corsResponse) return corsResponse
 
   // Apply rate limiting
-  const rateLimitResponse = getJobsLimiter(request)
+  const rateLimitResponse = await getJobsLimiter(request)
   if (rateLimitResponse) return applyCorsHeaders(request, rateLimitResponse)
   try {
     // Require authentication
@@ -109,7 +109,7 @@ export async function POST(request: NextRequest) {
     if (corsResponse) return corsResponse
 
     // Apply rate limiting
-    const rateLimitResponse = createJobLimiter(request)
+    const rateLimitResponse = await createJobLimiter(request)
     if (rateLimitResponse) return applyCorsHeaders(request, rateLimitResponse)
 
     // Require authentication

@@ -10,7 +10,7 @@
 
 export const dynamic = 'force-dynamic'
 
-export async function GET(request: Request) {
+export async function GET(_request: Request) {
   // Only allow in development
   if (process.env.NODE_ENV === 'production') {
     return new Response(
@@ -36,7 +36,7 @@ export async function GET(request: Request) {
       validation: {
         hasNextAuthUrl: !!process.env.NEXTAUTH_URL,
         hasNextAuthSecret: !!process.env.NEXTAUTH_SECRET,
-        isProduction: process.env.NODE_ENV === 'production',
+        isProduction: (process.env.NODE_ENV as string) === 'production',
         isDevelopment: process.env.NODE_ENV === 'development',
       },
       checks: {

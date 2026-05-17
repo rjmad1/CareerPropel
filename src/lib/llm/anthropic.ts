@@ -7,8 +7,10 @@ import {
   LLMMessage,
   LLMCallOptions,
   LLMCallResult,
-  LLMProvider as ILLMProvider,
+  LLMProvider,
 } from './provider';
+
+type ILLMProvider = LLMProvider;
 
 export class AnthropicProvider implements ILLMProvider {
   name = 'anthropic' as const;
@@ -48,10 +50,12 @@ export class AnthropicProvider implements ILLMProvider {
       temperature,
       top_p: topP,
       system: systemPrompt,
-      messages: messages.map((m) => ({
-        role: m.role,
-        content: m.content,
-      })),
+      messages: messages
+        .filter((m) => m.role !== 'system')
+        .map((m) => ({
+          role: m.role as 'user' | 'assistant',
+          content: m.content,
+        })),
     });
 
     const content =
@@ -92,10 +96,12 @@ export class AnthropicProvider implements ILLMProvider {
       temperature,
       top_p: topP,
       system: systemPrompt,
-      messages: messages.map((m) => ({
-        role: m.role,
-        content: m.content,
-      })),
+      messages: messages
+        .filter((m) => m.role !== 'system')
+        .map((m) => ({
+          role: m.role as 'user' | 'assistant',
+          content: m.content,
+        })),
       stream: true,
     });
 

@@ -62,7 +62,7 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
       <div className="sticky top-0 bg-white border-b border-gray-200 p-6 z-50" data-testid="detail-panel-header">
         <div className="flex items-start justify-between mb-4">
           <div className="flex-1">
-            <h2 className="text-xl font-bold text-gray-900">{job.role}</h2>
+            <h2 className="text-xl font-bold text-gray-900">{job.title}</h2>
             <p className="text-sm text-gray-600 mt-1">{job.company}</p>
           </div>
           <button
@@ -87,7 +87,7 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
           </div>
           <div className="bg-gray-50 rounded-lg p-2">
             <p className="text-xs text-gray-600">Priority</p>
-            <p className="text-sm font-semibold text-gray-900 capitalize">{job.priority}</p>
+            <p className="text-sm font-semibold text-gray-900 capitalize">{(job as any).priority || '—'}</p>
           </div>
         </div>
 

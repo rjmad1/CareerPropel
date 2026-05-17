@@ -17,7 +17,7 @@ interface MoveJobOptions {
 
 export const useMoveJob = (options?: MoveJobOptions) => {
   const updateJobStore = useJobStore((state) => state.updateJob);
-  const updateJobQueryMutation = useUpdateJob('');
+  useUpdateJob('');
 
   return useCallback(
     async (jobId: string, newStage: JobStage) => {

@@ -10,22 +10,18 @@
  */
 export interface AgentExecution {
   id: string;
-  candidateId: string;
-  jobId?: string;
+  userId: string;
   agentType: AgentType;
 
-  status: 'idle' | 'running' | 'completed' | 'failed' | 'paused';
+  status: 'queued' | 'running' | 'completed' | 'failed';
   startedAt?: Date;
   completedAt?: Date;
-  duration?: number; // milliseconds
+  tokenCount?: number;
+  durationMs?: number;
 
-  currentTask?: string;
   progress: number; // 0-100
-  eta?: number; // estimated seconds to completion
-
-  tokenUsage?: number;
+  output?: Record<string, any>;
   errorMessage?: string;
-  metadata?: Record<string, any>;
 
   toolCalls: ToolCall[];
   createdAt: Date;

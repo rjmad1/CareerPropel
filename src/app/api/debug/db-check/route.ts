@@ -1,8 +1,19 @@
 import { prisma } from "@/lib/db"
+import { getServerSession } from "next-auth/next"
+import { authOptions } from "@/lib/auth"
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
+export async function GET(_request: Request) {
+  if (process.env.NODE_ENV === 'production') {
+    return Response.json({ error: 'This endpoint is only available in development' }, { status: 403 })
+  }
+
+  const session = await getServerSession(authOptions)
+  if (!session) {
+    return Response.json({ error: 'Authentication required' }, { status: 401 })
+  }
+
   try {
     console.log("[DEBUG] Starting database check...")
     

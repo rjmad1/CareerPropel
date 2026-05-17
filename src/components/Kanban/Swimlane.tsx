@@ -1,8 +1,17 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { Job, JobStage, SwimlaneConfig } from '@/types/job';
+import { Job, JobStage } from '@/types/job';
 import { JobCard } from './JobCard';
+
+export interface SwimlaneConfig {
+  label: string;
+  borderColor: string;
+  bgColor?: string;
+  color?: string;
+  icon?: string;
+  description?: string;
+}
 
 export interface SwimlaneProps {
   stage: JobStage;

@@ -121,7 +121,7 @@ export async function publishAgentCompleted(
  */
 export async function publishAgentStatus(
   userId: string,
-  executionId: string,
+  _executionId: string,
   agentType: Phase2AgentType,
   executionStatus: 'queued' | 'running' | 'completed' | 'failed' | 'paused',
   queueDepth: number = 0,

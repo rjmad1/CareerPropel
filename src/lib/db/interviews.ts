@@ -87,12 +87,11 @@ export async function scheduleInterview(userId: string, data: ScheduleInterviewI
 
   const interview = await prisma.interview.create({
     data: {
+      candidateId: userId,
       jobId: data.jobId,
       type: data.type,
       scheduledAt: new Date(data.scheduledAt),
       duration: data.duration || 60,
-      interviewer: data.interviewer,
-      meetingLink: data.meetingLink,
       location: data.location,
       notes: data.notes,
       status: 'scheduled',

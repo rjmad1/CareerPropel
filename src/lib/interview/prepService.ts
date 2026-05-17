@@ -156,9 +156,7 @@ async function generateRoleBreakdown(
     responsibilities,
     requiredSkills: required.map(skill => ({
       name: skill,
-      proficiency: seniority,
-      yourLevel: undefined,
-      gapAnalysis: undefined,
+      proficiency: seniority === 'principal' ? 'staff' : seniority,
     })),
     preferredSkills: preferred.map(skill => ({
       name: skill,
@@ -178,7 +176,7 @@ async function generateRoleBreakdown(
 async function generateBehavioralStories(
   resume: string,
   jobDescription: string,
-  projects: string[]
+  _projects: string[]
 ): Promise<BehavioralStory[]> {
   const competencies = extractRequiredCompetencies(jobDescription);
   
@@ -298,7 +296,7 @@ async function generateTechnicalPrep(
 /**
  * Generate system design interview prep
  */
-async function generateSystemDesignPrep(jobDescription: string): Promise<SystemDesignPrep> {
+async function generateSystemDesignPrep(_jobDescription: string): Promise<SystemDesignPrep> {
   return {
     designPatterns: [
       {
@@ -406,32 +404,28 @@ async function generateResumeAlignment(
 async function generateCompensationGuide(
   company: string,
   jobTitle: string,
-  jobDescription: string
+  _jobDescription: string
 ): Promise<CompensationGuide> {
   const marketRange = estimateMarketRange(jobTitle);
   const equityRange = estimateEquityRange(company);
 
   return {
-    marketRange,
-    equityRange: {
-      min: equityRange.min,
-      max: equityRange.max,
-      vestingSchedule: '4 year vest, 1 year cliff',
-      dataSource: 'Levels.fyi, Blind',
+    marketRange: {
+      ...marketRange,
+      dataPoints: 0,
     },
-    benefitsToNegotiate: [
-      'Remote work options',
-      'Professional development budget',
-      'Signing bonus',
-      'Relocation package',
-      'Stock refresh grants',
-    ],
-    negotiationTactics: [
-      'Get competing offers before negotiating',
-      'Focus on value you bring, not personal need',
-      'Ask for what you want clearly',
-      'Negotiate everything at once (base, equity, bonus)',
-      'Build rapport before hard negotiations',
+    yourEstimate: {
+      min: Math.round(marketRange.min * 0.95),
+      max: Math.round(marketRange.max * 1.05),
+      justification: 'Based on market data for similar roles',
+    },
+    negotiationTalkingPoints: [
+      {
+        topic: 'Base Salary',
+        arguments: ['Market data supports higher range', 'Relevant experience and skills'],
+        dataSupport: 'Levels.fyi, Blind',
+        counterArguments: ['Budget constraints', 'Equity component'],
+      },
     ],
     redFlags: [
       'Vague equity details',
@@ -439,13 +433,14 @@ async function generateCompensationGuide(
       'Overly aggressive negotiation from company',
       'Unwillingness to discuss salary transparency',
     ],
-    interviewQuestionsToAsk: [
-      'Can you describe the equity structure?',
-      'What does success in this role look like?',
-      'How often are promotions considered?',
-      'What is the team structure?',
-      'How is performance measured?',
+    benefitsToPrioritize: [
+      'Remote work options',
+      'Professional development budget',
+      'Signing bonus',
+      'Relocation package',
+      'Stock refresh grants',
     ],
+    equityConsiderations: `${equityRange.min.toLocaleString()} - ${equityRange.max.toLocaleString()} options with standard 4-year vest, 1-year cliff`,
   };
 }
 
@@ -474,7 +469,7 @@ function extractTechStackFromJobDescription(jobDescription: string): string[] {
   );
 }
 
-function extractResponsibilities(jobDescription: string) {
+function extractResponsibilities(_jobDescription: string) {
   return [
     { title: 'Design', description: 'Design systems and architecture', priority: 'must_have' as const },
     {
@@ -490,7 +485,7 @@ function extractResponsibilities(jobDescription: string) {
   ];
 }
 
-function extractSkills(jobDescription: string) {
+function extractSkills(_jobDescription: string) {
   const required = ['Communication', 'Problem-solving', 'Teamwork'];
   const preferred = ['Leadership', 'Public speaking'];
 
@@ -522,7 +517,7 @@ function extractLocation(jobDescription: string): string {
   return 'Not specified';
 }
 
-function extractRequiredCompetencies(jobDescription: string): string[] {
+function extractRequiredCompetencies(_jobDescription: string): string[] {
   return [
     'Leadership',
     'Problem-solving',
@@ -532,7 +527,7 @@ function extractRequiredCompetencies(jobDescription: string): string[] {
   ];
 }
 
-function extractAchievements(resume: string) {
+function extractAchievements(_resume: string) {
   return [
     {
       title: 'Led Feature Launch',
@@ -548,7 +543,7 @@ function extractAchievements(resume: string) {
   ];
 }
 
-function calculateRelevanceScore(achievement: any, jobDescription: string): number {
+function calculateRelevanceScore(_achievement: unknown, _jobDescription: string): number {
   return 0.8; // Would calculate based on keyword matching
 }
 
@@ -566,7 +561,7 @@ function extractFrameworks(jobDescription: string): string[] {
   );
 }
 
-function extractWeakAreas(resume: string): string[] {
+function extractWeakAreas(_resume: string): string[] {
   return []; // Would be determined based on job requirements vs resume
 }
 
@@ -598,7 +593,7 @@ function calculateOverallMatch(keywordMatches: any[]): number {
   return Math.round((matched / keywordMatches.length) * 100);
 }
 
-function generateResumeSuggestions(missingKeywords: string[], resume: string) {
+function generateResumeSuggestions(missingKeywords: string[], _resume: string) {
   return missingKeywords.slice(0, 3).map(keyword => ({
     section: 'Skills',
     originalContent: 'Current skills section',
@@ -608,7 +603,7 @@ function generateResumeSuggestions(missingKeywords: string[], resume: string) {
   }));
 }
 
-function extractHighlightedExperience(resume: string, jobDescription: string) {
+function extractHighlightedExperience(_resume: string, _jobDescription: string) {
   return [
     {
       sourceProject: 'Project Name',
@@ -619,11 +614,11 @@ function extractHighlightedExperience(resume: string, jobDescription: string) {
   ];
 }
 
-function estimateMarketRange(jobTitle: string) {
+function estimateMarketRange(_jobTitle: string) {
   return { min: 120000, max: 180000, currency: 'USD', source: 'Levels.fyi' };
 }
 
-function estimateEquityRange(company: string) {
+function estimateEquityRange(_company: string) {
   return { min: 1000, max: 5000 };
 }
 

@@ -199,8 +199,8 @@ export function useInterviewPrep(
  */
 export function useInterviewPrepProgress(jobId: string) {
   const [progress, setProgress] = useState(0);
-  const [status, setStatus] = useState<'idle' | 'generating' | 'complete' | 'error'>('idle');
-  const [message, setMessage] = useState('');
+  const [status] = useState<'idle' | 'generating' | 'complete' | 'error'>('idle');
+  const [message] = useState('');
 
   useEffect(() => {
     if (!jobId) return;
@@ -210,11 +210,6 @@ export function useInterviewPrepProgress(jobId: string) {
     // and update progress, status, and message as they come in
 
     // Placeholder implementation
-    const handleProgress = (data: any) => {
-      setProgress(data.progress);
-      setStatus(data.status);
-      setMessage(data.message);
-    };
 
     // Simulated progress (remove when WebSocket is integrated)
     if (status === 'generating') {

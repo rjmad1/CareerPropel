@@ -14,11 +14,6 @@ import {
   Grid,
   Card,
   CardContent,
-  CardHeader,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Chip,
   Paper,
 } from '@mui/material'
@@ -59,7 +54,7 @@ const StatusCard = styled(Paper)(({ theme }) => ({
 }))
 
 export default function Home() {
-  const { data: session, status } = useSession()
+  const { status } = useSession()
   const router = useRouter()
 
   const features = [
@@ -199,7 +194,7 @@ export default function Home() {
             {features.map((feature, index) => {
               const IconComponent = feature.icon
               return (
-                <Grid item xs={12} sm={6} md={3} key={index}>
+                <Grid {...{ item: true, xs: 12, sm: 6, md: 3 } as any} key={index}>
                   <FeatureCard>
                     <CardContent sx={{ textAlign: 'center', flex: 1 }}>
                       <IconComponent
@@ -230,7 +225,7 @@ export default function Home() {
           </Typography>
           <Grid container spacing={2} sx={{ maxWidth: 600, mx: 'auto' }}>
             {statusItems.map((item, index) => (
-              <Grid item xs={12} key={index}>
+              <Grid {...{ item: true, xs: 12 } as any} key={index}>
                 <StatusCard>
                   <CheckCircleIcon color="success" />
                   <Box sx={{ flex: 1 }}>
@@ -238,7 +233,7 @@ export default function Home() {
                       {item.label}
                     </Typography>
                   </Box>
-                  <Chip label={item.status} color={item.color} variant="outlined" size="small" />
+                  <Chip label={item.status} color={item.color as any} variant="outlined" size="small" />
                 </StatusCard>
               </Grid>
             ))}

@@ -33,7 +33,7 @@ export async function GET(
     if (corsResponse) return corsResponse
 
     // Apply rate limiting
-    const rateLimitResponse = getJobLimiter(request)
+    const rateLimitResponse = await getJobLimiter(request)
     if (rateLimitResponse) return applyCorsHeaders(request, rateLimitResponse)
 
     // Require authentication
@@ -89,7 +89,7 @@ export async function PATCH(
     if (corsResponse) return corsResponse
 
     // Apply rate limiting
-    const rateLimitResponse = updateJobLimiter(request)
+    const rateLimitResponse = await updateJobLimiter(request)
     if (rateLimitResponse) return applyCorsHeaders(request, rateLimitResponse)
 
     // Require authentication
@@ -172,7 +172,7 @@ export async function DELETE(
     if (corsResponse) return corsResponse
 
     // Apply rate limiting
-    const rateLimitResponse = deleteJobLimiter(request)
+    const rateLimitResponse = await deleteJobLimiter(request)
     if (rateLimitResponse) return applyCorsHeaders(request, rateLimitResponse)
 
     // Require authentication

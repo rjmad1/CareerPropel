@@ -1,10 +1,7 @@
 import {
   ProfileScore,
   ProfileEntity,
-  ExtractionLog,
   ProfileRecommendation,
-  SemanticSkill,
-  Achievement,
   ProfileSummary,
 } from '@/types/profile';
 

@@ -20,7 +20,7 @@ export function useSocket(options: UseSocketOptions = {}) {
   const { autoConnect = true, reconnection = true } = options
   const { data: session } = useSession()
   const [socket, setSocket] = useState<Socket | null>(null)
-  const [isConnected, setIsConnected] = useState(false)
+  const [, setIsConnected] = useState(false)
   const socketRef = useRef<Socket | null>(null)
 
   useEffect(() => {
@@ -138,7 +138,7 @@ export function useJobSocket(jobId: string) {
 
     socket.on('job:stageChanged', (data) => {
       if (data.jobId === jobId) {
-        setJobData(prev => ({
+        setJobData((prev: any) => ({
           ...prev,
           stage: data.newStage,
           updatedAt: new Date().toISOString()
@@ -148,7 +148,7 @@ export function useJobSocket(jobId: string) {
 
     socket.on('job:notesUpdated', (data) => {
       if (data.jobId === jobId) {
-        setJobData(prev => ({
+        setJobData((prev: any) => ({
           ...prev,
           notes: data.notes,
           updatedAt: new Date().toISOString()

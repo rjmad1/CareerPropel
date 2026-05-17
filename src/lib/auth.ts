@@ -57,54 +57,37 @@ export const authOptions: NextAuthOptions = {
       })
     ] : []),
 
-    // Credentials provider - pure development mode
-    CredentialsProvider({
-      id: 'credentials',
-      name: 'Credentials',
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
-      },
-      async authorize(credentials, req) {
-        try {
-          // Validate credentials exist
-          if (!credentials?.email) {
-            console.warn('[Auth] Login attempt with missing email')
+    // Credentials provider — development only.
+    // Never runs in production; any email is accepted to simplify local testing.
+    ...(process.env.NODE_ENV !== 'production' ? [
+      CredentialsProvider({
+        id: 'credentials',
+        name: 'Credentials',
+        credentials: {
+          email: { label: "Email", type: "email" },
+          password: { label: "Password", type: "password" }
+        },
+        async authorize(credentials) {
+          try {
+            if (!credentials?.email) return null
+            const email = credentials.email.toLowerCase().trim()
+            if (!email.includes('@')) return null
+
+            if (devUsers.has(email)) {
+              return devUsers.get(email)
+            }
+
+            const newUser = { id: email.split('@')[0], email, name: email.split('@')[0] }
+            devUsers.set(email, newUser)
+            console.log('[Auth] ✅ Dev user authenticated:', email)
+            return newUser
+          } catch (error) {
+            console.error('[Auth] ❌ Unexpected error in authorize:', error)
             return null
           }
-          
-          const email = credentials.email.toLowerCase().trim()
-          
-          // Validate email format (basic)
-          if (!email.includes('@')) {
-            console.warn('[Auth] Login attempt with invalid email format:', email)
-            return null
-          }
-          
-          // Check if user already exists in store
-          if (devUsers.has(email)) {
-            const user = devUsers.get(email)
-            console.log('[Auth] ✅ User authenticated from store:', email)
-            return user
-          }
-          
-          // Create new user on first login (development mode)
-          const newUser = {
-            id: email.split('@')[0],
-            email: email,
-            name: email.split('@')[0]
-          }
-          
-          devUsers.set(email, newUser)
-          console.log('[Auth] ✅ New user created and authenticated:', email)
-          return newUser
-          
-        } catch (error) {
-          console.error('[Auth] ❌ Unexpected error in authorize:', error)
-          return null
         }
-      }
-    })
+      })
+    ] : [])
   ],
   
   // JWT Strategy
@@ -120,8 +103,8 @@ export const authOptions: NextAuthOptions = {
         if (user) {
           // On successful authorize(), add user data to token
           token.sub = user.id
-          token.email = user.email
-          token.name = user.name
+          token.email = user.email ?? ''
+          token.name = user.name ?? ''
           console.log('[Auth JWT] ✅ Token created for user:', user.email)
         }
         return token
@@ -135,12 +118,11 @@ export const authOptions: NextAuthOptions = {
       try {
         // Add user data from token to session
     // Ensure session user object is properly populated from token
-            if (!session.user) {
-                    session.user = {}
+            session.user = {
+              id: token.sub as string,
+              email: token.email as string,
+              name: token.name as string,
             }
-            session.user.id = token.sub as string
-                  session.user.email = token.email as string
-session.user.name = token.name as string
             console.log('[Auth Session] ✅ Session updated for user:', token.email)
             return session
       } catch (error) {

@@ -1,144 +1,97 @@
 import { prisma } from "@/lib/db"
+import { redis } from "@/lib/redis/redisClient"
 import { randomBytes, createHmac } from 'crypto'
 import * as speakeasy from 'speakeasy'
 import * as QRCode from 'qrcode'
 
+const TWO_FA_SESSION_TTL = 5 * 60 // 5 minutes in seconds
 
-/**
- * Two-Factor Authentication (2FA) Implementation
- * Supports:
- * - TOTP (Time-based One-Time Password) - Google Authenticator, Authy
- * - Backup codes for account recovery
- */
+// ─── HMAC key for backup codes ────────────────────────────────────────────────
+// Uses a dedicated secret so NEXTAUTH_SECRET can be rotated independently.
+function getBackupCodeHmacKey(): string {
+  const key = process.env.BACKUP_CODE_HMAC_SECRET
+  if (!key) throw new Error('BACKUP_CODE_HMAC_SECRET environment variable is required')
+  return key
+}
 
-// ============================================================================
-// TOTP Setup
-// ============================================================================
+// ─── TOTP Setup ───────────────────────────────────────────────────────────────
 
-/**
- * Generate TOTP secret for user
- * Returns QR code and secret
- */
 export async function generateTOTPSecret(email: string) {
   const secret = speakeasy.generateSecret({
     name: `CareerPropel (${email})`,
     issuer: 'CareerPropel',
-    length: 32
+    length: 32,
   })
 
-  // Generate QR code
   const qrCode = await QRCode.toDataURL(secret.otpauth_url!)
 
   return {
     secret: secret.base32,
     qrCode,
-    backupCodes: generateBackupCodes()
+    backupCodes: generateBackupCodes(),
   }
 }
 
-/**
- * Verify TOTP token
- */
 export function verifyTOTPToken(secret: string, token: string): boolean {
   return speakeasy.totp.verify({
     secret,
     encoding: 'base32',
     token,
-    window: 2 // Allow ±2 30-second windows for clock drift
+    window: 2,
   })
 }
 
-// ============================================================================
-// Backup Codes
-// ============================================================================
+// ─── Backup Codes ─────────────────────────────────────────────────────────────
 
-/**
- * Generate 10 backup codes
- * Each code is used once and deleted after use
- */
 export function generateBackupCodes(count: number = 10): string[] {
   const codes: string[] = []
   for (let i = 0; i < count; i++) {
-    // Generate 6-character codes: XXX-XXX
-    const code = randomBytes(3)
-      .toString('hex')
-      .toUpperCase()
-      .match(/.{1,3}/g)
-      ?.join('-')
+    const code = randomBytes(3).toString('hex').toUpperCase().match(/.{1,3}/g)?.join('-')
     if (code) codes.push(code)
   }
   return codes
 }
 
-/**
- * Hash backup code for secure storage
- */
 export function hashBackupCode(code: string): string {
-  return createHmac('sha256', process.env.NEXTAUTH_SECRET || 'secret')
+  return createHmac('sha256', getBackupCodeHmacKey())
     .update(code.replace(/-/g, ''))
     .digest('hex')
 }
 
-/**
- * Verify backup code
- * Returns true and deletes code if valid
- */
+// Verify and consume a backup code (single-use: removes it from the stored array).
 export async function verifyBackupCode(email: string, code: string): Promise<boolean> {
-  const candidate = await prisma.candidate.findUnique({
+  const record = await prisma.twoFactorSecret.findUnique({
     where: { email },
-    include: { backupCodes: true }
+    select: { backupCodes: true },
   })
-
-  if (!candidate) return false
+  if (!record) return false
 
   const codeHash = hashBackupCode(code)
-  const backupCode = candidate.backupCodes.find(bc => bc.code === codeHash && !bc.used)
+  const idx = record.backupCodes.indexOf(codeHash)
+  if (idx === -1) return false
 
-  if (!backupCode) return false
-
-  // Mark as used (don't delete, keep audit trail)
-  await prisma.backupCode.update({
-    where: { id: backupCode.id },
-    data: { used: true, usedAt: new Date() }
+  const remaining = record.backupCodes.filter((_, i) => i !== idx)
+  await prisma.twoFactorSecret.update({
+    where: { email },
+    data: { backupCodes: remaining },
   })
-
   return true
 }
 
-// ============================================================================
-// Enable/Disable 2FA
-// ============================================================================
+// ─── Enable / Disable 2FA ─────────────────────────────────────────────────────
 
-/**
- * Enable 2FA for user
- * Stores TOTP secret and backup codes
- */
 export async function enable2FA(
   email: string,
   totpSecret: string,
   backupCodes: string[]
 ): Promise<boolean> {
   try {
-    const candidate = await prisma.candidate.update({
+    const hashedCodes = backupCodes.map(hashBackupCode)
+    await prisma.twoFactorSecret.upsert({
       where: { email },
-      data: {
-        twoFactorEnabled: true,
-        totpSecret: totpSecret,
-        backupCodes: {
-          deleteMany: {}, // Remove old codes
-          create: backupCodes.map(code => ({
-            code: hashBackupCode(code),
-            used: false
-          }))
-        }
-      }
+      update: { secret: totpSecret, backupCodes: hashedCodes, enabled: true, enabledAt: new Date() },
+      create: { email, secret: totpSecret, backupCodes: hashedCodes, enabled: true, enabledAt: new Date() },
     })
-
-    // Log security event
-    await logSecurityEvent('2FA_ENABLED', email, {
-      method: 'TOTP'
-    })
-
     return true
   } catch (error) {
     console.error('Enable 2FA error:', error)
@@ -146,25 +99,13 @@ export async function enable2FA(
   }
 }
 
-/**
- * Disable 2FA for user
- */
 export async function disable2FA(email: string): Promise<boolean> {
   try {
-    await prisma.candidate.update({
+    await prisma.twoFactorSecret.upsert({
       where: { email },
-      data: {
-        twoFactorEnabled: false,
-        totpSecret: null,
-        backupCodes: {
-          deleteMany: {}
-        }
-      }
+      update: { enabled: false, backupCodes: [] },
+      create: { email, secret: '', backupCodes: [], enabled: false },
     })
-
-    // Log security event
-    await logSecurityEvent('2FA_DISABLED', email, {})
-
     return true
   } catch (error) {
     console.error('Disable 2FA error:', error)
@@ -172,117 +113,69 @@ export async function disable2FA(email: string): Promise<boolean> {
   }
 }
 
-/**
- * Check if user has 2FA enabled
- */
 export async function is2FAEnabled(email: string): Promise<boolean> {
-  const candidate = await prisma.candidate.findUnique({
+  const record = await prisma.twoFactorSecret.findUnique({
     where: { email },
-    select: { twoFactorEnabled: true }
+    select: { enabled: true },
   })
-
-  return candidate?.twoFactorEnabled || false
+  return record?.enabled ?? false
 }
 
-// ============================================================================
-// 2FA Session Management
-// ============================================================================
+// ─── 2FA Sessions (Redis-backed) ──────────────────────────────────────────────
 
-/**
- * Create temporary 2FA verification session
- * User must verify 2FA code within 5 minutes
- */
+interface TwoFASession {
+  email: string
+  verified: boolean
+  createdAt: number
+}
+
 export async function create2FASession(email: string): Promise<string> {
   const sessionId = randomBytes(32).toString('hex')
-  const expiresAt = new Date(Date.now() + 5 * 60 * 1000) // 5 minutes
-
-  // Store in temporary store (in production use Redis)
-  global.twoFASessions = global.twoFASessions || new Map()
-  global.twoFASessions.set(sessionId, {
-    email,
-    expiresAt,
-    verified: false
-  })
-
+  const session: TwoFASession = { email, verified: false, createdAt: Date.now() }
+  await redis.setex(`2fa:session:${sessionId}`, TWO_FA_SESSION_TTL, JSON.stringify(session))
   return sessionId
 }
 
-/**
- * Verify 2FA code and mark session as verified
- */
+async function get2FASession(sessionId: string): Promise<TwoFASession | null> {
+  const data = await redis.get(`2fa:session:${sessionId}`)
+  return data ? (JSON.parse(data) as TwoFASession) : null
+}
+
 export async function verify2FASession(
   sessionId: string,
   totpCode: string,
   backupCode?: string
 ): Promise<boolean> {
-  global.twoFASessions = global.twoFASessions || new Map()
-  const session = global.twoFASessions.get(sessionId)
+  const session = await get2FASession(sessionId)
+  if (!session) return false
 
-  if (!session || new Date() > session.expiresAt) {
-    return false
-  }
-
-  const candidate = await prisma.candidate.findUnique({
+  const record = await prisma.twoFactorSecret.findUnique({
     where: { email: session.email },
-    select: { totpSecret: true, twoFactorEnabled: true }
+    select: { secret: true, enabled: true },
   })
 
-  if (!candidate?.twoFactorEnabled) {
-    return false
-  }
+  if (!record?.enabled) return false
 
   let isValid = false
 
-  // Try TOTP code first
-  if (totpCode && candidate.totpSecret) {
-    isValid = verifyTOTPToken(candidate.totpSecret, totpCode)
+  if (totpCode && record.secret) {
+    isValid = verifyTOTPToken(record.secret, totpCode)
   }
 
-  // Try backup code if TOTP failed
   if (!isValid && backupCode) {
     isValid = await verifyBackupCode(session.email, backupCode)
   }
 
   if (isValid) {
-    session.verified = true
-    await logSecurityEvent('2FA_VERIFIED', session.email, {
-      method: backupCode ? 'BACKUP_CODE' : 'TOTP'
-    })
-  } else {
-    await logSecurityEvent('2FA_FAILED', session.email, {
-      method: backupCode ? 'BACKUP_CODE' : 'TOTP'
-    })
+    const updated: TwoFASession = { ...session, verified: true }
+    const ttl = await redis.ttl(`2fa:session:${sessionId}`)
+    await redis.setex(`2fa:session:${sessionId}`, Math.max(ttl, 1), JSON.stringify(updated))
   }
 
   return isValid
 }
 
-/**
- * Check if 2FA session is verified
- */
-export function is2FASessionVerified(sessionId: string): boolean {
-  global.twoFASessions = global.twoFASessions || new Map()
-  const session = global.twoFASessions.get(sessionId)
-
-  if (!session || new Date() > session.expiresAt) {
-    return false
-  }
-
-  return session.verified === true
-}
-
-// ============================================================================
-// Helper: Security Event Logging
-// ============================================================================
-
-/**
- * Log security events for audit trail
- */
-async function logSecurityEvent(
-  eventType: string,
-  email: string,
-  metadata: any
-): Promise<void> {
-  // This integrates with audit logging (Phase 3)
-  console.log(`[SECURITY] ${eventType} - ${email}`, metadata)
+export async function is2FASessionVerified(sessionId: string): Promise<boolean> {
+  const session = await get2FASession(sessionId)
+  return session?.verified === true
 }

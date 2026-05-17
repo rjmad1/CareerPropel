@@ -35,7 +35,7 @@ export function useProfileCompletion(
   const [recommendations, setRecommendations] = useState<ProfileRecommendation[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-  const [progressTracker, setProgressTracker] = useState<Record<string, number>>({});
+  const [, setProgressTracker] = useState<Record<string, number>>({});
 
   /**
    * Fetch completeness data

@@ -1,84 +1,38 @@
 import { createHash, randomBytes } from 'crypto'
+import { redis } from '@/lib/redis/redisClient'
 
-// In-memory store for CSRF tokens (in production, use Redis with expiration)
-const csrfTokens = new Map<string, { token: string; createdAt: number }>()
-
-const TOKEN_EXPIRATION = 24 * 60 * 60 * 1000 // 24 hours
+const TOKEN_TTL = 24 * 60 * 60 // 24 hours in seconds
 const TOKEN_LENGTH = 32 // bytes
 
-/**
- * Generate a new CSRF token
- * Should be called when rendering forms
- */
-export function generateCsrfToken(sessionId: string): string {
-  // Generate random token
+function hashToken(token: string): string {
+  return createHash('sha256').update(token).digest('hex')
+}
+
+export async function generateCsrfToken(sessionId: string): Promise<string> {
   const token = randomBytes(TOKEN_LENGTH).toString('hex')
   const tokenHash = hashToken(token)
-
-  // Store token with expiration
-  csrfTokens.set(sessionId, {
-    token: tokenHash,
-    createdAt: Date.now()
-  })
-
+  await redis.setex(`csrf:${sessionId}`, TOKEN_TTL, tokenHash)
   return token
 }
 
-/**
- * Verify a CSRF token
- * Should be called before processing form submissions
- */
-export function verifyCsrfToken(sessionId: string, providedToken: string): boolean {
-  const stored = csrfTokens.get(sessionId)
+export async function verifyCsrfToken(sessionId: string, providedToken: string): Promise<boolean> {
+  const stored = await redis.get(`csrf:${sessionId}`)
+  if (!stored) return false
 
-  if (!stored) {
-    return false
-  }
-
-  // Check expiration
-  if (Date.now() - stored.createdAt > TOKEN_EXPIRATION) {
-    csrfTokens.delete(sessionId)
-    return false
-  }
-
-  // Compare tokens (hash the provided token to compare)
   const providedHash = hashToken(providedToken)
-  const isValid = providedHash === stored.token
+  const isValid = providedHash === stored
 
-  // Delete token after verification (one-time use)
   if (isValid) {
-    csrfTokens.delete(sessionId)
+    await redis.del(`csrf:${sessionId}`) // one-time use
   }
 
   return isValid
 }
 
-/**
- * Hash a token for secure storage
- */
-function hashToken(token: string): string {
-  return createHash('sha256').update(token).digest('hex')
-}
-
-/**
- * Clean up expired tokens periodically
- */
-setInterval(() => {
-  const now = Date.now()
-  for (const [key, value] of csrfTokens.entries()) {
-    if (now - value.createdAt > TOKEN_EXPIRATION) {
-      csrfTokens.delete(key)
-    }
-  }
-}, 60 * 60 * 1000) // Cleanup every hour
-
-/**
- * Middleware to check CSRF token on state-changing requests
- */
-export function validateCsrfToken(sessionId: string, token: string | undefined): boolean {
-  if (!token) {
-    return false
-  }
-
+export async function validateCsrfToken(
+  sessionId: string,
+  token: string | undefined
+): Promise<boolean> {
+  if (!token) return false
   return verifyCsrfToken(sessionId, token)
 }

@@ -6,7 +6,7 @@
 import { AnthropicProvider } from './anthropic';
 import { NvidiaNimProvider } from './nvidia-nim';
 
-export type LLMProvider = 'anthropic' | 'nvidia-nim';
+export type LLMProviderName = 'anthropic' | 'nvidia-nim';
 
 export interface LLMMessage {
   role: 'user' | 'assistant' | 'system';
@@ -31,7 +31,7 @@ export interface LLMCallResult {
 }
 
 export interface LLMProvider {
-  name: LLMProvider;
+  name: LLMProviderName;
   callLLM(messages: LLMMessage[], options?: LLMCallOptions): Promise<LLMCallResult>;
   streamLLM(
     messages: LLMMessage[],
@@ -57,8 +57,9 @@ export function initializeLLMProvider(): LLMProvider {
       break;
   }
 
-  console.log(`[LLM] Initialized provider: ${providerInstance.name}`);
-  return providerInstance;
+  const instance = providerInstance!;
+  console.log(`[LLM] Initialized provider: ${instance.name}`);
+  return instance;
 }
 
 export function getLLMProvider(): LLMProvider {

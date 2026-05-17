@@ -8,8 +8,6 @@ import {
   cancelAgentExecution,
   subscribeToAgentExecution,
   pollAgentExecution,
-  AgentExecutionResponse,
-  LogsResponse,
 } from '@/lib/agent/agentService';
 
 export interface UseAgentExecutionResult {

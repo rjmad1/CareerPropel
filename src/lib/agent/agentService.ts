@@ -166,7 +166,7 @@ export function subscribeToAgentExecution(
       }
     });
 
-    eventSource.onerror = (error) => {
+    eventSource.onerror = (_error) => {
       eventSource.close();
       if (onError) onError(new Error('EventSource connection error'));
     };
@@ -209,7 +209,7 @@ export function pollAgentExecution(
       attempts++;
 
       // Continue polling if execution is running
-      if (response.execution.status === 'running' || response.execution.status === 'idle') {
+      if (response.execution.status === 'running' || response.execution.status === 'queued') {
         timeoutId = setTimeout(poll, interval);
       }
     } catch (error) {

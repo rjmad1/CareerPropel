@@ -24,6 +24,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 import { AgentType } from '@/lib/agents/prompts';
 
@@ -63,9 +65,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get userId from session/auth
-    // TODO: Replace with actual authentication
-    const userId = 'user-' + Math.random().toString(36).substring(7);
+    const session = await getServerSession(authOptions)
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
+    }
+    const userId = session.user.email;
 
     // Create execution record
     const execution = await prisma.agentExecution.create({
@@ -109,6 +113,12 @@ export async function POST(request: NextRequest) {
  */
 export async function GET(request: NextRequest) {
   try {
+    const session = await getServerSession(authOptions)
+    if (!session?.user?.email) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
+    }
+    const callerEmail = session.user.email;
+
     const executionId = request.nextUrl.searchParams.get('executionId');
 
     if (!executionId) {
@@ -133,6 +143,11 @@ export async function GET(request: NextRequest) {
         { error: 'Execution not found' },
         { status: 404 }
       );
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((execution as any).userId !== callerEmail && (execution as any).candidateId !== callerEmail) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
     return NextResponse.json({

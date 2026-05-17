@@ -111,8 +111,8 @@ export function useAgentStatus(autoConnect: boolean = true) {
         break;
       }
 
+      // @ts-expect-error: 'initial_state' is a custom server event not in the union
       case 'initial_state': {
-        // Initialize agents from server state
         const initialAgents = (event as any).agents || {};
         setAgents(initialAgents);
         break;

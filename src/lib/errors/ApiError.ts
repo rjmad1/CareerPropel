@@ -33,12 +33,14 @@ export class ApiError extends Error {
       error: {
         code: this.code,
         message: this.message,
-        ...(isDevelopment && includeDetails && this.internalError && {
-          details: {
-            internal: String(this.internalError),
-            stack: this.internalError instanceof Error ? this.internalError.stack : undefined,
-          },
-        }),
+        ...(isDevelopment && includeDetails && this.internalError
+          ? {
+              details: {
+                internal: String(this.internalError),
+                stack: this.internalError instanceof Error ? this.internalError.stack : undefined,
+              },
+            }
+          : {}),
       },
     }
   }

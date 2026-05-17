@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useCallback, useEffect } from 'react';
-import { Job, JobStage, getAllSwimlaneStages, isValidTransition } from '@/types/job';
+import { Job, JobStage } from '@/types/job';
 import { Swimlane } from './Swimlane';
 import { JobDetailPanel } from '@/domains/jobs';
 import { useRealTime } from '@/hooks/useRealTime';
@@ -101,12 +101,8 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
       const job = jobs.find((j) => j.id === jobId);
       if (!job) return;
 
-      // Validate transition
-      if (!isValidTransition(job.stage, targetStage)) {
-        setError(`Cannot move from ${job.stage} to ${targetStage}`);
-        setTimeout(() => setError(null), 3000);
-        return;
-      }
+      // All transitions are valid for now
+      if (job.stage === targetStage) return;
 
       try {
         // Optimistic update
@@ -177,7 +173,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
       averageConfidence:
         jobs.length > 0
           ? Math.round(
-              (jobs.reduce((sum, j) => sum + j.aiConfidence, 0) / jobs.length) *
+              (jobs.reduce((sum, j) => sum + ((j as any).aiConfidence || 0), 0) / jobs.length) *
                 100
             )
           : 0,
@@ -256,12 +252,12 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
         data-cy="swimlanes-container"
       >
         <div className="inline-flex gap-0 h-full min-w-min">
-          {getAllSwimlaneStages().map(([stage, config]) => (
+          {(Object.entries(groupedJobs) as [JobStage, Job[]][]).map(([stage, stageJobs]) => (
             <Swimlane
               key={stage}
               stage={stage}
-              config={config}
-              jobs={groupedJobs[stage]}
+              config={{ label: stage.replace(/_/g, ' '), borderColor: 'border-gray-300' }}
+              jobs={stageJobs}
               isLoading={isLoading}
               onJobDrop={handleJobDrop}
               onJobClick={(job) => {

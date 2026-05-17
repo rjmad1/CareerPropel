@@ -104,8 +104,6 @@ const theme = createTheme({
           fontSize: '1rem',
           padding: '10px 24px',
           borderRadius: 8,
-        },
-        containedPrimary: {
           boxShadow: '0 3px 5px -1px rgba(0,0,0,0.2)',
           '&:hover': {
             boxShadow: '0 5px 5px -3px rgba(0,0,0,0.2)',

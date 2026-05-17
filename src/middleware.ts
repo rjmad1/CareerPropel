@@ -3,9 +3,10 @@ import type { NextRequest } from 'next/server'
 
 // Protect all routes except login and auth endpoints
 export function middleware(request: NextRequest) {
-  // Get the session token from cookies
-  const token = request.cookies.get('next-auth.session-token')?.value || 
-                request.cookies.get('next-auth.jwt')?.value
+  // NextAuth uses __Secure- prefix on HTTPS (production) and plain name on HTTP (dev)
+  const token =
+    request.cookies.get('__Secure-next-auth.session-token')?.value ||
+    request.cookies.get('next-auth.session-token')?.value
 
   // Allow auth routes and login page
   if (

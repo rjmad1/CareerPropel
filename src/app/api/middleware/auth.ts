@@ -28,12 +28,6 @@ export async function getCurrentUser(req: NextRequest) {
       }
     }
 
-    // For development/testing: check for x-user-id header
-    const devUserId = req.headers.get('x-user-id');
-    if (devUserId) {
-      return { id: devUserId, email: `user-${devUserId}@example.com` };
-    }
-
     return null;
   } catch (error) {
     console.error('Error extracting user:', error);

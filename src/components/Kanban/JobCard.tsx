@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Job, getSwimlaneConfig } from '@/types/job';
+import { Job } from '@/types/job';
 import { useRealTime } from '@/hooks/useRealTime';
 
 export interface JobCardProps {
@@ -62,9 +62,10 @@ export const JobCard: React.FC<JobCardProps> = ({
     return unsubscribe;
   }, [job.id, subscribe]);
 
-  const stageConfig = getSwimlaneConfig(job.stage);
-  const priorityColor = getPriorityColor(job.priority);
-  const confidenceColor = getConfidenceColor(job.aiConfidence);
+  const jobAny = job as any;
+  const stageConfig = { borderColor: 'border-gray-300' };
+  const priorityColor = getPriorityColor(jobAny.priority || 'medium');
+  const confidenceColor = getConfidenceColor(jobAny.aiConfidence || 0);
 
   return (
     <div
@@ -90,12 +91,12 @@ export const JobCard: React.FC<JobCardProps> = ({
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
             <h4 className="font-semibold text-gray-900 text-sm truncate">
-              {job.role}
+              {job.title}
             </h4>
             <p className="text-xs text-gray-600 truncate">{job.company}</p>
           </div>
           <div className={`px-2 py-0.5 rounded text-xs font-semibold whitespace-nowrap flex-shrink-0 ${priorityColor}`}>
-            {job.priority.charAt(0).toUpperCase() + job.priority.slice(1)}
+            {(jobAny.priority || 'medium').charAt(0).toUpperCase() + (jobAny.priority || 'medium').slice(1)}
           </div>
         </div>
       </div>
@@ -119,11 +120,11 @@ export const JobCard: React.FC<JobCardProps> = ({
       </div>
 
       {/* Interview Status Badge */}
-      {job.interviewStatus !== 'not_started' && (
+      {jobAny.interviewStatus && jobAny.interviewStatus !== 'not_started' && (
         <div className="flex items-center gap-1 text-xs">
           <span className="text-gray-600">Status:</span>
-          <span className={`px-2 py-0.5 rounded text-xs font-semibold ${getInterviewStatusColor(job.interviewStatus)}`}>
-            {formatInterviewStatus(job.interviewStatus)}
+          <span className={`px-2 py-0.5 rounded text-xs font-semibold ${getInterviewStatusColor(jobAny.interviewStatus)}`}>
+            {formatInterviewStatus(jobAny.interviewStatus)}
           </span>
         </div>
       )}
@@ -133,53 +134,53 @@ export const JobCard: React.FC<JobCardProps> = ({
         <div className="bg-gray-50 p-1.5 rounded text-center">
           <div className="text-gray-600">Confidence</div>
           <div className={`font-semibold ${confidenceColor}`}>
-            {Math.round(job.aiConfidence * 100)}%
+            {Math.round((jobAny.aiConfidence || 0) * 100)}%
           </div>
         </div>
         <div className="bg-gray-50 p-1.5 rounded text-center">
           <div className="text-gray-600">Resume</div>
           <div className="font-semibold text-gray-900">
-            {job.resumeVersion}
+            {jobAny.resumeVersion || '—'}
           </div>
         </div>
         <div className="bg-gray-50 p-1.5 rounded text-center">
           <div className="text-gray-600">Recruiter</div>
           <div className="font-semibold text-gray-900">
-            {job.recruiterStatus === 'not_contacted'
+            {!jobAny.recruiterStatus || jobAny.recruiterStatus === 'not_contacted'
               ? '—'
-              : job.recruiterStatus.charAt(0).toUpperCase()}
+              : jobAny.recruiterStatus.charAt(0).toUpperCase()}
           </div>
         </div>
       </div>
 
       {/* Risks/Blockers Indicators */}
-      {(job.risks.length > 0 || job.blockers.length > 0) && (
+      {((jobAny.risks?.length > 0) || (jobAny.blockers?.length > 0)) && (
         <div className="flex gap-2 text-xs">
-          {job.risks.length > 0 && (
+          {jobAny.risks?.length > 0 && (
             <div className="flex items-center gap-1 px-2 py-1 bg-yellow-50 text-yellow-700 rounded">
               <span>⚠️</span>
-              <span>{job.risks.length} risk{job.risks.length > 1 ? 's' : ''}</span>
+              <span>{jobAny.risks.length} risk{jobAny.risks.length > 1 ? 's' : ''}</span>
             </div>
           )}
-          {job.blockers.length > 0 && (
+          {jobAny.blockers?.length > 0 && (
             <div className="flex items-center gap-1 px-2 py-1 bg-red-50 text-red-700 rounded">
               <span>🚫</span>
-              <span>{job.blockers.length} blocker{job.blockers.length > 1 ? 's' : ''}</span>
+              <span>{jobAny.blockers.length} blocker{jobAny.blockers.length > 1 ? 's' : ''}</span>
             </div>
           )}
         </div>
       )}
 
       {/* Next Action Preview */}
-      {job.nextAction && (
+      {jobAny.nextAction && (
         <div className="pt-1 border-t border-gray-200 text-xs text-gray-600">
-          <span className="text-gray-500">Next:</span> {job.nextAction}
+          <span className="text-gray-500">Next:</span> {jobAny.nextAction}
         </div>
       )}
 
       {/* Application Date */}
       <div className="pt-1 text-xs text-gray-500">
-        Applied {formatDate(job.applicationDate)}
+        Applied {formatDate(job.appliedAt || job.createdAt)}
       </div>
     </div>
   );

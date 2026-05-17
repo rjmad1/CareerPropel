@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
 
     const entities = await prisma.profileEntity.findMany({
       where,
-      orderBy: { extractedAt: 'desc' },
+      orderBy: { createdAt: 'desc' },
     });
 
     return NextResponse.json({ entities, total: entities.length }, { status: 200 });

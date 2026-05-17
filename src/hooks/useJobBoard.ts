@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react'
-import { Job } from '@/components/Kanban'
-import { StageId } from '@/lib/design-tokens'
+import { Job, JobStage } from '@/types/job'
 
 export interface UseJobBoardReturn {
   jobs: Job[]
@@ -10,10 +9,10 @@ export interface UseJobBoardReturn {
   addJob: (job: Job) => void
   updateJob: (id: string, updates: Partial<Job>) => void
   deleteJob: (id: string) => void
-  moveJob: (id: string, newStage: StageId) => void
+  moveJob: (id: string, newStage: JobStage) => void
   selectJob: (id: string | null) => void
   getJobById: (id: string) => Job | undefined
-  getJobsByStage: (stage: StageId) => Job[]
+  getJobsByStage: (stage: JobStage) => Job[]
 }
 
 /**
@@ -29,7 +28,10 @@ export function useJobBoard(): UseJobBoardReturn {
       company: 'Google',
       stage: 'sourced',
       matchScore: 92,
-      applicationDate: new Date().toISOString(),
+      appliedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      userId: 'mock',
       salary: { min: 150000, max: 200000, currency: 'USD' },
       location: 'Mountain View, CA',
     },
@@ -39,6 +41,10 @@ export function useJobBoard(): UseJobBoardReturn {
       company: 'Microsoft',
       stage: 'interested',
       matchScore: 85,
+      appliedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      userId: 'mock',
       salary: { min: 140000, max: 180000, currency: 'USD' },
       location: 'Seattle, WA',
     },
@@ -48,25 +54,36 @@ export function useJobBoard(): UseJobBoardReturn {
       company: 'Meta',
       stage: 'applied',
       matchScore: 88,
-      applicationDate: new Date(Date.now() - 86400000).toISOString(),
+      appliedAt: new Date(Date.now() - 86400000).toISOString(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      userId: 'mock',
       location: 'Menlo Park, CA',
     },
     {
       id: '4',
       title: 'Principal Engineer',
       company: 'Apple',
-      stage: 'recruiter-screen',
+      stage: 'recruiter_screen',
       matchScore: 90,
       recruiterEmail: 'recruiter@apple.com',
       recruiterName: 'Sarah Chen',
+      appliedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      userId: 'mock',
       location: 'Cupertino, CA',
     },
     {
       id: '5',
       title: 'Engineering Manager',
       company: 'Amazon',
-      stage: 'hiring-manager',
+      stage: 'hiring_manager',
       matchScore: 87,
+      appliedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      userId: 'mock',
       location: 'Seattle, WA',
     },
   ])
@@ -93,7 +110,7 @@ export function useJobBoard(): UseJobBoardReturn {
     }
   }, [selectedJobId])
 
-  const moveJob = useCallback((id: string, newStage: StageId) => {
+  const moveJob = useCallback((id: string, newStage: JobStage) => {
     updateJob(id, { stage: newStage })
   }, [updateJob])
 
@@ -107,7 +124,7 @@ export function useJobBoard(): UseJobBoardReturn {
   )
 
   const getJobsByStage = useCallback(
-    (stage: StageId) => jobs.filter((job) => job.stage === stage),
+    (stage: JobStage) => jobs.filter((job) => job.stage === stage),
     [jobs]
   )
 

@@ -17,7 +17,7 @@ This document outlines the automated and manual backup process for the CareerPro
 Before making your weekly backup, verify all changes are committed locally:
 
 ```bash
-cd ~/career-ops
+cd ~/career-propel
 git status  # Should show "nothing to commit, working tree clean"
 ```
 
@@ -43,7 +43,7 @@ chmod +x ./scripts/weekly-backup.sh
 If you prefer manual control:
 
 ```bash
-cd ~/career-ops
+cd ~/career-propel
 
 # Review changes
 git status
@@ -171,9 +171,9 @@ If the local repository becomes corrupted:
 ```bash
 # Clone fresh copy from GitHub
 cd ~
-rm -rf career-ops-backup
-git clone https://github.com/rjmad1/CareerPropel.git career-ops-backup
-cd career-ops-backup
+rm -rf career-propel-backup
+git clone https://github.com/rjmad1/CareerPropel.git career-propel-backup
+cd career-propel-backup
 npm install
 npm run dev
 ```

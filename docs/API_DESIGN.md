@@ -1,4 +1,4 @@
-# Career-Ops: API Design & Endpoint Reference
+# Career Propel: API Design & Endpoint Reference
 
 ## Base Configuration
 
