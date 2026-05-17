@@ -131,7 +131,7 @@ export const authOptions: NextAuthOptions = {
       }
     },
     
-    hasync session({ session, token }) {
+    async session({ session, token }) {
       try {
         // Add user data from token to session
     // Ensure session user object is properly populated from token
