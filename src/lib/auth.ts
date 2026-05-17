@@ -39,12 +39,11 @@ export const authOptions: NextAuthOptions = {
         try {
           const userEmail = credentials.email as string
           const userName = userEmail.split('@')[0]
-          const userId = `user-${userEmail.replace(/[^a-z0-9]/g, '')}`
+          const userId = `dev-${userEmail.replace(/[^a-z0-9]/g, '')}`
 
           // Check if user exists in dev store
           if (devUsers.has(userEmail)) {
-            const user = devUsers.get(userEmail)!
-            return user
+            return devUsers.get(userEmail)!
           }
 
           // Create new user in dev store
@@ -66,20 +65,18 @@ export const authOptions: NextAuthOptions = {
     error: "/auth/error"
   },
   callbacks: {
-    async signIn({ user, account }) {
-      // Allow all sign-ins
-      return true
-    },
-    jwt({ token, user }) {
+    async jwt({ token, user }) {
       if (user) {
-        token.id = user.id
+        return {
+          ...token,
+          id: user.id
+        }
       }
       return token
     },
     async session({ session, token }) {
-      session.user = {
-        ...session.user,
-        id: token.id as string
+      if (session.user) {
+        session.user.id = token.id as string
       }
       return session
     }
