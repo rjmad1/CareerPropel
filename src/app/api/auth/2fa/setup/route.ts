@@ -3,6 +3,9 @@ import { getAuthContext } from '@/lib/middleware/auth'
 import { generateTOTPSecret, generateBackupCodes } from '@/lib/security/twoFactor'
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
 
+// Mark as dynamic to prevent build-time static generation
+export const dynamic = 'force-dynamic'
+
 /**
  * POST /api/auth/2fa/setup
  * Generate TOTP secret and backup codes for 2FA setup
