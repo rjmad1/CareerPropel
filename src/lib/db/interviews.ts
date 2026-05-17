@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from "@/lib/db";
 import type { ScheduleInterviewInput, UpdateInterviewInput, ListInterviewsQuery } from '@/lib/validation/schemas';
 import { createActivity } from './jobs';
-
-const prisma = new PrismaClient();
 
 /**
  * Get interviews for a user with optional filtering

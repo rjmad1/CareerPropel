@@ -1,7 +1,6 @@
 import { Server as SocketServer, Socket } from 'socket.io'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from "@/lib/db"
 
-const prisma = new PrismaClient()
 
 /**
  * Authenticate WebSocket connections

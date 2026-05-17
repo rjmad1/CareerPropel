@@ -1,8 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from "@/lib/db";
 import type { CreateJobInput, UpdateJobInput, ListJobsQuery } from '@/lib/validation/schemas';
 
 // Initialize Prisma
-const prisma = new PrismaClient();
 
 /**
  * Get all jobs for a user with filtering, sorting, and pagination

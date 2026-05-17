@@ -1,9 +1,8 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from "@/lib/db"
 import { randomBytes, createHmac } from 'crypto'
 import * as speakeasy from 'speakeasy'
 import * as QRCode from 'qrcode'
 
-const prisma = new PrismaClient()
 
 /**
  * Two-Factor Authentication (2FA) Implementation

@@ -1,8 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from "@/lib/db";
 import type { LogOfferInput, UpdateOfferInput, ListOffersQuery } from '@/lib/validation/schemas';
 import { createActivity } from './jobs';
 
-const prisma = new PrismaClient();
 
 /**
  * Get offers for a user

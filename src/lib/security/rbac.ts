@@ -1,6 +1,5 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from "@/lib/db"
 
-const prisma = new PrismaClient()
 
 // Define built-in roles and their permissions
 export const DEFAULT_ROLES = {

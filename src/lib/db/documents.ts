@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from "@/lib/db";
 import type { UploadDocumentInput, ListDocumentsQuery } from '@/lib/validation/schemas';
-
-const prisma = new PrismaClient();
 
 /**
  * Get documents for a user

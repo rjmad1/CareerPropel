@@ -1,8 +1,7 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from "@/lib/db"
 import { createHash, randomBytes } from 'crypto'
 import { logSecurityEvent, AuditAction } from '@/lib/logging/auditLog'
 
-const prisma = new PrismaClient()
 
 /**
  * API Key Management
