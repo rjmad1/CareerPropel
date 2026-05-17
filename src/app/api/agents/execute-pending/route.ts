@@ -17,6 +17,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { processPendingExecutions } from '@/lib/agents/executor';
 
+// Mark as dynamic to prevent build-time static generation
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: NextRequest) {
   try {
     // Optional: Verify executor secret

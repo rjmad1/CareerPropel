@@ -4,6 +4,9 @@ import { validateRequest, successResponse, validationErrorResponse, errorRespons
 import { updateOfferSchema } from '@/lib/validation/schemas';
 import { getOfferById, updateOffer, deleteOffer } from '@/lib/db/offers';
 
+// Mark as dynamic to prevent build-time static generation
+export const dynamic = 'force-dynamic'
+
 /**
  * GET /api/offers/[id]
  * Get a single offer

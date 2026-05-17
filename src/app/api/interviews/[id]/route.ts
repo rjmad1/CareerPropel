@@ -4,6 +4,9 @@ import { validateRequest, successResponse, validationErrorResponse, errorRespons
 import { updateInterviewSchema } from '@/lib/validation/schemas';
 import { getInterviewById, updateInterview, deleteInterview } from '@/lib/db/interviews';
 
+// Mark as dynamic to prevent build-time static generation
+export const dynamic = 'force-dynamic'
+
 /**
  * GET /api/interviews/[id]
  * Get a single interview

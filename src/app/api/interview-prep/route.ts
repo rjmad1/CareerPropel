@@ -10,6 +10,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { generateInterviewPrep } from '@/lib/interview/prepService';
 
+// Mark as dynamic to prevent build-time static generation
+export const dynamic = 'force-dynamic'
+
 interface PrepRequest {
   jobId: string;
   jobDescription: string;

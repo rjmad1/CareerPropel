@@ -39,6 +39,9 @@
 
 import { NextRequest } from 'next/server';
 
+// Mark as dynamic to prevent build-time static generation
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: NextRequest) {
   try {
     const userId = request.nextUrl.searchParams.get('userId');

@@ -8,6 +8,9 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 
+// Mark as dynamic to prevent build-time static generation
+export const dynamic = 'force-dynamic'
+
 interface GenerateRequest {
   force?: boolean;
   userId: string;

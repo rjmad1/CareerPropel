@@ -10,6 +10,9 @@ import { getCurrentUser } from '@/app/api/middleware/auth';
 import { subscribeToAgentUpdates, unsubscribeClient, getAllAgentStatus } from '@/lib/realtime/wsServer';
 import { v4 as uuidv4 } from 'uuid';
 
+// Mark as dynamic to prevent build-time static generation
+export const dynamic = 'force-dynamic'
+
 /**
  * WebSocket upgrade handler
  * Expects Authorization header or ?token= query param

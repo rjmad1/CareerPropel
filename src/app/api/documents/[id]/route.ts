@@ -3,6 +3,9 @@ import { requireAuth } from '@/app/api/middleware/auth';
 import { successResponse, errorResponse } from '@/app/api/middleware/validation';
 import { getDocumentById, deleteDocument } from '@/lib/db/documents';
 
+// Mark as dynamic to prevent build-time static generation
+export const dynamic = 'force-dynamic'
+
 /**
  * GET /api/documents/[id]
  * Get a single document

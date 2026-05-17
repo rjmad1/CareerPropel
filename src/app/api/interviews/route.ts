@@ -4,6 +4,9 @@ import { validateRequest, successResponse, validationErrorResponse, errorRespons
 import { scheduleInterviewSchema, listInterviewsQuerySchema } from '@/lib/validation/schemas';
 import { getInterviews, scheduleInterview } from '@/lib/db/interviews';
 
+// Mark as dynamic to prevent build-time static generation
+export const dynamic = 'force-dynamic'
+
 /**
  * GET /api/interviews
  * List interviews for authenticated user

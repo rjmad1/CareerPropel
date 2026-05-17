@@ -5,6 +5,9 @@ import { ValidationError } from '@/app/api/middleware/auth';
 import { uploadDocumentSchema, listDocumentsQuerySchema } from '@/lib/validation/schemas';
 import { getDocuments, uploadDocument } from '@/lib/db/documents';
 
+// Mark as dynamic to prevent build-time static generation
+export const dynamic = 'force-dynamic'
+
 /**
  * GET /api/documents
  * List documents for authenticated user

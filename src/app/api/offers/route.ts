@@ -4,6 +4,9 @@ import { validateRequest, successResponse, validationErrorResponse, errorRespons
 import { logOfferSchema, listOffersQuerySchema } from '@/lib/validation/schemas';
 import { getOffers, logOffer } from '@/lib/db/offers';
 
+// Mark as dynamic to prevent build-time static generation
+export const dynamic = 'force-dynamic'
+
 /**
  * GET /api/offers
  * List offers for authenticated user
