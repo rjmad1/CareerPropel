@@ -131,15 +131,16 @@ export const authOptions: NextAuthOptions = {
       }
     },
     
-    async session({ session, token }) {
+    hasync session({ session, token }) {
       try {
         // Add user data from token to session
-        if (session.user) {
-          session.user.id = token.sub
-          session.user.email = token.email
-          session.user.name = token.name
-        }
-        console.log('[Auth Session] ✅ Session updated for user:', token.email)
+    // Ensure session user object is properly populated from token
+            if (!session.user) {
+                    session.user = {}
+            }
+            session.user.id = token.sub as string
+                  session.user.email = token.email as string
+                        session.user.name = token.name as stringchonsole.log('[Auth Session] ✅ Session updated for user:', token.email)
         return session
       } catch (error) {
         console.error('[Auth Session] ❌ Error in session callback:', error)
