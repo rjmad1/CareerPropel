@@ -5,6 +5,9 @@ import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
 import { ApiErrors } from '@/lib/errors/ApiError'
 import { z } from 'zod'
 
+// Mark as dynamic to prevent build-time static generation of protected endpoint
+export const dynamic = 'force-dynamic'
+
 const CreateAPIKeySchema = z.object({
   name: z.string().min(1).max(100),
   expiresIn: z.number().optional(), // Days until expiration

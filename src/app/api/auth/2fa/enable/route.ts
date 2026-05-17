@@ -5,6 +5,9 @@ import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
 import { ApiErrors } from '@/lib/errors/ApiError'
 import { z } from 'zod'
 
+// Mark as dynamic to prevent build-time static generation of protected endpoint
+export const dynamic = 'force-dynamic'
+
 const Enable2FASchema = z.object({
   secret: z.string().min(10),
   totpCode: z.string().regex(/^\d{6}$/),

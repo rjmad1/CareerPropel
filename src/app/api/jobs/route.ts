@@ -8,6 +8,9 @@ import { getAuthContext } from '@/lib/middleware/auth'
 import { createRateLimiter } from '@/lib/middleware/rateLimiter'
 import { handleCorsPreFlight, applyCorsHeaders } from '@/lib/middleware/cors'
 
+// Mark as dynamic to prevent build-time static generation of protected endpoint
+export const dynamic = 'force-dynamic'
+
 const prisma = new PrismaClient()
 
 // Rate limiters for different operations
