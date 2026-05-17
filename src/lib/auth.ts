@@ -36,24 +36,19 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        try {
-          const userEmail = credentials.email as string
-          const userName = userEmail.split('@')[0]
-          const userId = `dev-${userEmail.replace(/[^a-z0-9]/g, '')}`
+        const userEmail = credentials.email as string
+        const userName = userEmail.split('@')[0]
+        const userId = `dev-${userEmail.replace(/[^a-z0-9]/g, '')}`
 
-          // Check if user exists in dev store
-          if (devUsers.has(userEmail)) {
-            return devUsers.get(userEmail)!
-          }
-
-          // Create new user in dev store
-          const newUser = { id: userId, email: userEmail, name: userName }
-          devUsers.set(userEmail, newUser)
-          return newUser
-        } catch (error) {
-          console.error("[AUTH] Error:", error)
-          return null
+        // Check if user exists in dev store
+        if (devUsers.has(userEmail)) {
+          return devUsers.get(userEmail)!
         }
+
+        // Create new user in dev store
+        const newUser = { id: userId, email: userEmail, name: userName }
+        devUsers.set(userEmail, newUser)
+        return newUser
       }
     })
   ],
@@ -61,24 +56,14 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt"
   },
   pages: {
-    signIn: "/login",
-    error: "/auth/error"
+    signIn: "/login"
   },
   callbacks: {
-    async jwt({ token, user }) {
+    jwt({ token, user }) {
       if (user) {
-        return {
-          ...token,
-          id: user.id
-        }
+        token.sub = user.id
       }
       return token
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string
-      }
-      return session
     }
   }
 }
