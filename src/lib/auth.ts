@@ -140,8 +140,9 @@ export const authOptions: NextAuthOptions = {
             }
             session.user.id = token.sub as string
                   session.user.email = token.email as string
-                        session.user.name = token.name as stringchonsole.log('[Auth Session] ✅ Session updated for user:', token.email)
-        return session
+session.user.name = token.name as string
+            console.log('[Auth Session] ✅ Session updated for user:', token.email)
+            return session
       } catch (error) {
         console.error('[Auth Session] ❌ Error in session callback:', error)
         throw error
