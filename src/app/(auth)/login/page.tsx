@@ -1,5 +1,8 @@
 'use client'
 
+// Mark this page as dynamic to prevent prerendering issues with useSearchParams()
+export const dynamic = 'force-dynamic'
+
 import { FormEvent, useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'

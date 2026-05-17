@@ -1,8 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 import { getAuthContext } from '@/lib/middleware/auth'
 import { generateTOTPSecret, generateBackupCodes } from '@/lib/security/twoFactor'
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
-import { ApiErrors } from '@/lib/errors/ApiError'
 
 /**
  * POST /api/auth/2fa/setup
@@ -14,7 +13,7 @@ import { ApiErrors } from '@/lib/errors/ApiError'
  * - secret: Base32 encoded secret (for manual entry)
  * - backupCodes: Array of backup codes
  */
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
     // Require authentication
     const { userEmail } = await getAuthContext()

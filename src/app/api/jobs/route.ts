@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 import { PrismaClient } from '@prisma/client'
 import { CreateJobInputSchema, JobFilterSchema } from '@/lib/validations/job'
 import { ApiErrors } from '@/lib/errors/ApiError'
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
   if (rateLimitResponse) return applyCorsHeaders(request, rateLimitResponse)
   try {
     // Require authentication
-    const { userId } = await getAuthContext()
+    const { userEmail } = await getAuthContext()
 
     const { searchParams } = new URL(request.url)
 
@@ -112,7 +112,7 @@ export async function POST(request: NextRequest) {
     if (rateLimitResponse) return applyCorsHeaders(request, rateLimitResponse)
 
     // Require authentication
-    const { userId, userEmail } = await getAuthContext()
+    const { userEmail } = await getAuthContext()
 
     const body = await request.json()
 

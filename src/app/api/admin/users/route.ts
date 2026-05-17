@@ -40,7 +40,7 @@ export async function GET(request: NextRequest) {
 
     // Filter by role if specified
     if (roleFilter) {
-      userRoles = userRoles.filter((ur) => ur.role.name === roleFilter)
+      userRoles = userRoles.filter((ur: any) => ur.role.name === roleFilter)
     }
 
     // Group by email

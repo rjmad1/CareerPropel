@@ -3,10 +3,7 @@ import { getAuthContext } from '@/lib/middleware/auth'
 import { enable2FA, verifyTOTPToken } from '@/lib/security/twoFactor'
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
 import { ApiErrors } from '@/lib/errors/ApiError'
-import { PrismaClient } from '@prisma/client'
 import { z } from 'zod'
-
-const prisma = new PrismaClient()
 
 const Enable2FASchema = z.object({
   secret: z.string().min(10),
