@@ -156,6 +156,7 @@ export default function LoginForm() {
             onChange={(e) => setEmail(e.target.value)}
             disabled={isLoading}
             variant="outlined"
+            data-testid="login-email-input"
           />
 
           <TextField
@@ -171,6 +172,7 @@ export default function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
             disabled={isLoading}
             variant="outlined"
+            data-testid="login-password-input"
           />
 
           <Button
@@ -182,6 +184,7 @@ export default function LoginForm() {
             sx={{ mt: 3, mb: 2, py: 1.5 }}
             disabled={isLoading}
             startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
+            data-testid="login-submit-btn"
           >
             {isLoading ? 'Signing In...' : 'Sign In'}
           </Button>
