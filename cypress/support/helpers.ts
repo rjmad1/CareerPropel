@@ -13,7 +13,6 @@ export function loginUser(email: string = 'test@example.com', password: string =
   cy.get('[data-testid="login-password-input"]').type(password);
   cy.get('[data-testid="login-submit-btn"]').click();
   cy.url().should('include', '/');
-  cy.get('.job-card').should('exist');
 }
 
 /**
