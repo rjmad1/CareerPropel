@@ -84,6 +84,8 @@ export default function OverviewTab({ job }: OverviewTabProps) {
           {!isEditingNotes && (
             <button
               onClick={() => setIsEditingNotes(true)}
+              aria-label="Edit notes"
+              data-testid="notes-edit-btn"
               className="text-xs text-blue-600 hover:text-blue-700"
             >
               Edit
@@ -95,6 +97,7 @@ export default function OverviewTab({ job }: OverviewTabProps) {
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
+              data-testid="notes-textarea"
               className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               rows={4}
               placeholder="Add notes about this opportunity..."
@@ -103,6 +106,7 @@ export default function OverviewTab({ job }: OverviewTabProps) {
               <button
                 onClick={handleSaveNotes}
                 disabled={isSaving}
+                data-testid="notes-save-btn"
                 className="px-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:bg-gray-400"
               >
                 {isSaving ? 'Saving...' : 'Save'}
@@ -112,6 +116,7 @@ export default function OverviewTab({ job }: OverviewTabProps) {
                   setIsEditingNotes(false);
                   setNotes(job.notes || '');
                 }}
+                data-testid="notes-cancel-btn"
                 className="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium hover:bg-gray-50"
               >
                 Cancel
@@ -119,7 +124,10 @@ export default function OverviewTab({ job }: OverviewTabProps) {
             </div>
           </div>
         ) : (
-          <div className="bg-gray-50 rounded-lg p-3 text-sm text-gray-700 whitespace-pre-wrap">
+          <div
+            data-testid="notes-content"
+            className="bg-gray-50 rounded-lg p-3 text-sm text-gray-700 whitespace-pre-wrap"
+          >
             {notes || 'No notes yet'}
           </div>
         )}

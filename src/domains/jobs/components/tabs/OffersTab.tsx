@@ -82,7 +82,7 @@ export default function OffersTab({ jobId }: OffersTabProps) {
     <div className="p-6">
       {/* Add Offer Form */}
       {isAddingOffer && (
-        <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 space-y-3">
+        <div data-testid="offer-form" className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 space-y-3">
           <h3 className="text-sm font-semibold text-gray-900">Log Offer</h3>
 
           <input
@@ -90,6 +90,7 @@ export default function OffersTab({ jobId }: OffersTabProps) {
             placeholder="Base Salary (e.g., 150000)"
             value={formData.baseSalary || ''}
             onChange={(e) => setFormData({ ...formData, baseSalary: Number(e.target.value) })}
+            data-testid="offer-salary"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           />
 
@@ -98,6 +99,7 @@ export default function OffersTab({ jobId }: OffersTabProps) {
             placeholder="Bonus %"
             value={formData.bonusPercent || ''}
             onChange={(e) => setFormData({ ...formData, bonusPercent: Number(e.target.value) })}
+            data-testid="offer-bonus"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           />
 
@@ -106,6 +108,7 @@ export default function OffersTab({ jobId }: OffersTabProps) {
             placeholder="Equity (e.g., 0.25% RSUs)"
             value={formData.equity}
             onChange={(e) => setFormData({ ...formData, equity: e.target.value })}
+            data-testid="offer-equity"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           />
 
@@ -113,6 +116,7 @@ export default function OffersTab({ jobId }: OffersTabProps) {
             type="date"
             value={formData.startDate}
             onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+            data-testid="offer-start-date"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
           />
 
@@ -120,6 +124,7 @@ export default function OffersTab({ jobId }: OffersTabProps) {
             placeholder="Additional notes"
             value={formData.notes}
             onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+            data-testid="offer-notes"
             className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
             rows={2}
           />
@@ -128,6 +133,7 @@ export default function OffersTab({ jobId }: OffersTabProps) {
             <button
               onClick={handleAddOffer}
               disabled={isCreating}
+              data-testid="offer-submit-btn"
               className="flex-1 px-3 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 disabled:bg-green-400 disabled:cursor-not-allowed transition"
             >
               {isCreating ? 'Logging...' : 'Log Offer'}
@@ -147,6 +153,7 @@ export default function OffersTab({ jobId }: OffersTabProps) {
       {!isAddingOffer && (
         <button
           onClick={() => setIsAddingOffer(true)}
+          data-testid="log-offer-btn"
           className="w-full mb-6 flex items-center justify-center gap-2 px-3 py-2 border-2 border-dashed border-green-300 text-green-600 rounded-lg hover:bg-green-50 transition text-sm font-medium"
         >
           <Plus size={16} />
@@ -156,7 +163,7 @@ export default function OffersTab({ jobId }: OffersTabProps) {
 
       {/* Offers List */}
       {offers.length > 0 ? (
-        <div className="space-y-3">
+        <div className="space-y-3" data-testid="offers-list">
           {offers.map((offer: Offer) => {
             const totalComp = calculateTotalCompensation(offer);
             const statusColors = {
@@ -168,22 +175,26 @@ export default function OffersTab({ jobId }: OffersTabProps) {
             return (
               <div
                 key={offer.id}
+                data-testid="offer-item"
                 className={`border rounded-lg p-4 ${statusColors[offer.status]}`}
               >
                 {/* Status Badge */}
                 <div className="flex items-start justify-between mb-3">
-                  <span className={`inline-block px-2 py-1 rounded text-xs font-semibold ${
+                  <span
+                    data-testid="offer-status-badge"
+                    className={`inline-block px-2 py-1 rounded text-xs font-semibold ${
                     offer.status === 'accepted'
-                      ? 'bg-green-200 text-green-800'
+                      ? 'bg-green-100 text-green-800'
                       : offer.status === 'rejected'
-                      ? 'bg-red-200 text-red-800'
-                      : 'bg-yellow-200 text-yellow-800'
+                      ? 'bg-red-100 text-red-800'
+                      : 'bg-yellow-100 text-yellow-800'
                   }`}>
                     {offer.status.charAt(0).toUpperCase() + offer.status.slice(1)}
                   </span>
                   <button
                     onClick={() => handleDeleteOffer(offer.id)}
                     disabled={isDeleting}
+                    data-testid="offer-delete-btn"
                     className="p-1 hover:bg-red-100 disabled:bg-gray-100 disabled:cursor-not-allowed rounded transition"
                   >
                     <Trash2 size={14} className="text-red-600" />
@@ -220,7 +231,7 @@ export default function OffersTab({ jobId }: OffersTabProps) {
                       <TrendingUp size={14} />
                       Total Compensation
                     </span>
-                    <span className="text-lg font-bold text-green-600">
+                    <span className="text-lg font-bold text-green-600" data-testid="offer-total-compensation">
                       ${totalComp.toLocaleString()}
                     </span>
                   </div>
@@ -228,7 +239,7 @@ export default function OffersTab({ jobId }: OffersTabProps) {
 
                 {/* Start Date */}
                 {offer.startDate && (
-                  <div className="text-xs text-gray-600 mb-2">
+                  <div className="text-xs text-gray-600 mb-2" data-testid="offer-start-date">
                     Start Date: {new Date(offer.startDate).toLocaleDateString('en-US', {
                       month: 'short',
                       day: 'numeric',

@@ -87,19 +87,22 @@ export default function TimelineTab({ jobId }: TimelineTabProps) {
   if (error || activities.length === 0) {
     return (
       <div className="p-6 text-center">
-        <p className="text-sm text-gray-600">No activities yet</p>
+        <p className="text-sm text-gray-600" data-testid="empty-timeline-message">No activities yet</p>
       </div>
     );
   }
 
   return (
-    <div className="p-6">
+    <div className="p-6" data-testid="activity-timeline">
       <div className="space-y-4">
         {activities.map((activity: Activity, index: number) => (
-          <div key={activity.id} className="flex gap-4">
+          <div key={activity.id} className="flex gap-4" data-testid="activity-item">
             {/* Timeline Line */}
             <div className="flex flex-col items-center">
-              <div className="rounded-full p-1.5 bg-gray-100">
+              <div
+                className="rounded-full p-1.5 bg-gray-100"
+                data-testid={`activity-icon-${activity.type}`}
+              >
                 {getActivityIcon(activity.type)}
               </div>
               {index < activities.length - 1 && (
@@ -114,20 +117,20 @@ export default function TimelineTab({ jobId }: TimelineTabProps) {
                   <p className="text-sm font-semibold text-gray-900">
                     {getActivityLabel(activity.type)}
                   </p>
-                  <p className="text-xs text-gray-600 mt-1">
+                  <p className="text-xs text-gray-600 mt-1" data-testid="activity-description">
                     {activity.description}
                   </p>
                 </div>
-                <p className="text-xs text-gray-500 ml-2">
+                <p className="text-xs text-gray-500 ml-2" data-testid="activity-timestamp">
                   {formatRelativeTime(activity.timestamp)}
                 </p>
               </div>
 
               {/* Activity Metadata */}
               {activity.metadata && Object.keys(activity.metadata).length > 0 && (
-                <div className="mt-2 bg-gray-50 rounded p-2 text-xs text-gray-600">
+                <div className="mt-2 bg-gray-50 rounded p-2 text-xs text-gray-600" data-testid="activity-metadata">
                   {Object.entries(activity.metadata).map(([key, value]) => (
-                    <div key={key}>
+                    <div key={key} data-testid="activity-metadata-item">
                       <span className="font-medium">{key}:</span> {String(value)}
                     </div>
                   ))}
