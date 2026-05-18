@@ -73,7 +73,7 @@ export const JobCard: React.FC<JobCardProps> = ({
       onDragStart={onDragStart}
       draggable
       className={`
-        bg-white rounded-lg shadow hover:shadow-md transition-all cursor-move
+        job-card bg-white rounded-lg shadow hover:shadow-md transition-all cursor-move
         border-l-4 p-3 space-y-2 relative overflow-hidden
         ${isDraggedOver ? 'ring-2 ring-blue-400 opacity-75' : ''}
         ${isUpdating ? 'ring-2 ring-green-400' : ''}
