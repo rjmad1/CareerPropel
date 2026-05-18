@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-// Allowed origins for CORS
 const ALLOWED_ORIGINS = [
   'http://localhost:3000',
   'http://localhost:3001',
@@ -8,9 +7,6 @@ const ALLOWED_ORIGINS = [
   process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000/api',
 ].filter(Boolean)
 
-/**
- * CORS headers configuration
- */
 const CORS_HEADERS = {
   'Access-Control-Allow-Credentials': 'true',
   'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
@@ -18,16 +14,12 @@ const CORS_HEADERS = {
   'Access-Control-Max-Age': '86400', // 24 hours
 }
 
-/**
- * Apply CORS headers to response
- */
 export function applyCorsHeaders(
   request: NextRequest,
   response: NextResponse
 ): NextResponse {
   const origin = request.headers.get('origin') || ''
 
-  // Check if origin is allowed
   const isAllowed = ALLOWED_ORIGINS.some(allowedOrigin => {
     if (allowedOrigin === '*') return true
     return origin === allowedOrigin || 
@@ -38,7 +30,6 @@ export function applyCorsHeaders(
     response.headers.set('Access-Control-Allow-Origin', origin || '*')
   }
 
-  // Add CORS headers
   Object.entries(CORS_HEADERS).forEach(([key, value]) => {
     response.headers.set(key, value)
   })
@@ -46,9 +37,6 @@ export function applyCorsHeaders(
   return response
 }
 
-/**
- * Handle CORS preflight requests
- */
 export function handleCorsPreFlight(request: NextRequest): NextResponse | null {
   if (request.method === 'OPTIONS') {
     const origin = request.headers.get('origin') || ''
@@ -74,24 +62,13 @@ export function handleCorsPreFlight(request: NextRequest): NextResponse | null {
   return null
 }
 
-/**
- * Middleware to apply CORS to API routes
- * Usage in route.ts:
- *   const corsResponse = handleCorsPreFlight(request)
- *   if (corsResponse) return corsResponse
- *   // ... handle request
- *   const response = NextResponse.json(data)
- *   return applyCorsHeaders(request, response)
- */
 export function withCors(
   handler: (request: NextRequest) => Promise<NextResponse>
 ) {
   return async (request: NextRequest) => {
-    // Handle preflight
     const preFlightResponse = handleCorsPreFlight(request)
     if (preFlightResponse) return preFlightResponse
 
-    // Handle request
     const response = await handler(request)
     return applyCorsHeaders(request, response)
   }

@@ -1,8 +1,5 @@
 import { z } from 'zod';
 
-/**
- * Jobs Domain Schemas
- */
 export const createJobSchema = z.object({
   title: z.string().min(1, 'Title is required').max(200, 'Title too long'),
   company: z.string().min(1, 'Company is required').max(200, 'Company name too long'),

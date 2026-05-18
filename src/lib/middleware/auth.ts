@@ -3,15 +3,6 @@ import { NextRequest } from 'next/server'
 import { ApiErrors } from '@/lib/errors/ApiError'
 import { authOptions } from '@/lib/auth'
 
-/**
- * Authentication Middleware
- * Validates user session and authorizes requests
- */
-
-/**
- * Get authenticated session from request
- * Returns session or throws UNAUTHORIZED error
- */
 export async function getAuthSession() {
   try {
     const session = await getServerSession(authOptions)
@@ -27,31 +18,16 @@ export async function getAuthSession() {
   }
 }
 
-/**
- * Middleware wrapper for protected endpoints
- * Usage:
- *   const session = await requireAuth(request)
- */
 export async function requireAuth(_request: NextRequest) {
   return await getAuthSession()
 }
 
-/**
- * Check if user owns a resource
- * @param userId - User ID to check
- * @param resourceOwnerId - Owner ID of the resource
- * @throws FORBIDDEN if user doesn't own the resource
- */
 export function checkOwnership(userId: string, resourceOwnerId: string) {
   if (userId !== resourceOwnerId) {
     throw ApiErrors.FORBIDDEN('resource')
   }
 }
 
-/**
- * Parse user ID from session
- * Returns user ID or throws UNAUTHORIZED
- */
 export function getUserIdFromSession(session: any): string {
   const userId = session?.user?.id
   if (!userId) {
@@ -60,10 +36,6 @@ export function getUserIdFromSession(session: any): string {
   return userId
 }
 
-/**
- * Verify session and return user context
- * Useful for controller-like functions
- */
 export async function getAuthContext() {
   const session = await getAuthSession()
   const userId = getUserIdFromSession(session)

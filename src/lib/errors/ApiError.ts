@@ -1,8 +1,3 @@
-/**
- * API Error Handling
- * Standardized error responses that don't expose internal details
- */
-
 export interface ApiErrorResponse {
   error: {
     code: string
@@ -22,10 +17,6 @@ export class ApiError extends Error {
     this.name = 'ApiError'
   }
 
-  /**
-   * Convert to standardized API response
-   * In development, includes error details; in production, generic message
-   */
   toJSON(includeDetails = false): ApiErrorResponse {
     const isDevelopment = process.env.NODE_ENV === 'development'
 
@@ -45,9 +36,6 @@ export class ApiError extends Error {
     }
   }
 
-  /**
-   * Log error for monitoring/debugging
-   */
   log(): void {
     console.error(`[${this.code}] ${this.message}`, {
       statusCode: this.statusCode,
@@ -57,9 +45,6 @@ export class ApiError extends Error {
   }
 }
 
-/**
- * Common API errors
- */
 export const ApiErrors = {
   VALIDATION_ERROR: (details: string) =>
     new ApiError(

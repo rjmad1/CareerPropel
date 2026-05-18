@@ -8,40 +8,27 @@ import { getAuthContext } from '@/lib/middleware/auth'
 import { createRateLimiter } from '@/lib/middleware/rateLimiter'
 import { handleCorsPreFlight, applyCorsHeaders } from '@/lib/middleware/cors'
 
-// Mark as dynamic to prevent build-time static generation of protected endpoint
 export const dynamic = 'force-dynamic'
 
-// Rate limiters for individual job operations
-const getJobLimiter = createRateLimiter(100, 60000) // 100 per minute
-const updateJobLimiter = createRateLimiter(30, 60000) // 30 per minute
-const deleteJobLimiter = createRateLimiter(30, 60000) // 30 per minute
+const getJobLimiter = createRateLimiter(100, 60000)
+const updateJobLimiter = createRateLimiter(30, 60000)
+const deleteJobLimiter = createRateLimiter(30, 60000)
 
-/**
- * GET /api/jobs/[id]
- * Retrieve a specific job by ID
- * Protected: Requires authentication
- * Authorization: User must own the job
- * Rate Limited: 100 requests per minute
- */
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    // Handle CORS preflight
     const corsResponse = handleCorsPreFlight(request)
     if (corsResponse) return corsResponse
 
-    // Apply rate limiting
     const rateLimitResponse = await getJobLimiter(request)
     if (rateLimitResponse) return applyCorsHeaders(request, rateLimitResponse)
 
-    // Require authentication
     const { userEmail } = await getAuthContext()
 
     const { id } = params
 
-    // Validate ID format (basic check)
     if (!id || id.length < 5) {
       throw ApiErrors.INVALID_REQUEST('Invalid job ID format')
     }
@@ -55,7 +42,6 @@ export async function GET(
       throw ApiErrors.NOT_FOUND('job')
     }
 
-    // Check ownership: User can only view their own jobs
     const candidate = await prisma.candidate.findUnique({
       where: { email: userEmail },
     })
@@ -72,39 +58,27 @@ export async function GET(
   }
 }
 
-/**
- * PATCH /api/jobs/[id]
- * Update a specific job
- * Protected: Requires authentication
- * Authorization: User must own the job
- * Rate Limited: 30 requests per minute
- */
 export async function PATCH(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    // Handle CORS preflight
     const corsResponse = handleCorsPreFlight(request)
     if (corsResponse) return corsResponse
 
-    // Apply rate limiting
     const rateLimitResponse = await updateJobLimiter(request)
     if (rateLimitResponse) return applyCorsHeaders(request, rateLimitResponse)
 
-    // Require authentication
     const { userEmail } = await getAuthContext()
 
     const { id } = params
 
-    // Validate ID format
     if (!id || id.length < 5) {
       throw ApiErrors.INVALID_REQUEST('Invalid job ID format')
     }
 
     const body = await request.json()
 
-    // Validate request body with Zod
     const validation = UpdateJobInputSchema.safeParse(body)
     if (!validation.success) {
       const errors = validation.error.flatten().fieldErrors
@@ -116,7 +90,6 @@ export async function PATCH(
 
     const { title, company, url, stage, notes } = validation.data
 
-    // Check job exists first
     const existingJob = await prisma.job.findUnique({
       where: { id },
       include: { candidate: true },
@@ -126,12 +99,10 @@ export async function PATCH(
       throw ApiErrors.NOT_FOUND('job')
     }
 
-    // Check ownership: User can only update their own jobs
     if (existingJob.candidate.email !== userEmail) {
       throw ApiErrors.FORBIDDEN('job')
     }
 
-    // Prepare update data with sanitization
     const updateData: any = {}
     if (title !== undefined) updateData.title = title
     if (company !== undefined) updateData.company = company
@@ -155,37 +126,25 @@ export async function PATCH(
   }
 }
 
-/**
- * DELETE /api/jobs/[id]
- * Delete a specific job
- * Protected: Requires authentication
- * Authorization: User must own the job
- * Rate Limited: 30 requests per minute
- */
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    // Handle CORS preflight
     const corsResponse = handleCorsPreFlight(request)
     if (corsResponse) return corsResponse
 
-    // Apply rate limiting
     const rateLimitResponse = await deleteJobLimiter(request)
     if (rateLimitResponse) return applyCorsHeaders(request, rateLimitResponse)
 
-    // Require authentication
     const { userEmail } = await getAuthContext()
 
     const { id } = params
 
-    // Validate ID format
     if (!id || id.length < 5) {
       throw ApiErrors.INVALID_REQUEST('Invalid job ID format')
     }
 
-    // Check job exists first
     const job = await prisma.job.findUnique({
       where: { id },
       include: { candidate: true },
@@ -195,7 +154,6 @@ export async function DELETE(
       throw ApiErrors.NOT_FOUND('job')
     }
 
-    // Check ownership: User can only delete their own jobs
     if (job.candidate.email !== userEmail) {
       throw ApiErrors.FORBIDDEN('job')
     }

@@ -1,31 +1,17 @@
-/**
- * UI State Store
- * Zustand store for managing UI state (panels, modals, selections)
- */
-
 import { create } from 'zustand';
 
 interface UIStoreState {
-  // Panel states
   showDetailPanel: boolean;
   showFilterPanel: boolean;
   showAgentRail: boolean;
-
-  // Selected items
   selectedJobId: string | null;
   selectedTab: 'overview' | 'timeline' | 'interviews' | 'prep' | 'offers';
-
-  // Modal states
   showCreateJobModal: boolean;
   showConfirmDeleteModal: boolean;
   deleteTargetJobId: string | null;
-
-  // UI preferences
   nightBeforeMode: boolean;
   compactView: boolean;
   sidebarCollapsed: boolean;
-
-  // Actions
   toggleDetailPanel: () => void;
   setDetailPanel: (show: boolean) => void;
   toggleFilterPanel: () => void;
@@ -48,7 +34,6 @@ interface UIStoreState {
 }
 
 export const useUIStore = create<UIStoreState>((set) => ({
-  // Initial state
   showDetailPanel: false,
   showFilterPanel: false,
   showAgentRail: true,
@@ -61,7 +46,6 @@ export const useUIStore = create<UIStoreState>((set) => ({
   compactView: false,
   sidebarCollapsed: false,
 
-  // Panel actions
   toggleDetailPanel: () =>
     set((state) => ({ showDetailPanel: !state.showDetailPanel })),
 
@@ -80,14 +64,12 @@ export const useUIStore = create<UIStoreState>((set) => ({
   setAgentRail: (show) =>
     set({ showAgentRail: show }),
 
-  // Selection actions
   setSelectedJob: (jobId) =>
     set({ selectedJobId: jobId, showDetailPanel: jobId !== null }),
 
   setSelectedTab: (tab) =>
     set({ selectedTab: tab }),
 
-  // Modal actions
   openCreateJobModal: () =>
     set({ showCreateJobModal: true }),
 
@@ -100,7 +82,6 @@ export const useUIStore = create<UIStoreState>((set) => ({
   closeDeleteConfirm: () =>
     set({ showConfirmDeleteModal: false, deleteTargetJobId: null }),
 
-  // Preference actions
   toggleNightBeforeMode: () =>
     set((state) => ({ nightBeforeMode: !state.nightBeforeMode })),
 
@@ -119,7 +100,6 @@ export const useUIStore = create<UIStoreState>((set) => ({
   setSidebarCollapsed: (collapsed) =>
     set({ sidebarCollapsed: collapsed }),
 
-  // Reset
   resetUIState: () =>
     set({
       showDetailPanel: false,

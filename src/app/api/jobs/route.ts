@@ -8,35 +8,22 @@ import { getAuthContext } from '@/lib/middleware/auth'
 import { createRateLimiter } from '@/lib/middleware/rateLimiter'
 import { handleCorsPreFlight, applyCorsHeaders } from '@/lib/middleware/cors'
 
-// Mark as dynamic to prevent build-time static generation of protected endpoint
 export const dynamic = 'force-dynamic'
 
-// Rate limiters for different operations
-const getJobsLimiter = createRateLimiter(100, 60000) // 100 per minute
-const createJobLimiter = createRateLimiter(20, 60000) // 20 per minute
+const getJobsLimiter = createRateLimiter(100, 60000)
+const createJobLimiter = createRateLimiter(20, 60000)
 
-/**
- * GET /api/jobs
- * Retrieve all jobs with optional filtering
- * Protected: Requires authentication
- * Rate Limited: 100 requests per minute per IP
- * Returns only jobs belonging to the authenticated user
- */
 export async function GET(request: NextRequest) {
-  // Handle CORS preflight
   const corsResponse = handleCorsPreFlight(request)
   if (corsResponse) return corsResponse
 
-  // Apply rate limiting
   const rateLimitResponse = await getJobsLimiter(request)
   if (rateLimitResponse) return applyCorsHeaders(request, rateLimitResponse)
   try {
-    // Require authentication
     const { userEmail } = await getAuthContext()
 
     const { searchParams } = new URL(request.url)
 
-    // Validate and parse query parameters
     const filters = JobFilterSchema.safeParse({
       company: searchParams.get('company') || undefined,
       search: searchParams.get('search') || undefined,
@@ -51,17 +38,14 @@ export async function GET(request: NextRequest) {
 
     const { company, search, stage } = filters.data
 
-    // Get user's candidate profile
     const candidate = await prisma.candidate.findUnique({
       where: { email: userEmail },
     })
 
     if (!candidate) {
-      // User has no jobs yet
       return successResponse([])
     }
 
-    // Build query - only user's jobs
     const where: any = {
       candidateId: candidate.id,
     }
@@ -94,30 +78,18 @@ export async function GET(request: NextRequest) {
   }
 }
 
-/**
- * POST /api/jobs
- * Create a new job
- * Protected: Requires authentication
- * Rate Limited: 20 requests per minute per IP
- * CSRF Protected: Requires valid CSRF token (optional in dev)
- * Job will be created for the authenticated user
- */
 export async function POST(request: NextRequest) {
   try {
-    // Handle CORS preflight
     const corsResponse = handleCorsPreFlight(request)
     if (corsResponse) return corsResponse
 
-    // Apply rate limiting
     const rateLimitResponse = await createJobLimiter(request)
     if (rateLimitResponse) return applyCorsHeaders(request, rateLimitResponse)
 
-    // Require authentication
     const { userEmail } = await getAuthContext()
 
     const body = await request.json()
 
-    // Validate request body with Zod
     const validation = CreateJobInputSchema.safeParse(body)
     if (!validation.success) {
       const errors = validation.error.flatten().fieldErrors
@@ -129,25 +101,21 @@ export async function POST(request: NextRequest) {
 
     const { title, company, url, notes, stage } = validation.data
 
-    // Sanitize user input
     const sanitizedNotes = notes ? sanitizeUserFeedback(notes) : null
 
-    // Get or create candidate profile for authenticated user
     let candidate = await prisma.candidate.findUnique({
       where: { email: userEmail },
     })
 
     if (!candidate) {
-      // Create candidate profile for new user
       candidate = await prisma.candidate.create({
         data: {
           email: userEmail,
-          name: userEmail.split('@')[0], // Use email prefix as default name
+          name: userEmail.split('@')[0],
         },
       })
     }
 
-    // Create job in database
     const job = await prisma.job.create({
       data: {
         title,

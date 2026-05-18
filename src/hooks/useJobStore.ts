@@ -1,13 +1,7 @@
-/**
- * Job State Store
- * Zustand store for managing job application data
- */
-
 import { create } from 'zustand';
 import { Job, JobStage, JobFilter, JobSort } from '@/types/job';
 
 interface JobStoreState {
-  // State
   jobs: Job[];
   filteredJobs: Job[];
   selectedJobId: string | null;
@@ -16,7 +10,6 @@ interface JobStoreState {
   isLoading: boolean;
   error: string | null;
 
-  // Actions
   setJobs: (jobs: Job[]) => void;
   addJob: (job: Job) => void;
   updateJob: (jobId: string, data: Partial<Job>) => void;
@@ -38,7 +31,6 @@ const defaultSort: JobSort = {
 };
 
 export const useJobStore = create<JobStoreState>((set, get) => ({
-  // Initial state
   jobs: [],
   filteredJobs: [],
   selectedJobId: null,
@@ -47,7 +39,6 @@ export const useJobStore = create<JobStoreState>((set, get) => ({
   isLoading: false,
   error: null,
 
-  // Actions
   setJobs: (jobs) => {
     set({ jobs });
     get().applyFiltersAndSort();
@@ -114,7 +105,6 @@ export const useJobStore = create<JobStoreState>((set, get) => ({
     const { jobs, filters, sort } = get();
     let filtered = [...jobs];
 
-    // Apply filters
     if (filters.company) {
       filtered = filtered.filter((job) =>
         job.company.toLowerCase().includes(filters.company!.toLowerCase())
@@ -142,7 +132,6 @@ export const useJobStore = create<JobStoreState>((set, get) => ({
       filtered = filtered.filter((job) => job.salary?.max !== undefined && job.salary.max <= filters.salaryMax!);
     }
 
-    // Apply sort
     filtered.sort((a, b) => {
       let aVal: any = a[sort.field];
       let bVal: any = b[sort.field];

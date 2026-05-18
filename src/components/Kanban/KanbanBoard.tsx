@@ -5,6 +5,7 @@ import { Job, JobStage } from '@/types/job';
 import { Swimlane } from './Swimlane';
 import { JobDetailPanel } from '@/domains/jobs';
 import { useRealTime } from '@/hooks/useRealTime';
+import { AnyWebSocketMessage } from '@/lib/websocket/types';
 
 export interface KanbanBoardProps {
   initialJobs?: Job[];
@@ -57,12 +58,12 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
 
   // Subscribe to job updates
   useEffect(() => {
-    const unsubscribe = subscribe('job:update', (message: any) => {
+    const unsubscribe = subscribe('job:update', (message: AnyWebSocketMessage) => {
       if (message.type === 'job:update') {
         const { jobId, changes } = message.data;
         setJobs((prev) =>
           prev.map((job) =>
-            job.id === jobId ? { ...job, ...changes } : job
+            job.id === jobId ? { ...job, ...(changes as Partial<Job>) } : job
           )
         );
       }
@@ -73,9 +74,9 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
 
   // Subscribe to new jobs
   useEffect(() => {
-    const unsubscribe = subscribe('job:created', (message: any) => {
+    const unsubscribe = subscribe('job:created', (message: AnyWebSocketMessage) => {
       if (message.type === 'job:created') {
-        setJobs((prev) => [...prev, message.data.job]);
+        setJobs((prev) => [...prev, message.data.job as unknown as Job]);
       }
     });
 
@@ -84,7 +85,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
 
   // Subscribe to job deletions
   useEffect(() => {
-    const unsubscribe = subscribe('job:deleted', (message: any) => {
+    const unsubscribe = subscribe('job:deleted', (message: AnyWebSocketMessage) => {
       if (message.type === 'job:deleted') {
         setJobs((prev) => prev.filter((j) => j.id !== message.data.jobId));
       }
@@ -172,10 +173,13 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
       rejected: jobs.filter((j) => j.stage === 'rejected').length,
       averageConfidence:
         jobs.length > 0
-          ? Math.round(
-              (jobs.reduce((sum, j) => sum + ((j as any).aiConfidence || 0), 0) / jobs.length) *
-                100
-            )
+            ? Math.round(
+                (jobs.reduce((sum, j) => {
+                  const aiConf = (j as unknown as { aiConfidence?: number }).aiConfidence || 0;
+                  return sum + aiConf;
+                }, 0) / jobs.length) *
+                  100
+              )
           : 0,
     };
   };

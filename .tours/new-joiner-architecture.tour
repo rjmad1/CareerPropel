@@ -1,0 +1,80 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "Career OS — New Joiner Architecture Tour",
+  "description": "A narrative walkthrough for engineers joining the project. After this tour you'll understand the 3-column shell, the 14-stage job pipeline, how the 8 autonomous agents execute and stream via Claude, how Redis bridges agent events to the browser, and where auth lives. Total read time: ~15 minutes.",
+  "ref": "main",
+  "steps": [
+    {
+      "file": "src/components/CareerOS/IntegratedDashboard.tsx",
+      "line": 18,
+      "title": "1. The Control Center — Where Everything Meets",
+      "description": "**S:** This is the top-level shell of the entire product. One component, one screen.\n\n**M:** It renders a rigid 3-column layout: a `w-64` Agent Rail on the left (live agent sidebar), a `flex-1` Kanban board in the center, and an `w-80` context panel on the right. All three columns share real-time state via the `useRealTime` hook, so a Claude streaming event on the left updates a job card in the center without a page refresh.\n\n**I:** Every feature in the codebase feeds into one of these three columns. When you're asked to add a feature, your first question should be: *which column does this live in?*\n\n**G:** The dashboard accepts a `candidateId` prop — this is the database key for the logged-in user's Prisma `Candidate` record. It is NOT the NextAuth session user ID directly. The mapping happens upstream in the page that renders this component."
+    },
+    {
+      "file": "src/types/index.ts",
+      "line": 23,
+      "title": "2. The 14-Stage Pipeline — The Heart of the Domain",
+      "description": "**S:** This `JobStage` union type is the single source of truth for where a job application sits in the pipeline.\n\n**M:** Jobs flow left-to-right: `sourced → interested → resume_tailoring → applied → recruiter_screen → hiring_manager → technical_interview → system_design → behavioral → final_round → offer → negotiation`, and can exit to `rejected` or `archived` at any point. The Kanban board renders one swimlane per stage.\n\n**I:** When you change this type, you must also update: the Prisma schema `stage` column comment, the Kanban swimlane labels in `IntegratedDashboard.tsx`, and the `isValidTransition` function in `src/types/job.ts` that guards illegal stage jumps (e.g. you cannot move directly from `sourced` to `offer`).\n\n**G:** The Prisma schema stores `stage` as a plain `String`, not an enum. This was intentional for migration flexibility, but it means the DB won't reject an invalid stage value — only the TypeScript type and the `isValidTransition` guard protect you."
+    },
+    {
+      "file": "prisma/schema.prisma",
+      "line": 13,
+      "title": "3. Data Foundation — Candidate Owns Everything",
+      "description": "**S:** The Prisma schema defines the relational backbone. The `Candidate` model is the root entity — every other model cascades from it.\n\n**M:** A `Candidate` has many `Job`s. Each `Job` has many `JobActivity` records (the audit log), `InterviewFeedback`, and `Offer`s. The `Candidate` also owns `ProfileData` (resume/LinkedIn exports stored as `Json`), `Skill`s, `Achievement`s, and `Document`s. All foreign key relationships use `onDelete: Cascade` — deleting a candidate cleans up everything.\n\n**I:** The `AgentExecution` model (further down in the schema) stores every Claude API invocation with its status, token count, and raw output. This is how the system maintains full operational transparency — you can replay or audit any agent run.\n\n**G:** `ProfileData.content` is stored as Postgres `Json`, not a structured column. This was done to handle the wildly different shapes of resume vs. LinkedIn export vs. notes. Be careful when querying it — you cannot filter on `content` fields without a raw SQL query or a migration to extract columns."
+    },
+    {
+      "file": "src/components/Kanban/KanbanBoard.tsx",
+      "line": 41,
+      "title": "4. Kanban Board — Real-Time Drag-and-Drop Pipeline",
+      "description": "**S:** `KanbanBoard` renders the center column of the dashboard — horizontal swimlanes, one per stage, with job cards you can drag between them.\n\n**M:** It holds `jobs` in local state, initialized from `initialJobs` props. It subscribes to three WebSocket channels — `job:update`, `job:created`, `job:deleted` — at line 53. When a message arrives, it merges the update into local state optimistically before confirming with the server. Drag-and-drop calls `onJobUpdate` which persists the new stage via the API.\n\n**I:** The optimistic update pattern at line 60+ means the UI feels instant even on slow connections. The risk is that a failed API call leaves local state ahead of the DB — the board reconciles on the next WebSocket `job:update` event from the server.\n\n**G:** `isLoading` is hardcoded to `false` at line 50. The board was built UI-first during Week 4; the loading skeleton was planned but not yet wired to a real data-fetch hook. This is a known gap tracked in `MVP_PROGRESS.md`."
+    },
+    {
+      "file": "src/components/Kanban/JobCard.tsx",
+      "line": 43,
+      "title": "5. Job Card — What a Candidate Sees Per Application",
+      "description": "**S:** Each card in a swimlane is a `JobCard`. It is the most data-dense UI atom in the app.\n\n**M:** It displays role name, company, match score (0–100%), priority badge, interview status, confidence indicator, blockers, and next-action preview. It also subscribes to `useRealTime` so it can highlight itself when a WebSocket event targets its specific `job.id` — useful when an agent finishes tailoring the resume for this exact application.\n\n**I:** The match score comes from the `job-match` agent — a Claude call that scores resume-to-JD alignment. It is stored on the `Job` record and refreshed asynchronously, not on page load. A score of `undefined` means the agent hasn't run yet.\n\n**G:** The card supports drag-and-drop via native HTML5 drag events, not a library. This keeps the bundle small but means you need to handle `dragover`, `dragenter`, and `drop` events manually in `Swimlane.tsx` if you add new drop targets."
+    },
+    {
+      "file": "src/components/Agent/AgentRail.tsx",
+      "line": 32,
+      "title": "6. Agent Rail — The Live Operations Sidebar",
+      "description": "**S:** The left column of the dashboard is the Agent Rail — a real-time panel showing the status of every autonomous agent.\n\n**M:** On mount (line 46) it initializes all 8 agents from `AGENT_CONFIGS` in `src/types/agent-configs.ts` with `status: 'idle'`. It then subscribes to `agent:status` and `agent:log` WebSocket channels (line 40). Incoming messages update the agent's `status`, `progress`, and `tokensUsed` in local state. Clicking an agent reveals its `AgentLog` component with a scrolling activity feed.\n\n**I:** The Rail is the primary debugging surface during development. When a Claude call hangs or errors, the Rail shows it before any server log does — because the executor publishes status events to Redis at every meaningful transition, and Redis fans them out to the browser via the WebSocket server.\n\n**G:** Agents are initialized from client-side config, not from a DB query. This means the Rail always shows all 8 agents even if some have never run. Real `status` values only appear after the first WebSocket message for that agent arrives. Don't assume a `status: 'idle'` agent has a DB `AgentExecution` record — it may not."
+    },
+    {
+      "file": "src/lib/agents/executor.ts",
+      "line": 27,
+      "title": "7. Agent Execution Engine — The Core Async Loop",
+      "description": "**S:** This is the most important server-side function in the codebase. Every time an agent runs, this is what executes.\n\n**M:** `executeAgent` takes an `ExecutionContext` (executionId, agentType, promptContext, userId). It: (1) transitions the DB record to `running`; (2) publishes a Redis `agent:started` event; (3) builds system + user prompts; (4) streams tokens from Claude; (5) parses the JSON response; (6) persists the result to the DB; (7) publishes a Redis `agent:completed` or `agent:error` event. Steps 3–5 are the hot path — every token from Claude is counted, and a status event fires every 50 tokens (line 83) so the Rail shows live progress.\n\n**I:** The executor is the integration point for all three major systems: Prisma (persistence), LLM provider (Claude), and Redis (real-time fan-out). If any one of these is misconfigured, agent execution fails silently from the user's perspective — they see the Rail stuck at `running`. Always check the executor logs first when debugging agent failures.\n\n**G:** The JSON parser at line 102 uses a regex to extract the first `{...}` block from Claude's response. Claude sometimes wraps its JSON in markdown code fences or adds an explanation paragraph. The regex handles this, but if Claude changes its output format significantly, this parser will silently discard content and store an empty `parsedOutput`."
+    },
+    {
+      "file": "src/lib/agents/prompts.ts",
+      "line": 24,
+      "title": "8. Agent Prompts — How Each Agent Thinks",
+      "description": "**S:** This file defines what each of the 6 agent types tells Claude about its job.\n\n**M:** `getAgentSystemPrompt(agentType)` returns a detailed system prompt via a lookup map. Each prompt specifies the agent's role, its reasoning approach (numbered steps), and a strict JSON output schema. `buildAgentUserPrompt` injects runtime context — the actual resume, JD, company name — into the user turn. The executor calls both at lines 57–58.\n\n**I:** The output schema defined in each system prompt is what `executeAgent`'s JSON parser (step 7) expects to find. If you change a system prompt's output schema, you must update the DB model and any consumers of `execution.output` — it's an implicit contract, not enforced by TypeScript.\n\n**G:** The `AgentType` enum here (`'resume-tailor'`, `'job-match'`, etc.) uses kebab-case. The `AgentType` in `src/lib/realtime/events.ts` uses snake_case (`'resume_tailor'`). The bridge in `redis-integration.ts` maps between them — if you add a new agent type, you must update the map in that bridge file or the Rail will never receive events for the new agent."
+    },
+    {
+      "file": "src/lib/llm/provider.ts",
+      "line": 45,
+      "title": "9. LLM Provider — Swap Claude for NIM Without Touching Agent Code",
+      "description": "**S:** This module is a provider abstraction so agent code never imports `@anthropic-ai/sdk` directly.\n\n**M:** `initializeLLMProvider()` reads `process.env.LLM_PROVIDER` and returns either an `AnthropicProvider` or `NvidiaNimProvider` singleton. The exported `streamLLM` at line 79 is what the executor calls — it delegates to whichever provider is active. Both providers implement the same `LLMProvider` interface (callLLM + streamLLM + getDefaultModel).\n\n**I:** To run the app against a local Ollama or any other OpenAI-compatible endpoint, you add a third provider class and a new case in the switch. No agent prompt code changes. This is a deliberate architectural boundary.\n\n**G:** The provider is a module-level singleton — `providerInstance`. This works fine in a long-running Node server (`server.js`), but in Next.js API routes (serverless/Edge), each cold start re-initializes it. If you see unexpected provider switching in logs, it's because the module is being re-evaluated per request."
+    },
+    {
+      "file": "src/lib/agents/redis-integration.ts",
+      "line": 20,
+      "title": "10. Redis Event Bridge — Connecting Phase 2 Agents to the Browser",
+      "description": "**S:** This file is the glue between the new Phase 2 executor and the existing Redis pub/sub infrastructure that feeds the browser.\n\n**M:** `mapAgentType` converts Phase 2 kebab-case agent types to the legacy snake_case types that `REDIS_CHANNELS` and the WebSocket server understand. `publishAgentStarted`, `publishAgentCompleted`, and `publishAgentStatus` wrap raw Redis `publish` calls with the correct channel names and event shapes defined in `src/lib/realtime/events.ts`.\n\n**I:** This bridge exists because the real-time event schema was designed before the executor was built. Rather than rewrite the WS server and all frontend subscriptions, the bridge translates at the publishing layer. It's a deliberate compatibility shim — not tech debt to immediately eliminate.\n\n**G:** If you add a new agent type and forget to add it to the `typeMap` here, the fallback is `'research'`. The Rail will show research agent events instead of your new agent's events — a confusing bug with no error message."
+    },
+    {
+      "file": "src/hooks/useRealTime.ts",
+      "line": 29,
+      "title": "11. useRealTime — The React Bridge to WebSocket",
+      "description": "**S:** This custom hook is how every React component in the app subscribes to live events — the KanbanBoard, the JobCard, and the AgentRail all use it.\n\n**M:** On mount it calls `initWebSocket(url)` (singleton — safe to call multiple times), subscribes to connection state changes, and subscribes to the requested `channels`. It exposes `connected`, `subscribe(type, handler)`, and `send`. The `subscribe` function returns an unsubscribe callback — components call it in their cleanup effect to prevent memory leaks.\n\n**I:** The hook reads `NEXT_PUBLIC_WEBSOCKET_URL` from the environment. In local dev this points to the custom `server.js` (run via `npm run dev:socket`), not the standard `next dev` process. Forgetting to run the socket server is the #1 cause of the AgentRail showing perpetually disconnected in development.\n\n**G:** The WebSocket client uses a message queue (`messageQueue` in `WebSocketClient`) to buffer messages sent before the connection is open. This means `send()` calls in component mount effects won't be lost. However, the queue is in-memory and lost on page reload — do not design flows that depend on queued messages surviving a refresh."
+    },
+    {
+      "file": "src/lib/auth.ts",
+      "line": 42,
+      "title": "12. Auth — NextAuth Config and the Dev Safety Net",
+      "description": "**S:** `authOptions` is the single NextAuth configuration object consumed by `pages/api/auth/[...nextauth].ts`. All auth behavior flows from here.\n\n**M:** Three providers are configured: GitHub and Google OAuth (conditionally enabled if their env vars exist) and a `CredentialsProvider` that is always active. The credentials provider at line 61 does NOT check a password — it accepts any email address and auto-creates a user on first login using an in-memory `devUsers` Map. The JWT callback at line 118 stamps `token.sub` with the user ID; the session callback at line 134 reads it back into `session.user.id`.\n\n**I:** The in-memory `devUsers` store resets on every server restart, which is fine for local development. For production you must connect NextAuth to a real database adapter (Prisma adapter) and implement actual password hashing. This is tracked in `SECURITY_IMPLEMENTATION.md`.\n\n**G:** The API middleware in `src/app/api/middleware/auth.ts` does NOT use NextAuth's `getServerSession`. It has its own token-decoding logic that supports `test-` prefixed tokens for E2E testing. This means your API routes and your page auth can drift if you're not careful — a user that NextAuth considers authenticated may be treated as unauthenticated by an API route if it's checking a different session source."
+    }
+  ]
+}

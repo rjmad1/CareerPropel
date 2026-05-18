@@ -35,9 +35,18 @@ export interface RealtimeJobUpdate {
   stage: string;
   timestamp: Date;
   changeType: 'stage_change' | 'resume_updated' | 'match_score_updated' | 'status_changed';
-  oldValue?: any;
-  newValue?: any;
+  changes?: Record<string, unknown>;
+  oldValue?: unknown;
+  newValue?: unknown;
   agentId?: string;
+}
+
+export interface RealtimeJobCreated {
+  job: Record<string, unknown>;
+}
+
+export interface RealtimeJobDeleted {
+  jobId: string;
 }
 
 // Notification types
@@ -73,6 +82,14 @@ export interface JobUpdateMessage extends WebSocketMessage<RealtimeJobUpdate> {
   type: 'job:update';
 }
 
+export interface JobCreatedMessage extends WebSocketMessage<RealtimeJobCreated> {
+  type: 'job:created';
+}
+
+export interface JobDeletedMessage extends WebSocketMessage<RealtimeJobDeleted> {
+  type: 'job:deleted';
+}
+
 export interface NotificationMessage extends WebSocketMessage<Notification> {
   type: 'notification';
 }
@@ -93,6 +110,8 @@ export type AnyWebSocketMessage =
   | AgentStatusMessage
   | AgentLogMessage
   | JobUpdateMessage
+  | JobCreatedMessage
+  | JobDeletedMessage
   | NotificationMessage
   | ConnectionMessage
   | BatchUpdateMessage;

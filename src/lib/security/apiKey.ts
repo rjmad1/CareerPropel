@@ -137,6 +137,6 @@ export async function cleanupExpiredKeys(): Promise<number> {
   const result = await prisma.apiKey.deleteMany({
     where: { expiresAt: { lt: new Date() } },
   })
-  console.log(`[CLEANUP] Removed ${result.count} expired API keys`)
+  console.log(`Removed ${result.count} expired API keys`)
   return result.count
 }

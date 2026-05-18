@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { redis } from '@/lib/redis/redisClient'
 
-const RATE_LIMIT_WINDOW = 60 // seconds
+const RATE_LIMIT_WINDOW = 60
 const RATE_LIMIT_MAX_REQUESTS = 100
 
-// Lua script: atomically increments counter and sets TTL only on first call.
-// Returns [count, ttl]. Using SET NX + INCR avoids a race where incr runs
-// but expire never does (e.g. process crash between the two calls).
+// Atomically increments counter; sets TTL only on first increment to avoid a
+// race where INCR succeeds but EXPIRE never runs (e.g. process crash between calls).
 const RATE_LIMIT_SCRIPT = `
 local key = KEYS[1]
 local window = tonumber(ARGV[1])

@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/db"
 
 
-// Define built-in roles and their permissions
 export const DEFAULT_ROLES = {
   ADMIN: 'admin',
   RECRUITER: 'recruiter',
@@ -9,43 +8,28 @@ export const DEFAULT_ROLES = {
 }
 
 export const PERMISSION_MATRIX = {
-  // Job permissions
   'jobs.create': { resource: 'jobs', action: 'create' },
   'jobs.read': { resource: 'jobs', action: 'read' },
   'jobs.update': { resource: 'jobs', action: 'update' },
   'jobs.delete': { resource: 'jobs', action: 'delete' },
   'jobs.manage': { resource: 'jobs', action: 'manage' },
-
-  // User permissions
   'users.read': { resource: 'users', action: 'read' },
   'users.update': { resource: 'users', action: 'update' },
   'users.delete': { resource: 'users', action: 'delete' },
   'users.manage': { resource: 'users', action: 'manage' },
-
-  // Audit permissions
   'audit.read': { resource: 'audit', action: 'read' },
   'audit.manage': { resource: 'audit', action: 'manage' },
-
-  // Role permissions
   'roles.manage': { resource: 'roles', action: 'manage' },
   'permissions.manage': { resource: 'permissions', action: 'manage' },
-
-  // 2FA permissions
   'security.2fa': { resource: 'security', action: '2fa' },
   'security.manage': { resource: 'security', action: 'manage' },
-
-  // API Key permissions
   'api_keys.create': { resource: 'api_keys', action: 'create' },
   'api_keys.read': { resource: 'api_keys', action: 'read' },
   'api_keys.delete': { resource: 'api_keys', action: 'delete' },
 }
 
-// Define role permission mappings
 export const ROLE_PERMISSIONS = {
-  admin: [
-    // Admin has all permissions
-    ...Object.keys(PERMISSION_MATRIX),
-  ],
+  admin: [...Object.keys(PERMISSION_MATRIX)],
   recruiter: [
     'jobs.create',
     'jobs.read',
@@ -70,12 +54,8 @@ export const ROLE_PERMISSIONS = {
   ],
 }
 
-/**
- * Initialize default roles and permissions in the database
- */
 export async function initializeDefaultRoles(): Promise<void> {
   try {
-    // Create permissions
     for (const [name, { resource, action }] of Object.entries(PERMISSION_MATRIX)) {
       await prisma.permission.upsert({
         where: { name },
@@ -89,9 +69,7 @@ export async function initializeDefaultRoles(): Promise<void> {
       })
     }
 
-    // Create roles with their permissions
     for (const [roleName, permissionNames] of Object.entries(ROLE_PERMISSIONS)) {
-      // Create or get role
       const role = await prisma.role.upsert({
         where: { name: roleName },
         update: {},
@@ -101,12 +79,10 @@ export async function initializeDefaultRoles(): Promise<void> {
         },
       })
 
-      // Get all permissions for this role
       const permissions = await prisma.permission.findMany({
         where: { name: { in: permissionNames } },
       })
 
-      // Create role-permission relationships
       for (const permission of permissions) {
         await prisma.rolePermission.upsert({
           where: {
@@ -131,9 +107,6 @@ export async function initializeDefaultRoles(): Promise<void> {
   }
 }
 
-/**
- * Assign a role to a user
- */
 export async function assignRoleToUser(
   email: string,
   roleName: string,
@@ -165,9 +138,6 @@ export async function assignRoleToUser(
   }
 }
 
-/**
- * Remove a role from a user
- */
 export async function removeRoleFromUser(
   email: string,
   roleName: string
@@ -192,9 +162,6 @@ export async function removeRoleFromUser(
   }
 }
 
-/**
- * Get all roles for a user
- */
 export async function getUserRoles(email: string): Promise<string[]> {
   try {
     const userRoles = await prisma.userRole.findMany({
@@ -209,9 +176,6 @@ export async function getUserRoles(email: string): Promise<string[]> {
   }
 }
 
-/**
- * Get all permissions for a user (via their roles)
- */
 export async function getUserPermissions(email: string): Promise<string[]> {
   try {
     const userRoles = await prisma.userRole.findMany({
@@ -241,9 +205,6 @@ export async function getUserPermissions(email: string): Promise<string[]> {
   }
 }
 
-/**
- * Check if user has a specific permission
- */
 export async function hasPermission(
   email: string,
   permission: string
@@ -257,9 +218,6 @@ export async function hasPermission(
   }
 }
 
-/**
- * Check if user has any of the specified permissions
- */
 export async function hasAnyPermission(
   email: string,
   permissions: string[]
@@ -273,9 +231,6 @@ export async function hasAnyPermission(
   }
 }
 
-/**
- * Check if user has all of the specified permissions
- */
 export async function hasAllPermissions(
   email: string,
   permissions: string[]
@@ -289,9 +244,6 @@ export async function hasAllPermissions(
   }
 }
 
-/**
- * Get all users with a specific role
- */
 export async function getUsersWithRole(roleName: string): Promise<string[]> {
   try {
     const role = await prisma.role.findUnique({
@@ -313,9 +265,6 @@ export async function getUsersWithRole(roleName: string): Promise<string[]> {
   }
 }
 
-/**
- * Get role details with permissions
- */
 export async function getRoleDetails(roleName: string) {
   try {
     const role = await prisma.role.findUnique({
