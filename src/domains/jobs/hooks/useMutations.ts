@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-
 // ============================================================================
 // Interview Mutations
 // ============================================================================
@@ -16,18 +15,42 @@ export interface CreateInterviewInput {
   notes?: string;
 }
 
+const UI_TO_API_TYPE: Record<string, string> = {
+  phone_screen: 'recruiter_screen',
+  offer_discussion: 'other',
+};
+
 export function useCreateInterview() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (_input: CreateInterviewInput): Promise<unknown> => {
-      // TODO: Phase 2 — await apiClient.post('/api/interviews', _input)
-      throw new Error('Interview creation API not yet implemented');
+    mutationFn: async (input: CreateInterviewInput): Promise<unknown> => {
+      const payload = {
+        jobId: input.jobId,
+        type: UI_TO_API_TYPE[input.type] || input.type,
+        scheduledAt: `${input.date}T${input.time}:00.000Z`,
+        interviewer: input.interviewer ? { name: input.interviewer } : undefined,
+        location: input.location || undefined,
+        meetingLink: input.meetingLink || undefined,
+        notes: input.notes || undefined,
+      };
+
+      const res = await fetch('/api/interviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.error?.message || 'Failed to schedule interview');
+      }
+
+      const data = await res.json();
+      return data.data ?? data;
     },
     onSuccess: (_, variables) => {
-      // Invalidate interviews query for this job
       queryClient.invalidateQueries({ queryKey: ['interviews', variables.jobId] });
-      // Invalidate job activities to show new activity
       queryClient.invalidateQueries({ queryKey: ['job-activities', variables.jobId] });
     },
   });
@@ -37,8 +60,15 @@ export function useDeleteInterview() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (_interviewId: string) => {
-      // TODO: Phase 2 — await apiClient.delete(`/api/interviews/${_interviewId}`)
+    mutationFn: async (interviewId: string) => {
+      const res = await fetch(`/api/interviews/${interviewId}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) {
+        throw new Error('Failed to delete interview');
+      }
+      const data = await res.json();
+      return data.data ?? data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['interviews'] });
@@ -56,9 +86,27 @@ export function useUpdateInterview() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id: _id, updates: _updates }: Omit<UpdateInterviewInput, 'jobId'> & { id: string }): Promise<unknown> => {
-      // TODO: Phase 2 — await apiClient.patch(`/api/interviews/${_id}`, _updates)
-      throw new Error('Interview update API not yet implemented');
+    mutationFn: async ({ id, updates }: Omit<UpdateInterviewInput, 'jobId'> & { id: string }): Promise<unknown> => {
+      const payload: Record<string, unknown> = {};
+      if (updates.type) payload.type = UI_TO_API_TYPE[updates.type] || updates.type;
+      if (updates.date && updates.time) {
+        payload.scheduledAt = `${updates.date}T${updates.time}:00.000Z`;
+      }
+      if (updates.interviewer !== undefined) {
+        payload.interviewer = updates.interviewer ? { name: updates.interviewer } : undefined;
+      }
+      if (updates.location !== undefined) payload.location = updates.location;
+      if (updates.meetingLink !== undefined) payload.meetingLink = updates.meetingLink;
+      if (updates.notes !== undefined) payload.notes = updates.notes;
+
+      const res = await fetch(`/api/interviews/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error('Failed to update interview');
+      const data = await res.json();
+      return data.data ?? data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['interviews'] });
@@ -83,14 +131,35 @@ export function useCreateOffer() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (_input: CreateOfferInput): Promise<unknown> => {
-      // TODO: Phase 2 — await apiClient.post('/api/offers', _input)
-      throw new Error('Offer creation API not yet implemented');
+    mutationFn: async (input: CreateOfferInput): Promise<unknown> => {
+      const noteParts: string[] = [];
+      if (input.notes) noteParts.push(input.notes);
+      if (input.equity) noteParts.push(`Equity: ${input.equity}`);
+
+      const payload = {
+        jobId: input.jobId,
+        salary: input.baseSalary,
+        bonus: input.bonusPercent ? { amount: input.bonusPercent, type: 'percentage' } : undefined,
+        startDate: input.startDate ? `${input.startDate}T00:00:00.000Z` : undefined,
+        notes: noteParts.length > 0 ? noteParts.join('; ') : undefined,
+      };
+
+      const res = await fetch('/api/offers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.error?.message || 'Failed to log offer');
+      }
+
+      const data = await res.json();
+      return data.data ?? data;
     },
     onSuccess: (_, variables) => {
-      // Invalidate offers query for this job
       queryClient.invalidateQueries({ queryKey: ['offers', variables.jobId] });
-      // Invalidate job activities to show new activity
       queryClient.invalidateQueries({ queryKey: ['job-activities', variables.jobId] });
     },
   });
@@ -100,11 +169,15 @@ export function useDeleteOffer() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (_offerId: string) => {
-      // TODO: Phase 2 — await apiClient.delete(`/api/offers/${_offerId}`)
+    mutationFn: async (offerId: string) => {
+      const res = await fetch(`/api/offers/${offerId}`, {
+        method: 'DELETE',
+      });
+      if (!res.ok) throw new Error('Failed to delete offer');
+      const data = await res.json();
+      return data.data ?? data;
     },
     onSuccess: () => {
-      // Invalidate all offers queries
       queryClient.invalidateQueries({ queryKey: ['offers'] });
     },
   });
@@ -119,9 +192,23 @@ export function useUpdateOffer() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id: _id, updates: _updates }: UpdateOfferInput): Promise<unknown> => {
-      // TODO: Phase 2 — await apiClient.patch(`/api/offers/${_id}`, _updates)
-      throw new Error('Offer update API not yet implemented');
+    mutationFn: async ({ id, updates }: UpdateOfferInput): Promise<unknown> => {
+      const payload: Record<string, unknown> = {};
+      if (updates.baseSalary !== undefined) payload.salary = updates.baseSalary;
+      if (updates.bonusPercent !== undefined) {
+        payload.bonus = { amount: updates.bonusPercent, type: 'percentage' };
+      }
+      if (updates.startDate) payload.startDate = `${updates.startDate}T00:00:00.000Z`;
+      if (updates.notes !== undefined) payload.notes = updates.notes;
+
+      const res = await fetch(`/api/offers/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error('Failed to update offer');
+      const data = await res.json();
+      return data.data ?? data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['offers'] });
@@ -142,14 +229,21 @@ export function useUpdateJobNotes() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ jobId: _jobId, notes: _notes }: UpdateJobNotesInput): Promise<unknown> => {
-      // TODO: Phase 2 — await apiClient.patch(`/api/jobs/${_jobId}`, { notes: _notes })
-      throw new Error('Job notes update API not yet implemented');
+    mutationFn: async ({ jobId, notes }: UpdateJobNotesInput): Promise<unknown> => {
+      const res = await fetch(`/api/jobs/${jobId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ notes }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.error?.message || 'Failed to update notes');
+      }
+      const data = await res.json();
+      return data.data ?? data;
     },
     onSuccess: (_, variables) => {
-      // Invalidate job query
       queryClient.invalidateQueries({ queryKey: ['job', variables.jobId] });
-      // Invalidate job activities to show notes update
       queryClient.invalidateQueries({ queryKey: ['job-activities', variables.jobId] });
     },
   });
