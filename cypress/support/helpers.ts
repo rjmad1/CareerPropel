@@ -13,7 +13,7 @@ export function loginUser(email: string = 'test@example.com', password: string =
   cy.get('[data-testid="login-password-input"]').type(password);
   cy.get('[data-testid="login-submit-btn"]').click();
   cy.url().should('include', '/');
-  cy.get('[data-testid="job-card"]').should('exist');
+  cy.get('.job-card').should('exist');
 }
 
 /**
@@ -179,7 +179,7 @@ export function logOffer(
  * Opens a job detail panel for the first job
  */
 export function openJobDetailPanel() {
-  cy.get('[data-testid="job-card"]').first().click();
+  cy.get('.job-card').first().click();
   cy.get('[data-testid="job-detail-panel"]').should('be.visible');
 }
 
@@ -417,7 +417,7 @@ export function enableSlowMotion(delayMs: number = 500) {
 export function createAndOpenJob(jobData = {}) {
   return createTestJob(jobData).then((job) => {
     cy.visit('/');
-    cy.get('[data-testid="job-card"]').first().click();
+    cy.get('.job-card').first().click();
     cy.get('[data-testid="job-detail-panel"]').should('be.visible');
     return job;
   });
