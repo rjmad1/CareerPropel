@@ -133,6 +133,19 @@ export default function OverviewTab({ job }: OverviewTabProps) {
         )}
       </div>
 
+      {/* Job Description */}
+      {job.description && (
+        <div>
+          <h3 className="text-sm font-semibold text-gray-900 mb-2">Description</h3>
+          <div
+            data-testid="job-description"
+            className="bg-gray-50 rounded-lg p-3 text-sm text-gray-700 whitespace-pre-wrap max-h-48 overflow-y-auto"
+          >
+            {job.description}
+          </div>
+        </div>
+      )}
+
       {/* Job URL if available */}
       {job.url && (
         <div>

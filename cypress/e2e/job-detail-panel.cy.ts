@@ -9,7 +9,9 @@ import { loginUser, createTestJob, deleteTestData, fillForm, selectDropdown } fr
 describe('JobDetailPanel - Opening & Closing', () => {
   beforeEach(() => {
     loginUser();
-    cy.visit('/');
+    createTestJob({ title: 'Software Engineer', company: 'Test Company' });
+    cy.visit('/dashboard');
+    cy.get('[data-testid="job-card"]').should('exist');
   });
 
   afterEach(() => {
@@ -73,7 +75,8 @@ describe('JobDetailPanel - Opening & Closing', () => {
 describe('JobDetailPanel - Tab Navigation', () => {
   beforeEach(() => {
     loginUser();
-    cy.visit('/');
+    createTestJob({ title: 'Software Engineer', company: 'Test Company' });
+    cy.visit('/dashboard');
     cy.get('[data-testid="job-card"]').first().click();
   });
 
@@ -138,7 +141,8 @@ describe('JobDetailPanel - Tab Navigation', () => {
 describe('JobDetailPanel - Interview Management', () => {
   beforeEach(() => {
     loginUser();
-    cy.visit('/');
+    createTestJob({ title: 'Software Engineer', company: 'Test Company' });
+    cy.visit('/dashboard');
     cy.get('[data-testid="job-card"]').first().click();
     cy.get('[data-testid="tab-interviews"]').click();
   });
@@ -262,7 +266,8 @@ describe('JobDetailPanel - Interview Management', () => {
 describe('JobDetailPanel - Offer Management', () => {
   beforeEach(() => {
     loginUser();
-    cy.visit('/');
+    createTestJob({ title: 'Software Engineer', company: 'Test Company' });
+    cy.visit('/dashboard');
     cy.get('[data-testid="job-card"]').first().click();
     cy.get('[data-testid="tab-offers"]').click();
   });
@@ -379,7 +384,8 @@ describe('JobDetailPanel - Offer Management', () => {
 describe('JobDetailPanel - Notes Management', () => {
   beforeEach(() => {
     loginUser();
-    cy.visit('/');
+    createTestJob({ title: 'Software Engineer', company: 'Test Company' });
+    cy.visit('/dashboard');
     cy.get('[data-testid="job-card"]').first().click();
     cy.get('[data-testid="tab-overview"]').click();
   });
@@ -450,7 +456,8 @@ describe('JobDetailPanel - Notes Management', () => {
 describe('JobDetailPanel - Timeline Display', () => {
   beforeEach(() => {
     loginUser();
-    cy.visit('/');
+    createTestJob({ title: 'Software Engineer', company: 'Test Company' });
+    cy.visit('/dashboard');
     cy.get('[data-testid="job-card"]').first().click();
     cy.get('[data-testid="tab-timeline"]').click();
   });
@@ -528,7 +535,9 @@ describe('JobDetailPanel - Timeline Display', () => {
 describe('JobDetailPanel - Error Handling & Edge Cases', () => {
   beforeEach(() => {
     loginUser();
-    cy.visit('/');
+    createTestJob({ title: 'Software Engineer', company: 'Test Company' });
+    cy.visit('/dashboard');
+    cy.get('[data-testid="job-card"]').should('exist');
   });
 
   afterEach(() => {
@@ -612,7 +621,9 @@ describe('JobDetailPanel - Error Handling & Edge Cases', () => {
 describe('JobDetailPanel - Accessibility', () => {
   beforeEach(() => {
     loginUser();
-    cy.visit('/');
+    createTestJob({ title: 'Software Engineer', company: 'Test Company' });
+    cy.visit('/dashboard');
+    cy.get('[data-testid="job-card"]').should('exist');
   });
 
   afterEach(() => {

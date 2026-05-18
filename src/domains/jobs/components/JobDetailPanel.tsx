@@ -117,7 +117,7 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-3 gap-2 mb-4">
+          <div className="grid grid-cols-2 gap-2 mb-2">
             <div className="bg-gray-50 rounded-lg p-2">
               <p className="text-xs text-gray-600">Match Score</p>
               <p
@@ -130,6 +130,18 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
             <div className="bg-gray-50 rounded-lg p-2">
               <p className="text-xs text-gray-600">Stage</p>
               <p className="text-sm font-semibold text-gray-900 capitalize" data-testid="panel-stage-badge">{job.stage.replace(/_/g, ' ')}</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-2 mb-4">
+            <div className="bg-gray-50 rounded-lg p-2">
+              <p className="text-xs text-gray-600">Salary</p>
+              <p className="text-sm font-semibold text-gray-900" data-testid="panel-salary-range">
+                {(job as any).salary
+                  ? typeof (job as any).salary === 'object'
+                    ? `$${((job as any).salary.min || 0).toLocaleString()}${(job as any).salary.max ? `–$${(job as any).salary.max.toLocaleString()}` : '+'}`
+                    : `$${Number((job as any).salary).toLocaleString()}`
+                  : '—'}
+              </p>
             </div>
             <div className="bg-gray-50 rounded-lg p-2">
               <p className="text-xs text-gray-600">Priority</p>

@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { NavLayout } from '@/components/Layout/NavLayout';
+import { JobDetailPanel } from '@/domains/jobs';
 import Link from 'next/link';
 import { Plus, RefreshCw } from 'lucide-react';
 
@@ -68,6 +69,7 @@ export default function DashboardPage() {
   const [url, setUrl] = useState('');
   const [submitLoading, setSubmitLoading] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -259,7 +261,12 @@ export default function DashboardPage() {
                 {jobs.map((job) => {
                   const sk = stageKey(job.stage);
                   return (
-                    <div key={job.id} className="flex items-center px-5 py-3 hover:bg-gray-50 transition gap-4">
+                    <div
+                      key={job.id}
+                      data-testid="job-card"
+                      onClick={() => setSelectedJobId(job.id)}
+                      className="flex items-center px-5 py-3 hover:bg-gray-50 transition gap-4 cursor-pointer"
+                    >
                       <div className="min-w-0 flex-1">
                         <p className="font-medium text-gray-900 truncate">{job.title}</p>
                         <p className="text-sm text-gray-500 truncate">{job.company}</p>
@@ -270,6 +277,7 @@ export default function DashboardPage() {
                         </span>
                         <Link
                           href={`/interview-prep`}
+                          onClick={(e) => e.stopPropagation()}
                           className="text-xs text-blue-600 hover:text-blue-700 font-medium whitespace-nowrap"
                         >
                           Prepare →
@@ -297,6 +305,13 @@ export default function DashboardPage() {
           </div>
         </section>
       </div>
+
+      {selectedJobId && (
+        <JobDetailPanel
+          jobId={selectedJobId}
+          onClose={() => setSelectedJobId(null)}
+        />
+      )}
     </NavLayout>
   );
 }

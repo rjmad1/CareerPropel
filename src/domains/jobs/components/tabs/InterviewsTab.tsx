@@ -198,9 +198,9 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
       )}
 
       {/* Upcoming Interviews */}
-      {upcomingInterviews.length > 0 && (
-        <div className="mb-6" data-testid="upcoming-interviews-section">
-          <h3 className="text-sm font-semibold text-gray-900 mb-3">Upcoming</h3>
+      <div className="mb-6" data-testid="upcoming-interviews-section">
+        <h3 className="text-sm font-semibold text-gray-900 mb-3">Upcoming</h3>
+        {upcomingInterviews.length > 0 ? (
           <div className="space-y-3">
             {upcomingInterviews.map((interview: Interview) => (
               <div
@@ -256,13 +256,15 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
               </div>
             ))}
           </div>
-        </div>
-      )}
+        ) : (
+          <p className="text-sm text-gray-500 text-center py-2">No upcoming interviews</p>
+        )}
+      </div>
 
       {/* Past Interviews */}
-      {pastInterviews.length > 0 && (
-        <div data-testid="past-interviews-section">
-          <h3 className="text-sm font-semibold text-gray-900 mb-3">Past</h3>
+      <div data-testid="past-interviews-section">
+        <h3 className="text-sm font-semibold text-gray-900 mb-3">Past</h3>
+        {pastInterviews.length > 0 ? (
           <div className="space-y-3">
             {pastInterviews.map((interview: Interview) => (
               <div key={interview.id} data-testid="interview-item" className="bg-gray-50 border border-gray-200 rounded-lg p-3 opacity-75">
@@ -292,12 +294,10 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
               </div>
             ))}
           </div>
-        </div>
-      )}
-
-      {interviews.length === 0 && !isAddingInterview && (
-        <p className="text-sm text-gray-600 text-center py-4">No interviews scheduled yet</p>
-      )}
+        ) : (
+          <p className="text-sm text-gray-500 text-center py-2">No past interviews</p>
+        )}
+      </div>
     </div>
   );
 }

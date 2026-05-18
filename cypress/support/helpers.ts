@@ -12,39 +12,32 @@ export function loginUser(email: string = 'test@example.com', password: string =
   cy.get('[data-testid="login-email-input"]').type(email);
   cy.get('[data-testid="login-password-input"]').type(password);
   cy.get('[data-testid="login-submit-btn"]').click();
-  cy.url().should('include', '/');
+  cy.url().should('include', '/dashboard');
 }
 
 /**
  * Creates a test job via API
  * Used to ensure consistent test data
  */
-export function createTestJob(jobData = {}) {
+export function createTestJob(jobData: { title?: string; company?: string; notes?: string; stage?: string } = {}) {
   const defaultJob = {
     title: 'Software Engineer',
     company: 'Test Company',
-    description: 'Test job description',
-    location: 'Remote',
-    jobType: 'Full-time',
-    salary: 150000,
-    recruiter: {
-      name: 'John Recruiter',
-      email: 'recruiter@company.com',
-      phone: '555-1234'
-    },
-    ...jobData
+    notes: 'Test job description for automated testing',
+    stage: 'applied',
+    ...jobData,
   };
 
   return cy.request({
     method: 'POST',
     url: '/api/jobs',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: defaultJob
+    headers: { 'Content-Type': 'application/json' },
+    body: defaultJob,
+    failOnStatusCode: false,
   }).then((response) => {
-    expect(response.status).to.eq(201);
-    return response.body;
+    expect(response.status).to.be.oneOf([200, 201]);
+    // API wraps response in { data: ..., success: true }
+    return response.body.data ?? response.body;
   });
 }
 
@@ -53,46 +46,18 @@ export function createTestJob(jobData = {}) {
  * Called in afterEach hook to clean up
  */
 export function deleteTestData() {
-  // Delete all test jobs
+  // Delete all test jobs - API returns { data: [...], success: true }
   cy.request({
     method: 'GET',
-    url: '/api/jobs?limit=1000'
+    url: '/api/jobs?limit=1000',
+    failOnStatusCode: false,
   }).then((response) => {
-    const jobs = response.body;
-    jobs.forEach((job: any) => {
-      cy.request({
-        method: 'DELETE',
-        url: `/api/jobs/${job.id}`
+    const jobs: any[] = response.body?.data ?? response.body ?? [];
+    if (Array.isArray(jobs)) {
+      jobs.forEach((job: any) => {
+        cy.request({ method: 'DELETE', url: `/api/jobs/${job.id}`, failOnStatusCode: false });
       });
-    });
-  });
-
-  // Delete all test interviews
-  cy.request({
-    method: 'GET',
-    url: '/api/interviews?limit=1000'
-  }).then((response) => {
-    const interviews = response.body;
-    interviews.forEach((interview: any) => {
-      cy.request({
-        method: 'DELETE',
-        url: `/api/interviews/${interview.id}`
-      });
-    });
-  });
-
-  // Delete all test offers
-  cy.request({
-    method: 'GET',
-    url: '/api/offers?limit=1000'
-  }).then((response) => {
-    const offers = response.body;
-    offers.forEach((offer: any) => {
-      cy.request({
-        method: 'DELETE',
-        url: `/api/offers/${offer.id}`
-      });
-    });
+    }
   });
 }
 

@@ -79,6 +79,7 @@ export const JobCard: React.FC<JobCardProps> = ({
         ${isUpdating ? 'ring-2 ring-green-400' : ''}
         ${stageConfig.borderColor}
       `}
+      data-testid="job-card"
       data-cy={`job-card-${job.id}`}
     >
       {/* Updating indicator */}
