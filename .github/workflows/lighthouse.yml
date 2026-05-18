@@ -9,6 +9,28 @@ on:
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: careerpropel_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/careerpropel_ci
+      NEXTAUTH_SECRET: ci-test-secret-not-for-production
+      NEXTAUTH_URL: http://localhost:3000
+      NODE_ENV: production
+
     steps:
       - uses: actions/checkout@v6
 
@@ -21,18 +43,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Setup database schema
+        run: npx prisma db push --skip-generate --accept-data-loss
+
       - name: Build application
         run: npm run build
 
       - name: Start server
         run: npm run start &
-        timeout-minutes: 2
 
       - name: Wait for server
-        run: npx wait-on http://localhost:3000
+        run: npx wait-on http://localhost:3000 --timeout 30000
 
       - name: Run Lighthouse CI
-        uses: treosh/lighthouse-ci-action@v10
+        uses: treosh/lighthouse-ci-action@v12
         with:
           uploadArtifacts: true
           temporaryPublicStorage: true
@@ -44,29 +68,36 @@ jobs:
         with:
           script: |
             const fs = require('fs');
+            const path = require('path');
             try {
-              const report = JSON.parse(fs.readFileSync('./dist/manifest.json', 'utf8'));
-              const results = report.runs[0].scores;
-
-              const comment = `
-              ## ⚡ Lighthouse Report
-
-              | Metric | Score |
-              |--------|-------|
-              | Performance | ${Math.round(results.performance * 100)} |
-              | Accessibility | ${Math.round(results.accessibility * 100)} |
-              | Best Practices | ${Math.round(results['best-practices'] * 100)} |
-              | SEO | ${Math.round(results.seo * 100)} |
-
-              ${results.performance < 0.9 ? '⚠️ Performance below 90%' : '✅ Performance targets met'}
-              `;
-
-              github.rest.issues.createComment({
+              const manifestPath = path.join('.lighthouseci', 'manifest.json');
+              const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+              const run = manifest[0];
+              if (!run || !run.summary) {
+                console.log('No Lighthouse summary found in manifest');
+                return;
+              }
+              const s = run.summary;
+              const pct = (v) => Math.round((v || 0) * 100);
+              const icon = (v) => v >= 0.9 ? '✅' : v >= 0.75 ? '⚠️' : '❌';
+              const row = (label, key) =>
+                icon(s[key]) + ' **' + label + '**: ' + pct(s[key]) + '/100';
+              const lines = [
+                '## ⚡ Lighthouse Report',
+                '',
+                row('Performance', 'performance'),
+                row('Accessibility', 'accessibility'),
+                row('Best Practices', 'best-practices'),
+                row('SEO', 'seo'),
+                '',
+                'URL: ' + run.url,
+              ];
+              await github.rest.issues.createComment({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                body: comment
+                body: lines.join('\n'),
               });
             } catch (e) {
-              console.log('Could not parse Lighthouse results:', e);
+              console.log('Could not parse Lighthouse results:', e.message);
             }
