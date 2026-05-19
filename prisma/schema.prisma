@@ -32,6 +32,8 @@ model Candidate {
   interviews        Interview[]
   profileEntities   ProfileEntity[]
   profileScore      ProfileScore?
+  interviewPreps    InterviewPrep[]
+  starStories       StarStory[]
 }
 
 // ─── Job Pipeline ────────────────────────────────────────────────────────────
@@ -63,6 +65,7 @@ model Job {
   offers            Offer[]
   interviews        Interview[]
   documents         Document[]
+  interviewPrep     InterviewPrep?
 
   @@index([candidateId])
   @@index([stage])
@@ -230,6 +233,64 @@ model ProfileScore {
   candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
 
   @@index([candidateId])
+}
+
+// ─── Interview Intelligence ──────────────────────────────────────────────────
+
+model InterviewPrep {
+  id                String    @id @default(cuid())
+  candidateId       String
+  jobId             String    @unique   // one prep package per job
+  role              String
+  company           String
+  prepStatus        String    @default("not_started") // not_started, generating, ready, stale
+  confidenceScore   Float     @default(0)             // 0–1
+  contentVersion    Int       @default(1)
+  companyResearch   Json?     // serialised CompanyResearch
+  roleBreakdown     Json?     // serialised RoleBreakdown
+  technicalPrep     Json?     // serialised TechnicalPrep
+  systemDesignPrep  Json?     // serialised SystemDesignPrep
+  resumeAlignment   Json?     // serialised ResumeAlignment
+  compensationGuide Json?     // serialised CompensationGuide
+  generatedAt       DateTime?
+  expiresAt         DateTime?
+  userModifications Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  candidate  Candidate   @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job        Job         @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  starStories StarStory[]
+
+  @@index([candidateId])
+}
+
+model StarStory {
+  id               String   @id @default(cuid())
+  candidateId      String
+  interviewPrepId  String?  // optional: linked to a specific prep package
+  competency       String   // primary competency (e.g. "leadership")
+  competencies     String[] // additional competencies this story covers
+  title            String
+  summary          String?
+  situation        String
+  task             String
+  action           String
+  result           String
+  metrics          String[] // quantifiable outcomes
+  sourceProject    String?  // project from resume this story draws from
+  relevanceScore   Float    @default(0) // 0–1
+  timeToTell       Int?     // estimated seconds to deliver
+  confidence       Int?     // 0–100 user confidence rating
+  interviewQuestions String[] // interview questions this story can answer
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  candidate     Candidate      @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  interviewPrep InterviewPrep? @relation(fields: [interviewPrepId], references: [id], onDelete: SetNull)
+
+  @@index([candidateId])
+  @@index([interviewPrepId])
 }
 
 // ─── Agent Operations ────────────────────────────────────────────────────────

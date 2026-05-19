@@ -5,13 +5,16 @@ export function useJob(jobId: string) {
   return useQuery<Job, Error>({
     queryKey: ['job', jobId],
     queryFn: async () => {
-      // TODO: Implement API call in Phase 2
-      // const { data } = await apiClient.get(`/api/jobs/${jobId}`);
-      // return data;
-      return {} as Job;
+      const res = await fetch(`/api/jobs/${jobId}`);
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.error?.message || 'Failed to load job');
+      }
+      const json = await res.json();
+      return json.data ?? json;
     },
     enabled: !!jobId,
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
   });
 }

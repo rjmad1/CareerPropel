@@ -5,25 +5,27 @@ export const dynamic = 'force-dynamic';
 import React, { useState, useEffect } from 'react';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { InterviewPrepWorkspace } from '@/components/InterviewPrep/InterviewPrepWorkspace';
+import { STAGE_LABELS, STAGE_COLORS, JobStage } from '@/types/job';
+
+// Stages where active prep makes most sense
+const PREP_ELIGIBLE_STAGES = new Set<JobStage>([
+  'interested',
+  'applied',
+  'recruiter_screen',
+  'hiring_manager',
+  'technical_interview',
+  'system_design',
+  'behavioral',
+  'final_round',
+]);
 
 interface Job {
   id: string;
   title: string;
   company: string;
-  stage: string;
+  stage: JobStage;
   createdAt: string;
 }
-
-const PREP_ELIGIBLE_STAGES = [
-  'RECRUITER_SCREEN',
-  'HIRING_MANAGER',
-  'TECHNICAL_INTERVIEW',
-  'SYSTEM_DESIGN',
-  'BEHAVIORAL',
-  'FINAL_ROUND',
-  'APPLIED',
-  'INTERESTED',
-];
 
 export default function InterviewPrepPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -50,48 +52,14 @@ export default function InterviewPrepPage() {
     }
   }
 
-  const stageLabel: Record<string, string> = {
-    INTERESTED: 'Interested',
-    APPLIED: 'Applied',
-    RECRUITER_SCREEN: 'Recruiter Screen',
-    HIRING_MANAGER: 'Hiring Manager',
-    TECHNICAL_INTERVIEW: 'Technical Interview',
-    SYSTEM_DESIGN: 'System Design',
-    BEHAVIORAL: 'Behavioral',
-    FINAL_ROUND: 'Final Round',
-    OFFER: 'Offer',
-    REJECTED: 'Rejected',
-    SOURCED: 'Sourced',
-    TAILORING: 'Tailoring',
-  };
-
-  const stageColor: Record<string, string> = {
-    INTERESTED: 'bg-blue-100 text-blue-700',
-    APPLIED: 'bg-indigo-100 text-indigo-700',
-    RECRUITER_SCREEN: 'bg-yellow-100 text-yellow-700',
-    HIRING_MANAGER: 'bg-orange-100 text-orange-700',
-    TECHNICAL_INTERVIEW: 'bg-purple-100 text-purple-700',
-    SYSTEM_DESIGN: 'bg-violet-100 text-violet-700',
-    BEHAVIORAL: 'bg-pink-100 text-pink-700',
-    FINAL_ROUND: 'bg-rose-100 text-rose-700',
-    OFFER: 'bg-green-100 text-green-700',
-    REJECTED: 'bg-red-100 text-red-700',
-    SOURCED: 'bg-gray-100 text-gray-600',
-    TAILORING: 'bg-teal-100 text-teal-700',
-  };
-
   const filtered = jobs.filter(
     (j) =>
       j.title.toLowerCase().includes(searchText.toLowerCase()) ||
       j.company.toLowerCase().includes(searchText.toLowerCase())
   );
 
-  const interviewJobs = filtered.filter((j) =>
-    PREP_ELIGIBLE_STAGES.includes(j.stage?.toUpperCase())
-  );
-  const otherJobs = filtered.filter(
-    (j) => !PREP_ELIGIBLE_STAGES.includes(j.stage?.toUpperCase())
-  );
+  const interviewJobs = filtered.filter((j) => PREP_ELIGIBLE_STAGES.has(j.stage));
+  const otherJobs = filtered.filter((j) => !PREP_ELIGIBLE_STAGES.has(j.stage));
 
   return (
     <NavLayout
@@ -136,7 +104,7 @@ export default function InterviewPrepPage() {
           </div>
         ) : (
           <div className="space-y-8">
-            {/* Active Interview Roles */}
+            {/* Active interview pipeline */}
             {interviewJobs.length > 0 && (
               <section>
                 <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
@@ -144,20 +112,13 @@ export default function InterviewPrepPage() {
                 </h2>
                 <div className="grid gap-3 sm:grid-cols-2">
                   {interviewJobs.map((job) => (
-                    <JobCard
-                      key={job.id}
-                      job={job}
-                      stageLabel={stageLabel}
-                      stageColor={stageColor}
-                      onPrepare={setSelectedJobId}
-                      highlight
-                    />
+                    <JobCard key={job.id} job={job} onPrepare={setSelectedJobId} highlight />
                   ))}
                 </div>
               </section>
             )}
 
-            {/* Other Jobs */}
+            {/* Other tracked jobs */}
             {otherJobs.length > 0 && (
               <section>
                 <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
@@ -165,13 +126,7 @@ export default function InterviewPrepPage() {
                 </h2>
                 <div className="grid gap-3 sm:grid-cols-2">
                   {otherJobs.map((job) => (
-                    <JobCard
-                      key={job.id}
-                      job={job}
-                      stageLabel={stageLabel}
-                      stageColor={stageColor}
-                      onPrepare={setSelectedJobId}
-                    />
+                    <JobCard key={job.id} job={job} onPrepare={setSelectedJobId} />
                   ))}
                 </div>
               </section>
@@ -180,12 +135,8 @@ export default function InterviewPrepPage() {
         )}
       </div>
 
-      {/* Interview Prep Workspace Modal */}
       {selectedJobId && (
-        <InterviewPrepWorkspace
-          jobId={selectedJobId}
-          onClose={() => setSelectedJobId(null)}
-        />
+        <InterviewPrepWorkspace jobId={selectedJobId} onClose={() => setSelectedJobId(null)} />
       )}
     </NavLayout>
   );
@@ -193,14 +144,17 @@ export default function InterviewPrepPage() {
 
 interface JobCardProps {
   job: Job;
-  stageLabel: Record<string, string>;
-  stageColor: Record<string, string>;
   onPrepare: (id: string) => void;
   highlight?: boolean;
 }
 
-function JobCard({ job, stageLabel, stageColor, onPrepare, highlight }: JobCardProps) {
-  const stageKey = job.stage?.toUpperCase() ?? '';
+function JobCard({ job, onPrepare, highlight }: JobCardProps) {
+  const colors = STAGE_COLORS[job.stage] ?? {
+    bg: 'bg-gray-100',
+    text: 'text-gray-600',
+    border: 'border-gray-300',
+  };
+
   return (
     <div
       className={`bg-white border rounded-xl p-4 flex items-start justify-between gap-4 transition hover:shadow-sm ${
@@ -211,11 +165,9 @@ function JobCard({ job, stageLabel, stageColor, onPrepare, highlight }: JobCardP
         <p className="font-semibold text-gray-900 truncate">{job.title}</p>
         <p className="text-sm text-gray-500 truncate mt-0.5">{job.company}</p>
         <span
-          className={`inline-block mt-2 px-2 py-0.5 text-xs font-medium rounded-full ${
-            stageColor[stageKey] ?? 'bg-gray-100 text-gray-600'
-          }`}
+          className={`inline-block mt-2 px-2 py-0.5 text-xs font-medium rounded-full ${colors.bg} ${colors.text}`}
         >
-          {stageLabel[stageKey] ?? job.stage}
+          {STAGE_LABELS[job.stage] ?? job.stage}
         </span>
       </div>
       <button

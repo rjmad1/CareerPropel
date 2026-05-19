@@ -1,128 +1,121 @@
 /**
- * Interview Prep Generation Route
- *
- * POST /api/interview-prep/{jobId}/generate - Force regenerate interview prep
+ * POST /api/interview-prep/{jobId}/generate
+ * Force-regenerate (or create) interview prep for a job.
+ * Fetches job + candidate profile from DB, calls prepService, then upserts.
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server'
+import { prisma } from '@/lib/db'
+import { generateInterviewPrep } from '@/lib/interview/prepService'
+import { getAuthContext } from '@/lib/middleware/auth'
+import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
+import { ApiErrors } from '@/lib/errors/ApiError'
 
-// Mark as dynamic to prevent build-time static generation
 export const dynamic = 'force-dynamic'
 
-interface GenerateRequest {
-  force?: boolean;
-  userId: string;
-  jobDescription?: string;
-  userResume?: string;
-}
-
 interface RouteParams {
-  params: {
-    jobId: string;
-  };
+  params: { jobId: string }
 }
 
-/**
- * POST /api/interview-prep/{jobId}/generate
- * Force regenerate interview prep for a job
- */
 export async function POST(request: NextRequest, { params }: RouteParams) {
   try {
-    const { jobId } = params;
-    const body: GenerateRequest = await request.json();
+    const { userEmail } = await getAuthContext()
+    const { jobId } = params
 
-    if (!jobId) {
-      return NextResponse.json(
-        { error: 'Job ID is required' },
-        { status: 400 }
-      );
+    // Allow caller to supply extra context; fall back to DB values
+    const body = await request.json().catch(() => ({}))
+    const { jobDescription: bodyDesc, userResume: bodyResume } = body as {
+      jobDescription?: string
+      userResume?: string
     }
 
-    if (!body.userId) {
-      return NextResponse.json(
-        { error: 'User ID is required' },
-        { status: 400 }
-      );
-    }
+    const candidate = await prisma.candidate.findUnique({
+      where: { email: userEmail },
+      include: {
+        profileData: true,
+        skills: true,
+        achievements: true,
+      },
+    })
+    if (!candidate) throw ApiErrors.NOT_FOUND('candidate profile')
 
-    // TODO: Fetch job and user data from database
-    // const job = await db.job.findUnique({
-    //   where: { id: jobId },
-    //   include: { candidate: true },
-    // });
+    const job = await prisma.job.findFirst({
+      where: { id: jobId, candidateId: candidate.id },
+    })
+    if (!job) throw ApiErrors.NOT_FOUND('job')
 
-    // if (!job) {
-    //   return NextResponse.json(
-    //     { error: 'Job not found' },
-    //     { status: 404 }
-    //   );
-    // }
+    // Resolve resume text: caller override → stored resume → fallback to summary
+    const resumeRecord = candidate.profileData.find((p) => p.type === 'resume')
+    const resolvedResume =
+      bodyResume ||
+      (resumeRecord?.content ? JSON.stringify(resumeRecord.content) : null) ||
+      candidate.summary ||
+      `Candidate: ${candidate.name}`
 
-    // // Check if user owns this job
-    // if (job.candidate.id !== body.userId) {
-    //   return NextResponse.json(
-    //     { error: 'Unauthorized' },
-    //     { status: 403 }
-    //   );
-    // }
+    const resolvedDesc = bodyDesc || job.description || `${job.title} at ${job.company}`
 
-    // const userResume = body.userResume || job.candidate.resumeText;
-    // const jobDescription = body.jobDescription || job.description;
+    // Mark as generating so the UI can show a spinner
+    await prisma.interviewPrep.upsert({
+      where: { jobId },
+      create: {
+        jobId,
+        candidateId: candidate.id,
+        role: job.title,
+        company: job.company,
+        prepStatus: 'generating',
+      },
+      update: { prepStatus: 'generating', contentVersion: { increment: 1 } },
+    })
 
-    // if (!userResume || !jobDescription) {
-    //   return NextResponse.json(
-    //     { error: 'Resume and job description are required' },
-    //     { status: 400 }
-    //   );
-    // }
+    const generated = await generateInterviewPrep({
+      jobId,
+      jobDescription: resolvedDesc,
+      jobTitle: job.title,
+      company: job.company,
+      userResume: resolvedResume,
+    })
 
-    // // Generate new prep
-    // const prep = await generateInterviewPrep({
-    //   jobId,
-    //   jobDescription,
-    //   jobTitle: job.title,
-    //   company: job.company,
-    //   userResume,
-    // });
+    const prep = await prisma.interviewPrep.update({
+      where: { jobId },
+      data: {
+        role: job.title,
+        company: job.company,
+        prepStatus: 'ready',
+        confidenceScore: generated.confidenceScore,
+        companyResearch: generated.companyResearch as any,
+        roleBreakdown: generated.roleBreakdown as any,
+        technicalPrep: generated.technicalPrep as any,
+        systemDesignPrep: generated.systemDesignPrep as any,
+        resumeAlignment: generated.resumeAlignment as any,
+        compensationGuide: generated.compensationGuide as any,
+        generatedAt: generated.generatedAt,
+        userModifications: false,
+        starStories: {
+          deleteMany: {},
+          create: generated.behavioralStories.map((s) => ({
+            candidateId: candidate.id,
+            competency: s.competency,
+            competencies: s.competencies ?? [],
+            title: s.title ?? s.competency,
+            summary: s.summary,
+            situation: s.situation,
+            task: s.task,
+            action: s.action,
+            result: s.result,
+            metrics: Array.isArray(s.metrics) ? s.metrics : s.metrics ? [s.metrics] : [],
+            sourceProject: s.sourceProject,
+            relevanceScore: s.relevanceScore,
+            timeToTell: s.timeToTell,
+            confidence: s.confidence,
+            interviewQuestions: s.interviewQuestions ?? [],
+          })),
+        },
+      },
+      include: { starStories: true },
+    })
 
-    // // Save or update in database
-    // const upserted = await db.interviewPrep.upsert({
-    //   where: { jobId },
-    //   update: {
-    //     ...prep,
-    //     lastUpdated: new Date(),
-    //     prepStatus: 'ready',
-    //   },
-    //   create: {
-    //     ...prep,
-    //     candidateId: body.userId,
-    //     prepStatus: 'ready',
-    //   },
-    //   include: {
-    //     companyResearch: true,
-    //     roleBreakdown: true,
-    //     starStories: true,
-    //   },
-    // });
-
-    // // Publish event for real-time updates
-    // await publishEvent('interview-prep:generated', {
-    //   jobId,
-    //   userId: body.userId,
-    //   prep: upserted,
-    // });
-
-    // return NextResponse.json(upserted);
-
-    return NextResponse.json(
-      { error: 'Job not found' },
-      { status: 404 }
-    );
+    return successResponse(prep)
   } catch (error) {
-    console.error('Error generating interview prep:', error);
-    return NextResponse.json(
-      { error: 'Failed to generate interview prep' },
-      { status: 500 }
-    );
+    return errorResponse(error)
   }
 }

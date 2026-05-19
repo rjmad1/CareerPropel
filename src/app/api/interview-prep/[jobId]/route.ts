@@ -1,144 +1,97 @@
 /**
- * Interview Prep Dynamic Routes
+ * Interview Prep — per-job routes
  *
- * GET /api/interview-prep/{jobId} - Fetch prep for specific job
- * PUT /api/interview-prep/{jobId} - Update prep
- * DELETE /api/interview-prep/{jobId} - Delete prep
- * POST /api/interview-prep/{jobId}/generate - Force regenerate prep
+ * GET    /api/interview-prep/{jobId}  — fetch prep for a job
+ * PUT    /api/interview-prep/{jobId}  — update prep (user modifications)
+ * DELETE /api/interview-prep/{jobId}  — delete prep
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server'
+import { prisma } from '@/lib/db'
+import { getAuthContext } from '@/lib/middleware/auth'
+import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
+import { ApiErrors } from '@/lib/errors/ApiError'
 
-// Mark as dynamic to prevent build-time static generation
 export const dynamic = 'force-dynamic'
 
 interface RouteParams {
-  params: {
-    jobId: string;
-  };
+  params: { jobId: string }
 }
 
-/**
- * GET /api/interview-prep/{jobId}
- * Fetch interview prep for a specific job
- */
+async function getOwnedPrep(jobId: string, candidateId: string) {
+  const prep = await prisma.interviewPrep.findUnique({
+    where: { jobId },
+    include: { starStories: true },
+  })
+  if (!prep || prep.candidateId !== candidateId) {
+    throw ApiErrors.NOT_FOUND('interview prep')
+  }
+  return prep
+}
+
 export async function GET(_request: NextRequest, { params }: RouteParams) {
   try {
-    const { jobId } = params;
+    const { userEmail } = await getAuthContext()
+    const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } })
+    if (!candidate) return errorResponse(ApiErrors.NOT_FOUND('interview prep'))
 
-    if (!jobId) {
-      return NextResponse.json(
-        { error: 'Job ID is required' },
-        { status: 400 }
-      );
-    }
-
-    // TODO: Fetch from database
-    // const prep = await db.interviewPrep.findUnique({
-    //   where: { jobId },
-    //   include: {
-    //     companyResearch: true,
-    //     roleBreakdown: true,
-    //     starStories: true,
-    //     candidate: { select: { id: true, email: true } },
-    //     job: true,
-    //   },
-    // });
-
-    // if (!prep) {
-    //   return NextResponse.json(
-    //     { error: 'Interview prep not found' },
-    //     { status: 404 }
-    //   );
-    // }
-
-    // return NextResponse.json(prep);
-
-    return NextResponse.json(
-      { error: 'Interview prep not found' },
-      { status: 404 }
-    );
+    const prep = await getOwnedPrep(params.jobId, candidate.id)
+    return successResponse(prep)
   } catch (error) {
-    console.error('Error fetching interview prep:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch interview prep' },
-      { status: 500 }
-    );
+    return errorResponse(error)
   }
 }
 
-/**
- * PUT /api/interview-prep/{jobId}
- * Update interview prep
- */
-export async function PUT(_request: NextRequest, { params }: RouteParams) {
+export async function PUT(request: NextRequest, { params }: RouteParams) {
   try {
-    const { jobId } = params;
-    // const updates = await request.json();
+    const { userEmail } = await getAuthContext()
+    const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } })
+    if (!candidate) return errorResponse(ApiErrors.NOT_FOUND('interview prep'))
 
-    if (!jobId) {
-      return NextResponse.json(
-        { error: 'Job ID is required' },
-        { status: 400 }
-      );
+    await getOwnedPrep(params.jobId, candidate.id)
+
+    const updates = await request.json()
+
+    // Whitelist editable fields to prevent mass-assignment
+    const allowed = [
+      'companyResearch',
+      'roleBreakdown',
+      'technicalPrep',
+      'systemDesignPrep',
+      'resumeAlignment',
+      'compensationGuide',
+      'prepStatus',
+    ] as const
+
+    const data: Record<string, unknown> = { userModifications: true }
+    for (const field of allowed) {
+      if (field in updates) data[field] = updates[field]
     }
 
-    // TODO: Update in database
-    // const updated = await db.interviewPrep.update({
-    //   where: { jobId },
-    //   data: {
-    //     ...updates,
-    //     lastUpdated: new Date(),
-    //     userModifications: true,
-    //   },
-    //   include: {
-    //     companyResearch: true,
-    //     roleBreakdown: true,
-    //     starStories: true,
-    //   },
-    // });
+    const updated = await prisma.interviewPrep.update({
+      where: { jobId: params.jobId },
+      data,
+      include: { starStories: true },
+    })
 
-    // return NextResponse.json(updated);
-
-    return NextResponse.json(
-      { error: 'Interview prep not found' },
-      { status: 404 }
-    );
+    return successResponse(updated)
   } catch (error) {
-    console.error('Error updating interview prep:', error);
-    return NextResponse.json(
-      { error: 'Failed to update interview prep' },
-      { status: 500 }
-    );
+    return errorResponse(error)
   }
 }
 
-/**
- * DELETE /api/interview-prep/{jobId}
- * Delete interview prep
- */
 export async function DELETE(_request: NextRequest, { params }: RouteParams) {
   try {
-    const { jobId } = params;
+    const { userEmail } = await getAuthContext()
+    const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } })
+    if (!candidate) return errorResponse(ApiErrors.NOT_FOUND('interview prep'))
 
-    if (!jobId) {
-      return NextResponse.json(
-        { error: 'Job ID is required' },
-        { status: 400 }
-      );
-    }
+    await getOwnedPrep(params.jobId, candidate.id)
 
-    // TODO: Delete from database
-    // await db.interviewPrep.delete({
-    //   where: { jobId },
-    // });
+    await prisma.interviewPrep.delete({ where: { jobId: params.jobId } })
 
-    return NextResponse.json({ success: true });
+    return successResponse({ deleted: true })
   } catch (error) {
-    console.error('Error deleting interview prep:', error);
-    return NextResponse.json(
-      { error: 'Failed to delete interview prep' },
-      { status: 500 }
-    );
+    return errorResponse(error)
   }
 }

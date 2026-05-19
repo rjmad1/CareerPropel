@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAuth } from '@/app/api/middleware/auth';
 import { successResponse, errorResponse } from '@/app/api/middleware/validation';
 import { getDocumentById, deleteDocument } from '@/lib/db/documents';
+import { getAuthContext } from '@/lib/middleware/auth';
+import { prisma } from '@/lib/db';
 
 // Mark as dynamic to prevent build-time static generation
 export const dynamic = 'force-dynamic'
@@ -10,17 +11,15 @@ export const dynamic = 'force-dynamic'
  * GET /api/documents/[id]
  * Get a single document
  */
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const user = await requireAuth(req);
-    if (!user) {
-      return NextResponse.json(
-        { error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
-        { status: 401 }
-      );
+    const { userEmail } = await getAuthContext();
+    const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
+    if (!candidate) {
+      return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Profile not found' } }, { status: 404 });
     }
 
-    const document = await getDocumentById(user.id, params.id);
+    const document = await getDocumentById(candidate.id, params.id);
     if (!document) {
       return NextResponse.json(
         { error: { code: 'NOT_FOUND', message: 'Document not found' } },
@@ -39,17 +38,15 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
  * DELETE /api/documents/[id]
  * Delete a document
  */
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const user = await requireAuth(req);
-    if (!user) {
-      return NextResponse.json(
-        { error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
-        { status: 401 }
-      );
+    const { userEmail } = await getAuthContext();
+    const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
+    if (!candidate) {
+      return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Profile not found' } }, { status: 404 });
     }
 
-    const document = await deleteDocument(user.id, params.id);
+    const document = await deleteDocument(candidate.id, params.id);
     if (!document) {
       return NextResponse.json(
         { error: { code: 'NOT_FOUND', message: 'Document not found' } },

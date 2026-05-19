@@ -8,6 +8,7 @@ import {
   AlertCircle,
   Play,
 } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import { useRealTime } from '../../hooks/useRealTime';
 import { useInterviewPrep } from '../../hooks/useInterviewPrep';
 import CompanyIntelligence from './CompanyIntelligence';
@@ -45,6 +46,9 @@ export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
   const [nightBeforeMode, setNightBeforeMode] = useState(false);
   const [showQuickRevision, setShowQuickRevision] = useState(false);
 
+  const { data: session } = useSession();
+  const userId = session?.user?.email ?? '';
+
   // Real-time WebSocket connection
   const { connected: wsConnected } = useRealTime({
     autoConnect: true,
@@ -52,7 +56,7 @@ export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
   });
 
   // Interview prep hook for data management
-  const { prep, loading, error, regenerate, refetch } = useInterviewPrep(jobId, 'current-user'); // TODO: Get actual userId
+  const { prep, loading, error, regenerate, refetch } = useInterviewPrep(jobId, userId);
 
   // Initialize prep generation on mount
   useEffect(() => {

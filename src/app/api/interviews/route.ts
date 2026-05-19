@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAuth, ValidationError } from '@/app/api/middleware/auth';
+import { ValidationError } from '@/app/api/middleware/auth';
 import { validateRequest, successResponse, validationErrorResponse, errorResponse } from '@/app/api/middleware/validation';
 import { scheduleInterviewSchema, listInterviewsQuerySchema } from '@/lib/validation/schemas';
 import { getInterviews, scheduleInterview } from '@/lib/db/interviews';
+import { getAuthContext } from '@/lib/middleware/auth';
+import { prisma } from '@/lib/db';
 
 // Mark as dynamic to prevent build-time static generation
 export const dynamic = 'force-dynamic'
@@ -13,12 +15,10 @@ export const dynamic = 'force-dynamic'
  */
 export async function GET(req: NextRequest) {
   try {
-    const user = await requireAuth(req);
-    if (!user) {
-      return NextResponse.json(
-        { error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
-        { status: 401 }
-      );
+    const { userEmail } = await getAuthContext();
+    const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
+    if (!candidate) {
+      return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Profile not found' } }, { status: 404 });
     }
 
     // Parse query parameters
@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
       return validationErrorResponse(new ValidationError('Invalid query parameters', details));
     }
 
-    const result = await getInterviews(user.id, validation.data);
+    const result = await getInterviews(candidate.id, validation.data);
     return successResponse(result);
   } catch (error) {
     console.error('GET /api/interviews error:', error);
@@ -61,12 +61,10 @@ export async function GET(req: NextRequest) {
  */
 export async function POST(req: NextRequest) {
   try {
-    const user = await requireAuth(req);
-    if (!user) {
-      return NextResponse.json(
-        { error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
-        { status: 401 }
-      );
+    const { userEmail } = await getAuthContext();
+    const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
+    if (!candidate) {
+      return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Profile not found' } }, { status: 404 });
     }
 
     // Validate request body
@@ -75,7 +73,7 @@ export async function POST(req: NextRequest) {
       return validationErrorResponse(validation.error);
     }
 
-    const interview = await scheduleInterview(user.id, validation.data);
+    const interview = await scheduleInterview(candidate.id, validation.data);
     if (!interview) {
       return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Job not found' } }, { status: 404 });
     }

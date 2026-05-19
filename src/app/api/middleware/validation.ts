@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ZodSchema } from 'zod';
 import { ValidationError } from './auth';
+import { ApiError } from '@/lib/errors/ApiError';
 
 /**
  * Validate request body against Zod schema
@@ -65,6 +66,14 @@ export function successResponse(data: any, statusCode: number = 200) {
  * Error response formatter
  */
 export function errorResponse(error: any, statusCode: number = 500) {
+  // Handle ApiError (thrown by getAuthContext and other lib/middleware utilities)
+  if (error instanceof ApiError) {
+    return NextResponse.json(
+      { error: { code: error.code, message: error.message } },
+      { status: error.statusCode }
+    );
+  }
+
   // Handle custom error classes
   if (error.name === 'UnauthorizedError') {
     return NextResponse.json(

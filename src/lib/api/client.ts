@@ -1,6 +1,7 @@
 /**
  * API Client
- * Fetch wrapper with interceptors, error handling, and token refresh logic.
+ * Fetch wrapper with error handling and token refresh logic.
+ * Authentication is handled by NextAuth session cookies — no manual token management needed.
  */
 
 export interface APIErrorResponse {
@@ -27,48 +28,30 @@ interface RequestOptions extends RequestInit {
 
 export class APIClient {
   private baseURL: string
-  private token: string | null = null
 
-  constructor(baseURL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3001/api') {
+  constructor(baseURL = '/api') {
     this.baseURL = baseURL
-    this.loadToken()
-  }
-
-  private loadToken(): void {
-    // In production, token would be in HTTP-only cookie
-    // For development, we can store in sessionStorage
-    if (typeof window !== 'undefined') {
-      this.token = sessionStorage.getItem('authToken')
-    }
-  }
-
-  setToken(token: string | null): void {
-    this.token = token
-    if (token) {
-      sessionStorage.setItem('authToken', token)
-    } else {
-      sessionStorage.removeItem('authToken')
-    }
   }
 
   private buildURL(path: string, params?: Record<string, string | number | boolean>): string {
     let url = `${this.baseURL}${path}`
     if (params) {
       const queryString = Object.entries(params)
-        .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+        .filter(([, v]) => v !== undefined && v !== null)
+        .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
         .join('&')
       if (queryString) url += `?${queryString}`
     }
     return url
   }
 
-  private getHeaders(): Headers {
-    const headers = new Headers({
-      'Content-Type': 'application/json',
-    })
+  private getHeaders(body?: RequestInit['body']): Headers {
+    const headers = new Headers()
 
-    if (this.token) {
-      headers.set('Authorization', `Bearer ${this.token}`)
+    // Do NOT set Content-Type for FormData — the browser sets it automatically
+    // with the correct multipart boundary. Setting it manually breaks uploads.
+    if (!(body instanceof FormData)) {
+      headers.set('Content-Type', 'application/json')
     }
 
     return headers
@@ -79,36 +62,36 @@ export class APIClient {
     path: string,
     options?: RequestOptions
   ): Promise<T> {
-    const { params, ...fetchOptions } = options || {}
+    const { params, body, headers: extraHeaders, ...fetchOptions } = options || {}
 
     const url = this.buildURL(path, params)
-    const headers = this.getHeaders()
+    const headers = this.getHeaders(body)
+
+    if (extraHeaders) {
+      const extra = new Headers(extraHeaders as HeadersInit)
+      extra.forEach((value, key) => headers.set(key, value))
+    }
 
     try {
       const response = await fetch(url, {
         method,
         headers,
+        body,
+        credentials: 'include',
         ...fetchOptions,
       })
 
-      // Handle 401 Unauthorized - refresh token and retry
       if (response.status === 401) {
-        await this.refreshToken()
-        // Retry request with new token
-        const retryHeaders = this.getHeaders()
-        const retryResponse = await fetch(url, {
-          method,
-          headers: retryHeaders,
-          ...fetchOptions,
-        })
-        return this.handleResponse<T>(retryResponse)
+        // Session expired — hard redirect to login
+        if (typeof window !== 'undefined') {
+          window.location.href = `/login?callbackUrl=${encodeURIComponent(window.location.pathname)}`
+        }
+        throw new APIError(401, 'UNAUTHORIZED', 'Session expired. Redirecting to login.')
       }
 
       return this.handleResponse<T>(response)
     } catch (error) {
-      if (error instanceof APIError) {
-        throw error
-      }
+      if (error instanceof APIError) throw error
       throw new APIError(0, 'NETWORK_ERROR', 'Network request failed', {
         originalError: String(error),
       })
@@ -126,7 +109,8 @@ export class APIClient {
     }
 
     if (!response.ok) {
-      const errorData = typeof data === 'object' && data !== null ? (data as APIErrorResponse) : null
+      const errorData =
+        typeof data === 'object' && data !== null ? (data as APIErrorResponse) : null
       throw new APIError(
         response.status,
         errorData?.code || `HTTP_${response.status}`,
@@ -138,30 +122,9 @@ export class APIClient {
     return data as T
   }
 
-  private async refreshToken(): Promise<void> {
-    try {
-      const response = await fetch(`${this.baseURL}/auth/refresh`, {
-        method: 'POST',
-        headers: this.getHeaders(),
-      })
-
-      if (!response.ok) {
-        throw new APIError(response.status, 'REFRESH_FAILED', 'Token refresh failed')
-      }
-
-      const data = (await response.json()) as { token: string }
-      this.setToken(data.token)
-    } catch (error) {
-      this.setToken(null)
-      throw error
-    }
-  }
-
   // Job endpoints
-  async getJobs(filters?: Record<string, unknown>): Promise<any[]> {
-    return this.request('GET', '/jobs', {
-      params: filters as Record<string, string | number | boolean>,
-    })
+  async getJobs(filters?: Record<string, string | number | boolean>): Promise<any[]> {
+    return this.request('GET', '/jobs', { params: filters })
   }
 
   async getJobById(id: string): Promise<any> {
@@ -169,15 +132,11 @@ export class APIClient {
   }
 
   async createJob(job: any): Promise<any> {
-    return this.request('POST', '/jobs', {
-      body: JSON.stringify(job),
-    })
+    return this.request('POST', '/jobs', { body: JSON.stringify(job) })
   }
 
   async updateJob(id: string, updates: any): Promise<any> {
-    return this.request('PUT', `/jobs/${id}`, {
-      body: JSON.stringify(updates),
-    })
+    return this.request('PUT', `/jobs/${id}`, { body: JSON.stringify(updates) })
   }
 
   async deleteJob(id: string): Promise<void> {
@@ -185,9 +144,7 @@ export class APIClient {
   }
 
   async moveJob(id: string, stage: string): Promise<any> {
-    return this.request('POST', `/jobs/${id}/move`, {
-      body: JSON.stringify({ stage }),
-    })
+    return this.request('POST', `/jobs/${id}/move`, { body: JSON.stringify({ stage }) })
   }
 
   // Agent endpoints
@@ -205,24 +162,19 @@ export class APIClient {
 
   // User endpoints
   async getUserProfile(): Promise<any> {
-    return this.request('GET', '/users/profile')
+    return this.request('GET', '/profile')
   }
 
   async updateProfile(updates: any): Promise<any> {
-    return this.request('PUT', '/users/profile', {
-      body: JSON.stringify(updates),
-    })
+    return this.request('PUT', '/profile', { body: JSON.stringify(updates) })
   }
 
-  // Document endpoints
+  // Document endpoints — FormData body intentionally has no Content-Type override
   async uploadDocument(file: File, jobId?: string): Promise<any> {
     const formData = new FormData()
     formData.append('file', file)
     if (jobId) formData.append('jobId', jobId)
-
-    return this.request('POST', '/documents', {
-      body: formData,
-    })
+    return this.request('POST', '/documents', { body: formData })
   }
 
   async getDocuments(): Promise<any[]> {
@@ -230,5 +182,4 @@ export class APIClient {
   }
 }
 
-// Singleton instance
 export const apiClient = new APIClient()

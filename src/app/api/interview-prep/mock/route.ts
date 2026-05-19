@@ -5,6 +5,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
+import { getAuthContext } from '@/lib/middleware/auth';
+import { errorResponse } from '@/lib/utils/apiResponse';
 
 // Mark as dynamic to prevent build-time static generation
 export const dynamic = 'force-dynamic'
@@ -35,6 +37,8 @@ interface FeedbackResponse {
  */
 export async function POST(request: NextRequest) {
   try {
+    await getAuthContext();
+
     const body: FeedbackRequest = await request.json();
 
     if (!body.sessionId || !body.responses || body.responses.length === 0) {
@@ -44,8 +48,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // TODO: Integrate with Claude API to generate feedback
-    // This would call Claude to analyze the user's responses and provide feedback
+    // AI feedback is served by the /mock/feedback sub-route.
+    // This route returns a placeholder for direct /mock requests.
 
     // Placeholder response
     const feedback: FeedbackResponse = {
@@ -76,6 +80,9 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(feedback);
   } catch (error) {
+    if ((error as any)?.statusCode === 401) {
+      return errorResponse(error);
+    }
     console.error('Error generating interview feedback:', error);
     return NextResponse.json(
       { error: 'Failed to generate feedback' },

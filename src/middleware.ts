@@ -1,26 +1,28 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-// Protect all routes except login and auth endpoints
 export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  // API routes handle their own authentication via getAuthContext()
+  // Redirecting them here would return HTML instead of JSON 401
+  if (pathname.startsWith('/api/')) {
+    return NextResponse.next()
+  }
+
+  // Allow public page routes
+  if (pathname.startsWith('/login') || pathname.startsWith('/auth')) {
+    return NextResponse.next()
+  }
+
   // NextAuth uses __Secure- prefix on HTTPS (production) and plain name on HTTP (dev)
   const token =
     request.cookies.get('__Secure-next-auth.session-token')?.value ||
     request.cookies.get('next-auth.session-token')?.value
 
-  // Allow auth routes and login page
-  if (
-    request.nextUrl.pathname.startsWith('/login') ||
-    request.nextUrl.pathname.startsWith('/auth') ||
-    request.nextUrl.pathname.startsWith('/api/auth')
-  ) {
-    return NextResponse.next()
-  }
-
-  // Redirect to login if no session token
   if (!token) {
     return NextResponse.redirect(
-      new URL(`/login?callbackUrl=${request.nextUrl.pathname}`, request.url)
+      new URL(`/login?callbackUrl=${encodeURIComponent(pathname)}`, request.url)
     )
   }
 
@@ -28,7 +30,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    '/((?!api/auth|_next/static|_next/image|favicon.ico).*)',
-  ],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 }

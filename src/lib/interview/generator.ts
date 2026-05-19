@@ -21,6 +21,158 @@ import {
 } from '@/types/interview';
 import { CompanyProfile } from '@/types/company';
 import { Job } from '@/types/job';
+import { AnthropicProvider } from '@/lib/llm/anthropic';
+
+// ── Claude-powered generation ─────────────────────────────────────────────────
+
+interface ClaudeContent {
+  roleBreakdown: RoleBreakdown;
+  behavioralStories: BehavioralStory[];
+  technicalPrep: TechnicalPrep;
+  systemDesignPrep: SystemDesignPrep;
+}
+
+async function generateWithClaude(
+  job: Job,
+  resume: string,
+  projects: string,
+  company: CompanyProfile
+): Promise<ClaudeContent | null> {
+  try {
+    const llm = new AnthropicProvider();
+    const seniority = inferSeniority(job.title);
+    const techStack = Array.isArray(company.technicalStack)
+      ? company.technicalStack.map((t: any) => t.name ?? t).join(', ')
+      : 'Not specified';
+    const cultureValues = Array.isArray(company.culture?.values)
+      ? company.culture.values.join(', ')
+      : 'Collaboration, innovation, impact';
+
+    const prompt = `You are an expert career coach preparing a candidate for a ${seniority} ${job.title} role at ${job.company}.
+
+# Job Description
+${(job as any).description || `${job.title} at ${job.company}`}
+
+# Company Context
+Industry: ${company.industry}
+Tech Stack: ${techStack}
+Culture: ${cultureValues}
+
+# Candidate Resume
+${resume.slice(0, 3000)}
+
+# Projects
+${projects.slice(0, 1000)}
+
+Generate interview preparation content. Return ONLY valid JSON (no markdown code fences):
+
+{
+  "roleBreakdown": {
+    "seniority": "${seniority}",
+    "reportingLine": "Reports to Engineering Manager",
+    "responsibilities": [
+      {"title": "string", "description": "string", "priority": "must_have"}
+    ],
+    "requiredSkills": [
+      {"name": "string", "proficiency": "${seniority}", "yourLevel": "proficient"}
+    ],
+    "preferredSkills": [],
+    "experienceRequired": "string",
+    "location": "Remote / On-site"
+  },
+  "behavioralStories": [
+    {
+      "id": "story-1",
+      "competency": "string",
+      "situation": "string describing specific context from candidate's background",
+      "task": "string describing the challenge or goal",
+      "action": "string describing concrete steps taken",
+      "result": "string with measurable outcomes",
+      "metrics": ["quantified impact"],
+      "sourceProject": "project name from resume",
+      "relevanceScore": 0.9,
+      "timeToTell": 120,
+      "interviewQuestions": ["Tell me about a time..."]
+    }
+  ],
+  "technicalPrep": {
+    "programmingLanguages": [
+      {"language": "string", "relevance": "primary", "keyFeatures": ["string"], "commonPatterns": ["string"], "gotchas": ["string"]}
+    ],
+    "dataStructures": [
+      {"name": "string", "importance": "critical", "timeComplexity": "string", "spaceComplexity": "string", "useCase": "string", "relatedConcepts": ["string"]}
+    ],
+    "algorithms": [
+      {"name": "string", "importance": "important", "useCase": "string", "relatedConcepts": ["string"]}
+    ],
+    "systemDesignConcepts": [
+      {"name": "string", "description": "string", "tradeoffs": "string", "whenToUse": "string", "examples": ["string"], "commonPatterns": ["string"]}
+    ],
+    "toolsAndFrameworks": [
+      {"name": "string", "category": "framework", "relevance": "primary", "keyFeatures": ["string"], "gotchas": ["string"], "alternativesToCompare": ["string"]}
+    ],
+    "practiceProblems": [
+      {"id": "p1", "title": "string", "difficulty": "medium", "category": "string", "problemStatement": "string", "timeLimit": 45, "topicsToReview": ["string"], "relatedInterviewQuestions": ["string"], "completed": false}
+    ],
+    "weakAreas": ["string"],
+    "studyPlan": [
+      {"day": 1, "topic": "string", "duration": 90, "materials": ["string"], "practiceProblems": ["p1"]}
+    ]
+  },
+  "systemDesignPrep": {
+    "designPatterns": [
+      {"name": "string", "description": "string", "useCases": ["string"], "examples": ["string"], "tradeoffs": "string"}
+    ],
+    "scalingTechniques": [
+      {"name": "string", "description": "string", "whenToApply": "string", "examples": ["string"], "tradeoffs": "string"}
+    ],
+    "databases": [
+      {"type": "SQL", "examples": ["string"], "strengths": ["string"], "weaknesses": ["string"], "bestFor": "string", "tradeoffs": "string"}
+    ],
+    "architectures": [
+      {"name": "string", "description": "string", "components": ["string"], "dataFlow": "string", "scaleCharacteristics": "string", "examples": ["string"]}
+    ],
+    "caseStudies": [
+      {"company": "string", "system": "string", "scale": "string", "architecture": "string", "keyDecisions": ["string"], "lessons": ["string"]}
+    ],
+    "frameworkForDesign": {
+      "steps": ["Clarify requirements", "Estimate scale", "Design API", "Data model", "High-level architecture", "Deep dive", "Scale"],
+      "clarifyingQuestions": ["How many users?", "Read vs write ratio?", "Consistency requirements?"],
+      "constraints": ["string"],
+      "suggestedApproach": "string"
+    }
+  }
+}
+
+Rules:
+- Generate exactly 5 behavioralStories using specific, plausible details drawn from the candidate's resume
+- Each story must map to a distinct competency relevant to ${job.title}
+- Technical prep must be appropriate for ${seniority}-level ${job.title} at ${job.company}
+- Reference the company's tech stack (${techStack}) in tools and design patterns
+- Return valid JSON only — no extra text`;
+
+    const result = await llm.callLLM(
+      [{ role: 'user', content: prompt }],
+      {
+        systemPrompt:
+          'You are an expert career interview coach. Always return valid JSON exactly as specified with no markdown code fences or extra text.',
+        maxTokens: 8000,
+        temperature: 0.7,
+      }
+    );
+
+    const jsonText = result.content
+      .replace(/^```(?:json)?\n?/m, '')
+      .replace(/\n?```$/m, '')
+      .trim();
+    return JSON.parse(jsonText) as ClaudeContent;
+  } catch (err) {
+    console.error('[generator] Claude generation failed, using rule-based fallback:', err);
+    return null;
+  }
+}
+
+// ── Public entry point ────────────────────────────────────────────────────────
 
 /**
  * Generate complete interview prep for a job
@@ -33,6 +185,9 @@ export async function generateInterviewPrep(
 ): Promise<InterviewPrep> {
   const startTime = Date.now();
 
+  // One Claude call generates the four rich sections; fall back to rule-based if it fails
+  const claudeContent = await generateWithClaude(job, userResume, userProjects, companyProfile);
+
   const prep: InterviewPrep = {
     id: `prep-${job.id}-${Date.now()}`,
     jobId: job.id,
@@ -41,17 +196,13 @@ export async function generateInterviewPrep(
     generatedAt: new Date(),
     contentVersion: 1,
 
-    // Generate sections in parallel
     companyResearch: generateCompanyResearch(companyProfile, job),
-    roleBreakdown: generateRoleBreakdown(job),
-    behavioralStories: await generateBehavioralStories(
-      userResume,
-      userProjects,
-      job,
-      companyProfile
-    ),
-    technicalPrep: await generateTechnicalPrep(job, userResume),
-    systemDesignPrep: await generateSystemDesignPrep(job),
+    roleBreakdown: claudeContent?.roleBreakdown ?? generateRoleBreakdown(job),
+    behavioralStories:
+      claudeContent?.behavioralStories ??
+      (await generateBehavioralStories(userResume, userProjects, job, companyProfile)),
+    technicalPrep: claudeContent?.technicalPrep ?? (await generateTechnicalPrep(job, userResume)),
+    systemDesignPrep: claudeContent?.systemDesignPrep ?? (await generateSystemDesignPrep(job)),
     resumeAlignment: generateResumeAlignment(userResume, job),
     compensationGuide: generateCompensationGuide(job, companyProfile),
 
@@ -61,8 +212,9 @@ export async function generateInterviewPrep(
     userModifications: false,
   };
 
-  const generationTime = Date.now() - startTime;
-  console.log(`Interview prep generated in ${generationTime}ms`);
+  console.log(
+    `[generator] Interview prep generated in ${Date.now() - startTime}ms (${claudeContent ? 'Claude' : 'rule-based'})`
+  );
 
   return prep;
 }

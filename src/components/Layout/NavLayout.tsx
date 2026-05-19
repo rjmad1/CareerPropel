@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: '🏠' },
+  { href: '/jobs', label: 'Pipeline', icon: '🗂️' },
   { href: '/interview-prep', label: 'Interview Prep', icon: '🎤' },
   { href: '/interviews', label: 'Interviews', icon: '📅' },
   { href: '/offers', label: 'Offers', icon: '💰' },

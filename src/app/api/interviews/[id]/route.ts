@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { requireAuth } from '@/app/api/middleware/auth';
 import { validateRequest, successResponse, validationErrorResponse, errorResponse } from '@/app/api/middleware/validation';
 import { updateInterviewSchema } from '@/lib/validation/schemas';
 import { getInterviewById, updateInterview, deleteInterview } from '@/lib/db/interviews';
+import { getAuthContext } from '@/lib/middleware/auth';
+import { prisma } from '@/lib/db';
 
 // Mark as dynamic to prevent build-time static generation
 export const dynamic = 'force-dynamic'
@@ -11,17 +12,15 @@ export const dynamic = 'force-dynamic'
  * GET /api/interviews/[id]
  * Get a single interview
  */
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const user = await requireAuth(req);
-    if (!user) {
-      return NextResponse.json(
-        { error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
-        { status: 401 }
-      );
+    const { userEmail } = await getAuthContext();
+    const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
+    if (!candidate) {
+      return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Profile not found' } }, { status: 404 });
     }
 
-    const interview = await getInterviewById(user.id, params.id);
+    const interview = await getInterviewById(candidate.id, params.id);
     if (!interview) {
       return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Interview not found' } }, { status: 404 });
     }
@@ -39,12 +38,10 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
  */
 export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const user = await requireAuth(req);
-    if (!user) {
-      return NextResponse.json(
-        { error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
-        { status: 401 }
-      );
+    const { userEmail } = await getAuthContext();
+    const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
+    if (!candidate) {
+      return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Profile not found' } }, { status: 404 });
     }
 
     // Validate request body
@@ -53,7 +50,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
       return validationErrorResponse(validation.error);
     }
 
-    const interview = await updateInterview(user.id, params.id, validation.data);
+    const interview = await updateInterview(candidate.id, params.id, validation.data);
     if (!interview) {
       return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Interview not found' } }, { status: 404 });
     }
@@ -69,17 +66,15 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
  * DELETE /api/interviews/[id]
  * Delete an interview
  */
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const user = await requireAuth(req);
-    if (!user) {
-      return NextResponse.json(
-        { error: { code: 'UNAUTHORIZED', message: 'Authentication required' } },
-        { status: 401 }
-      );
+    const { userEmail } = await getAuthContext();
+    const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
+    if (!candidate) {
+      return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Profile not found' } }, { status: 404 });
     }
 
-    const interview = await deleteInterview(user.id, params.id);
+    const interview = await deleteInterview(candidate.id, params.id);
     if (!interview) {
       return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Interview not found' } }, { status: 404 });
     }

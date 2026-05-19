@@ -13,10 +13,20 @@ export function useJobActivities(jobId: string) {
   return useQuery<Activity[], Error>({
     queryKey: ['job-activities', jobId],
     queryFn: async () => {
-      // TODO: Implement API call in Phase 2
-      // const { data } = await apiClient.get(`/api/jobs/${jobId}/activities`);
-      // return data;
-      return [];
+      const res = await fetch(`/api/jobs/${jobId}/activities`);
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err?.error?.message || 'Failed to load activities');
+      }
+      const json = await res.json();
+      const raw: any[] = json.data ?? json ?? [];
+      return raw.map((item) => ({
+        id: item.id,
+        type: item.action as Activity['type'],
+        timestamp: item.createdAt,
+        description: item.metadata?.description ?? item.action,
+        metadata: item.metadata,
+      }));
     },
     enabled: !!jobId,
     staleTime: 2 * 60 * 1000, // 2 minutes

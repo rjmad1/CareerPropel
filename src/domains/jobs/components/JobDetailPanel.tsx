@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { useJob } from '../hooks/useJob';
+import { STAGE_LABELS } from '@/types/job';
 import OverviewTab from './tabs/OverviewTab';
 import TimelineTab from './tabs/TimelineTab';
 import InterviewsTab from './tabs/InterviewsTab';
@@ -129,7 +130,7 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
             </div>
             <div className="bg-gray-50 rounded-lg p-2">
               <p className="text-xs text-gray-600">Stage</p>
-              <p className="text-sm font-semibold text-gray-900 capitalize" data-testid="panel-stage-badge">{job.stage.replace(/_/g, ' ')}</p>
+              <p className="text-sm font-semibold text-gray-900" data-testid="panel-stage-badge">{STAGE_LABELS[job.stage] ?? job.stage}</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-2 mb-4">
