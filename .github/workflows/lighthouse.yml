@@ -29,7 +29,9 @@ jobs:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/careerpropel_ci
       NEXTAUTH_SECRET: ci-test-secret-not-for-production
       NEXTAUTH_URL: http://localhost:3000
-      NODE_ENV: production
+      # NODE_ENV is intentionally absent at job level — npm ci omits
+      # devDependencies when NODE_ENV=production, which breaks the build.
+      # It is set per-step only where production mode is actually required.
 
     steps:
       - uses: actions/checkout@v6
@@ -51,9 +53,13 @@ jobs:
 
       - name: Build application
         run: npm run build
+        env:
+          NODE_ENV: production
 
       - name: Start server
         run: npm run start &
+        env:
+          NODE_ENV: production
 
       - name: Wait for server
         run: npx wait-on http://localhost:3000 --timeout 30000
