@@ -59,17 +59,17 @@ Career-Ops is an autonomous job application orchestration platform that transfor
 ## Architecture Overview
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    Frontend (React/Next.js)                      │
-├─────────────────────────────────────────────────────────────────┤
-│  Agent Rail (L) │ Kanban Board (C) │ Context Panel (R)          │
-├─────────────────────────────────────────────────────────────────┤
-│                      API Layer (Next.js Routes)                  │
-├─────────────────────────────────────────────────────────────────┤
-│              PostgreSQL + Prisma (20+ models)                    │
-├─────────────────────────────────────────────────────────────────┤
-│     Claude API + Background Agent Execution + WebSocket         │
-└─────────────────────────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────────┐
+│                    Frontend (React/Next.js)                                │
+├────────────────────────────────────────────────────────────────────────────┤
+│  Agent Rail (L) │ Kanban Board (C) │ Context Panel (R)                     │
+├────────────────────────────────────────────────────────────────────────────┤
+│                      API Layer (Next.js Routes)                             │
+├────────────────────────────────────────────────────────────────────────────┤
+│              PostgreSQL + Prisma (20+ models)                               │
+├────────────────────────────────────────────────────────────────────────────┤
+│     Claude API + Background Agent Execution + WebSocket                    │
+└────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ## Tech Stack
@@ -92,8 +92,8 @@ Career-Ops is an autonomous job application orchestration platform that transfor
 ### Quick Setup
 ```bash
 # Clone repository
-git clone https://github.com/santifer/career-ops.git
-cd career-ops
+git clone https://github.com/rjmad1/CareerPropel.git
+cd CareerPropel
 
 # Install dependencies
 npm install
@@ -321,8 +321,8 @@ MIT
 
 ## Contact
 
-- GitHub Issues: [career-ops/issues](https://github.com/santifer/career-ops/issues)
-- Email: rajajeevankumar@gmail.com
+- GitHub Issues: [CareerPropel/issues](https://github.com/rjmad1/CareerPropel/issues)
+- Email: rjkumar.pm@gmail.com
 
 ---
 
