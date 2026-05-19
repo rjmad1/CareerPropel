@@ -5,20 +5,42 @@ export const dynamic = 'force-dynamic';
 import React, { useState, useEffect, useCallback } from 'react';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import {
-  Calendar,
-  Clock,
-  MapPin,
-  Link as LinkIcon,
-  Plus,
-  X,
-  Check,
-  ChevronDown,
-  ChevronUp,
+  Alert,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  FormControl,
+  Grid,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Rating,
+  Select,
+  Tab,
+  Tabs,
+  TextField,
+  Typography,
+} from '@mui/material';
+import {
+  Add,
+  CalendarMonth,
   Download,
-  Loader2,
-  Video,
-  User,
-} from 'lucide-react';
+  ExpandMore,
+  ExpandLess,
+  LocationOn,
+  Link as LinkIcon,
+  Person,
+  Schedule,
+  VideoCall,
+} from '@mui/icons-material';
 
 type InterviewType = 'recruiter_screen' | 'technical' | 'system_design' | 'behavioral' | 'final_round' | 'other';
 type InterviewStatus = 'scheduled' | 'completed' | 'cancelled' | 'no_show';
@@ -52,11 +74,11 @@ const TYPE_LABELS: Record<InterviewType, string> = {
   other: 'Other',
 };
 
-const STATUS_COLORS: Record<InterviewStatus, string> = {
-  scheduled: 'bg-blue-100 text-blue-700',
-  completed: 'bg-green-100 text-green-700',
-  cancelled: 'bg-gray-100 text-gray-600',
-  no_show: 'bg-red-100 text-red-700',
+const STATUS_COLOR: Record<InterviewStatus, 'default' | 'primary' | 'success' | 'error' | 'warning'> = {
+  scheduled: 'primary',
+  completed: 'success',
+  cancelled: 'default',
+  no_show: 'error',
 };
 
 const STATUS_LABELS: Record<InterviewStatus, string> = {
@@ -71,10 +93,7 @@ function generateICS(interview: Interview): string {
   const end = new Date(start.getTime() + (interview.duration ?? 60) * 60000);
 
   function fmt(d: Date) {
-    return d
-      .toISOString()
-      .replace(/[-:]/g, '')
-      .replace(/\.\d{3}/, '');
+    return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
   }
 
   const jobTitle = interview.job?.title ?? 'Interview';
@@ -85,27 +104,19 @@ function generateICS(interview: Interview): string {
     interview.interviewer?.name ? `Interviewer: ${interview.interviewer.name}` : '',
     interview.meetingLink ? `Meeting: ${interview.meetingLink}` : '',
     interview.notes ? `Notes: ${interview.notes}` : '',
-  ]
-    .filter(Boolean)
-    .join('\\n');
+  ].filter(Boolean).join('\\n');
 
   const lines = [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
+    'BEGIN:VCALENDAR', 'VERSION:2.0',
     'PRODID:-//CareerPropel//Interview Scheduler//EN',
-    'CALSCALE:GREGORIAN',
-    'METHOD:PUBLISH',
-    'BEGIN:VEVENT',
+    'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'BEGIN:VEVENT',
     `UID:interview-${interview.id}@careerpropel`,
-    `DTSTAMP:${fmt(new Date())}`,
-    `DTSTART:${fmt(start)}`,
-    `DTEND:${fmt(end)}`,
+    `DTSTAMP:${fmt(new Date())}`, `DTSTART:${fmt(start)}`, `DTEND:${fmt(end)}`,
     `SUMMARY:${summary}`,
     description ? `DESCRIPTION:${description}` : '',
     interview.meetingLink ? `URL:${interview.meetingLink}` : '',
     interview.location ? `LOCATION:${interview.location}` : '',
-    'END:VEVENT',
-    'END:VCALENDAR',
+    'END:VEVENT', 'END:VCALENDAR',
   ].filter(Boolean);
 
   return lines.join('\r\n');
@@ -123,24 +134,19 @@ function downloadICS(interview: Interview) {
   URL.revokeObjectURL(url);
 }
 
-interface ScheduleFormProps {
+interface ScheduleDialogProps {
+  open: boolean;
   jobs: Job[];
   onSuccess: () => void;
   onClose: () => void;
 }
 
-function ScheduleForm({ jobs, onSuccess, onClose }: ScheduleFormProps) {
+function ScheduleDialog({ open, jobs, onSuccess, onClose }: ScheduleDialogProps) {
   const [form, setForm] = useState({
-    jobId: '',
-    type: 'technical' as InterviewType,
-    scheduledAt: '',
-    duration: '60',
-    interviewerName: '',
-    interviewerEmail: '',
-    interviewerTitle: '',
-    meetingLink: '',
-    location: '',
-    notes: '',
+    jobId: '', type: 'technical' as InterviewType,
+    scheduledAt: '', duration: '60',
+    interviewerName: '', interviewerEmail: '', interviewerTitle: '',
+    meetingLink: '', location: '', notes: '',
   });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -151,14 +157,9 @@ function ScheduleForm({ jobs, onSuccess, onClose }: ScheduleFormProps) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!form.jobId || !form.scheduledAt) {
-      setError('Job and date/time are required.');
-      return;
-    }
-
+    if (!form.jobId || !form.scheduledAt) { setError('Job and date/time are required.'); return; }
     setSaving(true);
     setError('');
-
     try {
       const payload: Record<string, unknown> = {
         jobId: form.jobId,
@@ -166,7 +167,6 @@ function ScheduleForm({ jobs, onSuccess, onClose }: ScheduleFormProps) {
         scheduledAt: new Date(form.scheduledAt).toISOString(),
         duration: parseInt(form.duration, 10) || 60,
       };
-
       if (form.interviewerName || form.interviewerEmail || form.interviewerTitle) {
         payload.interviewer = {
           name: form.interviewerName || undefined,
@@ -183,12 +183,10 @@ function ScheduleForm({ jobs, onSuccess, onClose }: ScheduleFormProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-
       if (!res.ok) {
         const err = await res.json();
         throw new Error(err?.error?.message ?? 'Failed to schedule interview');
       }
-
       onSuccess();
     } catch (err: any) {
       setError(err.message ?? 'Something went wrong');
@@ -197,166 +195,100 @@ function ScheduleForm({ jobs, onSuccess, onClose }: ScheduleFormProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900">Schedule Interview</h2>
-          <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-lg transition">
-            <X size={18} className="text-gray-500" />
-          </button>
-        </div>
-
-        <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="col-span-2">
-              <label className="block text-xs font-medium text-gray-600 mb-1">Job *</label>
-              <select
-                value={form.jobId}
-                onChange={(e) => setField('jobId', e.target.value)}
-                required
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="">Select a job…</option>
-                {jobs.map((j) => (
-                  <option key={j.id} value={j.id}>
-                    {j.title} — {j.company}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Interview Type</label>
-              <select
-                value={form.type}
-                onChange={(e) => setField('type', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                {Object.entries(TYPE_LABELS).map(([val, label]) => (
-                  <option key={val} value={val}>{label}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1">Duration (min)</label>
-              <select
-                value={form.duration}
-                onChange={(e) => setField('duration', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                {[15, 30, 45, 60, 90, 120].map((d) => (
-                  <option key={d} value={d}>{d} min</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="col-span-2">
-              <label className="block text-xs font-medium text-gray-600 mb-1">Date & Time *</label>
-              <input
+    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+      <DialogTitle>Schedule Interview</DialogTitle>
+      <form onSubmit={handleSubmit}>
+        <DialogContent sx={{ pt: 1 }}>
+          <Grid container spacing={2}>
+            <Grid size={12}>
+              <FormControl fullWidth size="small" required>
+                <InputLabel>Job</InputLabel>
+                <Select value={form.jobId} label="Job" onChange={(e) => setField('jobId', e.target.value)}>
+                  <MenuItem value=""><em>Select a job…</em></MenuItem>
+                  {jobs.map((j) => (
+                    <MenuItem key={j.id} value={j.id}>{j.title} — {j.company}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid size={6}>
+              <FormControl fullWidth size="small">
+                <InputLabel>Interview Type</InputLabel>
+                <Select value={form.type} label="Interview Type" onChange={(e) => setField('type', e.target.value)}>
+                  {Object.entries(TYPE_LABELS).map(([val, label]) => (
+                    <MenuItem key={val} value={val}>{label}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid size={6}>
+              <FormControl fullWidth size="small">
+                <InputLabel>Duration</InputLabel>
+                <Select value={form.duration} label="Duration" onChange={(e) => setField('duration', e.target.value)}>
+                  {[15, 30, 45, 60, 90, 120].map((d) => (
+                    <MenuItem key={d} value={d}>{d} min</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid size={12}>
+              <TextField
+                label="Date & Time"
                 type="datetime-local"
+                required
+                fullWidth
                 value={form.scheduledAt}
                 onChange={(e) => setField('scheduledAt', e.target.value)}
-                required
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                slotProps={{ inputLabel: { shrink: true } }}
               />
-            </div>
-          </div>
-
-          <div className="border-t border-gray-100 pt-4">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Interviewer (optional)</p>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Name</label>
-                <input
-                  type="text"
-                  value={form.interviewerName}
-                  onChange={(e) => setField('interviewerName', e.target.value)}
-                  placeholder="Jane Smith"
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Title</label>
-                <input
-                  type="text"
-                  value={form.interviewerTitle}
-                  onChange={(e) => setField('interviewerTitle', e.target.value)}
-                  placeholder="Engineering Manager"
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Meeting Link</label>
-            <input
-              type="url"
-              value={form.meetingLink}
-              onChange={(e) => setField('meetingLink', e.target.value)}
-              placeholder="https://zoom.us/j/…"
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Location / Address</label>
-            <input
-              type="text"
-              value={form.location}
-              onChange={(e) => setField('location', e.target.value)}
-              placeholder="123 Main St or Remote"
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Notes</label>
-            <textarea
-              rows={2}
-              value={form.notes}
-              onChange={(e) => setField('notes', e.target.value)}
-              placeholder="Preparation notes, what to bring, etc."
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-            />
-          </div>
-
-          {error && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">{error}</div>
-          )}
-
-          <div className="flex gap-3 pt-1">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 py-2.5 text-sm font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={saving}
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 disabled:opacity-50 transition"
-            >
-              {saving ? <Loader2 size={15} className="animate-spin" /> : <Check size={15} />}
-              {saving ? 'Saving…' : 'Schedule'}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+            </Grid>
+            <Grid size={12}>
+              <Divider sx={{ my: 0.5 }}>
+                <Typography variant="caption" color="text.secondary">Interviewer (optional)</Typography>
+              </Divider>
+            </Grid>
+            <Grid size={6}>
+              <TextField label="Name" fullWidth value={form.interviewerName} onChange={(e) => setField('interviewerName', e.target.value)} placeholder="Jane Smith" />
+            </Grid>
+            <Grid size={6}>
+              <TextField label="Title" fullWidth value={form.interviewerTitle} onChange={(e) => setField('interviewerTitle', e.target.value)} placeholder="Engineering Manager" />
+            </Grid>
+            <Grid size={12}>
+              <TextField label="Meeting Link" fullWidth type="url" value={form.meetingLink} onChange={(e) => setField('meetingLink', e.target.value)} placeholder="https://zoom.us/j/…" />
+            </Grid>
+            <Grid size={12}>
+              <TextField label="Location / Address" fullWidth value={form.location} onChange={(e) => setField('location', e.target.value)} placeholder="123 Main St or Remote" />
+            </Grid>
+            <Grid size={12}>
+              <TextField label="Notes" fullWidth multiline rows={2} value={form.notes} onChange={(e) => setField('notes', e.target.value)} placeholder="Preparation notes, what to bring, etc." />
+            </Grid>
+            {error && (
+              <Grid size={12}>
+                <Alert severity="error">{error}</Alert>
+              </Grid>
+            )}
+          </Grid>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button onClick={onClose} disabled={saving}>Cancel</Button>
+          <Button type="submit" variant="contained" disabled={saving}>
+            {saving ? 'Saving…' : 'Schedule'}
+          </Button>
+        </DialogActions>
+      </form>
+    </Dialog>
   );
 }
 
-interface FeedbackFormProps {
+interface FeedbackDialogProps {
+  open: boolean;
   interview: Interview;
   onSuccess: () => void;
   onClose: () => void;
 }
 
-function FeedbackForm({ interview, onClose, onSuccess }: FeedbackFormProps) {
-  const [rating, setRating] = useState(interview.feedback?.rating ?? 3);
+function FeedbackDialog({ open, interview, onClose, onSuccess }: FeedbackDialogProps) {
+  const [rating, setRating] = useState<number | null>(interview.feedback?.rating ?? 3);
   const [notes, setNotes] = useState(interview.feedback?.notes ?? '');
   const [nextSteps, setNextSteps] = useState(interview.feedback?.nextSteps ?? '');
   const [status, setStatus] = useState<InterviewStatus>(interview.status);
@@ -373,7 +305,7 @@ function FeedbackForm({ interview, onClose, onSuccess }: FeedbackFormProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           status,
-          feedback: { rating, notes: notes || undefined, nextSteps: nextSteps || undefined },
+          feedback: { rating: rating ?? undefined, notes: notes || undefined, nextSteps: nextSteps || undefined },
         }),
       });
       if (!res.ok) {
@@ -388,222 +320,166 @@ function FeedbackForm({ interview, onClose, onSuccess }: FeedbackFormProps) {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900">Log Feedback</h2>
-          <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-lg transition">
-            <X size={18} className="text-gray-500" />
-          </button>
-        </div>
-
-        <form onSubmit={handleSubmit} className="px-6 py-5 space-y-4">
-          <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Outcome</label>
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value as InterviewStatus)}
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              {(['completed', 'cancelled', 'no_show'] as InterviewStatus[]).map((s) => (
-                <option key={s} value={s}>{STATUS_LABELS[s]}</option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-gray-600 mb-2">
-              How did it go? ({rating}/5)
-            </label>
-            <div className="flex gap-2">
-              {[1, 2, 3, 4, 5].map((n) => (
-                <button
-                  key={n}
-                  type="button"
-                  onClick={() => setRating(n)}
-                  className={`flex-1 py-2 rounded-lg text-sm font-medium border transition ${
-                    rating === n
-                      ? 'bg-blue-600 text-white border-blue-600'
-                      : 'bg-white text-gray-600 border-gray-200 hover:border-blue-300'
-                  }`}
-                >
-                  {n}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Notes</label>
-            <textarea
+    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+      <DialogTitle>Log Feedback</DialogTitle>
+      <form onSubmit={handleSubmit}>
+        <DialogContent sx={{ pt: 1 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+            <FormControl fullWidth size="small">
+              <InputLabel>Outcome</InputLabel>
+              <Select value={status} label="Outcome" onChange={(e) => setStatus(e.target.value as InterviewStatus)}>
+                {(['completed', 'cancelled', 'no_show'] as InterviewStatus[]).map((s) => (
+                  <MenuItem key={s} value={s}>{STATUS_LABELS[s]}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Box>
+              <Typography variant="body2" color="text.secondary" gutterBottom>How did it go?</Typography>
+              <Rating
+                value={rating}
+                onChange={(_, v) => setRating(v)}
+                size="large"
+              />
+            </Box>
+            <TextField
+              label="Notes"
+              multiline
               rows={3}
+              fullWidth
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="How did the interview feel? Any tough questions?"
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
             />
-          </div>
-
-          <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">Next Steps</label>
-            <input
-              type="text"
+            <TextField
+              label="Next Steps"
+              fullWidth
               value={nextSteps}
               onChange={(e) => setNextSteps(e.target.value)}
               placeholder="e.g. Second round next week, waiting for decision"
-              className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </div>
-
-          {error && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">{error}</div>
-          )}
-
-          <div className="flex gap-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 py-2.5 text-sm font-medium text-gray-600 border border-gray-200 rounded-lg hover:bg-gray-50 transition"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={saving}
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 disabled:opacity-50 transition"
-            >
-              {saving ? <Loader2 size={15} className="animate-spin" /> : <Check size={15} />}
-              {saving ? 'Saving…' : 'Save'}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+            {error && <Alert severity="error">{error}</Alert>}
+          </Box>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button onClick={onClose} disabled={saving}>Cancel</Button>
+          <Button type="submit" variant="contained" disabled={saving}>
+            {saving ? 'Saving…' : 'Save'}
+          </Button>
+        </DialogActions>
+      </form>
+    </Dialog>
   );
 }
 
-function InterviewCard({ interview, onFeedback, onRefresh: _onRefresh }: { interview: Interview; onFeedback: () => void; onRefresh: () => void }) {
+function InterviewCard({ interview, onFeedback }: { interview: Interview; onFeedback: () => void }) {
   const [expanded, setExpanded] = useState(false);
   const scheduled = new Date(interview.scheduledAt);
   const isPast = scheduled < new Date();
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-      <div className="px-5 py-4">
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-sm font-semibold text-gray-900">
+    <Card>
+      <CardContent sx={{ p: 2.5, '&:last-child': { pb: 2.5 } }}>
+        <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 2 }}>
+          <Box sx={{ flex: 1, minWidth: 0 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap', mb: 0.5 }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
                 {interview.job ? `${interview.job.title} — ${interview.job.company}` : 'Unknown Job'}
-              </span>
-              <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${STATUS_COLORS[interview.status]}`}>
-                {STATUS_LABELS[interview.status]}
-              </span>
-            </div>
-            <p className="text-xs text-blue-600 font-medium mt-0.5">{TYPE_LABELS[interview.type]}</p>
-
-            <div className="flex items-center gap-4 mt-2 flex-wrap">
-              <span className="flex items-center gap-1.5 text-xs text-gray-500">
-                <Calendar size={12} />
-                {scheduled.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
-              </span>
-              <span className="flex items-center gap-1.5 text-xs text-gray-500">
-                <Clock size={12} />
-                {scheduled.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })} · {interview.duration ?? 60} min
-              </span>
+              </Typography>
+              <Chip label={STATUS_LABELS[interview.status]} size="small" color={STATUS_COLOR[interview.status]} />
+            </Box>
+            <Typography variant="caption" sx={{ color: 'primary.main', fontWeight: 500, display: 'block', mb: 1 }}>
+              {TYPE_LABELS[interview.type]}
+            </Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                <CalendarMonth sx={{ fontSize: 14, color: 'text.secondary' }} />
+                <Typography variant="caption" color="text.secondary">
+                  {scheduled.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
+                </Typography>
+              </Box>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                <Schedule sx={{ fontSize: 14, color: 'text.secondary' }} />
+                <Typography variant="caption" color="text.secondary">
+                  {scheduled.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })} · {interview.duration ?? 60} min
+                </Typography>
+              </Box>
               {interview.interviewer?.name && (
-                <span className="flex items-center gap-1.5 text-xs text-gray-500">
-                  <User size={12} />
-                  {interview.interviewer.name}
-                </span>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  <Person sx={{ fontSize: 14, color: 'text.secondary' }} />
+                  <Typography variant="caption" color="text.secondary">{interview.interviewer.name}</Typography>
+                </Box>
               )}
-            </div>
-          </div>
-
-          <div className="flex items-center gap-1.5 flex-shrink-0">
+            </Box>
+          </Box>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flexShrink: 0 }}>
             {interview.meetingLink && (
-              <a
-                href={interview.meetingLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition"
-                title="Join meeting"
-              >
-                <Video size={15} />
-              </a>
+              <IconButton size="small" component="a" href={interview.meetingLink} target="_blank" rel="noopener noreferrer" title="Join meeting" sx={{ color: 'primary.main' }}>
+                <VideoCall fontSize="small" />
+              </IconButton>
             )}
-            <button
-              onClick={() => downloadICS(interview)}
-              className="p-1.5 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition"
-              title="Download .ics calendar file"
-            >
-              <Download size={15} />
-            </button>
+            <IconButton size="small" onClick={() => downloadICS(interview)} title="Download .ics" sx={{ color: 'text.secondary' }}>
+              <Download fontSize="small" />
+            </IconButton>
             {isPast && interview.status === 'scheduled' && (
-              <button
-                onClick={onFeedback}
-                className="px-3 py-1.5 text-xs font-medium text-blue-600 hover:bg-blue-50 border border-blue-200 rounded-lg transition"
-              >
+              <Button size="small" variant="outlined" onClick={onFeedback} sx={{ fontSize: '0.75rem' }}>
                 Log Feedback
-              </button>
+              </Button>
             )}
             {interview.status === 'completed' && interview.feedback && (
-              <button
-                onClick={onFeedback}
-                className="px-3 py-1.5 text-xs font-medium text-gray-600 hover:bg-gray-100 border border-gray-200 rounded-lg transition"
-              >
+              <Button size="small" variant="text" onClick={onFeedback} sx={{ fontSize: '0.75rem' }}>
                 Edit Feedback
-              </button>
+              </Button>
             )}
-            <button
-              onClick={() => setExpanded((v) => !v)}
-              className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition"
-            >
-              {expanded ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
-            </button>
-          </div>
-        </div>
-      </div>
+            <IconButton size="small" onClick={() => setExpanded((v) => !v)} sx={{ color: 'text.secondary' }}>
+              {expanded ? <ExpandLess fontSize="small" /> : <ExpandMore fontSize="small" />}
+            </IconButton>
+          </Box>
+        </Box>
 
-      {expanded && (
-        <div className="border-t border-gray-100 px-5 py-4 bg-gray-50 space-y-3 text-xs">
-          {interview.location && (
-            <div className="flex items-start gap-2">
-              <MapPin size={12} className="text-gray-400 mt-0.5 flex-shrink-0" />
-              <span className="text-gray-700">{interview.location}</span>
-            </div>
-          )}
-          {interview.meetingLink && (
-            <div className="flex items-start gap-2">
-              <LinkIcon size={12} className="text-gray-400 mt-0.5 flex-shrink-0" />
-              <a href={interview.meetingLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline truncate">
-                {interview.meetingLink}
-              </a>
-            </div>
-          )}
-          {interview.notes && (
-            <div>
-              <p className="font-medium text-gray-600 mb-1">Notes</p>
-              <p className="text-gray-700 whitespace-pre-wrap">{interview.notes}</p>
-            </div>
-          )}
-          {interview.feedback && (
-            <div>
-              <p className="font-medium text-gray-600 mb-1">Feedback</p>
-              {interview.feedback.rating && (
-                <p className="text-gray-700">Rating: {interview.feedback.rating}/5</p>
+        {expanded && (
+          <Box sx={{ mt: 2, pt: 2, borderTop: '1px solid', borderColor: 'divider', bgcolor: 'grey.50', mx: -2.5, mb: -2.5, px: 2.5, pb: 2, borderRadius: '0 0 12px 12px' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+              {interview.location && (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <LocationOn sx={{ fontSize: 14, color: 'text.disabled' }} />
+                  <Typography variant="caption" color="text.secondary">{interview.location}</Typography>
+                </Box>
               )}
-              {interview.feedback.notes && (
-                <p className="text-gray-700 mt-1 whitespace-pre-wrap">{interview.feedback.notes}</p>
+              {interview.meetingLink && (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <LinkIcon sx={{ fontSize: 14, color: 'text.disabled' }} />
+                  <Typography component="a" href={interview.meetingLink} target="_blank" rel="noopener noreferrer" variant="caption" sx={{ color: 'primary.main', '&:hover': { textDecoration: 'underline' }, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {interview.meetingLink}
+                  </Typography>
+                </Box>
               )}
-              {interview.feedback.nextSteps && (
-                <p className="text-gray-500 italic mt-1">Next: {interview.feedback.nextSteps}</p>
+              {interview.notes && (
+                <Box>
+                  <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600, display: 'block', mb: 0.25 }}>Notes</Typography>
+                  <Typography variant="caption" sx={{ whiteSpace: 'pre-wrap' }}>{interview.notes}</Typography>
+                </Box>
               )}
-            </div>
-          )}
-        </div>
-      )}
-    </div>
+              {interview.feedback && (
+                <Box>
+                  <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600, display: 'block', mb: 0.25 }}>Feedback</Typography>
+                  {interview.feedback.rating && (
+                    <Rating value={interview.feedback.rating} size="small" readOnly />
+                  )}
+                  {interview.feedback.notes && (
+                    <Typography variant="caption" sx={{ display: 'block', mt: 0.5, whiteSpace: 'pre-wrap' }}>{interview.feedback.notes}</Typography>
+                  )}
+                  {interview.feedback.nextSteps && (
+                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5, fontStyle: 'italic' }}>
+                      Next: {interview.feedback.nextSteps}
+                    </Typography>
+                  )}
+                </Box>
+              )}
+            </Box>
+          </Box>
+        )}
+      </CardContent>
+    </Card>
   );
 }
 
@@ -614,7 +490,7 @@ export default function InterviewsPage() {
   const [error, setError] = useState('');
   const [showSchedule, setShowSchedule] = useState(false);
   const [feedbackTarget, setFeedbackTarget] = useState<Interview | null>(null);
-  const [filter, setFilter] = useState<'upcoming' | 'past' | 'all'>('upcoming');
+  const [tabValue, setTabValue] = useState(0);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -624,10 +500,8 @@ export default function InterviewsPage() {
         fetch('/api/interviews?limit=100&sortBy=scheduledAt&sortOrder=asc'),
         fetch('/api/jobs?limit=100'),
       ]);
-
       const intJson = await intRes.json();
       const jobJson = await jobRes.json();
-
       setInterviews(Array.isArray(intJson?.data) ? intJson.data : Array.isArray(intJson) ? intJson : []);
       setJobs(Array.isArray(jobJson) ? jobJson : jobJson?.data ?? []);
     } catch {
@@ -637,128 +511,93 @@ export default function InterviewsPage() {
     }
   }, []);
 
-  useEffect(() => {
-    load();
-  }, [load]);
+  useEffect(() => { load(); }, [load]);
 
   const now = new Date();
-  const filtered = interviews.filter((i) => {
-    const d = new Date(i.scheduledAt);
-    if (filter === 'upcoming') return d >= now && i.status === 'scheduled';
-    if (filter === 'past') return d < now || i.status !== 'scheduled';
-    return true;
-  });
-
   const upcoming = interviews.filter((i) => new Date(i.scheduledAt) >= now && i.status === 'scheduled');
   const past = interviews.filter((i) => new Date(i.scheduledAt) < now || i.status !== 'scheduled');
+  const filtered = tabValue === 0 ? upcoming : tabValue === 1 ? past : interviews;
 
   return (
-    <NavLayout
-      title="Interviews"
-      subtitle="Track scheduled interviews and log feedback"
-    >
-      {showSchedule && (
-        <ScheduleForm
-          jobs={jobs}
-          onSuccess={() => { setShowSchedule(false); load(); }}
-          onClose={() => setShowSchedule(false)}
-        />
-      )}
-
+    <NavLayout title="Interviews" subtitle="Track scheduled interviews and log feedback">
+      <ScheduleDialog
+        open={showSchedule}
+        jobs={jobs}
+        onSuccess={() => { setShowSchedule(false); load(); }}
+        onClose={() => setShowSchedule(false)}
+      />
       {feedbackTarget && (
-        <FeedbackForm
+        <FeedbackDialog
+          open={!!feedbackTarget}
           interview={feedbackTarget}
           onSuccess={() => { setFeedbackTarget(null); load(); }}
           onClose={() => setFeedbackTarget(null)}
         />
       )}
 
-      <div className="p-6 max-w-4xl mx-auto">
-        {/* Header bar */}
-        <div className="flex items-center justify-between mb-6">
-          {/* Stats */}
-          <div className="flex gap-4">
-            <div className="text-center">
-              <p className="text-2xl font-bold text-gray-900">{upcoming.length}</p>
-              <p className="text-xs text-gray-500">Upcoming</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-gray-900">{past.length}</p>
-              <p className="text-xs text-gray-500">Past</p>
-            </div>
-            <div className="text-center">
-              <p className="text-2xl font-bold text-gray-900">
-                {interviews.filter((i) => i.status === 'completed' && (i.feedback?.rating ?? 0) >= 4).length}
-              </p>
-              <p className="text-xs text-gray-500">Strong</p>
-            </div>
-          </div>
-
-          <button
-            onClick={() => setShowSchedule(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
-          >
-            <Plus size={15} />
+      <Box sx={{ p: 3, maxWidth: 860, mx: 'auto' }}>
+        {/* Header */}
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
+          <Box sx={{ display: 'flex', gap: 4 }}>
+            {[
+              { label: 'Upcoming', value: upcoming.length },
+              { label: 'Past', value: past.length },
+              { label: 'Strong', value: interviews.filter((i) => i.status === 'completed' && (i.feedback?.rating ?? 0) >= 4).length },
+            ].map((stat) => (
+              <Box key={stat.label} sx={{ textAlign: 'center' }}>
+                <Typography variant="h5" sx={{ fontWeight: 700 }}>{stat.value}</Typography>
+                <Typography variant="caption" color="text.secondary">{stat.label}</Typography>
+              </Box>
+            ))}
+          </Box>
+          <Button variant="contained" startIcon={<Add />} onClick={() => setShowSchedule(true)}>
             Schedule Interview
-          </button>
-        </div>
+          </Button>
+        </Box>
 
-        {/* Filter tabs */}
-        <div className="flex gap-1 bg-gray-100 p-1 rounded-lg w-fit mb-5">
-          {(['upcoming', 'past', 'all'] as const).map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`px-4 py-1.5 text-sm font-medium rounded-md transition capitalize ${
-                filter === f ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              {f}
-            </button>
-          ))}
-        </div>
+        {/* Filter Tabs */}
+        <Tabs value={tabValue} onChange={(_, v) => setTabValue(v)} sx={{ mb: 3, bgcolor: 'grey.100', borderRadius: 1.5, p: 0.5, minHeight: 36 }}>
+          <Tab label="Upcoming" sx={{ minHeight: 32, borderRadius: 1 }} />
+          <Tab label="Past" sx={{ minHeight: 32, borderRadius: 1 }} />
+          <Tab label="All" sx={{ minHeight: 32, borderRadius: 1 }} />
+        </Tabs>
 
         {/* Content */}
         {loading ? (
-          <div className="flex justify-center py-20">
-            <Loader2 size={32} className="animate-spin text-blue-600" />
-          </div>
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}><CircularProgress /></Box>
         ) : error ? (
-          <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-sm text-red-700">{error}</div>
+          <Alert severity="error">{error}</Alert>
         ) : filtered.length === 0 ? (
-          <div className="bg-white border border-dashed border-gray-300 rounded-xl flex flex-col items-center justify-center min-h-64 text-center p-8">
-            <Calendar size={48} className="text-gray-300 mb-4" />
-            <h3 className="font-semibold text-gray-700 mb-2">
-              {filter === 'upcoming' ? 'No upcoming interviews' : 'No interviews found'}
-            </h3>
-            <p className="text-sm text-gray-400 max-w-xs mb-4">
-              {filter === 'upcoming'
-                ? 'Schedule your next interview to track it here.'
-                : 'No interviews match the selected filter.'}
-            </p>
-            {filter === 'upcoming' && (
-              <button
-                onClick={() => setShowSchedule(true)}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition"
-              >
-                <Plus size={14} />
-                Schedule Interview
-              </button>
-            )}
-          </div>
+          <Card sx={{ textAlign: 'center', py: 8, border: '1px dashed', borderColor: 'divider' }}>
+            <CardContent>
+              <CalendarMonth sx={{ fontSize: 48, color: 'text.disabled', mb: 2 }} />
+              <Typography variant="h6" gutterBottom>
+                {tabValue === 0 ? 'No upcoming interviews' : 'No interviews found'}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                {tabValue === 0
+                  ? 'Schedule your next interview to track it here.'
+                  : 'No interviews match the selected filter.'}
+              </Typography>
+              {tabValue === 0 && (
+                <Button variant="contained" startIcon={<Add />} onClick={() => setShowSchedule(true)}>
+                  Schedule Interview
+                </Button>
+              )}
+            </CardContent>
+          </Card>
         ) : (
-          <div className="space-y-3">
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {filtered.map((interview) => (
               <InterviewCard
                 key={interview.id}
                 interview={interview}
                 onFeedback={() => setFeedbackTarget(interview)}
-                onRefresh={load}
               />
             ))}
-          </div>
+          </Box>
         )}
-      </div>
+      </Box>
     </NavLayout>
   );
 }

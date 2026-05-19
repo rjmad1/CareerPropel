@@ -6,17 +6,24 @@ import React, { useState, useEffect } from 'react';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { InterviewPrepWorkspace } from '@/components/InterviewPrep/InterviewPrepWorkspace';
 import { STAGE_LABELS, STAGE_COLORS, JobStage } from '@/types/job';
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Grid,
+  InputAdornment,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { RecordVoiceOver, Search } from '@mui/icons-material';
+import Link from 'next/link';
 
-// Stages where active prep makes most sense
 const PREP_ELIGIBLE_STAGES = new Set<JobStage>([
-  'interested',
-  'applied',
-  'recruiter_screen',
-  'hiring_manager',
-  'technical_interview',
-  'system_design',
-  'behavioral',
-  'final_round',
+  'interested', 'applied', 'recruiter_screen', 'hiring_manager',
+  'technical_interview', 'system_design', 'behavioral', 'final_round',
 ]);
 
 interface Job {
@@ -34,17 +41,14 @@ export default function InterviewPrepPage() {
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [searchText, setSearchText] = useState('');
 
-  useEffect(() => {
-    fetchJobs();
-  }, []);
+  useEffect(() => { fetchJobs(); }, []);
 
   async function fetchJobs() {
     try {
       setLoading(true);
       const res = await fetch('/api/jobs?limit=100');
       const json = await res.json();
-      const rawJobs: Job[] = Array.isArray(json) ? json : json.data ?? [];
-      setJobs(rawJobs);
+      setJobs(Array.isArray(json) ? json : json.data ?? []);
     } catch {
       setError('Failed to load jobs');
     } finally {
@@ -53,11 +57,9 @@ export default function InterviewPrepPage() {
   }
 
   const filtered = jobs.filter(
-    (j) =>
-      j.title.toLowerCase().includes(searchText.toLowerCase()) ||
+    (j) => j.title.toLowerCase().includes(searchText.toLowerCase()) ||
       j.company.toLowerCase().includes(searchText.toLowerCase())
   );
-
   const interviewJobs = filtered.filter((j) => PREP_ELIGIBLE_STAGES.has(j.stage));
   const otherJobs = filtered.filter((j) => !PREP_ELIGIBLE_STAGES.has(j.stage));
 
@@ -66,74 +68,73 @@ export default function InterviewPrepPage() {
       title="Interview Preparation"
       subtitle="AI-powered prep kit for every role — company intel, behavioral stories, technical practice"
     >
-      <div className="p-6 max-w-5xl mx-auto">
+      <Box sx={{ p: 3, maxWidth: 900, mx: 'auto' }}>
         {/* Search */}
-        <div className="mb-6">
-          <input
-            type="text"
-            placeholder="Search by job title or company..."
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-            className="w-full max-w-md px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-          />
-        </div>
+        <TextField
+          fullWidth
+          placeholder="Search by job title or company..."
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          sx={{ mb: 3, maxWidth: 440 }}
+          slotProps={{
+            input: {
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Search sx={{ color: 'text.disabled', fontSize: 20 }} />
+                </InputAdornment>
+              ),
+            },
+          }}
+        />
 
-        {error && (
-          <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
-            {error}
-          </div>
-        )}
+        {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
 
         {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600" />
-          </div>
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}><CircularProgress /></Box>
         ) : jobs.length === 0 ? (
-          <div className="text-center py-20">
-            <div className="text-5xl mb-4">🎤</div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">No jobs tracked yet</h3>
-            <p className="text-gray-500 text-sm mb-4">
-              Add jobs from your dashboard to start preparing.
-            </p>
-            <a
-              href="/dashboard"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition"
-            >
-              Go to Dashboard
-            </a>
-          </div>
+          <Card sx={{ textAlign: 'center', py: 10 }}>
+            <CardContent>
+              <RecordVoiceOver sx={{ fontSize: 56, color: 'text.disabled', mb: 2 }} />
+              <Typography variant="h6" gutterBottom>No jobs tracked yet</Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                Add jobs from your dashboard to start preparing.
+              </Typography>
+              <Button variant="contained" component={Link} href="/dashboard">Go to Dashboard</Button>
+            </CardContent>
+          </Card>
         ) : (
-          <div className="space-y-8">
-            {/* Active interview pipeline */}
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             {interviewJobs.length > 0 && (
-              <section>
-                <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
+              <Box>
+                <Typography variant="overline" sx={{ color: 'text.secondary', fontWeight: 600, display: 'block', mb: 1.5 }}>
                   Active Pipeline ({interviewJobs.length})
-                </h2>
-                <div className="grid gap-3 sm:grid-cols-2">
+                </Typography>
+                <Grid container spacing={2}>
                   {interviewJobs.map((job) => (
-                    <JobCard key={job.id} job={job} onPrepare={setSelectedJobId} highlight />
+                    <Grid size={{ xs: 12, sm: 6 }} key={job.id}>
+                      <PrepJobCard job={job} onPrepare={setSelectedJobId} highlight />
+                    </Grid>
                   ))}
-                </div>
-              </section>
+                </Grid>
+              </Box>
             )}
-
-            {/* Other tracked jobs */}
             {otherJobs.length > 0 && (
-              <section>
-                <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
+              <Box>
+                <Typography variant="overline" sx={{ color: 'text.secondary', fontWeight: 600, display: 'block', mb: 1.5 }}>
                   All Jobs ({otherJobs.length})
-                </h2>
-                <div className="grid gap-3 sm:grid-cols-2">
+                </Typography>
+                <Grid container spacing={2}>
                   {otherJobs.map((job) => (
-                    <JobCard key={job.id} job={job} onPrepare={setSelectedJobId} />
+                    <Grid size={{ xs: 12, sm: 6 }} key={job.id}>
+                      <PrepJobCard job={job} onPrepare={setSelectedJobId} />
+                    </Grid>
                   ))}
-                </div>
-              </section>
+                </Grid>
+              </Box>
             )}
-          </div>
+          </Box>
         )}
-      </div>
+      </Box>
 
       {selectedJobId && (
         <InterviewPrepWorkspace jobId={selectedJobId} onClose={() => setSelectedJobId(null)} />
@@ -142,40 +143,44 @@ export default function InterviewPrepPage() {
   );
 }
 
-interface JobCardProps {
-  job: Job;
-  onPrepare: (id: string) => void;
-  highlight?: boolean;
-}
+interface PrepJobCardProps { job: Job; onPrepare: (id: string) => void; highlight?: boolean; }
 
-function JobCard({ job, onPrepare, highlight }: JobCardProps) {
-  const colors = STAGE_COLORS[job.stage] ?? {
-    bg: 'bg-gray-100',
-    text: 'text-gray-600',
-    border: 'border-gray-300',
-  };
+function PrepJobCard({ job, onPrepare, highlight }: PrepJobCardProps) {
+  const colors = STAGE_COLORS[job.stage] ?? { bg: 'bg-gray-100', text: 'text-gray-600', border: 'border-gray-300' };
 
   return (
-    <div
-      className={`bg-white border rounded-xl p-4 flex items-start justify-between gap-4 transition hover:shadow-sm ${
-        highlight ? 'border-blue-200 bg-blue-50/30' : 'border-gray-200'
-      }`}
+    <Card
+      sx={{
+        border: '1px solid',
+        borderColor: highlight ? 'primary.light' : 'divider',
+        bgcolor: highlight ? 'primary.50' : 'background.paper',
+        '&:hover': { boxShadow: 3 },
+        transition: 'box-shadow 0.2s',
+      }}
     >
-      <div className="min-w-0">
-        <p className="font-semibold text-gray-900 truncate">{job.title}</p>
-        <p className="text-sm text-gray-500 truncate mt-0.5">{job.company}</p>
-        <span
-          className={`inline-block mt-2 px-2 py-0.5 text-xs font-medium rounded-full ${colors.bg} ${colors.text}`}
+      <CardContent sx={{ p: 2.5, '&:last-child': { pb: 2.5 }, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 2 }}>
+        <Box sx={{ minWidth: 0 }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {job.title}
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', mt: 0.25 }}>
+            {job.company}
+          </Typography>
+          <Box sx={{ mt: 1.5 }}>
+            <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded-full ${colors.bg} ${colors.text}`}>
+              {STAGE_LABELS[job.stage] ?? job.stage}
+            </span>
+          </Box>
+        </Box>
+        <Button
+          variant="contained"
+          size="small"
+          onClick={() => onPrepare(job.id)}
+          sx={{ flexShrink: 0 }}
         >
-          {STAGE_LABELS[job.stage] ?? job.stage}
-        </span>
-      </div>
-      <button
-        onClick={() => onPrepare(job.id)}
-        className="flex-shrink-0 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg transition"
-      >
-        Prepare
-      </button>
-    </div>
+          Prepare
+        </Button>
+      </CardContent>
+    </Card>
   );
 }

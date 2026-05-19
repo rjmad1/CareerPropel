@@ -5,7 +5,28 @@ export const dynamic = 'force-dynamic';
 import React, { Suspense, useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { NavLayout } from '@/components/Layout/NavLayout';
-import { Calendar, RefreshCw, Link2, Link2Off, MapPin, Video, Clock, Loader2 } from 'lucide-react';
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Chip,
+  CircularProgress,
+  Grid,
+  IconButton,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+import {
+  CalendarMonth,
+  Refresh,
+  Link as LinkIcon,
+  LinkOff,
+  LocationOn,
+  VideoCall,
+  AccessTime,
+} from '@mui/icons-material';
 
 interface CalendarEvent {
   id: string;
@@ -21,11 +42,15 @@ interface CalendarEvent {
 }
 
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  return new Date(iso).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 }
 
 function formatTime(iso: string) {
   return new Date(iso).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+}
+
+function durationMins(start: string, end: string) {
+  return Math.round((new Date(end).getTime() - new Date(start).getTime()) / 60000);
 }
 
 function groupByDay(events: CalendarEvent[]) {
@@ -102,141 +127,193 @@ function CalendarContent() {
 
   return (
     <NavLayout title="Calendar" subtitle="Interview schedule and upcoming events">
-      <div className="p-6 max-w-3xl mx-auto space-y-6">
-
-        {/* Provider cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Google */}
-          <div className="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center shrink-0 text-lg">G</div>
-            <div className="flex-1 min-w-0">
-              <p className="font-medium text-gray-900 text-sm">Google Calendar</p>
-              <p className="text-xs text-gray-500">{googleConnected ? 'Connected' : 'Not connected'}</p>
-            </div>
-            {googleConnected ? (
-              <div className="flex gap-1.5 shrink-0">
-                <button onClick={() => handleSync('google')} disabled={syncing === 'google'}
-                  className="p-1.5 text-gray-400 hover:text-gray-700 disabled:opacity-50" title="Sync">
-                  <RefreshCw className={`w-4 h-4 ${syncing === 'google' ? 'animate-spin' : ''}`} />
-                </button>
-                <button onClick={() => handleDisconnect('google')} disabled={disconnecting === 'google'}
-                  className="p-1.5 text-red-400 hover:text-red-600 disabled:opacity-50" title="Disconnect">
-                  <Link2Off className="w-4 h-4" />
-                </button>
-              </div>
-            ) : (
-              <a href="/api/calendar/authorize"
-                className="shrink-0 inline-flex items-center gap-1 px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700">
-                <Link2 className="w-3.5 h-3.5" /> Connect
-              </a>
-            )}
-          </div>
-
-          {/* Outlook */}
-          <div className="bg-white rounded-xl border border-gray-200 p-4 flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-blue-50 flex items-center justify-center shrink-0 text-lg">O</div>
-            <div className="flex-1 min-w-0">
-              <p className="font-medium text-gray-900 text-sm">Outlook Calendar</p>
-              <p className="text-xs text-gray-500">{outlookConnected ? 'Connected' : 'Not connected'}</p>
-            </div>
-            {outlookConnected ? (
-              <div className="flex gap-1.5 shrink-0">
-                <button onClick={() => handleSync('outlook')} disabled={syncing === 'outlook'}
-                  className="p-1.5 text-gray-400 hover:text-gray-700 disabled:opacity-50" title="Sync">
-                  <RefreshCw className={`w-4 h-4 ${syncing === 'outlook' ? 'animate-spin' : ''}`} />
-                </button>
-                <button onClick={() => handleDisconnect('outlook')} disabled={disconnecting === 'outlook'}
-                  className="p-1.5 text-red-400 hover:text-red-600 disabled:opacity-50" title="Disconnect">
-                  <Link2Off className="w-4 h-4" />
-                </button>
-              </div>
-            ) : (
-              <a href="/api/calendar/authorize/outlook"
-                className="shrink-0 inline-flex items-center gap-1 px-3 py-1.5 bg-blue-600 text-white text-xs font-medium rounded-lg hover:bg-blue-700">
-                <Link2 className="w-3.5 h-3.5" /> Connect
-              </a>
-            )}
-          </div>
-        </div>
+      <Box sx={{ p: 3, maxWidth: 800, mx: 'auto' }}>
+        {/* Provider Cards */}
+        <Grid container spacing={2} sx={{ mb: 3 }}>
+          {[
+            {
+              id: 'google' as const,
+              label: 'Google Calendar',
+              connected: googleConnected,
+              authHref: '/api/calendar/authorize',
+              initial: 'G',
+              color: '#EA4335',
+            },
+            {
+              id: 'outlook' as const,
+              label: 'Outlook Calendar',
+              connected: outlookConnected,
+              authHref: '/api/calendar/authorize/outlook',
+              initial: 'O',
+              color: '#0078D4',
+            },
+          ].map((p) => (
+            <Grid size={{ xs: 12, sm: 6 }} key={p.id}>
+              <Card>
+                <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2, py: 2, '&:last-child': { pb: 2 } }}>
+                  <Box
+                    sx={{
+                      width: 40, height: 40, borderRadius: '50%',
+                      bgcolor: `${p.color}18`,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      color: p.color, fontWeight: 700, fontSize: '1.1rem', flexShrink: 0,
+                    }}
+                  >
+                    {p.initial}
+                  </Box>
+                  <Box sx={{ flex: 1, minWidth: 0 }}>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>{p.label}</Typography>
+                    <Typography variant="caption" color={p.connected ? 'success.main' : 'text.secondary'}>
+                      {p.connected ? 'Connected' : 'Not connected'}
+                    </Typography>
+                  </Box>
+                  {p.connected ? (
+                    <Box sx={{ display: 'flex', gap: 0.5, flexShrink: 0 }}>
+                      <Tooltip title="Sync">
+                        <IconButton
+                          size="small"
+                          onClick={() => handleSync(p.id)}
+                          disabled={syncing === p.id}
+                        >
+                          {syncing === p.id ? (
+                            <CircularProgress size={16} />
+                          ) : (
+                            <Refresh fontSize="small" />
+                          )}
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Disconnect">
+                        <IconButton
+                          size="small"
+                          color="error"
+                          onClick={() => handleDisconnect(p.id)}
+                          disabled={disconnecting === p.id}
+                        >
+                          <LinkOff fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      size="small"
+                      href={p.authHref}
+                      startIcon={<LinkIcon fontSize="small" />}
+                      sx={{ flexShrink: 0 }}
+                    >
+                      Connect
+                    </Button>
+                  )}
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
 
         {justConnected && (
-          <div className="text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-4 py-3">
+          <Alert severity="success" sx={{ mb: 3 }}>
             {justConnected === 'outlook' ? 'Outlook' : 'Google'} Calendar connected — your upcoming events have been synced.
-          </div>
+          </Alert>
         )}
 
         {error && (
-          <div className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-3">{error}</div>
+          <Alert severity="error" onClose={() => setError('')} sx={{ mb: 3 }}>{error}</Alert>
         )}
 
-        {/* Event list */}
+        {/* Event List */}
         {loading ? (
-          <div className="flex justify-center py-16">
-            <Loader2 className="w-6 h-6 text-gray-400 animate-spin" />
-          </div>
+          <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}><CircularProgress /></Box>
         ) : !anyConnected && events.length === 0 ? (
-          <div className="text-center py-16 text-gray-400 space-y-2">
-            <Calendar className="w-10 h-10 mx-auto opacity-40" />
-            <p className="text-sm">Connect Google or Outlook Calendar to see your interview schedule here.</p>
-            <p className="text-xs">Interviews you schedule in this app will appear automatically.</p>
-          </div>
+          <Card sx={{ textAlign: 'center', py: 8 }}>
+            <CardContent>
+              <CalendarMonth sx={{ fontSize: 56, color: 'text.disabled', mb: 2 }} />
+              <Typography variant="body1" color="text.secondary" gutterBottom>
+                Connect Google or Outlook Calendar to see your interview schedule here.
+              </Typography>
+              <Typography variant="body2" color="text.disabled">
+                Interviews you schedule in this app will appear automatically.
+              </Typography>
+            </CardContent>
+          </Card>
         ) : events.length === 0 ? (
-          <div className="text-center py-16 text-gray-400 space-y-2">
-            <Calendar className="w-10 h-10 mx-auto opacity-40" />
-            <p className="text-sm">No upcoming events found.</p>
-          </div>
+          <Card sx={{ textAlign: 'center', py: 8 }}>
+            <CardContent>
+              <CalendarMonth sx={{ fontSize: 56, color: 'text.disabled', mb: 2 }} />
+              <Typography variant="body2" color="text.secondary">No upcoming events found.</Typography>
+            </CardContent>
+          </Card>
         ) : (
-          <div className="space-y-6">
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
             {Array.from(grouped.entries()).map(([day, dayEvents]) => (
-              <div key={day}>
-                <h3 className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">
+              <Box key={day}>
+                <Typography
+                  variant="overline"
+                  sx={{ color: 'text.secondary', fontWeight: 600, display: 'block', mb: 1.5 }}
+                >
                   {formatDate(dayEvents[0].startAt)}
-                </h3>
-                <div className="space-y-2">
+                </Typography>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                   {dayEvents.map((ev) => (
-                    <div key={ev.id}
-                      className={`bg-white rounded-xl border p-4 flex gap-4 transition-colors ${ev.interviewId ? 'border-blue-200 bg-blue-50/30 hover:border-blue-300' : 'border-gray-200 hover:border-blue-200'}`}>
-                      <div className="text-right shrink-0 w-16">
-                        <p className="text-sm font-medium text-gray-900">{formatTime(ev.startAt)}</p>
-                        <p className="text-xs text-gray-400">{formatTime(ev.endAt)}</p>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <p className="font-medium text-gray-900 truncate">{ev.title}</p>
-                          {ev.interviewId && (
-                            <span className="shrink-0 text-xs font-medium bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">Interview</span>
+                    <Card
+                      key={ev.id}
+                      sx={{
+                        border: '1px solid',
+                        borderColor: ev.interviewId ? 'primary.light' : 'divider',
+                        bgcolor: ev.interviewId ? 'primary.50' : 'background.paper',
+                      }}
+                    >
+                      <CardContent sx={{ display: 'flex', gap: 2.5, py: 2, '&:last-child': { pb: 2 } }}>
+                        <Box sx={{ textAlign: 'right', flexShrink: 0, width: 68 }}>
+                          <Typography variant="body2" sx={{ fontWeight: 600 }}>{formatTime(ev.startAt)}</Typography>
+                          <Typography variant="caption" color="text.secondary">{formatTime(ev.endAt)}</Typography>
+                        </Box>
+                        <Box sx={{ flex: 1, minWidth: 0 }}>
+                          <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 0.75, mb: 0.5 }}>
+                            <Typography variant="body2" sx={{ fontWeight: 600 }} noWrap>{ev.title}</Typography>
+                            {ev.interviewId && (
+                              <Chip label="Interview" size="small" color="primary" variant="outlined" />
+                            )}
+                            <Chip label={ev.provider} size="small" variant="outlined" sx={{ textTransform: 'capitalize' }} />
+                          </Box>
+                          {ev.description && (
+                            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.75, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                              {ev.description}
+                            </Typography>
                           )}
-                          <span className="shrink-0 text-xs text-gray-400 capitalize">{ev.provider}</span>
-                        </div>
-                        {ev.description && (
-                          <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{ev.description}</p>
-                        )}
-                        <div className="flex flex-wrap gap-3 mt-2">
-                          {ev.location && (
-                            <span className="inline-flex items-center gap-1 text-xs text-gray-500">
-                              <MapPin className="w-3 h-3" /> {ev.location}
-                            </span>
-                          )}
-                          {ev.meetingUrl && (
-                            <a href={ev.meetingUrl} target="_blank" rel="noreferrer"
-                              className="inline-flex items-center gap-1 text-xs text-blue-600 hover:underline">
-                              <Video className="w-3 h-3" /> Join meeting
-                            </a>
-                          )}
-                          <span className="inline-flex items-center gap-1 text-xs text-gray-400">
-                            <Clock className="w-3 h-3" />
-                            {Math.round((new Date(ev.endAt).getTime() - new Date(ev.startAt).getTime()) / 60000)} min
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+                            {ev.location && (
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                                <LocationOn sx={{ fontSize: 14, color: 'text.disabled' }} />
+                                <Typography variant="caption" color="text.secondary">{ev.location}</Typography>
+                              </Box>
+                            )}
+                            {ev.meetingUrl && (
+                              <Box
+                                component="a"
+                                href={ev.meetingUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: 'primary.main', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
+                              >
+                                <VideoCall sx={{ fontSize: 14 }} />
+                                <Typography variant="caption">Join meeting</Typography>
+                              </Box>
+                            )}
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                              <AccessTime sx={{ fontSize: 14, color: 'text.disabled' }} />
+                              <Typography variant="caption" color="text.secondary">{durationMins(ev.startAt, ev.endAt)} min</Typography>
+                            </Box>
+                          </Box>
+                        </Box>
+                      </CardContent>
+                    </Card>
                   ))}
-                </div>
-              </div>
+                </Box>
+              </Box>
             ))}
-          </div>
+          </Box>
         )}
-      </div>
+      </Box>
     </NavLayout>
   );
 }

@@ -23,8 +23,11 @@ describe('ApiError', () => {
   })
 
   describe('toJSON', () => {
+    const setNodeEnv = (value: string) =>
+      Object.defineProperty(process.env, 'NODE_ENV', { value, configurable: true, writable: true })
+
     beforeEach(() => {
-      process.env.NODE_ENV = 'test'
+      setNodeEnv('test')
     })
 
     it('returns the code and message', () => {
@@ -43,23 +46,23 @@ describe('ApiError', () => {
 
     it('does not include details in non-development environment', () => {
       const originalEnv = process.env.NODE_ENV
-      process.env.NODE_ENV = 'production'
+      setNodeEnv('production')
       const cause = new Error('internal')
       const err = new ApiError(500, 'INTERNAL', 'failed', cause)
       const json = err.toJSON(true)
       expect(json.error.details).toBeUndefined()
-      process.env.NODE_ENV = originalEnv
+      setNodeEnv(originalEnv ?? 'test')
     })
 
     it('includes details in development with includeDetails=true and internalError', () => {
       const originalEnv = process.env.NODE_ENV
-      process.env.NODE_ENV = 'development'
+      setNodeEnv('development')
       const cause = new Error('db connection failed')
       const err = new ApiError(500, 'DB_ERROR', 'Database error', cause)
       const json = err.toJSON(true)
       expect(json.error.details).toBeDefined()
       expect(json.error.details?.internal).toContain('db connection failed')
-      process.env.NODE_ENV = originalEnv
+      setNodeEnv(originalEnv ?? 'test')
     })
   })
 

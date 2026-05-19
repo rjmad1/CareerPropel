@@ -4,7 +4,40 @@ export const dynamic = 'force-dynamic';
 
 import React, { useState, useEffect } from 'react';
 import { NavLayout } from '@/components/Layout/NavLayout';
-import { Plus, Trash2, Copy, Eye, EyeOff, RefreshCw, Key } from 'lucide-react';
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  Chip,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from '@mui/material';
+import {
+  Add,
+  ContentCopy,
+  Delete,
+  Key,
+  Refresh,
+  Visibility,
+  VisibilityOff,
+} from '@mui/icons-material';
 
 interface ApiKey {
   id: string;
@@ -27,7 +60,7 @@ export default function ApiKeysPage() {
   const [keys, setKeys] = useState<ApiKey[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [newKeyName, setNewKeyName] = useState('');
   const [expiresIn, setExpiresIn] = useState('365');
   const [creating, setCreating] = useState(false);
@@ -73,7 +106,7 @@ export default function ApiKeysPage() {
       setNewlyCreated({ id: data.id, key: data.key, name: data.name });
       setNewKeyName('');
       setExpiresIn('365');
-      setShowCreateForm(false);
+      setShowCreateDialog(false);
       setKeyVisible(false);
       await fetchKeys();
     } catch {
@@ -113,245 +146,230 @@ export default function ApiKeysPage() {
       title="API Keys"
       subtitle="Manage programmatic access to your CareerPropel data"
     >
-      <div className="p-6 max-w-4xl mx-auto space-y-6">
+      <Box sx={{ p: 3, maxWidth: 900, mx: 'auto' }}>
         {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700 flex items-center justify-between">
-            <span>{error}</span>
-            <button onClick={() => setError('')} className="text-red-400 hover:text-red-600">✕</button>
-          </div>
+          <Alert severity="error" onClose={() => setError('')} sx={{ mb: 3 }}>
+            {error}
+          </Alert>
         )}
 
         {/* Security Warning */}
-        <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl text-sm text-amber-800">
+        <Alert severity="warning" sx={{ mb: 3 }}>
           <strong>Security notice:</strong> API keys grant full access to your account data. Store them securely and never share them. Rotate keys regularly and revoke any that are no longer needed.
-        </div>
+        </Alert>
 
         {/* Newly Created Key — one-time display */}
         {newlyCreated && (
-          <div className="p-5 bg-green-50 border border-green-300 rounded-xl space-y-3">
-            <div className="flex items-center gap-2">
-              <Key size={16} className="text-green-600" />
-              <h3 className="font-semibold text-green-900">New API Key Created: {newlyCreated.name}</h3>
-            </div>
-            <p className="text-xs text-green-700">
+          <Alert
+            severity="success"
+            onClose={() => setNewlyCreated(null)}
+            sx={{ mb: 3 }}
+          >
+            <Typography variant="subtitle2" gutterBottom>
+              New API Key Created: {newlyCreated.name}
+            </Typography>
+            <Typography variant="body2" sx={{ mb: 1 }}>
               Copy this key now. You will not be able to see it again.
-            </p>
-            <div className="flex items-center gap-2">
-              <code className="flex-1 bg-white border border-green-300 rounded px-3 py-2 text-sm font-mono overflow-x-auto">
+            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, bgcolor: 'background.paper', border: '1px solid', borderColor: 'success.light', borderRadius: 1, px: 1.5, py: 1 }}>
+              <Typography
+                component="code"
+                sx={{ flex: 1, fontFamily: 'monospace', fontSize: '0.8125rem', wordBreak: 'break-all' }}
+              >
                 {keyVisible ? newlyCreated.key : newlyCreated.key.replace(/./g, '•').slice(0, 40)}
-              </code>
-              <button
-                onClick={() => setKeyVisible(!keyVisible)}
-                className="p-2 text-green-700 hover:text-green-900 hover:bg-green-100 rounded-lg transition"
-                title={keyVisible ? 'Hide key' : 'Show key'}
-              >
-                {keyVisible ? <EyeOff size={16} /> : <Eye size={16} />}
-              </button>
-              <button
-                onClick={() => copyToClipboard(newlyCreated.key, 'new')}
-                className="p-2 text-green-700 hover:text-green-900 hover:bg-green-100 rounded-lg transition"
-                title="Copy key"
-              >
-                <Copy size={16} />
-              </button>
-            </div>
+              </Typography>
+              <IconButton size="small" onClick={() => setKeyVisible(!keyVisible)} title={keyVisible ? 'Hide key' : 'Show key'}>
+                {keyVisible ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+              </IconButton>
+              <IconButton size="small" onClick={() => copyToClipboard(newlyCreated.key, 'new')} title="Copy key">
+                <ContentCopy fontSize="small" />
+              </IconButton>
+            </Box>
             {copiedId === 'new' && (
-              <p className="text-xs text-green-600 font-medium">Copied to clipboard!</p>
+              <Typography variant="caption" sx={{ color: 'success.dark', display: 'block', mt: 0.5 }}>
+                Copied to clipboard!
+              </Typography>
             )}
-            <button
-              onClick={() => setNewlyCreated(null)}
-              className="text-xs text-green-700 hover:text-green-900 underline"
-            >
-              I've saved my key — dismiss
-            </button>
-          </div>
+          </Alert>
         )}
 
-        {/* Actions */}
-        <div className="flex items-center justify-between">
-          <h2 className="font-semibold text-gray-900">
-            Active Keys{' '}
-            <span className="text-gray-400 font-normal">({activeKeys.length})</span>
-          </h2>
-          <div className="flex gap-2">
-            <button
-              onClick={fetchKeys}
-              disabled={loading}
-              className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition"
+        {/* Actions Header */}
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+          <Typography variant="h6">
+            Active Keys <Typography component="span" variant="body2" color="text.secondary">({activeKeys.length})</Typography>
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <IconButton size="small" onClick={fetchKeys} disabled={loading} title="Refresh">
+              <Refresh fontSize="small" />
+            </IconButton>
+            <Button
+              variant="contained"
+              size="small"
+              startIcon={<Add />}
+              onClick={() => setShowCreateDialog(true)}
             >
-              <RefreshCw size={15} className={loading ? 'animate-spin' : ''} />
-            </button>
-            <button
-              onClick={() => setShowCreateForm(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition"
-            >
-              <Plus size={16} />
               New API Key
-            </button>
-          </div>
-        </div>
+            </Button>
+          </Box>
+        </Box>
 
-        {/* Create Form */}
-        {showCreateForm && (
-          <div className="bg-white border border-blue-200 rounded-xl p-5">
-            <h3 className="font-semibold text-gray-900 mb-4">Create New API Key</h3>
-            <form onSubmit={handleCreate} className="space-y-3">
-              <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Key Name</label>
-                <input
-                  type="text"
+        {/* Create Key Dialog */}
+        <Dialog open={showCreateDialog} onClose={() => setShowCreateDialog(false)} maxWidth="sm" fullWidth>
+          <DialogTitle>Create New API Key</DialogTitle>
+          <form onSubmit={handleCreate}>
+            <DialogContent sx={{ pt: 1 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+                <TextField
+                  label="Key Name"
                   required
+                  fullWidth
                   placeholder="e.g. My App, CI/CD Pipeline"
                   value={newKeyName}
                   onChange={(e) => setNewKeyName(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  maxLength={100}
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Expires In (days)</label>
-                <select
-                  value={expiresIn}
-                  onChange={(e) => setExpiresIn(e.target.value)}
-                  className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option value="30">30 days</option>
-                  <option value="90">90 days</option>
-                  <option value="180">180 days</option>
-                  <option value="365">1 year</option>
-                  <option value="730">2 years</option>
-                </select>
-              </div>
-              <div className="flex gap-2">
-                <button
-                  type="submit"
+                  slotProps={{ htmlInput: { maxLength: 100 } }}
                   disabled={creating}
-                  className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition"
-                >
-                  {creating ? 'Creating...' : 'Create Key'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setShowCreateForm(false)}
-                  className="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
+                />
+                <FormControl size="small" fullWidth>
+                  <InputLabel>Expires In</InputLabel>
+                  <Select
+                    value={expiresIn}
+                    label="Expires In"
+                    onChange={(e) => setExpiresIn(e.target.value)}
+                    disabled={creating}
+                  >
+                    <MenuItem value="30">30 days</MenuItem>
+                    <MenuItem value="90">90 days</MenuItem>
+                    <MenuItem value="180">180 days</MenuItem>
+                    <MenuItem value="365">1 year</MenuItem>
+                    <MenuItem value="730">2 years</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+            </DialogContent>
+            <DialogActions sx={{ px: 3, pb: 2 }}>
+              <Button onClick={() => setShowCreateDialog(false)} disabled={creating}>Cancel</Button>
+              <Button type="submit" variant="contained" disabled={creating}>
+                {creating ? 'Creating...' : 'Create Key'}
+              </Button>
+            </DialogActions>
+          </form>
+        </Dialog>
 
         {/* Keys List */}
-        {loading ? (
-          <div className="flex items-center justify-center py-16">
-            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600" />
-          </div>
-        ) : activeKeys.length === 0 && !loading ? (
-          <div className="text-center py-16 bg-white border border-gray-200 rounded-xl">
-            <div className="text-4xl mb-3">🔑</div>
-            <h3 className="font-semibold text-gray-900 mb-1">No API keys</h3>
-            <p className="text-sm text-gray-500">Create your first key to enable programmatic access.</p>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {activeKeys.map((key) => (
-              <KeyCard
-                key={key.id}
-                apiKey={key}
-                onRevoke={handleRevoke}
-                onCopy={(text) => copyToClipboard(text, key.id)}
-                copied={copiedId === key.id}
-              />
-            ))}
-          </div>
-        )}
+        <Card sx={{ mb: 3 }}>
+          {loading ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}>
+              <CircularProgress />
+            </Box>
+          ) : activeKeys.length === 0 ? (
+            <Box sx={{ textAlign: 'center', py: 8 }}>
+              <Key sx={{ fontSize: 48, color: 'text.disabled', mb: 2 }} />
+              <Typography variant="h6" gutterBottom>No API keys</Typography>
+              <Typography variant="body2" color="text.secondary">
+                Create your first key to enable programmatic access.
+              </Typography>
+            </Box>
+          ) : (
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Prefix</TableCell>
+                    <TableCell>Created</TableCell>
+                    <TableCell>Expires</TableCell>
+                    <TableCell>Last Used</TableCell>
+                    <TableCell align="right">Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {activeKeys.map((key) => {
+                    const isExpired = key.expiresAt && new Date(key.expiresAt) < new Date();
+                    const expiresInDays = key.expiresAt
+                      ? Math.ceil((new Date(key.expiresAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
+                      : null;
+                    return (
+                      <TableRow key={key.id} hover>
+                        <TableCell>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <Typography variant="body2" sx={{ fontWeight: 500 }}>{key.name}</Typography>
+                            {isExpired && <Chip label="Expired" size="small" color="error" />}
+                            {!isExpired && expiresInDays !== null && expiresInDays <= 30 && (
+                              <Chip label={`${expiresInDays}d left`} size="small" color="warning" />
+                            )}
+                          </Box>
+                        </TableCell>
+                        <TableCell>
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                            <Typography component="code" sx={{ fontFamily: 'monospace', fontSize: '0.75rem', bgcolor: 'grey.100', px: 1, py: 0.25, borderRadius: 1 }}>
+                              {key.prefix}••••
+                            </Typography>
+                            <IconButton size="small" onClick={() => copyToClipboard(key.prefix, key.id)} title="Copy prefix">
+                              <ContentCopy sx={{ fontSize: 14 }} />
+                            </IconButton>
+                            {copiedId === key.id && (
+                              <Typography variant="caption" color="success.main">Copied!</Typography>
+                            )}
+                          </Box>
+                        </TableCell>
+                        <TableCell sx={{ color: 'text.secondary', fontSize: '0.8125rem' }}>
+                          {new Date(key.createdAt).toLocaleDateString()}
+                        </TableCell>
+                        <TableCell sx={{ color: isExpired ? 'error.main' : 'text.secondary', fontSize: '0.8125rem' }}>
+                          {key.expiresAt ? new Date(key.expiresAt).toLocaleDateString() : '—'}
+                        </TableCell>
+                        <TableCell sx={{ color: 'text.secondary', fontSize: '0.8125rem' }}>
+                          {key.lastUsedAt ? new Date(key.lastUsedAt).toLocaleDateString() : 'Never'}
+                        </TableCell>
+                        <TableCell align="right">
+                          <Button
+                            size="small"
+                            color="error"
+                            variant="outlined"
+                            startIcon={<Delete sx={{ fontSize: '14px !important' }} />}
+                            onClick={() => handleRevoke(key.id, key.name)}
+                            sx={{ fontSize: '0.75rem' }}
+                          >
+                            Revoke
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+        </Card>
 
         {/* Revoked Keys */}
         {revokedKeys.length > 0 && (
-          <div className="mt-8">
-            <h2 className="font-semibold text-gray-500 mb-3 text-sm">
+          <Box>
+            <Typography variant="overline" color="text.secondary" sx={{ fontWeight: 600, display: 'block', mb: 1.5 }}>
               Revoked Keys ({revokedKeys.length})
-            </h2>
-            <div className="space-y-2">
-              {revokedKeys.map((key) => (
-                <div key={key.id} className="bg-gray-50 border border-gray-200 rounded-xl p-4 flex items-center justify-between opacity-60">
-                  <div>
-                    <p className="text-sm font-medium text-gray-700">{key.name}</p>
-                    <p className="text-xs text-gray-500 font-mono mt-0.5">{key.prefix}••••</p>
-                  </div>
-                  <span className="text-xs bg-gray-200 text-gray-600 px-2 py-1 rounded-full">Revoked</span>
-                </div>
-              ))}
-            </div>
-          </div>
+            </Typography>
+            <Card sx={{ opacity: 0.65 }}>
+              <TableContainer>
+                <Table size="small">
+                  <TableBody>
+                    {revokedKeys.map((key) => (
+                      <TableRow key={key.id}>
+                        <TableCell sx={{ fontWeight: 500 }}>{key.name}</TableCell>
+                        <TableCell sx={{ fontFamily: 'monospace', fontSize: '0.75rem', color: 'text.secondary' }}>
+                          {key.prefix}••••
+                        </TableCell>
+                        <TableCell>
+                          <Chip label="Revoked" size="small" color="default" />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Card>
+          </Box>
         )}
-      </div>
+      </Box>
     </NavLayout>
-  );
-}
-
-function KeyCard({ apiKey, onRevoke, onCopy, copied }: {
-  apiKey: ApiKey;
-  onRevoke: (id: string, name: string) => void;
-  onCopy: (text: string) => void;
-  copied: boolean;
-}) {
-  const isExpired = apiKey.expiresAt && new Date(apiKey.expiresAt) < new Date();
-  const expiresInDays = apiKey.expiresAt
-    ? Math.ceil((new Date(apiKey.expiresAt).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
-    : null;
-
-  return (
-    <div className={`bg-white border rounded-xl p-5 ${isExpired ? 'border-red-200 bg-red-50/30' : 'border-gray-200'}`}>
-      <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <div className="flex items-center gap-2">
-            <Key size={14} className="text-gray-400 flex-shrink-0" />
-            <span className="font-semibold text-gray-900">{apiKey.name}</span>
-            {isExpired && (
-              <span className="text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full">Expired</span>
-            )}
-            {!isExpired && expiresInDays !== null && expiresInDays <= 30 && (
-              <span className="text-xs bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded-full">
-                Expires in {expiresInDays}d
-              </span>
-            )}
-          </div>
-          <div className="flex items-center gap-2 mt-1">
-            <code className="text-xs text-gray-500 font-mono bg-gray-100 px-2 py-0.5 rounded">
-              {apiKey.prefix}••••••••••••••••••••
-            </code>
-            <button
-              onClick={() => onCopy(apiKey.prefix)}
-              className="text-gray-400 hover:text-gray-600 transition"
-              title="Copy prefix"
-            >
-              <Copy size={12} />
-            </button>
-            {copied && <span className="text-xs text-green-600">Copied!</span>}
-          </div>
-          <div className="flex flex-wrap gap-3 mt-2 text-xs text-gray-500">
-            <span>Created {new Date(apiKey.createdAt).toLocaleDateString()}</span>
-            {apiKey.expiresAt && (
-              <span className={isExpired ? 'text-red-500' : ''}>
-                Expires {new Date(apiKey.expiresAt).toLocaleDateString()}
-              </span>
-            )}
-            {apiKey.lastUsedAt && (
-              <span>Last used {new Date(apiKey.lastUsedAt).toLocaleDateString()}</span>
-            )}
-            <span>{apiKey.usageCount} uses</span>
-          </div>
-        </div>
-        <button
-          onClick={() => onRevoke(apiKey.id, apiKey.name)}
-          className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 text-red-600 hover:text-red-700 hover:bg-red-50 border border-red-200 hover:border-red-300 text-xs font-medium rounded-lg transition"
-        >
-          <Trash2 size={12} />
-          Revoke
-        </button>
-      </div>
-    </div>
   );
 }

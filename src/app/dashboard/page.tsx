@@ -6,7 +6,36 @@ import { useRouter } from 'next/navigation';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { JobDetailPanel } from '@/domains/jobs';
 import Link from 'next/link';
-import { Plus, RefreshCw } from 'lucide-react';
+import {
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  Chip,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  TextField,
+  Typography,
+  Alert,
+} from '@mui/material';
+import {
+  Add,
+  Refresh,
+  RecordVoiceOver,
+  MonetizationOn,
+  Person,
+  BarChart,
+  Work,
+  ArrowForward,
+} from '@mui/icons-material';
 
 interface Job {
   id: string;
@@ -17,45 +46,45 @@ interface Job {
   createdAt: string;
 }
 
-const STAGE_COLORS: Record<string, string> = {
-  SOURCED: 'bg-gray-100 text-gray-600',
-  INTERESTED: 'bg-blue-100 text-blue-700',
-  TAILORING: 'bg-teal-100 text-teal-700',
-  APPLIED: 'bg-indigo-100 text-indigo-700',
-  RECRUITER_SCREEN: 'bg-yellow-100 text-yellow-700',
-  HIRING_MANAGER: 'bg-orange-100 text-orange-700',
-  TECHNICAL_INTERVIEW: 'bg-purple-100 text-purple-700',
-  SYSTEM_DESIGN: 'bg-violet-100 text-violet-700',
-  BEHAVIORAL: 'bg-pink-100 text-pink-700',
-  FINAL_ROUND: 'bg-rose-100 text-rose-700',
-  OFFER: 'bg-green-100 text-green-700',
-  NEGOTIATION: 'bg-emerald-100 text-emerald-700',
-  REJECTED: 'bg-red-100 text-red-700',
-  WITHDRAWN: 'bg-gray-100 text-gray-500',
+const STAGE_COLOR_MAP: Record<string, 'default' | 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info'> = {
+  SOURCED: 'default',
+  INTERESTED: 'primary',
+  RESUME_TAILORING: 'secondary',
+  APPLIED: 'primary',
+  RECRUITER_SCREEN: 'info',
+  HIRING_MANAGER: 'warning',
+  TECHNICAL_INTERVIEW: 'secondary',
+  SYSTEM_DESIGN: 'secondary',
+  BEHAVIORAL: 'warning',
+  FINAL_ROUND: 'warning',
+  OFFER: 'success',
+  NEGOTIATION: 'success',
+  REJECTED: 'error',
+  ARCHIVED: 'default',
 };
 
 const STAGE_LABELS: Record<string, string> = {
   SOURCED: 'Sourced',
   INTERESTED: 'Interested',
-  TAILORING: 'Tailoring',
+  RESUME_TAILORING: 'Tailoring',
   APPLIED: 'Applied',
   RECRUITER_SCREEN: 'Recruiter Screen',
   HIRING_MANAGER: 'Hiring Manager',
-  TECHNICAL_INTERVIEW: 'Technical Interview',
+  TECHNICAL_INTERVIEW: 'Technical',
   SYSTEM_DESIGN: 'System Design',
   BEHAVIORAL: 'Behavioral',
   FINAL_ROUND: 'Final Round',
   OFFER: 'Offer',
   NEGOTIATION: 'Negotiation',
   REJECTED: 'Rejected',
-  WITHDRAWN: 'Withdrawn',
+  ARCHIVED: 'Archived',
 };
 
 const QUICK_LINKS = [
-  { href: '/interview-prep', label: 'Interview Prep', icon: '🎤', description: 'AI-generated prep kits for every role' },
-  { href: '/offers', label: 'Offers', icon: '💰', description: 'Compare and evaluate compensation packages' },
-  { href: '/profile', label: 'Profile', icon: '👤', description: 'Manage skills, achievements, and ATS score' },
-  { href: '/analytics', label: 'Analytics', icon: '📊', description: 'Pipeline conversion rates and salary insights' },
+  { href: '/interview-prep', label: 'Interview Prep', description: 'AI-generated prep kits for every role', icon: RecordVoiceOver, color: '#EFF6FF' },
+  { href: '/offers', label: 'Offers', description: 'Compare and evaluate compensation packages', icon: MonetizationOn, color: '#F0FDF4' },
+  { href: '/profile', label: 'Profile', description: 'Manage skills, achievements, and ATS score', icon: Person, color: '#FEF3C7' },
+  { href: '/analytics', label: 'Analytics', description: 'Pipeline conversion rates and salary insights', icon: BarChart, color: '#F5F3FF' },
 ];
 
 export default function DashboardPage() {
@@ -83,6 +112,12 @@ export default function DashboardPage() {
     try {
       setLoading(true);
       const response = await fetch('/api/jobs?limit=20');
+      if (!response.ok) {
+        const text = await response.text();
+        let msg = `Failed to fetch jobs (${response.status})`;
+        try { msg = JSON.parse(text)?.error?.message ?? msg; } catch { /* */ }
+        throw new Error(msg);
+      }
       const data = await response.json();
       const rawJobs: Job[] = Array.isArray(data) ? data : data.data ?? [];
       setJobs(rawJobs);
@@ -101,7 +136,7 @@ export default function DashboardPage() {
       const response = await fetch('/api/jobs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, company, url: url || undefined, stage: 'INTERESTED' }),
+        body: JSON.stringify({ title, company, url: url || undefined, stage: 'interested' }),
       });
       if (!response.ok) throw new Error('Failed to create job');
       setTitle('');
@@ -121,190 +156,192 @@ export default function DashboardPage() {
   if (status === 'loading') return null;
   if (!session) return null;
 
+  const userName = session.user?.email ? session.user.email.split('@')[0] : '';
+
   return (
     <NavLayout
       title="Dashboard"
-      subtitle={`Welcome back${session.user?.email ? ', ' + session.user.email.split('@')[0] : ''}! Here's your career pipeline.`}
+      subtitle={`Welcome back${userName ? ', ' + userName : ''}! Here's your career pipeline.`}
     >
-      <div className="p-6 max-w-6xl mx-auto space-y-8">
+      <Box sx={{ p: 3, maxWidth: 1100, mx: 'auto' }}>
         {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+          <Alert severity="error" onClose={() => setError('')} sx={{ mb: 3 }}>
             {error}
-          </div>
+          </Alert>
         )}
 
         {/* Quick Navigation Cards */}
-        <section>
-          <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">Quick Access</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {QUICK_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="bg-white border border-gray-200 rounded-xl p-4 hover:border-blue-300 hover:shadow-sm transition group"
-              >
-                <div className="text-2xl mb-2">{link.icon}</div>
-                <div className="font-semibold text-gray-900 text-sm group-hover:text-blue-600 transition">{link.label}</div>
-                <div className="text-xs text-gray-500 mt-0.5 leading-relaxed">{link.description}</div>
-              </Link>
-            ))}
-          </div>
-        </section>
+        <Typography variant="overline" sx={{ color: 'text.secondary', fontWeight: 600, display: 'block', mb: 1.5 }}>
+          Quick Access
+        </Typography>
+        <Grid container spacing={2} sx={{ mb: 4 }}>
+          {QUICK_LINKS.map((link) => {
+            const IconComponent = link.icon;
+            return (
+              <Grid size={{ xs: 6, sm: 3 }} key={link.href}>
+                <Card sx={{ height: '100%', bgcolor: link.color, border: '1px solid', borderColor: 'divider' }}>
+                  <CardActionArea component={Link} href={link.href} sx={{ height: '100%', p: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                    <IconComponent sx={{ color: 'primary.main', mb: 1, fontSize: 28 }} />
+                    <Typography variant="subtitle2" sx={{ fontWeight: 600, color: 'text.primary', mb: 0.5 }}>
+                      {link.label}
+                    </Typography>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', lineHeight: 1.4 }}>
+                      {link.description}
+                    </Typography>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            );
+          })}
+        </Grid>
 
         {/* Jobs Section */}
-        <section>
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide">
-              Recent Jobs {jobs.length > 0 && `(${jobs.length})`}
-            </h2>
-            <div className="flex gap-2">
-              <button
-                onClick={fetchJobs}
-                disabled={loading}
-                className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition"
-                title="Refresh"
-              >
-                <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
-              </button>
-              <button
-                onClick={() => setShowAddForm(true)}
-                className="flex items-center gap-2 px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition"
-              >
-                <Plus size={14} />
-                Add Job
-              </button>
-            </div>
-          </div>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.5 }}>
+          <Typography variant="overline" sx={{ color: 'text.secondary', fontWeight: 600 }}>
+            Recent Jobs {jobs.length > 0 && `(${jobs.length})`}
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <IconButton size="small" onClick={fetchJobs} disabled={loading} title="Refresh">
+              <Refresh fontSize="small" className={loading ? 'animate-spin' : ''} />
+            </IconButton>
+            <Button
+              variant="contained"
+              size="small"
+              startIcon={<Add />}
+              onClick={() => setShowAddForm(true)}
+            >
+              Add Job
+            </Button>
+          </Box>
+        </Box>
 
-          {/* Add Job Form */}
-          {showAddForm && (
-            <div className="bg-white border border-blue-200 rounded-xl p-5 mb-4">
-              <h3 className="font-semibold text-gray-900 mb-3">Track New Job</h3>
-              <form onSubmit={handleAddJob} className="space-y-3">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Job Title *</label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Senior Software Engineer"
-                      value={title}
-                      onChange={(e) => setTitle(e.target.value)}
-                      disabled={submitLoading}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-medium text-gray-600 mb-1">Company *</label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Google"
-                      value={company}
-                      onChange={(e) => setCompany(e.target.value)}
-                      disabled={submitLoading}
-                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">Job URL (optional)</label>
-                  <input
+        {/* Add Job Dialog */}
+        <Dialog open={showAddForm} onClose={() => setShowAddForm(false)} maxWidth="sm" fullWidth>
+          <DialogTitle>Track New Job</DialogTitle>
+          <form onSubmit={handleAddJob}>
+            <DialogContent sx={{ pt: 1 }}>
+              <Grid container spacing={2}>
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <TextField
+                    label="Job Title"
+                    required
+                    fullWidth
+                    placeholder="e.g. Senior Software Engineer"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    disabled={submitLoading}
+                  />
+                </Grid>
+                <Grid size={{ xs: 12, sm: 6 }}>
+                  <TextField
+                    label="Company"
+                    required
+                    fullWidth
+                    placeholder="e.g. Google"
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    disabled={submitLoading}
+                  />
+                </Grid>
+                <Grid size={12}>
+                  <TextField
+                    label="Job URL (optional)"
+                    fullWidth
                     type="url"
                     placeholder="https://..."
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     disabled={submitLoading}
-                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    type="submit"
-                    disabled={submitLoading}
-                    className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition"
-                  >
-                    {submitLoading ? 'Adding...' : 'Add Job'}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setShowAddForm(false)}
-                    className="px-4 py-2 bg-gray-100 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-200 transition"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            </div>
-          )}
+                </Grid>
+              </Grid>
+            </DialogContent>
+            <DialogActions sx={{ px: 3, pb: 2 }}>
+              <Button onClick={() => setShowAddForm(false)} disabled={submitLoading}>Cancel</Button>
+              <Button type="submit" variant="contained" disabled={submitLoading}>
+                {submitLoading ? 'Adding...' : 'Add Job'}
+              </Button>
+            </DialogActions>
+          </form>
+        </Dialog>
 
-          {/* Jobs List */}
+        {/* Jobs List */}
+        <Card>
           {loading ? (
-            <div className="flex items-center justify-center py-12 bg-white border border-gray-200 rounded-xl">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
-            </div>
+            <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
+              <CircularProgress />
+            </Box>
           ) : jobs.length === 0 ? (
-            <div className="text-center py-16 bg-white border border-dashed border-gray-300 rounded-xl">
-              <div className="text-4xl mb-3">💼</div>
-              <h3 className="font-semibold text-gray-900 mb-1">No jobs tracked yet</h3>
-              <p className="text-sm text-gray-500 mb-4">Start tracking applications to manage your pipeline.</p>
-              <button
-                onClick={() => setShowAddForm(true)}
-                className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition"
-              >
+            <Box sx={{ textAlign: 'center', py: 8 }}>
+              <Work sx={{ fontSize: 48, color: 'text.disabled', mb: 2 }} />
+              <Typography variant="h6" gutterBottom>No jobs tracked yet</Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                Start tracking applications to manage your pipeline.
+              </Typography>
+              <Button variant="contained" onClick={() => setShowAddForm(true)} startIcon={<Add />}>
                 Add Your First Job
-              </button>
-            </div>
+              </Button>
+            </Box>
           ) : (
-            <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-              <div className="divide-y divide-gray-100">
-                {jobs.map((job) => {
-                  const sk = stageKey(job.stage);
-                  return (
-                    <div
-                      key={job.id}
-                      data-testid="job-card"
-                      onClick={() => setSelectedJobId(job.id)}
-                      className="flex items-center px-5 py-3 hover:bg-gray-50 transition gap-4 cursor-pointer"
-                    >
-                      <div className="min-w-0 flex-1">
-                        <p className="font-medium text-gray-900 truncate">{job.title}</p>
-                        <p className="text-sm text-gray-500 truncate">{job.company}</p>
-                      </div>
-                      <div className="flex items-center gap-3 flex-shrink-0">
-                        <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${STAGE_COLORS[sk] ?? 'bg-gray-100 text-gray-600'}`}>
-                          {STAGE_LABELS[sk] ?? job.stage}
-                        </span>
-                        <Link
-                          href={`/interview-prep`}
-                          onClick={(e) => e.stopPropagation()}
-                          className="text-xs text-blue-600 hover:text-blue-700 font-medium whitespace-nowrap"
-                        >
-                          Prepare →
-                        </Link>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+            <List disablePadding>
+              {jobs.map((job, idx) => {
+                const sk = stageKey(job.stage);
+                return (
+                  <ListItem
+                    key={job.id}
+                    data-testid="job-card"
+                    divider={idx < jobs.length - 1}
+                    onClick={() => setSelectedJobId(job.id)}
+                    sx={{
+                      px: 2.5,
+                      py: 1.5,
+                      cursor: 'pointer',
+                      '&:hover': { bgcolor: 'action.hover' },
+                      gap: 2,
+                    }}
+                  >
+                    <ListItemText
+                      primary={job.title}
+                      secondary={job.company}
+                      slotProps={{ primary: { sx: { fontWeight: 500 } }, secondary: { sx: { fontSize: '0.8125rem' } } }}
+                    />
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, flexShrink: 0 }}>
+                      <Chip
+                        label={STAGE_LABELS[sk] ?? job.stage}
+                        size="small"
+                        color={STAGE_COLOR_MAP[sk] ?? 'default'}
+                        variant="outlined"
+                      />
+                      <Button
+                        component={Link}
+                        href="/interview-prep"
+                        size="small"
+                        endIcon={<ArrowForward sx={{ fontSize: '14px !important' }} />}
+                        onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                        sx={{ fontSize: '0.75rem', minWidth: 'auto', px: 1 }}
+                      >
+                        Prepare
+                      </Button>
+                    </Box>
+                  </ListItem>
+                );
+              })}
               {jobs.length >= 20 && (
-                <div className="px-5 py-3 bg-gray-50 border-t border-gray-100 text-center">
-                  <p className="text-xs text-gray-500">Showing most recent 20 jobs</p>
-                </div>
+                <ListItem sx={{ bgcolor: 'grey.50', justifyContent: 'center', py: 1 }}>
+                  <Typography variant="caption" color="text.secondary">
+                    Showing most recent 20 jobs
+                  </Typography>
+                </ListItem>
               )}
-            </div>
+            </List>
           )}
-        </section>
+        </Card>
 
         {/* Auth Status */}
-        <section className="bg-green-50 border border-green-200 rounded-xl px-5 py-3 flex items-center gap-3">
-          <span className="text-green-500 text-lg">✓</span>
-          <div>
-            <p className="text-sm font-medium text-green-900">Authenticated as {session.user?.email}</p>
-            <p className="text-xs text-green-700 mt-0.5">All API endpoints are secured and returning your data.</p>
-          </div>
-        </section>
-      </div>
+        <Alert severity="success" sx={{ mt: 3 }}>
+          Authenticated as <strong>{session.user?.email}</strong> — all API endpoints secured.
+        </Alert>
+      </Box>
 
       {selectedJobId && (
         <JobDetailPanel

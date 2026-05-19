@@ -1,7 +1,6 @@
 import '../../../__mocks__/prisma'
 import { prismaMock } from '../../../__mocks__/prisma'
 import { generateAPIKey, hashAPIKey, createAPIKey, verifyAPIKey, revokeAPIKey, listAPIKeys } from '@/lib/security/apiKey'
-import { AuditAction } from '@/lib/logging/auditLog'
 
 jest.mock('@/lib/logging/auditLog', () => ({
   logSecurityEvent: jest.fn().mockResolvedValue(undefined),

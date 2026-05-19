@@ -7,6 +7,22 @@ import { useRouter } from 'next/navigation';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { KanbanBoard } from '@/components/Kanban/KanbanBoard';
 import { Job } from '@/types/job';
+import {
+  Alert,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+  CircularProgress,
+  Checkbox,
+} from '@mui/material';
+import { Add, Upload } from '@mui/icons-material';
 
 // ─── Data fetching ────────────────────────────────────────────────────────────
 
@@ -79,63 +95,84 @@ export default function JobsPage() {
   return (
     // title/subtitle intentionally omitted — the KanbanBoard has its own header
     <NavLayout>
-      <div className="h-full flex flex-col">
+      <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
         {/* Toolbar */}
-        <div className="flex-shrink-0 flex items-center justify-between px-6 py-3 bg-white border-b border-gray-200">
-          <p className="text-sm text-gray-500">
+        <Box
+          sx={{
+            flexShrink: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            px: 3,
+            py: 1.5,
+            bgcolor: 'background.paper',
+            borderBottom: '1px solid',
+            borderColor: 'divider',
+          }}
+        >
+          <Typography variant="body2" color="text.secondary">
             {isLoading ? 'Loading…' : `${jobs.length} job${jobs.length !== 1 ? 's' : ''} tracked`}
-          </p>
-          <div className="flex items-center gap-2">
-            <button
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<Upload />}
               onClick={() => setShowImportModal(true)}
-              className="flex items-center gap-2 px-4 py-1.5 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 text-sm font-medium rounded-lg transition"
             >
               Import Jobs
-            </button>
-            <button
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              startIcon={<Add />}
               onClick={() => setShowAddModal(true)}
-              className="flex items-center gap-2 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition"
             >
-              <span className="text-base leading-none">+</span>
               Add Job
-            </button>
-          </div>
-        </div>
+            </Button>
+          </Box>
+        </Box>
 
         {error && (
-          <div className="flex-shrink-0 px-6 py-2 bg-red-50 border-b border-red-200 text-sm text-red-700">
-            Failed to load jobs. <button className="underline" onClick={() => queryClient.invalidateQueries({ queryKey: ['jobs'] })}>Retry</button>
-          </div>
+          <Alert
+            severity="error"
+            action={
+              <Button size="small" onClick={() => queryClient.invalidateQueries({ queryKey: ['jobs'] })}>
+                Retry
+              </Button>
+            }
+            sx={{ flexShrink: 0, borderRadius: 0 }}
+          >
+            Failed to load jobs.
+          </Alert>
         )}
 
         {/* Board fills remaining height */}
-        <div className="flex-1 min-h-0">
+        <Box sx={{ flex: 1, minHeight: 0 }}>
           <KanbanBoard
             initialJobs={jobs}
             onJobUpdate={handleJobUpdate}
           />
-        </div>
-      </div>
+        </Box>
+      </Box>
 
-      {showAddModal && (
-        <AddJobModal
-          onClose={() => setShowAddModal(false)}
-          onCreated={() => {
-            queryClient.invalidateQueries({ queryKey: ['jobs'] });
-            setShowAddModal(false);
-          }}
-        />
-      )}
+      <AddJobModal
+        open={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        onCreated={() => {
+          queryClient.invalidateQueries({ queryKey: ['jobs'] });
+          setShowAddModal(false);
+        }}
+      />
 
-      {showImportModal && (
-        <ImportJobsModal
-          onClose={() => setShowImportModal(false)}
-          onImported={() => {
-            queryClient.invalidateQueries({ queryKey: ['jobs'] });
-            setShowImportModal(false);
-          }}
-        />
-      )}
+      <ImportJobsModal
+        open={showImportModal}
+        onClose={() => setShowImportModal(false)}
+        onImported={() => {
+          queryClient.invalidateQueries({ queryKey: ['jobs'] });
+          setShowImportModal(false);
+        }}
+      />
     </NavLayout>
   );
 }
@@ -157,7 +194,7 @@ interface ImportedJob {
   department?: string | null;
 }
 
-function ImportJobsModal({ onClose, onImported }: { onClose: () => void; onImported: () => void }) {
+function ImportJobsModal({ open, onClose, onImported }: { open: boolean; onClose: () => void; onImported: () => void }) {
   const [source, setSource] = useState<ImportSource>('greenhouse');
   const [query, setQuery] = useState('');
   const [location, setLocation] = useState('Remote');
@@ -216,102 +253,154 @@ function ImportJobsModal({ onClose, onImported }: { onClose: () => void; onImpor
   }
 
   return (
-    <>
-      <div className="fixed inset-0 bg-black/30 z-40" onClick={onClose} />
-      <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
-          <div className="p-6 border-b border-gray-100">
-            <h2 className="text-lg font-bold text-gray-900">Import Jobs</h2>
-            <p className="text-sm text-gray-500 mt-0.5">Search job boards and add matching roles to your pipeline.</p>
-          </div>
+    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
+      <DialogTitle>
+        Import Jobs
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.25 }}>
+          Search job boards and add matching roles to your pipeline.
+        </Typography>
+      </DialogTitle>
 
-          <div className="p-6 space-y-4 border-b border-gray-100">
-            {/* Source tabs */}
-            <div className="flex gap-1 p-1 bg-gray-100 rounded-lg w-fit">
-              {(['greenhouse', 'indeed', 'linkedin'] as ImportSource[]).map((s) => (
-                <button key={s} onClick={() => setSource(s)}
-                  className={`px-3 py-1.5 text-sm font-medium rounded-md capitalize transition ${source === s ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>
-                  {s}
-                </button>
-              ))}
-            </div>
+      <DialogContent dividers>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+          {/* Source Toggle */}
+          <ToggleButtonGroup
+            value={source}
+            exclusive
+            onChange={(_, v) => v && setSource(v)}
+            size="small"
+          >
+            {(['greenhouse', 'indeed', 'linkedin'] as ImportSource[]).map((s) => (
+              <ToggleButton key={s} value={s} sx={{ textTransform: 'capitalize' }}>{s}</ToggleButton>
+            ))}
+          </ToggleButtonGroup>
 
-            <form onSubmit={handleSearch} className="space-y-3">
-              {source === 'greenhouse' && (
-                <input type="text" placeholder="Company board token (e.g. stripe, airbnb)"
-                  value={boardToken} onChange={(e) => setBoardToken(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          {/* Search Form */}
+          <Box component="form" onSubmit={handleSearch} sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+            {source === 'greenhouse' && (
+              <TextField
+                size="small"
+                fullWidth
+                placeholder="Company board token (e.g. stripe, airbnb)"
+                value={boardToken}
+                onChange={(e) => setBoardToken(e.target.value)}
+              />
+            )}
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <TextField
+                size="small"
+                fullWidth
+                required
+                placeholder="Job title or keywords"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+              {source !== 'greenhouse' && (
+                <TextField
+                  size="small"
+                  placeholder="Location"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  sx={{ width: 150 }}
+                />
               )}
-              <div className="flex gap-2">
-                <input type="text" placeholder="Job title or keywords" required value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                {source !== 'greenhouse' && (
-                  <input type="text" placeholder="Location" value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    className="w-36 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                )}
-                <button type="submit" disabled={searching}
-                  className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 whitespace-nowrap">
-                  {searching ? 'Searching…' : 'Search'}
-                </button>
-              </div>
-              {source === 'indeed' || source === 'linkedin' ? (
-                <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded px-3 py-2">
-                  {source === 'linkedin' ? 'LinkedIn' : 'Indeed'} search uses a headless browser and may take 20–40 seconds.
-                </p>
-              ) : null}
-            </form>
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={searching}
+                startIcon={searching ? <CircularProgress size={14} color="inherit" /> : undefined}
+                sx={{ whiteSpace: 'nowrap' }}
+              >
+                {searching ? 'Searching…' : 'Search'}
+              </Button>
+            </Box>
+            {(source === 'indeed' || source === 'linkedin') && (
+              <Alert severity="warning" sx={{ py: 0.5 }}>
+                {source === 'linkedin' ? 'LinkedIn' : 'Indeed'} search uses a headless browser and may take 20–40 seconds.
+              </Alert>
+            )}
+          </Box>
 
-            {error && <p className="text-sm text-red-600">{error}</p>}
-          </div>
+          {error && <Alert severity="error">{error}</Alert>}
 
           {/* Results */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-2">
-            {results.length > 0 && (
-              <div className="flex items-center justify-between mb-3">
-                <p className="text-sm text-gray-500">{results.length} result{results.length !== 1 ? 's' : ''}</p>
-                <button onClick={toggleAll} className="text-xs text-blue-600 hover:underline">
+          {results.length > 0 && (
+            <Box>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+                <Typography variant="body2" color="text.secondary">
+                  {results.length} result{results.length !== 1 ? 's' : ''}
+                </Typography>
+                <Button size="small" onClick={toggleAll}>
                   {selected.size === results.length ? 'Deselect all' : 'Select all'}
-                </button>
-              </div>
-            )}
-            {results.map((job, i) => (
-              <label key={i} className={`flex gap-3 p-3 rounded-xl border cursor-pointer transition ${selected.has(i) ? 'border-blue-300 bg-blue-50' : 'border-gray-200 hover:border-gray-300'}`}>
-                <input type="checkbox" checked={selected.has(i)}
-                  onChange={() => setSelected((s) => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n; })}
-                  className="mt-0.5 accent-blue-600" />
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium text-gray-900 text-sm truncate">{job.title}</p>
-                  <p className="text-xs text-gray-500">{job.company} · {job.location}</p>
-                  {job.description && (
-                    <p className="text-xs text-gray-400 mt-1 line-clamp-2">{job.description}</p>
-                  )}
-                </div>
-                {job.url && (
-                  <a href={job.url} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}
-                    className="shrink-0 text-xs text-blue-600 hover:underline self-start">View</a>
-                )}
-              </label>
-            ))}
-          </div>
+                </Button>
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, maxHeight: 300, overflowY: 'auto' }}>
+                {results.map((job, i) => (
+                  <Box
+                    key={i}
+                    onClick={() => setSelected((s) => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n; })}
+                    sx={{
+                      display: 'flex', gap: 1.5, p: 1.5, borderRadius: 2, border: '1px solid',
+                      borderColor: selected.has(i) ? 'primary.light' : 'divider',
+                      bgcolor: selected.has(i) ? 'primary.50' : 'background.paper',
+                      cursor: 'pointer', alignItems: 'flex-start',
+                      '&:hover': { borderColor: 'primary.light' },
+                    }}
+                  >
+                    <Checkbox
+                      checked={selected.has(i)}
+                      size="small"
+                      sx={{ p: 0, mt: 0.25 }}
+                      onClick={(e) => e.stopPropagation()}
+                      onChange={() => setSelected((s) => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n; })}
+                    />
+                    <Box sx={{ flex: 1, minWidth: 0 }}>
+                      <Typography variant="body2" noWrap sx={{ fontWeight: 500 }}>{job.title}</Typography>
+                      <Typography variant="caption" color="text.secondary">{job.company} · {job.location}</Typography>
+                      {job.description && (
+                        <Typography variant="caption" color="text.disabled" sx={{ display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {job.description}
+                        </Typography>
+                      )}
+                    </Box>
+                    {job.url && (
+                      <Button
+                        size="small"
+                        href={job.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        sx={{ flexShrink: 0, fontSize: '0.75rem' }}
+                      >
+                        View
+                      </Button>
+                    )}
+                  </Box>
+                ))}
+              </Box>
+            </Box>
+          )}
+        </Box>
+      </DialogContent>
 
-          <div className="p-4 border-t border-gray-100 flex gap-3">
-            <button onClick={onClose} className="flex-1 py-2 border border-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50">Cancel</button>
-            <button onClick={handleImport} disabled={importing || selected.size === 0}
-              className="flex-1 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50">
-              {importing ? 'Importing…' : `Import ${selected.size > 0 ? selected.size : ''} Job${selected.size !== 1 ? 's' : ''}`}
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
+      <DialogActions sx={{ px: 3, py: 2 }}>
+        <Button onClick={onClose} disabled={importing}>Cancel</Button>
+        <Button
+          variant="contained"
+          onClick={handleImport}
+          disabled={importing || selected.size === 0}
+          startIcon={importing ? <CircularProgress size={14} color="inherit" /> : undefined}
+        >
+          {importing ? 'Importing…' : `Import ${selected.size > 0 ? selected.size : ''} Job${selected.size !== 1 ? 's' : ''}`}
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 }
 
 // ─── Add Job Modal ────────────────────────────────────────────────────────────
 
-function AddJobModal({ onClose, onCreated }: { onClose: () => void; onCreated: () => void }) {
+function AddJobModal({ open, onClose, onCreated }: { open: boolean; onClose: () => void; onCreated: () => void }) {
   const [title, setTitle] = useState('');
   const [company, setCompany] = useState('');
   const [url, setUrl] = useState('');
@@ -334,72 +423,51 @@ function AddJobModal({ onClose, onCreated }: { onClose: () => void; onCreated: (
   }
 
   return (
-    <>
-      <div className="fixed inset-0 bg-black/30 z-40" onClick={onClose} />
-      <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6" onClick={(e) => e.stopPropagation()}>
-          <h2 className="text-lg font-bold text-gray-900 mb-4">Track a New Job</h2>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Job Title *</label>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="e.g. Senior Software Engineer"
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-                autoFocus
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Company *</label>
-              <input
-                type="text"
-                value={company}
-                onChange={(e) => setCompany(e.target.value)}
-                placeholder="e.g. Acme Corp"
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Job Posting URL</label>
-              <input
-                type="url"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                placeholder="https://…"
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            {error && (
-              <p className="text-sm text-red-600">{error}</p>
-            )}
-
-            <div className="flex gap-3 pt-2">
-              <button
-                type="button"
-                onClick={onClose}
-                className="flex-1 px-4 py-2 border border-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={saving || !title.trim() || !company.trim()}
-                className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white text-sm font-medium rounded-lg transition"
-              >
-                {saving ? 'Adding…' : 'Add Job'}
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </>
+    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
+      <DialogTitle>Track a New Job</DialogTitle>
+      <form onSubmit={handleSubmit}>
+        <DialogContent sx={{ pt: 1 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <TextField
+              label="Job Title"
+              required
+              fullWidth
+              placeholder="e.g. Senior Software Engineer"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              autoFocus
+            />
+            <TextField
+              label="Company"
+              required
+              fullWidth
+              placeholder="e.g. Acme Corp"
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+            />
+            <TextField
+              label="Job Posting URL"
+              fullWidth
+              type="url"
+              placeholder="https://…"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+            />
+            {error && <Alert severity="error">{error}</Alert>}
+          </Box>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button onClick={onClose} disabled={saving}>Cancel</Button>
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={saving || !title.trim() || !company.trim()}
+            startIcon={saving ? <CircularProgress size={14} color="inherit" /> : undefined}
+          >
+            {saving ? 'Adding…' : 'Add Job'}
+          </Button>
+        </DialogActions>
+      </form>
+    </Dialog>
   );
 }

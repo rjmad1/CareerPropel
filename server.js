@@ -162,24 +162,26 @@ app.prepare().then(() => {
     password: process.env.REDIS_PASSWORD,
     enableReadyCheck: false,
     lazyConnect: true,
+    // Stop retrying immediately if Redis is not available
+    retryStrategy: (times) => times > 3 ? null : Math.min(times * 500, 2000),
   })
 
+  let redisSubActive = false
+
   redisSub.connect().then(() => {
-    // Use pattern subscribe to catch all per-user channels
+    redisSubActive = true
     redisSub.psubscribe('agent:*', 'queue:*', (err) => {
       if (err) console.error('[Redis] psubscribe error', err)
       else console.log('[Redis] Subscribed to agent:* and queue:* channels')
     })
   }).catch((err) => {
-    console.warn('[Redis] Could not connect for pub/sub bridge:', err.message)
+    console.warn('[Redis] pub/sub bridge unavailable (agent live updates disabled):', err.message)
   })
 
   redisSub.on('pmessage', (_pattern, channel, message) => {
     try {
       const event = JSON.parse(message)
-      // Channels follow the pattern: agent:status:<userEmail> etc.
       const parts = channel.split(':')
-      // userEmail is always the third segment in our REDIS_CHANNELS convention
       const userEmail = parts.slice(2).join(':')
       if (userEmail) {
         io.to(`user:${userEmail}`).emit(event.type || 'agent:event', event)
@@ -190,7 +192,7 @@ app.prepare().then(() => {
   })
 
   redisSub.on('error', (err) => {
-    console.error('[Redis] pub/sub bridge error:', err.message)
+    if (redisSubActive) console.error('[Redis] pub/sub bridge error:', err.message)
   })
 
   // Start server

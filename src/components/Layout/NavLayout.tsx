@@ -1,27 +1,58 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import {
+  Box,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  Avatar,
+  Button,
+  CircularProgress,
+} from '@mui/material';
+import {
+  Dashboard,
+  ViewKanban,
+  RecordVoiceOver,
+  EventNote,
+  MonetizationOn,
+  Description,
+  Email,
+  Person,
+  CalendarMonth,
+  BarChart,
+  Security,
+  VpnKey,
+  Settings,
+  Logout,
+  Assignment,
+} from '@mui/icons-material';
+
+const DRAWER_WIDTH = 220;
 
 const navItems = [
-  { href: '/dashboard', label: 'Dashboard', icon: '🏠' },
-  { href: '/jobs', label: 'Pipeline', icon: '🗂️' },
-  { href: '/interview-prep', label: 'Interview Prep', icon: '🎤' },
-  { href: '/interviews', label: 'Interviews', icon: '📅' },
-  { href: '/offers', label: 'Offers', icon: '💰' },
-  { href: '/documents', label: 'Documents', icon: '📄' },
-  { href: '/emails', label: 'Emails', icon: '✉️' },
-  { href: '/profile', label: 'Profile', icon: '👤' },
-  { href: '/calendar', label: 'Calendar', icon: '📅' },
-  { href: '/analytics', label: 'Analytics', icon: '📊' },
-  { href: '/audit-logs', label: 'Audit Logs', icon: '📋' },
-  { href: '/api-keys', label: 'API Keys', icon: '🔑' },
-  { href: '/settings/security', label: 'Security', icon: '🛡️' },
-  { href: '/settings/account', label: 'Account', icon: '⚙️' },
+  { href: '/dashboard', label: 'Dashboard', icon: Dashboard },
+  { href: '/jobs', label: 'Pipeline', icon: ViewKanban },
+  { href: '/interview-prep', label: 'Interview Prep', icon: RecordVoiceOver },
+  { href: '/interviews', label: 'Interviews', icon: EventNote },
+  { href: '/offers', label: 'Offers', icon: MonetizationOn },
+  { href: '/documents', label: 'Documents', icon: Description },
+  { href: '/emails', label: 'Emails', icon: Email },
+  { href: '/profile', label: 'Profile', icon: Person },
+  { href: '/calendar', label: 'Calendar', icon: CalendarMonth },
+  { href: '/analytics', label: 'Analytics', icon: BarChart },
+  { href: '/audit-logs', label: 'Audit Logs', icon: Assignment },
+  { href: '/api-keys', label: 'API Keys', icon: VpnKey },
+  { href: '/settings/security', label: 'Security', icon: Security },
+  { href: '/settings/account', label: 'Account', icon: Settings },
 ];
 
 interface NavLayoutProps {
@@ -43,82 +74,153 @@ export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
 
   if (status === 'loading') {
     return (
-      <div className="flex h-screen items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600" />
-      </div>
+      <Box sx={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', bgcolor: 'background.default' }}>
+        <CircularProgress />
+      </Box>
     );
   }
 
   if (!session) return null;
 
+  const initials = session.user?.name
+    ? session.user.name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
+    : session.user?.email?.charAt(0).toUpperCase() ?? '?';
+
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
-      {/* Sidebar */}
-      <aside className="w-56 flex-shrink-0 bg-gray-900 flex flex-col">
+    <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden', bgcolor: 'background.default' }}>
+      {/* Sidebar Drawer */}
+      <Drawer
+        variant="permanent"
+        sx={{
+          width: DRAWER_WIDTH,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: DRAWER_WIDTH,
+            boxSizing: 'border-box',
+            bgcolor: '#0F172A',
+            color: 'white',
+            border: 'none',
+            overflowX: 'hidden',
+          },
+        }}
+      >
         {/* Logo */}
-        <div className="px-4 py-5 border-b border-gray-700">
-          <Link href="/dashboard" className="block">
-            <span className="text-white font-bold text-lg">CareerPropel</span>
-            <span className="block text-xs text-blue-400 mt-0.5">AI Career Platform</span>
+        <Box sx={{ px: 2.5, py: 2.5, borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+          <Link href="/dashboard" style={{ textDecoration: 'none' }}>
+            <Typography variant="h6" sx={{ color: 'white', fontWeight: 700, lineHeight: 1.2, fontSize: '1rem' }}>
+              CareerPropel
+            </Typography>
+            <Typography variant="caption" sx={{ color: '#60A5FA', display: 'block', mt: 0.25 }}>
+              AI Career Platform
+            </Typography>
           </Link>
-        </div>
+        </Box>
 
         {/* Nav Items */}
-        <nav className="flex-1 py-4 space-y-1 overflow-y-auto">
+        <List sx={{ flex: 1, py: 1.5, overflowY: 'auto', overflowX: 'hidden' }} disablePadding>
           {navItems.map((item) => {
-            const isActive = pathname === item.href || pathname?.startsWith(item.href + '/');
+            const isActive = pathname === item.href || (pathname?.startsWith(item.href + '/') && item.href !== '/');
+            const IconComponent = item.icon;
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`flex items-center gap-3 mx-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  isActive
-                    ? 'bg-blue-600 text-white'
-                    : 'text-gray-400 hover:text-white hover:bg-gray-800'
-                }`}
-              >
-                <span className="text-base">{item.icon}</span>
-                <span>{item.label}</span>
-              </Link>
+              <ListItem key={item.href} disablePadding sx={{ px: 1, mb: 0.25 }}>
+                <ListItemButton
+                  component={Link}
+                  href={item.href}
+                  selected={isActive}
+                  sx={{
+                    borderRadius: 1.5,
+                    py: 0.875,
+                    px: 1.5,
+                    minHeight: 40,
+                    color: isActive ? 'white' : 'rgba(255,255,255,0.55)',
+                    bgcolor: isActive ? 'rgba(37,99,235,0.85)' : 'transparent',
+                    '&:hover': {
+                      bgcolor: isActive ? 'rgba(37,99,235,0.9)' : 'rgba(255,255,255,0.07)',
+                      color: 'white',
+                    },
+                    '&.Mui-selected': {
+                      bgcolor: 'rgba(37,99,235,0.85)',
+                      '&:hover': { bgcolor: 'rgba(37,99,235,0.95)' },
+                    },
+                  }}
+                >
+                  <ListItemIcon sx={{ minWidth: 32, color: 'inherit' }}>
+                    <IconComponent sx={{ fontSize: 18 }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.label}
+                    slotProps={{ primary: { sx: { fontSize: '0.8125rem', fontWeight: isActive ? 600 : 400 }, noWrap: true } }}
+                  />
+                </ListItemButton>
+              </ListItem>
             );
           })}
-        </nav>
+        </List>
 
         {/* User Footer */}
-        <div className="border-t border-gray-700 px-4 py-3">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0 overflow-hidden">
-              {(session.user as { avatarUrl?: string })?.avatarUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={(session.user as { avatarUrl?: string }).avatarUrl} alt="" className="w-full h-full object-cover" />
-              ) : (
-                session.user?.email?.charAt(0).toUpperCase()
-              )}
-            </div>
-            <span className="text-xs text-gray-400 truncate">{session.user?.name || session.user?.email}</span>
-          </div>
-          <button
+        <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.08)', px: 2, py: 2 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
+            <Avatar
+              src={(session.user as { avatarUrl?: string })?.avatarUrl}
+              sx={{ width: 30, height: 30, fontSize: '0.75rem', bgcolor: 'primary.main' }}
+            >
+              {initials}
+            </Avatar>
+            <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.6)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
+              {session.user?.name || session.user?.email}
+            </Typography>
+          </Box>
+          <Button
+            fullWidth
+            size="small"
+            startIcon={<Logout sx={{ fontSize: '14px !important' }} />}
             onClick={() => signOut({ callbackUrl: '/login' })}
-            className="w-full text-xs text-gray-500 hover:text-gray-300 text-left transition-colors py-1"
+            sx={{
+              color: 'rgba(255,255,255,0.45)',
+              justifyContent: 'flex-start',
+              px: 0.5,
+              fontSize: '0.75rem',
+              '&:hover': { color: 'rgba(255,255,255,0.8)', bgcolor: 'transparent' },
+            }}
           >
             Sign out
-          </button>
-        </div>
-      </aside>
+          </Button>
+        </Box>
+      </Drawer>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <Box component="main" sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
         {/* Page Header */}
         {(title || subtitle) && (
-          <header className="bg-white border-b border-gray-200 px-6 py-4 flex-shrink-0">
-            {title && <h1 className="text-2xl font-bold text-gray-900">{title}</h1>}
-            {subtitle && <p className="text-sm text-gray-500 mt-0.5">{subtitle}</p>}
-          </header>
+          <Box
+            component="header"
+            sx={{
+              bgcolor: 'background.paper',
+              borderBottom: '1px solid',
+              borderColor: 'divider',
+              px: 3,
+              py: 2,
+              flexShrink: 0,
+            }}
+          >
+            {title && (
+              <Typography variant="h5" component="h1" sx={{ fontWeight: 700, color: 'text.primary', lineHeight: 1.3 }}>
+                {title}
+              </Typography>
+            )}
+            {subtitle && (
+              <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.25 }}>
+                {subtitle}
+              </Typography>
+            )}
+          </Box>
         )}
 
         {/* Scrollable Page Content */}
-        <main className="flex-1 overflow-y-auto">{children}</main>
-      </div>
-    </div>
+        <Box sx={{ flex: 1, overflowY: 'auto' }}>
+          {children}
+        </Box>
+      </Box>
+    </Box>
   );
 }

@@ -5,6 +5,25 @@ export const dynamic = 'force-dynamic'
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
 import { signOut } from 'next-auth/react'
 import { NavLayout } from '@/components/Layout/NavLayout'
+import {
+  Alert,
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CircularProgress,
+  Divider,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  Switch,
+  TextField,
+  Typography,
+} from '@mui/material'
+import { Save } from '@mui/icons-material'
 
 interface AccountData {
   id: string
@@ -18,24 +37,15 @@ interface AccountData {
   preferences: { emailNotifications?: boolean; theme?: 'light' | 'dark' | 'system' } | null
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function SectionCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">{title}</h2>
-      {children}
-    </div>
-  )
-}
-
-function SaveButton({ loading, label = 'Save Changes' }: { loading: boolean; label?: string }) {
-  return (
-    <button
-      type="submit"
-      disabled={loading}
-      className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-    >
-      {loading ? 'Saving...' : label}
-    </button>
+    <Card>
+      <CardContent sx={{ p: 3 }}>
+        <Typography variant="h6" gutterBottom>{title}</Typography>
+        <Divider sx={{ mb: 2.5 }} />
+        {children}
+      </CardContent>
+    </Card>
   )
 }
 
@@ -51,11 +61,13 @@ export default function AccountSettingsPage() {
   const [summary, setSummary] = useState('')
   const [profileSaving, setProfileSaving] = useState(false)
   const [profileMsg, setProfileMsg] = useState('')
+  const [profileError, setProfileError] = useState('')
 
   // Avatar
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
   const [avatarSaving, setAvatarSaving] = useState(false)
   const [avatarMsg, setAvatarMsg] = useState('')
+  const [avatarIsError, setAvatarIsError] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   // Password form
@@ -104,6 +116,7 @@ export default function AccountSettingsPage() {
     e.preventDefault()
     setProfileSaving(true)
     setProfileMsg('')
+    setProfileError('')
     const res = await fetch('/api/account', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -115,7 +128,7 @@ export default function AccountSettingsPage() {
       setProfileMsg('Profile saved.')
       setAccount((prev) => prev ? { ...prev, ...json.data } : prev)
     } else {
-      setProfileMsg(json.error?.message || 'Save failed.')
+      setProfileError(json.error?.message || 'Save failed.')
     }
   }
 
@@ -125,10 +138,12 @@ export default function AccountSettingsPage() {
 
     if (file.size > 200 * 1024) {
       setAvatarMsg('Image must be under 200 KB.')
+      setAvatarIsError(true)
       return
     }
     if (!file.type.startsWith('image/')) {
       setAvatarMsg('Please select an image file.')
+      setAvatarIsError(true)
       return
     }
 
@@ -137,6 +152,7 @@ export default function AccountSettingsPage() {
       const dataUrl = ev.target?.result as string
       setAvatarPreview(dataUrl)
       setAvatarMsg('')
+      setAvatarIsError(false)
     }
     reader.readAsDataURL(file)
   }
@@ -145,6 +161,7 @@ export default function AccountSettingsPage() {
     if (!avatarPreview) return
     setAvatarSaving(true)
     setAvatarMsg('')
+    setAvatarIsError(false)
     const res = await fetch('/api/account/avatar', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -154,8 +171,10 @@ export default function AccountSettingsPage() {
     setAvatarSaving(false)
     if (res.ok) {
       setAvatarMsg('Profile picture updated.')
+      setAvatarIsError(false)
     } else {
       setAvatarMsg(json.error?.message || 'Upload failed.')
+      setAvatarIsError(true)
     }
   }
 
@@ -219,283 +238,254 @@ export default function AccountSettingsPage() {
   if (loading) {
     return (
       <NavLayout title="Account Settings">
-        <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600" />
-        </div>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 300 }}>
+          <CircularProgress />
+        </Box>
       </NavLayout>
     )
   }
 
   return (
     <NavLayout title="Account Settings" subtitle="Manage your account, profile, and preferences">
-      <div className="p-6 max-w-2xl mx-auto space-y-6">
-        {globalError && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">{globalError}</div>
-        )}
+      <Box sx={{ p: 3, maxWidth: 680, mx: 'auto', display: 'flex', flexDirection: 'column', gap: 3 }}>
+        {globalError && <Alert severity="error">{globalError}</Alert>}
 
         {/* Profile Picture */}
-        <Section title="Profile Picture">
-          <div className="flex items-center gap-6">
-            <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center overflow-hidden flex-shrink-0 border-2 border-gray-200">
-              {avatarPreview ? (
-                <img src={avatarPreview} alt="Avatar" className="w-full h-full object-cover" />
-              ) : (
-                <span className="text-3xl font-bold text-blue-600">
-                  {account?.name?.charAt(0).toUpperCase() ?? '?'}
-                </span>
-              )}
-            </div>
-            <div className="space-y-2">
+        <SectionCard title="Profile Picture">
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+            <Avatar
+              src={avatarPreview ?? undefined}
+              sx={{ width: 80, height: 80, fontSize: '2rem', bgcolor: 'primary.main', flexShrink: 0 }}
+            >
+              {account?.name?.charAt(0).toUpperCase() ?? '?'}
+            </Avatar>
+            <Box>
               <input
                 ref={fileInputRef}
                 type="file"
                 accept="image/*"
-                className="hidden"
+                style={{ display: 'none' }}
                 onChange={handleFileChange}
               />
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="px-3 py-1.5 text-sm border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                Choose Image
-              </button>
-              {avatarPreview && avatarPreview !== account?.avatarUrl && (
-                <button
-                  type="button"
-                  onClick={handleAvatarSave}
-                  disabled={avatarSaving}
-                  className="ml-2 px-3 py-1.5 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+              <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={() => fileInputRef.current?.click()}
                 >
-                  {avatarSaving ? 'Saving...' : 'Save Picture'}
-                </button>
-              )}
-              <p className="text-xs text-gray-500">JPG, PNG, GIF — max 200 KB</p>
+                  Choose Image
+                </Button>
+                {avatarPreview && avatarPreview !== account?.avatarUrl && (
+                  <Button
+                    variant="contained"
+                    size="small"
+                    onClick={handleAvatarSave}
+                    disabled={avatarSaving}
+                  >
+                    {avatarSaving ? 'Saving...' : 'Save Picture'}
+                  </Button>
+                )}
+              </Box>
+              <Typography variant="caption" color="text.secondary">
+                JPG, PNG, GIF — max 200 KB
+              </Typography>
               {avatarMsg && (
-                <p className={`text-xs ${avatarMsg.includes('updated') ? 'text-green-600' : 'text-red-600'}`}>
+                <Typography variant="caption" sx={{ display: 'block', color: avatarIsError ? 'error.main' : 'success.main' }}>
                   {avatarMsg}
-                </p>
+                </Typography>
               )}
-            </div>
-          </div>
-        </Section>
+            </Box>
+          </Box>
+        </SectionCard>
 
         {/* Personal Info */}
-        <Section title="Personal Information">
+        <SectionCard title="Personal Information">
           {account && !account.emailVerified && (
-            <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800">
+            <Alert severity="warning" sx={{ mb: 2 }}>
               Your email is not verified. Check your inbox for a verification link.
-            </div>
+            </Alert>
           )}
-          <form onSubmit={handleProfileSave} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-              <input
+          <form onSubmit={handleProfileSave}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <TextField
+                label="Email"
                 type="email"
                 value={account?.email ?? ''}
                 disabled
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-gray-500 text-sm"
+                fullWidth
+                helperText="Email cannot be changed here"
               />
-              <p className="text-xs text-gray-400 mt-1">Email cannot be changed here</p>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-              <input
-                type="text"
+              <TextField
+                label="Full Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                fullWidth
               />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
-              <input
+              <TextField
+                label="Phone"
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                fullWidth
               />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-              <input
-                type="text"
+              <TextField
+                label="Location"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
                 placeholder="City, State"
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                fullWidth
               />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Bio / Summary</label>
-              <textarea
+              <TextField
+                label="Bio / Summary"
                 value={summary}
                 onChange={(e) => setSummary(e.target.value)}
+                multiline
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                fullWidth
               />
-            </div>
-            <div className="flex items-center gap-3">
-              <SaveButton loading={profileSaving} />
-              {profileMsg && (
-                <span className={`text-sm ${profileMsg.includes('saved') ? 'text-green-600' : 'text-red-600'}`}>
-                  {profileMsg}
-                </span>
-              )}
-            </div>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <Button type="submit" variant="contained" disabled={profileSaving} startIcon={<Save />}>
+                  {profileSaving ? 'Saving...' : 'Save Changes'}
+                </Button>
+                {profileMsg && <Typography variant="body2" color="success.main">{profileMsg}</Typography>}
+                {profileError && <Typography variant="body2" color="error.main">{profileError}</Typography>}
+              </Box>
+            </Box>
           </form>
-        </Section>
+        </SectionCard>
 
         {/* Change Password */}
-        <Section title="Change Password">
-          <form onSubmit={handlePasswordSave} className="space-y-4">
-            {passwordError && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">{passwordError}</div>
-            )}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Current Password</label>
-              <input
+        <SectionCard title="Change Password">
+          <form onSubmit={handlePasswordSave}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {passwordError && <Alert severity="error">{passwordError}</Alert>}
+              <TextField
+                label="Current Password"
                 type="password"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                fullWidth
               />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">New Password</label>
-              <input
+              <TextField
+                label="New Password"
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                fullWidth
+                helperText="Min 8 chars, 1 uppercase, 1 number"
               />
-              <p className="text-xs text-gray-400 mt-1">Min 8 chars, 1 uppercase, 1 number</p>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password</label>
-              <input
+              <TextField
+                label="Confirm New Password"
                 type="password"
                 value={confirmNewPassword}
                 onChange={(e) => setConfirmNewPassword(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                fullWidth
               />
-            </div>
-            <div className="flex items-center gap-3">
-              <SaveButton loading={passwordSaving} label="Change Password" />
-              {passwordMsg && <span className="text-sm text-green-600">{passwordMsg}</span>}
-            </div>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <Button type="submit" variant="contained" disabled={passwordSaving}>
+                  {passwordSaving ? 'Saving...' : 'Change Password'}
+                </Button>
+                {passwordMsg && <Typography variant="body2" color="success.main">{passwordMsg}</Typography>}
+              </Box>
+            </Box>
           </form>
-        </Section>
+        </SectionCard>
 
         {/* Preferences */}
-        <Section title="Preferences">
-          <form onSubmit={handlePrefSave} className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-700">Email Notifications</p>
-                <p className="text-xs text-gray-500">Receive job alerts and interview reminders</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setEmailNotifications(!emailNotifications)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  emailNotifications ? 'bg-blue-600' : 'bg-gray-200'
-                }`}
-              >
-                <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    emailNotifications ? 'translate-x-6' : 'translate-x-1'
-                  }`}
+        <SectionCard title="Preferences">
+          <form onSubmit={handlePrefSave}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Box>
+                  <Typography variant="body2" sx={{ fontWeight: 500 }}>Email Notifications</Typography>
+                  <Typography variant="caption" color="text.secondary">Receive job alerts and interview reminders</Typography>
+                </Box>
+                <Switch
+                  checked={emailNotifications}
+                  onChange={(e) => setEmailNotifications(e.target.checked)}
+                  color="primary"
                 />
-              </button>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Theme</label>
-              <div className="flex gap-3">
-                {(['light', 'dark', 'system'] as const).map((t) => (
-                  <button
-                    key={t}
-                    type="button"
-                    onClick={() => setTheme(t)}
-                    className={`px-4 py-2 text-sm rounded-lg border capitalize transition-colors ${
-                      theme === t
-                        ? 'border-blue-600 bg-blue-50 text-blue-700 font-medium'
-                        : 'border-gray-200 text-gray-600 hover:bg-gray-50'
-                    }`}
-                  >
-                    {t}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <SaveButton loading={prefSaving} label="Save Preferences" />
-              {prefMsg && <span className="text-sm text-green-600">{prefMsg}</span>}
-            </div>
+              </Box>
+              <FormControl>
+                <FormLabel sx={{ mb: 1, fontSize: '0.875rem', fontWeight: 500 }}>Theme</FormLabel>
+                <RadioGroup
+                  row
+                  value={theme}
+                  onChange={(e) => setTheme(e.target.value as 'light' | 'dark' | 'system')}
+                >
+                  {(['light', 'dark', 'system'] as const).map((t) => (
+                    <FormControlLabel key={t} value={t} control={<Radio size="small" />} label={t.charAt(0).toUpperCase() + t.slice(1)} />
+                  ))}
+                </RadioGroup>
+              </FormControl>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <Button type="submit" variant="contained" disabled={prefSaving}>
+                  {prefSaving ? 'Saving...' : 'Save Preferences'}
+                </Button>
+                {prefMsg && <Typography variant="body2" color="success.main">{prefMsg}</Typography>}
+              </Box>
+            </Box>
           </form>
-        </Section>
+        </SectionCard>
 
         {/* Danger Zone */}
-        <Section title="Danger Zone">
+        <SectionCard title="Danger Zone">
           {!deleteConfirmOpen ? (
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-700">Delete Account</p>
-                <p className="text-xs text-gray-500">Permanently delete your account and all data. This cannot be undone.</p>
-              </div>
-              <button
-                type="button"
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <Box>
+                <Typography variant="body2" sx={{ fontWeight: 500 }}>Delete Account</Typography>
+                <Typography variant="caption" color="text.secondary">
+                  Permanently delete your account and all data. This cannot be undone.
+                </Typography>
+              </Box>
+              <Button
+                variant="outlined"
+                color="error"
+                size="small"
                 onClick={() => setDeleteConfirmOpen(true)}
-                className="px-4 py-2 text-sm font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors"
               >
                 Delete Account
-              </button>
-            </div>
+              </Button>
+            </Box>
           ) : (
-            <div className="space-y-4">
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-800">
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+              <Alert severity="error">
                 This will permanently delete your account and all associated data. This action cannot be undone.
-              </div>
-              {deleteError && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">{deleteError}</div>
-              )}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Enter your password to confirm</label>
-                <input
-                  type="password"
-                  value={deletePassword}
-                  onChange={(e) => setDeletePassword(e.target.value)}
-                  placeholder="Your current password"
-                  className="w-full px-3 py-2 border border-red-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                />
-              </div>
-              <div className="flex gap-3">
-                <button
-                  type="button"
+              </Alert>
+              {deleteError && <Alert severity="error">{deleteError}</Alert>}
+              <TextField
+                label="Enter your password to confirm"
+                type="password"
+                value={deletePassword}
+                onChange={(e) => setDeletePassword(e.target.value)}
+                placeholder="Your current password"
+                fullWidth
+                color="error"
+              />
+              <Box sx={{ display: 'flex', gap: 2 }}>
+                <Button
+                  variant="contained"
+                  color="error"
                   onClick={handleDeleteAccount}
                   disabled={deleting}
-                  className="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors"
                 >
                   {deleting ? 'Deleting...' : 'Yes, Delete My Account'}
-                </button>
-                <button
-                  type="button"
+                </Button>
+                <Button
+                  variant="outlined"
                   onClick={() => { setDeleteConfirmOpen(false); setDeleteError(''); setDeletePassword('') }}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                 >
                   Cancel
-                </button>
-              </div>
-            </div>
+                </Button>
+              </Box>
+            </Box>
           )}
-        </Section>
-      </div>
+        </SectionCard>
+      </Box>
     </NavLayout>
   )
 }

@@ -22,9 +22,14 @@ async function checkRateLimit(
   maxRequests: number,
   windowSecs: number
 ): Promise<{ allowed: boolean; retryAfter: number }> {
-  const result = await redis.eval(RATE_LIMIT_SCRIPT, 1, key, String(windowSecs)) as [number, number]
-  const [count, ttl] = result
-  return { allowed: count <= maxRequests, retryAfter: Math.max(ttl, 1) }
+  try {
+    const result = await redis.eval(RATE_LIMIT_SCRIPT, 1, key, String(windowSecs)) as [number, number]
+    const [count, ttl] = result
+    return { allowed: count <= maxRequests, retryAfter: Math.max(ttl, 1) }
+  } catch {
+    // Fail open: if Redis is unavailable, allow the request through
+    return { allowed: true, retryAfter: 0 }
+  }
 }
 
 function clientIp(request: NextRequest): string {
