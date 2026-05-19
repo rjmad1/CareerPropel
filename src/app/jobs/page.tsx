@@ -55,11 +55,6 @@ export default function JobsPage() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
 
-  if (status === 'unauthenticated') {
-    router.push('/login');
-    return null;
-  }
-
   const { data: jobs = [], isLoading, error } = useQuery({
     queryKey: ['jobs'],
     queryFn: fetchJobs,
@@ -71,6 +66,11 @@ export default function JobsPage() {
       patchJob(jobId, updates),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['jobs'] }),
   });
+
+  if (status === 'unauthenticated') {
+    router.push('/login');
+    return null;
+  }
 
   const handleJobUpdate = async (jobId: string, updates: Partial<Job>) => {
     await updateMutation.mutateAsync({ jobId, updates });
