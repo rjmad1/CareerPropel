@@ -1,5 +1,6 @@
 # Career-Ops: AI-Native Career Operating System
 <img width="2752" height="1536" alt="image-1779014074826" src="https://github.com/user-attachments/assets/c1157a7c-692f-4038-bb47-3baf3f87cb62" />
+<img width="2752" height="1536" alt="image-1779186313227" src="https://github.com/user-attachments/assets/d0980016-a8e6-42d8-9c97-c4708c2f61ee" />
 
 
 Career-Ops is an autonomous job application orchestration platform that transforms career development into a visual, operationally transparent workflow.
