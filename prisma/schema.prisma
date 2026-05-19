@@ -19,6 +19,16 @@ model Candidate {
   phone     String?
   location  String?
   summary   String?
+  avatarUrl String?
+  // Credential auth
+  passwordHash              String?
+  emailVerified             Boolean   @default(false)
+  emailVerificationToken    String?
+  emailVerificationTokenExp DateTime?
+  passwordResetToken        String?
+  passwordResetTokenExp     DateTime?
+  // User preferences: { emailNotifications: bool, theme: 'light'|'dark'|'system' }
+  preferences               Json?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

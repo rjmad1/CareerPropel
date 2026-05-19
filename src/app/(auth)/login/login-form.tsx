@@ -1,6 +1,7 @@
 'use client'
 
 import { FormEvent, useState } from 'react'
+import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import {
@@ -132,6 +133,12 @@ export default function LoginForm() {
           AI-Native Career Management
         </Typography>
 
+        {searchParams.get('verified') === '1' && (
+          <Alert severity="success" sx={{ width: '100%', mb: 2 }}>
+            Email verified! You can now sign in.
+          </Alert>
+        )}
+
         {error && (
           <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
             {error}
@@ -190,8 +197,16 @@ export default function LoginForm() {
           </Button>
 
           <Box sx={{ mt: 2, textAlign: 'center' }}>
+            <Link href="/forgot-password" style={{ textDecoration: 'none' }}>
+              <Typography variant="body2" color="primary" sx={{ mb: 1 }}>
+                Forgot password?
+              </Typography>
+            </Link>
             <Typography variant="body2" color="text.secondary">
-              For development: Use any email and password to create an account
+              Don&apos;t have an account?{' '}
+              <Link href="/register" style={{ color: 'inherit', fontWeight: 600 }}>
+                Register
+              </Link>
             </Typography>
           </Box>
         </StyledForm>

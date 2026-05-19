@@ -11,7 +11,14 @@ export function middleware(request: NextRequest) {
   }
 
   // Allow public page routes
-  if (pathname.startsWith('/login') || pathname.startsWith('/auth')) {
+  if (
+    pathname.startsWith('/login') ||
+    pathname.startsWith('/auth') ||
+    pathname.startsWith('/register') ||
+    pathname.startsWith('/forgot-password') ||
+    pathname.startsWith('/reset-password') ||
+    pathname.startsWith('/verify-email')
+  ) {
     return NextResponse.next()
   }
 

@@ -21,6 +21,7 @@ const navItems = [
   { href: '/audit-logs', label: 'Audit Logs', icon: '📋' },
   { href: '/api-keys', label: 'API Keys', icon: '🔑' },
   { href: '/settings/security', label: 'Security', icon: '🛡️' },
+  { href: '/settings/account', label: 'Account', icon: '⚙️' },
 ];
 
 interface NavLayoutProps {
@@ -86,10 +87,15 @@ export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
         {/* User Footer */}
         <div className="border-t border-gray-700 px-4 py-3">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-              {session.user?.email?.charAt(0).toUpperCase()}
+            <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold flex-shrink-0 overflow-hidden">
+              {(session.user as { avatarUrl?: string })?.avatarUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={(session.user as { avatarUrl?: string }).avatarUrl} alt="" className="w-full h-full object-cover" />
+              ) : (
+                session.user?.email?.charAt(0).toUpperCase()
+              )}
             </div>
-            <span className="text-xs text-gray-400 truncate">{session.user?.email}</span>
+            <span className="text-xs text-gray-400 truncate">{session.user?.name || session.user?.email}</span>
           </div>
           <button
             onClick={() => signOut({ callbackUrl: '/login' })}

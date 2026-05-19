@@ -2,40 +2,25 @@ import type { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
+import bcrypt from "bcryptjs"
+import { prisma } from "@/lib/db"
 
-// Simple in-memory user store for development
-const devUsers = new Map<string, any>()
+// In-memory store for dev bypass mode (ALLOW_DEV_LOGIN=true only)
+const devUsers = new Map<string, { id: string; email: string; name: string }>()
 
-// Validate required environment variables at module load time
 function validateAuthEnvironment() {
   const errors: string[] = []
-  
-  if (!process.env.NEXTAUTH_SECRET) {
-    errors.push('NEXTAUTH_SECRET is not set')
-  }
-  if (!process.env.NEXTAUTH_URL) {
-    errors.push('NEXTAUTH_URL is not set')
-  }
-  
+  if (!process.env.NEXTAUTH_SECRET) errors.push('NEXTAUTH_SECRET is not set')
+  if (!process.env.NEXTAUTH_URL) errors.push('NEXTAUTH_URL is not set')
   if (errors.length > 0) {
     console.error('❌ NextAuth Configuration Errors:')
     errors.forEach(err => console.error(`  - ${err}`))
-    console.error('')
-    console.error('CRITICAL: NextAuth will not function properly without these environment variables.')
-    console.error('For local development, add to .env.local:')
-    console.error('  NEXTAUTH_SECRET=your-secret-key')
-    console.error('  NEXTAUTH_URL=http://localhost:3000')
-    console.error('')
-    console.error('For Vercel production, add to Project Settings > Environment Variables:')
-    console.error('  NEXTAUTH_SECRET=<generate-with-: openssl rand -base64 32>')
-    console.error('  NEXTAUTH_URL=https://your-domain.vercel.app')
+    console.error('Add these to .env.local or Vercel environment variables.')
   }
-  
   return errors.length === 0
 }
 
-// Check auth environment on startup
-if (typeof window === 'undefined') { // Only on server side
+if (typeof window === 'undefined') {
   validateAuthEnvironment()
 }
 
@@ -57,55 +42,68 @@ export const authOptions: NextAuthOptions = {
       })
     ] : []),
 
-    // Credentials provider — development only.
-    // Never runs in production; any email is accepted to simplify local testing.
-    ...(process.env.NODE_ENV !== 'production' ? [
-      CredentialsProvider({
-        id: 'credentials',
-        name: 'Credentials',
-        credentials: {
-          email: { label: "Email", type: "email" },
-          password: { label: "Password", type: "password" }
-        },
-        async authorize(credentials) {
-          try {
-            if (!credentials?.email) return null
-            const email = credentials.email.toLowerCase().trim()
-            if (!email.includes('@')) return null
+    // Credentials — validates against DB (bcrypt). Falls back to dev bypass
+    // when ALLOW_DEV_LOGIN=true (for local testing without DB seed).
+    CredentialsProvider({
+      id: 'credentials',
+      name: 'Credentials',
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" }
+      },
+      async authorize(credentials) {
+        try {
+          if (!credentials?.email || !credentials?.password) return null
+          const email = credentials.email.toLowerCase().trim()
+          if (!email.includes('@')) return null
 
-            if (devUsers.has(email)) {
-              return devUsers.get(email)
-            }
-
+          // Dev bypass: any email/password accepted when ALLOW_DEV_LOGIN=true
+          if (process.env.ALLOW_DEV_LOGIN === 'true') {
+            if (devUsers.has(email)) return devUsers.get(email)!
             const newUser = { id: email.split('@')[0], email, name: email.split('@')[0] }
             devUsers.set(email, newUser)
-            console.log('[Auth] ✅ Dev user authenticated:', email)
+            console.log('[Auth] ✅ Dev bypass login:', email)
             return newUser
-          } catch (error) {
-            console.error('[Auth] ❌ Unexpected error in authorize:', error)
+          }
+
+          // Production path: validate against Candidate table
+          const candidate = await prisma.candidate.findUnique({ where: { email } })
+          if (!candidate) {
+            console.log('[Auth] ❌ No account for:', email)
             return null
           }
+          if (!candidate.passwordHash) {
+            // OAuth-only account — no password set
+            console.log('[Auth] ❌ OAuth-only account, no password:', email)
+            return null
+          }
+          const valid = await bcrypt.compare(credentials.password, candidate.passwordHash)
+          if (!valid) {
+            console.log('[Auth] ❌ Wrong password for:', email)
+            return null
+          }
+          console.log('[Auth] ✅ Authenticated:', email)
+          return { id: candidate.id, email: candidate.email, name: candidate.name }
+        } catch (error) {
+          console.error('[Auth] ❌ Error in authorize:', error)
+          return null
         }
-      })
-    ] : [])
+      }
+    })
   ],
-  
-  // JWT Strategy
-  session: { 
+
+  session: {
     strategy: "jwt",
-    maxAge: 24 * 60 * 60, // 24 hours
+    maxAge: 24 * 60 * 60,
   },
-  
-  // JWT Callback: Add user ID to token
+
   callbacks: {
     async jwt({ token, user }) {
       try {
         if (user) {
-          // On successful authorize(), add user data to token
           token.sub = user.id
           token.email = user.email ?? ''
           token.name = user.name ?? ''
-          console.log('[Auth JWT] ✅ Token created for user:', user.email)
         }
         return token
       } catch (error) {
@@ -113,31 +111,26 @@ export const authOptions: NextAuthOptions = {
         throw error
       }
     },
-    
+
     async session({ session, token }) {
       try {
-        // Add user data from token to session
-    // Ensure session user object is properly populated from token
-            session.user = {
-              id: token.sub as string,
-              email: token.email as string,
-              name: token.name as string,
-            }
-            console.log('[Auth Session] ✅ Session updated for user:', token.email)
-            return session
+        session.user = {
+          id: token.sub as string,
+          email: token.email as string,
+          name: token.name as string,
+        }
+        return session
       } catch (error) {
         console.error('[Auth Session] ❌ Error in session callback:', error)
         throw error
       }
     }
   },
-  
-  // Custom pages
-  pages: { 
+
+  pages: {
     signIn: "/login",
-    error: "/login?error=auth" 
+    error: "/login?error=auth"
   },
-  
-  // Debug mode for development
+
   ...(process.env.NODE_ENV === 'development' && { debug: true })
 }
