@@ -60,9 +60,6 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install chromium --with-deps
 
-      - name: Setup database schema
-        run: npx prisma db push --skip-generate --accept-data-loss
-
       - name: Build application
         run: npm run build
         env:
