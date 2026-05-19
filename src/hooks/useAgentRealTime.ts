@@ -108,32 +108,73 @@ export function useAgentRealTime(
 
 
   /**
-   * Setup WebSocket connection (mock for now)
+   * Connect via Server-Sent Events; fall back to polling if SSE fails.
    */
   useEffect(() => {
     if (!options?.autoConnect || !candidateId) return;
 
-    const connect = () => {
-      try {
-        // TODO: Connect to actual WebSocket/EventSource
-        // For now, we use polling as fallback
-        setIsConnected(true);
+    let es: EventSource | null = null;
+    let fallbackTimer: ReturnType<typeof setInterval> | null = null;
 
-        // Setup polling
-        if (pollIntervalRef.current) clearInterval(pollIntervalRef.current);
-        pollIntervalRef.current = setInterval(() => {
-          fetchExecutions();
-        }, refreshInterval);
-      } catch (err) {
-        setError(err instanceof Error ? err : new Error('Connection failed'));
-        setIsConnected(false);
-      }
+    const startPolling = () => {
+      if (fallbackTimer) return;
+      fallbackTimer = setInterval(fetchExecutions, refreshInterval);
     };
 
-    connect();
+    const stopPolling = () => {
+      if (fallbackTimer) { clearInterval(fallbackTimer); fallbackTimer = null; }
+    };
+
+    try {
+      es = new EventSource('/api/agents/events');
+
+      es.addEventListener('snapshot', (e: MessageEvent) => {
+        try {
+          const snapshot = JSON.parse(e.data) as Record<string, any>;
+          setAgents((prev) => {
+            const next = { ...prev };
+            Object.entries(snapshot).forEach(([type, status]) => {
+              next[type] = { ...prev[type], ...(status as any) };
+            });
+            return next;
+          });
+        } catch { /* ignore parse errors */ }
+      });
+
+      es.addEventListener('agent:status_update', (e: MessageEvent) => {
+        try {
+          const ev = JSON.parse(e.data);
+          setAgents((prev) => ({
+            ...prev,
+            [ev.agentType]: {
+              ...prev[ev.agentType],
+              status: ev.status,
+              lastActivity: ev.lastActivity,
+              tokensUsed: ev.tokensUsed ?? prev[ev.agentType]?.tokensUsed,
+            },
+          }));
+        } catch { /* ignore */ }
+      });
+
+      es.addEventListener('agent:execution_update', (e: MessageEvent) => {
+        try {
+          const ev = JSON.parse(e.data);
+          setAllExecutions((prev) =>
+            prev.map((x) => (x.id === ev.executionId ? { ...x, ...ev } : x))
+          );
+        } catch { /* ignore */ }
+      });
+
+      es.onopen = () => { setIsConnected(true); stopPolling(); };
+      es.onerror = () => { setIsConnected(false); startPolling(); };
+    } catch {
+      startPolling();
+    }
 
     return () => {
-      if (pollIntervalRef.current) clearInterval(pollIntervalRef.current);
+      es?.close();
+      stopPolling();
+      if (pollIntervalRef.current) { clearInterval(pollIntervalRef.current); pollIntervalRef.current = null; }
     };
   }, [candidateId, options?.autoConnect, refreshInterval, fetchExecutions]);
 

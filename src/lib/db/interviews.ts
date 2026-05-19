@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/db";
 import type { ScheduleInterviewInput, UpdateInterviewInput, ListInterviewsQuery } from '@/lib/validation/schemas';
 import { createActivity } from './jobs';
+import { isConnected } from '@/lib/calendar/googleCalendar';
 
 /**
  * Get interviews for a user with optional filtering
@@ -93,6 +94,7 @@ export async function scheduleInterview(userId: string, data: ScheduleInterviewI
       scheduledAt: new Date(data.scheduledAt),
       duration: data.duration || 60,
       location: data.location,
+      meetingLink: data.meetingLink,
       notes: data.notes,
       status: 'scheduled',
     },
@@ -105,6 +107,35 @@ export async function scheduleInterview(userId: string, data: ScheduleInterviewI
     scheduledAt: data.scheduledAt,
     interviewer: data.interviewer?.name,
   });
+
+  // If Google Calendar is connected, create a CalendarEvent and link it back
+  try {
+    if (await isConnected(userId)) {
+      const endAt = new Date(new Date(data.scheduledAt).getTime() + (data.duration || 60) * 60_000);
+      const calEvent = await prisma.calendarEvent.create({
+        data: {
+          candidateId: userId,
+          externalId: `interview-${interview.id}`,
+          provider: 'local',
+          title: `Interview: ${interview.job.title} @ ${interview.job.company}`,
+          description: data.notes ?? null,
+          startAt: new Date(data.scheduledAt),
+          endAt,
+          location: data.location ?? null,
+          meetingUrl: data.meetingLink ?? null,
+          interviewId: interview.id,
+          jobId: data.jobId,
+        },
+      });
+      // Back-link the interview to the calendar event
+      await prisma.interview.update({
+        where: { id: interview.id },
+        data: { calendarEventId: calEvent.id },
+      });
+    }
+  } catch {
+    // Calendar sync is best-effort — don't fail the interview creation
+  }
 
   return interview;
 }

@@ -34,6 +34,9 @@ model Candidate {
   profileScore      ProfileScore?
   interviewPreps    InterviewPrep[]
   starStories       StarStory[]
+  calendarTokens    CalendarToken[]
+  calendarEvents    CalendarEvent[]
+  jobImports        JobImport[]
 }
 
 // ─── Job Pipeline ────────────────────────────────────────────────────────────
@@ -84,17 +87,19 @@ model JobActivity {
 }
 
 model Interview {
-  id          String    @id @default(cuid())
-  candidateId String
-  jobId       String
-  type        String    // phone, video, onsite, panel, technical, behavioral
-  scheduledAt DateTime
-  duration    Int?      // minutes
-  location    String?
-  notes       String?
-  status      String    @default("scheduled") // scheduled, completed, cancelled, rescheduled
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id              String    @id @default(cuid())
+  candidateId     String
+  jobId           String
+  type            String    // phone, video, onsite, panel, technical, behavioral
+  scheduledAt     DateTime
+  duration        Int?      // minutes
+  location        String?
+  meetingLink     String?
+  calendarEventId String?   // linked CalendarEvent.id after auto-sync
+  notes           String?
+  status          String    @default("scheduled") // scheduled, completed, cancelled, rescheduled
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
   job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
@@ -482,4 +487,64 @@ model SessionActivity {
   @@index([sessionId])
   @@index([timestamp])
   @@index([riskScore])
+}
+
+// ─── Calendar Integration ─────────────────────────────────────────────────────
+
+model CalendarToken {
+  id           String    @id @default(cuid())
+  candidateId  String
+  provider     String    // "google" | "outlook"
+  accessToken  String
+  refreshToken String?
+  expiresAt    DateTime?
+  scope        String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@unique([candidateId, provider])
+  @@index([candidateId])
+}
+
+model CalendarEvent {
+  id          String    @id @default(cuid())
+  candidateId String
+  externalId  String    // Google/Outlook event ID
+  provider    String    // "google" | "outlook"
+  title       String
+  description String?
+  startAt     DateTime
+  endAt       DateTime
+  location    String?
+  meetingUrl  String?
+  jobId       String?
+  interviewId String?
+  syncedAt    DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@unique([candidateId, externalId, provider])
+  @@index([candidateId])
+  @@index([startAt])
+}
+
+// ─── Job Board Import ─────────────────────────────────────────────────────────
+
+model JobImport {
+  id          String   @id @default(cuid())
+  candidateId String
+  source      String   // "greenhouse" | "indeed" | "linkedin" | "manual"
+  externalId  String?  // source job ID where available
+  rawData     Json     // full scraped/fetched payload
+  imported    Boolean  @default(false)
+  jobId       String?  // set after user accepts and a Job record is created
+  createdAt   DateTime @default(now())
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([source])
 }

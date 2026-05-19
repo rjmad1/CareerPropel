@@ -12,7 +12,7 @@ import { SkillMatrix } from '@/components/Profile/SkillMatrix';
 import { AchievementExtractor } from '@/components/Profile/AchievementExtractor';
 import { useProfile } from '@/hooks/useProfile';
 
-type TabId = 'overview' | 'editor' | 'skills' | 'achievements' | 'recommendations';
+type TabId = 'overview' | 'editor' | 'skills' | 'achievements' | 'recommendations' | 'import';
 
 const tabs: { id: TabId; label: string; icon: string }[] = [
   { id: 'overview', label: 'Overview', icon: '📊' },
@@ -20,6 +20,7 @@ const tabs: { id: TabId; label: string; icon: string }[] = [
   { id: 'skills', label: 'Skills', icon: '🛠️' },
   { id: 'achievements', label: 'Achievements', icon: '⭐' },
   { id: 'recommendations', label: 'Recommendations', icon: '💡' },
+  { id: 'import', label: 'Import', icon: '🔗' },
 ];
 
 export default function ProfilePage() {
@@ -144,6 +145,10 @@ export default function ProfilePage() {
             )
           )}
 
+          {activeTab === 'import' && (
+            <LinkedInImportPanel onImported={refresh} />
+          )}
+
           {activeTab === 'recommendations' && (
             <div className="space-y-4">
               {loading ? (
@@ -176,6 +181,88 @@ export default function ProfilePage() {
         </div>
       </div>
     </NavLayout>
+  );
+}
+
+// ─── LinkedIn Import Panel ────────────────────────────────────────────────────
+
+function LinkedInImportPanel({ onImported }: { onImported: () => void }) {
+  const [url, setUrl] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState<{ name: string; experience: number; skills: number } | null>(null);
+  const [error, setError] = useState('');
+
+  async function handleImport(e: React.FormEvent) {
+    e.preventDefault();
+    setError('');
+    setResult(null);
+    setLoading(true);
+    try {
+      const res = await fetch('/api/linkedin/import-profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ profileUrl: url }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.message ?? json.error?.message ?? 'Import failed');
+      setResult(json.data ?? json);
+      onImported();
+    } catch (e: any) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="bg-white rounded-xl border border-gray-200 p-6">
+        <h3 className="font-semibold text-gray-900 mb-1">Import from LinkedIn</h3>
+        <p className="text-sm text-gray-500 mb-4">
+          Paste your public LinkedIn profile URL to import experience, education, and skills. The profile must be publicly visible.
+        </p>
+
+        <form onSubmit={handleImport} className="flex gap-2">
+          <input
+            type="url"
+            required
+            placeholder="https://www.linkedin.com/in/your-profile"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="submit"
+            disabled={loading}
+            className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 whitespace-nowrap"
+          >
+            {loading ? 'Importing…' : 'Import'}
+          </button>
+        </form>
+
+        {loading && (
+          <p className="text-xs text-gray-400 mt-2">
+            Opening browser to read your profile — this takes 15–30 seconds.
+          </p>
+        )}
+
+        {error && (
+          <p className="mt-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">{error}</p>
+        )}
+
+        {result && (
+          <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg text-sm text-green-800 space-y-1">
+            <p className="font-medium">Import complete for {result.name}</p>
+            <p>{result.experience} experience entries · {result.skills} skills added to your profile</p>
+          </div>
+        )}
+      </div>
+
+      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
+        <p className="font-medium mb-1">Public profile required</p>
+        <p>Set your LinkedIn profile visibility to "Public" in LinkedIn Settings → Visibility → Edit your public profile.</p>
+      </div>
+    </div>
   );
 }
 

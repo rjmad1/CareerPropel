@@ -16,9 +16,11 @@ const navItems = [
   { href: '/documents', label: 'Documents', icon: '📄' },
   { href: '/emails', label: 'Emails', icon: '✉️' },
   { href: '/profile', label: 'Profile', icon: '👤' },
+  { href: '/calendar', label: 'Calendar', icon: '📅' },
   { href: '/analytics', label: 'Analytics', icon: '📊' },
   { href: '/audit-logs', label: 'Audit Logs', icon: '📋' },
   { href: '/api-keys', label: 'API Keys', icon: '🔑' },
+  { href: '/settings/security', label: 'Security', icon: '🛡️' },
 ];
 
 interface NavLayoutProps {

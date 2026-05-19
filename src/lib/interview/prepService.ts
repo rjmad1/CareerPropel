@@ -24,6 +24,7 @@ import {
   ResumeAlignment,
   CompensationGuide,
 } from '@/types/interview';
+import { AnthropicProvider } from '@/lib/llm/anthropic';
 
 /**
  * Interview prep generation request
@@ -106,35 +107,74 @@ async function generateCompanyResearch(
   company: string,
   jobDescription: string
 ): Promise<CompanyResearch> {
-  // TODO: Integrate with Claude API to fetch company research
-  // For now, return structured template
+  const techStack = extractTechStackFromJobDescription(jobDescription);
 
-  return {
-    company,
-    industry: 'Technology', // Would be fetched from Crunchbase/LinkedIn API
-    size: 'scale-up',
-    founded: 2018,
-    recentNews: [
+  try {
+    const llm = new AnthropicProvider();
+    const result = await llm.callLLM(
+      [
+        {
+          role: 'user',
+          content: `You are a company research analyst. Based on the job description below, produce a JSON object for "${company}" with these exact keys:
+industry, size (startup/scale-up/enterprise), founded (year as number), culture (2-3 sentences), fundingStatus, competitorsAndContext (1-2 sentences), salaryMin (number USD), salaryMax (number USD), recentNewsTitle, recentNewsSummary.
+
+Job description:
+${jobDescription.slice(0, 2000)}
+
+Return ONLY valid JSON, no markdown fences.`,
+        },
+      ],
       {
-        date: new Date(),
-        title: 'Company News Item',
-        source: 'TechCrunch',
-        url: '#',
-        summary: 'Recent company news summary',
+        systemPrompt: 'You are a factual company research assistant. Return only valid JSON.',
+        maxTokens: 800,
+        temperature: 0.3,
+      }
+    );
+
+    const raw = JSON.parse(result.content);
+    return {
+      company,
+      industry: raw.industry ?? 'Technology',
+      size: raw.size ?? 'scale-up',
+      founded: raw.founded ?? 2020,
+      recentNews: [
+        {
+          date: new Date(),
+          title: raw.recentNewsTitle ?? 'Recent company update',
+          source: 'Public sources',
+          url: '#',
+          summary: raw.recentNewsSummary ?? '',
+        },
+      ],
+      culture: raw.culture ?? `${company} values innovation and collaboration.`,
+      technicalStack: techStack,
+      fundingStatus: raw.fundingStatus ?? 'Unknown',
+      competitorsAndContext: raw.competitorsAndContext ?? '',
+      linkedinCompanyUrl: `https://linkedin.com/company/${company.toLowerCase().replace(/\s+/g, '-')}`,
+      crunchbaseProfile: `https://crunchbase.com/organization/${company.toLowerCase()}`,
+      salaryGlassodoor: {
+        min: raw.salaryMin ?? 120000,
+        max: raw.salaryMax ?? 180000,
+        currency: 'USD',
       },
-    ],
-    culture: `${company} appears to value innovation, collaboration, and continuous learning based on the job description.`,
-    technicalStack: extractTechStackFromJobDescription(jobDescription),
-    fundingStatus: 'Series B Funded',
-    competitorsAndContext: `${company} operates in a competitive market with key competitors in the space.`,
-    linkedinCompanyUrl: `https://linkedin.com/company/${company.toLowerCase().replace(/\s+/g, '-')}`,
-    crunchbaseProfile: `https://crunchbase.com/organization/${company.toLowerCase()}`,
-    salaryGlassodoor: {
-      min: 120000,
-      max: 180000,
-      currency: 'USD',
-    },
-  };
+    };
+  } catch {
+    // Fallback to rule-based when Claude is unavailable
+    return {
+      company,
+      industry: 'Technology',
+      size: 'scale-up',
+      founded: 2020,
+      recentNews: [],
+      culture: `${company} appears to value innovation, collaboration, and continuous learning based on the job description.`,
+      technicalStack: techStack,
+      fundingStatus: 'Unknown',
+      competitorsAndContext: `${company} operates in a competitive market.`,
+      linkedinCompanyUrl: `https://linkedin.com/company/${company.toLowerCase().replace(/\s+/g, '-')}`,
+      crunchbaseProfile: `https://crunchbase.com/organization/${company.toLowerCase()}`,
+      salaryGlassodoor: { min: 120000, max: 180000, currency: 'USD' },
+    };
+  }
 }
 
 /**

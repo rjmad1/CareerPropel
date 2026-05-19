@@ -1,10 +1,12 @@
 /**
- * Custom Next.js server with Socket.io integration
- * This file enables WebSocket support for real-time features
- * 
+ * Custom Next.js server with Socket.io + Redis pub/sub bridge
+ *
  * Usage:
- *   node server.js (for production)
- *   npm run dev (uses next dev, Socket.io runs separately)
+ *   npm run dev:socket  — development with hot reload
+ *   npm start           — production
+ *
+ * Redis events published by agent workers are forwarded to the relevant
+ * Socket.io user room so browser clients receive live status updates.
  */
 
 const { createServer } = require('http')
@@ -12,6 +14,7 @@ const { parse } = require('url')
 const next = require('next')
 const { Server } = require('socket.io')
 const { getToken } = require('next-auth/jwt')
+const Redis = require('ioredis')
 
 const dev = process.env.NODE_ENV !== 'production'
 const hostname = process.env.HOSTNAME || 'localhost'
@@ -150,11 +153,51 @@ app.prepare().then(() => {
     })
   })
 
+  // Redis → Socket.io bridge
+  // Subscribes to all per-user agent channels and forwards events to the
+  // matching Socket.io room so every connected browser tab gets updates.
+  const redisSub = new Redis({
+    host: process.env.REDIS_HOST || 'localhost',
+    port: parseInt(process.env.REDIS_PORT || '6379', 10),
+    password: process.env.REDIS_PASSWORD,
+    enableReadyCheck: false,
+    lazyConnect: true,
+  })
+
+  redisSub.connect().then(() => {
+    // Use pattern subscribe to catch all per-user channels
+    redisSub.psubscribe('agent:*', 'queue:*', (err) => {
+      if (err) console.error('[Redis] psubscribe error', err)
+      else console.log('[Redis] Subscribed to agent:* and queue:* channels')
+    })
+  }).catch((err) => {
+    console.warn('[Redis] Could not connect for pub/sub bridge:', err.message)
+  })
+
+  redisSub.on('pmessage', (_pattern, channel, message) => {
+    try {
+      const event = JSON.parse(message)
+      // Channels follow the pattern: agent:status:<userEmail> etc.
+      const parts = channel.split(':')
+      // userEmail is always the third segment in our REDIS_CHANNELS convention
+      const userEmail = parts.slice(2).join(':')
+      if (userEmail) {
+        io.to(`user:${userEmail}`).emit(event.type || 'agent:event', event)
+      }
+    } catch {
+      // malformed message — ignore
+    }
+  })
+
+  redisSub.on('error', (err) => {
+    console.error('[Redis] pub/sub bridge error:', err.message)
+  })
+
   // Start server
   httpServer.listen(port, (err) => {
     if (err) throw err
     console.log(`✅ Server running at http://${hostname}:${port}`)
-    console.log(`📡 WebSocket server running`)
+    console.log(`📡 WebSocket (Socket.io) + Redis bridge running`)
     console.log(`🔐 Environment: ${dev ? 'development' : 'production'}`)
   })
 })
