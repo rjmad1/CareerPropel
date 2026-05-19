@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { Suspense, useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { Calendar, RefreshCw, Link2, Link2Off, MapPin, Video, Clock, Loader2 } from 'lucide-react';
@@ -38,7 +38,7 @@ function groupByDay(events: CalendarEvent[]) {
   return map;
 }
 
-export default function CalendarPage() {
+function CalendarContent() {
   const searchParams = useSearchParams();
   const justConnected = searchParams.get('connected');
   const connectError = searchParams.get('error');
@@ -238,5 +238,13 @@ export default function CalendarPage() {
         )}
       </div>
     </NavLayout>
+  );
+}
+
+export default function CalendarPage() {
+  return (
+    <Suspense>
+      <CalendarContent />
+    </Suspense>
   );
 }
