@@ -4,34 +4,17 @@ export const dynamic = 'force-dynamic';
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { NavLayout } from '@/components/Layout/NavLayout';
+import { Button, Input, Textarea, Card, CardBody, Select } from '@/components/ui';
 import {
-  Alert,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CircularProgress,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
-  TextField,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-} from '@mui/material';
-import {
-  Description,
+  FileText,
   Download,
-  ContentCopy,
+  Copy,
   Check,
-  Refresh,
-  AutoAwesome,
-} from '@mui/icons-material';
+  RefreshCw,
+  Sparkles,
+  AlertCircle,
+  X,
+} from 'lucide-react';
 
 type DocType = 'resume' | 'cover_letter';
 type Tone = 'professional' | 'enthusiastic' | 'concise';
@@ -132,230 +115,280 @@ export default function DocumentsPage() {
 
   const displayedDoc = activeHistory?.doc ?? result;
 
+  const jobOptions = [
+    { value: '', label: 'General / No specific job' },
+    ...jobs.map((j) => ({
+      value: j.id,
+      label: `${j.title} — ${j.company}`,
+    })),
+  ];
+
   return (
     <NavLayout
       title="Document Generator"
       subtitle="AI-powered resume and cover letter tailored to each job"
     >
-      <Box sx={{ p: 3, maxWidth: 1100, mx: 'auto' }}>
-        <Grid container spacing={3}>
-          {/* Left: Controls */}
-          <Grid size={{ xs: 12, lg: 4 }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-              <Card>
-                <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-                  <Typography variant="h6">Generate Document</Typography>
+      <div className="p-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Left Side: Controls */}
+          <div className="lg:col-span-4 flex flex-col gap-6">
+            <Card>
+              <CardBody className="p-6 flex flex-col gap-5">
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">
+                  Generate Document
+                </h2>
 
-                  {/* Type Toggle */}
-                  <Box>
-                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>Document Type</Typography>
-                    <ToggleButtonGroup
-                      value={docType}
-                      exclusive
-                      onChange={(_, v) => v && setDocType(v)}
-                      fullWidth
-                      size="small"
+                {/* Type Selector */}
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                    Document Type
+                  </span>
+                  <div className="flex bg-slate-100 dark:bg-slate-950 p-1 rounded-xl border border-slate-200/50 dark:border-slate-800">
+                    <button
+                      type="button"
+                      onClick={() => setDocType('resume')}
+                      className={`flex-1 py-2 px-3 rounded-lg text-xs font-semibold transition-all duration-150 ${
+                        docType === 'resume'
+                          ? 'bg-white text-slate-800 shadow-sm dark:bg-slate-800 dark:text-white'
+                          : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                      }`}
                     >
-                      <ToggleButton value="resume">Resume</ToggleButton>
-                      <ToggleButton value="cover_letter">Cover Letter</ToggleButton>
-                    </ToggleButtonGroup>
-                  </Box>
-
-                  {/* Job selector */}
-                  <FormControl fullWidth size="small">
-                    <InputLabel>Tailor for Job (optional)</InputLabel>
-                    <Select
-                      value={selectedJobId}
-                      label="Tailor for Job (optional)"
-                      onChange={(e) => setSelectedJobId(e.target.value)}
+                      Resume
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDocType('cover_letter')}
+                      className={`flex-1 py-2 px-3 rounded-lg text-xs font-semibold transition-all duration-150 ${
+                        docType === 'cover_letter'
+                          ? 'bg-white text-slate-800 shadow-sm dark:bg-slate-800 dark:text-white'
+                          : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-200'
+                      }`}
                     >
-                      <MenuItem value="">General / No specific job</MenuItem>
-                      {jobs.map((j) => (
-                        <MenuItem key={j.id} value={j.id}>{j.title} — {j.company}</MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+                      Cover Letter
+                    </button>
+                  </div>
+                </div>
 
-                  {/* Tone (cover letter only) */}
-                  {docType === 'cover_letter' && (
-                    <FormControl>
-                      <Typography variant="caption" color="text.secondary" sx={{ mb: 0.5 }}>Tone</Typography>
-                      <RadioGroup value={tone} onChange={(e) => setTone(e.target.value as Tone)}>
-                        {([
-                          ['professional', 'Professional', 'Confident and formal'],
-                          ['enthusiastic', 'Enthusiastic', 'Warm and energetic'],
-                          ['concise', 'Concise', 'Under 250 words, direct'],
-                        ] as [Tone, string, string][]).map(([val, label, desc]) => (
-                          <FormControlLabel
+                {/* Job selection */}
+                <Select
+                  label="Tailor for Job (optional)"
+                  value={selectedJobId}
+                  options={jobOptions}
+                  onChange={(e) => setSelectedJobId(e.target.value)}
+                />
+
+                {/* Tone (cover letter only) */}
+                {docType === 'cover_letter' && (
+                  <div className="flex flex-col gap-2">
+                    <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                      Tone
+                    </span>
+                    <div className="flex flex-col gap-2">
+                      {([
+                        ['professional', 'Professional', 'Confident and formal'],
+                        ['enthusiastic', 'Enthusiastic', 'Warm and energetic'],
+                        ['concise', 'Concise', 'Under 250 words, direct'],
+                      ] as [Tone, string, string][]).map(([val, label, desc]) => {
+                        const isSelected = tone === val;
+                        return (
+                          <label
                             key={val}
-                            value={val}
-                            control={<Radio size="small" />}
-                            label={
-                              <Box>
-                                <Typography variant="body2" sx={{ fontWeight: 500 }}>{label}</Typography>
-                                <Typography variant="caption" color="text.secondary">{desc}</Typography>
-                              </Box>
-                            }
-                            sx={{ mb: 0.5 }}
-                          />
-                        ))}
-                      </RadioGroup>
-                    </FormControl>
-                  )}
+                            className={`flex items-start gap-3 p-3 rounded-xl border-2 transition-all cursor-pointer select-none ${
+                              isSelected
+                                ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/20'
+                                : 'border-slate-100 hover:border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800'
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name="tone"
+                              value={val}
+                              checked={isSelected}
+                              onChange={(e) => setTone(e.target.value as Tone)}
+                              className="mt-1 h-4 w-4 text-blue-600 border-slate-350 focus:ring-blue-500 focus:ring-offset-0"
+                            />
+                            <div className="flex flex-col">
+                              <span className={`text-sm font-semibold leading-none ${
+                                isSelected ? 'text-blue-600 dark:text-blue-400' : 'text-slate-800 dark:text-slate-200'
+                              }`}>
+                                {label}
+                              </span>
+                              <span className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-normal">
+                                {desc}
+                              </span>
+                            </div>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
 
-                  <TextField
-                    label="Focus Areas (comma-separated)"
-                    size="small"
-                    fullWidth
-                    placeholder="leadership, system design, ML"
-                    value={focusAreas}
-                    onChange={(e) => setFocusAreas(e.target.value)}
-                  />
+                <Input
+                  label="Focus Areas (comma-separated)"
+                  placeholder="leadership, system design, ML"
+                  value={focusAreas}
+                  onChange={(e) => setFocusAreas(e.target.value)}
+                />
 
-                  <TextField
-                    label="Additional Context"
-                    size="small"
-                    fullWidth
-                    multiline
-                    rows={2}
-                    placeholder="Any specific points to highlight..."
-                    value={additionalContext}
-                    onChange={(e) => setAdditionalContext(e.target.value)}
-                  />
+                <Textarea
+                  label="Additional Context"
+                  placeholder="Any specific points to highlight..."
+                  value={additionalContext}
+                  onChange={(e) => setAdditionalContext(e.target.value)}
+                  rows={3}
+                />
 
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    onClick={handleGenerate}
-                    disabled={generating}
-                    startIcon={generating ? <CircularProgress size={16} color="inherit" /> : <AutoAwesome />}
-                  >
-                    {generating ? 'Generating…' : 'Generate with AI'}
-                  </Button>
+                <Button
+                  variant="primary"
+                  className="w-full flex items-center justify-center gap-2 mt-2"
+                  onClick={handleGenerate}
+                  loading={generating}
+                >
+                  {!generating && <Sparkles className="w-4 h-4" />}
+                  {generating ? 'Generating…' : 'Generate with AI'}
+                </Button>
 
-                  {error && <Alert severity="error" onClose={() => setError('')}>{error}</Alert>}
-                </CardContent>
-              </Card>
+                {error && (
+                  <div className="flex items-start justify-between p-3.5 text-sm text-red-800 border border-red-100 bg-red-50/50 rounded-xl dark:bg-red-950/20 dark:text-red-400 dark:border-red-900" role="alert">
+                    <div className="flex items-center gap-2.5">
+                      <AlertCircle className="w-4 h-4 text-red-650 shrink-0" />
+                      <span>{error}</span>
+                    </div>
+                    <button onClick={() => setError('')} className="p-1 hover:bg-red-150 dark:hover:bg-red-900/50 rounded text-red-500 transition-colors">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
+              </CardBody>
+            </Card>
 
-              {/* History */}
-              {history.length > 0 && (
-                <Card>
-                  <CardContent>
-                    <Typography variant="subtitle2" gutterBottom>Session History</Typography>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
-                      {history.map((entry, i) => (
-                        <Box
+            {/* History Panel */}
+            {history.length > 0 && (
+              <Card>
+                <CardBody className="p-5 flex flex-col gap-3">
+                  <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+                    Session History
+                  </h3>
+                  <div className="flex flex-col gap-2 max-h-60 overflow-y-auto pr-1">
+                    {history.map((entry, i) => {
+                      const isSelected = activeHistory === entry;
+                      return (
+                        <div
                           key={i}
                           onClick={() => setActiveHistory(entry)}
-                          sx={{
-                            px: 1.5,
-                            py: 1,
-                            borderRadius: 1.5,
-                            border: '1px solid',
-                            borderColor: activeHistory === entry ? 'primary.light' : 'divider',
-                            bgcolor: activeHistory === entry ? 'primary.50' : 'grey.50',
-                            cursor: 'pointer',
-                            '&:hover': { bgcolor: activeHistory === entry ? 'primary.50' : 'grey.100' },
-                          }}
+                          className={`p-3 rounded-xl border text-left cursor-pointer transition-all duration-155 ${
+                            isSelected
+                              ? 'border-blue-300 bg-blue-50/30 dark:border-blue-900 dark:bg-blue-950/10'
+                              : 'border-slate-105 hover:bg-slate-50 bg-slate-50/50 dark:border-slate-800 dark:hover:bg-slate-800/30'
+                          }`}
                         >
-                          <Typography variant="caption" noWrap sx={{ fontWeight: 500, display: 'block' }}>{entry.doc.title}</Typography>
+                          <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 block">
+                            {entry.doc.title}
+                          </span>
                           {entry.jobTitle && (
-                            <Typography variant="caption" color="text.secondary" noWrap sx={{ display: 'block' }}>{entry.jobTitle}</Typography>
+                            <span className="text-2xs text-slate-500 dark:text-slate-400 block mt-0.5 truncate">
+                              {entry.jobTitle}
+                            </span>
                           )}
-                        </Box>
-                      ))}
-                    </Box>
-                  </CardContent>
-                </Card>
-              )}
-            </Box>
-          </Grid>
-
-          {/* Right: Output */}
-          <Grid size={{ xs: 12, lg: 8 }}>
-            {displayedDoc ? (
-              <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                {/* Doc Header */}
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: 2.5, py: 1.5, borderBottom: '1px solid', borderColor: 'divider' }}>
-                  <Box>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>{displayedDoc.title}</Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {displayedDoc.wordCount} words · {new Date(displayedDoc.generatedAt).toLocaleTimeString()}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: 'flex', gap: 0.5 }}>
-                    <Button
-                      size="small"
-                      startIcon={copied ? <Check fontSize="small" /> : <ContentCopy fontSize="small" />}
-                      onClick={() => handleCopy(displayedDoc.content)}
-                      color={copied ? 'success' : 'inherit'}
-                    >
-                      {copied ? 'Copied!' : 'Copy'}
-                    </Button>
-                    <Button
-                      size="small"
-                      startIcon={<Download fontSize="small" />}
-                      onClick={() => handleDownload(displayedDoc)}
-                    >
-                      .md
-                    </Button>
-                    <Button
-                      size="small"
-                      startIcon={<Refresh fontSize="small" />}
-                      onClick={handleGenerate}
-                      disabled={generating}
-                    >
-                      Regenerate
-                    </Button>
-                  </Box>
-                </Box>
-
-                {/* Content */}
-                <Box sx={{ flex: 1, overflowY: 'auto', p: 2.5 }}>
-                  <Box
-                    component="pre"
-                    sx={{
-                      whiteSpace: 'pre-wrap',
-                      fontFamily: '"Roboto Mono", monospace',
-                      fontSize: '0.8125rem',
-                      color: 'text.primary',
-                      lineHeight: 1.7,
-                      m: 0,
-                    }}
-                  >
-                    {displayedDoc.content}
-                  </Box>
-                </Box>
-              </Card>
-            ) : (
-              <Card
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  minHeight: 380,
-                  border: '1.5px dashed',
-                  borderColor: 'divider',
-                  textAlign: 'center',
-                  p: 4,
-                }}
-              >
-                <Description sx={{ fontSize: 56, color: 'text.disabled', mb: 2 }} />
-                <Typography variant="h6" gutterBottom>No document generated yet</Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 300 }}>
-                  Configure your options on the left and click <strong>Generate with AI</strong> to create a tailored document.
-                </Typography>
-                {jobs.length === 0 && (
-                  <Alert severity="warning" sx={{ mt: 2, maxWidth: 340, textAlign: 'left' }}>
-                    Add jobs to your pipeline for better tailoring — the AI will use the job description to optimise keywords.
-                  </Alert>
-                )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </CardBody>
               </Card>
             )}
-          </Grid>
-        </Grid>
-      </Box>
+          </div>
+
+          {/* Right Side: Output */}
+          <div className="lg:col-span-8">
+            {displayedDoc ? (
+              <Card className="h-full flex flex-col">
+                {/* Header Actions */}
+                <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 rounded-t-lg">
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                      {displayedDoc.title}
+                    </h3>
+                    <span className="text-xs text-slate-550 dark:text-slate-400 mt-0.5 block">
+                      {displayedDoc.wordCount} words · {new Date(displayedDoc.generatedAt).toLocaleTimeString()}
+                    </span>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className={copied ? 'text-green-600 border-green-200 bg-green-50' : ''}
+                      onClick={() => handleCopy(displayedDoc.content)}
+                    >
+                      {copied ? (
+                        <>
+                          <Check className="w-3.5 h-3.5" />
+                          <span>Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3.5 h-3.5" />
+                          <span>Copy</span>
+                        </>
+                      )}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-1.5"
+                      onClick={() => handleDownload(displayedDoc)}
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>.md</span>
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-1.5"
+                      onClick={handleGenerate}
+                      disabled={generating}
+                      loading={generating}
+                    >
+                      {!generating && <RefreshCw className="w-3.5 h-3.5" />}
+                      <span>Regenerate</span>
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Main Content Pane */}
+                <CardBody className="p-6 flex-1 flex flex-col min-h-[450px]">
+                  <div className="flex-1 bg-slate-50 dark:bg-slate-950/40 rounded-xl p-5 border border-slate-100 dark:border-slate-800">
+                    <pre className="whitespace-pre-wrap font-mono text-xs text-slate-800 dark:text-slate-200 leading-relaxed min-h-[350px] max-h-[60vh] overflow-y-auto">
+                      {displayedDoc.content}
+                    </pre>
+                  </div>
+                </CardBody>
+              </Card>
+            ) : (
+              <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-205 dark:border-slate-800 rounded-2xl p-12 text-center bg-white dark:bg-slate-900 min-h-[480px]">
+                <div className="w-16 h-16 rounded-full bg-slate-50 dark:bg-slate-850 flex items-center justify-center mb-5 border border-slate-100 dark:border-slate-800">
+                  <FileText className="w-8 h-8 text-slate-400" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                  No document generated yet
+                </h3>
+                <p className="text-sm text-slate-550 dark:text-slate-400 max-w-sm leading-relaxed mb-6">
+                  Configure your options on the left and click <strong>Generate with AI</strong> to create a tailored document instantly.
+                </p>
+                {jobs.length === 0 && (
+                  <div className="flex items-start gap-3 p-4 text-sm text-amber-800 border border-amber-100 bg-amber-50/50 rounded-xl dark:bg-amber-950/20 dark:text-amber-400 dark:border-amber-900 max-w-md text-left">
+                    <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                    <span>
+                      Add jobs to your pipeline for better tailoring — the AI will use the job description to optimize keywords.
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </NavLayout>
   );
 }

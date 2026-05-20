@@ -3,38 +3,8 @@
 import { FormEvent, useState } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import {
-  Container, Paper, TextField, Button, Box,
-  Typography, Alert, CircularProgress,
-} from '@mui/material'
-import { styled } from '@mui/material/styles'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-
-const StyledPaper = styled(Paper)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: theme.spacing(4),
-  marginTop: theme.spacing(8),
-  boxShadow: theme.shadows[5],
-}))
-
-const IconWrapper = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: 56,
-  height: 56,
-  borderRadius: '50%',
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.primary.contrastText,
-  marginBottom: theme.spacing(2),
-}))
-
-const StyledForm = styled('form')(({ theme }) => ({
-  width: '100%',
-  marginTop: theme.spacing(2),
-}))
+import { Input, Button } from '@/components/ui'
+import { Lock, AlertCircle, CheckCircle2 } from 'lucide-react'
 
 export default function ResetPasswordForm() {
   const searchParams = useSearchParams()
@@ -48,17 +18,22 @@ export default function ResetPasswordForm() {
 
   if (!token) {
     return (
-      <Container component="main" maxWidth="sm">
-        <StyledPaper elevation={6}>
-          <Typography variant="h5" sx={{ fontWeight: 600 }} gutterBottom>Invalid Link</Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+      <div className="max-w-md mx-auto w-full px-4 mt-20">
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 flex flex-col items-center text-center">
+          <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-rose-50 border border-rose-100 text-rose-600 mb-5">
+            <AlertCircle className="w-6 h-6" />
+          </div>
+          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-2">Invalid Link</h2>
+          <p className="text-sm text-slate-500 mb-6 leading-relaxed">
             This password reset link is invalid or has expired.
-          </Typography>
-          <Link href="/forgot-password" style={{ color: 'inherit' }}>
-            <Button variant="contained" fullWidth>Request New Link</Button>
+          </p>
+          <Link href="/forgot-password" className="w-full">
+            <Button variant="primary" className="w-full py-2.5 rounded-xl">
+              Request New Link
+            </Button>
           </Link>
-        </StyledPaper>
-      </Container>
+        </div>
+      </div>
     )
   }
 
@@ -91,64 +66,88 @@ export default function ResetPasswordForm() {
 
   if (success) {
     return (
-      <Container component="main" maxWidth="sm">
-        <StyledPaper elevation={6}>
-          <Typography variant="h5" sx={{ fontWeight: 600 }} gutterBottom>Password Updated</Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+      <div className="max-w-md mx-auto w-full px-4 mt-20">
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 flex flex-col items-center text-center">
+          <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white mb-5 shadow-md shadow-indigo-100">
+            <CheckCircle2 className="w-6 h-6" />
+          </div>
+          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-2">Password Updated</h2>
+          <p className="text-sm text-slate-500 mb-6 leading-relaxed">
             Your password has been reset successfully.
-          </Typography>
-          <Link href="/login" style={{ color: 'inherit' }}>
-            <Button variant="contained" fullWidth>Sign In Now</Button>
+          </p>
+          <Link href="/login" className="w-full">
+            <Button variant="primary" className="w-full py-2.5 rounded-xl">
+              Sign In Now
+            </Button>
           </Link>
-        </StyledPaper>
-      </Container>
+        </div>
+      </div>
     )
   }
 
   return (
-    <Container component="main" maxWidth="sm">
-      <StyledPaper elevation={6}>
-        <IconWrapper>
-          <LockOutlinedIcon sx={{ fontSize: 32 }} />
-        </IconWrapper>
+    <div className="max-w-md mx-auto w-full px-4 mt-20">
+      <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 flex flex-col items-center">
+        {/* Icon wrapper with gradient */}
+        <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white mb-4 shadow-md shadow-indigo-100">
+          <Lock className="w-6 h-6" />
+        </div>
 
-        <Typography component="h1" variant="h4" sx={{ fontWeight: 600, mb: 1 }}>
+        <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-1">
           Reset Password
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+        </h1>
+        <p className="text-sm text-slate-500 mb-6">
           Enter your new password below.
-        </Typography>
+        </p>
 
         {error && (
-          <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>
+          <div className="flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-800 text-sm rounded-2xl w-full mb-5 shadow-sm shadow-rose-50/50">
+            <AlertCircle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
+            <span>{error}</span>
+          </div>
         )}
 
-        <StyledForm onSubmit={handleSubmit} noValidate>
-          <TextField
-            margin="normal" required fullWidth label="New Password" type="password" autoFocus
-            helperText="Min 8 chars, 1 uppercase, 1 number"
-            value={password} onChange={(e) => setPassword(e.target.value)} disabled={isLoading}
+        <form onSubmit={handleSubmit} noValidate className="w-full space-y-4">
+          <Input
+            required
+            id="password"
+            label="New Password"
+            name="password"
+            type="password"
+            autoFocus
+            hint="Min 8 chars, 1 uppercase, 1 number"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            disabled={isLoading}
           />
-          <TextField
-            margin="normal" required fullWidth label="Confirm New Password" type="password"
-            value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} disabled={isLoading}
+
+          <Input
+            required
+            id="confirmPassword"
+            label="Confirm New Password"
+            name="confirmPassword"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            disabled={isLoading}
           />
 
           <Button
-            type="submit" fullWidth variant="contained" size="large"
-            sx={{ mt: 3, mb: 2, py: 1.5 }} disabled={isLoading}
-            startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
+            type="submit"
+            className="w-full mt-6 py-2.5 shadow-md shadow-indigo-100 hover:shadow-lg transition-shadow rounded-xl"
+            disabled={isLoading}
+            loading={isLoading}
           >
             {isLoading ? 'Resetting...' : 'Reset Password'}
           </Button>
 
-          <Box sx={{ textAlign: 'center' }}>
-            <Link href="/login" style={{ color: 'inherit', fontSize: 14 }}>
+          <div className="mt-6 text-center pt-3 border-t border-slate-100 w-full">
+            <Link href="/login" className="text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline">
               Back to Sign In
             </Link>
-          </Box>
-        </StyledForm>
-      </StyledPaper>
-    </Container>
+          </div>
+        </form>
+      </div>
+    </div>
   )
 }

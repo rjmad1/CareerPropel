@@ -4,44 +4,8 @@ import { FormEvent, useState } from 'react'
 import Link from 'next/link'
 import { signIn } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import {
-  Container,
-  Paper,
-  TextField,
-  Button,
-  Box,
-  Typography,
-  Alert,
-  CircularProgress,
-} from '@mui/material'
-import { styled } from '@mui/material/styles'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
-
-const StyledPaper = styled(Paper)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: theme.spacing(4),
-  marginTop: theme.spacing(8),
-  boxShadow: theme.shadows[5],
-}))
-
-const IconWrapper = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: 56,
-  height: 56,
-  borderRadius: '50%',
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.primary.contrastText,
-  marginBottom: theme.spacing(2),
-}))
-
-const StyledForm = styled('form')(({ theme }) => ({
-  width: '100%',
-  marginTop: theme.spacing(3),
-}))
+import { Input, Button } from '@/components/ui'
+import { Lock, Sparkles, AlertCircle, CheckCircle2 } from 'lucide-react'
 
 export default function LoginForm() {
   const router = useRouter()
@@ -120,56 +84,52 @@ export default function LoginForm() {
   }
 
   return (
-    <Container component="main" maxWidth="sm">
-      <StyledPaper elevation={6}>
-        <IconWrapper>
-          <LockOutlinedIcon sx={{ fontSize: 32 }} />
-        </IconWrapper>
+    <div className="max-w-md mx-auto w-full px-4 mt-20">
+      <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 flex flex-col items-center">
+        {/* Lock Icon Wrapper with gradient */}
+        <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white mb-4 shadow-md shadow-indigo-100">
+          <Lock className="w-6 h-6" />
+        </div>
 
-        <Typography component="h1" variant="h4" sx={{ fontWeight: 600, mb: 1 }}>
+        <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-1">
           CareerPropel
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          AI-Native Career Management
-        </Typography>
+        </h1>
+        <p className="text-sm text-slate-500 mb-6 flex items-center gap-1.5">
+          <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
+          <span>AI-Native Career Management</span>
+        </p>
 
         {searchParams.get('verified') === '1' && (
-          <Alert severity="success" sx={{ width: '100%', mb: 2 }}>
-            Email verified! You can now sign in.
-          </Alert>
+          <div className="flex items-start gap-2.5 p-3.5 bg-emerald-50 border border-emerald-100 text-emerald-800 text-sm rounded-2xl w-full mb-5 shadow-sm shadow-emerald-50/50">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+            <span>Email verified! You can now sign in.</span>
+          </div>
         )}
 
         {error && (
-          <Alert severity="error" sx={{ width: '100%', mb: 2 }}>
-            {error}
-          </Alert>
+          <div className="flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-800 text-sm rounded-2xl w-full mb-5 shadow-sm shadow-rose-50/50">
+            <AlertCircle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
+            <span>{error}</span>
+          </div>
         )}
 
-        <StyledForm
-          onSubmit={handleSubmit}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            margin="normal"
+        <form onSubmit={handleSubmit} noValidate className="w-full space-y-4">
+          <Input
             required
-            fullWidth
             id="email"
             label="Email Address"
             name="email"
+            type="email"
             autoComplete="email"
             autoFocus
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={isLoading}
-            variant="outlined"
-            slotProps={{ htmlInput: { 'data-testid': 'login-email-input' } }}
+            data-testid="login-email-input"
           />
 
-          <TextField
-            margin="normal"
+          <Input
             required
-            fullWidth
             name="password"
             label="Password"
             type="password"
@@ -178,39 +138,32 @@ export default function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             disabled={isLoading}
-            variant="outlined"
-            slotProps={{ htmlInput: { 'data-testid': 'login-password-input' } }}
+            data-testid="login-password-input"
           />
 
           <Button
             type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            size="large"
-            sx={{ mt: 3, mb: 2, py: 1.5 }}
+            className="w-full mt-6 py-2.5 shadow-md shadow-indigo-100 hover:shadow-lg transition-shadow rounded-xl"
             disabled={isLoading}
+            loading={isLoading}
             data-testid="login-submit-btn"
-            startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
           >
             {isLoading ? 'Signing In...' : 'Sign In'}
           </Button>
 
-          <Box sx={{ mt: 2, textAlign: 'center' }}>
-            <Link href="/forgot-password" style={{ textDecoration: 'none' }}>
-              <Typography variant="body2" color="primary" sx={{ mb: 1 }}>
-                Forgot password?
-              </Typography>
+          <div className="mt-6 text-center space-y-2.5 pt-2 border-t border-slate-100 w-full">
+            <Link href="/forgot-password" className="block text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline">
+              Forgot password?
             </Link>
-            <Typography variant="body2" color="text.secondary">
+            <p className="text-sm text-slate-500">
               Don&apos;t have an account?{' '}
-              <Link href="/register" style={{ color: 'inherit', fontWeight: 600 }}>
+              <Link href="/register" className="font-bold text-slate-700 hover:text-indigo-600 transition-colors">
                 Register
               </Link>
-            </Typography>
-          </Box>
-        </StyledForm>
-      </StyledPaper>
-    </Container>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
   )
 }

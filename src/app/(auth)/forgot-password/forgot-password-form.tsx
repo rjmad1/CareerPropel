@@ -2,38 +2,8 @@
 
 import { FormEvent, useState } from 'react'
 import Link from 'next/link'
-import {
-  Container, Paper, TextField, Button, Box,
-  Typography, Alert, CircularProgress,
-} from '@mui/material'
-import { styled } from '@mui/material/styles'
-import LockResetOutlinedIcon from '@mui/icons-material/LockResetOutlined'
-
-const StyledPaper = styled(Paper)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: theme.spacing(4),
-  marginTop: theme.spacing(8),
-  boxShadow: theme.shadows[5],
-}))
-
-const IconWrapper = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: 56,
-  height: 56,
-  borderRadius: '50%',
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.primary.contrastText,
-  marginBottom: theme.spacing(2),
-}))
-
-const StyledForm = styled('form')(({ theme }) => ({
-  width: '100%',
-  marginTop: theme.spacing(2),
-}))
+import { Input, Button } from '@/components/ui'
+import { KeyRound, AlertCircle, Mail } from 'lucide-react'
 
 export default function ForgotPasswordForm() {
   const [email, setEmail] = useState('')
@@ -70,59 +40,77 @@ export default function ForgotPasswordForm() {
 
   if (submitted) {
     return (
-      <Container component="main" maxWidth="sm">
-        <StyledPaper elevation={6}>
-          <Typography variant="h5" sx={{ fontWeight: 600 }} gutterBottom>Check your email</Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', mb: 3 }}>
-            {"If that email is registered, you'll receive a reset link shortly."}
-          </Typography>
-          <Link href="/login" style={{ color: 'inherit' }}>
-            <Button variant="outlined" fullWidth>Back to Sign In</Button>
+      <div className="max-w-md mx-auto w-full px-4 mt-20">
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 flex flex-col items-center text-center">
+          <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white mb-5 shadow-md shadow-indigo-100">
+            <Mail className="w-6 h-6" />
+          </div>
+          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-2">Check your email</h2>
+          <p className="text-sm text-slate-500 mb-6 leading-relaxed">
+            If that email is registered, you&apos;ll receive a reset link shortly.
+          </p>
+          <Link href="/login" className="w-full">
+            <Button variant="outline" className="w-full py-2.5 rounded-xl">
+              Back to Sign In
+            </Button>
           </Link>
-        </StyledPaper>
-      </Container>
+        </div>
+      </div>
     )
   }
 
   return (
-    <Container component="main" maxWidth="sm">
-      <StyledPaper elevation={6}>
-        <IconWrapper>
-          <LockResetOutlinedIcon sx={{ fontSize: 32 }} />
-        </IconWrapper>
+    <div className="max-w-md mx-auto w-full px-4 mt-20">
+      <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-8 flex flex-col items-center">
+        {/* Icon wrapper with gradient */}
+        <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white mb-4 shadow-md shadow-indigo-100">
+          <KeyRound className="w-6 h-6" />
+        </div>
 
-        <Typography component="h1" variant="h4" sx={{ fontWeight: 600, mb: 1 }}>
+        <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight mb-1">
           Forgot Password
-        </Typography>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2, textAlign: 'center' }}>
+        </h1>
+        <p className="text-sm text-slate-500 mb-6 text-center">
           Enter your email and we&apos;ll send you a reset link.
-        </Typography>
+        </p>
 
         {error && (
-          <Alert severity="error" sx={{ width: '100%', mb: 2 }}>{error}</Alert>
+          <div className="flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-800 text-sm rounded-2xl w-full mb-5 shadow-sm shadow-rose-50/50">
+            <AlertCircle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
+            <span>{error}</span>
+          </div>
         )}
 
-        <StyledForm onSubmit={handleSubmit} noValidate>
-          <TextField
-            margin="normal" required fullWidth label="Email Address" type="email" autoFocus
-            value={email} onChange={(e) => setEmail(e.target.value)} disabled={isLoading}
+        <form onSubmit={handleSubmit} noValidate className="w-full space-y-4">
+          <Input
+            required
+            id="email"
+            label="Email Address"
+            name="email"
+            type="email"
+            autoComplete="email"
+            autoFocus
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={isLoading}
           />
 
           <Button
-            type="submit" fullWidth variant="contained" size="large"
-            sx={{ mt: 3, mb: 2, py: 1.5 }} disabled={isLoading}
-            startIcon={isLoading ? <CircularProgress size={20} color="inherit" /> : null}
+            type="submit"
+            className="w-full mt-6 py-2.5 shadow-md shadow-indigo-100 hover:shadow-lg transition-shadow rounded-xl"
+            disabled={isLoading}
+            loading={isLoading}
           >
             {isLoading ? 'Sending...' : 'Send Reset Link'}
           </Button>
 
-          <Box sx={{ textAlign: 'center' }}>
-            <Link href="/login" style={{ color: 'inherit', fontSize: 14 }}>
+          <div className="mt-6 text-center pt-3 border-t border-slate-100 w-full">
+            <Link href="/login" className="text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline">
               Back to Sign In
             </Link>
-          </Box>
-        </StyledForm>
-      </StyledPaper>
-    </Container>
+          </div>
+        </form>
+      </div>
+    </div>
   )
 }

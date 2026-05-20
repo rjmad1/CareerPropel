@@ -5,28 +5,19 @@ export const dynamic = 'force-dynamic';
 import React, { Suspense, useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { NavLayout } from '@/components/Layout/NavLayout';
+import { Button, Card, CardBody } from '@/components/ui';
 import {
-  Alert,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Chip,
-  CircularProgress,
-  Grid,
-  IconButton,
-  Tooltip,
-  Typography,
-} from '@mui/material';
-import {
-  CalendarMonth,
-  Refresh,
+  Calendar,
+  RefreshCw,
   Link as LinkIcon,
-  LinkOff,
-  LocationOn,
-  VideoCall,
-  AccessTime,
-} from '@mui/icons-material';
+  Link2Off,
+  MapPin,
+  Video,
+  Clock,
+  AlertCircle,
+  X,
+  CheckCircle,
+} from 'lucide-react';
 
 interface CalendarEvent {
   id: string;
@@ -127,9 +118,10 @@ function CalendarContent() {
 
   return (
     <NavLayout title="Calendar" subtitle="Interview schedule and upcoming events">
-      <Box sx={{ p: 3, maxWidth: 800, mx: 'auto' }}>
+      <div className="p-6 max-w-4xl mx-auto flex flex-col gap-6">
+        
         {/* Provider Cards */}
-        <Grid container spacing={2} sx={{ mb: 3 }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[
             {
               id: 'google' as const,
@@ -137,7 +129,8 @@ function CalendarContent() {
               connected: googleConnected,
               authHref: '/api/calendar/authorize',
               initial: 'G',
-              color: '#EA4335',
+              colorClass: 'bg-red-50 text-red-650 border-red-100 dark:bg-red-950/20 dark:text-red-400 dark:border-red-900',
+              accentColor: 'bg-red-500',
             },
             {
               id: 'outlook' as const,
@@ -145,182 +138,207 @@ function CalendarContent() {
               connected: outlookConnected,
               authHref: '/api/calendar/authorize/outlook',
               initial: 'O',
-              color: '#0078D4',
+              colorClass: 'bg-blue-50 text-blue-650 border-blue-105 dark:bg-blue-950/20 dark:text-blue-400 dark:border-blue-900',
+              accentColor: 'bg-blue-500',
             },
           ].map((p) => (
-            <Grid size={{ xs: 12, sm: 6 }} key={p.id}>
-              <Card>
-                <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2, py: 2, '&:last-child': { pb: 2 } }}>
-                  <Box
-                    sx={{
-                      width: 40, height: 40, borderRadius: '50%',
-                      bgcolor: `${p.color}18`,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      color: p.color, fontWeight: 700, fontSize: '1.1rem', flexShrink: 0,
-                    }}
-                  >
+            <Card key={p.id}>
+              <CardBody className="p-5 flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg ${p.colorClass} border shrink-0`}>
                     {p.initial}
-                  </Box>
-                  <Box sx={{ flex: 1, minWidth: 0 }}>
-                    <Typography variant="body2" sx={{ fontWeight: 600 }}>{p.label}</Typography>
-                    <Typography variant="caption" color={p.connected ? 'success.main' : 'text.secondary'}>
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-sm font-semibold text-slate-800 dark:text-slate-200 block truncate">
+                      {p.label}
+                    </span>
+                    <span className={`text-xs block mt-0.5 ${p.connected ? 'text-green-600 dark:text-green-400 font-medium' : 'text-slate-500'}`}>
                       {p.connected ? 'Connected' : 'Not connected'}
-                    </Typography>
-                  </Box>
-                  {p.connected ? (
-                    <Box sx={{ display: 'flex', gap: 0.5, flexShrink: 0 }}>
-                      <Tooltip title="Sync">
-                        <IconButton
-                          size="small"
-                          onClick={() => handleSync(p.id)}
-                          disabled={syncing === p.id}
-                        >
-                          {syncing === p.id ? (
-                            <CircularProgress size={16} />
-                          ) : (
-                            <Refresh fontSize="small" />
-                          )}
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Disconnect">
-                        <IconButton
-                          size="small"
-                          color="error"
-                          onClick={() => handleDisconnect(p.id)}
-                          disabled={disconnecting === p.id}
-                        >
-                          <LinkOff fontSize="small" />
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
-                  ) : (
-                    <Button
-                      variant="contained"
-                      size="small"
-                      href={p.authHref}
-                      startIcon={<LinkIcon fontSize="small" />}
-                      sx={{ flexShrink: 0 }}
+                    </span>
+                  </div>
+                </div>
+
+                {p.connected ? (
+                  <div className="flex items-center gap-1 shrink-0">
+                    {/* Sync Button */}
+                    <button
+                      onClick={() => handleSync(p.id)}
+                      disabled={syncing === p.id}
+                      className="p-2 text-slate-550 hover:text-slate-800 dark:hover:text-slate-200 disabled:opacity-50 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                      title="Sync"
                     >
-                      Connect
+                      <RefreshCw className={`w-4 h-4 ${syncing === p.id ? 'animate-spin text-blue-500' : ''}`} />
+                    </button>
+                    {/* Disconnect Button */}
+                    <button
+                      onClick={() => handleDisconnect(p.id)}
+                      disabled={disconnecting === p.id}
+                      className="p-2 text-red-500 hover:text-red-700 disabled:opacity-50 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-colors"
+                      title="Disconnect"
+                    >
+                      <Link2Off className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <a href={p.authHref} className="shrink-0">
+                    <Button variant="primary" size="sm" className="flex items-center gap-1.5">
+                      <LinkIcon className="w-3.5 h-3.5" />
+                      <span>Connect</span>
                     </Button>
-                  )}
-                </CardContent>
-              </Card>
-            </Grid>
+                  </a>
+                )}
+              </CardBody>
+            </Card>
           ))}
-        </Grid>
+        </div>
 
         {justConnected && (
-          <Alert severity="success" sx={{ mb: 3 }}>
-            {justConnected === 'outlook' ? 'Outlook' : 'Google'} Calendar connected — your upcoming events have been synced.
-          </Alert>
+          <div className="flex items-start gap-3 p-4 text-sm text-green-800 border border-green-100 bg-green-50/50 rounded-xl dark:bg-green-950/20 dark:text-green-400 dark:border-green-900">
+            <CheckCircle className="w-4 h-4 text-green-600 shrink-0 mt-0.5" />
+            <span>
+              {justConnected === 'outlook' ? 'Outlook' : 'Google'} Calendar connected — your upcoming events have been synced.
+            </span>
+          </div>
         )}
 
         {error && (
-          <Alert severity="error" onClose={() => setError('')} sx={{ mb: 3 }}>{error}</Alert>
+          <div className="flex items-start justify-between p-4 text-sm text-red-800 border border-red-100 bg-red-50/50 rounded-xl dark:bg-red-950/20 dark:text-red-400 dark:border-red-900" role="alert">
+            <div className="flex items-center gap-2.5">
+              <AlertCircle className="w-4 h-4 text-red-650 shrink-0" />
+              <span>{error}</span>
+            </div>
+            <button onClick={() => setError('')} className="p-1 hover:bg-red-100 dark:hover:bg-red-900/50 rounded text-red-550 transition-colors">
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         )}
 
         {/* Event List */}
         {loading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', py: 8 }}><CircularProgress /></Box>
+          <div className="flex justify-center py-16">
+            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          </div>
         ) : !anyConnected && events.length === 0 ? (
-          <Card sx={{ textAlign: 'center', py: 8 }}>
-            <CardContent>
-              <CalendarMonth sx={{ fontSize: 56, color: 'text.disabled', mb: 2 }} />
-              <Typography variant="body1" color="text.secondary" gutterBottom>
+          <Card className="text-center py-12 px-6">
+            <CardBody className="flex flex-col items-center max-w-md mx-auto">
+              <div className="w-16 h-16 rounded-full bg-slate-50 dark:bg-slate-900 flex items-center justify-center mb-5 border border-slate-100 dark:border-slate-800">
+                <Calendar className="w-8 h-8 text-slate-400" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white mb-2">
+                No Calendar Connected
+              </h3>
+              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
                 Connect Google or Outlook Calendar to see your interview schedule here.
-              </Typography>
-              <Typography variant="body2" color="text.disabled">
+              </p>
+              <p className="text-xs text-slate-400 leading-normal">
                 Interviews you schedule in this app will appear automatically.
-              </Typography>
-            </CardContent>
+              </p>
+            </CardBody>
           </Card>
         ) : events.length === 0 ? (
-          <Card sx={{ textAlign: 'center', py: 8 }}>
-            <CardContent>
-              <CalendarMonth sx={{ fontSize: 56, color: 'text.disabled', mb: 2 }} />
-              <Typography variant="body2" color="text.secondary">No upcoming events found.</Typography>
-            </CardContent>
+          <Card className="text-center py-12 px-6">
+            <CardBody className="flex flex-col items-center">
+              <div className="w-14 h-14 rounded-full bg-slate-50 dark:bg-slate-900 flex items-center justify-center mb-4 border border-slate-100 dark:border-slate-800">
+                <Calendar className="w-7 h-7 text-slate-400" />
+              </div>
+              <span className="text-sm font-semibold text-slate-650 dark:text-slate-400">
+                No upcoming events found.
+              </span>
+            </CardBody>
           </Card>
         ) : (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <div className="flex flex-col gap-6">
             {Array.from(grouped.entries()).map(([day, dayEvents]) => (
-              <Box key={day}>
-                <Typography
-                  variant="overline"
-                  sx={{ color: 'text.secondary', fontWeight: 600, display: 'block', mb: 1.5 }}
-                >
+              <div key={day} className="flex flex-col gap-3">
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block pl-1">
                   {formatDate(dayEvents[0].startAt)}
-                </Typography>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                </span>
+                <div className="flex flex-col gap-3">
                   {dayEvents.map((ev) => (
                     <Card
                       key={ev.id}
-                      sx={{
-                        border: '1px solid',
-                        borderColor: ev.interviewId ? 'primary.light' : 'divider',
-                        bgcolor: ev.interviewId ? 'primary.50' : 'background.paper',
-                      }}
+                      className={ev.interviewId ? 'border-blue-200 dark:border-blue-900 bg-blue-50/10' : ''}
                     >
-                      <CardContent sx={{ display: 'flex', gap: 2.5, py: 2, '&:last-child': { pb: 2 } }}>
-                        <Box sx={{ textAlign: 'right', flexShrink: 0, width: 68 }}>
-                          <Typography variant="body2" sx={{ fontWeight: 600 }}>{formatTime(ev.startAt)}</Typography>
-                          <Typography variant="caption" color="text.secondary">{formatTime(ev.endAt)}</Typography>
-                        </Box>
-                        <Box sx={{ flex: 1, minWidth: 0 }}>
-                          <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 0.75, mb: 0.5 }}>
-                            <Typography variant="body2" sx={{ fontWeight: 600 }} noWrap>{ev.title}</Typography>
-                            {ev.interviewId && (
-                              <Chip label="Interview" size="small" color="primary" variant="outlined" />
+                      <CardBody className="p-5 flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+                        <div className="flex gap-4 items-start">
+                          {/* Time info */}
+                          <div className="text-left shrink-0 w-20 pt-0.5">
+                            <span className="text-sm font-bold text-slate-900 dark:text-white block">
+                              {formatTime(ev.startAt)}
+                            </span>
+                            <span className="text-2xs text-slate-500 dark:text-slate-400 block mt-0.5">
+                              {formatTime(ev.endAt)}
+                            </span>
+                          </div>
+
+                          {/* Event main details */}
+                          <div className="min-w-0">
+                            <div className="flex items-center flex-wrap gap-2 mb-1.5">
+                              <span className="text-sm font-bold text-slate-900 dark:text-white truncate max-w-xs block leading-tight">
+                                {ev.title}
+                              </span>
+                              {ev.interviewId && (
+                                <span className="px-2 py-0.5 text-2xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 border border-blue-200 dark:border-blue-900">
+                                  Interview
+                                </span>
+                              )}
+                              <span className="px-2 py-0.5 text-2xs font-medium rounded-full bg-slate-100 text-slate-650 dark:bg-slate-800 dark:text-slate-350 border border-slate-200 dark:border-slate-700 capitalize">
+                                {ev.provider}
+                              </span>
+                            </div>
+
+                            {ev.description && (
+                              <p className="text-xs text-slate-500 dark:text-slate-400 truncate max-w-md mb-2">
+                                {ev.description}
+                              </p>
                             )}
-                            <Chip label={ev.provider} size="small" variant="outlined" sx={{ textTransform: 'capitalize' }} />
-                          </Box>
-                          {ev.description && (
-                            <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.75, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                              {ev.description}
-                            </Typography>
-                          )}
-                          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
-                            {ev.location && (
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                                <LocationOn sx={{ fontSize: 14, color: 'text.disabled' }} />
-                                <Typography variant="caption" color="text.secondary">{ev.location}</Typography>
-                              </Box>
-                            )}
-                            {ev.meetingUrl && (
-                              <Box
-                                component="a"
-                                href={ev.meetingUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: 'primary.main', textDecoration: 'none', '&:hover': { textDecoration: 'underline' } }}
-                              >
-                                <VideoCall sx={{ fontSize: 14 }} />
-                                <Typography variant="caption">Join meeting</Typography>
-                              </Box>
-                            )}
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                              <AccessTime sx={{ fontSize: 14, color: 'text.disabled' }} />
-                              <Typography variant="caption" color="text.secondary">{durationMins(ev.startAt, ev.endAt)} min</Typography>
-                            </Box>
-                          </Box>
-                        </Box>
-                      </CardContent>
+
+                            {/* Extra metadata tags */}
+                            <div className="flex flex-wrap gap-4 text-slate-550 dark:text-slate-400">
+                              {ev.location && (
+                                <div className="flex items-center gap-1 text-xs">
+                                  <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                                  <span className="truncate max-w-[180px]">{ev.location}</span>
+                                </div>
+                              )}
+                              {ev.meetingUrl && (
+                                <a
+                                  href={ev.meetingUrl}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 hover:underline"
+                                >
+                                  <Video className="w-3.5 h-3.5 shrink-0" />
+                                  <span>Join meeting</span>
+                                </a>
+                              )}
+                              <div className="flex items-center gap-1 text-xs">
+                                <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                                <span>{durationMins(ev.startAt, ev.endAt)} min</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </CardBody>
                     </Card>
                   ))}
-                </Box>
-              </Box>
+                </div>
+              </div>
             ))}
-          </Box>
+          </div>
         )}
-      </Box>
+      </div>
     </NavLayout>
   );
 }
 
 export default function CalendarPage() {
   return (
-    <Suspense>
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+      </div>
+    }>
       <CalendarContent />
     </Suspense>
   );

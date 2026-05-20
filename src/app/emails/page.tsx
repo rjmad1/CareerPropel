@@ -4,27 +4,17 @@ export const dynamic = 'force-dynamic';
 
 import React, { useState, useCallback } from 'react';
 import { NavLayout } from '@/components/Layout/NavLayout';
+import { Button, Input, Textarea, Card, CardBody } from '@/components/ui';
 import {
-  Alert,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CircularProgress,
-  Collapse,
-  Grid,
-  IconButton,
-  TextField,
-  Typography,
-} from '@mui/material';
-import {
-  Email,
-  ContentCopy,
+  Mail,
+  Copy,
   Check,
-  AutoAwesome,
-  ExpandMore,
-  ExpandLess,
-} from '@mui/icons-material';
+  Sparkles,
+  ChevronDown,
+  ChevronUp,
+  AlertCircle,
+  X,
+} from 'lucide-react';
 
 type EmailType = 'thank_you' | 'follow_up' | 'counter_offer' | 'withdraw' | 'recruiter_reach_out';
 
@@ -159,216 +149,268 @@ export default function EmailsPage() {
       title="Email Generator"
       subtitle="AI-drafted professional emails for every stage of your job search"
     >
-      <Box sx={{ p: 3, maxWidth: 1000, mx: 'auto' }}>
-        <Grid container spacing={3}>
-          {/* Left: Controls */}
-          <Grid size={{ xs: 12, lg: 5 }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-              {/* Email Type Selection */}
-              <Card>
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>Email Type</Typography>
-                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                    {EMAIL_TYPES.map((t) => (
-                      <Box
-                        key={t.value}
-                        onClick={() => setField('type', t.value)}
-                        sx={{
-                          p: 1.5,
-                          borderRadius: 2,
-                          border: '1px solid',
-                          borderColor: form.type === t.value ? 'primary.main' : 'divider',
-                          bgcolor: form.type === t.value ? 'primary.50' : 'background.paper',
-                          cursor: 'pointer',
-                          '&:hover': { borderColor: 'primary.light', bgcolor: form.type === t.value ? 'primary.50' : 'grey.50' },
-                        }}
-                      >
-                        <Typography variant="body2" color={form.type === t.value ? 'primary.main' : 'text.primary'} sx={{ fontWeight: 600 }}>
-                          {t.label}
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary">{t.description}</Typography>
-                      </Box>
-                    ))}
-                  </Box>
-                </CardContent>
-              </Card>
+      <div className="p-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Left Side: Controls */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
+            {/* Email Type Selection */}
+            <Card>
+              <CardBody className="p-6 flex flex-col gap-4">
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+                  <Mail className="w-5 h-5 text-blue-500" />
+                  Email Type
+                </h2>
+                <div className="flex flex-col gap-2">
+                  {EMAIL_TYPES.map((t) => (
+                    <div
+                      key={t.value}
+                      onClick={() => setField('type', t.value)}
+                      className={`p-3.5 rounded-xl border-2 transition-all duration-200 cursor-pointer select-none ${
+                        form.type === t.value
+                          ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/20'
+                          : 'border-slate-100 hover:border-slate-200 bg-white dark:bg-slate-900 dark:border-slate-800'
+                      }`}
+                    >
+                      <span className={`text-sm font-semibold block leading-tight ${
+                        form.type === t.value ? 'text-blue-600 dark:text-blue-400' : 'text-slate-800 dark:text-slate-200'
+                      }`}>
+                        {t.label}
+                      </span>
+                      <span className="text-xs text-slate-500 dark:text-slate-400 mt-1 block leading-normal">
+                        {t.description}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </CardBody>
+            </Card>
 
-              {/* Dynamic Fields */}
-              <Card>
-                <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  <Typography variant="h6">Details</Typography>
+            {/* Dynamic Fields Form */}
+            <Card>
+              <CardBody className="p-6 flex flex-col gap-5">
+                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Details</h2>
 
+                <div className="flex flex-col gap-4">
                   {visibleFields.map((key) => {
                     const label = FIELD_LABELS[key] ?? key;
                     const isTextarea = key === 'reason' || key === 'context';
                     const isNumber = key === 'daysSinceInterview' || key === 'offerAmount' || key === 'targetAmount';
 
+                    if (isTextarea) {
+                      return (
+                        <Textarea
+                          key={key}
+                          label={label}
+                          value={(form as any)[key]}
+                          onChange={(e) => setField(key, e.target.value)}
+                          placeholder={`Enter ${label.toLowerCase()}…`}
+                          rows={3}
+                        />
+                      );
+                    }
+
                     return (
-                      <TextField
+                      <Input
                         key={key}
                         label={label}
-                        size="small"
-                        fullWidth
                         type={isNumber ? 'number' : 'text'}
-                        multiline={isTextarea}
-                        rows={isTextarea ? 2 : undefined}
                         value={(form as any)[key]}
                         onChange={(e) => setField(key, e.target.value)}
                         placeholder={`Enter ${label.toLowerCase()}…`}
                       />
                     );
                   })}
+                </div>
 
-                  <Button
-                    variant="contained"
-                    fullWidth
-                    onClick={handleGenerate}
-                    disabled={generating}
-                    startIcon={generating ? <CircularProgress size={16} color="inherit" /> : <AutoAwesome />}
-                  >
-                    {generating ? 'Generating…' : 'Generate Email'}
-                  </Button>
+                <Button
+                  variant="primary"
+                  className="w-full flex items-center justify-center gap-2 mt-2"
+                  onClick={handleGenerate}
+                  loading={generating}
+                >
+                  {!generating && <Sparkles className="w-4 h-4" />}
+                  {generating ? 'Generating…' : 'Generate Email'}
+                </Button>
 
-                  {error && <Alert severity="error" onClose={() => setError('')}>{error}</Alert>}
-                </CardContent>
-              </Card>
+                {error && (
+                  <div className="flex items-start justify-between p-3.5 text-sm text-red-800 border border-red-100 bg-red-50/50 rounded-xl dark:bg-red-950/20 dark:text-red-400 dark:border-red-900" role="alert">
+                    <div className="flex items-center gap-2.5">
+                      <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+                      <span>{error}</span>
+                    </div>
+                    <button onClick={() => setError('')} className="p-1 hover:bg-red-100 dark:hover:bg-red-900/50 rounded text-red-500 transition-colors">
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
+              </CardBody>
+            </Card>
 
-              {/* History */}
-              {history.length > 0 && (
-                <Card>
-                  <CardContent sx={{ pb: showHistory ? 2 : 1.5 }}>
-                    <Box
-                      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer' }}
-                      onClick={() => setShowHistory((v) => !v)}
-                    >
-                      <Typography variant="subtitle2">Session History ({history.length})</Typography>
-                      <IconButton size="small">{showHistory ? <ExpandLess /> : <ExpandMore />}</IconButton>
-                    </Box>
-                    <Collapse in={showHistory}>
-                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75, mt: 1.5 }}>
-                        {history.map((entry, i) => {
-                          const typeInfo = EMAIL_TYPES.find((t) => t.value === entry.type)!;
-                          return (
-                            <Box
-                              key={i}
-                              onClick={() => setActiveHistory(entry.email)}
-                              sx={{
-                                px: 1.5, py: 1, borderRadius: 1.5, border: '1px solid',
-                                borderColor: activeHistory === entry.email ? 'primary.light' : 'divider',
-                                bgcolor: activeHistory === entry.email ? 'primary.50' : 'grey.50',
-                                cursor: 'pointer',
-                                '&:hover': { bgcolor: 'grey.100' },
-                              }}
-                            >
-                              <Typography variant="caption" noWrap sx={{ fontWeight: 500, display: 'block' }}>
-                                {typeInfo.label} — {entry.label}
-                              </Typography>
-                              <Typography variant="caption" color="text.secondary" noWrap sx={{ display: 'block' }}>
-                                {entry.email.subject}
-                              </Typography>
-                            </Box>
-                          );
-                        })}
-                      </Box>
-                    </Collapse>
-                  </CardContent>
-                </Card>
-              )}
-            </Box>
-          </Grid>
-
-          {/* Right: Output */}
-          <Grid size={{ xs: 12, lg: 7 }}>
-            {displayed ? (
+            {/* History Panel */}
+            {history.length > 0 && (
               <Card>
-                {/* Subject */}
-                <Box sx={{ display: 'flex', alignItems: 'center', px: 2.5, py: 1.5, borderBottom: '1px solid', borderColor: 'divider', bgcolor: 'grey.50' }}>
-                  <Box sx={{ flex: 1, minWidth: 0 }}>
-                    <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.5 }}>Subject</Typography>
-                    <Typography variant="body2" noWrap sx={{ fontWeight: 600 }}>{displayed.subject}</Typography>
-                  </Box>
-                  <Button
-                    size="small"
-                    startIcon={copied === 'subject' ? <Check fontSize="small" /> : <ContentCopy fontSize="small" />}
-                    onClick={() => handleCopy(displayed.subject, 'subject')}
-                    color={copied === 'subject' ? 'success' : 'inherit'}
-                    sx={{ flexShrink: 0, ml: 1.5 }}
+                <CardBody className="p-6">
+                  <div
+                    className="flex items-center justify-between cursor-pointer select-none"
+                    onClick={() => setShowHistory((v) => !v)}
                   >
-                    {copied === 'subject' ? 'Copied' : 'Copy'}
-                  </Button>
-                </Box>
-
-                {/* Body */}
-                <CardContent>
-                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1.5 }}>
-                    <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: 0.5 }}>Body</Typography>
-                    <Box sx={{ display: 'flex', gap: 0.5 }}>
-                      <Button
-                        size="small"
-                        startIcon={copied === 'body' ? <Check fontSize="small" /> : <ContentCopy fontSize="small" />}
-                        onClick={() => handleCopy(displayed.body, 'body')}
-                        color={copied === 'body' ? 'success' : 'inherit'}
-                      >
-                        {copied === 'body' ? 'Copied' : 'Copy body'}
-                      </Button>
-                      <Button
-                        size="small"
-                        variant="contained"
-                        startIcon={copied === 'all' ? <Check fontSize="small" /> : <Email fontSize="small" />}
-                        onClick={() => handleCopy(`Subject: ${displayed.subject}\n\n${displayed.body}`, 'all')}
-                        color={copied === 'all' ? 'success' : 'primary'}
-                      >
-                        {copied === 'all' ? 'Copied!' : 'Copy all'}
-                      </Button>
-                    </Box>
-                  </Box>
-                  <Box
-                    component="pre"
-                    sx={{
-                      whiteSpace: 'pre-wrap',
-                      fontFamily: '"Roboto", sans-serif',
-                      fontSize: '0.875rem',
-                      color: 'text.primary',
-                      lineHeight: 1.7,
-                      minHeight: 260,
-                      maxHeight: '60vh',
-                      overflowY: 'auto',
-                      m: 0,
-                    }}
-                  >
-                    {displayed.body}
-                  </Box>
-                </CardContent>
-
-                {/* Regenerate */}
-                <Box sx={{ px: 2.5, py: 1.5, borderTop: '1px solid', borderColor: 'divider', bgcolor: 'grey.50' }}>
-                  <Button
-                    size="small"
-                    startIcon={generating ? <CircularProgress size={14} /> : <AutoAwesome fontSize="small" />}
-                    onClick={handleGenerate}
-                    disabled={generating}
-                  >
-                    {generating ? 'Regenerating…' : 'Regenerate'}
-                  </Button>
-                </Box>
-              </Card>
-            ) : (
-              <Card
-                sx={{
-                  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                  minHeight: 380, border: '1.5px dashed', borderColor: 'divider', textAlign: 'center', p: 4,
-                }}
-              >
-                <Email sx={{ fontSize: 56, color: 'text.disabled', mb: 2 }} />
-                <Typography variant="h6" gutterBottom>No email generated yet</Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ maxWidth: 300 }}>
-                  Choose an email type, fill in the details, and click <strong>Generate Email</strong> to get a tailored professional email.
-                </Typography>
+                    <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+                      Session History ({history.length})
+                    </span>
+                    <button className="p-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                      {showHistory ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                    </button>
+                  </div>
+                  {showHistory && (
+                    <div className="flex flex-col gap-2 mt-4 max-h-60 overflow-y-auto pr-1">
+                      {history.map((entry, i) => {
+                        const typeInfo = EMAIL_TYPES.find((t) => t.value === entry.type)!;
+                        const isSelected = activeHistory === entry.email;
+                        return (
+                          <div
+                            key={i}
+                            onClick={() => setActiveHistory(entry.email)}
+                            className={`p-3 rounded-xl border text-left cursor-pointer transition-all duration-150 ${
+                              isSelected
+                                ? 'border-blue-300 bg-blue-50/30 dark:border-blue-900 dark:bg-blue-950/10'
+                                : 'border-slate-100 hover:bg-slate-50 bg-slate-50/50 dark:border-slate-800 dark:hover:bg-slate-800/30'
+                            }`}
+                          >
+                            <span className="text-xs font-semibold text-slate-700 dark:text-slate-300 block">
+                              {typeInfo.label} — {entry.label}
+                            </span>
+                            <span className="text-xs text-slate-500 dark:text-slate-400 truncate block mt-1">
+                              {entry.email.subject}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </CardBody>
               </Card>
             )}
-          </Grid>
-        </Grid>
-      </Box>
+          </div>
+
+          {/* Right Side: Output */}
+          <div className="lg:col-span-7">
+            {displayed ? (
+              <Card className="h-full flex flex-col">
+                {/* Subject Block */}
+                <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 rounded-t-lg">
+                  <div className="min-w-0 flex-1">
+                    <span className="text-2xs uppercase tracking-wider text-slate-400 font-bold block mb-0.5">
+                      Subject
+                    </span>
+                    <span className="text-sm font-semibold text-slate-900 dark:text-white truncate block">
+                      {displayed.subject}
+                    </span>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={`ml-4 shrink-0 transition-all ${
+                      copied === 'subject' ? 'text-green-600 border-green-200 bg-green-50' : ''
+                    }`}
+                    onClick={() => handleCopy(displayed.subject, 'subject')}
+                  >
+                    {copied === 'subject' ? (
+                      <>
+                        <Check className="w-3.5 h-3.5" />
+                        <span>Copied</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>Copy</span>
+                      </>
+                    )}
+                  </Button>
+                </div>
+
+                {/* Email Body Block */}
+                <CardBody className="p-6 flex-1 flex flex-col min-h-[400px]">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-2xs uppercase tracking-wider text-slate-400 font-bold block">
+                      Body
+                    </span>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className={copied === 'body' ? 'text-green-600 border-green-200 bg-green-50' : ''}
+                        onClick={() => handleCopy(displayed.body, 'body')}
+                      >
+                        {copied === 'body' ? (
+                          <>
+                            <Check className="w-3.5 h-3.5" />
+                            <span>Copied body</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" />
+                            <span>Copy body</span>
+                          </>
+                        )}
+                      </Button>
+                      <Button
+                        variant="primary"
+                        size="sm"
+                        className={copied === 'all' ? 'bg-green-600 hover:bg-green-700' : ''}
+                        onClick={() => handleCopy(`Subject: ${displayed.subject}\n\n${displayed.body}`, 'all')}
+                      >
+                        {copied === 'all' ? (
+                          <>
+                            <Check className="w-3.5 h-3.5" />
+                            <span>Copied all</span>
+                          </>
+                        ) : (
+                          <>
+                            <Mail className="w-3.5 h-3.5" />
+                            <span>Copy all</span>
+                          </>
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="flex-1 bg-slate-50 dark:bg-slate-950/40 rounded-xl p-5 border border-slate-100 dark:border-slate-800">
+                    <pre className="whitespace-pre-wrap font-sans text-sm text-slate-800 dark:text-slate-200 leading-relaxed min-h-[300px] max-h-[50vh] overflow-y-auto">
+                      {displayed.body}
+                    </pre>
+                  </div>
+                </CardBody>
+
+                {/* Footer Actions */}
+                <div className="px-6 py-4 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 rounded-b-lg">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex items-center gap-2"
+                    onClick={handleGenerate}
+                    loading={generating}
+                  >
+                    {!generating && <Sparkles className="w-3.5 h-3.5 text-blue-500" />}
+                    {generating ? 'Regenerating…' : 'Regenerate'}
+                  </Button>
+                </div>
+              </Card>
+            ) : (
+              <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-2xl p-12 text-center bg-white dark:bg-slate-900 min-h-[480px]">
+                <div className="w-16 h-16 rounded-full bg-slate-50 dark:bg-slate-850 flex items-center justify-center mb-5 border border-slate-100 dark:border-slate-800">
+                  <Mail className="w-8 h-8 text-slate-400" />
+                </div>
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                  No email generated yet
+                </h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed mb-6">
+                  Choose an email type, fill in the details, and click <strong>Generate Email</strong> to get a tailored professional email instantly.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </NavLayout>
   );
 }

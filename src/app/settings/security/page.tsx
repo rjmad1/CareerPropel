@@ -5,23 +5,16 @@ export const dynamic = 'force-dynamic';
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { NavLayout } from '@/components/Layout/NavLayout';
+import { Button, Card } from '@/components/ui';
 import {
-  Alert,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Chip,
-  CircularProgress,
-  TextField,
-  Typography,
-} from '@mui/material';
-import {
-  Security,
+  Shield,
   CheckCircle,
-  Cancel,
-} from '@mui/icons-material';
-import { ContentCopy, Check } from '@mui/icons-material';
+  XCircle,
+  Copy,
+  Check,
+  AlertTriangle,
+  Loader2,
+} from 'lucide-react';
 
 type Step = 'loading' | 'disabled' | 'setup' | 'verify' | 'enabled' | 'disabling';
 
@@ -121,217 +114,232 @@ export default function SecuritySettingsPage() {
 
   return (
     <NavLayout title="Security" subtitle="Two-factor authentication and account protection">
-      <Box sx={{ p: 3, maxWidth: 560, mx: 'auto', display: 'flex', flexDirection: 'column', gap: 3 }}>
+      <div className="p-6 max-w-xl mx-auto flex flex-col gap-6">
 
         {/* Status card */}
-        <Card>
-          <CardContent sx={{ p: 3 }}>
-            {step === 'loading' ? (
-              <Box sx={{ display: 'flex', justifyContent: 'center', py: 2 }}>
-                <CircularProgress size={28} />
-              </Box>
-            ) : (
-              <>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+        <Card className="p-6">
+          {step === 'loading' ? (
+            <div className="flex justify-center py-4">
+              <Loader2 className="w-7 h-7 text-blue-600 animate-spin" />
+            </div>
+          ) : (
+            <div className="flex flex-col gap-6">
+              <div className="flex items-start gap-4">
+                <div className={`p-3 rounded-2xl ${step === 'enabled' ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-100 text-slate-500'}`}>
                   {step === 'enabled' ? (
-                    <CheckCircle sx={{ color: 'success.main', fontSize: 28 }} />
+                    <CheckCircle className="w-6 h-6" />
                   ) : (
-                    <Security sx={{ color: 'text.disabled', fontSize: 28 }} />
+                    <Shield className="w-6 h-6" />
                   )}
-                  <Box sx={{ flex: 1 }}>
-                    <Typography variant="h6" sx={{ lineHeight: 1.3 }}>Two-Factor Authentication</Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {step === 'enabled' ? '2FA is active on your account.' : 'Protect your account with an authenticator app.'}
-                    </Typography>
-                  </Box>
-                  <Chip
-                    label={step === 'enabled' ? 'Enabled' : 'Disabled'}
-                    color={step === 'enabled' ? 'success' : 'default'}
-                    size="small"
-                  />
-                </Box>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-bold text-slate-900 leading-tight">Two-Factor Authentication</h3>
+                  <p className="text-sm text-slate-500 mt-1">
+                    {step === 'enabled' ? '2FA is active on your account.' : 'Protect your account with an authenticator app.'}
+                  </p>
+                </div>
+                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${step === 'enabled' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' : 'bg-slate-50 text-slate-600 border-slate-200'}`}>
+                  {step === 'enabled' ? 'Enabled' : 'Disabled'}
+                </span>
+              </div>
 
-                {step === 'disabled' && (
-                  <Button
-                    variant="contained"
-                    onClick={handleStartSetup}
-                    disabled={loading}
-                    startIcon={loading ? <CircularProgress size={16} /> : undefined}
-                  >
-                    Set up 2FA
-                  </Button>
-                )}
+              {step === 'disabled' && (
+                <Button
+                  onClick={handleStartSetup}
+                  disabled={loading}
+                  loading={loading}
+                  className="w-fit"
+                >
+                  Set up 2FA
+                </Button>
+              )}
 
-                {step === 'enabled' && (
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    startIcon={<Cancel />}
-                    onClick={() => { setStep('disabling'); setError(''); }}
-                  >
-                    Disable 2FA
-                  </Button>
-                )}
+              {step === 'enabled' && (
+                <Button
+                  variant="outline"
+                  onClick={() => { setStep('disabling'); setError(''); }}
+                  className="w-fit text-red-600 border-red-200 hover:bg-red-50 hover:text-red-700 hover:border-red-300"
+                >
+                  Disable 2FA
+                </Button>
+              )}
 
-                {error && (step === 'disabled' || step === 'enabled') && (
-                  <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>
-                )}
-              </>
-            )}
-          </CardContent>
+              {error && (step === 'disabled' || step === 'enabled') && (
+                <div className="flex items-start gap-2 p-3.5 bg-rose-50 border border-rose-100 text-rose-800 text-sm rounded-xl">
+                  <XCircle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
+                  <span>{error}</span>
+                </div>
+              )}
+            </div>
+          )}
         </Card>
 
         {/* Disable confirmation panel */}
         {step === 'disabling' && (
-          <Card sx={{ border: '1px solid', borderColor: 'error.light' }}>
-            <CardContent sx={{ p: 3 }}>
-              <Typography variant="h6" gutterBottom>Disable Two-Factor Authentication</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                Enter the 6-digit code from your authenticator app to confirm. This will remove 2FA protection from your account.
-              </Typography>
-              <form onSubmit={handleDisable}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  <TextField
-                    slotProps={{ htmlInput: { inputMode: 'numeric', pattern: '\\d{6}', maxLength: 6 } }}
-                    placeholder="000000"
-                    value={disableCode}
-                    onChange={(e) => setDisableCode(e.target.value.replace(/\D/g, ''))}
-                    sx={{ '& input': { textAlign: 'center', fontSize: '1.5rem', fontFamily: 'monospace', letterSpacing: '0.25em' } }}
-                    fullWidth
-                    autoFocus
-                  />
-                  {error && <Alert severity="error">{error}</Alert>}
-                  <Box sx={{ display: 'flex', gap: 2 }}>
-                    <Button
-                      fullWidth
-                      variant="outlined"
-                      onClick={() => { setStep('enabled'); setError(''); setDisableCode(''); }}
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      fullWidth
-                      type="submit"
-                      variant="contained"
-                      color="error"
-                      disabled={loading || disableCode.length !== 6}
-                    >
-                      {loading ? 'Disabling…' : 'Confirm Disable'}
-                    </Button>
-                  </Box>
-                </Box>
-              </form>
-            </CardContent>
+          <Card className="p-6 border-red-200/80 bg-red-50/10">
+            <h3 className="text-lg font-bold text-slate-900 mb-2">Disable Two-Factor Authentication</h3>
+            <p className="text-sm text-slate-500 mb-4 leading-relaxed">
+              Enter the 6-digit code from your authenticator app to confirm. This will remove 2FA protection from your account.
+            </p>
+            <form onSubmit={handleDisable}>
+              <div className="flex flex-col gap-4">
+                <input
+                  inputMode="numeric"
+                  pattern="\d{6}"
+                  maxLength={6}
+                  placeholder="000000"
+                  value={disableCode}
+                  onChange={(e) => setDisableCode(e.target.value.replace(/\D/g, ''))}
+                  className="w-full text-center py-3 text-3xl font-mono tracking-widest border border-slate-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:outline-none bg-white text-slate-900"
+                  autoFocus
+                />
+                {error && (
+                  <div className="flex items-start gap-2 p-3.5 bg-rose-50 border border-rose-100 text-rose-800 text-sm rounded-xl">
+                    <XCircle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
+                    <span>{error}</span>
+                  </div>
+                )}
+                <div className="flex gap-3">
+                  <Button
+                    variant="outline"
+                    className="flex-1"
+                    onClick={() => { setStep('enabled'); setError(''); setDisableCode(''); }}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    variant="danger"
+                    className="flex-1"
+                    disabled={loading || disableCode.length !== 6}
+                    loading={loading}
+                  >
+                    Confirm Disable
+                  </Button>
+                </div>
+              </div>
+            </form>
           </Card>
         )}
 
         {/* Step 1 — Scan QR */}
         {step === 'setup' && setupData && (
-          <Card>
-            <CardContent sx={{ p: 3, display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-              <Typography variant="h6">Step 1 — Scan QR code</Typography>
-              <Typography variant="body2" color="text.secondary">
-                Open Google Authenticator, Authy, or any TOTP app and scan this code.
-              </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Image src={setupData.qrCode} alt="QR code for 2FA setup" width={192} height={192}
-                  style={{ borderRadius: 8, border: '1px solid #E5E7EB' }} unoptimized />
-              </Box>
+          <Card className="p-6 flex flex-col gap-5">
+            <h3 className="text-lg font-bold text-slate-900">Step 1 — Scan QR code</h3>
+            <p className="text-sm text-slate-500 leading-relaxed">
+              Open Google Authenticator, Authy, or any TOTP app and scan this code.
+            </p>
+            <div className="flex justify-center p-4 bg-slate-50 rounded-2xl border border-slate-100 w-fit mx-auto">
+              <Image src={setupData.qrCode} alt="QR code for 2FA setup" width={192} height={192}
+                className="rounded-xl border border-slate-200 bg-white" unoptimized />
+            </div>
 
-              <Box>
-                <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600, display: 'block', mb: 0.75 }}>
-                  Manual entry key
-                </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, bgcolor: 'grey.50', border: '1px solid', borderColor: 'divider', borderRadius: 1, px: 1.5, py: 1 }}>
-                  <Typography component="code" sx={{ flex: 1, fontFamily: 'monospace', fontSize: '0.8125rem', wordBreak: 'break-all' }}>
-                    {setupData.secret}
-                  </Typography>
-                  <Button
-                    size="small"
-                    onClick={() => copy(setupData.secret, 'secret')}
-                    startIcon={copiedSecret ? <Check sx={{ color: 'success.main' }} /> : <ContentCopy />}
-                    sx={{ flexShrink: 0 }}
+            <div className="space-y-1.5">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 block">
+                Manual entry key
+              </span>
+              <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5">
+                <code className="flex-1 font-mono text-sm text-slate-800 break-all select-all">
+                  {setupData.secret}
+                </code>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => copy(setupData.secret, 'secret')}
+                  className="flex-shrink-0 text-slate-600 hover:text-indigo-600"
+                >
+                  {copiedSecret ? (
+                    <Check className="w-4 h-4 text-emerald-600" />
+                  ) : (
+                    <Copy className="w-4 h-4" />
+                  )}
+                </Button>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Backup codes — save now
+                </span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => copy(setupData.backupCodes.join('\n'), 'codes')}
+                  className="text-slate-600 hover:text-indigo-600"
+                >
+                  {copiedCodes ? (
+                    <span className="flex items-center gap-1 text-emerald-600"><Check className="w-3.5 h-3.5" /> Copied</span>
+                  ) : (
+                    <span className="flex items-center gap-1"><Copy className="w-3.5 h-3.5" /> Copy all</span>
+                  )}
+                </Button>
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {setupData.backupCodes.map((code) => (
+                  <code
+                    key={code}
+                    className="bg-slate-50 border border-slate-200 rounded-lg py-2 text-center font-mono text-sm text-slate-800 select-all"
                   >
-                    {copiedSecret ? 'Copied' : 'Copy'}
-                  </Button>
-                </Box>
-              </Box>
+                    {code}
+                  </code>
+                ))}
+              </div>
+              <div className="flex items-start gap-2.5 p-3.5 bg-amber-50 border border-amber-100 text-amber-800 text-xs rounded-xl mt-3">
+                <AlertTriangle className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                <span>Each backup code can only be used once. Store them somewhere safe.</span>
+              </div>
+            </div>
 
-              <Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
-                  <Typography variant="caption" color="text.secondary" sx={{ textTransform: 'uppercase', letterSpacing: '0.06em', fontWeight: 600 }}>
-                    Backup codes — save now
-                  </Typography>
-                  <Button
-                    size="small"
-                    onClick={() => copy(setupData.backupCodes.join('\n'), 'codes')}
-                    startIcon={copiedCodes ? <Check sx={{ color: 'success.main' }} /> : <ContentCopy />}
-                  >
-                    {copiedCodes ? 'Copied' : 'Copy all'}
-                  </Button>
-                </Box>
-                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1 }}>
-                  {setupData.backupCodes.map((code) => (
-                    <Box
-                      key={code}
-                      component="code"
-                      sx={{ bgcolor: 'grey.50', border: '1px solid', borderColor: 'divider', borderRadius: 1, px: 1.5, py: 1, textAlign: 'center', fontFamily: 'monospace', fontSize: '0.8125rem' }}
-                    >
-                      {code}
-                    </Box>
-                  ))}
-                </Box>
-                <Alert severity="warning" sx={{ mt: 1.5 }}>
-                  Each backup code can only be used once. Store them somewhere safe.
-                </Alert>
-              </Box>
-
-              <Button variant="contained" fullWidth onClick={() => setStep('verify')}>
-                I&apos;ve scanned the code →
-              </Button>
-            </CardContent>
+            <Button variant="primary" className="w-full mt-2" onClick={() => setStep('verify')}>
+              I&apos;ve scanned the code →
+            </Button>
           </Card>
         )}
 
         {/* Step 2 — Verify */}
         {step === 'verify' && setupData && (
-          <Card>
-            <CardContent sx={{ p: 3 }}>
-              <Typography variant="h6" gutterBottom>Step 2 — Verify</Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                Enter the 6-digit code shown in your authenticator app to confirm setup.
-              </Typography>
-              <form onSubmit={handleEnable}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                  <TextField
-                    slotProps={{ htmlInput: { inputMode: 'numeric', pattern: '\\d{6}', maxLength: 6 } }}
-                    placeholder="000000"
-                    value={totpCode}
-                    onChange={(e) => setTotpCode(e.target.value.replace(/\D/g, ''))}
-                    sx={{ '& input': { textAlign: 'center', fontSize: '1.5rem', fontFamily: 'monospace', letterSpacing: '0.25em' } }}
-                    fullWidth
-                    autoFocus
-                  />
-                  {error && <Alert severity="error">{error}</Alert>}
-                  <Box sx={{ display: 'flex', gap: 2 }}>
-                    <Button fullWidth variant="outlined" onClick={() => { setStep('setup'); setError(''); }}>
-                      Back
-                    </Button>
-                    <Button
-                      fullWidth
-                      type="submit"
-                      variant="contained"
-                      disabled={loading || totpCode.length !== 6}
-                    >
-                      {loading ? 'Verifying…' : 'Enable 2FA'}
-                    </Button>
-                  </Box>
-                </Box>
-              </form>
-            </CardContent>
+          <Card className="p-6">
+            <h3 className="text-lg font-bold text-slate-900 mb-1">Step 2 — Verify</h3>
+            <p className="text-sm text-slate-500 mb-4 leading-relaxed">
+              Enter the 6-digit code shown in your authenticator app to confirm setup.
+            </p>
+            <form onSubmit={handleEnable}>
+              <div className="flex flex-col gap-4">
+                <input
+                  inputMode="numeric"
+                  pattern="\d{6}"
+                  maxLength={6}
+                  placeholder="000000"
+                  value={totpCode}
+                  onChange={(e) => setTotpCode(e.target.value.replace(/\D/g, ''))}
+                  className="w-full text-center py-3 text-3xl font-mono tracking-widest border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none bg-white text-slate-900"
+                  autoFocus
+                />
+                {error && (
+                  <div className="flex items-start gap-2 p-3.5 bg-rose-50 border border-rose-100 text-rose-800 text-sm rounded-xl">
+                    <XCircle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
+                    <span>{error}</span>
+                  </div>
+                )}
+                <div className="flex gap-3">
+                  <Button variant="outline" className="flex-1" onClick={() => { setStep('setup'); setError(''); }}>
+                    Back
+                  </Button>
+                  <Button
+                    type="submit"
+                    className="flex-1"
+                    disabled={loading || totpCode.length !== 6}
+                    loading={loading}
+                  >
+                    Enable 2FA
+                  </Button>
+                </div>
+              </div>
+            </form>
           </Card>
         )}
-      </Box>
+      </div>
     </NavLayout>
   );
 }

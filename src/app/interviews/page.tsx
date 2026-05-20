@@ -2,45 +2,35 @@
 
 export const dynamic = 'force-dynamic';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import {
-  Alert,
-  Box,
   Button,
+  Input,
+  Textarea,
   Card,
-  CardContent,
-  Chip,
-  CircularProgress,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  FormControl,
-  Grid,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Rating,
+  Modal,
+  ModalHeader,
+  ModalTitle,
+  ModalBody,
+  ModalFooter,
   Select,
-  Tab,
-  Tabs,
-  TextField,
-  Typography,
-} from '@mui/material';
+} from '@/components/ui';
 import {
-  Add,
-  CalendarMonth,
+  Plus,
+  Calendar,
   Download,
-  ExpandMore,
-  ExpandLess,
-  LocationOn,
+  ChevronDown,
+  ChevronUp,
+  MapPin,
   Link as LinkIcon,
-  Person,
-  Schedule,
-  VideoCall,
-} from '@mui/icons-material';
+  User,
+  Clock,
+  Video,
+  Star,
+  Loader2,
+  AlertTriangle,
+} from 'lucide-react';
 
 type InterviewType = 'recruiter_screen' | 'technical' | 'system_design' | 'behavioral' | 'final_round' | 'other';
 type InterviewStatus = 'scheduled' | 'completed' | 'cancelled' | 'no_show';
@@ -74,11 +64,11 @@ const TYPE_LABELS: Record<InterviewType, string> = {
   other: 'Other',
 };
 
-const STATUS_COLOR: Record<InterviewStatus, 'default' | 'primary' | 'success' | 'error' | 'warning'> = {
-  scheduled: 'primary',
-  completed: 'success',
-  cancelled: 'default',
-  no_show: 'error',
+const STATUS_CLASSES: Record<InterviewStatus, string> = {
+  scheduled: 'bg-blue-50 text-blue-700 border-blue-200',
+  completed: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  cancelled: 'bg-slate-50 text-slate-600 border-slate-200',
+  no_show: 'bg-rose-50 text-rose-700 border-rose-200',
 };
 
 const STATUS_LABELS: Record<InterviewStatus, string> = {
@@ -104,19 +94,27 @@ function generateICS(interview: Interview): string {
     interview.interviewer?.name ? `Interviewer: ${interview.interviewer.name}` : '',
     interview.meetingLink ? `Meeting: ${interview.meetingLink}` : '',
     interview.notes ? `Notes: ${interview.notes}` : '',
-  ].filter(Boolean).join('\\n');
+  ]
+    .filter(Boolean)
+    .join('\\n');
 
   const lines = [
-    'BEGIN:VCALENDAR', 'VERSION:2.0',
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
     'PRODID:-//CareerPropel//Interview Scheduler//EN',
-    'CALSCALE:GREGORIAN', 'METHOD:PUBLISH', 'BEGIN:VEVENT',
+    'CALSCALE:GREGORIAN',
+    'METHOD:PUBLISH',
+    'BEGIN:VEVENT',
     `UID:interview-${interview.id}@careerpropel`,
-    `DTSTAMP:${fmt(new Date())}`, `DTSTART:${fmt(start)}`, `DTEND:${fmt(end)}`,
+    `DTSTAMP:${fmt(new Date())}`,
+    `DTSTART:${fmt(start)}`,
+    `DTEND:${fmt(end)}`,
     `SUMMARY:${summary}`,
     description ? `DESCRIPTION:${description}` : '',
     interview.meetingLink ? `URL:${interview.meetingLink}` : '',
     interview.location ? `LOCATION:${interview.location}` : '',
-    'END:VEVENT', 'END:VCALENDAR',
+    'END:VEVENT',
+    'END:VCALENDAR',
   ].filter(Boolean);
 
   return lines.join('\r\n');
@@ -143,10 +141,16 @@ interface ScheduleDialogProps {
 
 function ScheduleDialog({ open, jobs, onSuccess, onClose }: ScheduleDialogProps) {
   const [form, setForm] = useState({
-    jobId: '', type: 'technical' as InterviewType,
-    scheduledAt: '', duration: '60',
-    interviewerName: '', interviewerEmail: '', interviewerTitle: '',
-    meetingLink: '', location: '', notes: '',
+    jobId: '',
+    type: 'technical' as InterviewType,
+    scheduledAt: '',
+    duration: '60',
+    interviewerName: '',
+    interviewerEmail: '',
+    interviewerTitle: '',
+    meetingLink: '',
+    location: '',
+    notes: '',
   });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -157,7 +161,10 @@ function ScheduleDialog({ open, jobs, onSuccess, onClose }: ScheduleDialogProps)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!form.jobId || !form.scheduledAt) { setError('Job and date/time are required.'); return; }
+    if (!form.jobId || !form.scheduledAt) {
+      setError('Job and date/time are required.');
+      return;
+    }
     setSaving(true);
     setError('');
     try {
@@ -194,89 +201,128 @@ function ScheduleDialog({ open, jobs, onSuccess, onClose }: ScheduleDialogProps)
     }
   }
 
+  const jobOptions = useMemo(() => {
+    return [
+      { value: '', label: 'Select a job...' },
+      ...jobs.map((j) => ({
+        value: j.id,
+        label: `${j.title} — ${j.company}`,
+      })),
+    ];
+  }, [jobs]);
+
+  const typeOptions = useMemo(() => {
+    return Object.entries(TYPE_LABELS).map(([val, label]) => ({
+      value: val,
+      label,
+    }));
+  }, []);
+
+  const durationOptions = useMemo(() => {
+    return [15, 30, 45, 60, 90, 120].map((d) => ({
+      value: String(d),
+      label: `${d} min`,
+    }));
+  }, []);
+
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Schedule Interview</DialogTitle>
+    <Modal isOpen={open} onClose={onClose} className="max-w-lg">
+      <ModalHeader onClose={onClose}>
+        <ModalTitle>Schedule Interview</ModalTitle>
+      </ModalHeader>
       <form onSubmit={handleSubmit}>
-        <DialogContent sx={{ pt: 1 }}>
-          <Grid container spacing={2}>
-            <Grid size={12}>
-              <FormControl fullWidth size="small" required>
-                <InputLabel>Job</InputLabel>
-                <Select value={form.jobId} label="Job" onChange={(e) => setField('jobId', e.target.value)}>
-                  <MenuItem value=""><em>Select a job…</em></MenuItem>
-                  {jobs.map((j) => (
-                    <MenuItem key={j.id} value={j.id}>{j.title} — {j.company}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid size={6}>
-              <FormControl fullWidth size="small">
-                <InputLabel>Interview Type</InputLabel>
-                <Select value={form.type} label="Interview Type" onChange={(e) => setField('type', e.target.value)}>
-                  {Object.entries(TYPE_LABELS).map(([val, label]) => (
-                    <MenuItem key={val} value={val}>{label}</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid size={6}>
-              <FormControl fullWidth size="small">
-                <InputLabel>Duration</InputLabel>
-                <Select value={form.duration} label="Duration" onChange={(e) => setField('duration', e.target.value)}>
-                  {[15, 30, 45, 60, 90, 120].map((d) => (
-                    <MenuItem key={d} value={d}>{d} min</MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid size={12}>
-              <TextField
-                label="Date & Time"
-                type="datetime-local"
-                required
-                fullWidth
-                value={form.scheduledAt}
-                onChange={(e) => setField('scheduledAt', e.target.value)}
-                slotProps={{ inputLabel: { shrink: true } }}
+        <ModalBody className="flex flex-col gap-4">
+          <Select
+            label="Job"
+            required
+            options={jobOptions}
+            value={form.jobId}
+            onChange={(e) => setField('jobId', e.target.value)}
+          />
+
+          <div className="grid grid-cols-2 gap-4">
+            <Select
+              label="Interview Type"
+              options={typeOptions}
+              value={form.type}
+              onChange={(e) => setField('type', e.target.value)}
+            />
+            <Select
+              label="Duration"
+              options={durationOptions}
+              value={form.duration}
+              onChange={(e) => setField('duration', e.target.value)}
+            />
+          </div>
+
+          <Input
+            label="Date & Time"
+            type="datetime-local"
+            required
+            value={form.scheduledAt}
+            onChange={(e) => setField('scheduledAt', e.target.value)}
+          />
+
+          <div className="border-t border-slate-100 pt-3">
+            <span className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">
+              Interviewer (optional)
+            </span>
+            <div className="grid grid-cols-2 gap-4">
+              <Input
+                label="Name"
+                value={form.interviewerName}
+                onChange={(e) => setField('interviewerName', e.target.value)}
+                placeholder="Jane Smith"
               />
-            </Grid>
-            <Grid size={12}>
-              <Divider sx={{ my: 0.5 }}>
-                <Typography variant="caption" color="text.secondary">Interviewer (optional)</Typography>
-              </Divider>
-            </Grid>
-            <Grid size={6}>
-              <TextField label="Name" fullWidth value={form.interviewerName} onChange={(e) => setField('interviewerName', e.target.value)} placeholder="Jane Smith" />
-            </Grid>
-            <Grid size={6}>
-              <TextField label="Title" fullWidth value={form.interviewerTitle} onChange={(e) => setField('interviewerTitle', e.target.value)} placeholder="Engineering Manager" />
-            </Grid>
-            <Grid size={12}>
-              <TextField label="Meeting Link" fullWidth type="url" value={form.meetingLink} onChange={(e) => setField('meetingLink', e.target.value)} placeholder="https://zoom.us/j/…" />
-            </Grid>
-            <Grid size={12}>
-              <TextField label="Location / Address" fullWidth value={form.location} onChange={(e) => setField('location', e.target.value)} placeholder="123 Main St or Remote" />
-            </Grid>
-            <Grid size={12}>
-              <TextField label="Notes" fullWidth multiline rows={2} value={form.notes} onChange={(e) => setField('notes', e.target.value)} placeholder="Preparation notes, what to bring, etc." />
-            </Grid>
-            {error && (
-              <Grid size={12}>
-                <Alert severity="error">{error}</Alert>
-              </Grid>
-            )}
-          </Grid>
-        </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button onClick={onClose} disabled={saving}>Cancel</Button>
-          <Button type="submit" variant="contained" disabled={saving}>
-            {saving ? 'Saving…' : 'Schedule'}
+              <Input
+                label="Title"
+                value={form.interviewerTitle}
+                onChange={(e) => setField('interviewerTitle', e.target.value)}
+                placeholder="Engineering Manager"
+              />
+            </div>
+          </div>
+
+          <Input
+            label="Meeting Link"
+            type="url"
+            value={form.meetingLink}
+            onChange={(e) => setField('meetingLink', e.target.value)}
+            placeholder="https://zoom.us/j/…"
+          />
+
+          <Input
+            label="Location / Address"
+            value={form.location}
+            onChange={(e) => setField('location', e.target.value)}
+            placeholder="123 Main St or Remote"
+          />
+
+          <Textarea
+            label="Notes"
+            value={form.notes}
+            onChange={(e) => setField('notes', e.target.value)}
+            placeholder="Preparation notes, what to bring, etc."
+            rows={2}
+          />
+
+          {error && (
+            <div className="flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-800 text-sm rounded-xl">
+              <AlertTriangle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
+              <span>{error}</span>
+            </div>
+          )}
+        </ModalBody>
+        <ModalFooter>
+          <Button variant="outline" type="button" onClick={onClose} disabled={saving}>
+            Cancel
           </Button>
-        </DialogActions>
+          <Button type="submit" disabled={saving} loading={saving}>
+            Schedule
+          </Button>
+        </ModalFooter>
       </form>
-    </Dialog>
+    </Modal>
   );
 }
 
@@ -319,55 +365,78 @@ function FeedbackDialog({ open, interview, onClose, onSuccess }: FeedbackDialogP
     }
   }
 
+  const outcomeOptions = [
+    { value: 'completed', label: 'Completed' },
+    { value: 'cancelled', label: 'Cancelled' },
+    { value: 'no_show', label: 'No Show' },
+  ];
+
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Log Feedback</DialogTitle>
+    <Modal isOpen={open} onClose={onClose} className="max-w-md">
+      <ModalHeader onClose={onClose}>
+        <ModalTitle>Log Feedback</ModalTitle>
+      </ModalHeader>
       <form onSubmit={handleSubmit}>
-        <DialogContent sx={{ pt: 1 }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
-            <FormControl fullWidth size="small">
-              <InputLabel>Outcome</InputLabel>
-              <Select value={status} label="Outcome" onChange={(e) => setStatus(e.target.value as InterviewStatus)}>
-                {(['completed', 'cancelled', 'no_show'] as InterviewStatus[]).map((s) => (
-                  <MenuItem key={s} value={s}>{STATUS_LABELS[s]}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <Box>
-              <Typography variant="body2" color="text.secondary" gutterBottom>How did it go?</Typography>
-              <Rating
-                value={rating}
-                onChange={(_, v) => setRating(v)}
-                size="large"
-              />
-            </Box>
-            <TextField
-              label="Notes"
-              multiline
-              rows={3}
-              fullWidth
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="How did the interview feel? Any tough questions?"
-            />
-            <TextField
-              label="Next Steps"
-              fullWidth
-              value={nextSteps}
-              onChange={(e) => setNextSteps(e.target.value)}
-              placeholder="e.g. Second round next week, waiting for decision"
-            />
-            {error && <Alert severity="error">{error}</Alert>}
-          </Box>
-        </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button onClick={onClose} disabled={saving}>Cancel</Button>
-          <Button type="submit" variant="contained" disabled={saving}>
-            {saving ? 'Saving…' : 'Save'}
+        <ModalBody className="flex flex-col gap-4">
+          <Select
+            label="Outcome"
+            options={outcomeOptions}
+            value={status}
+            onChange={(e) => setStatus(e.target.value as InterviewStatus)}
+          />
+
+          <div>
+            <span className="block text-sm font-semibold text-slate-700 mb-2">How did it go?</span>
+            <div className="flex gap-1.5">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  type="button"
+                  onClick={() => setRating(star)}
+                  className="text-slate-300 hover:text-amber-400 focus:outline-none transition-colors"
+                >
+                  <Star
+                    className={`w-7 h-7 ${
+                      (rating ?? 0) >= star ? 'fill-amber-400 text-amber-400' : 'text-slate-300'
+                    }`}
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <Textarea
+            label="Notes"
+            rows={3}
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            placeholder="How did the interview feel? Any tough questions?"
+          />
+
+          <Input
+            label="Next Steps"
+            value={nextSteps}
+            onChange={(e) => setNextSteps(e.target.value)}
+            placeholder="e.g. Second round next week, waiting for decision"
+          />
+
+          {error && (
+            <div className="flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-800 text-sm rounded-xl">
+              <AlertTriangle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
+              <span>{error}</span>
+            </div>
+          )}
+        </ModalBody>
+        <ModalFooter>
+          <Button variant="outline" type="button" onClick={onClose} disabled={saving}>
+            Cancel
           </Button>
-        </DialogActions>
+          <Button type="submit" disabled={saving} loading={saving}>
+            Save
+          </Button>
+        </ModalFooter>
       </form>
-    </Dialog>
+    </Modal>
   );
 }
 
@@ -377,108 +446,155 @@ function InterviewCard({ interview, onFeedback }: { interview: Interview; onFeed
   const isPast = scheduled < new Date();
 
   return (
-    <Card>
-      <CardContent sx={{ p: 2.5, '&:last-child': { pb: 2.5 } }}>
-        <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 2 }}>
-          <Box sx={{ flex: 1, minWidth: 0 }}>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap', mb: 0.5 }}>
-              <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
-                {interview.job ? `${interview.job.title} — ${interview.job.company}` : 'Unknown Job'}
-              </Typography>
-              <Chip label={STATUS_LABELS[interview.status]} size="small" color={STATUS_COLOR[interview.status]} />
-            </Box>
-            <Typography variant="caption" sx={{ color: 'primary.main', fontWeight: 500, display: 'block', mb: 1 }}>
-              {TYPE_LABELS[interview.type]}
-            </Typography>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                <CalendarMonth sx={{ fontSize: 14, color: 'text.secondary' }} />
-                <Typography variant="caption" color="text.secondary">
-                  {scheduled.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
-                </Typography>
-              </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                <Schedule sx={{ fontSize: 14, color: 'text.secondary' }} />
-                <Typography variant="caption" color="text.secondary">
-                  {scheduled.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })} · {interview.duration ?? 60} min
-                </Typography>
-              </Box>
-              {interview.interviewer?.name && (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                  <Person sx={{ fontSize: 14, color: 'text.secondary' }} />
-                  <Typography variant="caption" color="text.secondary">{interview.interviewer.name}</Typography>
-                </Box>
-              )}
-            </Box>
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flexShrink: 0 }}>
-            {interview.meetingLink && (
-              <IconButton size="small" component="a" href={interview.meetingLink} target="_blank" rel="noopener noreferrer" title="Join meeting" sx={{ color: 'primary.main' }}>
-                <VideoCall fontSize="small" />
-              </IconButton>
-            )}
-            <IconButton size="small" onClick={() => downloadICS(interview)} title="Download .ics" sx={{ color: 'text.secondary' }}>
-              <Download fontSize="small" />
-            </IconButton>
-            {isPast && interview.status === 'scheduled' && (
-              <Button size="small" variant="outlined" onClick={onFeedback} sx={{ fontSize: '0.75rem' }}>
-                Log Feedback
-              </Button>
-            )}
-            {interview.status === 'completed' && interview.feedback && (
-              <Button size="small" variant="text" onClick={onFeedback} sx={{ fontSize: '0.75rem' }}>
-                Edit Feedback
-              </Button>
-            )}
-            <IconButton size="small" onClick={() => setExpanded((v) => !v)} sx={{ color: 'text.secondary' }}>
-              {expanded ? <ExpandLess fontSize="small" /> : <ExpandMore fontSize="small" />}
-            </IconButton>
-          </Box>
-        </Box>
+    <Card className="p-5">
+      <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <h4 className="text-sm font-bold text-slate-900">
+              {interview.job ? `${interview.job.title} — ${interview.job.company}` : 'Unknown Job'}
+            </h4>
+            <span
+              className={`text-xs font-semibold px-2 py-0.5 rounded-full border capitalize ${
+                STATUS_CLASSES[interview.status] ?? 'bg-slate-50 text-slate-700 border-slate-200'
+              }`}
+            >
+              {STATUS_LABELS[interview.status]}
+            </span>
+          </div>
 
-        {expanded && (
-          <Box sx={{ mt: 2, pt: 2, borderTop: '1px solid', borderColor: 'divider', bgcolor: 'grey.50', mx: -2.5, mb: -2.5, px: 2.5, pb: 2, borderRadius: '0 0 12px 12px' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-              {interview.location && (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <LocationOn sx={{ fontSize: 14, color: 'text.disabled' }} />
-                  <Typography variant="caption" color="text.secondary">{interview.location}</Typography>
-                </Box>
+          <span className="text-xs font-bold text-blue-600 tracking-wide block mb-3">
+            {TYPE_LABELS[interview.type]}
+          </span>
+
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-slate-500 font-medium">
+            <div className="flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5" />
+              <span>
+                {scheduled.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Clock className="w-3.5 h-3.5" />
+              <span>
+                {scheduled.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })} ·{' '}
+                {interview.duration ?? 60} min
+              </span>
+            </div>
+            {interview.interviewer?.name && (
+              <div className="flex items-center gap-1.5">
+                <User className="w-3.5 h-3.5" />
+                <span>{interview.interviewer.name}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="flex items-center gap-1.5 flex-shrink-0 border-t md:border-t-0 pt-3 md:pt-0">
+          {interview.meetingLink && (
+            <a
+              href={interview.meetingLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Join meeting"
+              className="inline-flex items-center justify-center rounded-lg text-sm font-semibold border border-blue-200 text-blue-600 hover:bg-blue-50 transition-colors p-2 h-9 w-9"
+            >
+              <Video className="w-4 h-4" />
+            </a>
+          )}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => downloadICS(interview)}
+            title="Download .ics"
+            className="p-2"
+          >
+            <Download className="w-4 h-4" />
+          </Button>
+          {isPast && interview.status === 'scheduled' && (
+            <Button size="sm" onClick={onFeedback} className="text-xs">
+              Log Feedback
+            </Button>
+          )}
+          {interview.status === 'completed' && interview.feedback && (
+            <Button size="sm" variant="ghost" onClick={onFeedback} className="text-xs text-blue-600 hover:bg-blue-50">
+              Edit Feedback
+            </Button>
+          )}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setExpanded((v) => !v)}
+            className="p-2"
+          >
+            {expanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+          </Button>
+        </div>
+      </div>
+
+      {expanded && (
+        <div className="mt-4 pt-4 border-t border-slate-100 flex flex-col gap-3">
+          {interview.location && (
+            <div className="flex items-start gap-2 text-xs font-semibold text-slate-600">
+              <MapPin className="w-4 h-4 text-slate-400 mt-0.5" />
+              <span>{interview.location}</span>
+            </div>
+          )}
+          {interview.meetingLink && (
+            <div className="flex items-start gap-2 text-xs">
+              <LinkIcon className="w-4 h-4 text-slate-400 mt-0.5" />
+              <a
+                href={interview.meetingLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline font-semibold break-all"
+              >
+                {interview.meetingLink}
+              </a>
+            </div>
+          )}
+          {interview.notes && (
+            <div>
+              <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">
+                Notes
+              </span>
+              <p className="text-xs text-slate-600 leading-relaxed whitespace-pre-wrap font-medium">
+                {interview.notes}
+              </p>
+            </div>
+          )}
+          {interview.feedback && (
+            <div className="p-3 bg-slate-50 border border-slate-100 rounded-xl flex flex-col gap-1.5">
+              <span className="block text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                Feedback
+              </span>
+              {interview.feedback.rating && (
+                <div className="flex gap-0.5">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Star
+                      key={star}
+                      className={`w-4 h-4 ${
+                        (interview.feedback?.rating ?? 0) >= star
+                          ? 'fill-amber-400 text-amber-400'
+                          : 'text-slate-200'
+                      }`}
+                    />
+                  ))}
+                </div>
               )}
-              {interview.meetingLink && (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <LinkIcon sx={{ fontSize: 14, color: 'text.disabled' }} />
-                  <Typography component="a" href={interview.meetingLink} target="_blank" rel="noopener noreferrer" variant="caption" sx={{ color: 'primary.main', '&:hover': { textDecoration: 'underline' }, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                    {interview.meetingLink}
-                  </Typography>
-                </Box>
+              {interview.feedback.notes && (
+                <p className="text-xs text-slate-600 leading-relaxed whitespace-pre-wrap font-medium">
+                  {interview.feedback.notes}
+                </p>
               )}
-              {interview.notes && (
-                <Box>
-                  <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600, display: 'block', mb: 0.25 }}>Notes</Typography>
-                  <Typography variant="caption" sx={{ whiteSpace: 'pre-wrap' }}>{interview.notes}</Typography>
-                </Box>
+              {interview.feedback.nextSteps && (
+                <p className="text-xs font-semibold text-slate-500 italic mt-0.5">
+                  Next: {interview.feedback.nextSteps}
+                </p>
               )}
-              {interview.feedback && (
-                <Box>
-                  <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600, display: 'block', mb: 0.25 }}>Feedback</Typography>
-                  {interview.feedback.rating && (
-                    <Rating value={interview.feedback.rating} size="small" readOnly />
-                  )}
-                  {interview.feedback.notes && (
-                    <Typography variant="caption" sx={{ display: 'block', mt: 0.5, whiteSpace: 'pre-wrap' }}>{interview.feedback.notes}</Typography>
-                  )}
-                  {interview.feedback.nextSteps && (
-                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5, fontStyle: 'italic' }}>
-                      Next: {interview.feedback.nextSteps}
-                    </Typography>
-                  )}
-                </Box>
-              )}
-            </Box>
-          </Box>
-        )}
-      </CardContent>
+            </div>
+          )}
+        </div>
+      )}
     </Card>
   );
 }
@@ -511,7 +627,9 @@ export default function InterviewsPage() {
     }
   }, []);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => {
+    load();
+  }, [load]);
 
   const now = new Date();
   const upcoming = interviews.filter((i) => new Date(i.scheduledAt) >= now && i.status === 'scheduled');
@@ -523,71 +641,97 @@ export default function InterviewsPage() {
       <ScheduleDialog
         open={showSchedule}
         jobs={jobs}
-        onSuccess={() => { setShowSchedule(false); load(); }}
+        onSuccess={() => {
+          setShowSchedule(false);
+          load();
+        }}
         onClose={() => setShowSchedule(false)}
       />
       {feedbackTarget && (
         <FeedbackDialog
           open={!!feedbackTarget}
           interview={feedbackTarget}
-          onSuccess={() => { setFeedbackTarget(null); load(); }}
+          onSuccess={() => {
+            setFeedbackTarget(null);
+            load();
+          }}
           onClose={() => setFeedbackTarget(null)}
         />
       )}
 
-      <Box sx={{ p: 3, maxWidth: 860, mx: 'auto' }}>
+      <div className="p-6 max-w-3xl mx-auto flex flex-col gap-6">
         {/* Header */}
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 3 }}>
-          <Box sx={{ display: 'flex', gap: 4 }}>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+          <div className="flex gap-6">
             {[
               { label: 'Upcoming', value: upcoming.length },
               { label: 'Past', value: past.length },
-              { label: 'Strong', value: interviews.filter((i) => i.status === 'completed' && (i.feedback?.rating ?? 0) >= 4).length },
+              {
+                label: 'Strong',
+                value: interviews.filter((i) => i.status === 'completed' && (i.feedback?.rating ?? 0) >= 4).length,
+              },
             ].map((stat) => (
-              <Box key={stat.label} sx={{ textAlign: 'center' }}>
-                <Typography variant="h5" sx={{ fontWeight: 700 }}>{stat.value}</Typography>
-                <Typography variant="caption" color="text.secondary">{stat.label}</Typography>
-              </Box>
+              <div key={stat.label} className="text-center">
+                <div className="text-2xl font-bold text-slate-900 leading-none">{stat.value}</div>
+                <div className="text-[11px] font-semibold text-slate-400 mt-1 uppercase tracking-wider">{stat.label}</div>
+              </div>
             ))}
-          </Box>
-          <Button variant="contained" startIcon={<Add />} onClick={() => setShowSchedule(true)}>
+          </div>
+          <Button onClick={() => setShowSchedule(true)} className="flex items-center gap-1.5 self-start sm:self-auto">
+            <Plus className="w-4 h-4" />
             Schedule Interview
           </Button>
-        </Box>
+        </div>
 
         {/* Filter Tabs */}
-        <Tabs value={tabValue} onChange={(_, v) => setTabValue(v)} sx={{ mb: 3, bgcolor: 'grey.100', borderRadius: 1.5, p: 0.5, minHeight: 36 }}>
-          <Tab label="Upcoming" sx={{ minHeight: 32, borderRadius: 1 }} />
-          <Tab label="Past" sx={{ minHeight: 32, borderRadius: 1 }} />
-          <Tab label="All" sx={{ minHeight: 32, borderRadius: 1 }} />
-        </Tabs>
+        <div className="flex bg-slate-100/80 p-1 rounded-xl border border-slate-200/50 self-start">
+          {['Upcoming', 'Past', 'All'].map((label, idx) => (
+            <button
+              key={label}
+              onClick={() => setTabValue(idx)}
+              className={`px-4 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                tabValue === idx
+                  ? 'bg-white text-slate-800 shadow-sm'
+                  : 'text-slate-500 hover:text-slate-800'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
 
         {/* Content */}
         {loading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', py: 10 }}><CircularProgress /></Box>
+          <div className="flex justify-center py-12">
+            <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+          </div>
         ) : error ? (
-          <Alert severity="error">{error}</Alert>
+          <div className="flex items-start gap-2.5 p-3.5 bg-rose-50 border border-rose-100 text-rose-800 text-sm rounded-xl">
+            <AlertTriangle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
+            <span>{error}</span>
+          </div>
         ) : filtered.length === 0 ? (
-          <Card sx={{ textAlign: 'center', py: 8, border: '1px dashed', borderColor: 'divider' }}>
-            <CardContent>
-              <CalendarMonth sx={{ fontSize: 48, color: 'text.disabled', mb: 2 }} />
-              <Typography variant="h6" gutterBottom>
-                {tabValue === 0 ? 'No upcoming interviews' : 'No interviews found'}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                {tabValue === 0
-                  ? 'Schedule your next interview to track it here.'
-                  : 'No interviews match the selected filter.'}
-              </Typography>
-              {tabValue === 0 && (
-                <Button variant="contained" startIcon={<Add />} onClick={() => setShowSchedule(true)}>
-                  Schedule Interview
-                </Button>
-              )}
-            </CardContent>
+          <Card className="text-center py-12 p-8 border-2 border-dashed border-slate-200 bg-transparent shadow-none hover:shadow-none">
+            <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center mx-auto mb-4 border border-slate-100">
+              <Calendar className="w-6 h-6 text-slate-400" />
+            </div>
+            <h4 className="text-base font-bold text-slate-800 mb-1">
+              {tabValue === 0 ? 'No upcoming interviews' : 'No interviews found'}
+            </h4>
+            <p className="text-sm text-slate-500 max-w-sm mx-auto mb-6 leading-relaxed">
+              {tabValue === 0
+                ? 'Schedule your next interview to track it here.'
+                : 'No interviews match the selected filter.'}
+            </p>
+            {tabValue === 0 && (
+              <Button onClick={() => setShowSchedule(true)} className="flex items-center gap-1.5 mx-auto">
+                <Plus className="w-4 h-4" />
+                Schedule Interview
+              </Button>
+            )}
           </Card>
         ) : (
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <div className="flex flex-col gap-4">
             {filtered.map((interview) => (
               <InterviewCard
                 key={interview.id}
@@ -595,9 +739,9 @@ export default function InterviewsPage() {
                 onFeedback={() => setFeedbackTarget(interview)}
               />
             ))}
-          </Box>
+          </div>
         )}
-      </Box>
+      </div>
     </NavLayout>
   );
 }
