@@ -1,10 +1,7 @@
 'use client';
 
 import React, { useState, useCallback } from 'react';
-import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
-import { Card } from '@/components/ui/Card';
-import { Badge } from '@/components/ui/Badge';
+import { Button, Input, Card, Badge, Checkbox, Select } from '@/components/ui';
 
 interface FilterState {
   textSearch: string;
@@ -433,15 +430,12 @@ export const AdvancedJobFilterForm: React.FC<
       >
         <div className="grid grid-cols-2 gap-4">
           {PIPELINE_STAGES.map((stage) => (
-            <label key={stage} className="flex items-center gap-4 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={filters.stages.includes(stage)}
-                onChange={() => handleStageToggle(stage)}
-                className="w-8 h-8"
-              />
-              <span className="text-sm">{stage.replace(/_/g, ' ')}</span>
-            </label>
+            <Checkbox
+              key={stage}
+              label={stage.replace(/_/g, ' ')}
+              checked={filters.stages.includes(stage)}
+              onChange={() => handleStageToggle(stage)}
+            />
           ))}
         </div>
       </ExpandableSection>
@@ -497,21 +491,15 @@ export const AdvancedJobFilterForm: React.FC<
         onToggle={() => toggleSection('sorting')}
       >
         <div className="space-y-6">
-          <div>
-            <label className="text-sm text-gray-600">Sort By</label>
-            <select
+          <div className="w-full">
+            <Select
+              label="Sort By"
               value={filters.sortBy}
+              options={SORT_OPTIONS}
               onChange={(e) =>
                 handleFilterChange('sortBy', e.target.value)
               }
-              className="w-full mt-2 px-6 py-4 border rounded-md text-sm"
-            >
-              {SORT_OPTIONS.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+            />
           </div>
           <div>
             <label className="text-sm text-gray-600">Order</label>

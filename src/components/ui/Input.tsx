@@ -10,28 +10,29 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 /**
  * Input Component
  * Text input field with optional label, error, and hint text.
+ * WCAG 2.1 AA compliant: explicit htmlFor label, aria-invalid, aria-describedby.
  */
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, hint, className, id, ...props }, ref) => {
     const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`
 
     return (
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1.5">
         {label && (
-          <label htmlFor={inputId} className="text-sm font-medium text-gray-900">
+          <label htmlFor={inputId} className="text-sm font-medium text-slate-700 leading-none">
             {label}
-            {props.required && <span className="text-red-600 ml-2">*</span>}
+            {props.required && <span className="text-red-500 ml-1" aria-hidden="true">*</span>}
           </label>
         )}
         <input
           ref={ref}
           id={inputId}
           className={cn(
-            'h-20 px-6 py-4 border border-gray-300 rounded-lg text-base transition-colors duration-200',
+            'h-9 px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white transition-colors duration-150',
+            'placeholder:text-slate-400 text-slate-900',
             'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:border-blue-500',
-            'disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed',
-            'placeholder:text-gray-400',
-            error && 'border-red-600 focus:ring-red-500 focus:border-red-600',
+            'disabled:bg-slate-50 disabled:text-slate-500 disabled:cursor-not-allowed',
+            error && 'border-red-500 focus:ring-red-500 focus:border-red-500',
             className
           )}
           aria-invalid={!!error}
@@ -39,12 +40,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {error && (
-          <p id={`${inputId}-error`} className="text-sm text-red-600">
+          <p id={`${inputId}-error`} role="alert" className="text-xs text-red-600 font-medium">
             {error}
           </p>
         )}
         {hint && !error && (
-          <p id={`${inputId}-hint`} className="text-sm text-gray-500">
+          <p id={`${inputId}-hint`} className="text-xs text-slate-500">
             {hint}
           </p>
         )}
@@ -70,22 +71,22 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     const textareaId = id || `textarea-${Math.random().toString(36).substr(2, 9)}`
 
     return (
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1.5">
         {label && (
-          <label htmlFor={textareaId} className="text-sm font-medium text-gray-900">
+          <label htmlFor={textareaId} className="text-sm font-medium text-slate-700 leading-none">
             {label}
-            {props.required && <span className="text-red-600 ml-2">*</span>}
+            {props.required && <span className="text-red-500 ml-1" aria-hidden="true">*</span>}
           </label>
         )}
         <textarea
           ref={ref}
           id={textareaId}
           className={cn(
-            'min-h-48 px-6 py-4 border border-gray-300 rounded-lg text-base transition-colors duration-200 resize-none',
+            'min-h-24 px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white transition-colors duration-150 resize-none',
+            'placeholder:text-slate-400 text-slate-900',
             'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:border-blue-500',
-            'disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed',
-            'placeholder:text-gray-400',
-            error && 'border-red-600 focus:ring-red-500 focus:border-red-600',
+            'disabled:bg-slate-50 disabled:text-slate-500 disabled:cursor-not-allowed',
+            error && 'border-red-500 focus:ring-red-500 focus:border-red-500',
             className
           )}
           aria-invalid={!!error}
@@ -93,12 +94,12 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           {...props}
         />
         {error && (
-          <p id={`${textareaId}-error`} className="text-sm text-red-600">
+          <p id={`${textareaId}-error`} role="alert" className="text-xs text-red-600 font-medium">
             {error}
           </p>
         )}
         {hint && !error && (
-          <p id={`${textareaId}-hint`} className="text-sm text-gray-500">
+          <p id={`${textareaId}-hint`} className="text-xs text-slate-500">
             {hint}
           </p>
         )}

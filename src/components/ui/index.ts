@@ -9,18 +9,5 @@ export { Avatar, type AvatarProps } from './Avatar'
 export { Icon, type IconProps } from './Icon'
 export { Spinner, type SpinnerProps } from './Spinner'
 export { Skeleton, type SkeletonProps } from './Skeleton'
-
-// Additional primitives to be created:
-// - Tooltip
-// - Popover
-// - Dropdown Menu
-// - Select
-// - Checkbox
-// - Radio
-// - Toggle / Switch
-// - Divider
-// - Progress Bar
-// - Tabs
-// - Accordion
-// - Alert / Banner
-// - Link
+export { Select, type SelectProps, type SelectOption } from './Select'
+export { Checkbox, type CheckboxProps } from './Checkbox'

@@ -23,7 +23,7 @@ describe('Button component', () => {
     it('renders secondary variant', () => {
       render(<Button variant="secondary">Secondary</Button>)
       const btn = screen.getByRole('button')
-      expect(btn.className).toContain('bg-gray-100')
+      expect(btn.className).toContain('bg-slate-100')
     })
 
     it('renders danger variant', () => {
@@ -42,17 +42,17 @@ describe('Button component', () => {
   describe('sizes', () => {
     it('renders small size', () => {
       render(<Button size="sm">Small</Button>)
-      expect(screen.getByRole('button').className).toContain('h-16')
+      expect(screen.getByRole('button').className).toContain('h-8')
     })
 
     it('renders medium size (default)', () => {
       render(<Button>Medium</Button>)
-      expect(screen.getByRole('button').className).toContain('h-20')
+      expect(screen.getByRole('button').className).toContain('h-9')
     })
 
     it('renders large size', () => {
       render(<Button size="lg">Large</Button>)
-      expect(screen.getByRole('button').className).toContain('h-24')
+      expect(screen.getByRole('button').className).toContain('h-11')
     })
   })
 
