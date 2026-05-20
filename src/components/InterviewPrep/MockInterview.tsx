@@ -189,17 +189,17 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
             <h3 className="text-base font-semibold text-emerald-900">How It Works</h3>
             <ol className="space-y-4 text-sm text-emerald-800">
               <li>
-                <strong>1. Read the question:</strong> You'll see the question on screen. Take a moment to
+                <strong>1. Read the question:</strong> You&apos;ll see the question on screen. Take a moment to
                 think.
               </li>
               <li>
                 <strong>2. Answer aloud:</strong> Click the microphone to start recording your answer.
               </li>
               <li>
-                <strong>3. Submit answer:</strong> Click "Next Question" when done. You can skip if needed.
+                <strong>3. Submit answer:</strong> Click &quot;Next Question&quot; when done. You can skip if needed.
               </li>
               <li>
-                <strong>4. Get feedback:</strong> After all questions, you'll receive detailed feedback on
+                <strong>4. Get feedback:</strong> After all questions, you&apos;ll receive detailed feedback on
                 your responses.
               </li>
             </ol>
@@ -223,7 +223,7 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
               <li>• Use specific examples with metrics</li>
               <li>• Take a moment to think before answering</li>
               <li>• Structure your answer (situation, action, result)</li>
-              <li>• Don't exceed the time limit significantly</li>
+              <li>• Don&apos;t exceed the time limit significantly</li>
             </ul>
           </section>
         </div>
@@ -283,7 +283,7 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
                 {Math.floor(recordingTime / 60)}:{String(recordingTime % 60).padStart(2, '0')}
               </div>
               <p className="text-xs text-red-700 mt-6">
-                Speak clearly. You can click "Next Question" when done or wait for the timer.
+                Speak clearly. You can click &quot;Next Question&quot; when done or wait for the timer.
               </p>
             </div>
 

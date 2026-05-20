@@ -27,7 +27,7 @@ export default function ProfilePage() {
   const { data: session } = useSession();
   const [activeTab, setActiveTab] = useState<TabId>('overview');
 
-  const candidateId = (session?.user as any)?.id ?? session?.user?.email ?? '';
+  const candidateId = session?.user?.id ?? session?.user?.email ?? '';
 
   const {
     profile,
@@ -92,18 +92,20 @@ export default function ProfilePage() {
         <div>
           {activeTab === 'overview' && (
             <div className="space-y-12">
-              {loading ? (
+              {loading && (
                 <div className="flex items-center justify-center py-32">
                   <div className="animate-spin rounded-full h-20 w-20 border-b-2 border-blue-600" />
                 </div>
-              ) : score ? (
+              )}
+              {!loading && score && (
                 <ProfileCompleteness
                   score={score}
                   recommendations={recommendations}
                   loading={loading}
                   onRefresh={refresh}
                 />
-              ) : (
+              )}
+              {!loading && !score && (
                 <EmptyProfileState onRefresh={refresh} />
               )}
             </div>
@@ -124,7 +126,7 @@ export default function ProfilePage() {
               </div>
             ) : (
               <SkillMatrix
-                skills={(profile as any)?.topSkills ?? []}
+                skills={profile?.topSkills ?? []}
                 onSkillUpdate={(skill) => updateProfile({ skills: [skill] })}
                 onSkillDelete={(name) => console.log('delete skill', name)}
               />
@@ -138,7 +140,7 @@ export default function ProfilePage() {
               </div>
             ) : (
               <AchievementExtractor
-                achievements={(profile as any)?.recentAchievements ?? []}
+                achievements={profile?.recentAchievements ?? []}
                 onAddAchievement={(a) => updateProfile({ achievements: [a] })}
                 onDeleteAchievement={(id) => console.log('delete achievement', id)}
               />
@@ -151,17 +153,19 @@ export default function ProfilePage() {
 
           {activeTab === 'recommendations' && (
             <div className="space-y-8">
-              {loading ? (
+              {loading && (
                 <div className="flex items-center justify-center py-32">
                   <div className="animate-spin rounded-full h-20 w-20 border-b-2 border-blue-600" />
                 </div>
-              ) : recommendations.length > 0 ? (
+              )}
+              {!loading && recommendations.length > 0 && (
                 <RecommendationPanel
                   recommendations={recommendations}
                   onDismiss={(id) => console.log('dismiss', id)}
                   onAction={(id) => console.log('action', id)}
                 />
-              ) : (
+              )}
+              {!loading && recommendations.length === 0 && (
                 <div className="text-center py-32 bg-white border border-gray-200 rounded-xl">
                   <div className="text-4xl mb-6">💡</div>
                   <h3 className="font-semibold text-gray-900 mb-2">No recommendations yet</h3>
@@ -186,7 +190,7 @@ export default function ProfilePage() {
 
 // ─── LinkedIn Import Panel ────────────────────────────────────────────────────
 
-function LinkedInImportPanel({ onImported }: { onImported: () => void }) {
+function LinkedInImportPanel({ onImported }: { readonly onImported: () => void }) {
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ name: string; experience: number; skills: number } | null>(null);
@@ -207,8 +211,8 @@ function LinkedInImportPanel({ onImported }: { onImported: () => void }) {
       if (!res.ok) throw new Error(json.message ?? json.error?.message ?? 'Import failed');
       setResult(json.data ?? json);
       onImported();
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Import failed');
     } finally {
       setLoading(false);
     }
@@ -260,13 +264,13 @@ function LinkedInImportPanel({ onImported }: { onImported: () => void }) {
 
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-8 text-sm text-amber-800">
         <p className="font-medium mb-2">Public profile required</p>
-        <p>Set your LinkedIn profile visibility to "Public" in LinkedIn Settings → Visibility → Edit your public profile.</p>
+        <p>Set your LinkedIn profile visibility to &quot;Public&quot; in LinkedIn Settings → Visibility → Edit your public profile.</p>
       </div>
     </div>
   );
 }
 
-function EmptyProfileState({ onRefresh }: { onRefresh: () => void }) {
+function EmptyProfileState({ onRefresh }: { readonly onRefresh: () => void }) {
   return (
     <div className="text-center py-32 bg-white border border-gray-200 rounded-xl">
       <div className="text-5xl mb-8">👤</div>

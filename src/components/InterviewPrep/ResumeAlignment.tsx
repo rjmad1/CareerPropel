@@ -168,7 +168,7 @@ export const ResumeAlignment: React.FC<ResumeAlignmentProps> = ({ prep }) => {
           <div className="flex-1">
             <h3 className="text-lg font-semibold text-blue-900 mb-6">Resume Fit Analysis</h3>
             <p className="text-sm text-blue-800 mb-8">
-              Your resume is {matchScore}% aligned with the job requirements. Below you'll find specific
+              Your resume is {matchScore}% aligned with the job requirements. Below you&apos;ll find specific
               gaps and tailoring recommendations to improve your chances.
             </p>
             <div className="space-y-4">
@@ -216,7 +216,7 @@ export const ResumeAlignment: React.FC<ResumeAlignmentProps> = ({ prep }) => {
           </h3>
           <p className="text-sm text-amber-800">
             These keywords appear in the job description but not prominently in your resume. Consider
-            adding them if they're relevant to your experience.
+            adding them if they&apos;re relevant to your experience.
           </p>
           <div className="flex flex-wrap gap-4">
             {missingKeywords.map((keyword, idx) => (
@@ -393,7 +393,7 @@ export const ResumeAlignment: React.FC<ResumeAlignmentProps> = ({ prep }) => {
                 <div>
                   <div className="text-xs font-medium text-blue-700 mb-2">Example:</div>
                   <div className="text-sm text-blue-900 bg-blue-50 rounded p-4 font-mono">
-                    "{tip.example}"
+                    &quot;{tip.example}&quot;
                   </div>
                 </div>
               </div>
@@ -450,8 +450,8 @@ export const ResumeAlignment: React.FC<ResumeAlignmentProps> = ({ prep }) => {
             description as a guide.
           </li>
           <li>
-            <strong>Quantify achievements:</strong> Instead of "improved performance," say "improved
-            performance by 40%."
+            <strong>Quantify achievements:</strong> Instead of &quot;improved performance,&quot; say &quot;improved
+            performance by 40%.&quot;
           </li>
           <li>
             <strong>Mirror job language:</strong> Use similar terminology and keywords from the job

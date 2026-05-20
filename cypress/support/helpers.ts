@@ -7,7 +7,18 @@
  * Logs in a test user with predefined credentials
  * Assumes login endpoint at /api/auth/login
  */
-export function loginUser(email: string = 'test@example.com', password: string = 'password123') {
+function getRequiredTestCredential(name: 'CYPRESS_TEST_EMAIL' | 'CYPRESS_TEST_PASSWORD'): string {
+  const value = Cypress.env(name);
+  if (typeof value !== 'string' || value.trim().length === 0) {
+    throw new Error(`${name} must be provided for Cypress authentication tests`);
+  }
+  return value;
+}
+
+export function loginUser(
+  email: string = getRequiredTestCredential('CYPRESS_TEST_EMAIL'),
+  password: string = getRequiredTestCredential('CYPRESS_TEST_PASSWORD')
+) {
   cy.visit('/login');
   cy.get('[data-testid="login-email-input"]').type(email);
   cy.get('[data-testid="login-password-input"]').type(password);

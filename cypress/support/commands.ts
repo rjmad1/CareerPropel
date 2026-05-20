@@ -6,10 +6,16 @@
  */
 
 // Login command
-Cypress.Commands.add('login', (email: string = 'test@example.com', password: string = 'password') => {
+Cypress.Commands.add('login', (email?: string, password?: string) => {
+  const testEmail = email ?? Cypress.env('CYPRESS_TEST_EMAIL');
+  const testPassword = password ?? Cypress.env('CYPRESS_TEST_PASSWORD');
+  if (!testEmail || !testPassword) {
+    throw new Error('CYPRESS_TEST_EMAIL and CYPRESS_TEST_PASSWORD are required for cy.login');
+  }
+
   cy.visit('/api/auth/signin');
-  cy.get('input[type="email"]').type(email);
-  cy.get('input[type="password"]').type(password);
+  cy.get('input[type="email"]').type(testEmail);
+  cy.get('input[type="password"]').type(testPassword);
   cy.get('button[type="submit"]').click();
   cy.url().should('not.include', '/signin');
 });

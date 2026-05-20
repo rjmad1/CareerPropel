@@ -145,7 +145,6 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     if ((execution as any).userId !== callerEmail && (execution as any).candidateId !== callerEmail) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }

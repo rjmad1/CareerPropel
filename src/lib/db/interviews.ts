@@ -10,7 +10,7 @@ export async function getInterviews(userId: string, query: ListInterviewsQuery) 
   const { limit, offset, jobId, type, status, sortBy, sortOrder } = query;
 
   // Build where clause - must verify ownership via job
-  const where: any = {
+  const where: Record<string, unknown> = {
     job: {
       candidateId: userId,
     },

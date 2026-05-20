@@ -69,7 +69,7 @@ export interface JobActivity {
   newStage?: JobStage;
   timestamp: Date | string;
   userId: string;
-  details?: Record<string, any>;
+  details?: Record<string, unknown>;
 }
 
 export interface JobFilter {

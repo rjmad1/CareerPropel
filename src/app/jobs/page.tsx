@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { KanbanBoard } from '@/components/Kanban/KanbanBoard';
 import { Job } from '@/types/job';
+import { sanitizeText, sanitizeUrl } from '@/lib/security/sanitizeContent';
 import { Plus, Upload as LucideUpload } from 'lucide-react';
 import {
   Button,
@@ -372,17 +373,19 @@ function ImportJobsModal({ open, onClose, onImported }: { open: boolean; onClose
                       className="mt-0.5"
                     />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-slate-900 truncate">{job.title}</p>
-                      <p className="text-xs font-medium text-slate-500 mt-0.5">{job.company} · {job.location}</p>
+                      <p className="text-sm font-semibold text-slate-900 truncate">{sanitizeText(job.title)}</p>
+                      <p className="text-xs font-medium text-slate-500 mt-0.5">
+                        {sanitizeText(job.company)} · {sanitizeText(job.location)}
+                      </p>
                       {job.description && (
                         <p className="text-xs text-slate-400 truncate mt-1">
-                          {job.description}
+                          {sanitizeText(job.description)}
                         </p>
                       )}
                     </div>
-                    {job.url && (
+                    {sanitizeUrl(job.url) && (
                       <a
-                        href={job.url}
+                        href={sanitizeUrl(job.url) ?? undefined}
                         target="_blank"
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}

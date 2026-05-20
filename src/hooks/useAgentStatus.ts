@@ -30,6 +30,69 @@ export function useAgentStatus(autoConnect: boolean = true) {
   const reconnectDelayMs = 3000; // 3 seconds
 
   /**
+   * Handle incoming WebSocket messages
+   */
+  const handleMessage = useCallback((event: RealtimeEvent) => {
+    switch (event.type) {
+      case 'agent:status_update': {
+        const statusEvent = event;
+        setAgents((prev) => ({
+          ...prev,
+          [statusEvent.agentType]: statusEvent,
+        }));
+        break;
+      }
+
+      // @ts-expect-error: 'initial_state' is a custom server event not in the union
+      case 'initial_state': {
+        const initialAgents = (event as unknown as { agents: AgentStateMap }).agents || {};
+        setAgents(initialAgents);
+        break;
+      }
+
+      case 'agent:started': {
+        const { agentType } = event;
+        setAgents((prev) => ({
+          ...prev,
+          [agentType]: {
+            ...prev[agentType],
+            status: 'running',
+            lastActivity: new Date(),
+          } as AgentStatusEvent,
+        }));
+        break;
+      }
+
+      case 'agent:completed': {
+        const { agentType, status } = event;
+        setAgents((prev) => ({
+          ...prev,
+          [agentType]: {
+            ...prev[agentType],
+            status: status === 'success' ? 'completed' : 'error',
+            lastActivity: new Date(),
+          } as AgentStatusEvent,
+        }));
+        break;
+      }
+
+      case 'heartbeat': {
+        // Heartbeat - connection is alive
+        break;
+      }
+
+      case 'error': {
+        console.error('[Agent Status] Server error:', event.message);
+        setError(event.message);
+        break;
+      }
+
+      default:
+        console.log('[Agent Status] Unknown event type:', event.type);
+    }
+  }, []);
+
+  /**
    * Connect to WebSocket server
    */
   const connect = useCallback(() => {
@@ -40,8 +103,8 @@ export function useAgentStatus(autoConnect: boolean = true) {
 
     try {
       // Build WebSocket URL
-      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      const host = window.location.host;
+      const protocol = globalThis.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      const host = globalThis.location.host;
       const url = `${protocol}//${host}/api/ws`;
 
       console.log('[Agent Status] Connecting to', url);
@@ -95,71 +158,7 @@ export function useAgentStatus(autoConnect: boolean = true) {
       setError(message);
       setIsConnected(false);
     }
-  }, [autoConnect]);
-
-  /**
-   * Handle incoming WebSocket messages
-   */
-  const handleMessage = useCallback((event: RealtimeEvent) => {
-    switch (event.type) {
-      case 'agent:status_update': {
-        const statusEvent = event as AgentStatusEvent;
-        setAgents((prev) => ({
-          ...prev,
-          [statusEvent.agentType]: statusEvent,
-        }));
-        break;
-      }
-
-      // @ts-expect-error: 'initial_state' is a custom server event not in the union
-      case 'initial_state': {
-        const initialAgents = (event as any).agents || {};
-        setAgents(initialAgents);
-        break;
-      }
-
-      case 'agent:started': {
-        const { agentType } = event as any;
-        setAgents((prev) => ({
-          ...prev,
-          [agentType]: {
-            ...prev[agentType],
-            status: 'running',
-            lastActivity: new Date(),
-          } as any,
-        }));
-        break;
-      }
-
-      case 'agent:completed': {
-        const { agentType, status } = event as any;
-        setAgents((prev) => ({
-          ...prev,
-          [agentType]: {
-            ...prev[agentType],
-            status: status === 'success' ? 'completed' : 'error',
-            lastActivity: new Date(),
-          } as any,
-        }));
-        break;
-      }
-
-      case 'heartbeat': {
-        // Heartbeat - connection is alive
-        break;
-      }
-
-      case 'error': {
-        const errorEvent = event as any;
-        console.error('[Agent Status] Server error:', errorEvent.message);
-        setError(errorEvent.message);
-        break;
-      }
-
-      default:
-        console.log('[Agent Status] Unknown event type:', event.type);
-    }
-  }, []);
+  }, [autoConnect, handleMessage]);
 
   /**
    * Disconnect from WebSocket

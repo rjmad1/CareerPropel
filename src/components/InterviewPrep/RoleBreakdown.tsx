@@ -191,7 +191,7 @@ export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
         <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-6 mt-6">
           <p className="text-xs text-emerald-800">
             <strong>Preparation tip:</strong> Be prepared to discuss your hands-on experience with each required skill.
-            Have specific examples of projects or problems you've solved.
+            Have specific examples of projects or problems you&apos;ve solved.
           </p>
         </div>
       </section>
@@ -333,7 +333,7 @@ export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
             from your background.
           </li>
           <li>
-            <strong>2. Study Gaps:</strong> If you're missing a required skill, be honest about it but show
+            <strong>2. Study Gaps:</strong> If you&apos;re missing a required skill, be honest about it but show
             eagerness to learn.
           </li>
           <li>

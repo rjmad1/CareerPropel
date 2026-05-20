@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db"
+import { log } from "@/lib/logging/logger"
 
 export enum AuditAction {
   // Authentication
@@ -72,7 +73,7 @@ export async function logAuditEvent(entry: AuditLogEntry): Promise<void> {
       await alertSecurityTeam(entry)
     }
   } catch (error) {
-    console.error('Audit log error:', error)
+    log.error({ err: error }, 'Audit log persistence error')
   }
 }
 
@@ -175,6 +176,60 @@ export async function detectSuspiciousActivity(
   return findings
 }
 
+/**
+ * Security alert dispatcher.
+ *
+ * RASUI-006 remediation: replaced console.warn (which is invisible in
+ * production log aggregators unless they parse stdout) with a structured
+ * pino log at 'error' level, which aggregators (Datadog, Logtail, etc.)
+ * can route to an alert channel.
+ *
+ * Additionally, if SECURITY_ALERT_WEBHOOK_URL is configured, POSTs the
+ * alert payload to a Slack-compatible incoming webhook.
+ * Set SECURITY_ALERT_WEBHOOK_URL to your Slack / PagerDuty webhook URL.
+ */
 async function alertSecurityTeam(entry: AuditLogEntry): Promise<void> {
-  console.warn(`[SECURITY ALERT] ${entry.action} - ${entry.email}`, entry)
+  // Structured log — visible in all aggregators at ERROR severity
+  log.error(
+    {
+      securityAlert: true,
+      action: entry.action,
+      // Deliberately omit entry.email from the top-level to avoid PII indexing;
+      // it is present in the AuditLog DB record.
+      resource: entry.resource,
+      resourceId: entry.resourceId,
+      ipAddress: entry.ipAddress,
+      severity: entry.severity,
+      status: entry.status,
+    },
+    '[SECURITY ALERT] Unauthorized access detected'
+  );
+
+  // Optional webhook delivery (Slack / PagerDuty / etc.)
+  const webhookUrl = process.env.SECURITY_ALERT_WEBHOOK_URL;
+  if (!webhookUrl) return;
+
+  try {
+    const payload = {
+      text: `🚨 *Security Alert*: ${entry.action}`,
+      blocks: [
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: `*Action:* ${entry.action}\n*Resource:* ${entry.resource ?? 'system'}\n*IP:* ${entry.ipAddress ?? 'unknown'}\n*Severity:* ${entry.severity ?? 'unknown'}`,
+          },
+        },
+      ],
+    };
+
+    await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      signal: AbortSignal.timeout(5000), // 5s timeout on webhook delivery
+    });
+  } catch (err) {
+    log.warn({ err }, 'Failed to deliver security alert to webhook');
+  }
 }

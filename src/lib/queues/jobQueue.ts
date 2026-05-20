@@ -208,12 +208,27 @@ export class JobQueue {
     return allStats;
   }
 
+  /**
+   * Watch for completion of a specific job via Redis pub/sub.
+   *
+   * RASUI-011 fix: The subscriber is now stored and cleaned up on BOTH the
+   * success and error paths. The previous implementation only disconnected on
+   * success, causing subscriber connections to leak permanently on any error.
+   */
   watchJobCompletion(jobId: string, callback: (job: QueuedJob) => void) {
     const subscriber = redis.duplicate();
 
+    const cleanup = () => {
+      subscriber.unsubscribe().catch(() => {}).finally(() => {
+        subscriber.quit().catch(() => {});
+      });
+    };
+
     subscriber.subscribe(`job:completed:${jobId}`, (err) => {
       if (err) {
-        console.error('Failed to subscribe:', err);
+        // Subscription failed — clean up immediately so we don't leak the connection
+        cleanup();
+        return;
       }
     });
 
@@ -221,11 +236,17 @@ export class JobQueue {
       try {
         const job = JSON.parse(message) as QueuedJob;
         callback(job);
-        subscriber.unsubscribe();
-        subscriber.disconnect();
-      } catch (err) {
-        console.error('Error parsing job:', err);
+      } catch {
+        // Swallow parse errors; subscriber cleanup still runs below
+      } finally {
+        // Always clean up on message receipt regardless of parse success/failure
+        cleanup();
       }
+    });
+
+    subscriber.on('error', () => {
+      // Ensure the connection is released on underlying socket errors
+      cleanup();
     });
   }
 }

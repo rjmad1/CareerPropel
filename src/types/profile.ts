@@ -34,7 +34,7 @@ export interface ExtractionLog {
   confidence: number; // average confidence
   errors?: string;
   duration?: number; // milliseconds
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   createdAt: Date;
 }
 
@@ -127,7 +127,7 @@ export interface ProfileNode {
   description?: string;
   connections: string[]; // node IDs this connects to
   confidence: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 /**

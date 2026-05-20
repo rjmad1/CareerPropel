@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Achievement } from '@/types/profile';
+import { hasOwnSafe } from '@/lib/security/objectGuards';
 
 interface AchievementExtractorProps {
   achievements: Achievement[];
@@ -39,6 +40,20 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
       ...newAchievement,
       metrics: newAchievement.metrics.filter((_, i) => i !== index),
     });
+  };
+
+  const handleMetricChange = (
+    index: number,
+    field: 'metric' | 'value' | 'unit',
+    value: string
+  ) => {
+    const current = newAchievement.metrics[index];
+    if (!current || !hasOwnSafe(current, field)) return;
+
+    const updated = newAchievement.metrics.map((metric, metricIndex) =>
+      metricIndex === index ? { ...metric, [field]: value } : metric
+    );
+    setNewAchievement({ ...newAchievement, metrics: updated });
   };
 
   const handleSaveAchievement = () => {
@@ -156,33 +171,21 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
                   type="text"
                   placeholder="Metric name"
                   value={metric.metric}
-                  onChange={(e) => {
-                    const updated = [...newAchievement.metrics];
-                    updated[idx].metric = e.target.value;
-                    setNewAchievement({ ...newAchievement, metrics: updated });
-                  }}
+                  onChange={(e) => handleMetricChange(idx, 'metric', e.target.value)}
                   className="flex-1 px-6 py-4 border border-gray-300 rounded text-sm"
                 />
                 <input
                   type="text"
                   placeholder="Value"
                   value={metric.value}
-                  onChange={(e) => {
-                    const updated = [...newAchievement.metrics];
-                    updated[idx].value = e.target.value;
-                    setNewAchievement({ ...newAchievement, metrics: updated });
-                  }}
+                  onChange={(e) => handleMetricChange(idx, 'value', e.target.value)}
                   className="w-48 px-6 py-4 border border-gray-300 rounded text-sm"
                 />
                 <input
                   type="text"
                   placeholder="Unit"
                   value={metric.unit}
-                  onChange={(e) => {
-                    const updated = [...newAchievement.metrics];
-                    updated[idx].unit = e.target.value;
-                    setNewAchievement({ ...newAchievement, metrics: updated });
-                  }}
+                  onChange={(e) => handleMetricChange(idx, 'unit', e.target.value)}
                   className="w-40 px-6 py-4 border border-gray-300 rounded text-sm"
                 />
                 <button

@@ -2,9 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import {
   LayoutDashboard,
   KanbanSquare,
@@ -24,6 +23,8 @@ import {
   Menu,
   X
 } from 'lucide-react';
+import { DemoBanner } from '@/components/ui/DemoBanner';
+import { DemoDataIndicator } from '@/components/ui/DemoDataBadge';
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -43,9 +44,9 @@ const navItems = [
 ];
 
 interface NavLayoutProps {
-  children: React.ReactNode;
-  title?: string;
-  subtitle?: string;
+  readonly children: React.ReactNode;
+  readonly title?: string;
+  readonly subtitle?: string;
 }
 
 export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
@@ -126,6 +127,7 @@ export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
         <div className="flex items-center gap-3 mb-3">
           <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-semibold overflow-hidden shrink-0 border border-slate-700/50">
             {avatarUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
               <img src={avatarUrl} alt={session.user?.name || 'User'} className="h-full w-full object-cover" />
             ) : (
               initials
@@ -151,8 +153,14 @@ export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
     </div>
   );
 
+  // Detect demo session for DemoDataIndicator
+  const isDemo = (session?.user?.email ?? '').startsWith('demo+');
+
   return (
-    <div className="flex min-h-screen bg-slate-50 text-slate-900 overflow-hidden relative">
+    <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 overflow-hidden relative">
+      {/* Demo Environment Banner — only shown to demo accounts */}
+      <DemoBanner />
+      <div className="flex flex-1 overflow-hidden relative">
       {/* Sidebar - Desktop */}
       <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:z-30 border-r border-slate-800 bg-slate-900 shrink-0">
         {renderSidebarContent()}
@@ -163,8 +171,10 @@ export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
         className={`fixed inset-0 z-40 lg:hidden ${sidebarOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
       >
         {/* Backdrop overlay */}
-        <div
-          className={`absolute inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-350 ease-in-out ${
+        <button
+          type="button"
+          aria-label="Close sidebar"
+          className={`absolute inset-0 w-full bg-slate-950/60 backdrop-blur-xs transition-opacity duration-350 ease-in-out cursor-default ${
             sidebarOpen ? 'opacity-100' : 'opacity-0'
           }`}
           onClick={() => setSidebarOpen(false)}
@@ -209,6 +219,7 @@ export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
           </div>
           <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-semibold overflow-hidden shrink-0 border border-slate-200">
             {avatarUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
               <img src={avatarUrl} alt={session.user?.name || 'User'} className="h-full w-full object-cover" />
             ) : (
               initials
@@ -239,6 +250,9 @@ export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
           {children}
         </main>
       </div>
+      </div>
+      {/* Subtle demo watermark — bottom-right, only for demo accounts */}
+      {isDemo && <DemoDataIndicator />}
     </div>
   );
 }

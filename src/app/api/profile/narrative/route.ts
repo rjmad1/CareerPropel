@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { AnthropicProvider } from '@/lib/llm/anthropic';
+import { callLLM } from '@/lib/llm/provider';
 import { prisma } from '@/lib/db';
 import { getAuthContext } from '@/lib/middleware/auth';
 
@@ -54,9 +54,7 @@ export async function POST(request: NextRequest) {
       .map((a) => `${a.title}: ${a.description}`)
       .join('\n');
 
-    const llm = new AnthropicProvider();
-
-    const result = await llm.callLLM(
+    const result = await callLLM(
       [
         {
           role: 'user',

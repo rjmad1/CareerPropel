@@ -198,7 +198,7 @@ export const TechnicalPrep: React.FC<TechnicalPrepProps> = ({ prep }) => {
           </div>
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-4">
             <p className="text-xs text-blue-800">
-              <strong>Tip:</strong> You'll likely code in your language of choice. Make sure you're
+              <strong>Tip:</strong> You&apos;ll likely code in your language of choice. Make sure you&apos;re
               comfortable with syntax, string manipulation, and built-in data structures.
             </p>
           </div>
@@ -381,7 +381,7 @@ export const TechnicalPrep: React.FC<TechnicalPrepProps> = ({ prep }) => {
           <li className="text-sm text-amber-900 flex items-start gap-4">
             <span className="text-amber-600 mt-0.5">✗</span>
             <span>
-              <strong>Memorizing solutions:</strong> Understand the approach and principles. You won't
+              <strong>Memorizing solutions:</strong> Understand the approach and principles. You won&apos;t
               memorize every problem pattern.
             </span>
           </li>
@@ -395,7 +395,7 @@ export const TechnicalPrep: React.FC<TechnicalPrepProps> = ({ prep }) => {
           <li className="text-sm text-amber-900 flex items-start gap-4">
             <span className="text-amber-600 mt-0.5">✗</span>
             <span>
-              <strong>Not coding during practice:</strong> Actually write code, don't just think
+              <strong>Not coding during practice:</strong> Actually write code, don&apos;t just think
               through it. Practice clean code habits.
             </span>
           </li>

@@ -1,4 +1,4 @@
-import Anthropic from '@anthropic-ai/sdk';
+import { callLLM } from '@/lib/llm/provider';
 
 export type DocumentType = 'resume' | 'cover_letter';
 export type CoverLetterTone = 'professional' | 'enthusiastic' | 'concise';
@@ -25,17 +25,9 @@ export interface GeneratedDocument {
   generatedAt: string;
 }
 
-function getClient(): Anthropic {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
-  if (!apiKey) throw new Error('ANTHROPIC_API_KEY is not configured');
-  return new Anthropic({ apiKey });
-}
-
 export async function generateTailoredResume(
   input: GenerateDocumentInput
 ): Promise<GeneratedDocument> {
-  const client = getClient();
-
   const skillsText = input.skills?.length ? `Key Skills: ${input.skills.join(', ')}` : '';
   const achievementsText = input.achievements?.length
     ? `Notable Achievements:\n${input.achievements.map((a) => `- ${a}`).join('\n')}`
@@ -70,13 +62,13 @@ Generate a complete, compelling resume with:
 Make every bullet quantifiable. Use strong action verbs. Align language to the job description keywords where provided.
 Output ONLY the resume in Markdown. No preamble or explanation.`;
 
-  const response = await client.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 2048,
-    messages: [{ role: 'user', content: prompt }],
+  const result = await callLLM([{ role: 'user', content: prompt }], {
+    maxTokens: 2048,
+    temperature: 0.2,
+    systemPrompt: 'You are an expert resume writer.',
   });
 
-  const content = response.content[0].type === 'text' ? response.content[0].text : '';
+  const content = result.content;
   const title = input.jobTitle
     ? `Resume – ${input.jobTitle}${input.company ? ` at ${input.company}` : ''}`
     : `Professional Resume`;
@@ -92,8 +84,6 @@ Output ONLY the resume in Markdown. No preamble or explanation.`;
 export async function generateCoverLetter(
   input: GenerateDocumentInput
 ): Promise<GeneratedDocument> {
-  const client = getClient();
-
   if (!input.jobTitle || !input.company) {
     throw new Error('Job title and company are required for cover letter generation');
   }
@@ -128,13 +118,13 @@ Structure:
 
 Output ONLY the cover letter text in Markdown (starting with the date line). No preamble.`;
 
-  const response = await client.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 1024,
-    messages: [{ role: 'user', content: prompt }],
+  const result = await callLLM([{ role: 'user', content: prompt }], {
+    maxTokens: 1024,
+    temperature: 0.7,
+    systemPrompt: 'You are an expert cover letter writer.',
   });
 
-  const content = response.content[0].type === 'text' ? response.content[0].text : '';
+  const content = result.content;
 
   return {
     title: `Cover Letter – ${input.jobTitle} at ${input.company}`,
@@ -153,8 +143,6 @@ export async function generateNegotiationScript(input: {
   competingOffer?: number;
   keyAchievements?: string[];
 }): Promise<{ emailScript: string; talkingPoints: string[]; redLines: string[] }> {
-  const client = getClient();
-
   const gap = input.targetSalary - input.currentOffer;
   const gapPct = ((gap / input.currentOffer) * 100).toFixed(1);
   const competingOfferText = input.competingOffer
@@ -180,13 +168,13 @@ Respond with a JSON object with exactly these fields:
 The email should be warm but confident. Reference specific value. Never apologise for asking.
 Output ONLY the JSON object.`;
 
-  const response = await client.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 1500,
-    messages: [{ role: 'user', content: prompt }],
+  const result = await callLLM([{ role: 'user', content: prompt }], {
+    maxTokens: 1500,
+    temperature: 0.5,
+    systemPrompt: 'You are an expert salary negotiation coach.',
   });
 
-  const raw = response.content[0].type === 'text' ? response.content[0].text : '{}';
+  const raw = result.content || '{}';
 
   try {
     const jsonMatch = raw.match(/\{[\s\S]*\}/);
@@ -212,8 +200,6 @@ export async function generateEmailTemplate(input: {
   reason?: string;
   context?: string;
 }): Promise<{ subject: string; body: string }> {
-  const client = getClient();
-
   const typeDescriptions: Record<string, string> = {
     thank_you: 'post-interview thank-you note sent within 24 hours',
     follow_up: 'polite follow-up after no response for 5-7 days',
@@ -243,13 +229,13 @@ Respond with a JSON object:
 
 Keep it human, not stiff. Output ONLY the JSON.`;
 
-  const response = await client.messages.create({
-    model: 'claude-sonnet-4-6',
-    max_tokens: 800,
-    messages: [{ role: 'user', content: prompt }],
+  const result = await callLLM([{ role: 'user', content: prompt }], {
+    maxTokens: 800,
+    temperature: 0.6,
+    systemPrompt: 'You are an expert career communications assistant.',
   });
 
-  const raw = response.content[0].type === 'text' ? response.content[0].text : '{}';
+  const raw = result.content || '{}';
 
   try {
     const jsonMatch = raw.match(/\{[\s\S]*\}/);

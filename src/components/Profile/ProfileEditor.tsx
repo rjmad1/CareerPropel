@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 
 interface ProfileEditorProps {
   candidateId: string;
-  onSave?: (data: any) => Promise<void>;
+  onSave?: (data: Record<string, unknown>) => Promise<void>;
   loading?: boolean;
 }
 

@@ -7,10 +7,14 @@
  * Base test user credentials
  */
 export const TEST_USER = {
-  email: 'test@example.com',
-  password: 'password123',
+  email: Cypress.env('CYPRESS_TEST_EMAIL'),
+  password: Cypress.env('CYPRESS_TEST_PASSWORD'),
   id: 'user-test-123'
 };
+
+if (!TEST_USER.email || !TEST_USER.password) {
+  throw new Error('CYPRESS_TEST_EMAIL and CYPRESS_TEST_PASSWORD are required for Cypress test data');
+}
 
 /**
  * Sample job data for testing

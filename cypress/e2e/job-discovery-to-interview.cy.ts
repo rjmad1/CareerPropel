@@ -9,7 +9,7 @@ describe('E2E: Job Discovery → Interview Scheduled', () => {
 
   beforeEach(() => {
     cy.visit('/dashboard');
-    cy.login('test@example.com', 'password123');
+    cy.login();
   });
 
   it('should complete full job→interview flow with agent involvement', () => {

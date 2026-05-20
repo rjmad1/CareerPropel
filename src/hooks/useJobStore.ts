@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { Job, JobStage, JobFilter, JobSort } from '@/types/job';
 
+type SortableValue = string | number | null | undefined;
+
 interface JobStoreState {
   jobs: Job[];
   filteredJobs: Job[];
@@ -133,8 +135,8 @@ export const useJobStore = create<JobStoreState>((set, get) => ({
     }
 
     filtered.sort((a, b) => {
-      let aVal: any = a[sort.field];
-      let bVal: any = b[sort.field];
+      let aVal: SortableValue = a[sort.field as keyof Job] as SortableValue;
+      let bVal: SortableValue = b[sort.field as keyof Job] as SortableValue;
 
       if (sort.field === 'matchScore') {
         aVal = a.matchScore || 0;
@@ -147,8 +149,8 @@ export const useJobStore = create<JobStoreState>((set, get) => ({
         bVal = b.salary?.max || 0;
       }
 
-      if (aVal < bVal) return sort.direction === 'asc' ? -1 : 1;
-      if (aVal > bVal) return sort.direction === 'asc' ? 1 : -1;
+      if ((aVal ?? '') < (bVal ?? '')) return sort.direction === 'asc' ? -1 : 1;
+      if ((aVal ?? '') > (bVal ?? '')) return sort.direction === 'asc' ? 1 : -1;
       return 0;
     });
 

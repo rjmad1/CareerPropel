@@ -4,7 +4,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { AnthropicProvider } from '@/lib/llm/anthropic';
+import { callLLM } from '@/lib/llm/provider';
 import { getAuthContext } from '@/lib/middleware/auth';
 import { errorResponse } from '@/lib/utils/apiResponse';
 
@@ -44,9 +44,7 @@ export async function POST(request: NextRequest) {
       })
       .join('\n\n');
 
-    const llm = new AnthropicProvider();
-
-    const result = await llm.callLLM(
+    const result = await callLLM(
       [
         {
           role: 'user',

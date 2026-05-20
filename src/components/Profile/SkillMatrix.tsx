@@ -39,7 +39,7 @@ export const SkillMatrix: React.FC<SkillMatrixProps> = ({
   const [sortBy, setSortBy] = useState<'name' | 'demand' | 'endorsements' | 'experience'>('name');
 
   const filteredAndSorted = useMemo(() => {
-    let filtered = skills.filter((skill) => {
+    const filtered = skills.filter((skill) => {
       const matchesSearch = skill.name.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory = !categoryFilter || skill.category === categoryFilter;
       return matchesSearch && matchesCategory;
@@ -95,7 +95,7 @@ export const SkillMatrix: React.FC<SkillMatrixProps> = ({
 
         <select
           value={sortBy}
-          onChange={(e) => setSortBy(e.target.value as any)}
+          onChange={(e) => setSortBy(e.target.value as 'name' | 'demand' | 'endorsements' | 'experience')}
           className="px-6 py-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="name">Sort: Name</option>

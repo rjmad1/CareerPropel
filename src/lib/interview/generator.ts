@@ -21,7 +21,7 @@ import {
 } from '@/types/interview';
 import { CompanyProfile } from '@/types/company';
 import { Job } from '@/types/job';
-import { AnthropicProvider } from '@/lib/llm/anthropic';
+import { callLLM } from '@/lib/llm/provider';
 
 // ── Claude-powered generation ─────────────────────────────────────────────────
 
@@ -39,7 +39,6 @@ async function generateWithClaude(
   company: CompanyProfile
 ): Promise<ClaudeContent | null> {
   try {
-    const llm = new AnthropicProvider();
     const seniority = inferSeniority(job.title);
     const techStack = Array.isArray(company.technicalStack)
       ? company.technicalStack.map((t: any) => t.name ?? t).join(', ')
@@ -151,7 +150,7 @@ Rules:
 - Reference the company's tech stack (${techStack}) in tools and design patterns
 - Return valid JSON only — no extra text`;
 
-    const result = await llm.callLLM(
+    const result = await callLLM(
       [{ role: 'user', content: prompt }],
       {
         systemPrompt:

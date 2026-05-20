@@ -6,6 +6,7 @@ import React, { Suspense, useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { Button, Card, CardBody } from '@/components/ui';
+import { sanitizeText, sanitizeUrl } from '@/lib/security/sanitizeContent';
 import {
   Calendar,
   RefreshCw,
@@ -56,8 +57,8 @@ function groupByDay(events: CalendarEvent[]) {
 
 function CalendarContent() {
   const searchParams = useSearchParams();
-  const justConnected = searchParams.get('connected');
-  const connectError = searchParams.get('error');
+  const justConnected = sanitizeText(searchParams.get('connected'));
+  const connectError = sanitizeText(searchParams.get('error'));
 
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [googleConnected, setGoogleConnected] = useState(false);
@@ -275,7 +276,7 @@ function CalendarContent() {
                           <div className="min-w-0">
                             <div className="flex items-center flex-wrap gap-2 mb-1.5">
                               <span className="text-sm font-bold text-slate-900 dark:text-white truncate max-w-xs block leading-tight">
-                                {ev.title}
+                                {sanitizeText(ev.title)}
                               </span>
                               {ev.interviewId && (
                                 <span className="px-2 py-0.5 text-2xs font-semibold rounded-full bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 border border-blue-200 dark:border-blue-900">
@@ -283,13 +284,13 @@ function CalendarContent() {
                                 </span>
                               )}
                               <span className="px-2 py-0.5 text-2xs font-medium rounded-full bg-slate-100 text-slate-650 dark:bg-slate-800 dark:text-slate-350 border border-slate-200 dark:border-slate-700 capitalize">
-                                {ev.provider}
+                                {sanitizeText(ev.provider)}
                               </span>
                             </div>
 
                             {ev.description && (
                               <p className="text-xs text-slate-500 dark:text-slate-400 truncate max-w-md mb-2">
-                                {ev.description}
+                                {sanitizeText(ev.description)}
                               </p>
                             )}
 
@@ -298,12 +299,12 @@ function CalendarContent() {
                               {ev.location && (
                                 <div className="flex items-center gap-1 text-xs">
                                   <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-                                  <span className="truncate max-w-[180px]">{ev.location}</span>
+                                  <span className="truncate max-w-[180px]">{sanitizeText(ev.location)}</span>
                                 </div>
                               )}
-                              {ev.meetingUrl && (
+                              {sanitizeUrl(ev.meetingUrl) && (
                                 <a
-                                  href={ev.meetingUrl}
+                                  href={sanitizeUrl(ev.meetingUrl) ?? undefined}
                                   target="_blank"
                                   rel="noreferrer"
                                   className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 hover:underline"

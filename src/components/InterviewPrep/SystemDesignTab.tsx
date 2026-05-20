@@ -387,7 +387,7 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-6">
           <p className="text-xs text-blue-800">
             <strong>Preparation tip:</strong> Practice 3-4 problems deeply. Understand the trade-offs
-            and why certain architectural decisions were made. You'll likely face variations of these
+            and why certain architectural decisions were made. You&apos;ll likely face variations of these
             problems.
           </p>
         </div>
@@ -443,7 +443,7 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
         </h3>
         <ul className="space-y-4 text-sm text-emerald-800">
           <li>
-            <strong>1. Ask questions first:</strong> Don't assume requirements. Clarify scale, users,
+            <strong>1. Ask questions first:</strong> Don&apos;t assume requirements. Clarify scale, users,
             regions, real-time needs.
           </li>
           <li>
@@ -463,7 +463,7 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
             choices.
           </li>
           <li>
-            <strong>6. Identify bottlenecks:</strong> Proactively point out limitations and how you'd
+            <strong>6. Identify bottlenecks:</strong> Proactively point out limitations and how you&apos;d
             scale further.
           </li>
         </ul>

@@ -37,6 +37,7 @@ export const Avatar = React.forwardRef<HTMLImageElement, AvatarProps>(
     }
 
     return (
+      // eslint-disable-next-line @next/next/no-img-element
       <img
         ref={ref}
         src={src}

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { ProfileScore, ProfileEntity, ProfileRecommendation } from '@/types/profile';
+import { ProfileScore, ProfileEntity, ProfileRecommendation, ProfileSummary } from '@/types/profile';
 import {
   getProfileSummary,
   getProfileScore,
@@ -9,7 +9,7 @@ import {
 } from '@/lib/profile/profileService';
 
 export interface UseProfileResult {
-  profile: any | null;
+  profile: ProfileSummary | null;
   score: ProfileScore | null;
   entities: ProfileEntity[];
   recommendations: ProfileRecommendation[];
@@ -18,7 +18,7 @@ export interface UseProfileResult {
   unsavedChanges: boolean;
 
   // Actions
-  updateProfile: (data: Partial<any>) => Promise<void>;
+  updateProfile: (data: Record<string, unknown>) => Promise<void>;
   addEntity: (entity: ProfileEntity) => void;
   removeEntity: (id: string) => void;
   refresh: () => Promise<void>;
@@ -47,7 +47,7 @@ export function useProfile(
     onStaleDetected?: () => void;
   }
 ): UseProfileResult {
-  const [profile, setProfile] = useState<any | null>(null);
+  const [profile, setProfile] = useState<ProfileSummary | null>(null);
   const [score, setScore] = useState<ProfileScore | null>(null);
   const [entities, setEntities] = useState<ProfileEntity[]>([]);
   const [recommendations, setRecommendations] = useState<ProfileRecommendation[]>([]);
@@ -57,7 +57,7 @@ export function useProfile(
 
   const cacheTTL = options?.cacheTTL || 15 * 60 * 1000; // 15 minutes
   const lastFetchRef = useRef<Date | null>(null);
-  const pendingChangesRef = useRef<Partial<any>>({});
+  const pendingChangesRef = useRef<Record<string, unknown>>({});
 
   const isStale = useCallback(() => {
     if (!lastFetchRef.current) return true;
@@ -94,7 +94,7 @@ export function useProfile(
   /**
    * Update profile with debouncing
    */
-  const updateProfileData = useCallback(async (data: Partial<any>) => {
+  const updateProfileData = useCallback(async (data: Record<string, unknown>) => {
     try {
       // Merge with pending changes
       pendingChangesRef.current = { ...pendingChangesRef.current, ...data };

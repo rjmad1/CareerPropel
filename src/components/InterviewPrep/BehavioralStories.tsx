@@ -171,7 +171,7 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
           <div className="space-y-6">
             {stories.map((story, idx) => (
               <div
-                key={idx}
+                key={story.title ?? idx}
                 className="border border-slate-200 rounded-lg overflow-hidden"
                 data-cy={`behavioral-story-${idx}`}
               >
@@ -190,9 +190,9 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
                     </div>
                     <p className="text-sm text-slate-700 mb-4">{story.summary}</p>
                     <div className="flex flex-wrap gap-4">
-                      {story.competencies?.slice(0, 3).map((comp, cIdx) => (
+                      {story.competencies?.slice(0, 3).map((comp) => (
                         <span
-                          key={cIdx}
+                          key={comp}
                           className="text-xs bg-blue-100 text-blue-800 px-4 py-2 rounded"
                         >
                           {comp}
@@ -266,7 +266,7 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
                       <div className="text-sm font-semibold text-blue-900 mb-4">💡 Delivery Tips</div>
                       <ul className="space-y-2 text-xs text-blue-800">
                         <li>• Start with context (Situation) to set the scene</li>
-                        <li>• Focus on YOUR actions, not team's actions</li>
+                        <li>• Focus on YOUR actions, not team&apos;s actions</li>
                         <li>• Quantify results when possible (%, time saved, impact)</li>
                         <li>• Practice telling this story in 2-3 minutes maximum</li>
                         <li>• Avoid negative stories; frame challenges positively</li>
@@ -290,7 +290,7 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
           <div className="grid grid-cols-2 gap-4">
             {competencies.map(([competency, count], idx) => (
               <div
-                key={idx}
+                key={competency}
                 className="bg-amber-50 border border-amber-200 rounded-lg p-6"
                 data-cy={`competency-${idx}`}
               >
@@ -322,7 +322,7 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
         <div className="grid grid-cols-2 gap-4">
           {commonBehavioralTopics.slice(0, 4).map((topic, idx) => (
             <div
-              key={idx}
+              key={topic.topic}
               className="bg-white border border-amber-300 rounded-lg p-6"
               data-cy={`gap-topic-${idx}`}
             >
@@ -344,7 +344,7 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
         <div className="grid grid-cols-1 gap-6">
           {commonBehavioralTopics.map((topic, idx) => (
             <div
-              key={idx}
+              key={topic.topic}
               className="bg-slate-50 border border-slate-200 rounded-lg p-6"
               data-cy={`behavioral-topic-${idx}`}
             >
@@ -353,8 +353,8 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
                 <h4 className="font-semibold text-slate-900">{topic.topic}</h4>
               </div>
               <ul className="space-y-2 ml-12">
-                {topic.examples.map((example, exIdx) => (
-                  <li key={exIdx} className="text-xs text-slate-700">• {example}</li>
+                {topic.examples.map((example) => (
+                  <li key={example} className="text-xs text-slate-700">• {example}</li>
                 ))}
               </ul>
             </div>
@@ -373,7 +373,7 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
             <ul className="text-xs text-blue-800 space-y-2 ml-8">
               <li>• Set the context: company, team, role, timeframe</li>
               <li>• Make it relatable: what was the challenge/problem?</li>
-              <li>• Don't over-explain: keep it concise</li>
+              <li>• Don&apos;t over-explain: keep it concise</li>
             </ul>
           </div>
 
@@ -393,7 +393,7 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
               ⚙️ ACTION (30-40 seconds)
             </div>
             <ul className="text-xs text-blue-800 space-y-2 ml-8">
-              <li>• Use "I" not "we" - focus on YOUR contribution</li>
+              <li>• Use &quot;I&quot; not &quot;we&quot; - focus on YOUR contribution</li>
               <li>• Describe specific steps YOU took</li>
               <li>• Highlight relevant skills and decision-making</li>
               <li>• This is the longest part - show your thinking</li>
@@ -408,7 +408,7 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
               <li>• What was the outcome?</li>
               <li>• Quantify impact if possible (%, time, money, etc.)</li>
               <li>• What did YOU learn?</li>
-              <li>• How does this relate to the role you're interviewing for?</li>
+              <li>• How does this relate to the role you&apos;re interviewing for?</li>
             </ul>
           </div>
         </div>

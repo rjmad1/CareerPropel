@@ -152,7 +152,7 @@ export const CompanyIntelligence: React.FC<CompanyIntelligenceProps> = ({
       <section className="bg-blue-50 border border-blue-200 rounded-lg p-8">
         <div className="text-sm font-semibold text-blue-900 mb-4">📚 Preparation Tips</div>
         <ul className="space-y-2 text-xs text-blue-800">
-          <li>• Research the company's recent product launches and announcements</li>
+          <li>• Research the company&apos;s recent product launches and announcements</li>
           <li>• Understand their competitive positioning in the market</li>
           <li>• Familiarize yourself with their tech stack and engineering culture</li>
           <li>• Review glassdoor reviews and employee feedback (balanced perspective)</li>

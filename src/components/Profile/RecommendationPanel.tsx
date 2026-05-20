@@ -181,7 +181,7 @@ export const RecommendationPanel: React.FC<RecommendationPanelProps> = ({
           <div className="text-center py-16">
             <p className="text-lg font-semibold text-gray-900">🎉 All set!</p>
             <p className="text-sm text-gray-600 mt-2">
-              You've addressed all recommendations
+              You&apos;ve addressed all recommendations
             </p>
           </div>
         )}

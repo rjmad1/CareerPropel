@@ -12,6 +12,7 @@
 
 import axios from 'axios';
 import { prisma } from '@/lib/db';
+import { encrypt, decrypt } from '@/lib/crypto/tokenEncryption';
 
 const GOOGLE_AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
 const GOOGLE_TOKEN_URL = 'https://oauth2.googleapis.com/token';
@@ -92,7 +93,13 @@ async function refreshAccessToken(refreshToken: string): Promise<{ access_token:
   return data;
 }
 
-/** Persist tokens for a candidate. Updates if a record already exists. */
+/**
+ * Persist tokens for a candidate. Updates if a record already exists.
+ *
+ * RASUI-002 remediation: accessToken and refreshToken are encrypted with
+ * AES-256-GCM before being written to the database. They are decrypted
+ * transparently on read in getValidAccessToken().
+ */
 export async function saveTokens(
   candidateId: string,
   tokens: TokenResponse
@@ -103,14 +110,14 @@ export async function saveTokens(
     create: {
       candidateId,
       provider: 'google',
-      accessToken: tokens.access_token,
-      refreshToken: tokens.refresh_token ?? '',
+      accessToken: encrypt(tokens.access_token),
+      refreshToken: tokens.refresh_token ? encrypt(tokens.refresh_token) : '',
       expiresAt,
       scope: tokens.scope,
     },
     update: {
-      accessToken: tokens.access_token,
-      ...(tokens.refresh_token ? { refreshToken: tokens.refresh_token } : {}),
+      accessToken: encrypt(tokens.access_token),
+      ...(tokens.refresh_token ? { refreshToken: encrypt(tokens.refresh_token) } : {}),
       expiresAt,
       scope: tokens.scope,
     },
@@ -129,15 +136,17 @@ async function getValidAccessToken(candidateId: string): Promise<string> {
     ? record.expiresAt.getTime() - Date.now() < 60_000
     : true;
 
-  if (!needsRefresh) return record.accessToken;
+  // RASUI-002: decrypt token on read (handles both encrypted and legacy plaintext)
+  if (!needsRefresh) return decrypt(record.accessToken);
 
   if (!record.refreshToken) throw new Error('No refresh token — reconnect Google Calendar');
 
-  const fresh = await refreshAccessToken(record.refreshToken);
+  const decryptedRefreshToken = decrypt(record.refreshToken);
+  const fresh = await refreshAccessToken(decryptedRefreshToken);
   const expiresAt = new Date(Date.now() + fresh.expires_in * 1000);
   await prisma.calendarToken.update({
     where: { candidateId_provider: { candidateId, provider: 'google' } },
-    data: { accessToken: fresh.access_token, expiresAt },
+    data: { accessToken: encrypt(fresh.access_token), expiresAt },
   });
   return fresh.access_token;
 }

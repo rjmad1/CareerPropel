@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Notification } from '@/lib/notifications/manager';
 
 interface ToastProps {
@@ -31,6 +31,13 @@ export const Toast: React.FC<ToastProps> = ({
 
   const config = getTypeConfig(notification.type);
 
+  const handleDismiss = useCallback(() => {
+    setIsExiting(true);
+    setTimeout(() => {
+      onDismiss(notification.id);
+    }, 300);
+  }, [onDismiss, notification.id]);
+
   // Handle auto-dismiss
   useEffect(() => {
     if (!notification.duration || notification.duration === 0) {
@@ -51,15 +58,7 @@ export const Toast: React.FC<ToastProps> = ({
     }, 10);
 
     return () => clearInterval(interval);
-  }, [notification.duration]);
-
-  const handleDismiss = () => {
-    setIsExiting(true);
-    // Wait for animation to complete
-    setTimeout(() => {
-      onDismiss(notification.id);
-    }, 300);
-  };
+  }, [notification.duration, handleDismiss]);
 
   return (
     <div

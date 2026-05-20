@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react';
 import { useEffect, useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { JobDetailPanel } from '@/domains/jobs';
 import Link from 'next/link';
@@ -18,7 +18,9 @@ import {
   ArrowRight,
   ShieldCheck,
   AlertCircle,
-  X
+  X,
+  Sparkles,
+  PartyPopper
 } from 'lucide-react';
 
 interface Job {
@@ -74,8 +76,11 @@ const QUICK_LINKS = [
 export default function DashboardPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(false);
+  const [onboardCheckLoading, setOnboardCheckLoading] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(false);
   const [error, setError] = useState('');
   const [title, setTitle] = useState('');
   const [company, setCompany] = useState('');
@@ -83,14 +88,6 @@ export default function DashboardPage() {
   const [submitLoading, setSubmitLoading] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/login');
-    } else if (status === 'authenticated') {
-      fetchJobs();
-    }
-  }, [status, router]);
 
   const fetchJobs = useCallback(async () => {
     try {
@@ -112,6 +109,43 @@ export default function DashboardPage() {
       setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    async function checkOnboardingAndFetch() {
+      if (status === 'unauthenticated') {
+        router.push('/login');
+        return;
+      }
+
+      if (status === 'authenticated') {
+        try {
+          const res = await fetch('/api/account');
+          if (res.ok) {
+            const result = await res.json();
+            const prefs = result?.data?.preferences || {};
+            
+            // Redirect if not onboarded
+            if (!prefs.onboarded) {
+              router.push('/onboarding');
+              return;
+            }
+
+            // Display welcome state if parameter active
+            if (searchParams.get('welcome') === '1') {
+              setShowWelcome(true);
+            }
+          }
+        } catch (e) {
+          console.error('Failed to verify onboarding status:', e);
+        } finally {
+          setOnboardCheckLoading(false);
+          fetchJobs();
+        }
+      }
+    }
+
+    checkOnboardingAndFetch();
+  }, [status, router, fetchJobs, searchParams]);
 
   async function handleAddJob(e: React.FormEvent) {
     e.preventDefault();
@@ -137,7 +171,14 @@ export default function DashboardPage() {
 
   const stageKey = (stage: string) => stage?.toUpperCase() ?? '';
 
-  if (status === 'loading') return null;
+  if (status === 'loading' || onboardCheckLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
+        <Spinner className="w-10 h-10 text-indigo-600" />
+        <span className="text-sm text-slate-500 font-medium">Booting Career Operating System...</span>
+      </div>
+    );
+  }
   if (!session) return null;
 
   const userName = session.user?.email ? session.user.email.split('@')[0] : '';
@@ -148,6 +189,33 @@ export default function DashboardPage() {
       subtitle={`Welcome back${userName ? ', ' + userName : ''}! Here's your career pipeline.`}
     >
       <div className="p-6 max-w-5xl mx-auto space-y-8">
+        {showWelcome && (
+          <div className="bg-gradient-to-r from-blue-600/95 to-indigo-600/95 text-white rounded-3xl p-6 shadow-xl relative overflow-hidden backdrop-blur-md border border-indigo-400/20">
+            <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-white text-[10px] font-bold uppercase tracking-wider">
+                  <PartyPopper className="w-3.5 h-3.5" />
+                  <span>Onboarding Complete</span>
+                </div>
+                <h3 className="text-xl font-bold flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-amber-300 animate-pulse" />
+                  <span>Your Career OS is Active & Custom-Configured!</span>
+                </h3>
+                <p className="text-xs text-blue-100 max-w-2xl leading-relaxed">
+                  We have successfully mapped your career goals, privacy presets, and budget limits to all 11+ outcome presets. You can manage encrypted API keys, fallback routes, or offline discovery anytime under settings.
+                </p>
+              </div>
+              <button 
+                onClick={() => setShowWelcome(false)}
+                className="bg-white hover:bg-slate-100 text-indigo-950 px-5 py-2.5 rounded-xl text-xs font-extrabold transition-all shrink-0 shadow-sm"
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
+        )}
+
         {error && (
           <div className="flex items-center justify-between p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm" role="alert">
             <div className="flex items-center gap-2">

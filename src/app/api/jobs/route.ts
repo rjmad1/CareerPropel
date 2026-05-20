@@ -10,8 +10,10 @@ import { handleCorsPreFlight, applyCorsHeaders } from '@/lib/middleware/cors'
 
 export const dynamic = 'force-dynamic'
 
-const getJobsLimiter = createRateLimiter(100, 60000)
-const createJobLimiter = createRateLimiter(20, 60000)
+// RASUI-007 fix: windowSecs is in SECONDS. 60 = 1 minute window.
+// Previous bug: createRateLimiter(100, 60000) set a 16.7-hour window (ms passed as seconds).
+const getJobsLimiter = createRateLimiter(100, 60)
+const createJobLimiter = createRateLimiter(20, 60)
 
 export async function GET(request: NextRequest) {
   const corsResponse = handleCorsPreFlight(request)

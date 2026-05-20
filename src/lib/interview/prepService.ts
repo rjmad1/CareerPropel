@@ -24,7 +24,7 @@ import {
   ResumeAlignment,
   CompensationGuide,
 } from '@/types/interview';
-import { AnthropicProvider } from '@/lib/llm/anthropic';
+import { callLLM } from '@/lib/llm/provider';
 
 /**
  * Interview prep generation request
@@ -110,8 +110,7 @@ async function generateCompanyResearch(
   const techStack = extractTechStackFromJobDescription(jobDescription);
 
   try {
-    const llm = new AnthropicProvider();
-    const result = await llm.callLLM(
+    const result = await callLLM(
       [
         {
           role: 'user',
