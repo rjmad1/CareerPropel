@@ -60,6 +60,9 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install chromium --with-deps
 
+      - name: Run Prisma Migrations
+        run: npx prisma migrate deploy
+
       - name: Build application
         run: npm run build
         env:

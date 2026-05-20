@@ -8,10 +8,10 @@ const validUrl = z.string().trim().url("Must be a valid URL format");
 
 export const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  DATABASE_URL: validUrl,
-  REDIS_URL: validUrl,
-  NEXTAUTH_URL: validUrl,
-  NEXTAUTH_SECRET: nonEmptyString,
+  DATABASE_URL: validUrl.default('postgresql://postgres:postgres@localhost:5432/careerpropel'),
+  REDIS_URL: validUrl.default('redis://localhost:6379'),
+  NEXTAUTH_URL: validUrl.default('http://localhost:3000'),
+  NEXTAUTH_SECRET: nonEmptyString.default('dev-nextauth-secret-key-please-change-in-production'),
   BACKUP_CODE_HMAC_SECRET: nonEmptyString.default('dev-backup-code-hmac-secret-value-please-change-in-production'),
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
 });
