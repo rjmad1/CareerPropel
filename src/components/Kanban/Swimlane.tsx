@@ -85,14 +85,14 @@ export const Swimlane: React.FC<SwimlaneProps> = ({
       data-cy={`swimlane-${stage}`}
     >
       {/* Header */}
-      <div className={`px-4 py-3 border-b ${config.borderColor} flex-shrink-0`}>
-        <div className="flex items-center gap-2 mb-2">
+      <div className={`px-8 py-6 border-b ${config.borderColor} flex-shrink-0`}>
+        <div className="flex items-center gap-4 mb-4">
           <span className="text-xl">{config.icon}</span>
           <div className="flex-1">
             <h3 className="font-semibold text-gray-900">{config.label}</h3>
             <p className="text-xs text-gray-600">{config.description}</p>
           </div>
-          <div className="bg-white px-2 py-1 rounded-full text-sm font-semibold text-gray-900">
+          <div className="bg-white px-4 py-2 rounded-full text-sm font-semibold text-gray-900">
             {jobs.length}
           </div>
         </div>
@@ -101,7 +101,7 @@ export const Swimlane: React.FC<SwimlaneProps> = ({
       {/* Jobs Container */}
       <div
         ref={scrollContainerRef}
-        className={`flex-1 overflow-y-auto min-h-0 p-3 space-y-2 transition-colors ${
+        className={`flex-1 overflow-y-auto min-h-0 p-6 space-y-4 transition-colors ${
           isDragOver ? 'bg-opacity-75' : ''
         }`}
         onDragOver={handleDragOver}
@@ -111,11 +111,11 @@ export const Swimlane: React.FC<SwimlaneProps> = ({
       >
         {isLoading ? (
           // Loading skeleton
-          <div className="space-y-2">
+          <div className="space-y-4">
             {[...Array(3)].map((_, i) => (
               <div
                 key={i}
-                className="h-24 bg-white rounded shadow animate-pulse"
+                className="h-48 bg-white rounded shadow animate-pulse"
               />
             ))}
           </div>
@@ -135,9 +135,9 @@ export const Swimlane: React.FC<SwimlaneProps> = ({
           ))
         ) : (
           // Empty state
-          <div className="flex items-center justify-center h-32 text-gray-500 text-sm">
+          <div className="flex items-center justify-center h-64 text-gray-500 text-sm">
             <div className="text-center">
-              <div className="text-2xl mb-1">✨</div>
+              <div className="text-2xl mb-2">✨</div>
               <p>No jobs here</p>
             </div>
           </div>
@@ -145,7 +145,7 @@ export const Swimlane: React.FC<SwimlaneProps> = ({
       </div>
 
       {/* Footer: Stage info */}
-      <div className={`px-4 py-2 border-t ${config.borderColor} text-xs text-gray-600 flex-shrink-0`}>
+      <div className={`px-8 py-4 border-t ${config.borderColor} text-xs text-gray-600 flex-shrink-0`}>
         <div className="flex justify-between">
           <span>Average match score:</span>
           <span className="font-semibold">

@@ -14,9 +14,9 @@ export interface AvatarProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 export const Avatar = React.forwardRef<HTMLImageElement, AvatarProps>(
   ({ initials, size = 'md', fallbackColor = 'bg-blue-600', className, src, alt, ...props }, ref) => {
     const sizeStyles = {
-      sm: 'w-8 h-8 text-xs',
-      md: 'w-10 h-10 text-sm',
-      lg: 'w-12 h-12 text-base',
+      sm: 'w-16 h-16 text-xs',
+      md: 'w-20 h-20 text-sm',
+      lg: 'w-24 h-24 text-base',
     }
 
     if (!src && initials) {

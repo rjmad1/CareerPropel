@@ -37,5 +37,6 @@
       "source": "PowerShell",
       "icon": "terminal-powershell"
     }
-  }
+  },
+  "css.lint.unknownAtRules": "ignore"
 }

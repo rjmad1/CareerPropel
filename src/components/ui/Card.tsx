@@ -37,7 +37,7 @@ export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ className, children, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn('px-6 py-4 border-b border-gray-100', className)}
+      className={cn('px-12 py-8 border-b border-gray-100', className)}
       {...props}
     >
       {children}
@@ -56,7 +56,7 @@ export interface CardBodyProps extends React.HTMLAttributes<HTMLDivElement> {
  */
 export const CardBody = React.forwardRef<HTMLDivElement, CardBodyProps>(
   ({ className, children, ...props }, ref) => (
-    <div ref={ref} className={cn('px-6 py-4', className)} {...props}>
+    <div ref={ref} className={cn('px-12 py-8', className)} {...props}>
       {children}
     </div>
   )
@@ -75,7 +75,7 @@ export const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
   ({ className, children, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn('px-6 py-4 border-t border-gray-100 flex items-center justify-between gap-4', className)}
+      className={cn('px-12 py-8 border-t border-gray-100 flex items-center justify-between gap-8', className)}
       {...props}
     >
       {children}

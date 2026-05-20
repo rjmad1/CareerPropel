@@ -189,50 +189,24 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
     return grouped;
   }, [jobs]);
 
-  const stats = {
-    total: jobs.length,
-    active: jobs.filter((j) => j.stage !== 'rejected' && j.stage !== 'archived' && j.stage !== 'offer').length,
-    offers: jobs.filter((j) => j.stage === 'offer').length,
-    rejected: jobs.filter((j) => j.stage === 'rejected').length,
-  };
-
   const groupedJobs = jobsByStage();
 
   return (
-    <div className="flex flex-col h-full bg-gray-50" data-cy="kanban-board">
-      {/* Header */}
-      <div className="px-6 py-4 bg-white border-b border-gray-200 flex-shrink-0">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">Job Pipeline</h1>
-            <p className="text-sm text-gray-600 mt-1">Drag jobs between stages to move them forward</p>
-          </div>
-          <div className="flex gap-6">
-            {[
-              { label: 'Total', value: stats.total, color: 'text-gray-900' },
-              { label: 'Active', value: stats.active, color: 'text-blue-600' },
-              { label: 'Offers', value: stats.offers, color: 'text-green-600' },
-              { label: 'Rejected', value: stats.rejected, color: 'text-red-600' },
-            ].map(({ label, value, color }) => (
-              <div key={label} className="text-center">
-                <div className={`text-2xl font-bold ${color}`}>{value}</div>
-                <div className="text-xs text-gray-500">{label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
+    <div className="flex flex-col h-full bg-slate-50" data-cy="kanban-board">
       {!connected && (
-        <div className="px-6 py-2 bg-yellow-50 border-b border-yellow-200 text-sm text-yellow-700 flex-shrink-0">
-          ⚠️ Disconnected from real-time updates. Changes will sync on reconnect.
+        <div className="px-6 py-3 bg-amber-50 border-b border-amber-200 text-xs font-medium text-amber-800 flex-shrink-0 flex items-center gap-2">
+          <span>⚠️</span>
+          <span>Disconnected from real-time updates. Changes will sync on reconnect.</span>
         </div>
       )}
 
       {error && (
-        <div className="px-6 py-2 bg-red-50 border-b border-red-200 text-sm text-red-700 flex-shrink-0">
-          ❌ {error}
-          <button className="ml-2 underline" onClick={() => setError(null)}>Dismiss</button>
+        <div className="px-6 py-3 bg-red-50 border-b border-red-200 text-xs font-medium text-red-800 flex-shrink-0 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span>❌</span>
+            <span>{error}</span>
+          </div>
+          <button className="underline hover:text-red-900" onClick={() => setError(null)}>Dismiss</button>
         </div>
       )}
 

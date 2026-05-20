@@ -67,23 +67,23 @@ export const SkillMatrix: React.FC<SkillMatrixProps> = ({
   );
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
       {/* Controls */}
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col sm:flex-row gap-6">
         <div className="flex-1">
           <input
             type="text"
             placeholder="Search skills..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-6 py-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
         <select
           value={categoryFilter || ''}
           onChange={(e) => setCategoryFilter(e.target.value || null)}
-          className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-6 py-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">All Categories</option>
           {categories.map((cat) => (
@@ -96,7 +96,7 @@ export const SkillMatrix: React.FC<SkillMatrixProps> = ({
         <select
           value={sortBy}
           onChange={(e) => setSortBy(e.target.value as any)}
-          className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-6 py-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="name">Sort: Name</option>
           <option value="demand">Sort: Market Demand</option>
@@ -107,10 +107,10 @@ export const SkillMatrix: React.FC<SkillMatrixProps> = ({
 
       {/* Skill Grid */}
       {filteredAndSorted.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filteredAndSorted.map((skill) => (
-            <div key={skill.name} className="p-4 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
-              <div className="flex items-start justify-between mb-3">
+            <div key={skill.name} className="p-8 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors">
+              <div className="flex items-start justify-between mb-6">
                 <div className="flex-1">
                   <h4 className="font-semibold text-gray-900">{skill.name}</h4>
                   <p className="text-xs text-gray-500">
@@ -119,7 +119,7 @@ export const SkillMatrix: React.FC<SkillMatrixProps> = ({
                 </div>
                 {skill.marketDemand && (
                   <span className={cn(
-                    'text-xs px-2 py-1 rounded-full font-medium',
+                    'text-xs px-4 py-2 rounded-full font-medium',
                     demandColors[skill.marketDemand]
                   )}>
                     {skill.marketDemand}
@@ -128,8 +128,8 @@ export const SkillMatrix: React.FC<SkillMatrixProps> = ({
               </div>
 
               {/* Proficiency Stars */}
-              <div className="mb-2">
-                <div className="flex items-center gap-1">
+              <div className="mb-4">
+                <div className="flex items-center gap-2">
                   {[1, 2, 3, 4].map((star) => (
                     <span
                       key={star}
@@ -137,14 +137,14 @@ export const SkillMatrix: React.FC<SkillMatrixProps> = ({
                     >
                     </span>
                   ))}
-                  <span className="text-xs text-gray-600 ml-2 capitalize">
+                  <span className="text-xs text-gray-600 ml-4 capitalize">
                     {skill.proficiency}
                   </span>
                 </div>
               </div>
 
               {/* Metrics */}
-              <div className="grid grid-cols-2 gap-2 mb-3 text-xs">
+              <div className="grid grid-cols-2 gap-4 mb-6 text-xs">
                 {skill.yearsOfExperience !== undefined && (
                   <div className="text-gray-600">
                     {skill.yearsOfExperience}y experience
@@ -159,11 +159,11 @@ export const SkillMatrix: React.FC<SkillMatrixProps> = ({
 
               {/* Projects */}
               {skill.projects && skill.projects.length > 0 && (
-                <div className="mb-3 text-xs">
-                  <p className="text-gray-600 font-medium mb-1">Projects:</p>
-                  <div className="flex flex-wrap gap-1">
+                <div className="mb-6 text-xs">
+                  <p className="text-gray-600 font-medium mb-2">Projects:</p>
+                  <div className="flex flex-wrap gap-2">
                     {skill.projects.slice(0, 2).map((proj) => (
-                      <span key={proj} className="bg-blue-50 text-blue-700 px-2 py-0.5 rounded">
+                      <span key={proj} className="bg-blue-50 text-blue-700 px-4 py-0.5 rounded">
                         {proj}
                       </span>
                     ))}
@@ -175,14 +175,14 @@ export const SkillMatrix: React.FC<SkillMatrixProps> = ({
               )}
 
               {/* Actions */}
-              <div className="flex gap-2">
-                <button className="flex-1 text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 rounded py-1.5 font-medium transition-colors">
+              <div className="flex gap-4">
+                <button className="flex-1 text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 rounded py-3 font-medium transition-colors">
                   Edit
                 </button>
                 {onSkillDelete && (
                   <button
                     onClick={() => onSkillDelete(skill.name)}
-                    className="flex-1 text-xs bg-red-50 hover:bg-red-100 text-red-700 rounded py-1.5 font-medium transition-colors"
+                    className="flex-1 text-xs bg-red-50 hover:bg-red-100 text-red-700 rounded py-3 font-medium transition-colors"
                   >
                     Delete
                   </button>
@@ -192,7 +192,7 @@ export const SkillMatrix: React.FC<SkillMatrixProps> = ({
           ))}
         </div>
       ) : (
-        <div className="p-8 text-center border border-dashed border-gray-300 rounded-lg">
+        <div className="p-16 text-center border border-dashed border-gray-300 rounded-lg">
           <p className="text-gray-500 text-sm">No skills found</p>
         </div>
       )}

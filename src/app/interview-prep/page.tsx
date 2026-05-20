@@ -167,7 +167,7 @@ function PrepJobCard({ job, onPrepare, highlight }: PrepJobCardProps) {
             {job.company}
           </Typography>
           <Box sx={{ mt: 1.5 }}>
-            <span className={`inline-block px-2 py-0.5 text-xs font-medium rounded-full ${colors.bg} ${colors.text}`}>
+            <span className={`inline-block px-4 py-0.5 text-xs font-medium rounded-full ${colors.bg} ${colors.text}`}>
               {STAGE_LABELS[job.stage] ?? job.stage}
             </span>
           </Box>

@@ -141,16 +141,16 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
   };
 
   return (
-    <div data-cy="mock-interview-tab" className="space-y-6 py-4">
+    <div data-cy="mock-interview-tab" className="space-y-12 py-8">
       {/* Setup Screen */}
       {interviewState === 'setup' && (
-        <div className="space-y-6">
+        <div className="space-y-12">
           {/* Header */}
-          <section className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-5">
-            <div className="flex items-start gap-3">
-              <Mic className="w-5 h-5 text-blue-600 flex-shrink-0 mt-1" />
+          <section className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-10">
+            <div className="flex items-start gap-6">
+              <Mic className="w-10 h-10 text-blue-600 flex-shrink-0 mt-2" />
               <div className="flex-1">
-                <h3 className="text-lg font-semibold text-blue-900 mb-2">
+                <h3 className="text-lg font-semibold text-blue-900 mb-4">
                   Mock Interview Simulation
                 </h3>
                 <p className="text-sm text-blue-800">
@@ -162,20 +162,20 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
           </section>
 
           {/* Interview Format */}
-          <section className="space-y-3">
+          <section className="space-y-6">
             <h3 className="text-base font-semibold text-slate-900">Interview Format</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                <div className="text-sm font-semibold text-slate-900 mb-2">📝 Mix of Questions</div>
-                <ul className="text-xs text-slate-700 space-y-1">
+            <div className="grid grid-cols-2 gap-6">
+              <div className="bg-slate-50 border border-slate-200 rounded-lg p-8">
+                <div className="text-sm font-semibold text-slate-900 mb-4">📝 Mix of Questions</div>
+                <ul className="text-xs text-slate-700 space-y-2">
                   <li>• 3 Behavioral questions</li>
                   <li>• 2 Technical/Design questions</li>
                   <li>• Real role-specific scenarios</li>
                 </ul>
               </div>
-              <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
-                <div className="text-sm font-semibold text-slate-900 mb-2">⏱️ Time Limits</div>
-                <ul className="text-xs text-slate-700 space-y-1">
+              <div className="bg-slate-50 border border-slate-200 rounded-lg p-8">
+                <div className="text-sm font-semibold text-slate-900 mb-4">⏱️ Time Limits</div>
+                <ul className="text-xs text-slate-700 space-y-2">
                   <li>• Each question has a time limit</li>
                   <li>• Total interview: ~15 minutes</li>
                   <li>• Matches real interview pace</li>
@@ -185,9 +185,9 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
           </section>
 
           {/* How It Works */}
-          <section className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 space-y-3">
+          <section className="bg-emerald-50 border border-emerald-200 rounded-lg p-8 space-y-6">
             <h3 className="text-base font-semibold text-emerald-900">How It Works</h3>
-            <ol className="space-y-2 text-sm text-emerald-800">
+            <ol className="space-y-4 text-sm text-emerald-800">
               <li>
                 <strong>1. Read the question:</strong> You'll see the question on screen. Take a moment to
                 think.
@@ -208,17 +208,17 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
           {/* Start Button */}
           <button
             onClick={handleStartInterview}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-6 px-8 rounded-lg transition-colors flex items-center justify-center gap-4"
             data-cy="start-interview-button"
           >
-            <Mic className="w-5 h-5" />
+            <Mic className="w-10 h-10" />
             Start Mock Interview
           </button>
 
           {/* Tips */}
-          <section className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-            <div className="text-sm font-semibold text-amber-900 mb-3">💡 Tips for Success</div>
-            <ul className="space-y-2 text-xs text-amber-800">
+          <section className="bg-amber-50 border border-amber-200 rounded-lg p-8">
+            <div className="text-sm font-semibold text-amber-900 mb-6">💡 Tips for Success</div>
+            <ul className="space-y-4 text-xs text-amber-800">
               <li>• Speak clearly and at a natural pace</li>
               <li>• Use specific examples with metrics</li>
               <li>• Take a moment to think before answering</li>
@@ -231,23 +231,23 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
 
       {/* Recording Screen */}
       {interviewState === 'recording' && (
-        <div className="space-y-6">
+        <div className="space-y-12">
           {/* Progress */}
-          <div className="bg-slate-100 rounded-full h-2">
+          <div className="bg-slate-100 rounded-full h-4">
             <div
-              className="bg-blue-600 h-2 rounded-full transition-all"
+              className="bg-blue-600 h-4 rounded-full transition-all"
               style={{ width: `${((currentQuestion + 1) / interviewQuestions.length) * 100}%` }}
             ></div>
           </div>
 
           {/* Current Question */}
-          <section className="space-y-4">
+          <section className="space-y-8">
             <div className="flex items-center justify-between">
               <div>
                 <div className="text-sm font-medium text-slate-600">
                   Question {currentQuestion + 1} of {interviewQuestions.length}
                 </div>
-                <div className="text-xs text-slate-500 mt-1">
+                <div className="text-xs text-slate-500 mt-2">
                   Type: {currentQuestionData?.type === 'behavioral' ? '💬 Behavioral' : '🔧 Technical'}
                 </div>
               </div>
@@ -255,68 +255,68 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
                 <div className="text-sm font-medium text-slate-600">
                   {currentQuestionData?.category}
                 </div>
-                <div className="text-xs text-slate-500 mt-1">
+                <div className="text-xs text-slate-500 mt-2">
                   Time limit: {currentQuestionData?.timeLimit}s
                 </div>
               </div>
             </div>
 
             {/* Question Display */}
-            <div className="bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-lg p-6">
+            <div className="bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-lg p-12">
               <p className="text-lg font-semibold text-indigo-900">
                 {currentQuestionData?.question}
               </p>
-              <p className="text-sm text-indigo-700 mt-3">
+              <p className="text-sm text-indigo-700 mt-6">
                 Expected answer length: {currentQuestionData?.expectedLength}
               </p>
             </div>
           </section>
 
           {/* Recording Controls */}
-          <section className="space-y-4">
-            <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <div className="w-3 h-3 bg-red-600 rounded-full animate-pulse"></div>
+          <section className="space-y-8">
+            <div className="bg-red-50 border border-red-200 rounded-lg p-12 text-center">
+              <div className="flex items-center justify-center gap-4 mb-8">
+                <div className="w-6 h-6 bg-red-600 rounded-full animate-pulse"></div>
                 <span className="text-sm font-semibold text-red-900">Recording</span>
               </div>
               <div className="text-3xl font-mono font-bold text-red-900">
                 {Math.floor(recordingTime / 60)}:{String(recordingTime % 60).padStart(2, '0')}
               </div>
-              <p className="text-xs text-red-700 mt-3">
+              <p className="text-xs text-red-700 mt-6">
                 Speak clearly. You can click "Next Question" when done or wait for the timer.
               </p>
             </div>
 
             {/* Action Buttons */}
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-6">
               <button
                 onClick={handleSkipQuestion}
-                className="bg-slate-200 hover:bg-slate-300 text-slate-900 font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+                className="bg-slate-200 hover:bg-slate-300 text-slate-900 font-semibold py-4 px-8 rounded-lg transition-colors flex items-center justify-center gap-4"
                 data-cy="skip-question-button"
               >
-                <SkipForward className="w-4 h-4" />
+                <SkipForward className="w-8 h-8" />
                 Skip
               </button>
               <button
                 disabled
-                className="bg-gray-400 text-white font-semibold py-2 px-4 rounded-lg opacity-50 cursor-not-allowed flex items-center justify-center gap-2"
+                className="bg-gray-400 text-white font-semibold py-4 px-8 rounded-lg opacity-50 cursor-not-allowed flex items-center justify-center gap-4"
               >
-                <Square className="w-4 h-4" />
+                <Square className="w-8 h-8" />
                 Pause
               </button>
               <button
                 onClick={handleNextQuestion}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-lg transition-colors flex items-center justify-center gap-4"
                 data-cy="next-question-button"
               >
-                <SkipForward className="w-4 h-4" />
+                <SkipForward className="w-8 h-8" />
                 Next
               </button>
             </div>
           </section>
 
           {/* Time Hint */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
             <p className="text-xs text-blue-800">
               <strong>💡 Time Tip:</strong> Most interviewers prefer concise, structured answers. Aim
               for 2-3 minutes for behavioral and 3-5 minutes for technical questions.
@@ -327,13 +327,13 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
 
       {/* Reviewing Screen */}
       {interviewState === 'reviewing' && mockFeedback && (
-        <div className="space-y-6">
+        <div className="space-y-12">
           {/* Overall Score */}
-          <section className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-lg p-6">
-            <div className="flex items-start gap-4">
+          <section className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200 rounded-lg p-12">
+            <div className="flex items-start gap-8">
               <div className="flex-shrink-0">
-                <div className="relative w-24 h-24 flex items-center justify-center">
-                  <svg className="w-24 h-24 transform -rotate-90">
+                <div className="relative w-48 h-48 flex items-center justify-center">
+                  <svg className="w-48 h-48 transform -rotate-90">
                     <circle
                       cx="48"
                       cy="48"
@@ -363,8 +363,8 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
               </div>
 
               <div className="flex-1">
-                <h3 className="text-lg font-semibold text-emerald-900 mb-2">Interview Performance</h3>
-                <div className="space-y-2 text-sm text-emerald-800">
+                <h3 className="text-lg font-semibold text-emerald-900 mb-4">Interview Performance</h3>
+                <div className="space-y-4 text-sm text-emerald-800">
                   <div>
                     <strong>Questions answered:</strong> {completionStats.questionsAnswered} of{' '}
                     {interviewQuestions.length}
@@ -383,19 +383,19 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
           </section>
 
           {/* Competency Breakdown */}
-          <section className="space-y-3">
+          <section className="space-y-6">
             <h3 className="text-base font-semibold text-slate-900">Competency Breakdown</h3>
-            <div className="space-y-3">
+            <div className="space-y-6">
               {mockFeedback.competencies.map((comp, idx) => (
                 <div
                   key={idx}
-                  className="border border-slate-200 rounded-lg p-4"
+                  className="border border-slate-200 rounded-lg p-8"
                   data-cy={`competency-${idx}`}
                 >
-                  <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center justify-between mb-4">
                     <div className="font-semibold text-slate-900">{comp.name}</div>
                     <div
-                      className={`text-sm font-bold px-2 py-1 rounded ${
+                      className={`text-sm font-bold px-4 py-2 rounded ${
                         comp.score >= 75
                           ? 'bg-emerald-100 text-emerald-800'
                           : comp.score >= 65
@@ -406,7 +406,7 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
                       {comp.score}/100
                     </div>
                   </div>
-                  <div className="w-full h-2 bg-slate-300 rounded-full overflow-hidden mb-2">
+                  <div className="w-full h-4 bg-slate-300 rounded-full overflow-hidden mb-4">
                     <div
                       className={`h-full rounded-full ${
                         comp.score >= 75
@@ -425,14 +425,14 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
           </section>
 
           {/* Strengths */}
-          <section className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 space-y-3">
-            <h3 className="text-base font-semibold text-emerald-900 flex items-center gap-2">
-              <CheckCircle2 className="w-5 h-5" />
+          <section className="bg-emerald-50 border border-emerald-200 rounded-lg p-8 space-y-6">
+            <h3 className="text-base font-semibold text-emerald-900 flex items-center gap-4">
+              <CheckCircle2 className="w-10 h-10" />
               Strengths
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-4">
               {mockFeedback.strengths.map((strength, idx) => (
-                <li key={idx} className="text-sm text-emerald-900 flex items-start gap-2">
+                <li key={idx} className="text-sm text-emerald-900 flex items-start gap-4">
                   <span className="text-emerald-600 mt-0.5">✓</span>
                   <span>{strength}</span>
                 </li>
@@ -441,14 +441,14 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
           </section>
 
           {/* Areas for Improvement */}
-          <section className="bg-amber-50 border border-amber-200 rounded-lg p-4 space-y-3">
-            <h3 className="text-base font-semibold text-amber-900 flex items-center gap-2">
-              <AlertCircle className="w-5 h-5" />
+          <section className="bg-amber-50 border border-amber-200 rounded-lg p-8 space-y-6">
+            <h3 className="text-base font-semibold text-amber-900 flex items-center gap-4">
+              <AlertCircle className="w-10 h-10" />
               Areas for Improvement
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-4">
               {mockFeedback.improvements.map((improvement, idx) => (
-                <li key={idx} className="text-sm text-amber-900 flex items-start gap-2">
+                <li key={idx} className="text-sm text-amber-900 flex items-start gap-4">
                   <span className="text-amber-600 mt-0.5">•</span>
                   <span>{improvement}</span>
                 </li>
@@ -459,17 +459,17 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
           {/* Retake Button */}
           <button
             onClick={handleRetake}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center gap-2"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-6 px-8 rounded-lg transition-colors flex items-center justify-center gap-4"
             data-cy="retake-interview-button"
           >
-            <RefreshCw className="w-5 h-5" />
+            <RefreshCw className="w-10 h-10" />
             Retake Interview
           </button>
 
           {/* Next Steps */}
-          <section className="bg-slate-50 border border-slate-200 rounded-lg p-4">
-            <div className="text-sm font-semibold text-slate-900 mb-3">🎯 Next Steps</div>
-            <ol className="space-y-2 text-xs text-slate-700">
+          <section className="bg-slate-50 border border-slate-200 rounded-lg p-8">
+            <div className="text-sm font-semibold text-slate-900 mb-6">🎯 Next Steps</div>
+            <ol className="space-y-4 text-xs text-slate-700">
               <li>1. Review the improvement areas above</li>
               <li>2. Check the Behavioral Stories tab for better STAR frameworks</li>
               <li>3. Practice the specific areas where you scored lower</li>
@@ -482,7 +482,7 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
 
       {/* Last Updated */}
       {prep.lastUpdated && interviewState === 'setup' && (
-        <div className="text-xs text-slate-500 pt-2 border-t border-slate-200">
+        <div className="text-xs text-slate-500 pt-4 border-t border-slate-200">
           Last updated: {new Date(prep.lastUpdated).toLocaleString()}
         </div>
       )}

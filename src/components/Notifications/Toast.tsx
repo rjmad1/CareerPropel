@@ -71,8 +71,8 @@ export const Toast: React.FC<ToastProps> = ({
     >
       <div
         className={`
-          rounded-lg shadow-lg p-4 max-w-sm
-          flex gap-3 items-start
+          rounded-lg shadow-lg p-8 max-w-sm
+          flex gap-6 items-start
           ${config.bgColor} ${config.borderColor}
           border
         `}
@@ -88,7 +88,7 @@ export const Toast: React.FC<ToastProps> = ({
             {notification.title}
           </div>
           {notification.message && (
-            <div className={`text-sm mt-1 ${config.messageColor}`}>
+            <div className={`text-sm mt-2 ${config.messageColor}`}>
               {notification.message}
             </div>
           )}
@@ -101,7 +101,7 @@ export const Toast: React.FC<ToastProps> = ({
                 handleDismiss();
               }}
               className={`
-                text-xs font-semibold mt-2 underline
+                text-xs font-semibold mt-4 underline
                 ${config.actionColor} hover:opacity-75 transition-opacity
               `}
             >
@@ -121,7 +121,7 @@ export const Toast: React.FC<ToastProps> = ({
         {/* Progress Bar (if auto-dismissing) */}
         {notification.duration && notification.duration > 0 && (
           <div
-            className={`absolute bottom-0 left-0 right-0 h-1 ${config.progressColor}`}
+            className={`absolute bottom-0 left-0 right-0 h-2 ${config.progressColor}`}
             style={{
               width: `${progress}%`,
               transition: 'width 0.1s linear',

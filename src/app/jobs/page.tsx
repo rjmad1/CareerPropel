@@ -22,7 +22,7 @@ import {
   CircularProgress,
   Checkbox,
 } from '@mui/material';
-import { Add, Upload } from '@mui/icons-material';
+import { Plus, Upload as LucideUpload } from 'lucide-react';
 
 // ─── Data fetching ────────────────────────────────────────────────────────────
 
@@ -71,7 +71,7 @@ export default function JobsPage() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
 
-  const { data: jobs = [], isLoading, error } = useQuery({
+  const { data: jobs = [], error } = useQuery({
     queryKey: ['jobs'],
     queryFn: fetchJobs,
     enabled: status === 'authenticated',
@@ -92,46 +92,51 @@ export default function JobsPage() {
     await updateMutation.mutateAsync({ jobId, updates });
   };
 
+  const stats = {
+    total: jobs.length,
+    active: jobs.filter((j) => j.stage !== 'rejected' && j.stage !== 'archived' && j.stage !== 'offer').length,
+    offers: jobs.filter((j) => j.stage === 'offer').length,
+    rejected: jobs.filter((j) => j.stage === 'rejected').length,
+  };
+
   return (
-    // title/subtitle intentionally omitted — the KanbanBoard has its own header
-    <NavLayout>
-      <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-        {/* Toolbar */}
-        <Box
-          sx={{
-            flexShrink: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            px: 3,
-            py: 1.5,
-            bgcolor: 'background.paper',
-            borderBottom: '1px solid',
-            borderColor: 'divider',
-          }}
-        >
-          <Typography variant="body2" color="text.secondary">
-            {isLoading ? 'Loading…' : `${jobs.length} job${jobs.length !== 1 ? 's' : ''} tracked`}
-          </Typography>
-          <Box sx={{ display: 'flex', gap: 1 }}>
-            <Button
-              variant="outlined"
-              size="small"
-              startIcon={<Upload />}
+    <NavLayout title="Job Pipeline" subtitle="Drag jobs between stages to move them forward">
+      <div className="h-full flex flex-col min-h-0 bg-slate-50">
+        {/* Unified Sub-Header Toolbar */}
+        <div className="flex-shrink-0 bg-white border-b border-slate-200 px-6 py-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          {/* Stats indicators */}
+          <div className="flex flex-wrap items-center gap-4">
+            {[
+              { label: 'Total', value: stats.total, color: 'text-slate-900 border-slate-200 bg-slate-50' },
+              { label: 'Active', value: stats.active, color: 'text-blue-700 border-blue-100 bg-blue-50/50' },
+              { label: 'Offers', value: stats.offers, color: 'text-emerald-700 border-emerald-100 bg-emerald-50/50' },
+              { label: 'Rejected', value: stats.rejected, color: 'text-rose-700 border-rose-100 bg-rose-50/50' },
+            ].map(({ label, value, color }) => (
+              <div key={label} className={`flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold ${color}`}>
+                <span>{label}:</span>
+                <span className="font-bold text-sm">{value}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Action buttons */}
+          <div className="flex items-center gap-3">
+            <button
               onClick={() => setShowImportModal(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 active:bg-slate-100 transition-colors shadow-xs"
             >
-              Import Jobs
-            </Button>
-            <Button
-              variant="contained"
-              size="small"
-              startIcon={<Add />}
+              <LucideUpload className="h-3.5 w-3.5" />
+              <span>Import Jobs</span>
+            </button>
+            <button
               onClick={() => setShowAddModal(true)}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 text-xs font-semibold text-white hover:bg-blue-700 active:bg-blue-800 transition-colors shadow-sm"
             >
-              Add Job
-            </Button>
-          </Box>
-        </Box>
+              <Plus className="h-3.5 w-3.5" />
+              <span>Add Job</span>
+            </button>
+          </div>
+        </div>
 
         {error && (
           <Alert
@@ -148,13 +153,13 @@ export default function JobsPage() {
         )}
 
         {/* Board fills remaining height */}
-        <Box sx={{ flex: 1, minHeight: 0 }}>
+        <div className="flex-1 min-h-0">
           <KanbanBoard
             initialJobs={jobs}
             onJobUpdate={handleJobUpdate}
           />
-        </Box>
-      </Box>
+        </div>
+      </div>
 
       <AddJobModal
         open={showAddModal}

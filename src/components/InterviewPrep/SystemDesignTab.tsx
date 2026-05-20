@@ -151,18 +151,18 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
   }, []);
 
   return (
-    <div data-cy="system-design-tab" className="space-y-6 py-4">
+    <div data-cy="system-design-tab" className="space-y-12 py-8">
       {/* Header */}
-      <section className="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-5">
-        <div className="flex items-start gap-3">
-          <Boxes className="w-5 h-5 text-purple-600 flex-shrink-0 mt-1" />
+      <section className="bg-gradient-to-br from-purple-50 to-blue-50 border border-purple-200 rounded-lg p-10">
+        <div className="flex items-start gap-6">
+          <Boxes className="w-10 h-10 text-purple-600 flex-shrink-0 mt-2" />
           <div className="flex-1">
-            <h3 className="text-lg font-semibold text-purple-900 mb-2">System Design</h3>
-            <p className="text-sm text-purple-800 mb-3">
+            <h3 className="text-lg font-semibold text-purple-900 mb-4">System Design</h3>
+            <p className="text-sm text-purple-800 mb-6">
               System design interviews evaluate your ability to design scalable, reliable systems. They
               focus on trade-offs, trade-off reasoning, and architectural thinking.
             </p>
-            <div className="text-xs text-purple-700 font-medium bg-white bg-opacity-50 px-3 py-2 rounded inline-block">
+            <div className="text-xs text-purple-700 font-medium bg-white bg-opacity-50 px-6 py-4 rounded inline-block">
               ⏱️ Typical interview: 45-60 minutes with discussion
             </div>
           </div>
@@ -170,29 +170,29 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
       </section>
 
       {/* System Design Approach */}
-      <section className="space-y-3">
+      <section className="space-y-6">
         <button
           onClick={() =>
             setExpandedSection(expandedSection === 'approach' ? null : 'approach')
           }
-          className="w-full bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg p-4 flex items-center justify-between transition-colors"
+          className="w-full bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg p-8 flex items-center justify-between transition-colors"
         >
           <h3 className="text-base font-semibold text-slate-900">📋 System Design Approach</h3>
           {expandedSection === 'approach' ? (
-            <ChevronUp className="w-5 h-5 text-slate-600" />
+            <ChevronUp className="w-10 h-10 text-slate-600" />
           ) : (
-            <ChevronDown className="w-5 h-5 text-slate-600" />
+            <ChevronDown className="w-10 h-10 text-slate-600" />
           )}
         </button>
 
         {expandedSection === 'approach' && (
-          <div className="border border-slate-200 rounded-lg p-4 space-y-4 bg-white">
-            <div className="space-y-3">
-              <div className="border-l-4 border-blue-500 pl-4 py-2">
-                <div className="text-sm font-semibold text-slate-900 mb-1">
+          <div className="border border-slate-200 rounded-lg p-8 space-y-8 bg-white">
+            <div className="space-y-6">
+              <div className="border-l-4 border-blue-500 pl-8 py-4">
+                <div className="text-sm font-semibold text-slate-900 mb-2">
                   1️⃣ Understand Requirements (5-10 min)
                 </div>
-                <ul className="text-xs text-slate-700 space-y-1 ml-0">
+                <ul className="text-xs text-slate-700 space-y-2 ml-0">
                   <li>• Ask clarifying questions about functional and non-functional requirements</li>
                   <li>• Understand scale: users, requests per second, data size</li>
                   <li>• Identify constraints: latency, availability, consistency</li>
@@ -200,11 +200,11 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
                 </ul>
               </div>
 
-              <div className="border-l-4 border-green-500 pl-4 py-2">
-                <div className="text-sm font-semibold text-slate-900 mb-1">
+              <div className="border-l-4 border-green-500 pl-8 py-4">
+                <div className="text-sm font-semibold text-slate-900 mb-2">
                   2️⃣ High-Level Architecture (10-15 min)
                 </div>
-                <ul className="text-xs text-slate-700 space-y-1 ml-0">
+                <ul className="text-xs text-slate-700 space-y-2 ml-0">
                   <li>• Draw simple blocks for major components</li>
                   <li>• Show data flow between components</li>
                   <li>• Identify key decisions (sync vs async, monolith vs microservices)</li>
@@ -212,11 +212,11 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
                 </ul>
               </div>
 
-              <div className="border-l-4 border-orange-500 pl-4 py-2">
-                <div className="text-sm font-semibold text-slate-900 mb-1">
+              <div className="border-l-4 border-orange-500 pl-8 py-4">
+                <div className="text-sm font-semibold text-slate-900 mb-2">
                   3️⃣ Deep Dives (20-30 min)
                 </div>
-                <ul className="text-xs text-slate-700 space-y-1 ml-0">
+                <ul className="text-xs text-slate-700 space-y-2 ml-0">
                   <li>• Database schema and indexing</li>
                   <li>• API endpoints and data models</li>
                   <li>• Caching strategy and invalidation</li>
@@ -224,11 +224,11 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
                 </ul>
               </div>
 
-              <div className="border-l-4 border-purple-500 pl-4 py-2">
-                <div className="text-sm font-semibold text-slate-900 mb-1">
+              <div className="border-l-4 border-purple-500 pl-8 py-4">
+                <div className="text-sm font-semibold text-slate-900 mb-2">
                   4️⃣ Bottlenecks & Optimization (5-10 min)
                 </div>
-                <ul className="text-xs text-slate-700 space-y-1 ml-0">
+                <ul className="text-xs text-slate-700 space-y-2 ml-0">
                   <li>• Identify potential bottlenecks</li>
                   <li>• Propose monitoring and alerting</li>
                   <li>• Discuss failure modes and recovery</li>
@@ -237,7 +237,7 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
               </div>
             </div>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
               <p className="text-xs text-blue-800">
                 <strong>Pro tip:</strong> Think out loud. The interviewer cares more about your reasoning
                 than the final answer. Be comfortable discussing trade-offs and changing your mind.
@@ -248,32 +248,32 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
       </section>
 
       {/* Scaling Concepts */}
-      <section className="space-y-3">
-        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-          <TrendingUp className="w-5 h-5 text-emerald-600" />
+      <section className="space-y-6">
+        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-4">
+          <TrendingUp className="w-10 h-10 text-emerald-600" />
           Core Scaling Concepts
         </h3>
-        <div className="grid grid-cols-1 gap-3">
+        <div className="grid grid-cols-1 gap-6">
           {scalingConcepts.map((concept, idx) => (
             <div
               key={idx}
-              className="border border-slate-200 rounded-lg p-4 hover:border-slate-300 transition-colors"
+              className="border border-slate-200 rounded-lg p-8 hover:border-slate-300 transition-colors"
               data-cy={`scaling-concept-${idx}`}
             >
-              <div className="flex items-start gap-3 mb-3">
+              <div className="flex items-start gap-6 mb-6">
                 <span className="text-2xl">{concept.icon}</span>
                 <div className="flex-1">
                   <div className="font-semibold text-slate-900">{concept.concept}</div>
-                  <p className="text-sm text-slate-700 mt-1">{concept.description}</p>
+                  <p className="text-sm text-slate-700 mt-2">{concept.description}</p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-6">
                 <div>
-                  <div className="text-xs font-semibold text-emerald-700 mb-2">✓ Advantages</div>
-                  <ul className="text-xs text-emerald-700 space-y-1">
+                  <div className="text-xs font-semibold text-emerald-700 mb-4">✓ Advantages</div>
+                  <ul className="text-xs text-emerald-700 space-y-2">
                     {concept.pros.map((pro, pIdx) => (
-                      <li key={pIdx} className="flex items-start gap-1">
+                      <li key={pIdx} className="flex items-start gap-2">
                         <span className="mt-0.5">•</span>
                         <span>{pro}</span>
                       </li>
@@ -281,10 +281,10 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
                   </ul>
                 </div>
                 <div>
-                  <div className="text-xs font-semibold text-amber-700 mb-2">⚠️ Trade-offs</div>
-                  <ul className="text-xs text-amber-700 space-y-1">
+                  <div className="text-xs font-semibold text-amber-700 mb-4">⚠️ Trade-offs</div>
+                  <ul className="text-xs text-amber-700 space-y-2">
                     {concept.cons.map((con, cIdx) => (
-                      <li key={cIdx} className="flex items-start gap-1">
+                      <li key={cIdx} className="flex items-start gap-2">
                         <span className="mt-0.5">•</span>
                         <span>{con}</span>
                       </li>
@@ -298,27 +298,27 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
       </section>
 
       {/* Architecture Patterns */}
-      <section className="space-y-3">
-        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-          <GitBranch className="w-5 h-5 text-blue-600" />
+      <section className="space-y-6">
+        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-4">
+          <GitBranch className="w-10 h-10 text-blue-600" />
           Architecture Patterns
         </h3>
-        <div className="space-y-3">
+        <div className="space-y-6">
           {architecturePatterns.map((arch, idx) => (
             <div
               key={idx}
-              className="bg-slate-50 border border-slate-200 rounded-lg p-4"
+              className="bg-slate-50 border border-slate-200 rounded-lg p-8"
               data-cy={`architecture-pattern-${idx}`}
             >
-              <div className="font-semibold text-slate-900 mb-2">{arch.pattern}</div>
-              <p className="text-sm text-slate-700 mb-3">{arch.description}</p>
+              <div className="font-semibold text-slate-900 mb-4">{arch.pattern}</div>
+              <p className="text-sm text-slate-700 mb-6">{arch.description}</p>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-8">
                 <div>
-                  <div className="text-xs font-semibold text-slate-600 mb-2">Use When:</div>
-                  <ul className="text-xs text-slate-700 space-y-1">
+                  <div className="text-xs font-semibold text-slate-600 mb-4">Use When:</div>
+                  <ul className="text-xs text-slate-700 space-y-2">
                     {arch.useWhen.map((when, wIdx) => (
-                      <li key={wIdx} className="flex items-start gap-1">
+                      <li key={wIdx} className="flex items-start gap-2">
                         <span className="text-slate-400 mt-0.5">•</span>
                         <span>{when}</span>
                       </li>
@@ -326,10 +326,10 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
                   </ul>
                 </div>
                 <div>
-                  <div className="text-xs font-semibold text-amber-700 mb-2">Risks:</div>
-                  <ul className="text-xs text-amber-700 space-y-1">
+                  <div className="text-xs font-semibold text-amber-700 mb-4">Risks:</div>
+                  <ul className="text-xs text-amber-700 space-y-2">
                     {arch.risks.map((risk, rIdx) => (
-                      <li key={rIdx} className="flex items-start gap-1">
+                      <li key={rIdx} className="flex items-start gap-2">
                         <span className="text-amber-600 mt-0.5">✗</span>
                         <span>{risk}</span>
                       </li>
@@ -343,34 +343,34 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
       </section>
 
       {/* Common Design Problems */}
-      <section className="space-y-3">
-        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-slate-700" />
+      <section className="space-y-6">
+        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-4">
+          <BookOpen className="w-10 h-10 text-slate-700" />
           Common Design Problems
         </h3>
-        <div className="space-y-2">
+        <div className="space-y-4">
           {commonProblems.map((problem, idx) => (
             <div
               key={idx}
-              className="bg-slate-50 border border-slate-200 rounded-lg p-3 flex items-start justify-between"
+              className="bg-slate-50 border border-slate-200 rounded-lg p-6 flex items-start justify-between"
               data-cy={`design-problem-${idx}`}
             >
               <div className="flex-1">
                 <div className="font-semibold text-slate-900">{problem.problem}</div>
-                <div className="flex flex-wrap gap-1 mt-2">
+                <div className="flex flex-wrap gap-2 mt-4">
                   {problem.topics.map((topic, tIdx) => (
                     <span
                       key={tIdx}
-                      className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded"
+                      className="text-xs bg-blue-100 text-blue-800 px-4 py-2 rounded"
                     >
                       {topic}
                     </span>
                   ))}
                 </div>
               </div>
-              <div className="ml-3 flex-shrink-0 text-right">
+              <div className="ml-6 flex-shrink-0 text-right">
                 <div
-                  className={`text-xs font-semibold px-2 py-1 rounded mb-1 ${
+                  className={`text-xs font-semibold px-4 py-2 rounded mb-2 ${
                     problem.complexity === 'Medium'
                       ? 'bg-yellow-100 text-yellow-800'
                       : 'bg-red-100 text-red-800'
@@ -384,7 +384,7 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
           ))}
         </div>
 
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mt-3">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-6">
           <p className="text-xs text-blue-800">
             <strong>Preparation tip:</strong> Practice 3-4 problems deeply. Understand the trade-offs
             and why certain architectural decisions were made. You'll likely face variations of these
@@ -394,39 +394,39 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
       </section>
 
       {/* Key Terms */}
-      <section className="bg-slate-50 border border-slate-200 rounded-lg p-4 space-y-3">
-        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-          <Zap className="w-5 h-5 text-amber-600" />
+      <section className="bg-slate-50 border border-slate-200 rounded-lg p-8 space-y-6">
+        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-4">
+          <Zap className="w-10 h-10 text-amber-600" />
           Key Terminology
         </h3>
-        <div className="grid grid-cols-2 gap-3 text-xs">
+        <div className="grid grid-cols-2 gap-6 text-xs">
           <div>
-            <div className="font-semibold text-slate-900 mb-1">Consistency Models</div>
-            <ul className="space-y-1 text-slate-700">
+            <div className="font-semibold text-slate-900 mb-2">Consistency Models</div>
+            <ul className="space-y-2 text-slate-700">
               <li>• <strong>Strong:</strong> All reads see latest write</li>
               <li>• <strong>Eventual:</strong> Consistency over time</li>
               <li>• <strong>Causal:</strong> Related operations ordered</li>
             </ul>
           </div>
           <div>
-            <div className="font-semibold text-slate-900 mb-1">Availability Concepts</div>
-            <ul className="space-y-1 text-slate-700">
+            <div className="font-semibold text-slate-900 mb-2">Availability Concepts</div>
+            <ul className="space-y-2 text-slate-700">
               <li>• <strong>HA:</strong> Minimize downtime</li>
               <li>• <strong>DR:</strong> Recovery from disasters</li>
               <li>• <strong>SLA/SLO:</strong> Service guarantees</li>
             </ul>
           </div>
           <div>
-            <div className="font-semibold text-slate-900 mb-1">Networking</div>
-            <ul className="space-y-1 text-slate-700">
+            <div className="font-semibold text-slate-900 mb-2">Networking</div>
+            <ul className="space-y-2 text-slate-700">
               <li>• <strong>Latency:</strong> Time for round trip</li>
               <li>• <strong>Throughput:</strong> Data per time unit</li>
               <li>• <strong>Bandwidth:</strong> Network capacity</li>
             </ul>
           </div>
           <div>
-            <div className="font-semibold text-slate-900 mb-1">Storage Concepts</div>
-            <ul className="space-y-1 text-slate-700">
+            <div className="font-semibold text-slate-900 mb-2">Storage Concepts</div>
+            <ul className="space-y-2 text-slate-700">
               <li>• <strong>ACID:</strong> Transaction properties</li>
               <li>• <strong>BASE:</strong> Eventual consistency</li>
               <li>• <strong>CAP:</strong> Distributed system trade-offs</li>
@@ -436,12 +436,12 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
       </section>
 
       {/* Interview Tips */}
-      <section className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 space-y-3">
-        <h3 className="text-base font-semibold text-emerald-900 flex items-center gap-2">
-          <AlertCircle className="w-5 h-5" />
+      <section className="bg-emerald-50 border border-emerald-200 rounded-lg p-8 space-y-6">
+        <h3 className="text-base font-semibold text-emerald-900 flex items-center gap-4">
+          <AlertCircle className="w-10 h-10" />
           Interview Tips
         </h3>
-        <ul className="space-y-2 text-sm text-emerald-800">
+        <ul className="space-y-4 text-sm text-emerald-800">
           <li>
             <strong>1. Ask questions first:</strong> Don't assume requirements. Clarify scale, users,
             regions, real-time needs.
@@ -471,7 +471,7 @@ export const SystemDesignTab: React.FC<SystemDesignTabProps> = ({ prep }) => {
 
       {/* Last Updated */}
       {prep.lastUpdated && (
-        <div className="text-xs text-slate-500 pt-2 border-t border-slate-200">
+        <div className="text-xs text-slate-500 pt-4 border-t border-slate-200">
           Last updated: {new Date(prep.lastUpdated).toLocaleString()}
         </div>
       )}

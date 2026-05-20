@@ -123,18 +123,18 @@ export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
   }, [requiredSkills]);
 
   return (
-    <div data-cy="role-breakdown-tab" className="space-y-6 py-4">
+    <div data-cy="role-breakdown-tab" className="space-y-12 py-8">
       {/* Role Header */}
-      <section className="bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-lg p-5">
-        <div className="flex items-start gap-3">
-          <Briefcase className="w-6 h-6 text-indigo-600 flex-shrink-0 mt-1" />
+      <section className="bg-gradient-to-br from-indigo-50 to-blue-50 border border-indigo-200 rounded-lg p-10">
+        <div className="flex items-start gap-6">
+          <Briefcase className="w-12 h-12 text-indigo-600 flex-shrink-0 mt-2" />
           <div className="flex-1">
-            <h2 className="text-2xl font-bold text-indigo-900 mb-2">{roleData.title}</h2>
-            <div className="flex flex-wrap gap-2 mb-3">
-              <div className="bg-indigo-100 text-indigo-800 text-sm font-medium px-3 py-1 rounded-full">
+            <h2 className="text-2xl font-bold text-indigo-900 mb-4">{roleData.title}</h2>
+            <div className="flex flex-wrap gap-4 mb-6">
+              <div className="bg-indigo-100 text-indigo-800 text-sm font-medium px-6 py-2 rounded-full">
                 {roleData.seniority}
               </div>
-              <div className="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
+              <div className="bg-blue-100 text-blue-800 text-sm font-medium px-6 py-2 rounded-full">
                 {seniorityMetadata.yearsMin}-{seniorityMetadata.yearsMax} years experience
               </div>
             </div>
@@ -147,22 +147,22 @@ export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
 
       {/* Key Responsibilities */}
       {responsibilities.length > 0 && (
-        <section className="space-y-3">
-          <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-            <Target className="w-5 h-5 text-orange-600" />
+        <section className="space-y-6">
+          <h3 className="text-base font-semibold text-slate-900 flex items-center gap-4">
+            <Target className="w-10 h-10 text-orange-600" />
             Key Responsibilities
           </h3>
-          <ul className="space-y-2">
+          <ul className="space-y-4">
             {responsibilities.map((resp, idx) => (
               <li
                 key={idx}
-                className="bg-slate-50 border border-slate-200 rounded-lg p-3 flex items-start gap-3"
+                className="bg-slate-50 border border-slate-200 rounded-lg p-6 flex items-start gap-6"
                 data-cy={`responsibility-${idx}`}
               >
                 <span className="text-orange-600 flex-shrink-0 mt-0.5">✓</span>
                 <div>
                   <p className="text-sm font-medium text-slate-900">{resp.title}</p>
-                  <p className="text-xs text-slate-600 mt-1">{resp.description}</p>
+                  <p className="text-xs text-slate-600 mt-2">{resp.description}</p>
                 </div>
               </li>
             ))}
@@ -171,24 +171,24 @@ export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
       )}
 
       {/* Required Skills */}
-      <section className="space-y-3">
-        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-          <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+      <section className="space-y-6">
+        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-4">
+          <CheckCircle2 className="w-10 h-10 text-emerald-600" />
           Required Skills
         </h3>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-4">
           {requiredSkills.map((skill, idx) => (
             <div
               key={idx}
-              className="bg-emerald-50 border border-emerald-200 rounded-lg p-3"
+              className="bg-emerald-50 border border-emerald-200 rounded-lg p-6"
               data-cy={`required-skill-${idx}`}
             >
               <div className="text-sm font-medium text-emerald-900">{skill.name}</div>
-              <div className="text-xs text-emerald-700 mt-1">{skill.proficiency}</div>
+              <div className="text-xs text-emerald-700 mt-2">{skill.proficiency}</div>
             </div>
           ))}
         </div>
-        <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 mt-3">
+        <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-6 mt-6">
           <p className="text-xs text-emerald-800">
             <strong>Preparation tip:</strong> Be prepared to discuss your hands-on experience with each required skill.
             Have specific examples of projects or problems you've solved.
@@ -198,24 +198,24 @@ export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
 
       {/* Nice-to-Have Skills */}
       {niceToHaveSkills.length > 0 && (
-        <section className="space-y-3">
-          <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-            <Circle className="w-5 h-5 text-blue-600" />
+        <section className="space-y-6">
+          <h3 className="text-base font-semibold text-slate-900 flex items-center gap-4">
+            <Circle className="w-10 h-10 text-blue-600" />
             Nice-to-Have Skills
           </h3>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-4">
             {niceToHaveSkills.map((skill, idx) => (
               <div
                 key={idx}
-                className="bg-blue-50 border border-blue-200 rounded-lg p-3"
+                className="bg-blue-50 border border-blue-200 rounded-lg p-6"
                 data-cy={`nice-to-have-skill-${idx}`}
               >
                 <div className="text-sm font-medium text-blue-900">{skill.name}</div>
-                <div className="text-xs text-blue-700 mt-1">{skill.proficiency}</div>
+                <div className="text-xs text-blue-700 mt-2">{skill.proficiency}</div>
               </div>
             ))}
           </div>
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mt-3">
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-6">
             <p className="text-xs text-blue-800">
               <strong>Interview insight:</strong> If you have experience with these, mention it naturally
               when relevant. They differentiate you from other candidates.
@@ -225,42 +225,42 @@ export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
       )}
 
       {/* Growth Trajectory */}
-      <section className="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-4 space-y-3">
-        <h3 className="text-base font-semibold text-purple-900 flex items-center gap-2">
-          <TrendingUp className="w-5 h-5" />
+      <section className="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-8 space-y-6">
+        <h3 className="text-base font-semibold text-purple-900 flex items-center gap-4">
+          <TrendingUp className="w-10 h-10" />
           Career Growth Path
         </h3>
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 text-sm">
-            <div className="w-3 h-3 bg-purple-400 rounded-full"></div>
+        <div className="space-y-4">
+          <div className="flex items-center gap-4 text-sm">
+            <div className="w-6 h-6 bg-purple-400 rounded-full"></div>
             <span className="text-purple-900"><strong>0-2 years:</strong> Build foundational expertise</span>
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
+          <div className="flex items-center gap-4 text-sm">
+            <div className="w-6 h-6 bg-purple-500 rounded-full"></div>
             <span className="text-purple-900"><strong>2-4 years:</strong> Lead initiatives and mentor juniors</span>
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <div className="w-3 h-3 bg-purple-600 rounded-full"></div>
+          <div className="flex items-center gap-4 text-sm">
+            <div className="w-6 h-6 bg-purple-600 rounded-full"></div>
             <span className="text-purple-900"><strong>4+ years:</strong> Strategic leadership and architecture</span>
           </div>
         </div>
-        <p className="text-xs text-purple-800 pt-2 border-t border-purple-200 mt-3">
+        <p className="text-xs text-purple-800 pt-4 border-t border-purple-200 mt-6">
           💡 During the interview, discuss your growth goals. Hiring managers want to see ambition and commitment.
         </p>
       </section>
 
       {/* Interview Focus Areas */}
-      <section className="space-y-4">
-        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-          <Zap className="w-5 h-5 text-amber-600" />
+      <section className="space-y-8">
+        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-4">
+          <Zap className="w-10 h-10 text-amber-600" />
           Interview Focus Areas
         </h3>
         {interviewFocusAreas.map((focusArea, idx) => (
-          <div key={idx} className="border border-slate-200 rounded-lg p-4" data-cy={`focus-area-${idx}`}>
-            <div className="flex items-start justify-between mb-2">
+          <div key={idx} className="border border-slate-200 rounded-lg p-8" data-cy={`focus-area-${idx}`}>
+            <div className="flex items-start justify-between mb-4">
               <div className="text-sm font-semibold text-slate-900">{focusArea.area}</div>
               <span
-                className={`text-xs font-medium px-2 py-1 rounded ${
+                className={`text-xs font-medium px-4 py-2 rounded ${
                   focusArea.emphasis === 'High'
                     ? 'bg-red-100 text-red-800'
                     : 'bg-yellow-100 text-yellow-800'
@@ -269,9 +269,9 @@ export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
                 {focusArea.emphasis} Emphasis
               </span>
             </div>
-            <ul className="space-y-1">
+            <ul className="space-y-2">
               {focusArea.topics.map((topic, topicIdx) => (
-                <li key={topicIdx} className="text-sm text-slate-700 flex items-start gap-2">
+                <li key={topicIdx} className="text-sm text-slate-700 flex items-start gap-4">
                   <span className="text-slate-400 mt-0.5">•</span>
                   <span>{topic}</span>
                 </li>
@@ -282,40 +282,40 @@ export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
       </section>
 
       {/* Common Interview Questions */}
-      <section className="space-y-3">
-        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-          <AlertCircle className="w-5 h-5 text-slate-700" />
+      <section className="space-y-6">
+        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-4">
+          <AlertCircle className="w-10 h-10 text-slate-700" />
           Common Interview Questions
         </h3>
-        <div className="space-y-2">
+        <div className="space-y-4">
           {commonQuestions.map((question, idx) => (
             <div
               key={idx}
-              className="bg-slate-50 border border-slate-200 rounded-lg p-3"
+              className="bg-slate-50 border border-slate-200 rounded-lg p-6"
               data-cy={`common-question-${idx}`}
             >
               <p className="text-sm text-slate-900">{question}</p>
             </div>
           ))}
         </div>
-        <p className="text-xs text-slate-600 bg-blue-50 border border-blue-200 rounded-lg p-3">
+        <p className="text-xs text-slate-600 bg-blue-50 border border-blue-200 rounded-lg p-6">
           💡 For each question above, prepare a 2-3 minute response using the STAR framework
           (Situation, Task, Action, Result). Have 3-5 relevant stories ready.
         </p>
       </section>
 
       {/* Team Context */}
-      <section className="bg-slate-50 border border-slate-200 rounded-lg p-4 space-y-3">
-        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-          <Users className="w-5 h-5 text-slate-700" />
+      <section className="bg-slate-50 border border-slate-200 rounded-lg p-8 space-y-6">
+        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-4">
+          <Users className="w-10 h-10 text-slate-700" />
           Team & Reporting Structure
         </h3>
-        <div className="space-y-2 text-sm">
+        <div className="space-y-4 text-sm">
           <p className="text-slate-700">
             Understanding the team structure and reporting relationships helps you ask smart questions
             and assess cultural fit during the interview.
           </p>
-          <ul className="space-y-1 text-slate-600 ml-4">
+          <ul className="space-y-2 text-slate-600 ml-8">
             <li>• How many people are on the team?</li>
             <li>• Who is the direct manager?</li>
             <li>• What other functions does this role interact with?</li>
@@ -325,9 +325,9 @@ export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
       </section>
 
       {/* Preparation Strategy */}
-      <section className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
-        <div className="text-sm font-semibold text-indigo-900 mb-3">📋 Role Preparation Strategy</div>
-        <ol className="space-y-2 text-xs text-indigo-800">
+      <section className="bg-indigo-50 border border-indigo-200 rounded-lg p-8">
+        <div className="text-sm font-semibold text-indigo-900 mb-6">📋 Role Preparation Strategy</div>
+        <ol className="space-y-4 text-xs text-indigo-800">
           <li>
             <strong>1. Map Your Experience:</strong> For each required skill, identify 2-3 concrete examples
             from your background.
@@ -353,7 +353,7 @@ export const RoleBreakdown: React.FC<RoleBreakdownProps> = ({ prep }) => {
 
       {/* Last Updated */}
       {prep.lastUpdated && (
-        <div className="text-xs text-slate-500 pt-2 border-t border-slate-200">
+        <div className="text-xs text-slate-500 pt-4 border-t border-slate-200">
           Last updated: {new Date(prep.lastUpdated).toLocaleString()}
         </div>
       )}

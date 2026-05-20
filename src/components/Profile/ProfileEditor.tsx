@@ -44,15 +44,15 @@ export const ProfileEditor: React.FC<ProfileEditorProps> = ({
   return (
     <div className="h-full flex flex-col bg-white">
       {/* Header */}
-      <div className="border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+      <div className="border-b border-gray-200 px-12 py-8 flex items-center justify-between">
         <h2 className="text-lg font-semibold text-gray-900">Profile Editor</h2>
         {hasUnsavedChanges && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <span className="text-sm text-amber-600 font-medium">Unsaved changes</span>
             <button
               onClick={handleSave}
               disabled={isSaving}
-              className="px-4 py-2 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white rounded text-sm font-medium transition-colors"
+              className="px-8 py-4 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white rounded text-sm font-medium transition-colors"
             >
               {isSaving ? 'Saving...' : 'Save'}
             </button>
@@ -62,13 +62,13 @@ export const ProfileEditor: React.FC<ProfileEditorProps> = ({
 
       {/* Tabs */}
       <div className="border-b border-gray-200 overflow-x-auto">
-        <div className="flex gap-1 px-6 py-0">
+        <div className="flex gap-2 px-12 py-0">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={cn(
-                'px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap',
+                'px-8 py-6 text-sm font-medium border-b-2 transition-colors whitespace-nowrap',
                 activeTab === tab.id
                   ? 'border-blue-500 text-blue-600'
                   : 'border-transparent text-gray-600 hover:text-gray-900'
@@ -81,7 +81,7 @@ export const ProfileEditor: React.FC<ProfileEditorProps> = ({
       </div>
 
       {/* Tab Content */}
-      <div className="flex-1 overflow-y-auto p-6">
+      <div className="flex-1 overflow-y-auto p-12">
         {activeTab === 'overview' && (
           <OverviewTab
             candidateId={candidateId}
@@ -139,7 +139,7 @@ export const ProfileEditor: React.FC<ProfileEditorProps> = ({
 const OverviewTab: React.FC<{ candidateId: string; onChangesMade: () => void }> = ({
   onChangesMade,
 }) => (
-  <div className="max-w-2xl space-y-4">
+  <div className="max-w-2xl space-y-8">
     <FormField
       label="Full Name"
       type="text"
@@ -170,7 +170,7 @@ const OverviewTab: React.FC<{ candidateId: string; onChangesMade: () => void }> 
       placeholder="Brief overview of your professional background..."
       onChange={onChangesMade}
     />
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-2 gap-8">
       <FormField
         label="Visa Status"
         type="select"
@@ -191,9 +191,9 @@ const ResumeTab: React.FC<{ candidateId: string; onChangesMade: () => void }> = 
   onChangesMade,
 }) => (
   <div className="max-w-4xl">
-    <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-      <p className="text-sm text-blue-900 font-semibold mb-2">💡 Tips for better resume visibility:</p>
-      <ul className="text-xs text-blue-800 space-y-1 ml-4">
+    <div className="mb-12 p-8 bg-blue-50 border border-blue-200 rounded-lg">
+      <p className="text-sm text-blue-900 font-semibold mb-4">💡 Tips for better resume visibility:</p>
+      <ul className="text-xs text-blue-800 space-y-2 ml-8">
         <li>• Include relevant keywords from job descriptions</li>
         <li>• Use action verbs (Led, Designed, Implemented)</li>
         <li>• Quantify achievements with metrics</li>
@@ -214,22 +214,22 @@ const SkillsTab: React.FC<{ candidateId: string; onChangesMade: () => void }> = 
   onChangesMade,
 }) => (
   <div className="max-w-2xl">
-    <div className="mb-4 flex gap-2">
-      <button className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-medium">
+    <div className="mb-8 flex gap-4">
+      <button className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-medium">
         + Add Skill
       </button>
     </div>
-    <div className="space-y-3">
+    <div className="space-y-6">
       {[1, 2, 3].map((i) => (
-        <div key={i} className="flex items-center gap-3 p-3 border border-gray-200 rounded-lg">
+        <div key={i} className="flex items-center gap-6 p-6 border border-gray-200 rounded-lg">
           <input
             type="text"
             placeholder="Skill name"
-            className="flex-1 px-3 py-2 border border-gray-300 rounded text-sm"
+            className="flex-1 px-6 py-4 border border-gray-300 rounded text-sm"
             onChange={onChangesMade}
           />
           <select
-            className="px-3 py-2 border border-gray-300 rounded text-sm"
+            className="px-6 py-4 border border-gray-300 rounded text-sm"
             onChange={onChangesMade}
           >
             <option>Beginner</option>
@@ -248,33 +248,33 @@ const AchievementsTab: React.FC<{ candidateId: string; onChangesMade: () => void
   onChangesMade,
 }) => (
   <div className="max-w-3xl">
-    <div className="mb-4 flex gap-2">
-      <button className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-medium">
+    <div className="mb-8 flex gap-4">
+      <button className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-medium">
         + Add Achievement
       </button>
-      <button className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-900 rounded text-sm font-medium">
+      <button className="px-8 py-4 bg-gray-200 hover:bg-gray-300 text-gray-900 rounded text-sm font-medium">
         Extract from Resume
       </button>
     </div>
-    <div className="space-y-4">
+    <div className="space-y-8">
       {[1].map((i) => (
-        <div key={i} className="p-4 border border-gray-200 rounded-lg space-y-3">
+        <div key={i} className="p-8 border border-gray-200 rounded-lg space-y-6">
           <input
             type="text"
             placeholder="Achievement title"
-            className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+            className="w-full px-6 py-4 border border-gray-300 rounded text-sm"
             onChange={onChangesMade}
           />
           <textarea
             placeholder="Description"
-            className="w-full px-3 py-2 border border-gray-300 rounded text-sm"
+            className="w-full px-6 py-4 border border-gray-300 rounded text-sm"
             rows={2}
             onChange={onChangesMade}
           />
-          <div className="grid grid-cols-3 gap-2">
-            <input type="text" placeholder="Metric" className="px-3 py-2 border border-gray-300 rounded text-sm" onChange={onChangesMade} />
-            <input type="text" placeholder="Value" className="px-3 py-2 border border-gray-300 rounded text-sm" onChange={onChangesMade} />
-            <input type="text" placeholder="Unit" className="px-3 py-2 border border-gray-300 rounded text-sm" onChange={onChangesMade} />
+          <div className="grid grid-cols-3 gap-4">
+            <input type="text" placeholder="Metric" className="px-6 py-4 border border-gray-300 rounded text-sm" onChange={onChangesMade} />
+            <input type="text" placeholder="Value" className="px-6 py-4 border border-gray-300 rounded text-sm" onChange={onChangesMade} />
+            <input type="text" placeholder="Unit" className="px-6 py-4 border border-gray-300 rounded text-sm" onChange={onChangesMade} />
           </div>
           <div className="flex justify-end">
             <button className="text-red-500 hover:text-red-700 text-sm font-medium">Delete</button>
@@ -289,8 +289,8 @@ const EducationTab: React.FC<{ candidateId: string; onChangesMade: () => void }>
   onChangesMade,
 }) => (
   <div className="max-w-2xl">
-    <div className="mb-4">
-      <button className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-medium">
+    <div className="mb-8">
+      <button className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-medium">
         + Add Education
       </button>
     </div>
@@ -305,8 +305,8 @@ const CertificationsTab: React.FC<{ candidateId: string; onChangesMade: () => vo
   onChangesMade,
 }) => (
   <div className="max-w-2xl">
-    <div className="mb-4">
-      <button className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-medium">
+    <div className="mb-8">
+      <button className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-medium">
         + Add Certification
       </button>
     </div>
@@ -321,8 +321,8 @@ const LanguagesTab: React.FC<{ candidateId: string; onChangesMade: () => void }>
   onChangesMade,
 }) => (
   <div className="max-w-2xl">
-    <div className="mb-4">
-      <button className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-medium">
+    <div className="mb-8">
+      <button className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-medium">
         + Add Language
       </button>
     </div>
@@ -338,12 +338,12 @@ const LanguagesTab: React.FC<{ candidateId: string; onChangesMade: () => void }>
 
 const DocumentsTab: React.FC<{ candidateId: string; onChangesMade: () => void }> = () => (
   <div className="max-w-2xl">
-    <div className="mb-6 p-6 border-2 border-dashed border-gray-300 rounded-lg text-center hover:border-blue-400 transition-colors cursor-pointer">
+    <div className="mb-12 p-12 border-2 border-dashed border-gray-300 rounded-lg text-center hover:border-blue-400 transition-colors cursor-pointer">
       <p className="text-gray-600 font-medium">📁 Drag and drop files here</p>
-      <p className="text-sm text-gray-500 mt-1">or click to browse (PDF, DOCX, TXT)</p>
+      <p className="text-sm text-gray-500 mt-2">or click to browse (PDF, DOCX, TXT)</p>
     </div>
-    <div className="space-y-2">
-      <div className="flex items-center justify-between p-3 bg-gray-50 rounded border border-gray-200">
+    <div className="space-y-4">
+      <div className="flex items-center justify-between p-6 bg-gray-50 rounded border border-gray-200">
         <span className="text-sm text-gray-900">Resume_v2.pdf</span>
         <button className="text-red-500 hover:text-red-700 text-sm">Delete</button>
       </div>
@@ -361,17 +361,17 @@ const FormField: React.FC<{
   onChange: () => void;
 }> = ({ label, type = 'text', placeholder, rows, options, onChange }) => (
   <div>
-    <label className="block text-sm font-semibold text-gray-700 mb-2">{label}</label>
+    <label className="block text-sm font-semibold text-gray-700 mb-4">{label}</label>
     {type === 'textarea' ? (
       <textarea
         placeholder={placeholder}
         rows={rows || 4}
-        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full px-6 py-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         onChange={onChange}
       />
     ) : type === 'select' ? (
       <select
-        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full px-6 py-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         onChange={onChange}
       >
         <option>Select...</option>
@@ -383,7 +383,7 @@ const FormField: React.FC<{
       <input
         type={type}
         placeholder={placeholder}
-        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full px-6 py-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         onChange={onChange}
       />
     )}

@@ -38,15 +38,15 @@ export default function PrepTab({ jobId }: PrepTabProps) {
 
   if (isLoading) {
     return (
-      <div className="p-6 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="p-12 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
       </div>
     );
   }
 
   if (error || !prep) {
     return (
-      <div className="p-6 text-center">
+      <div className="p-12 text-center">
         <p className="text-sm text-gray-600">No prep content available yet</p>
       </div>
     );
@@ -55,14 +55,14 @@ export default function PrepTab({ jobId }: PrepTabProps) {
   const typedPrep = prep as PrepData;
 
   return (
-    <div className="p-6 space-y-3">
+    <div className="p-12 space-y-6">
       {/* STAR Stories */}
       <div className="border border-gray-200 rounded-lg overflow-hidden">
         <button
           onClick={() => toggleSection('star-stories')}
-          className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition"
+          className="w-full flex items-center justify-between p-8 bg-gray-50 hover:bg-gray-100 transition"
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <Zap size={16} className="text-orange-600" />
             <h3 className="font-semibold text-gray-900">STAR Stories</h3>
           </div>
@@ -74,11 +74,11 @@ export default function PrepTab({ jobId }: PrepTabProps) {
         </button>
 
         {expandedSections.includes('star-stories') && (
-          <div className="p-4 space-y-4 bg-white border-t border-gray-200">
+          <div className="p-8 space-y-8 bg-white border-t border-gray-200">
             {typedPrep.starStories?.map((story, idx) => (
-              <div key={idx} className="bg-orange-50 rounded-lg p-3 border border-orange-200">
-                <p className="text-sm font-semibold text-gray-900 mb-2">{story.title}</p>
-                <div className="space-y-1 text-xs text-gray-700">
+              <div key={idx} className="bg-orange-50 rounded-lg p-6 border border-orange-200">
+                <p className="text-sm font-semibold text-gray-900 mb-4">{story.title}</p>
+                <div className="space-y-2 text-xs text-gray-700">
                   <div>
                     <span className="font-medium">Situation:</span> {story.situation}
                   </div>
@@ -102,9 +102,9 @@ export default function PrepTab({ jobId }: PrepTabProps) {
       <div className="border border-gray-200 rounded-lg overflow-hidden">
         <button
           onClick={() => toggleSection('technical')}
-          className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition"
+          className="w-full flex items-center justify-between p-8 bg-gray-50 hover:bg-gray-100 transition"
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <Zap size={16} className="text-blue-600" />
             <h3 className="font-semibold text-gray-900">Technical Concepts</h3>
           </div>
@@ -116,13 +116,13 @@ export default function PrepTab({ jobId }: PrepTabProps) {
         </button>
 
         {expandedSections.includes('technical') && (
-          <div className="p-4 space-y-3 bg-white border-t border-gray-200">
+          <div className="p-8 space-y-6 bg-white border-t border-gray-200">
             {typedPrep.technicalConcepts?.map((concept, idx) => (
-              <div key={idx} className="bg-blue-50 rounded-lg p-3 border border-blue-200">
-                <p className="text-sm font-semibold text-gray-900 mb-2">{concept.topic}</p>
-                <ul className="space-y-1">
+              <div key={idx} className="bg-blue-50 rounded-lg p-6 border border-blue-200">
+                <p className="text-sm font-semibold text-gray-900 mb-4">{concept.topic}</p>
+                <ul className="space-y-2">
                   {concept.keyPoints?.map((point, pointIdx) => (
-                    <li key={pointIdx} className="text-xs text-gray-700 flex gap-2">
+                    <li key={pointIdx} className="text-xs text-gray-700 flex gap-4">
                       <span className="text-blue-600 font-bold">•</span>
                       <span>{point}</span>
                     </li>
@@ -138,9 +138,9 @@ export default function PrepTab({ jobId }: PrepTabProps) {
       <div className="border border-gray-200 rounded-lg overflow-hidden">
         <button
           onClick={() => toggleSection('company')}
-          className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition"
+          className="w-full flex items-center justify-between p-8 bg-gray-50 hover:bg-gray-100 transition"
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <Zap size={16} className="text-green-600" />
             <h3 className="font-semibold text-gray-900">Company Intelligence</h3>
           </div>
@@ -152,22 +152,22 @@ export default function PrepTab({ jobId }: PrepTabProps) {
         </button>
 
         {expandedSections.includes('company') && (
-          <div className="p-4 space-y-3 bg-white border-t border-gray-200">
+          <div className="p-8 space-y-6 bg-white border-t border-gray-200">
             {typedPrep.companyIntelligence && (
               <>
-                <div className="bg-green-50 rounded-lg p-3 border border-green-200">
-                  <p className="text-xs font-semibold text-gray-900 mb-1">Mission</p>
+                <div className="bg-green-50 rounded-lg p-6 border border-green-200">
+                  <p className="text-xs font-semibold text-gray-900 mb-2">Mission</p>
                   <p className="text-xs text-gray-700">
                     {typedPrep.companyIntelligence.mission}
                   </p>
                 </div>
 
                 {typedPrep.companyIntelligence.recentNews?.length > 0 && (
-                  <div className="bg-green-50 rounded-lg p-3 border border-green-200">
-                    <p className="text-xs font-semibold text-gray-900 mb-2">Recent News</p>
-                    <ul className="space-y-1">
+                  <div className="bg-green-50 rounded-lg p-6 border border-green-200">
+                    <p className="text-xs font-semibold text-gray-900 mb-4">Recent News</p>
+                    <ul className="space-y-2">
                       {typedPrep.companyIntelligence.recentNews.map((news, idx) => (
-                        <li key={idx} className="text-xs text-gray-700 flex gap-2">
+                        <li key={idx} className="text-xs text-gray-700 flex gap-4">
                           <span className="text-green-600 font-bold">•</span>
                           <span>{news}</span>
                         </li>
@@ -176,8 +176,8 @@ export default function PrepTab({ jobId }: PrepTabProps) {
                   </div>
                 )}
 
-                <div className="bg-green-50 rounded-lg p-3 border border-green-200">
-                  <p className="text-xs font-semibold text-gray-900 mb-1">Culture</p>
+                <div className="bg-green-50 rounded-lg p-6 border border-green-200">
+                  <p className="text-xs font-semibold text-gray-900 mb-2">Culture</p>
                   <p className="text-xs text-gray-700">
                     {typedPrep.companyIntelligence.culture}
                   </p>
@@ -192,9 +192,9 @@ export default function PrepTab({ jobId }: PrepTabProps) {
       <div className="border border-gray-200 rounded-lg overflow-hidden">
         <button
           onClick={() => toggleSection('questions')}
-          className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition"
+          className="w-full flex items-center justify-between p-8 bg-gray-50 hover:bg-gray-100 transition"
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <Zap size={16} className="text-purple-600" />
             <h3 className="font-semibold text-gray-900">Likely Questions</h3>
           </div>
@@ -206,9 +206,9 @@ export default function PrepTab({ jobId }: PrepTabProps) {
         </button>
 
         {expandedSections.includes('questions') && (
-          <div className="p-4 space-y-2 bg-white border-t border-gray-200">
+          <div className="p-8 space-y-4 bg-white border-t border-gray-200">
             {typedPrep.likelyQuestions?.map((question, idx) => (
-              <div key={idx} className="bg-purple-50 rounded-lg p-3 border border-purple-200">
+              <div key={idx} className="bg-purple-50 rounded-lg p-6 border border-purple-200">
                 <p className="text-sm text-gray-900">{question}</p>
               </div>
             ))}

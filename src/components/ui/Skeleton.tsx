@@ -21,7 +21,7 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
  * Placeholder component for loading states.
  */
 export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
-  ({ width = 'w-full', height = 'h-4', circle = false, className, ...props }, ref) => (
+  ({ width = 'w-full', height = 'h-8', circle = false, className, ...props }, ref) => (
     <div
       ref={ref}
       className={cn(

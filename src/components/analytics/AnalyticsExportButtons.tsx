@@ -105,8 +105,8 @@ export const AnalyticsExportButtons: React.FC<
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap gap-2">
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-wrap gap-4">
         <Button
           onClick={handleExportCSV}
           disabled={disabled || isLoading}
@@ -149,7 +149,7 @@ export const AnalyticsExportButtons: React.FC<
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-md p-3 text-sm text-red-700">
+        <div className="bg-red-50 border border-red-200 rounded-md p-6 text-sm text-red-700">
           {error}
         </div>
       )}

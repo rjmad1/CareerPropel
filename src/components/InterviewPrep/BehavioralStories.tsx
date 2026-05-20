@@ -125,18 +125,18 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
   }, []);
 
   return (
-    <div data-cy="behavioral-stories-tab" className="space-y-6 py-4">
+    <div data-cy="behavioral-stories-tab" className="space-y-12 py-8">
       {/* Overview */}
-      <section className="bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200 rounded-lg p-5">
-        <div className="flex items-start gap-3">
-          <BookOpen className="w-5 h-5 text-blue-600 flex-shrink-0 mt-1" />
+      <section className="bg-gradient-to-br from-blue-50 to-cyan-50 border border-blue-200 rounded-lg p-10">
+        <div className="flex items-start gap-6">
+          <BookOpen className="w-10 h-10 text-blue-600 flex-shrink-0 mt-2" />
           <div className="flex-1">
-            <h3 className="text-lg font-semibold text-blue-900 mb-2">Behavioral Interview Stories</h3>
-            <p className="text-sm text-blue-800 mb-3">
+            <h3 className="text-lg font-semibold text-blue-900 mb-4">Behavioral Interview Stories</h3>
+            <p className="text-sm text-blue-800 mb-6">
               Behavioral questions focus on past experiences. The STAR method (Situation, Task, Action,
               Result) is the most effective way to answer them.
             </p>
-            <div className="flex items-center gap-4 text-sm">
+            <div className="flex items-center gap-8 text-sm">
               <div>
                 <div className="font-semibold text-blue-900">{stories.length}</div>
                 <div className="text-xs text-blue-700">Stories Ready</div>
@@ -154,21 +154,21 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
       </section>
 
       {/* Your Prepared Stories */}
-      <section className="space-y-3">
-        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-          <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+      <section className="space-y-6">
+        <h3 className="text-base font-semibold text-slate-900 flex items-center gap-4">
+          <CheckCircle2 className="w-10 h-10 text-emerald-600" />
           Your Prepared Stories ({stories.length})
         </h3>
         {stories.length === 0 ? (
-          <div className="bg-slate-50 border border-slate-300 border-dashed rounded-lg p-6 text-center">
-            <Lightbulb className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+          <div className="bg-slate-50 border border-slate-300 border-dashed rounded-lg p-12 text-center">
+            <Lightbulb className="w-16 h-16 text-slate-400 mx-auto mb-4" />
             <p className="text-sm text-slate-600">No behavioral stories generated yet.</p>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-slate-500 mt-2">
               Stories are automatically generated based on your resume and work history.
             </p>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-6">
             {stories.map((story, idx) => (
               <div
                 key={idx}
@@ -177,29 +177,29 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
               >
                 <button
                   onClick={() => toggleStory(idx)}
-                  className="w-full bg-gradient-to-r from-slate-50 to-slate-100 hover:from-slate-100 hover:to-slate-150 p-4 flex items-start gap-3 transition-colors"
+                  className="w-full bg-gradient-to-r from-slate-50 to-slate-100 hover:from-slate-100 hover:to-slate-150 p-8 flex items-start gap-6 transition-colors"
                 >
                   <div className="flex-1 text-left">
-                    <div className="flex items-start justify-between mb-1">
+                    <div className="flex items-start justify-between mb-2">
                       <h4 className="font-semibold text-slate-900">{story.title}</h4>
                       {expandedStories.has(idx) ? (
-                        <ChevronUp className="w-5 h-5 text-slate-600 flex-shrink-0" />
+                        <ChevronUp className="w-10 h-10 text-slate-600 flex-shrink-0" />
                       ) : (
-                        <ChevronDown className="w-5 h-5 text-slate-600 flex-shrink-0" />
+                        <ChevronDown className="w-10 h-10 text-slate-600 flex-shrink-0" />
                       )}
                     </div>
-                    <p className="text-sm text-slate-700 mb-2">{story.summary}</p>
-                    <div className="flex flex-wrap gap-2">
+                    <p className="text-sm text-slate-700 mb-4">{story.summary}</p>
+                    <div className="flex flex-wrap gap-4">
                       {story.competencies?.slice(0, 3).map((comp, cIdx) => (
                         <span
                           key={cIdx}
-                          className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded"
+                          className="text-xs bg-blue-100 text-blue-800 px-4 py-2 rounded"
                         >
                           {comp}
                         </span>
                       ))}
                       {story.confidence && (
-                        <span className="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded">
+                        <span className="text-xs bg-emerald-100 text-emerald-800 px-4 py-2 rounded">
                           {story.confidence}% confidence
                         </span>
                       )}
@@ -209,37 +209,37 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
 
                 {/* Expanded Content */}
                 {expandedStories.has(idx) && (
-                  <div className="border-t border-slate-200 p-4 space-y-4 bg-white">
+                  <div className="border-t border-slate-200 p-8 space-y-8 bg-white">
                     {/* STAR Breakdown */}
-                    <div className="space-y-3">
-                      <div className="bg-orange-50 border-l-4 border-orange-400 p-3 rounded">
-                        <div className="text-sm font-semibold text-orange-900 mb-1">
+                    <div className="space-y-6">
+                      <div className="bg-orange-50 border-l-4 border-orange-400 p-6 rounded">
+                        <div className="text-sm font-semibold text-orange-900 mb-2">
                           🎬 Situation
                         </div>
                         <p className="text-sm text-orange-800">{story.situation}</p>
                       </div>
 
-                      <div className="bg-yellow-50 border-l-4 border-yellow-400 p-3 rounded">
-                        <div className="text-sm font-semibold text-yellow-900 mb-1">
+                      <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded">
+                        <div className="text-sm font-semibold text-yellow-900 mb-2">
                           ✅ Task
                         </div>
                         <p className="text-sm text-yellow-800">{story.task}</p>
                       </div>
 
-                      <div className="bg-blue-50 border-l-4 border-blue-400 p-3 rounded">
-                        <div className="text-sm font-semibold text-blue-900 mb-1">
+                      <div className="bg-blue-50 border-l-4 border-blue-400 p-6 rounded">
+                        <div className="text-sm font-semibold text-blue-900 mb-2">
                           ⚙️ Action
                         </div>
                         <p className="text-sm text-blue-800">{story.action}</p>
                       </div>
 
-                      <div className="bg-emerald-50 border-l-4 border-emerald-400 p-3 rounded">
-                        <div className="text-sm font-semibold text-emerald-900 mb-1">
+                      <div className="bg-emerald-50 border-l-4 border-emerald-400 p-6 rounded">
+                        <div className="text-sm font-semibold text-emerald-900 mb-2">
                           🎯 Result
                         </div>
                         <p className="text-sm text-emerald-800">{story.result}</p>
                         {story.metrics && (
-                          <div className="text-xs text-emerald-700 mt-2 font-medium">
+                          <div className="text-xs text-emerald-700 mt-4 font-medium">
                             📊 {story.metrics}
                           </div>
                         )}
@@ -247,24 +247,24 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
                     </div>
 
                     {/* Metadata */}
-                    <div className="grid grid-cols-2 gap-2 text-xs">
-                      <div className="bg-slate-50 rounded p-2">
+                    <div className="grid grid-cols-2 gap-4 text-xs">
+                      <div className="bg-slate-50 rounded p-4">
                         <div className="font-semibold text-slate-700">Time to Tell</div>
                         <div className="text-slate-600">
-                          <Clock className="w-4 h-4 inline mr-1" />
+                          <Clock className="w-8 h-8 inline mr-2" />
                           90-120 seconds
                         </div>
                       </div>
-                      <div className="bg-slate-50 rounded p-2">
+                      <div className="bg-slate-50 rounded p-4">
                         <div className="font-semibold text-slate-700">Best For</div>
                         <div className="text-slate-600">{story.competencies?.[0] || 'Behavioral'}</div>
                       </div>
                     </div>
 
                     {/* Tips */}
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                      <div className="text-sm font-semibold text-blue-900 mb-2">💡 Delivery Tips</div>
-                      <ul className="space-y-1 text-xs text-blue-800">
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                      <div className="text-sm font-semibold text-blue-900 mb-4">💡 Delivery Tips</div>
+                      <ul className="space-y-2 text-xs text-blue-800">
                         <li>• Start with context (Situation) to set the scene</li>
                         <li>• Focus on YOUR actions, not team's actions</li>
                         <li>• Quantify results when possible (%, time saved, impact)</li>
@@ -282,21 +282,21 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
 
       {/* Competency Coverage */}
       {competencies.length > 0 && (
-        <section className="space-y-3">
-          <h3 className="text-base font-semibold text-slate-900 flex items-center gap-2">
-            <Zap className="w-5 h-5 text-amber-600" />
+        <section className="space-y-6">
+          <h3 className="text-base font-semibold text-slate-900 flex items-center gap-4">
+            <Zap className="w-10 h-10 text-amber-600" />
             Your Competency Coverage
           </h3>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-4">
             {competencies.map(([competency, count], idx) => (
               <div
                 key={idx}
-                className="bg-amber-50 border border-amber-200 rounded-lg p-3"
+                className="bg-amber-50 border border-amber-200 rounded-lg p-6"
                 data-cy={`competency-${idx}`}
               >
-                <div className="text-sm font-semibold text-amber-900 mb-1">{competency}</div>
-                <div className="flex items-center gap-2">
-                  <div className="flex-1 h-2 bg-amber-200 rounded-full overflow-hidden">
+                <div className="text-sm font-semibold text-amber-900 mb-2">{competency}</div>
+                <div className="flex items-center gap-4">
+                  <div className="flex-1 h-4 bg-amber-200 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-amber-600 rounded-full"
                       style={{ width: `${(count / Math.max(...competencies.map(c => c[1]))) * 100}%` }}
@@ -311,24 +311,24 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
       )}
 
       {/* Gap Analysis */}
-      <section className="bg-amber-50 border border-amber-200 rounded-lg p-4 space-y-3">
-        <h3 className="text-base font-semibold text-amber-900 flex items-center gap-2">
-          <AlertCircle className="w-5 h-5" />
+      <section className="bg-amber-50 border border-amber-200 rounded-lg p-8 space-y-6">
+        <h3 className="text-base font-semibold text-amber-900 flex items-center gap-4">
+          <AlertCircle className="w-10 h-10" />
           Coverage Gaps
         </h3>
         <p className="text-sm text-amber-800">
           Consider preparing additional stories for these common behavioral competencies:
         </p>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-4">
           {commonBehavioralTopics.slice(0, 4).map((topic, idx) => (
             <div
               key={idx}
-              className="bg-white border border-amber-300 rounded-lg p-3"
+              className="bg-white border border-amber-300 rounded-lg p-6"
               data-cy={`gap-topic-${idx}`}
             >
-              <div className="text-base mb-1">{topic.icon}</div>
+              <div className="text-base mb-2">{topic.icon}</div>
               <div className="text-sm font-medium text-amber-900">{topic.topic}</div>
-              <div className="text-xs text-amber-700 mt-2">
+              <div className="text-xs text-amber-700 mt-4">
                 {competencies.some(c => c[0].toLowerCase() === topic.topic.toLowerCase())
                   ? '✓ Covered'
                   : '○ Need story'}
@@ -339,20 +339,20 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
       </section>
 
       {/* Common Behavioral Topics Reference */}
-      <section className="space-y-3">
+      <section className="space-y-6">
         <h3 className="text-base font-semibold text-slate-900">Common Behavioral Topics</h3>
-        <div className="grid grid-cols-1 gap-3">
+        <div className="grid grid-cols-1 gap-6">
           {commonBehavioralTopics.map((topic, idx) => (
             <div
               key={idx}
-              className="bg-slate-50 border border-slate-200 rounded-lg p-3"
+              className="bg-slate-50 border border-slate-200 rounded-lg p-6"
               data-cy={`behavioral-topic-${idx}`}
             >
-              <div className="flex items-start gap-2 mb-2">
+              <div className="flex items-start gap-4 mb-4">
                 <span className="text-lg">{topic.icon}</span>
                 <h4 className="font-semibold text-slate-900">{topic.topic}</h4>
               </div>
-              <ul className="space-y-1 ml-6">
+              <ul className="space-y-2 ml-12">
                 {topic.examples.map((example, exIdx) => (
                   <li key={exIdx} className="text-xs text-slate-700">• {example}</li>
                 ))}
@@ -363,14 +363,14 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
       </section>
 
       {/* STAR Framework Guide */}
-      <section className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 space-y-3">
-        <h3 className="text-base font-semibold text-blue-900 mb-3">📚 STAR Framework Deep Dive</h3>
-        <div className="space-y-3">
+      <section className="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-8 space-y-6">
+        <h3 className="text-base font-semibold text-blue-900 mb-6">📚 STAR Framework Deep Dive</h3>
+        <div className="space-y-6">
           <div>
-            <div className="text-sm font-semibold text-blue-900 mb-1">
+            <div className="text-sm font-semibold text-blue-900 mb-2">
               🎬 SITUATION (15-20 seconds)
             </div>
-            <ul className="text-xs text-blue-800 space-y-1 ml-4">
+            <ul className="text-xs text-blue-800 space-y-2 ml-8">
               <li>• Set the context: company, team, role, timeframe</li>
               <li>• Make it relatable: what was the challenge/problem?</li>
               <li>• Don't over-explain: keep it concise</li>
@@ -378,10 +378,10 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
           </div>
 
           <div>
-            <div className="text-sm font-semibold text-blue-900 mb-1">
+            <div className="text-sm font-semibold text-blue-900 mb-2">
               ✅ TASK (10-15 seconds)
             </div>
-            <ul className="text-xs text-blue-800 space-y-1 ml-4">
+            <ul className="text-xs text-blue-800 space-y-2 ml-8">
               <li>• What was YOUR specific responsibility?</li>
               <li>• What was the goal or objective?</li>
               <li>• Why was it important?</li>
@@ -389,10 +389,10 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
           </div>
 
           <div>
-            <div className="text-sm font-semibold text-blue-900 mb-1">
+            <div className="text-sm font-semibold text-blue-900 mb-2">
               ⚙️ ACTION (30-40 seconds)
             </div>
-            <ul className="text-xs text-blue-800 space-y-1 ml-4">
+            <ul className="text-xs text-blue-800 space-y-2 ml-8">
               <li>• Use "I" not "we" - focus on YOUR contribution</li>
               <li>• Describe specific steps YOU took</li>
               <li>• Highlight relevant skills and decision-making</li>
@@ -401,10 +401,10 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
           </div>
 
           <div>
-            <div className="text-sm font-semibold text-blue-900 mb-1">
+            <div className="text-sm font-semibold text-blue-900 mb-2">
               🎯 RESULT (15-20 seconds)
             </div>
-            <ul className="text-xs text-blue-800 space-y-1 ml-4">
+            <ul className="text-xs text-blue-800 space-y-2 ml-8">
               <li>• What was the outcome?</li>
               <li>• Quantify impact if possible (%, time, money, etc.)</li>
               <li>• What did YOU learn?</li>
@@ -413,7 +413,7 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
           </div>
         </div>
 
-        <div className="bg-white border border-blue-300 rounded-lg p-3 mt-3">
+        <div className="bg-white border border-blue-300 rounded-lg p-6 mt-6">
           <p className="text-xs text-blue-800">
             <strong>Pro tip:</strong> Total story time: 2-3 minutes. Practice with a timer or record
             yourself. Interviewers will likely ask follow-up questions, so be ready to go deeper.
@@ -422,9 +422,9 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
       </section>
 
       {/* Practice Recommendations */}
-      <section className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
-        <div className="text-sm font-semibold text-emerald-900 mb-3">🎤 Practice Recommendations</div>
-        <ol className="space-y-2 text-xs text-emerald-800">
+      <section className="bg-emerald-50 border border-emerald-200 rounded-lg p-8">
+        <div className="text-sm font-semibold text-emerald-900 mb-6">🎤 Practice Recommendations</div>
+        <ol className="space-y-4 text-xs text-emerald-800">
           <li>
             <strong>1. Record yourself:</strong> Tell each story out loud and listen back. Are you
             rambling? Do you sound confident?
@@ -447,7 +447,7 @@ export const BehavioralStories: React.FC<BehavioralStoriesProps> = ({ prep }) =>
 
       {/* Last Updated */}
       {prep.lastUpdated && (
-        <div className="text-xs text-slate-500 pt-2 border-t border-slate-200">
+        <div className="text-xs text-slate-500 pt-4 border-t border-slate-200">
           Last updated: {new Date(prep.lastUpdated).toLocaleString()}
         </div>
       )}

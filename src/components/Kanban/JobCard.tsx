@@ -74,7 +74,7 @@ export const JobCard: React.FC<JobCardProps> = ({
       draggable
       className={`
         job-card bg-white rounded-lg shadow hover:shadow-md transition-all cursor-move
-        border-l-4 p-3 space-y-2 relative overflow-hidden
+        border-l-4 p-6 space-y-4 relative overflow-hidden
         ${isDraggedOver ? 'ring-2 ring-blue-400 opacity-75' : ''}
         ${isUpdating ? 'ring-2 ring-green-400' : ''}
         ${stageConfig.borderColor}
@@ -84,35 +84,35 @@ export const JobCard: React.FC<JobCardProps> = ({
     >
       {/* Updating indicator */}
       {isUpdating && (
-        <div className="absolute top-0 left-0 right-0 h-1 bg-green-400 animate-pulse" />
+        <div className="absolute top-0 left-0 right-0 h-2 bg-green-400 animate-pulse" />
       )}
 
       {/* Header: Role + Company + Priority */}
       <div>
-        <div className="flex items-start justify-between gap-2">
+        <div className="flex items-start justify-between gap-4">
           <div className="flex-1 min-w-0">
             <h4 className="font-semibold text-gray-900 text-sm truncate">
               {job.title}
             </h4>
             <p className="text-xs text-gray-600 truncate">{job.company}</p>
           </div>
-          <div className={`px-2 py-0.5 rounded text-xs font-semibold whitespace-nowrap flex-shrink-0 ${priorityColor}`}>
+          <div className={`px-4 py-0.5 rounded text-xs font-semibold whitespace-nowrap flex-shrink-0 ${priorityColor}`}>
             {(jobAny.priority || 'medium').charAt(0).toUpperCase() + (jobAny.priority || 'medium').slice(1)}
           </div>
         </div>
       </div>
 
       {/* Match Score Progress Bar */}
-      <div className="space-y-1">
+      <div className="space-y-2">
         <div className="flex justify-between items-center">
           <span className="text-xs text-gray-600">Match Score</span>
           <span className="text-xs font-semibold text-gray-900">
             {Math.round(job.matchScore)}%
           </span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-1.5">
+        <div className="w-full bg-gray-200 rounded-full h-3">
           <div
-            className={`h-1.5 rounded-full transition-all ${getMatchScoreColor(
+            className={`h-3 rounded-full transition-all ${getMatchScoreColor(
               job.matchScore
             )}`}
             style={{ width: `${job.matchScore}%` }}
@@ -122,29 +122,29 @@ export const JobCard: React.FC<JobCardProps> = ({
 
       {/* Interview Status Badge */}
       {jobAny.interviewStatus && jobAny.interviewStatus !== 'not_started' && (
-        <div className="flex items-center gap-1 text-xs">
+        <div className="flex items-center gap-2 text-xs">
           <span className="text-gray-600">Status:</span>
-          <span className={`px-2 py-0.5 rounded text-xs font-semibold ${getInterviewStatusColor(jobAny.interviewStatus)}`}>
+          <span className={`px-4 py-0.5 rounded text-xs font-semibold ${getInterviewStatusColor(jobAny.interviewStatus)}`}>
             {formatInterviewStatus(jobAny.interviewStatus)}
           </span>
         </div>
       )}
 
       {/* Metrics Row: Confidence + Resume + Recruiter */}
-      <div className="grid grid-cols-3 gap-1 text-xs">
-        <div className="bg-gray-50 p-1.5 rounded text-center">
+      <div className="grid grid-cols-3 gap-2 text-xs">
+        <div className="bg-gray-50 p-3 rounded text-center">
           <div className="text-gray-600">Confidence</div>
           <div className={`font-semibold ${confidenceColor}`}>
             {Math.round((jobAny.aiConfidence || 0) * 100)}%
           </div>
         </div>
-        <div className="bg-gray-50 p-1.5 rounded text-center">
+        <div className="bg-gray-50 p-3 rounded text-center">
           <div className="text-gray-600">Resume</div>
           <div className="font-semibold text-gray-900">
             {jobAny.resumeVersion || '—'}
           </div>
         </div>
-        <div className="bg-gray-50 p-1.5 rounded text-center">
+        <div className="bg-gray-50 p-3 rounded text-center">
           <div className="text-gray-600">Recruiter</div>
           <div className="font-semibold text-gray-900">
             {!jobAny.recruiterStatus || jobAny.recruiterStatus === 'not_contacted'
@@ -156,15 +156,15 @@ export const JobCard: React.FC<JobCardProps> = ({
 
       {/* Risks/Blockers Indicators */}
       {((jobAny.risks?.length > 0) || (jobAny.blockers?.length > 0)) && (
-        <div className="flex gap-2 text-xs">
+        <div className="flex gap-4 text-xs">
           {jobAny.risks?.length > 0 && (
-            <div className="flex items-center gap-1 px-2 py-1 bg-yellow-50 text-yellow-700 rounded">
+            <div className="flex items-center gap-2 px-4 py-2 bg-yellow-50 text-yellow-700 rounded">
               <span>⚠️</span>
               <span>{jobAny.risks.length} risk{jobAny.risks.length > 1 ? 's' : ''}</span>
             </div>
           )}
           {jobAny.blockers?.length > 0 && (
-            <div className="flex items-center gap-1 px-2 py-1 bg-red-50 text-red-700 rounded">
+            <div className="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-700 rounded">
               <span>🚫</span>
               <span>{jobAny.blockers.length} blocker{jobAny.blockers.length > 1 ? 's' : ''}</span>
             </div>
@@ -174,13 +174,13 @@ export const JobCard: React.FC<JobCardProps> = ({
 
       {/* Next Action Preview */}
       {jobAny.nextAction && (
-        <div className="pt-1 border-t border-gray-200 text-xs text-gray-600">
+        <div className="pt-2 border-t border-gray-200 text-xs text-gray-600">
           <span className="text-gray-500">Next:</span> {jobAny.nextAction}
         </div>
       )}
 
       {/* Application Date */}
-      <div className="pt-1 text-xs text-gray-500">
+      <div className="pt-2 text-xs text-gray-500">
         Applied {formatDate(job.appliedAt || job.createdAt)}
       </div>
     </div>

@@ -61,7 +61,7 @@ export const NotificationCenter: React.FC = () => {
 
   return (
     <div
-      className="fixed bottom-4 right-4 z-50 space-y-2 pointer-events-none"
+      className="fixed bottom-8 right-8 z-50 space-y-4 pointer-events-none"
       data-cy="notification-center"
     >
       {notifications.map((notification) => (

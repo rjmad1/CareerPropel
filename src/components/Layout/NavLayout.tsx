@@ -1,57 +1,44 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import {
-  Box,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-  Avatar,
-  Button,
-  CircularProgress,
-} from '@mui/material';
-import {
-  Dashboard,
-  ViewKanban,
-  RecordVoiceOver,
-  EventNote,
-  MonetizationOn,
-  Description,
-  Email,
-  Person,
-  CalendarMonth,
-  BarChart,
-  Security,
-  VpnKey,
+  LayoutDashboard,
+  KanbanSquare,
+  Mic,
+  CalendarCheck,
+  CircleDollarSign,
+  FileText,
+  Mail,
+  User,
+  Calendar,
+  BarChart3,
+  FileSpreadsheet,
+  KeyRound,
+  ShieldAlert,
   Settings,
-  Logout,
-  Assignment,
-} from '@mui/icons-material';
-
-const DRAWER_WIDTH = 220;
+  LogOut,
+  Menu,
+  X
+} from 'lucide-react';
 
 const navItems = [
-  { href: '/dashboard', label: 'Dashboard', icon: Dashboard },
-  { href: '/jobs', label: 'Pipeline', icon: ViewKanban },
-  { href: '/interview-prep', label: 'Interview Prep', icon: RecordVoiceOver },
-  { href: '/interviews', label: 'Interviews', icon: EventNote },
-  { href: '/offers', label: 'Offers', icon: MonetizationOn },
-  { href: '/documents', label: 'Documents', icon: Description },
-  { href: '/emails', label: 'Emails', icon: Email },
-  { href: '/profile', label: 'Profile', icon: Person },
-  { href: '/calendar', label: 'Calendar', icon: CalendarMonth },
-  { href: '/analytics', label: 'Analytics', icon: BarChart },
-  { href: '/audit-logs', label: 'Audit Logs', icon: Assignment },
-  { href: '/api-keys', label: 'API Keys', icon: VpnKey },
-  { href: '/settings/security', label: 'Security', icon: Security },
+  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/jobs', label: 'Pipeline', icon: KanbanSquare },
+  { href: '/interview-prep', label: 'Interview Prep', icon: Mic },
+  { href: '/interviews', label: 'Interviews', icon: CalendarCheck },
+  { href: '/offers', label: 'Offers', icon: CircleDollarSign },
+  { href: '/documents', label: 'Documents', icon: FileText },
+  { href: '/emails', label: 'Emails', icon: Mail },
+  { href: '/profile', label: 'Profile', icon: User },
+  { href: '/calendar', label: 'Calendar', icon: Calendar },
+  { href: '/analytics', label: 'Analytics', icon: BarChart3 },
+  { href: '/audit-logs', label: 'Audit Logs', icon: FileSpreadsheet },
+  { href: '/api-keys', label: 'API Keys', icon: KeyRound },
+  { href: '/settings/security', label: 'Security', icon: ShieldAlert },
   { href: '/settings/account', label: 'Account', icon: Settings },
 ];
 
@@ -65,6 +52,7 @@ export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
   const pathname = usePathname();
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -72,11 +60,16 @@ export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
     }
   }, [status, router]);
 
+  // Close sidebar on route change on mobile
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [pathname]);
+
   if (status === 'loading') {
     return (
-      <Box sx={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', bgcolor: 'background.default' }}>
-        <CircularProgress />
-      </Box>
+      <div className="flex h-screen items-center justify-center bg-slate-50">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
+      </div>
     );
   }
 
@@ -86,141 +79,166 @@ export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
     ? session.user.name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
     : session.user?.email?.charAt(0).toUpperCase() ?? '?';
 
-  return (
-    <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden', bgcolor: 'background.default' }}>
-      {/* Sidebar Drawer */}
-      <Drawer
-        variant="permanent"
-        sx={{
-          width: DRAWER_WIDTH,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: DRAWER_WIDTH,
-            boxSizing: 'border-box',
-            bgcolor: '#0F172A',
-            color: 'white',
-            border: 'none',
-            overflowX: 'hidden',
-          },
-        }}
-      >
-        {/* Logo */}
-        <Box sx={{ px: 2.5, py: 2.5, borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
-          <Link href="/dashboard" style={{ textDecoration: 'none' }}>
-            <Typography variant="h6" sx={{ color: 'white', fontWeight: 700, lineHeight: 1.2, fontSize: '1rem' }}>
-              CareerPropel
-            </Typography>
-            <Typography variant="caption" sx={{ color: '#60A5FA', display: 'block', mt: 0.25 }}>
-              AI Career Platform
-            </Typography>
-          </Link>
-        </Box>
+  const avatarUrl = (session.user as { avatarUrl?: string })?.avatarUrl;
 
-        {/* Nav Items */}
-        <List sx={{ flex: 1, py: 1.5, overflowY: 'auto', overflowX: 'hidden' }} disablePadding>
-          {navItems.map((item) => {
-            const isActive = pathname === item.href || (pathname?.startsWith(item.href + '/') && item.href !== '/');
-            const IconComponent = item.icon;
-            return (
-              <ListItem key={item.href} disablePadding sx={{ px: 1, mb: 0.25 }}>
-                <ListItemButton
-                  component={Link}
-                  href={item.href}
-                  selected={isActive}
-                  sx={{
-                    borderRadius: 1.5,
-                    py: 0.875,
-                    px: 1.5,
-                    minHeight: 40,
-                    color: isActive ? 'white' : 'rgba(255,255,255,0.55)',
-                    bgcolor: isActive ? 'rgba(37,99,235,0.85)' : 'transparent',
-                    '&:hover': {
-                      bgcolor: isActive ? 'rgba(37,99,235,0.9)' : 'rgba(255,255,255,0.07)',
-                      color: 'white',
-                    },
-                    '&.Mui-selected': {
-                      bgcolor: 'rgba(37,99,235,0.85)',
-                      '&:hover': { bgcolor: 'rgba(37,99,235,0.95)' },
-                    },
-                  }}
-                >
-                  <ListItemIcon sx={{ minWidth: 32, color: 'inherit' }}>
-                    <IconComponent sx={{ fontSize: 18 }} />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={item.label}
-                    slotProps={{ primary: { sx: { fontSize: '0.8125rem', fontWeight: isActive ? 600 : 400 }, noWrap: true } }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            );
-          })}
-        </List>
+  const renderSidebarContent = () => (
+    <div className="flex h-full flex-col bg-slate-900 text-slate-400">
+      {/* Logo */}
+      <div className="flex h-16 items-center px-6 border-b border-slate-800 shrink-0">
+        <Link href="/dashboard" className="flex flex-col group">
+          <span className="text-base font-bold text-white tracking-wide transition-colors group-hover:text-blue-400">
+            CareerPropel
+          </span>
+          <span className="text-[10px] font-medium text-blue-400/80 uppercase tracking-wider -mt-0.5">
+            AI Career Platform
+          </span>
+        </Link>
+      </div>
 
-        {/* User Footer */}
-        <Box sx={{ borderTop: '1px solid rgba(255,255,255,0.08)', px: 2, py: 2 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.5 }}>
-            <Avatar
-              src={(session.user as { avatarUrl?: string })?.avatarUrl}
-              sx={{ width: 30, height: 30, fontSize: '0.75rem', bgcolor: 'primary.main' }}
+      {/* Nav Items */}
+      <nav className="flex-1 overflow-y-auto px-4 py-4 space-y-1 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
+        {navItems.map((item) => {
+          const isActive = pathname === item.href || (pathname?.startsWith(item.href + '/') && item.href !== '/');
+          const IconComponent = item.icon;
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs transition-all duration-150 group ${
+                isActive
+                  ? 'bg-blue-600 text-white font-medium shadow-sm shadow-blue-500/10'
+                  : 'text-slate-400 hover:bg-slate-800/60 hover:text-white'
+              }`}
             >
-              {initials}
-            </Avatar>
-            <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.6)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1 }}>
-              {session.user?.name || session.user?.email}
-            </Typography>
-          </Box>
-          <Button
-            fullWidth
-            size="small"
-            startIcon={<Logout sx={{ fontSize: '14px !important' }} />}
-            onClick={() => signOut({ callbackUrl: '/login' })}
-            sx={{
-              color: 'rgba(255,255,255,0.45)',
-              justifyContent: 'flex-start',
-              px: 0.5,
-              fontSize: '0.75rem',
-              '&:hover': { color: 'rgba(255,255,255,0.8)', bgcolor: 'transparent' },
-            }}
-          >
-            Sign out
-          </Button>
-        </Box>
-      </Drawer>
+              <IconComponent
+                className={`h-4 w-4 shrink-0 transition-colors ${
+                  isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'
+                }`}
+              />
+              <span className="truncate">{item.label}</span>
+            </Link>
+          );
+        })}
+      </nav>
 
-      {/* Main Content */}
-      <Box component="main" sx={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
-        {/* Page Header */}
-        {(title || subtitle) && (
-          <Box
-            component="header"
-            sx={{
-              bgcolor: 'background.paper',
-              borderBottom: '1px solid',
-              borderColor: 'divider',
-              px: 3,
-              py: 2,
-              flexShrink: 0,
-            }}
+      {/* User Footer */}
+      <div className="border-t border-slate-800 px-6 py-4 bg-slate-950/40 shrink-0">
+        <div className="flex items-center gap-3 mb-3">
+          <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-semibold overflow-hidden shrink-0 border border-slate-700/50">
+            {avatarUrl ? (
+              <img src={avatarUrl} alt={session.user?.name || 'User'} className="h-full w-full object-cover" />
+            ) : (
+              initials
+            )}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-semibold text-slate-200 truncate leading-snug">
+              {session.user?.name || 'User Account'}
+            </p>
+            <p className="text-[10px] text-slate-500 truncate leading-none mt-0.5">
+              {session.user?.email}
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={() => signOut({ callbackUrl: '/login' })}
+          className="flex items-center gap-2 text-slate-500 hover:text-red-400 transition-colors duration-150 w-full text-left py-1 text-xs group"
+        >
+          <LogOut className="h-3.5 w-3.5 group-hover:text-red-400 transition-colors" />
+          <span>Sign out</span>
+        </button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="flex min-h-screen bg-slate-50 text-slate-900 overflow-hidden relative">
+      {/* Sidebar - Desktop */}
+      <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:z-30 border-r border-slate-800 bg-slate-900 shrink-0">
+        {renderSidebarContent()}
+      </aside>
+
+      {/* Sidebar - Mobile Sliding Drawer */}
+      <div
+        className={`fixed inset-0 z-40 lg:hidden ${sidebarOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
+      >
+        {/* Backdrop overlay */}
+        <div
+          className={`absolute inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-350 ease-in-out ${
+            sidebarOpen ? 'opacity-100' : 'opacity-0'
+          }`}
+          onClick={() => setSidebarOpen(false)}
+        />
+        {/* Sliding Panel */}
+        <aside
+          className={`absolute inset-y-0 left-0 w-64 bg-slate-900 shadow-2xl transition-transform duration-350 ease-in-out ${
+            sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-md bg-slate-800/40 hover:bg-slate-800 transition-all z-50 lg:hidden"
+            aria-label="Close sidebar"
           >
-            {title && (
-              <Typography variant="h5" component="h1" sx={{ fontWeight: 700, color: 'text.primary', lineHeight: 1.3 }}>
-                {title}
-              </Typography>
+            <X className="h-4 w-4" />
+          </button>
+          {renderSidebarContent()}
+        </aside>
+      </div>
+
+      {/* Main Content Layout */}
+      <div className="flex flex-col flex-1 min-w-0 lg:pl-64 min-h-screen relative">
+        {/* Top Mobile Navbar */}
+        <header className="lg:hidden h-16 border-b border-slate-200 bg-white flex items-center justify-between px-4 sticky top-0 z-20 shrink-0 shadow-xs">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="p-1.5 rounded-lg text-slate-600 hover:bg-slate-100 active:bg-slate-200 transition-all"
+              aria-label="Open sidebar"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+            <Link href="/dashboard" className="flex flex-col">
+              <span className="text-sm font-bold text-slate-900 tracking-wide">
+                CareerPropel
+              </span>
+              <span className="text-[9px] font-semibold text-blue-600 uppercase tracking-wider -mt-1">
+                AI Career Platform
+              </span>
+            </Link>
+          </div>
+          <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-semibold overflow-hidden shrink-0 border border-slate-200">
+            {avatarUrl ? (
+              <img src={avatarUrl} alt={session.user?.name || 'User'} className="h-full w-full object-cover" />
+            ) : (
+              initials
             )}
-            {subtitle && (
-              <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.25 }}>
-                {subtitle}
-              </Typography>
-            )}
-          </Box>
+          </div>
+        </header>
+
+        {/* Page Header (Desktop & Mobile fluid) */}
+        {(title || subtitle) && (
+          <header className="bg-white border-b border-slate-200 px-6 py-4 shrink-0 shadow-xs relative">
+            <div className="flex flex-col gap-0.5">
+              {title && (
+                <h1 className="text-xl font-bold text-slate-900 leading-tight tracking-tight">
+                  {title}
+                </h1>
+              )}
+              {subtitle && (
+                <p className="text-xs text-slate-500 font-medium">
+                  {subtitle}
+                </p>
+              )}
+            </div>
+          </header>
         )}
 
-        {/* Scrollable Page Content */}
-        <Box sx={{ flex: 1, overflowY: 'auto' }}>
+        {/* Scrollable Page Body */}
+        <main className="flex-1 overflow-y-auto relative bg-slate-50 focus:outline-none">
           {children}
-        </Box>
-      </Box>
-    </Box>
+        </main>
+      </div>
+    </div>
   );
 }

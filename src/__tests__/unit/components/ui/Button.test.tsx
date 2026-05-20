@@ -42,17 +42,17 @@ describe('Button component', () => {
   describe('sizes', () => {
     it('renders small size', () => {
       render(<Button size="sm">Small</Button>)
-      expect(screen.getByRole('button').className).toContain('h-8')
+      expect(screen.getByRole('button').className).toContain('h-16')
     })
 
     it('renders medium size (default)', () => {
       render(<Button>Medium</Button>)
-      expect(screen.getByRole('button').className).toContain('h-10')
+      expect(screen.getByRole('button').className).toContain('h-20')
     })
 
     it('renders large size', () => {
       render(<Button size="lg">Large</Button>)
-      expect(screen.getByRole('button').className).toContain('h-12')
+      expect(screen.getByRole('button').className).toContain('h-24')
     })
   })
 

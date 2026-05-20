@@ -16,18 +16,18 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`
 
     return (
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         {label && (
           <label htmlFor={inputId} className="text-sm font-medium text-gray-900">
             {label}
-            {props.required && <span className="text-red-600 ml-1">*</span>}
+            {props.required && <span className="text-red-600 ml-2">*</span>}
           </label>
         )}
         <input
           ref={ref}
           id={inputId}
           className={cn(
-            'h-10 px-3 py-2 border border-gray-300 rounded-lg text-base transition-colors duration-200',
+            'h-20 px-6 py-4 border border-gray-300 rounded-lg text-base transition-colors duration-200',
             'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:border-blue-500',
             'disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed',
             'placeholder:text-gray-400',
@@ -70,18 +70,18 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     const textareaId = id || `textarea-${Math.random().toString(36).substr(2, 9)}`
 
     return (
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-2">
         {label && (
           <label htmlFor={textareaId} className="text-sm font-medium text-gray-900">
             {label}
-            {props.required && <span className="text-red-600 ml-1">*</span>}
+            {props.required && <span className="text-red-600 ml-2">*</span>}
           </label>
         )}
         <textarea
           ref={ref}
           id={textareaId}
           className={cn(
-            'min-h-24 px-3 py-2 border border-gray-300 rounded-lg text-base transition-colors duration-200 resize-none',
+            'min-h-48 px-6 py-4 border border-gray-300 rounded-lg text-base transition-colors duration-200 resize-none',
             'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:border-blue-500',
             'disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed',
             'placeholder:text-gray-400',

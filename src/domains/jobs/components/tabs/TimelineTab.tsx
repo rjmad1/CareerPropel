@@ -78,57 +78,57 @@ export default function TimelineTab({ jobId }: TimelineTabProps) {
 
   if (isLoading) {
     return (
-      <div className="p-6 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="p-12 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
       </div>
     );
   }
 
   if (error || activities.length === 0) {
     return (
-      <div className="p-6 text-center">
+      <div className="p-12 text-center">
         <p className="text-sm text-gray-600" data-testid="empty-timeline-message">No activities yet</p>
       </div>
     );
   }
 
   return (
-    <div className="p-6" data-testid="activity-timeline">
-      <div className="space-y-4">
+    <div className="p-12" data-testid="activity-timeline">
+      <div className="space-y-8">
         {activities.map((activity: Activity, index: number) => (
-          <div key={activity.id} className="flex gap-4" data-testid="activity-item">
+          <div key={activity.id} className="flex gap-8" data-testid="activity-item">
             {/* Timeline Line */}
             <div className="flex flex-col items-center">
               <div
-                className="rounded-full p-1.5 bg-gray-100"
+                className="rounded-full p-3 bg-gray-100"
                 data-testid={`activity-icon-${activity.type}`}
               >
                 {getActivityIcon(activity.type)}
               </div>
               {index < activities.length - 1 && (
-                <div className="w-0.5 h-12 bg-gray-200 mt-2"></div>
+                <div className="w-0.5 h-24 bg-gray-200 mt-4"></div>
               )}
             </div>
 
             {/* Activity Content */}
-            <div className="flex-1 pt-1">
+            <div className="flex-1 pt-2">
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-sm font-semibold text-gray-900">
                     {getActivityLabel(activity.type)}
                   </p>
-                  <p className="text-xs text-gray-600 mt-1" data-testid="activity-description">
+                  <p className="text-xs text-gray-600 mt-2" data-testid="activity-description">
                     {activity.description}
                   </p>
                 </div>
-                <p className="text-xs text-gray-500 ml-2" data-testid="activity-timestamp">
+                <p className="text-xs text-gray-500 ml-4" data-testid="activity-timestamp">
                   {formatRelativeTime(activity.timestamp)}
                 </p>
               </div>
 
               {/* Activity Metadata */}
               {activity.metadata && Object.keys(activity.metadata).length > 0 && (
-                <div className="mt-2 bg-gray-50 rounded p-2 text-xs text-gray-600" data-testid="activity-metadata">
+                <div className="mt-4 bg-gray-50 rounded p-4 text-xs text-gray-600" data-testid="activity-metadata">
                   {Object.entries(activity.metadata).map(([key, value]) => (
                     <div key={key} data-testid="activity-metadata-item">
                       <span className="font-medium">{key}:</span> {String(value)}

@@ -84,8 +84,8 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
 
   if (isLoading) {
     return (
-      <div className="p-6 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="p-12 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600"></div>
       </div>
     );
   }
@@ -101,17 +101,17 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
   });
 
   return (
-    <div className="p-6">
+    <div className="p-12">
       {/* Add Interview Form */}
       {isAddingInterview && (
-        <div data-testid="interview-form" className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4 space-y-3">
+        <div data-testid="interview-form" className="mb-12 bg-blue-50 border border-blue-200 rounded-lg p-8 space-y-6">
           <h3 className="text-sm font-semibold text-gray-900">Schedule Interview</h3>
 
           <select
             value={formData.type}
             onChange={(e) => setFormData({ ...formData, type: e.target.value as Interview['type'] })}
             data-testid="interview-type-select"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-6 py-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             {Object.entries(INTERVIEW_TYPES).map(([key, label]) => (
               <option key={key} value={key}>
@@ -120,20 +120,20 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
             ))}
           </select>
 
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-4">
             <input
               type="date"
               value={formData.date}
               onChange={(e) => setFormData({ ...formData, date: e.target.value })}
               data-testid="interview-date"
-              className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-6 py-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
               type="time"
               value={formData.time}
               onChange={(e) => setFormData({ ...formData, time: e.target.value })}
               data-testid="interview-time"
-              className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-6 py-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -143,7 +143,7 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
             value={formData.interviewer}
             onChange={(e) => setFormData({ ...formData, interviewer: e.target.value })}
             data-testid="interview-interviewer"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-6 py-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
           <input
@@ -152,7 +152,7 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
             value={formData.location || formData.meetingLink}
             onChange={(e) => setFormData({ ...formData, location: e.target.value, meetingLink: e.target.value })}
             data-testid="interview-location"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-6 py-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
           <textarea
@@ -160,23 +160,23 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
             value={formData.notes}
             onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
             data-testid="interview-notes"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-6 py-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             rows={2}
           />
 
-          <div className="flex gap-2">
+          <div className="flex gap-4">
             <button
               onClick={handleAddInterview}
               disabled={isCreating}
               data-testid="schedule-submit-btn"
-              className="flex-1 px-3 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed transition"
+              className="flex-1 px-6 py-4 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed transition"
             >
               {isCreating ? 'Scheduling...' : 'Schedule'}
             </button>
             <button
               onClick={() => setIsAddingInterview(false)}
               disabled={isCreating}
-              className="flex-1 px-3 py-2 bg-gray-200 text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed transition"
+              className="flex-1 px-6 py-4 bg-gray-200 text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-300 disabled:bg-gray-100 disabled:cursor-not-allowed transition"
             >
               Cancel
             </button>
@@ -190,7 +190,7 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
           onClick={() => setIsAddingInterview(true)}
           data-testid="schedule-interview-btn"
           aria-label="Schedule a new interview"
-          className="w-full mb-6 flex items-center justify-center gap-2 px-3 py-2 border-2 border-dashed border-blue-300 text-blue-600 rounded-lg hover:bg-blue-50 transition text-sm font-medium"
+          className="w-full mb-12 flex items-center justify-center gap-4 px-6 py-4 border-2 border-dashed border-blue-300 text-blue-600 rounded-lg hover:bg-blue-50 transition text-sm font-medium"
         >
           <Plus size={16} />
           Schedule Interview
@@ -198,17 +198,17 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
       )}
 
       {/* Upcoming Interviews */}
-      <div className="mb-6" data-testid="upcoming-interviews-section">
-        <h3 className="text-sm font-semibold text-gray-900 mb-3">Upcoming</h3>
+      <div className="mb-12" data-testid="upcoming-interviews-section">
+        <h3 className="text-sm font-semibold text-gray-900 mb-6">Upcoming</h3>
         {upcomingInterviews.length > 0 ? (
-          <div className="space-y-3">
+          <div className="space-y-6">
             {upcomingInterviews.map((interview: Interview) => (
               <div
                 key={interview.id}
                 data-testid="interview-item"
-                className="bg-green-50 border border-green-200 rounded-lg p-3"
+                className="bg-green-50 border border-green-200 rounded-lg p-6"
               >
-                <div className="flex items-start justify-between mb-2">
+                <div className="flex items-start justify-between mb-4">
                   <p className="text-sm font-semibold text-gray-900" data-testid="interview-type-badge">
                     {INTERVIEW_TYPES[interview.type]}
                   </p>
@@ -216,14 +216,14 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
                     onClick={() => handleDeleteInterview(interview.id)}
                     disabled={isDeleting}
                     data-testid="interview-delete-btn"
-                    className="p-1 hover:bg-red-100 disabled:bg-gray-100 disabled:cursor-not-allowed rounded transition"
+                    className="p-2 hover:bg-red-100 disabled:bg-gray-100 disabled:cursor-not-allowed rounded transition"
                   >
                     <Trash2 size={14} className="text-red-600" />
                   </button>
                 </div>
 
-                <div className="space-y-1 text-xs text-gray-600">
-                  <div className="flex items-center gap-2" data-testid="interview-date">
+                <div className="space-y-2 text-xs text-gray-600">
+                  <div className="flex items-center gap-4" data-testid="interview-date">
                     <Calendar size={14} />
                     {new Date(`${interview.date}T${interview.time}`).toLocaleDateString('en-US', {
                       month: 'short',
@@ -233,13 +233,13 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
                     })}
                   </div>
                   {interview.interviewer && (
-                    <div className="flex items-center gap-2" data-testid="interview-interviewer">
+                    <div className="flex items-center gap-4" data-testid="interview-interviewer">
                       <User size={14} />
                       {interview.interviewer}
                     </div>
                   )}
                   {interview.meetingLink && (
-                    <div className="flex items-center gap-2" data-testid="interview-location">
+                    <div className="flex items-center gap-4" data-testid="interview-location">
                       <MapPin size={14} />
                       <a href={interview.meetingLink} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
                         {interview.meetingLink}
@@ -247,7 +247,7 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
                     </div>
                   )}
                   {interview.location && !interview.meetingLink && (
-                    <div className="flex items-center gap-2" data-testid="interview-location">
+                    <div className="flex items-center gap-4" data-testid="interview-location">
                       <MapPin size={14} />
                       {interview.location}
                     </div>
@@ -257,18 +257,18 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
             ))}
           </div>
         ) : (
-          <p className="text-sm text-gray-500 text-center py-2">No upcoming interviews</p>
+          <p className="text-sm text-gray-500 text-center py-4">No upcoming interviews</p>
         )}
       </div>
 
       {/* Past Interviews */}
       <div data-testid="past-interviews-section">
-        <h3 className="text-sm font-semibold text-gray-900 mb-3">Past</h3>
+        <h3 className="text-sm font-semibold text-gray-900 mb-6">Past</h3>
         {pastInterviews.length > 0 ? (
-          <div className="space-y-3">
+          <div className="space-y-6">
             {pastInterviews.map((interview: Interview) => (
-              <div key={interview.id} data-testid="interview-item" className="bg-gray-50 border border-gray-200 rounded-lg p-3 opacity-75">
-                <div className="flex items-start justify-between mb-2">
+              <div key={interview.id} data-testid="interview-item" className="bg-gray-50 border border-gray-200 rounded-lg p-6 opacity-75">
+                <div className="flex items-start justify-between mb-4">
                   <p className="text-sm font-semibold text-gray-900" data-testid="interview-type-badge">
                     {INTERVIEW_TYPES[interview.type]}
                   </p>
@@ -276,14 +276,14 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
                     onClick={() => handleDeleteInterview(interview.id)}
                     disabled={isDeleting}
                     data-testid="interview-delete-btn"
-                    className="p-1 hover:bg-red-100 disabled:bg-gray-100 disabled:cursor-not-allowed rounded transition"
+                    className="p-2 hover:bg-red-100 disabled:bg-gray-100 disabled:cursor-not-allowed rounded transition"
                   >
                     <Trash2 size={14} className="text-red-600" />
                   </button>
                 </div>
 
-                <div className="space-y-1 text-xs text-gray-600">
-                  <div className="flex items-center gap-2">
+                <div className="space-y-2 text-xs text-gray-600">
+                  <div className="flex items-center gap-4">
                     <Calendar size={14} />
                     {new Date(`${interview.date}T${interview.time}`).toLocaleDateString('en-US', {
                       month: 'short',
@@ -295,7 +295,7 @@ export default function InterviewsTab({ jobId }: InterviewsTabProps) {
             ))}
           </div>
         ) : (
-          <p className="text-sm text-gray-500 text-center py-2">No past interviews</p>
+          <p className="text-sm text-gray-500 text-center py-4">No past interviews</p>
         )}
       </div>
     </div>

@@ -12,9 +12,9 @@ export interface SpinnerProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>(
   ({ size = 'md', className, ...props }, ref) => {
     const sizeStyles = {
-      sm: 'w-4 h-4 border-2',
-      md: 'w-6 h-6 border-2',
-      lg: 'w-8 h-8 border-3',
+      sm: 'w-8 h-8 border-2',
+      md: 'w-12 h-12 border-2',
+      lg: 'w-16 h-16 border-3',
     }
 
     return (

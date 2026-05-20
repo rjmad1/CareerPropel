@@ -23,8 +23,9 @@ describe('ApiError', () => {
   })
 
   describe('toJSON', () => {
-    const setNodeEnv = (value: string) =>
-      Object.defineProperty(process.env, 'NODE_ENV', { value, configurable: true, writable: true })
+    const setNodeEnv = (value: string) => {
+      (process.env as any).NODE_ENV = value
+    }
 
     beforeEach(() => {
       setNodeEnv('test')

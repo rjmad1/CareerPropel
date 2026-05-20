@@ -67,42 +67,42 @@ export const RecommendationPanel: React.FC<RecommendationPanelProps> = ({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
       {/* Progress Section */}
-      <div className="bg-white border border-gray-200 rounded-lg p-4">
-        <div className="flex items-center justify-between mb-2">
+      <div className="bg-white border border-gray-200 rounded-lg p-8">
+        <div className="flex items-center justify-between mb-4">
           <span className="font-semibold text-gray-900">Progress</span>
           <span className="text-sm font-bold text-gray-600">{progressPercent}%</span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
+        <div className="w-full bg-gray-200 rounded-full h-4">
           <div
-            className="bg-blue-500 h-2 rounded-full transition-all"
+            className="bg-blue-500 h-4 rounded-full transition-all"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
-        <p className="text-xs text-gray-600 mt-2">
+        <p className="text-xs text-gray-600 mt-4">
           {completedCount} of {recommendations.length} recommendations addressed
         </p>
       </div>
 
       {/* Alert for High Priority */}
       {highPriorityCount > 0 && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-8">
           <p className="font-semibold text-red-900 text-sm">
             🚨 {highPriorityCount} high-priority recommendations
           </p>
-          <p className="text-xs text-red-800 mt-1">
+          <p className="text-xs text-red-800 mt-2">
             These items will significantly improve your profile
           </p>
         </div>
       )}
 
       {/* Controls */}
-      <div className="flex gap-2">
+      <div className="flex gap-4">
         <button
           onClick={() => setGroupBy('priority')}
           className={cn(
-            'px-3 py-2 text-sm font-medium rounded transition-colors',
+            'px-6 py-4 text-sm font-medium rounded transition-colors',
             groupBy === 'priority'
               ? 'bg-blue-500 text-white'
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -113,7 +113,7 @@ export const RecommendationPanel: React.FC<RecommendationPanelProps> = ({
         <button
           onClick={() => setGroupBy('category')}
           className={cn(
-            'px-3 py-2 text-sm font-medium rounded transition-colors',
+            'px-6 py-4 text-sm font-medium rounded transition-colors',
             groupBy === 'category'
               ? 'bg-blue-500 text-white'
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -124,50 +124,50 @@ export const RecommendationPanel: React.FC<RecommendationPanelProps> = ({
       </div>
 
       {/* Recommendations List */}
-      <div className="space-y-4">
+      <div className="space-y-8">
         {visibleRecommendations.length > 0 ? (
           Object.entries(grouped).map(([groupName, recs]) => (
             <div key={groupName}>
-              <h3 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+              <h3 className="font-semibold text-gray-900 mb-4 flex items-center gap-4">
                 {groupBy === 'priority' ? '📍' : '📂'} {groupName}
                 <span className="text-sm text-gray-600 font-normal">({recs.length})</span>
               </h3>
-              <div className="space-y-2">
+              <div className="space-y-4">
                 {recs.map((rec) => (
                   <div
                     key={rec.id}
                     className={cn(
-                      'p-4 border rounded-lg transition-all hover:shadow-sm',
+                      'p-8 border rounded-lg transition-all hover:shadow-sm',
                       priorityColors[rec.priority]
                     )}
                   >
-                    <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-4">
                           <span className="font-semibold text-sm">
                             {categoryEmojis[rec.category as keyof typeof categoryEmojis]} {rec.suggestion}
                           </span>
                         </div>
-                        <p className="text-xs mt-1 opacity-90">{rec.impact}</p>
+                        <p className="text-xs mt-2 opacity-90">{rec.impact}</p>
                       </div>
-                      <span className="text-xs font-medium flex-shrink-0 ml-2 opacity-75">
+                      <span className="text-xs font-medium flex-shrink-0 ml-4 opacity-75">
                         {rec.estimatedTime}m
                       </span>
                     </div>
 
                     {/* Actions */}
-                    <div className="flex gap-2">
+                    <div className="flex gap-4">
                       {rec.action && (
                         <button
                           onClick={() => onAction?.(rec.id)}
-                          className="flex-1 text-xs px-3 py-1.5 bg-white hover:bg-opacity-90 rounded font-medium transition-colors"
+                          className="flex-1 text-xs px-6 py-3 bg-white hover:bg-opacity-90 rounded font-medium transition-colors"
                         >
                           {rec.action}
                         </button>
                       )}
                       <button
                         onClick={() => handleDismiss(rec.id)}
-                        className="text-xs px-3 py-1.5 bg-white hover:bg-opacity-90 rounded font-medium transition-colors"
+                        className="text-xs px-6 py-3 bg-white hover:bg-opacity-90 rounded font-medium transition-colors"
                       >
                         ✓ Done
                       </button>
@@ -178,9 +178,9 @@ export const RecommendationPanel: React.FC<RecommendationPanelProps> = ({
             </div>
           ))
         ) : (
-          <div className="text-center py-8">
+          <div className="text-center py-16">
             <p className="text-lg font-semibold text-gray-900">🎉 All set!</p>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-gray-600 mt-2">
               You've addressed all recommendations
             </p>
           </div>

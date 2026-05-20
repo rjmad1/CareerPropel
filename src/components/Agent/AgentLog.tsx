@@ -30,18 +30,18 @@ export const AgentLog: React.FC<AgentLogComponentProps> = ({ log }) => {
   const hasData = log.metadata && Object.keys(log.metadata).length > 0;
 
   return (
-    <div className="font-mono text-xs border-l-2 border-gray-200 pl-3 py-2">
+    <div className="font-mono text-xs border-l-2 border-gray-200 pl-6 py-4">
       <div
         className={cn(
-          'flex items-start gap-2 p-2 rounded cursor-pointer hover:bg-gray-50',
+          'flex items-start gap-4 p-4 rounded cursor-pointer hover:bg-gray-50',
           expanded && 'bg-gray-50'
         )}
         onClick={() => hasData && setExpanded(!expanded)}
       >
         <span className="text-base flex-shrink-0">{emoji}</span>
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className={cn('text-xs px-2 py-0.5 rounded font-semibold', levelColor)}>
+          <div className="flex items-center gap-4 flex-wrap">
+            <span className={cn('text-xs px-4 py-0.5 rounded font-semibold', levelColor)}>
               {level}
             </span>
             <span className="text-gray-600 flex-1 truncate">{log.message}</span>
@@ -52,7 +52,7 @@ export const AgentLog: React.FC<AgentLogComponentProps> = ({ log }) => {
 
           {/* Expandable Data Section */}
           {hasData && expanded && (
-            <div className="mt-2 p-2 bg-gray-100 rounded border border-gray-300 text-xs text-gray-700 max-h-48 overflow-y-auto">
+            <div className="mt-4 p-4 bg-gray-100 rounded border border-gray-300 text-xs text-gray-700 max-h-48 overflow-y-auto">
               <pre className="whitespace-pre-wrap break-words">
                 {JSON.stringify(log.metadata, null, 2)}
               </pre>
@@ -60,7 +60,7 @@ export const AgentLog: React.FC<AgentLogComponentProps> = ({ log }) => {
           )}
 
           {hasData && !expanded && (
-            <div className="mt-1 text-xs text-gray-500 flex items-center gap-1">
+            <div className="mt-2 text-xs text-gray-500 flex items-center gap-2">
               <span>▶</span>
               <span>View details ({Object.keys(log.metadata || {}).length} fields)</span>
             </div>

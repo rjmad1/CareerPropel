@@ -9,11 +9,12 @@ module.exports = {
     extend: {
       colors: {
         // Semantic colors
-        primary: '#2563EB',
-        success: '#10B981',
-        warning: '#F97316',
-        error: '#EF4444',
-        info: '#06B6D4',
+        primary: 'rgb(var(--color-primary))',
+        'primary-dark': 'rgb(var(--color-primary-dark))',
+        secondary: 'rgb(var(--color-secondary))',
+        success: 'rgb(var(--color-success))',
+        warning: 'rgb(var(--color-warning))',
+        error: 'rgb(var(--color-error))',
         
         // Pipeline stage colors (14 stages)
         'stage-sourced': '#9CA3AF',
@@ -30,22 +31,6 @@ module.exports = {
         'stage-negotiation': '#EF4444',
         'stage-rejected': '#64748B',
         'stage-archived': '#A1A1A1',
-      },
-      spacing: {
-        0: '0',
-        1: '0.5rem',
-        2: '1rem',
-        3: '1.5rem',
-        4: '2rem',
-        5: '2.5rem',
-        6: '3rem',
-        8: '4rem',
-        10: '5rem',
-        12: '6rem',
-        16: '8rem',
-        20: '10rem',
-        24: '12rem',
-        32: '16rem',
       },
       fontFamily: {
         sans: 'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',

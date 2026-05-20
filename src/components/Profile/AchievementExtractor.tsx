@@ -82,12 +82,12 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
       {/* Action Buttons */}
-      <div className="flex gap-2">
+      <div className="flex gap-4">
         <button
           onClick={() => setShowAddForm(!showAddForm)}
-          className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-medium transition-colors"
+          className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-medium transition-colors"
         >
           + Add Achievement
         </button>
@@ -95,7 +95,7 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
           <button
             onClick={handleExtract}
             disabled={isExtracting}
-            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 disabled:bg-gray-300 text-gray-900 rounded text-sm font-medium transition-colors"
+            className="px-8 py-4 bg-gray-200 hover:bg-gray-300 disabled:bg-gray-300 text-gray-900 rounded text-sm font-medium transition-colors"
           >
             {isExtracting ? '🔄 Extracting...' : '🤖 Extract from Resume'}
           </button>
@@ -104,7 +104,7 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
 
       {/* Add Form */}
       {showAddForm && (
-        <div className="p-4 border border-blue-300 bg-blue-50 rounded-lg space-y-3">
+        <div className="p-8 border border-blue-300 bg-blue-50 rounded-lg space-y-6">
           <h3 className="font-semibold text-gray-900">New Achievement</h3>
           
           <input
@@ -114,7 +114,7 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
             onChange={(e) =>
               setNewAchievement({ ...newAchievement, title: e.target.value })
             }
-            className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-6 py-4 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
           <textarea
@@ -124,7 +124,7 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
               setNewAchievement({ ...newAchievement, description: e.target.value })
             }
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-6 py-4 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
           <input
@@ -134,7 +134,7 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
             onChange={(e) =>
               setNewAchievement({ ...newAchievement, context: e.target.value })
             }
-            className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-6 py-4 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
           <input
@@ -144,14 +144,14 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
             onChange={(e) =>
               setNewAchievement({ ...newAchievement, impact: e.target.value })
             }
-            className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-6 py-4 border border-gray-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
           {/* Metrics */}
-          <div className="space-y-2">
+          <div className="space-y-4">
             <label className="block text-sm font-semibold text-gray-700">Metrics</label>
             {newAchievement.metrics.map((metric, idx) => (
-              <div key={idx} className="flex gap-2">
+              <div key={idx} className="flex gap-4">
                 <input
                   type="text"
                   placeholder="Metric name"
@@ -161,7 +161,7 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
                     updated[idx].metric = e.target.value;
                     setNewAchievement({ ...newAchievement, metrics: updated });
                   }}
-                  className="flex-1 px-3 py-2 border border-gray-300 rounded text-sm"
+                  className="flex-1 px-6 py-4 border border-gray-300 rounded text-sm"
                 />
                 <input
                   type="text"
@@ -172,7 +172,7 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
                     updated[idx].value = e.target.value;
                     setNewAchievement({ ...newAchievement, metrics: updated });
                   }}
-                  className="w-24 px-3 py-2 border border-gray-300 rounded text-sm"
+                  className="w-48 px-6 py-4 border border-gray-300 rounded text-sm"
                 />
                 <input
                   type="text"
@@ -183,7 +183,7 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
                     updated[idx].unit = e.target.value;
                     setNewAchievement({ ...newAchievement, metrics: updated });
                   }}
-                  className="w-20 px-3 py-2 border border-gray-300 rounded text-sm"
+                  className="w-40 px-6 py-4 border border-gray-300 rounded text-sm"
                 />
                 <button
                   onClick={() => handleRemoveMetric(idx)}
@@ -202,16 +202,16 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
           </div>
 
           {/* Form Actions */}
-          <div className="flex gap-2 justify-end">
+          <div className="flex gap-4 justify-end">
             <button
               onClick={() => setShowAddForm(false)}
-              className="px-3 py-2 text-sm text-gray-700 hover:text-gray-900 font-medium"
+              className="px-6 py-4 text-sm text-gray-700 hover:text-gray-900 font-medium"
             >
               Cancel
             </button>
             <button
               onClick={handleSaveAchievement}
-              className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-medium"
+              className="px-8 py-4 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm font-medium"
             >
               Save Achievement
             </button>
@@ -220,22 +220,22 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
       )}
 
       {/* Achievements List */}
-      <div className="space-y-3">
+      <div className="space-y-6">
         {achievements.length > 0 ? (
           achievements.map((achievement) => (
             <div
               key={achievement.id}
-              className="p-4 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors space-y-2"
+              className="p-8 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors space-y-4"
             >
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <h4 className="font-semibold text-gray-900">{achievement.title}</h4>
-                  <p className="text-sm text-gray-700 mt-1">{achievement.description}</p>
+                  <p className="text-sm text-gray-700 mt-2">{achievement.description}</p>
                 </div>
               </div>
 
               {/* Context and Impact */}
-              <div className="grid grid-cols-2 gap-2 text-xs">
+              <div className="grid grid-cols-2 gap-4 text-xs">
                 {achievement.context && (
                   <div>
                     <span className="font-semibold text-gray-600">Context:</span>
@@ -253,12 +253,12 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
               {/* Metrics */}
               {achievement.metrics && achievement.metrics.length > 0 && (
                 <div>
-                  <p className="text-xs font-semibold text-gray-600 mb-1">Metrics:</p>
-                  <div className="flex flex-wrap gap-2">
+                  <p className="text-xs font-semibold text-gray-600 mb-2">Metrics:</p>
+                  <div className="flex flex-wrap gap-4">
                     {achievement.metrics.map((metric, idx) => (
                       <span
                         key={idx}
-                        className="px-2 py-1 bg-green-50 text-green-700 rounded text-xs font-medium"
+                        className="px-4 py-2 bg-green-50 text-green-700 rounded text-xs font-medium"
                       >
                         {metric.metric}: {metric.value} {metric.unit}
                       </span>
@@ -270,12 +270,12 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
               {/* Relevant Skills */}
               {achievement.relevantSkills && achievement.relevantSkills.length > 0 && (
                 <div>
-                  <p className="text-xs font-semibold text-gray-600 mb-1">Skills:</p>
-                  <div className="flex flex-wrap gap-1">
+                  <p className="text-xs font-semibold text-gray-600 mb-2">Skills:</p>
+                  <div className="flex flex-wrap gap-2">
                     {achievement.relevantSkills.map((skill) => (
                       <span
                         key={skill}
-                        className="px-2 py-0.5 bg-blue-50 text-blue-700 rounded text-xs"
+                        className="px-4 py-0.5 bg-blue-50 text-blue-700 rounded text-xs"
                       >
                         {skill}
                       </span>
@@ -285,7 +285,7 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
               )}
 
               {/* Actions */}
-              <div className="flex gap-2 justify-end pt-2">
+              <div className="flex gap-4 justify-end pt-4">
                 <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
                   Edit
                 </button>
@@ -301,7 +301,7 @@ export const AchievementExtractor: React.FC<AchievementExtractorProps> = ({
             </div>
           ))
         ) : (
-          <div className="p-8 text-center border border-dashed border-gray-300 rounded-lg">
+          <div className="p-16 text-center border border-dashed border-gray-300 rounded-lg">
             <p className="text-gray-500">No achievements yet. Add one or extract from your resume.</p>
           </div>
         )}

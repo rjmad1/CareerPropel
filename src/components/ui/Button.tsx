@@ -28,9 +28,9 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     }
 
     const sizeStyles = {
-      sm: 'h-8 px-3 text-sm gap-2',
-      md: 'h-10 px-4 text-base gap-2',
-      lg: 'h-12 px-6 text-base gap-3',
+      sm: 'h-16 px-6 text-sm gap-4',
+      md: 'h-20 px-8 text-base gap-4',
+      lg: 'h-24 px-12 text-base gap-6',
     }
 
     return (
@@ -58,9 +58,9 @@ interface SpinnerProps {
 
 const Spinner: React.FC<SpinnerProps> = ({ size }) => {
   const sizeClasses = {
-    sm: 'w-3 h-3',
-    md: 'w-4 h-4',
-    lg: 'w-5 h-5',
+    sm: 'w-6 h-6',
+    md: 'w-8 h-8',
+    lg: 'w-10 h-10',
   }
 
   return (

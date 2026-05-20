@@ -112,14 +112,14 @@ export const AgentRail: React.FC = () => {
       {/* Left Panel: Agent List (w-64) */}
       <div className="w-64 border-r border-gray-200 flex flex-col">
         {/* Header */}
-        <div className="px-4 py-3 border-b border-gray-200">
-          <div className="flex items-center gap-2 mb-2">
+        <div className="px-8 py-6 border-b border-gray-200">
+          <div className="flex items-center gap-4 mb-4">
             <span className="text-lg">🤖</span>
             <h2 className="font-semibold text-gray-900">Agents</h2>
           </div>
-          <div className="flex items-center gap-2 text-xs">
+          <div className="flex items-center gap-4 text-xs">
             <div
-              className={`w-2 h-2 rounded-full ${
+              className={`w-4 h-4 rounded-full ${
                 connected ? 'bg-green-500' : 'bg-red-500'
               }`}
             />
@@ -145,7 +145,7 @@ export const AgentRail: React.FC = () => {
         </div>
 
         {/* Footer: Summary */}
-        <div className="px-4 py-3 border-t border-gray-200 text-xs text-gray-600">
+        <div className="px-8 py-6 border-t border-gray-200 text-xs text-gray-600">
           <div>{Object.keys(agents).length} agents active</div>
           <div>
             {Object.values(agents).filter((a) => a.status === 'running').length}{' '}
@@ -168,7 +168,7 @@ export const AgentRail: React.FC = () => {
               {/* Logs Header */}
               <div
                 onClick={() => setExpandedLogs(!expandedLogs)}
-                className="px-4 py-3 bg-gray-50 cursor-pointer hover:bg-gray-100 flex items-center justify-between"
+                className="px-8 py-6 bg-gray-50 cursor-pointer hover:bg-gray-100 flex items-center justify-between"
               >
                 <h3 className="font-semibold text-sm text-gray-900">
                   Activity Log ({selectedAgentLogs.length})
@@ -182,7 +182,7 @@ export const AgentRail: React.FC = () => {
               {expandedLogs && (
                 <div className="max-h-64 overflow-y-auto border-t border-gray-200">
                   {selectedAgentLogs.length > 0 ? (
-                    <div className="space-y-1 p-3">
+                    <div className="space-y-2 p-6">
                       {selectedAgentLogs.map((log, idx) => (
                         <AgentLog
                           key={`${log.timestamp}-${idx}`}
@@ -191,7 +191,7 @@ export const AgentRail: React.FC = () => {
                       ))}
                     </div>
                   ) : (
-                    <div className="p-4 text-center text-sm text-gray-500">
+                    <div className="p-8 text-center text-sm text-gray-500">
                       No logs yet
                     </div>
                   )}
@@ -203,7 +203,7 @@ export const AgentRail: React.FC = () => {
           // No agent selected
           <div className="flex items-center justify-center h-full">
             <div className="text-center">
-              <div className="text-4xl mb-2">🤖</div>
+              <div className="text-4xl mb-4">🤖</div>
               <p className="text-gray-500 text-sm">
                 Select an agent to view details
               </p>

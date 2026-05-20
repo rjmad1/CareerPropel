@@ -51,7 +51,7 @@ export interface SidebarProps {
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ children }) => (
-  <nav className="flex flex-col gap-1 p-4">{children}</nav>
+  <nav className="flex flex-col gap-2 p-8">{children}</nav>
 )
 
 Sidebar.displayName = 'Sidebar'
@@ -68,7 +68,7 @@ export const SidebarItem = React.forwardRef<HTMLButtonElement, SidebarItemProps>
     <button
       ref={ref}
       className={cn(
-        'w-full flex items-center gap-3 px-4 py-2 text-sm rounded-lg transition-colors duration-200',
+        'w-full flex items-center gap-6 px-8 py-4 text-sm rounded-lg transition-colors duration-200',
         active
           ? 'bg-blue-50 text-blue-700 font-medium'
           : 'text-gray-700 hover:bg-gray-100',
@@ -92,12 +92,12 @@ export interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ title, subtitle, actions }) => (
-  <div className="px-6 py-4 flex items-center justify-between">
+  <div className="px-12 py-8 flex items-center justify-between">
     <div>
       {title && <h1 className="text-2xl font-bold text-gray-900">{title}</h1>}
-      {subtitle && <p className="text-sm text-gray-600 mt-1">{subtitle}</p>}
+      {subtitle && <p className="text-sm text-gray-600 mt-2">{subtitle}</p>}
     </div>
-    {actions && <div className="flex items-center gap-4">{actions}</div>}
+    {actions && <div className="flex items-center gap-8">{actions}</div>}
   </div>
 )
 
@@ -113,7 +113,7 @@ export const SidePanel = React.forwardRef<HTMLDivElement, SidePanelProps>(
   ({ children, title, onClose }, ref) => (
     <div ref={ref} className="flex flex-col h-full">
       {title && (
-        <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+        <div className="px-12 py-8 border-b border-gray-200 flex items-center justify-between">
           <h2 className="text-lg font-bold text-gray-900">{title}</h2>
           {onClose && (
             <button
@@ -121,14 +121,14 @@ export const SidePanel = React.forwardRef<HTMLDivElement, SidePanelProps>(
               className="text-gray-400 hover:text-gray-600 transition-colors"
               aria-label="Close panel"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           )}
         </div>
       )}
-      <div className="flex-1 overflow-y-auto px-6 py-4">{children}</div>
+      <div className="flex-1 overflow-y-auto px-12 py-8">{children}</div>
     </div>
   )
 )

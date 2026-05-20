@@ -11,7 +11,7 @@ export interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
  */
 export const Form = React.forwardRef<HTMLFormElement, FormProps>(
   ({ className, children, ...props }, ref) => (
-    <form ref={ref} className={cn('flex flex-col gap-4', className)} {...props}>
+    <form ref={ref} className={cn('flex flex-col gap-8', className)} {...props}>
       {children}
     </form>
   )
@@ -28,7 +28,7 @@ export interface FormFieldProps extends React.HTMLAttributes<HTMLDivElement> {
  */
 export const FormField = React.forwardRef<HTMLDivElement, FormFieldProps>(
   ({ className, children, ...props }, ref) => (
-    <div ref={ref} className={cn('flex flex-col gap-1', className)} {...props}>
+    <div ref={ref} className={cn('flex flex-col gap-2', className)} {...props}>
       {children}
     </div>
   )
@@ -48,7 +48,7 @@ export const FormLabel = React.forwardRef<HTMLLabelElement, FormLabelProps>(
   ({ className, children, required, ...props }, ref) => (
     <label ref={ref} className={cn('text-sm font-medium text-gray-900', className)} {...props}>
       {children}
-      {required && <span className="text-red-600 ml-1">*</span>}
+      {required && <span className="text-red-600 ml-2">*</span>}
     </label>
   )
 )

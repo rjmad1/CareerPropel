@@ -238,10 +238,10 @@ export const AdvancedJobFilterForm: React.FC<
   }, [persistFilters]);
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-8">
       {/* Filter Presets */}
-      <Card className="p-4">
-        <div className="space-y-3">
+      <Card className="p-8">
+        <div className="space-y-6">
           <div className="flex items-center justify-between">
             <h3 className="font-semibold text-sm">Saved Presets</h3>
             <Button
@@ -254,11 +254,11 @@ export const AdvancedJobFilterForm: React.FC<
           </div>
 
           {presets.length > 0 ? (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-4">
               {presets.map((preset) => (
                 <div
                   key={preset.id}
-                  className="flex items-center gap-2 bg-gray-100 rounded-full px-3 py-1"
+                  className="flex items-center gap-4 bg-gray-100 rounded-full px-6 py-2"
                 >
                   <button
                     onClick={() => loadPreset(preset)}
@@ -280,7 +280,7 @@ export const AdvancedJobFilterForm: React.FC<
           )}
 
           {showPresetModal && (
-            <div className="bg-blue-50 border border-blue-200 rounded-md p-3 flex gap-2">
+            <div className="bg-blue-50 border border-blue-200 rounded-md p-6 flex gap-4">
               <Input
                 placeholder="Preset name..."
                 value={presetName}
@@ -324,8 +324,8 @@ export const AdvancedJobFilterForm: React.FC<
         isExpanded={expandedSections.matchScore}
         onToggle={() => toggleSection('matchScore')}
       >
-        <div className="space-y-3">
-          <div className="flex items-center gap-4">
+        <div className="space-y-6">
+          <div className="flex items-center gap-8">
             <div className="flex-1">
               <label className="text-sm text-gray-600">Min</label>
               <Input
@@ -363,8 +363,8 @@ export const AdvancedJobFilterForm: React.FC<
         isExpanded={expandedSections.salary}
         onToggle={() => toggleSection('salary')}
       >
-        <div className="space-y-3">
-          <div className="flex items-center gap-4">
+        <div className="space-y-6">
+          <div className="flex items-center gap-8">
             <div className="flex-1">
               <label className="text-sm text-gray-600">Min ($)</label>
               <Input
@@ -399,8 +399,8 @@ export const AdvancedJobFilterForm: React.FC<
         isExpanded={expandedSections.dateRange}
         onToggle={() => toggleSection('dateRange')}
       >
-        <div className="space-y-3">
-          <div className="flex items-center gap-4">
+        <div className="space-y-6">
+          <div className="flex items-center gap-8">
             <div className="flex-1">
               <label className="text-sm text-gray-600">From</label>
               <Input
@@ -431,14 +431,14 @@ export const AdvancedJobFilterForm: React.FC<
         isExpanded={expandedSections.stages}
         onToggle={() => toggleSection('stages')}
       >
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-4">
           {PIPELINE_STAGES.map((stage) => (
-            <label key={stage} className="flex items-center gap-2 cursor-pointer">
+            <label key={stage} className="flex items-center gap-4 cursor-pointer">
               <input
                 type="checkbox"
                 checked={filters.stages.includes(stage)}
                 onChange={() => handleStageToggle(stage)}
-                className="w-4 h-4"
+                className="w-8 h-8"
               />
               <span className="text-sm">{stage.replace(/_/g, ' ')}</span>
             </label>
@@ -452,7 +452,7 @@ export const AdvancedJobFilterForm: React.FC<
         isExpanded={expandedSections.priority}
         onToggle={() => toggleSection('priority')}
       >
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-4">
           {PRIORITY_OPTIONS.map((priority) => (
             <Badge
               key={priority}
@@ -474,7 +474,7 @@ export const AdvancedJobFilterForm: React.FC<
         isExpanded={expandedSections.status}
         onToggle={() => toggleSection('status')}
       >
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-4">
           {STATUS_OPTIONS.map((status) => (
             <Badge
               key={status}
@@ -496,7 +496,7 @@ export const AdvancedJobFilterForm: React.FC<
         isExpanded={expandedSections.sorting}
         onToggle={() => toggleSection('sorting')}
       >
-        <div className="space-y-3">
+        <div className="space-y-6">
           <div>
             <label className="text-sm text-gray-600">Sort By</label>
             <select
@@ -504,7 +504,7 @@ export const AdvancedJobFilterForm: React.FC<
               onChange={(e) =>
                 handleFilterChange('sortBy', e.target.value)
               }
-              className="w-full mt-1 px-3 py-2 border rounded-md text-sm"
+              className="w-full mt-2 px-6 py-4 border rounded-md text-sm"
             >
               {SORT_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -515,7 +515,7 @@ export const AdvancedJobFilterForm: React.FC<
           </div>
           <div>
             <label className="text-sm text-gray-600">Order</label>
-            <div className="flex gap-2 mt-1">
+            <div className="flex gap-4 mt-2">
               {(['asc', 'desc'] as const).map((order) => (
                 <Button
                   key={order}
@@ -536,7 +536,7 @@ export const AdvancedJobFilterForm: React.FC<
       </ExpandableSection>
 
       {/* Action Buttons */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-4">
         <Button
           size="sm"
           variant="secondary"
@@ -580,14 +580,14 @@ const ExpandableSection: React.FC<ExpandableSectionProps> = ({
   <Card className="p-0 overflow-hidden">
     <button
       onClick={onToggle}
-      className="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-50 transition-colors"
+      className="w-full px-8 py-6 flex items-center justify-between hover:bg-gray-50 transition-colors"
     >
       <h3 className="font-semibold text-sm">{title}</h3>
       <span className={`transform transition-transform ${isExpanded ? 'rotate-180' : ''}`}>
         ▼
       </span>
     </button>
-    {isExpanded && <div className="px-4 py-3 border-t bg-gray-50">{children}</div>}
+    {isExpanded && <div className="px-8 py-6 border-t bg-gray-50">{children}</div>}
   </Card>
 );
 

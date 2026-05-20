@@ -22,14 +22,14 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
     }
 
     const sizeStyles = {
-      sm: 'px-2 py-1 text-xs font-medium rounded',
-      md: 'px-3 py-1 text-sm font-medium rounded-md',
+      sm: 'px-4 py-2 text-xs font-medium rounded',
+      md: 'px-6 py-2 text-sm font-medium rounded-md',
     }
 
     return (
       <span
         ref={ref}
-        className={cn('inline-flex items-center gap-1 font-sans', variantStyles[variant], sizeStyles[size], className)}
+        className={cn('inline-flex items-center gap-2 font-sans', variantStyles[variant], sizeStyles[size], className)}
         {...props}
       >
         {children}

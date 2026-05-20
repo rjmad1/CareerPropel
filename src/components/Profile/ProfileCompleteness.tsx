@@ -49,23 +49,23 @@ export const ProfileCompleteness: React.FC<ProfileCompletenessProps> = ({
   const completenessPercent = Math.round((score.completeness || 0) * 100);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-12">
       {/* Overall Score Card */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
-        <div className="flex items-center justify-between mb-6">
+      <div className="bg-white border border-gray-200 rounded-lg p-12">
+        <div className="flex items-center justify-between mb-12">
           <h2 className="text-lg font-semibold text-gray-900">Profile Completeness</h2>
           {onRefresh && (
             <button
               onClick={onRefresh}
               disabled={loading}
-              className="text-sm px-3 py-1.5 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white rounded transition-colors"
+              className="text-sm px-6 py-3 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 text-white rounded transition-colors"
             >
               {loading ? 'Refreshing...' : 'Refresh'}
             </button>
           )}
         </div>
 
-        <div className="flex items-center justify-between gap-8">
+        <div className="flex items-center justify-between gap-16">
           {/* Radial Progress */}
           <div className="flex-shrink-0">
             <svg width="140" height="140" className="transform -rotate-90">
@@ -92,28 +92,28 @@ export const ProfileCompleteness: React.FC<ProfileCompletenessProps> = ({
                 className="transition-all duration-500"
               />
             </svg>
-            <div className="absolute inset-0 flex items-center justify-center mt-2">
+            <div className="absolute inset-0 flex items-center justify-center mt-4">
               <div className="text-center">
                 <p className={cn('text-3xl font-bold', getScoreColor(completenessPercent))}>
                   {completenessPercent}%
                 </p>
-                <p className="text-sm text-gray-600 mt-1">Complete</p>
+                <p className="text-sm text-gray-600 mt-2">Complete</p>
               </div>
             </div>
           </div>
 
           {/* Overall Score */}
           <div className="flex-1">
-            <div className="mb-6">
-              <div className="flex items-baseline justify-between mb-2">
+            <div className="mb-12">
+              <div className="flex items-baseline justify-between mb-4">
                 <span className="text-sm font-semibold text-gray-700">Overall Score</span>
                 <span className={cn('text-2xl font-bold', getScoreColor(score.totalScore))}>
                   {score.totalScore}/100
                 </span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-3">
+              <div className="w-full bg-gray-200 rounded-full h-6">
                 <div
-                  className={cn('h-3 rounded-full transition-all', getScoreBgColor(score.totalScore))}
+                  className={cn('h-6 rounded-full transition-all', getScoreBgColor(score.totalScore))}
                   style={{
                     width: `${Math.min(score.totalScore, 100)}%`,
                     backgroundColor: getRadialColor(score.totalScore),
@@ -124,14 +124,14 @@ export const ProfileCompleteness: React.FC<ProfileCompletenessProps> = ({
 
             {/* Next Steps */}
             {recommendations.length > 0 && (
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
-                <p className="text-sm font-semibold text-amber-900 mb-2">
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
+                <p className="text-sm font-semibold text-amber-900 mb-4">
                   💡 Quick Win
                 </p>
                 <p className="text-sm text-amber-800">
                   {recommendations[0].suggestion}
                 </p>
-                <p className="text-xs text-amber-700 mt-2">
+                <p className="text-xs text-amber-700 mt-4">
                   ⏱️ ~{recommendations[0].estimatedTime} min to complete
                 </p>
               </div>
@@ -141,7 +141,7 @@ export const ProfileCompleteness: React.FC<ProfileCompletenessProps> = ({
       </div>
 
       {/* Category Breakdown */}
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
+      <div className="bg-white border border-gray-200 rounded-lg p-12">
         <button
           onClick={() => setExpandedDetails(!expandedDetails)}
           className="w-full flex items-center justify-between p-0 hover:text-blue-600"
@@ -151,12 +151,12 @@ export const ProfileCompleteness: React.FC<ProfileCompletenessProps> = ({
         </button>
 
         {expandedDetails && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
             {scoreCategories.map((category) => {
               const categoryScore = (score[category.key as keyof ProfileScore] as number) || 0;
               return (
-                <div key={category.key} className="p-3 bg-gray-50 rounded-lg">
-                  <div className="flex items-center justify-between mb-2">
+                <div key={category.key} className="p-6 bg-gray-50 rounded-lg">
+                  <div className="flex items-center justify-between mb-4">
                     <span className="text-sm font-semibold text-gray-900">
                       {category.emoji} {category.label}
                     </span>
@@ -164,9 +164,9 @@ export const ProfileCompleteness: React.FC<ProfileCompletenessProps> = ({
                       {categoryScore}%
                     </span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="w-full bg-gray-200 rounded-full h-4">
                     <div
-                      className="h-2 rounded-full bg-blue-500 transition-all"
+                      className="h-4 rounded-full bg-blue-500 transition-all"
                       style={{ width: `${Math.min(categoryScore, 100)}%` }}
                     />
                   </div>
@@ -179,18 +179,18 @@ export const ProfileCompleteness: React.FC<ProfileCompletenessProps> = ({
 
       {/* Recommendations List */}
       {recommendations.length > 0 && (
-        <div className="bg-white border border-gray-200 rounded-lg p-6">
-          <h3 className="font-semibold text-gray-900 mb-4">
+        <div className="bg-white border border-gray-200 rounded-lg p-12">
+          <h3 className="font-semibold text-gray-900 mb-8">
             Recommendations ({recommendations.length})
           </h3>
-          <div className="space-y-3">
+          <div className="space-y-6">
             {recommendations.slice(0, 5).map((rec) => (
-              <div key={rec.id} className="p-3 border border-gray-200 rounded-lg">
+              <div key={rec.id} className="p-6 border border-gray-200 rounded-lg">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="flex items-center gap-4 mb-2">
                       <span className={cn(
-                        'text-xs font-semibold px-2 py-0.5 rounded-full',
+                        'text-xs font-semibold px-4 py-0.5 rounded-full',
                         rec.priority === 'high' ? 'bg-red-100 text-red-700' :
                           rec.priority === 'medium' ? 'bg-yellow-100 text-yellow-700' :
                             'bg-green-100 text-green-700'
@@ -200,14 +200,14 @@ export const ProfileCompleteness: React.FC<ProfileCompletenessProps> = ({
                       <span className="text-xs text-gray-600">{rec.category}</span>
                     </div>
                     <p className="text-sm text-gray-900 font-medium">{rec.suggestion}</p>
-                    <p className="text-xs text-gray-600 mt-1">{rec.impact}</p>
+                    <p className="text-xs text-gray-600 mt-2">{rec.impact}</p>
                   </div>
-                  <span className="text-xs text-gray-500 flex-shrink-0 ml-2">
+                  <span className="text-xs text-gray-500 flex-shrink-0 ml-4">
                     {rec.estimatedTime}m
                   </span>
                 </div>
                 {rec.action && (
-                  <button className="mt-2 text-xs text-blue-600 hover:text-blue-700 font-medium">
+                  <button className="mt-4 text-xs text-blue-600 hover:text-blue-700 font-medium">
                     {rec.action} →
                   </button>
                 )}

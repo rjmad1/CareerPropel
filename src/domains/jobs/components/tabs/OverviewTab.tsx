@@ -41,37 +41,37 @@ export default function OverviewTab({ job }: OverviewTabProps) {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-12 space-y-12">
       {/* Key Details */}
       <div>
-        <h3 className="text-sm font-semibold text-gray-900 mb-3">Position Details</h3>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-gray-50 rounded-lg p-3">
-            <div className="flex items-center gap-2 mb-1">
+        <h3 className="text-sm font-semibold text-gray-900 mb-6">Position Details</h3>
+        <div className="grid grid-cols-2 gap-8">
+          <div className="bg-gray-50 rounded-lg p-6">
+            <div className="flex items-center gap-4 mb-2">
               <Briefcase size={16} className="text-gray-500" />
               <p className="text-xs text-gray-600">Role</p>
             </div>
             <p className="text-sm font-medium text-gray-900">{job.title}</p>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-3">
-            <div className="flex items-center gap-2 mb-1">
+          <div className="bg-gray-50 rounded-lg p-6">
+            <div className="flex items-center gap-4 mb-2">
               <Briefcase size={16} className="text-gray-500" />
               <p className="text-xs text-gray-600">Company</p>
             </div>
             <p className="text-sm font-medium text-gray-900">{job.company}</p>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-3">
-            <div className="flex items-center gap-2 mb-1">
+          <div className="bg-gray-50 rounded-lg p-6">
+            <div className="flex items-center gap-4 mb-2">
               <Calendar size={16} className="text-gray-500" />
               <p className="text-xs text-gray-600">Applied</p>
             </div>
             <p className="text-sm font-medium text-gray-900">{formattedDate}</p>
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-3">
-            <p className="text-xs text-gray-600 mb-1">Stage</p>
+          <div className="bg-gray-50 rounded-lg p-6">
+            <p className="text-xs text-gray-600 mb-2">Stage</p>
             <p className="text-sm font-medium text-gray-900 capitalize">{job.stage.replace(/_/g, ' ')}</p>
           </div>
         </div>
@@ -79,7 +79,7 @@ export default function OverviewTab({ job }: OverviewTabProps) {
 
       {/* Notes Section */}
       <div>
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-6">
           <h3 className="text-sm font-semibold text-gray-900">Notes</h3>
           {!isEditingNotes && (
             <button
@@ -93,21 +93,21 @@ export default function OverviewTab({ job }: OverviewTabProps) {
           )}
         </div>
         {isEditingNotes ? (
-          <div className="space-y-2">
+          <div className="space-y-4">
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               data-testid="notes-textarea"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-6 py-4 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               rows={4}
               placeholder="Add notes about this opportunity..."
             />
-            <div className="flex gap-2">
+            <div className="flex gap-4">
               <button
                 onClick={handleSaveNotes}
                 disabled={isSaving}
                 data-testid="notes-save-btn"
-                className="px-3 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:bg-gray-400"
+                className="px-6 py-4 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 disabled:bg-gray-400"
               >
                 {isSaving ? 'Saving...' : 'Save'}
               </button>
@@ -117,7 +117,7 @@ export default function OverviewTab({ job }: OverviewTabProps) {
                   setNotes(job.notes || '');
                 }}
                 data-testid="notes-cancel-btn"
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm font-medium hover:bg-gray-50"
+                className="px-6 py-4 border border-gray-300 rounded-lg text-sm font-medium hover:bg-gray-50"
               >
                 Cancel
               </button>
@@ -126,7 +126,7 @@ export default function OverviewTab({ job }: OverviewTabProps) {
         ) : (
           <div
             data-testid="notes-content"
-            className="bg-gray-50 rounded-lg p-3 text-sm text-gray-700 whitespace-pre-wrap"
+            className="bg-gray-50 rounded-lg p-6 text-sm text-gray-700 whitespace-pre-wrap"
           >
             {notes || 'No notes yet'}
           </div>
@@ -136,10 +136,10 @@ export default function OverviewTab({ job }: OverviewTabProps) {
       {/* Job Description */}
       {job.description && (
         <div>
-          <h3 className="text-sm font-semibold text-gray-900 mb-2">Description</h3>
+          <h3 className="text-sm font-semibold text-gray-900 mb-4">Description</h3>
           <div
             data-testid="job-description"
-            className="bg-gray-50 rounded-lg p-3 text-sm text-gray-700 whitespace-pre-wrap max-h-48 overflow-y-auto"
+            className="bg-gray-50 rounded-lg p-6 text-sm text-gray-700 whitespace-pre-wrap max-h-48 overflow-y-auto"
           >
             {job.description}
           </div>
@@ -149,7 +149,7 @@ export default function OverviewTab({ job }: OverviewTabProps) {
       {/* Job URL if available */}
       {job.url && (
         <div>
-          <h3 className="text-sm font-semibold text-gray-900 mb-2">Job Listing</h3>
+          <h3 className="text-sm font-semibold text-gray-900 mb-4">Job Listing</h3>
           <a
             href={job.url}
             target="_blank"
