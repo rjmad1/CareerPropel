@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { Prisma } from '@prisma/client';
 import type { CreateJobInput, UpdateJobInput, ListJobsQuery } from '@/lib/validation/schemas';
 
 // Initialize Prisma
@@ -22,7 +23,7 @@ export async function getJobs(userId: string, query: ListJobsQuery) {
   } = query;
 
   // Build where clause
-  const where: any = {
+  const where: Record<string, unknown> = {
     candidateId: userId,
   };
 
@@ -35,15 +36,17 @@ export async function getJobs(userId: string, query: ListJobsQuery) {
   }
 
   if (minSalary || maxSalary) {
-    where.salary = {};
-    if (minSalary) where.salary.gte = minSalary;
-    if (maxSalary) where.salary.lte = maxSalary;
+    const salaryFilter: { gte?: number; lte?: number } = {};
+    if (minSalary) salaryFilter.gte = minSalary;
+    if (maxSalary) salaryFilter.lte = maxSalary;
+    where.salary = salaryFilter;
   }
 
   if (minMatchScore || maxMatchScore) {
-    where.matchScore = {};
-    if (minMatchScore) where.matchScore.gte = minMatchScore;
-    if (maxMatchScore) where.matchScore.lte = maxMatchScore;
+    const matchScoreFilter: { gte?: number; lte?: number } = {};
+    if (minMatchScore) matchScoreFilter.gte = minMatchScore;
+    if (maxMatchScore) matchScoreFilter.lte = maxMatchScore;
+    where.matchScore = matchScoreFilter;
   }
 
   if (priority) {
@@ -203,13 +206,13 @@ export async function deleteJob(userId: string, jobId: string) {
 export async function createActivity(
   jobId: string,
   action: string,
-  metadata: Record<string, any> = {}
+  metadata: Record<string, unknown> = {}
 ) {
   return prisma.jobActivity.create({
     data: {
       jobId,
       action,
-      metadata,
+      metadata: metadata as unknown as Prisma.InputJsonValue,
       createdAt: new Date(),
     },
   });
