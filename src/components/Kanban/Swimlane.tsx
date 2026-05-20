@@ -20,6 +20,7 @@ export interface SwimlaneProps {
   isLoading?: boolean;
   onJobDrop?: (jobId: string, targetStage: JobStage) => void;
   onJobClick?: (job: Job) => void;
+  onJobMoveStage?: (jobId: string, targetStage: JobStage) => void;
 }
 
 /**
@@ -47,6 +48,7 @@ export const Swimlane: React.FC<SwimlaneProps> = ({
   isLoading = false,
   onJobDrop,
   onJobClick,
+  onJobMoveStage,
 }) => {
   const [dragOverJob, setDragOverJob] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -131,6 +133,7 @@ export const Swimlane: React.FC<SwimlaneProps> = ({
                 e.dataTransfer.setData('jobId', job.id);
               }}
               isDraggedOver={dragOverJob === job.id}
+              onMoveStage={onJobMoveStage}
             />
           ))
         ) : (

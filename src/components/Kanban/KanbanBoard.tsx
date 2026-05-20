@@ -225,6 +225,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
                 setSelectedJobId(job.id);
                 onJobClick?.(job);
               }}
+              onJobMoveStage={handleJobDrop}
             />
           ))}
         </div>

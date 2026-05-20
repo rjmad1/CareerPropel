@@ -7,22 +7,17 @@ import { useRouter } from 'next/navigation';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { KanbanBoard } from '@/components/Kanban/KanbanBoard';
 import { Job } from '@/types/job';
-import {
-  Alert,
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-  ToggleButton,
-  ToggleButtonGroup,
-  Typography,
-  CircularProgress,
-  Checkbox,
-} from '@mui/material';
 import { Plus, Upload as LucideUpload } from 'lucide-react';
+import {
+  Button,
+  Input,
+  Modal,
+  ModalHeader,
+  ModalTitle,
+  ModalBody,
+  ModalFooter,
+  Checkbox,
+} from '@/components/ui';
 
 // ─── Data fetching ────────────────────────────────────────────────────────────
 
@@ -139,17 +134,18 @@ export default function JobsPage() {
         </div>
 
         {error && (
-          <Alert
-            severity="error"
-            action={
-              <Button size="small" onClick={() => queryClient.invalidateQueries({ queryKey: ['jobs'] })}>
-                Retry
-              </Button>
-            }
-            sx={{ flexShrink: 0, borderRadius: 0 }}
-          >
-            Failed to load jobs.
-          </Alert>
+          <div className="flex-shrink-0 bg-rose-50 border-b border-rose-100 px-6 py-3 flex items-center justify-between text-rose-800 text-xs font-semibold">
+            <div className="flex items-center gap-2">
+              <span>⚠️</span>
+              <span>Failed to load jobs.</span>
+            </div>
+            <button
+              onClick={() => queryClient.invalidateQueries({ queryKey: ['jobs'] })}
+              className="px-2.5 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 active:bg-rose-300 font-bold transition-all text-[10px] uppercase tracking-wider text-rose-700"
+            >
+              Retry
+            </button>
+          </div>
         )}
 
         {/* Board fills remaining height */}
@@ -258,148 +254,165 @@ function ImportJobsModal({ open, onClose, onImported }: { open: boolean; onClose
   }
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
-      <DialogTitle>
-        Import Jobs
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.25 }}>
-          Search job boards and add matching roles to your pipeline.
-        </Typography>
-      </DialogTitle>
+    <Modal isOpen={open} onClose={onClose} className="max-w-3xl w-11/12 overflow-hidden flex flex-col max-h-[85vh]">
+      <ModalHeader onClose={onClose}>
+        <div>
+          <ModalTitle>Import Jobs</ModalTitle>
+          <p className="text-xs text-slate-500 mt-1 font-medium">
+            Search job boards and add matching roles to your pipeline.
+          </p>
+        </div>
+      </ModalHeader>
 
-      <DialogContent dividers>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
+      <ModalBody className="flex-1 overflow-y-auto p-6 space-y-6">
+        <div className="flex flex-col gap-6">
           {/* Source Toggle */}
-          <ToggleButtonGroup
-            value={source}
-            exclusive
-            onChange={(_, v) => v && setSource(v)}
-            size="small"
-          >
+          <div className="flex rounded-lg border border-slate-200 p-0.5 bg-slate-50 self-start">
             {(['greenhouse', 'indeed', 'linkedin'] as ImportSource[]).map((s) => (
-              <ToggleButton key={s} value={s} sx={{ textTransform: 'capitalize' }}>{s}</ToggleButton>
+              <button
+                key={s}
+                type="button"
+                onClick={() => setSource(s)}
+                className={`px-3 py-1.5 rounded-md text-xs font-semibold capitalize transition-all ${
+                  source === s
+                    ? 'bg-white text-slate-900 shadow-xs border border-slate-200/50 font-bold'
+                    : 'text-slate-500 hover:text-slate-900'
+                }`}
+              >
+                {s}
+              </button>
             ))}
-          </ToggleButtonGroup>
+          </div>
 
           {/* Search Form */}
-          <Box component="form" onSubmit={handleSearch} sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+          <form onSubmit={handleSearch} className="space-y-4">
             {source === 'greenhouse' && (
-              <TextField
-                size="small"
-                fullWidth
+              <Input
                 placeholder="Company board token (e.g. stripe, airbnb)"
                 value={boardToken}
                 onChange={(e) => setBoardToken(e.target.value)}
+                label="Company Board Token"
+                required
               />
             )}
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              <TextField
-                size="small"
-                fullWidth
-                required
-                placeholder="Job title or keywords"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-              />
-              {source !== 'greenhouse' && (
-                <TextField
-                  size="small"
-                  placeholder="Location"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  sx={{ width: 150 }}
+            <div className="flex flex-col sm:flex-row gap-3 items-end">
+              <div className="flex-1 w-full">
+                <Input
+                  required
+                  placeholder="Job title or keywords"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  label="Keywords"
                 />
+              </div>
+              {source !== 'greenhouse' && (
+                <div className="w-full sm:w-48">
+                  <Input
+                    placeholder="Location"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    label="Location"
+                  />
+                </div>
               )}
               <Button
                 type="submit"
-                variant="contained"
                 disabled={searching}
-                startIcon={searching ? <CircularProgress size={14} color="inherit" /> : undefined}
-                sx={{ whiteSpace: 'nowrap' }}
+                loading={searching}
+                className="w-full sm:w-auto h-9 whitespace-nowrap"
               >
                 {searching ? 'Searching…' : 'Search'}
               </Button>
-            </Box>
+            </div>
             {(source === 'indeed' || source === 'linkedin') && (
-              <Alert severity="warning" sx={{ py: 0.5 }}>
-                {source === 'linkedin' ? 'LinkedIn' : 'Indeed'} search uses a headless browser and may take 20–40 seconds.
-              </Alert>
+              <div className="flex items-center gap-2 p-3 bg-amber-50 border border-amber-100 rounded-lg text-amber-800 text-xs font-medium">
+                <span>⚠️</span>
+                <span>{source === 'linkedin' ? 'LinkedIn' : 'Indeed'} search uses a headless browser and may take 20–40 seconds.</span>
+              </div>
             )}
-          </Box>
+          </form>
 
-          {error && <Alert severity="error">{error}</Alert>}
+          {error && (
+            <div className="flex items-center gap-2 p-3 bg-rose-50 border border-rose-100 rounded-lg text-rose-800 text-xs font-semibold">
+              <span>⚠️</span>
+              <span>{error}</span>
+            </div>
+          )}
 
           {/* Results */}
           {results.length > 0 && (
-            <Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
-                <Typography variant="body2" color="text.secondary">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-bold text-slate-500">
                   {results.length} result{results.length !== 1 ? 's' : ''}
-                </Typography>
-                <Button size="small" onClick={toggleAll}>
+                </p>
+                <button
+                  type="button"
+                  onClick={toggleAll}
+                  className="text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors"
+                >
                   {selected.size === results.length ? 'Deselect all' : 'Select all'}
-                </Button>
-              </Box>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, maxHeight: 300, overflowY: 'auto' }}>
+                </button>
+              </div>
+              <div className="space-y-2.5 max-h-[250px] overflow-y-auto pr-1">
                 {results.map((job, i) => (
-                  <Box
+                  <div
                     key={i}
                     onClick={() => setSelected((s) => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n; })}
-                    sx={{
-                      display: 'flex', gap: 1.5, p: 1.5, borderRadius: 2, border: '1px solid',
-                      borderColor: selected.has(i) ? 'primary.light' : 'divider',
-                      bgcolor: selected.has(i) ? 'primary.50' : 'background.paper',
-                      cursor: 'pointer', alignItems: 'flex-start',
-                      '&:hover': { borderColor: 'primary.light' },
-                    }}
+                    className={`flex gap-3 p-4 rounded-xl border transition-all cursor-pointer items-start hover:border-blue-300 ${
+                      selected.has(i)
+                        ? 'border-blue-500 bg-blue-50/40 shadow-xs'
+                        : 'border-slate-200 bg-white'
+                    }`}
                   >
                     <Checkbox
                       checked={selected.has(i)}
-                      size="small"
-                      sx={{ p: 0, mt: 0.25 }}
                       onClick={(e) => e.stopPropagation()}
                       onChange={() => setSelected((s) => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n; })}
+                      className="mt-0.5"
                     />
-                    <Box sx={{ flex: 1, minWidth: 0 }}>
-                      <Typography variant="body2" noWrap sx={{ fontWeight: 500 }}>{job.title}</Typography>
-                      <Typography variant="caption" color="text.secondary">{job.company} · {job.location}</Typography>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-slate-900 truncate">{job.title}</p>
+                      <p className="text-xs font-medium text-slate-500 mt-0.5">{job.company} · {job.location}</p>
                       {job.description && (
-                        <Typography variant="caption" color="text.disabled" sx={{ display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        <p className="text-xs text-slate-400 truncate mt-1">
                           {job.description}
-                        </Typography>
+                        </p>
                       )}
-                    </Box>
+                    </div>
                     {job.url && (
-                      <Button
-                        size="small"
+                      <a
                         href={job.url}
                         target="_blank"
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        sx={{ flexShrink: 0, fontSize: '0.75rem' }}
+                        className="flex-shrink-0 text-xs font-semibold text-blue-600 hover:text-blue-700 border border-blue-200 hover:border-blue-300 bg-blue-50/50 hover:bg-blue-50 px-2.5 py-1 rounded-md transition-colors"
                       >
                         View
-                      </Button>
+                      </a>
                     )}
-                  </Box>
+                  </div>
                 ))}
-              </Box>
-            </Box>
+              </div>
+            </div>
           )}
-        </Box>
-      </DialogContent>
+        </div>
+      </ModalBody>
 
-      <DialogActions sx={{ px: 3, py: 2 }}>
-        <Button onClick={onClose} disabled={importing}>Cancel</Button>
+      <ModalFooter>
+        <Button variant="outline" onClick={onClose} disabled={importing} size="sm">
+          Cancel
+        </Button>
         <Button
-          variant="contained"
           onClick={handleImport}
           disabled={importing || selected.size === 0}
-          startIcon={importing ? <CircularProgress size={14} color="inherit" /> : undefined}
+          loading={importing}
+          size="sm"
         >
           {importing ? 'Importing…' : `Import ${selected.size > 0 ? selected.size : ''} Job${selected.size !== 1 ? 's' : ''}`}
         </Button>
-      </DialogActions>
-    </Dialog>
+      </ModalFooter>
+    </Modal>
   );
 }
 
@@ -420,6 +433,10 @@ function AddJobModal({ open, onClose, onCreated }: { open: boolean; onClose: () 
     try {
       await createJob({ title: title.trim(), company: company.trim(), url: url.trim() || undefined });
       onCreated();
+      // Reset form
+      setTitle('');
+      setCompany('');
+      setUrl('');
     } catch (err: any) {
       setError(err.message || 'Failed to add job');
     } finally {
@@ -428,51 +445,55 @@ function AddJobModal({ open, onClose, onCreated }: { open: boolean; onClose: () 
   }
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>Track a New Job</DialogTitle>
+    <Modal isOpen={open} onClose={onClose} className="max-w-lg w-11/12">
+      <ModalHeader onClose={onClose}>
+        <ModalTitle>Track a New Job</ModalTitle>
+      </ModalHeader>
       <form onSubmit={handleSubmit}>
-        <DialogContent sx={{ pt: 1 }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <TextField
-              label="Job Title"
-              required
-              fullWidth
-              placeholder="e.g. Senior Software Engineer"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              autoFocus
-            />
-            <TextField
-              label="Company"
-              required
-              fullWidth
-              placeholder="e.g. Acme Corp"
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-            />
-            <TextField
-              label="Job Posting URL"
-              fullWidth
-              type="url"
-              placeholder="https://…"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-            />
-            {error && <Alert severity="error">{error}</Alert>}
-          </Box>
-        </DialogContent>
-        <DialogActions sx={{ px: 3, pb: 2 }}>
-          <Button onClick={onClose} disabled={saving}>Cancel</Button>
+        <ModalBody className="space-y-5 p-6">
+          <Input
+            label="Job Title"
+            required
+            placeholder="e.g. Senior Software Engineer"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            autoFocus
+          />
+          <Input
+            label="Company"
+            required
+            placeholder="e.g. Acme Corp"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+          />
+          <Input
+            label="Job Posting URL"
+            type="url"
+            placeholder="https://…"
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+          />
+          {error && (
+            <div className="flex items-center gap-2 p-3 bg-rose-50 border border-rose-100 rounded-lg text-rose-800 text-xs font-semibold">
+              <span>⚠️</span>
+              <span>{error}</span>
+            </div>
+          )}
+        </ModalBody>
+        <ModalFooter>
+          <Button variant="outline" onClick={onClose} disabled={saving} size="sm">
+            Cancel
+          </Button>
           <Button
             type="submit"
-            variant="contained"
             disabled={saving || !title.trim() || !company.trim()}
-            startIcon={saving ? <CircularProgress size={14} color="inherit" /> : undefined}
+            loading={saving}
+            size="sm"
           >
             {saving ? 'Adding…' : 'Add Job'}
           </Button>
-        </DialogActions>
+        </ModalFooter>
       </form>
-    </Dialog>
+    </Modal>
   );
 }
