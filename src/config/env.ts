@@ -20,11 +20,9 @@ export const envSchema = z.object({
 }).superRefine((env, ctx) => {
   if (env.NODE_ENV === 'production') {
     if (!env.REDIS_URL) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ['REDIS_URL'],
-        message: 'REDIS_URL is required in production',
-      });
+      // REDIS_URL is strongly recommended in production for rate limiting and queues,
+      // but the app degrades gracefully (fail-open rate limiting, no background jobs).
+      console.warn('[env] REDIS_URL not set — Redis-dependent features will be disabled.');
     }
 
     // RASUI-009: enforce EXECUTOR_SECRET in production
