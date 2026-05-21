@@ -243,7 +243,7 @@ All configured variables in `.env.local`:
 
 ```
 # Database
-DATABASE_URL="postgresql://postgres:CareerPropel123!@localhost:5432/career_ops_dev"
+DATABASE_URL="postgresql://postgres:CareerPropel123!@localhost:5432/career_propel_dev"
 
 # Authentication
 NEXTAUTH_URL="http://localhost:3000"
@@ -327,7 +327,7 @@ OPENAI_API_KEY=""
 
 ### Database
 - [x] PostgreSQL 18 installed
-- [x] Database created: `career_ops_dev`
+- [x] Database created: `career_propel_dev`
 - [x] Prisma migrations run
 - [x] All Phase 3 tables created
 - [x] Database connection verified

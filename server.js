@@ -15,6 +15,9 @@ const next = require('next')
 const { Server } = require('socket.io')
 const { getToken } = require('next-auth/jwt')
 const Redis = require('ioredis')
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
 
 const dev = process.env.NODE_ENV !== 'production'
 const hostname = process.env.HOSTNAME || 'localhost'
@@ -78,15 +81,21 @@ app.prepare().then(() => {
     // Join user's personal room
     socket.join(`user:${socket.data.userEmail}`)
 
-    // Subscribe to job
+    // Subscribe to job — verify ownership before granting room access
     socket.on('subscribe:job', async (jobId, callback) => {
       try {
-        // In production, verify user owns this job
+        const job = await prisma.job.findUnique({
+          where: { id: jobId },
+          include: { candidate: { select: { email: true } } },
+        })
+        if (!job || job.candidate.email !== socket.data.userEmail) {
+          return callback({ success: false, error: 'Forbidden' })
+        }
         socket.join(`job:${jobId}`)
         callback({ success: true, jobId })
-        console.log(`[Socket] User subscribed to job: ${jobId}`)
       } catch (error) {
-        callback({ success: false, error: error.message })
+        console.error('[Socket] subscribe:job error:', error)
+        callback({ success: false, error: 'Subscription failed' })
       }
     })
 

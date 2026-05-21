@@ -72,7 +72,7 @@ export function withAuth(handler: AuthenticatedHandler, policy: RoutePolicy) {
         }
 
         // Execute actual handler — await params for Next.js 16 compatibility
-        const params = await context.params;
+        const params = context?.params ? await context.params : {};
         return await handler(request, auth, params);
       } catch (error: any) {
         log.error({ err: error, path: request.nextUrl.pathname }, '[withAuth] Route handler execution crashed');

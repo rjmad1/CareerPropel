@@ -449,10 +449,10 @@ Always backup before major changes:
 
 ```bash
 # PostgreSQL backup
-pg_dump career_ops_dev > backup_2026_05_16.sql
+pg_dump career_propel_dev > backup_2026_05_16.sql
 
 # Restore if needed
-psql career_ops_dev < backup_2026_05_16.sql
+psql career_propel_dev < backup_2026_05_16.sql
 ```
 
 ---
@@ -461,7 +461,7 @@ psql career_ops_dev < backup_2026_05_16.sql
 
 ### "Database not connecting"
 ```bash
-$env:DATABASE_URL="postgresql://postgres:CareerPropel123!@localhost:5432/career_ops_dev"
+$env:DATABASE_URL="postgresql://postgres:CareerPropel123!@localhost:5432/career_propel_dev"
 npm run db:push
 ```
 

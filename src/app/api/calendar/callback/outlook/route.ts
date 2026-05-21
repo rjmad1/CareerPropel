@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { exchangeOutlookCode, saveOutlookTokens, syncOutlookEvents } from '@/lib/calendar/outlookCalendar';
+import { verifyOAuthState } from '@/lib/calendar/oauthState';
 import { prisma } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
@@ -20,8 +21,12 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${base}/calendar?error=missing_params`);
   }
 
+  const userEmail = verifyOAuthState(state);
+  if (!userEmail) {
+    return NextResponse.redirect(`${base}/calendar?error=invalid_state`);
+  }
+
   try {
-    const userEmail = Buffer.from(state, 'base64').toString('utf-8');
     const candidate = await prisma.candidate.findUnique({ where: { email: userEmail }, select: { id: true } });
     if (!candidate) return NextResponse.redirect(`${base}/calendar?error=user_not_found`);
 
@@ -30,7 +35,8 @@ export async function GET(request: NextRequest) {
     await syncOutlookEvents(candidate.id);
 
     return NextResponse.redirect(`${base}/calendar?connected=outlook`);
-  } catch (err: any) {
-    return NextResponse.redirect(`${base}/calendar?error=${encodeURIComponent(err?.message ?? 'unknown')}`);
+  } catch (err: unknown) {
+    console.error('[Outlook callback]', err);
+    return NextResponse.redirect(`${base}/calendar?error=callback_failed`);
   }
 }

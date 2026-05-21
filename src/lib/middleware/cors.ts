@@ -20,11 +20,9 @@ export function applyCorsHeaders(
 ): NextResponse {
   const origin = request.headers.get('origin') || ''
 
-  const isAllowed = ALLOWED_ORIGINS.some(allowedOrigin => {
-    if (allowedOrigin === '*') return true
-    return origin === allowedOrigin || 
-           origin.startsWith(allowedOrigin.replace('http://', '').replace('https://', ''))
-  })
+  const isAllowed = ALLOWED_ORIGINS.some(allowedOrigin =>
+    allowedOrigin === '*' || origin === allowedOrigin
+  )
 
   if (isAllowed) {
     response.headers.set('Access-Control-Allow-Origin', origin || '*')

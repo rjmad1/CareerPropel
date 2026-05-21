@@ -21,15 +21,15 @@
 
 ### 1. **Database Setup** (Required)
 
-PostgreSQL must be running with the `career_ops_dev` database:
+PostgreSQL must be running with the `career_propel_dev` database:
 
 ```bash
 # Create database (if not exists)
-createdb -U career_user career_ops_dev
+createdb -U career_user career_propel_dev
 
 # Or using psql
 psql -U postgres
-CREATE DATABASE career_ops_dev OWNER career_user;
+CREATE DATABASE career_propel_dev OWNER career_user;
 ```
 
 **⚠️ Important**: Update `.env.local` if your PostgreSQL credentials differ.

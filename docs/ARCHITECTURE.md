@@ -1,8 +1,8 @@
-# Career-Ops: System Architecture
+# CareerPropel: System Architecture
 
 ## Overview
 
-Career-Ops is an AI-native, autonomous job application orchestration platform designed as an operational "Career Operating System." The frontend transforms the backend agentic system into a highly visual, Kanban-based career management platform with real-time agent visibility, profile intelligence, and AI-generated interview preparation.
+CareerPropel is an AI-native, autonomous job application orchestration platform designed as an operational "Career Operating System." The frontend transforms the backend agentic system into a highly visual, Kanban-based career management platform with real-time agent visibility, profile intelligence, and AI-generated interview preparation.
 
 **Key Principles:**
 - AI-native interaction model (agents are first-class citizens)

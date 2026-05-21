@@ -3,7 +3,7 @@
 ## Base Configuration
 
 - **Base URL**: `http://localhost:3000/api` (development)
-- **Production Base URL**: `https://career-ops.vercel.app/api`
+- **Production Base URL**: `https://career-propel.vercel.app/api`
 - **Authentication**: JWT token in `Authorization: Bearer <token>` header
 - **Content-Type**: `application/json`
 - **Rate Limit**: 100 requests/minute per user

@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/db"
 import { redis } from "@/lib/redis/redisClient"
-import { randomBytes, createHmac } from 'crypto'
+import { randomBytes, createHmac } from 'node:crypto'
 import * as speakeasy from 'speakeasy'
 import * as QRCode from 'qrcode'
 
@@ -46,15 +46,17 @@ export function verifyTOTPToken(secret: string, token: string): boolean {
 export function generateBackupCodes(count: number = 10): string[] {
   const codes: string[] = []
   for (let i = 0; i < count; i++) {
-    const code = randomBytes(3).toString('hex').toUpperCase().match(/.{1,3}/g)?.join('-')
-    if (code) codes.push(code)
+    // 10 bytes = 80 bits of entropy; formatted as XXXXX-XXXXX-XXXXX-XXXXX
+    const hex = randomBytes(10).toString('hex').toUpperCase()
+    const code = hex.match(/.{1,5}/g)!.join('-')
+    codes.push(code)
   }
   return codes
 }
 
 export function hashBackupCode(code: string): string {
   return createHmac('sha256', getBackupCodeHmacKey())
-    .update(code.replace(/-/g, ''))
+    .update(code.replaceAll('-', ''))
     .digest('hex')
 }
 

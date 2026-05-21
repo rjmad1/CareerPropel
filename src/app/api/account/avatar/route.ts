@@ -19,8 +19,10 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { avatarDataUrl } = schema.parse(body)
 
-    if (!avatarDataUrl.startsWith('data:image/')) {
-      throw ApiErrors.VALIDATION_ERROR('avatarDataUrl must be an image data URL')
+    const ALLOWED_IMAGE_TYPES = ['data:image/jpeg,', 'data:image/jpg,', 'data:image/png,', 'data:image/webp,', 'data:image/gif,']
+    const isAllowedType = ALLOWED_IMAGE_TYPES.some((prefix) => avatarDataUrl.startsWith(prefix))
+    if (!isAllowedType) {
+      throw ApiErrors.VALIDATION_ERROR('avatarDataUrl must be a JPEG, PNG, WebP, or GIF image')
     }
 
     // Rough byte size check (base64 encodes ~4/3 raw bytes)

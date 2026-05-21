@@ -229,7 +229,7 @@ npm start
 
 **Required for development**:
 ```env
-DATABASE_URL="postgresql://postgres:CareerPropel123!@localhost:5432/career_ops_dev"
+DATABASE_URL="postgresql://postgres:CareerPropel123!@localhost:5432/career_propel_dev"
 NEXTAUTH_URL="http://localhost:3000"
 NEXTAUTH_SECRET="dev-secret-key-change-in-production"
 NEXT_PUBLIC_API_BASE_URL="http://localhost:3000/api"

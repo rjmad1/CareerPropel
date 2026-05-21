@@ -226,4 +226,4 @@ When you're ready to:
 
 ---
 
-**Career-Ops is now ready for development! Open VSCode and start building.** 🚀
+**CareerPropel is now ready for development! Open VSCode and start building.** 🚀

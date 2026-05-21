@@ -1,10 +1,13 @@
+import type { IncomingMessage } from 'http'
 import { Server as SocketServer, Socket } from 'socket.io'
+import { getToken } from 'next-auth/jwt'
 import { prisma } from "@/lib/db"
 
 
 /**
- * Authenticate WebSocket connections
- * Extracts and validates the auth token from socket handshake
+ * Authenticate WebSocket connections using verified NextAuth JWT from the
+ * session cookie. The previous base64(email:id) scheme was unsigned and
+ * trivially forgeable — any caller could impersonate any user.
  */
 export async function authenticateSocket(socket: Socket): Promise<{
   userId: string
@@ -12,25 +15,22 @@ export async function authenticateSocket(socket: Socket): Promise<{
   candidateId: string
 } | null> {
   try {
-    // Get token from socket handshake query or headers
-    const token =
-      (socket.handshake.query.token as string) ||
-      socket.handshake.headers.authorization?.replace('Bearer ', '')
+    const cookieHeader = socket.handshake.headers.cookie || ''
+    // getToken reads req.headers.cookie at runtime; TS types demand full
+    // IncomingMessage so we cast through unknown rather than using bare `as any`.
+    const mockReq = { headers: { cookie: cookieHeader } } as unknown as IncomingMessage & { cookies: Record<string, string> }
+    const jwtToken = await getToken({
+      req: mockReq,
+      secret: process.env.NEXTAUTH_SECRET,
+    })
 
-    if (!token) {
+    if (!jwtToken?.email || !jwtToken?.sub) {
       return null
     }
 
-    // Decode JWT token (in production, verify with your secret)
-    // For now, expect token format: base64(email:id)
-    const decoded = Buffer.from(token, 'base64').toString('utf-8')
-    const [userEmail, userId] = decoded.split(':')
+    const userEmail = jwtToken.email as string
+    const userId = jwtToken.sub
 
-    if (!userEmail || !userId) {
-      return null
-    }
-
-    // Verify candidate exists
     const candidate = await prisma.candidate.findUnique({
       where: { email: userEmail }
     })

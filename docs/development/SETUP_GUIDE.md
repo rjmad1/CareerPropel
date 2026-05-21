@@ -21,8 +21,8 @@
 
 ### 1. Clone Repository
 ```bash
-git clone https://github.com/santifer/career-ops.git
-cd career-ops
+git clone https://github.com/rjmad1/CareerPropel.git
+cd CareerPropel
 ```
 
 ### 2. Install Dependencies
@@ -64,15 +64,15 @@ AWS_S3_BUCKET="..."
 
 ```bash
 # Start PostgreSQL container
-docker run --name career-ops-db \
+docker run --name career-propel-db \
   -e POSTGRES_USER=postgres \
   -e POSTGRES_PASSWORD=postgres \
-  -e POSTGRES_DB=career_ops \
+  -e POSTGRES_DB=career_propel \
   -p 5432:5432 \
   -d postgres:14
 
 # Update .env.local:
-# DATABASE_URL="postgresql://postgres:postgres@localhost:5432/career_ops"
+# DATABASE_URL="postgresql://postgres:postgres@localhost:5432/career_propel"
 ```
 
 #### Option B: Local PostgreSQL Installation
@@ -81,11 +81,11 @@ docker run --name career-ops-db \
 # macOS (Homebrew)
 brew install postgresql
 brew services start postgresql
-createdb career_ops
+createdb career_propel
 
 # Linux (Ubuntu/Debian)
 sudo apt-get install postgresql postgresql-contrib
-sudo -u postgres createdb career_ops
+sudo -u postgres createdb career_propel
 
 # Windows
 # Download and install from postgresql.org
@@ -118,7 +118,7 @@ Server runs at `http://localhost:3000`
 ## Project Structure
 
 ```
-career-ops/
+CareerPropel/
 ├── src/
 │   ├── app/
 │   │   ├── page.tsx                    # Home page
@@ -517,7 +517,7 @@ npx prisma generate
 **Database connection failed:**
 ```bash
 # Check PostgreSQL is running
-psql -U postgres -d career_ops
+psql -U postgres -d career_propel
 
 # Update DATABASE_URL in .env.local
 ```

@@ -1,26 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { getAuthContext } from '@/lib/middleware/auth';
 
-// Mark as dynamic to prevent build-time static generation
 export const dynamic = 'force-dynamic'
 
 /**
- * GET /api/profile?candidateId={id}
- * Fetch complete profile summary
+ * GET /api/profile
+ * Fetch the authenticated user's profile summary.
+ * candidateId is resolved from the session — callers cannot enumerate other users.
  */
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
-    const candidateId = request.nextUrl.searchParams.get('candidateId');
-
-    if (!candidateId) {
-      return NextResponse.json(
-        { error: 'candidateId is required' },
-        { status: 400 }
-      );
-    }
+    const { userEmail } = await getAuthContext();
 
     const candidate = await prisma.candidate.findUnique({
-      where: { id: candidateId },
+      where: { email: userEmail },
       include: {
         profileScore: true,
         profileEntities: true,
@@ -49,7 +43,7 @@ export async function GET(request: NextRequest) {
           ? candidate.profileEntities.reduce((sum: number, e: any) => sum + e.confidence, 0) / candidate.profileEntities.length
           : 0,
         documentCount: await prisma.profileData.count({
-          where: { candidateId },
+          where: { candidateId: candidate.id },
         }),
         lastExtraction: candidate.updatedAt,
       },
@@ -66,23 +60,29 @@ export async function GET(request: NextRequest) {
 }
 
 /**
- * PUT /api/profile?candidateId={id}
- * Update profile data
+ * PUT /api/profile
+ * Update the authenticated user's profile data.
+ * candidateId is resolved from the session — users cannot update other candidates.
  */
 export async function PUT(request: NextRequest) {
   try {
-    const candidateId = request.nextUrl.searchParams.get('candidateId');
+    const { userEmail } = await getAuthContext();
     const body = await request.json();
 
-    if (!candidateId) {
+    const candidate = await prisma.candidate.findUnique({
+      where: { email: userEmail },
+      select: { id: true },
+    });
+
+    if (!candidate) {
       return NextResponse.json(
-        { error: 'candidateId is required' },
-        { status: 400 }
+        { error: 'Candidate not found' },
+        { status: 404 }
       );
     }
 
     const updated = await prisma.candidate.update({
-      where: { id: candidateId },
+      where: { id: candidate.id },
       data: body,
     });
 

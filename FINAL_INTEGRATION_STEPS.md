@@ -37,7 +37,7 @@ All three security phases have been **fully implemented and integrated**:
 
 ```
 ✅ PostgreSQL 18 running
-✅ career_ops_dev database created
+✅ career_propel_dev database created
 ✅ All Phase 1 tables (Candidate, Job, etc.)
 ✅ All Phase 2 tables (ready)
 ✅ All Phase 3 tables created:
@@ -368,7 +368,7 @@ Documentation/
 ### "DATABASE_URL not found"
 ```bash
 # Set environment variable
-$env:DATABASE_URL="postgresql://postgres:CareerPropel123!@localhost:5432/career_ops_dev"
+$env:DATABASE_URL="postgresql://postgres:CareerPropel123!@localhost:5432/career_propel_dev"
 ```
 
 ### "NEXTAUTH_SECRET not defined"
@@ -430,7 +430,7 @@ DATABASE_URL="<production-database-url>"
 ### 2. Database Backup
 ```bash
 # Before deploying
-pg_dump career_ops_dev > backup.sql
+pg_dump career_propel_dev > backup.sql
 ```
 
 ### 3. Security Audit

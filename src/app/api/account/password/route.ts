@@ -5,8 +5,12 @@ import { prisma } from '@/lib/db'
 import { getAuthContext } from '@/lib/middleware/auth'
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
 import { ApiErrors } from '@/lib/errors/ApiError'
+import { createRateLimiter } from '@/lib/middleware/rateLimiter'
 
 export const dynamic = 'force-dynamic'
+
+// 5 attempts per minute — prevents brute-force on the current-password field
+const passwordRateLimit = createRateLimiter(5, 60)
 
 const schema = z.object({
   currentPassword: z.string().min(1, 'Current password is required'),
@@ -22,6 +26,9 @@ const schema = z.object({
 })
 
 export async function PUT(request: NextRequest) {
+  const limited = await passwordRateLimit(request)
+  if (limited) return limited
+
   try {
     const { userEmail } = await getAuthContext()
     const body = await request.json()

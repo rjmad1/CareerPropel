@@ -60,8 +60,8 @@ See `docs/schema/DATABASE_SCHEMA.md` for the current schema reference.
 ```sql
 -- Run as postgres superuser
 CREATE ROLE career_user WITH LOGIN PASSWORD 'career_pass';
-CREATE DATABASE career_ops_dev OWNER career_user;
-GRANT ALL PRIVILEGES ON DATABASE career_ops_dev TO career_user;
+CREATE DATABASE career_propel_dev OWNER career_user;
+GRANT ALL PRIVILEGES ON DATABASE career_propel_dev TO career_user;
 ```
 
 ```bash

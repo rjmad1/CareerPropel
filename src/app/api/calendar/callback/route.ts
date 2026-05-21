@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { exchangeCode, saveTokens, syncCalendarEvents } from '@/lib/calendar/googleCalendar';
+import { verifyOAuthState } from '@/lib/calendar/oauthState';
 import { prisma } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
@@ -7,7 +8,7 @@ export const dynamic = 'force-dynamic';
 /**
  * GET /api/calendar/callback?code=...&state=...
  * Google redirects here after the user grants consent.
- * Exchanges the code for tokens, persists them, then kicks off an initial sync.
+ * Verifies the HMAC-signed state before exchanging the auth code.
  */
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -25,9 +26,12 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(`${baseUrl}/calendar?error=missing_params`);
   }
 
-  try {
-    const userEmail = Buffer.from(state, 'base64').toString('utf-8');
+  const userEmail = verifyOAuthState(state);
+  if (!userEmail) {
+    return NextResponse.redirect(`${baseUrl}/calendar?error=invalid_state`);
+  }
 
+  try {
     const candidate = await prisma.candidate.findUnique({
       where: { email: userEmail },
       select: { id: true },
@@ -42,10 +46,8 @@ export async function GET(request: NextRequest) {
     await syncCalendarEvents(candidate.id);
 
     return NextResponse.redirect(`${baseUrl}/calendar?connected=true`);
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('[Calendar callback]', err);
-    return NextResponse.redirect(
-      `${baseUrl}/calendar?error=${encodeURIComponent(err?.message ?? 'unknown')}`
-    );
+    return NextResponse.redirect(`${baseUrl}/calendar?error=callback_failed`);
   }
 }

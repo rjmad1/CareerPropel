@@ -28,8 +28,13 @@ export function middleware(request: NextRequest) {
     request.cookies.get('next-auth.session-token')?.value
 
   if (!token) {
+    // Only allow relative paths as callbackUrl — block protocol-relative (//)
+    // and absolute URLs that could be used for open-redirect attacks.
+    const safeCallback = pathname.startsWith('/') && !pathname.startsWith('//')
+      ? encodeURIComponent(pathname)
+      : encodeURIComponent('/')
     return NextResponse.redirect(
-      new URL(`/login?callbackUrl=${encodeURIComponent(pathname)}`, request.url)
+      new URL(`/login?callbackUrl=${safeCallback}`, request.url)
     )
   }
 

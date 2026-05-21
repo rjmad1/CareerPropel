@@ -14,10 +14,12 @@ import { encryptApiKey } from '@/lib/llm/privacy';
 
 export const dynamic = 'force-dynamic';
 
-const DEFAULT_SECRET = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef';
-
 function getMasterSecret(): string {
-  return process.env.AI_MASTER_SECRET || DEFAULT_SECRET;
+  const secret = process.env.AI_MASTER_SECRET;
+  if (!secret) {
+    throw new Error('AI_MASTER_SECRET environment variable is required but not set');
+  }
+  return secret;
 }
 
 export const GET = withAuth(
@@ -74,13 +76,76 @@ export const GET = withAuth(
   }
 );
 
+type ProviderConfig = {
+  providerName: string;
+  endpointUrl?: string;
+  apiKey?: string;
+  isActive?: boolean;
+  priority?: number;
+};
+
+type PresetConfig = {
+  presetName: string;
+  providerName: string;
+  modelName: string;
+  maxCostLimit?: number;
+  privacyMode?: string;
+};
+
+async function saveProvider(candidateId: string, cfg: ProviderConfig): Promise<NextResponse> {
+  const { providerName, endpointUrl, apiKey, isActive, priority } = cfg;
+  const encryptedKey =
+    apiKey && apiKey !== '••••••••••••••••••••'
+      ? encryptApiKey(apiKey, getMasterSecret())
+      : undefined;
+
+  await prisma.aiProviderConfig.upsert({
+    where: { candidateId_providerName: { candidateId, providerName } },
+    update: {
+      endpointUrl: endpointUrl ?? null,
+      ...(encryptedKey ? { encryptedKey } : {}),
+      isActive: isActive ?? true,
+      priority: priority ?? 1,
+    },
+    create: {
+      candidateId,
+      providerName,
+      endpointUrl: endpointUrl ?? null,
+      encryptedKey: encryptedKey ?? null,
+      isActive: isActive ?? true,
+      priority: priority ?? 1,
+    },
+  });
+  return NextResponse.json({ success: true, message: 'Provider configuration saved successfully' });
+}
+
+async function savePreset(candidateId: string, cfg: PresetConfig): Promise<NextResponse> {
+  const { presetName, providerName, modelName, maxCostLimit, privacyMode } = cfg;
+  await prisma.userCapabilityPreset.upsert({
+    where: { candidateId_presetName: { candidateId, presetName } },
+    update: {
+      providerName,
+      modelName,
+      maxCostLimit: maxCostLimit ?? 0.05,
+      privacyMode: privacyMode ?? 'enterprise',
+    },
+    create: {
+      candidateId,
+      presetName,
+      providerName,
+      modelName,
+      maxCostLimit: maxCostLimit ?? 0.05,
+      privacyMode: privacyMode ?? 'enterprise',
+    },
+  });
+  return NextResponse.json({ success: true, message: 'Capability preset configuration saved successfully' });
+}
+
 export const POST = withAuth(
   async (request: NextRequest, auth) => {
     try {
-      const email = auth.userEmail;
-
       const candidate = await prisma.candidate.findUnique({
-        where: { email },
+        where: { email: auth.userEmail },
         select: { id: true },
       });
 
@@ -88,87 +153,18 @@ export const POST = withAuth(
         return NextResponse.json({ error: 'Candidate not found' }, { status: 404 });
       }
 
-      const body = await request.json();
-      const { action, providerConfig, presetConfig } = body as {
+      const { action, providerConfig, presetConfig } = await request.json() as {
         action: 'save_provider' | 'save_preset';
-        providerConfig?: {
-          providerName: string;
-          endpointUrl?: string;
-          apiKey?: string;
-          isActive?: boolean;
-          priority?: number;
-        };
-        presetConfig?: {
-          presetName: string;
-          providerName: string;
-          modelName: string;
-          maxCostLimit?: number;
-          privacyMode?: string;
-        };
+        providerConfig?: ProviderConfig;
+        presetConfig?: PresetConfig;
       };
 
       if (action === 'save_provider' && providerConfig) {
-        const { providerName, endpointUrl, apiKey, isActive, priority } = providerConfig;
-
-        // AES Encrypt if key was provided and not masked
-        let encryptedKey: string | undefined = undefined;
-        if (apiKey && apiKey !== '••••••••••••••••••••') {
-          encryptedKey = encryptApiKey(apiKey, getMasterSecret());
-        }
-
-        await prisma.aiProviderConfig.upsert({
-          where: {
-            candidateId_providerName: {
-              candidateId: candidate.id,
-              providerName,
-            },
-          },
-          update: {
-            endpointUrl: endpointUrl || null,
-            ...(encryptedKey ? { encryptedKey } : {}),
-            isActive: isActive !== undefined ? isActive : true,
-            priority: priority !== undefined ? priority : 1,
-          },
-          create: {
-            candidateId: candidate.id,
-            providerName,
-            endpointUrl: endpointUrl || null,
-            encryptedKey: encryptedKey || null,
-            isActive: isActive !== undefined ? isActive : true,
-            priority: priority !== undefined ? priority : 1,
-          },
-        });
-
-        return NextResponse.json({ success: true, message: 'Provider configuration saved successfully' });
+        return saveProvider(candidate.id, providerConfig);
       }
 
       if (action === 'save_preset' && presetConfig) {
-        const { presetName, providerName, modelName, maxCostLimit, privacyMode } = presetConfig;
-
-        await prisma.userCapabilityPreset.upsert({
-          where: {
-            candidateId_presetName: {
-              candidateId: candidate.id,
-              presetName,
-            },
-          },
-          update: {
-            providerName,
-            modelName,
-            maxCostLimit: maxCostLimit !== undefined ? maxCostLimit : 0.05,
-            privacyMode: privacyMode || 'enterprise',
-          },
-          create: {
-            candidateId: candidate.id,
-            presetName,
-            providerName,
-            modelName,
-            maxCostLimit: maxCostLimit !== undefined ? maxCostLimit : 0.05,
-            privacyMode: privacyMode || 'enterprise',
-          },
-        });
-
-        return NextResponse.json({ success: true, message: 'Capability preset configuration saved successfully' });
+        return savePreset(candidate.id, presetConfig);
       }
 
       return NextResponse.json({ error: 'Invalid request payload or action' }, { status: 400 });

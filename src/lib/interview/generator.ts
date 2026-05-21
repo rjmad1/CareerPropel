@@ -23,6 +23,24 @@ import { CompanyProfile } from '@/types/company';
 import { Job } from '@/types/job';
 import { callLLM } from '@/lib/llm/provider';
 
+/**
+ * Strip prompt-injection patterns from strings that will be embedded in LLM
+ * prompts. This is defence-in-depth — the system prompt already instructs the
+ * model to return JSON only, but we also remove the most common injection
+ * directives from user-controlled fields (job descriptions, resume text, etc.)
+ * before interpolation so they cannot override the system prompt.
+ */
+function sanitizeForPrompt(text: string): string {
+  return text
+    .replace(/ignore\s+(all\s+)?(previous|prior|above)\s+(instructions?|prompts?|context)/gi, '[removed]')
+    .replace(/you\s+are\s+now\s+(a\s+)?/gi, '[removed] ')
+    .replace(/disregard\s+(all\s+)?(previous|prior)\s+(instructions?|context)/gi, '[removed]')
+    .replace(/system\s*prompt\s*:/gi, '[removed]:')
+    .replace(/<\|?(system|user|assistant|im_start|im_end)\|?>/gi, '')
+    .replace(/```[^`]*```/g, '[code block removed]')
+    .trim()
+}
+
 // ── Claude-powered generation ─────────────────────────────────────────────────
 
 interface ClaudeContent {
@@ -47,10 +65,16 @@ async function generateWithClaude(
       ? company.culture.values.join(', ')
       : 'Collaboration, innovation, impact';
 
+    const jobDescription = sanitizeForPrompt(
+      (job as any).description || `${job.title} at ${job.company}`
+    )
+    const sanitizedResume = sanitizeForPrompt(resume.slice(0, 3000))
+    const sanitizedProjects = sanitizeForPrompt(projects.slice(0, 1000))
+
     const prompt = `You are an expert career coach preparing a candidate for a ${seniority} ${job.title} role at ${job.company}.
 
 # Job Description
-${(job as any).description || `${job.title} at ${job.company}`}
+${jobDescription}
 
 # Company Context
 Industry: ${company.industry}
@@ -58,10 +82,10 @@ Tech Stack: ${techStack}
 Culture: ${cultureValues}
 
 # Candidate Resume
-${resume.slice(0, 3000)}
+${sanitizedResume}
 
 # Projects
-${projects.slice(0, 1000)}
+${sanitizedProjects}
 
 Generate interview preparation content. Return ONLY valid JSON (no markdown code fences):
 
@@ -276,15 +300,7 @@ function generateRoleBreakdown(job: Job): RoleBreakdown {
       },
     ],
     preferredSkills: [],
-    experienceRequired: `${
-      seniority === 'senior'
-        ? '5+'
-        : seniority === 'mid'
-          ? '2-3'
-          : seniority === 'staff'
-            ? '8+'
-            : '0-2'
-    } years`,
+    experienceRequired: `${seniorityToYears(seniority)} years`,
     location: 'Unknown', // From job posting
   };
 }
@@ -499,6 +515,13 @@ function generateCompensationGuide(
 // HELPER FUNCTIONS
 // ============================================================================
 
+function seniorityToYears(seniority: 'junior' | 'mid' | 'senior' | 'staff' | 'principal'): string {
+  if (seniority === 'senior') return '5+'
+  if (seniority === 'staff') return '8+'
+  if (seniority === 'mid') return '2-3'
+  return '0-2'
+}
+
 function inferSeniority(
   roleTitle: string
 ): 'junior' | 'mid' | 'senior' | 'staff' | 'principal' {
@@ -524,18 +547,20 @@ function inferCompetencies(_role: string, _company: string): string[] {
 }
 
 function extractAchievements(resume: string): string[] {
-  // Extract accomplishments using simple heuristics (increased, reduced, built, etc.)
-  const patterns = [/increased?.*?%?/gi, /reduced?.*?%?/gi, /built?.*?(?:system|app|feature)/gi];
+  const patterns = [
+    /increased?[^.;]*/gi,
+    /reduced?[^.;]*/gi,
+    /built?[^.;]*(?:system|app|feature)[^.;]*/gi,
+  ];
 
   const achievements: string[] = [];
   for (const pattern of patterns) {
-    const matches = resume.match(pattern);
-    if (matches) {
-      achievements.push(...matches);
+    for (const m of resume.matchAll(pattern)) {
+      achievements.push(m[0]);
     }
   }
 
-  return achievements.slice(0, 5); // Top 5 achievements
+  return achievements.slice(0, 5);
 }
 
 function extractProjectExperiences(projects: string): string[] {
@@ -608,19 +633,9 @@ function extractKeywords(text: string): string[] {
     .split(/\W+/)
     .filter((w) => w.length > 3);
 
-  // Remove common words
-  const stopwords = [
-    'the',
-    'and',
-    'with',
-    'from',
-    'that',
-    'this',
-    'were',
-    'have',
-  ];
+  const stopwords = new Set(['the', 'and', 'with', 'from', 'that', 'this', 'were', 'have']);
 
-  return [...new Set(words.filter((w) => !stopwords.includes(w)))].slice(0, 20);
+  return [...new Set(words.filter((w) => !stopwords.has(w)))].slice(0, 20);
 }
 
 function calculateConfidenceScore(job: Job): number {

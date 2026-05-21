@@ -29,7 +29,7 @@ loadEnvFile('.env.local')
 loadEnvFile('.env')
 
 // Fallback defaults for testing environment
-process.env.DATABASE_URL = process.env.DATABASE_URL || 'postgresql://career_user:career_pass@localhost:5433/career_ops_dev'
+process.env.DATABASE_URL = process.env.DATABASE_URL || 'postgresql://career_user:career_pass@localhost:5433/career_propel_dev'
 process.env.REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379'
 process.env.NEXTAUTH_URL = process.env.NEXTAUTH_URL || 'http://localhost:3001'
 process.env.NEXTAUTH_SECRET = process.env.NEXTAUTH_SECRET || 'a'.repeat(32)

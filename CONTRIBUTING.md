@@ -18,7 +18,7 @@ cp .env.local.example .env.local
 
 # 3. Set up database
 # CREATE ROLE career_user WITH LOGIN PASSWORD 'career_pass';
-# CREATE DATABASE career_ops_dev OWNER career_user;
+# CREATE DATABASE career_propel_dev OWNER career_user;
 npx prisma migrate deploy
 npx prisma generate
 

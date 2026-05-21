@@ -33,7 +33,6 @@ export async function GET(_request: Request) {
     return Response.json({
       status: "error",
       message: error instanceof Error ? error.message : "Unknown error",
-      error: error instanceof Error ? error.stack : String(error),
       timestamp: new Date().toISOString()
     }, { status: 500 })
   }

@@ -252,7 +252,7 @@ npx prisma db push            # Push schema to database
 ## Project Structure
 
 ```
-career-ops/
+CareerPropel/
 ├── src/
 │   ├── app/                  # Next.js App Router
 │   │   ├── api/             # API routes
