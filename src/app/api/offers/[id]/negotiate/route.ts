@@ -20,9 +20,10 @@ const NegotiateSchema = z.object({
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await context.params;
     const { userEmail } = await getAuthContext();
     if (!userEmail) return errorResponse(new Error('Unauthorized'), 401);
 
@@ -36,7 +37,7 @@ export async function POST(
     if (!candidate) return errorResponse(new Error('Candidate not found'), 404);
 
     const offer = await prisma.offer.findFirst({
-      where: { id: params.id, job: { candidateId: candidate.id } },
+      where: { id, job: { candidateId: candidate.id } },
       include: { job: true },
     });
     if (!offer) return errorResponse(new Error('Offer not found'), 404);
@@ -54,13 +55,13 @@ export async function POST(
 
     // Update offer status
     const updatedOffer = await prisma.offer.update({
-      where: { id: params.id },
+      where: { id },
       data: { status: newStatus },
       include: { job: true },
     });
 
     // Store negotiation event in ProfileData for history tracking
-    const historyKey = `negotiation_history_${params.id}`;
+    const historyKey = `negotiation_history_${id}`;
     const existing = await prisma.profileData.findFirst({
       where: { candidateId: candidate.id, type: historyKey },
     });
@@ -102,22 +103,23 @@ export async function POST(
  */
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await context.params;
     const { userEmail } = await getAuthContext();
     if (!userEmail) return errorResponse(new Error('Unauthorized'), 401);
 
     const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
     if (!candidate) return errorResponse(new Error('Candidate not found'), 404);
 
-    const historyKey = `negotiation_history_${params.id}`;
+    const historyKey = `negotiation_history_${id}`;
     const record = await prisma.profileData.findFirst({
       where: { candidateId: candidate.id, type: historyKey },
     });
 
     return successResponse({
-      offerId: params.id,
+      offerId: id,
       history: Array.isArray(record?.content) ? record.content : [],
     });
   } catch (error) {

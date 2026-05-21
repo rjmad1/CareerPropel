@@ -19,9 +19,10 @@ const NegotiationScriptSchema = z.object({
  */
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await context.params;
     const { userEmail } = await getAuthContext();
     if (!userEmail) return errorResponse(new Error('Unauthorized'), 401);
 
@@ -36,7 +37,7 @@ export async function POST(
     if (!candidate) return errorResponse(new Error('Candidate not found'), 404);
 
     const offer = await prisma.offer.findFirst({
-      where: { id: params.id, job: { candidateId: candidate.id } },
+      where: { id, job: { candidateId: candidate.id } },
       include: { job: true },
     });
     if (!offer) return errorResponse(new Error('Offer not found'), 404);

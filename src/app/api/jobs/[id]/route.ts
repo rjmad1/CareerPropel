@@ -16,7 +16,7 @@ const deleteJobLimiter = createRateLimiter(30, 60000)
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const corsResponse = handleCorsPreFlight(request)
@@ -27,7 +27,7 @@ export async function GET(
 
     const { userEmail } = await getAuthContext()
 
-    const { id } = params
+    const { id } = await context.params
 
     if (!id || id.length < 5) {
       throw ApiErrors.INVALID_REQUEST('Invalid job ID format')
@@ -60,7 +60,7 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const corsResponse = handleCorsPreFlight(request)
@@ -71,7 +71,7 @@ export async function PATCH(
 
     const { userEmail } = await getAuthContext()
 
-    const { id } = params
+    const { id } = await context.params
 
     if (!id || id.length < 5) {
       throw ApiErrors.INVALID_REQUEST('Invalid job ID format')
@@ -128,7 +128,7 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const corsResponse = handleCorsPreFlight(request)
@@ -139,7 +139,7 @@ export async function DELETE(
 
     const { userEmail } = await getAuthContext()
 
-    const { id } = params
+    const { id } = await context.params
 
     if (!id || id.length < 5) {
       throw ApiErrors.INVALID_REQUEST('Invalid job ID format')

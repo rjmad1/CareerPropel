@@ -12,7 +12,7 @@ const limiter = createRateLimiter(100, 60000);
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const corsResponse = handleCorsPreFlight(request);
@@ -22,7 +22,7 @@ export async function GET(
     if (rateLimitResponse) return applyCorsHeaders(request, rateLimitResponse);
 
     const { userEmail } = await getAuthContext();
-    const { id } = params;
+    const { id } = await context.params;
 
     if (!id || id.length < 5) {
       throw ApiErrors.INVALID_REQUEST('Invalid job ID format');

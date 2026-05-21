@@ -2,11 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
 
-  experimental: {
-    // Playwright is a native-binary package used only in server-side scraping
-    // routes. Mark it external so webpack never tries to bundle it.
-    serverComponentsExternalPackages: ['playwright', 'playwright-core'],
-  },
+  // Playwright is a native-binary package used only in server-side scraping
+  // routes. Mark it external so webpack never tries to bundle it.
+  serverExternalPackages: ['playwright', 'playwright-core'],
 
   async headers() {
     return [

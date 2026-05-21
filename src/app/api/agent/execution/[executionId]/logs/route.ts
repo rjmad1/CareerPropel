@@ -10,10 +10,10 @@ export const dynamic = 'force-dynamic'
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { executionId: string } }
+  context: { params: Promise<{ executionId: string }> }
 ) {
   try {
-    const executionId = params.executionId;
+    const { executionId } = await context.params;
     const limit = parseInt(request.nextUrl.searchParams.get('limit') || '50');
     const offset = parseInt(request.nextUrl.searchParams.get('offset') || '0');
 

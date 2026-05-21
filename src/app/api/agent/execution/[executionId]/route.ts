@@ -10,10 +10,10 @@ export const dynamic = 'force-dynamic'
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { executionId: string } }
+  context: { params: Promise<{ executionId: string }> }
 ) {
   try {
-    const executionId = params.executionId;
+    const { executionId } = await context.params;
     const includeToolCalls = request.nextUrl.searchParams.get('excludeTools') !== 'true';
     const includeEvents = request.nextUrl.searchParams.get('excludeEvents') !== 'true';
 
@@ -55,10 +55,10 @@ export async function GET(
  */
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { executionId: string } }
+  context: { params: Promise<{ executionId: string }> }
 ) {
   try {
-    const executionId = params.executionId;
+    const { executionId } = await context.params;
     const body = await request.json();
 
     const updated = await prisma.agentExecution.update({
@@ -82,10 +82,10 @@ export async function PUT(
  */
 export async function DELETE(
   _request: NextRequest,
-  { params }: { params: { executionId: string } }
+  context: { params: Promise<{ executionId: string }> }
 ) {
   try {
-    const executionId = params.executionId;
+    const { executionId } = await context.params;
 
     await prisma.agentExecution.delete({
       where: { id: executionId },

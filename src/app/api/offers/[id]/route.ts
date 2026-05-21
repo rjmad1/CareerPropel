@@ -12,15 +12,16 @@ export const dynamic = 'force-dynamic'
  * GET /api/offers/[id]
  * Get a single offer
  */
-export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_req: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await context.params;
     const { userEmail } = await getAuthContext();
     const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
     if (!candidate) {
       return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Profile not found' } }, { status: 404 });
     }
 
-    const offer = await getOfferById(candidate.id, params.id);
+    const offer = await getOfferById(candidate.id, id);
     if (!offer) {
       return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Offer not found' } }, { status: 404 });
     }
@@ -36,8 +37,9 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
  * PATCH /api/offers/[id]
  * Update an offer
  */
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await context.params;
     const { userEmail } = await getAuthContext();
     const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
     if (!candidate) {
@@ -50,7 +52,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
       return validationErrorResponse(validation.error);
     }
 
-    const offer = await updateOffer(candidate.id, params.id, validation.data);
+    const offer = await updateOffer(candidate.id, id, validation.data);
     if (!offer) {
       return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Offer not found' } }, { status: 404 });
     }
@@ -66,15 +68,16 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
  * DELETE /api/offers/[id]
  * Delete an offer
  */
-export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_req: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await context.params;
     const { userEmail } = await getAuthContext();
     const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
     if (!candidate) {
       return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Profile not found' } }, { status: 404 });
     }
 
-    const offer = await deleteOffer(candidate.id, params.id);
+    const offer = await deleteOffer(candidate.id, id);
     if (!offer) {
       return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Offer not found' } }, { status: 404 });
     }

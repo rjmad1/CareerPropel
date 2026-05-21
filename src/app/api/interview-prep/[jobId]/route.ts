@@ -15,7 +15,7 @@ import { ApiErrors } from '@/lib/errors/ApiError'
 export const dynamic = 'force-dynamic'
 
 interface RouteParams {
-  params: { jobId: string }
+  params: Promise<{ jobId: string }>
 }
 
 async function getOwnedPrep(jobId: string, candidateId: string) {
@@ -31,11 +31,12 @@ async function getOwnedPrep(jobId: string, candidateId: string) {
 
 export async function GET(_request: NextRequest, { params }: RouteParams) {
   try {
+    const { jobId } = await params
     const { userEmail } = await getAuthContext()
     const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } })
     if (!candidate) return errorResponse(ApiErrors.NOT_FOUND('interview prep'))
 
-    const prep = await getOwnedPrep(params.jobId, candidate.id)
+    const prep = await getOwnedPrep(jobId, candidate.id)
     return successResponse(prep)
   } catch (error) {
     return errorResponse(error)
@@ -44,11 +45,12 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
 
 export async function PUT(request: NextRequest, { params }: RouteParams) {
   try {
+    const { jobId } = await params
     const { userEmail } = await getAuthContext()
     const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } })
     if (!candidate) return errorResponse(ApiErrors.NOT_FOUND('interview prep'))
 
-    await getOwnedPrep(params.jobId, candidate.id)
+    await getOwnedPrep(jobId, candidate.id)
 
     const updates = await request.json()
 
@@ -69,7 +71,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     }
 
     const updated = await prisma.interviewPrep.update({
-      where: { jobId: params.jobId },
+      where: { jobId },
       data,
       include: { starStories: true },
     })
@@ -82,13 +84,14 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 
 export async function DELETE(_request: NextRequest, { params }: RouteParams) {
   try {
+    const { jobId } = await params
     const { userEmail } = await getAuthContext()
     const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } })
     if (!candidate) return errorResponse(ApiErrors.NOT_FOUND('interview prep'))
 
-    await getOwnedPrep(params.jobId, candidate.id)
+    await getOwnedPrep(jobId, candidate.id)
 
-    await prisma.interviewPrep.delete({ where: { jobId: params.jobId } })
+    await prisma.interviewPrep.delete({ where: { jobId } })
 
     return successResponse({ deleted: true })
   } catch (error) {

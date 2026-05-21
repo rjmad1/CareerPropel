@@ -10,10 +10,10 @@ export const dynamic = 'force-dynamic'
  */
 export async function POST(
   _request: NextRequest,
-  { params }: { params: { executionId: string } }
+  context: { params: Promise<{ executionId: string }> }
 ) {
   try {
-    const executionId = params.executionId;
+    const { executionId } = await context.params;
 
     const execution = await prisma.agentExecution.findUnique({
       where: { id: executionId },

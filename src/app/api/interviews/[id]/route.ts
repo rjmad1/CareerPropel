@@ -12,15 +12,16 @@ export const dynamic = 'force-dynamic'
  * GET /api/interviews/[id]
  * Get a single interview
  */
-export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(_req: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await context.params;
     const { userEmail } = await getAuthContext();
     const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
     if (!candidate) {
       return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Profile not found' } }, { status: 404 });
     }
 
-    const interview = await getInterviewById(candidate.id, params.id);
+    const interview = await getInterviewById(candidate.id, id);
     if (!interview) {
       return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Interview not found' } }, { status: 404 });
     }
@@ -36,8 +37,9 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
  * PATCH /api/interviews/[id]
  * Update an interview
  */
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await context.params;
     const { userEmail } = await getAuthContext();
     const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
     if (!candidate) {
@@ -50,7 +52,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
       return validationErrorResponse(validation.error);
     }
 
-    const interview = await updateInterview(candidate.id, params.id, validation.data);
+    const interview = await updateInterview(candidate.id, id, validation.data);
     if (!interview) {
       return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Interview not found' } }, { status: 404 });
     }
@@ -66,15 +68,16 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
  * DELETE /api/interviews/[id]
  * Delete an interview
  */
-export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_req: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await context.params;
     const { userEmail } = await getAuthContext();
     const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
     if (!candidate) {
       return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Profile not found' } }, { status: 404 });
     }
 
-    const interview = await deleteInterview(candidate.id, params.id);
+    const interview = await deleteInterview(candidate.id, id);
     if (!interview) {
       return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Interview not found' } }, { status: 404 });
     }

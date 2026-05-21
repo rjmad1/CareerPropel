@@ -14,13 +14,13 @@ import { ApiErrors } from '@/lib/errors/ApiError'
 export const dynamic = 'force-dynamic'
 
 interface RouteParams {
-  params: { jobId: string }
+  params: Promise<{ jobId: string }>
 }
 
 export async function POST(request: NextRequest, { params }: RouteParams) {
   try {
+    const { jobId } = await params
     const { userEmail } = await getAuthContext()
-    const { jobId } = params
 
     // Allow caller to supply extra context; fall back to DB values
     const body = await request.json().catch(() => ({}))
