@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic';
 
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { Button, Input, Textarea, Card, CardBody } from '@/components/ui';
 import {

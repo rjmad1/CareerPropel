@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { AnalyticsExportButtons } from '@/components/analytics/AnalyticsExportButtons';
 import { calculateAnalytics, AnalyticsMetrics } from '@/lib/analytics/export';

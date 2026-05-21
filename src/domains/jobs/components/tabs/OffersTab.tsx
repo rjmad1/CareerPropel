@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Plus, Trash2, TrendingUp } from 'lucide-react';
 import { useOffers } from '../../hooks/useOffers';
 import { useCreateOffer, useDeleteOffer } from '../../hooks/useMutations';

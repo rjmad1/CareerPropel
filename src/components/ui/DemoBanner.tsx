@@ -13,7 +13,7 @@
  * - Zero impact on production users
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
 const DISMISS_KEY = 'careerpropel_demo_banner_dismissed';

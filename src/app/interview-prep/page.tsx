@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { InterviewPrepWorkspace } from '@/components/InterviewPrep/InterviewPrepWorkspace';
 import { STAGE_LABELS, STAGE_COLORS, JobStage } from '@/types/job';

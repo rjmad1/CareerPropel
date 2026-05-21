@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { useJob } from '../hooks/useJob';
 import { STAGE_LABELS } from '@/types/job';

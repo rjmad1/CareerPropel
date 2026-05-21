@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Calendar, MapPin, User, Trash2, Plus } from 'lucide-react';
 import { useInterviews } from '../../hooks/useInterviews';
 import { useCreateInterview, useDeleteInterview } from '../../hooks/useMutations';

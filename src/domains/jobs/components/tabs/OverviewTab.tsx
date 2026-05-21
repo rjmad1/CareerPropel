@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Briefcase, Calendar } from 'lucide-react';
 import { Job } from '@/types/job';
 import { useUpdateJobNotes } from '../../hooks/useMutations';
