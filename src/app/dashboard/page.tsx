@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -73,7 +74,7 @@ const QUICK_LINKS = [
   { href: '/analytics', label: 'Analytics', description: 'Pipeline conversion rates and salary insights', icon: BarChart3, bgClass: 'bg-purple-50 hover:bg-purple-100/80 border border-purple-100', iconColor: 'text-purple-600' },
 ];
 
-export default function DashboardPage() {
+function DashboardContent() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -414,5 +415,13 @@ export default function DashboardPage() {
         />
       )}
     </NavLayout>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <Suspense>
+      <DashboardContent />
+    </Suspense>
   );
 }
