@@ -1,11 +1,10 @@
 import { NextRequest } from 'next/server'
-import { getAuthContext } from '@/lib/middleware/auth'
+import { withAuth } from '@/lib/middleware/withAuth'
 import { createAPIKey, listAPIKeys, revokeAPIKey } from '@/lib/security/apiKey'
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
 import { ApiErrors } from '@/lib/errors/ApiError'
 import { z } from 'zod'
 
-// Mark as dynamic to prevent build-time static generation of protected endpoint
 export const dynamic = 'force-dynamic'
 
 const CreateAPIKeySchema = z.object({
@@ -16,109 +15,112 @@ const CreateAPIKeySchema = z.object({
 /**
  * GET /api/api-keys
  * List all API keys for the authenticated user
- * Protected: Requires authentication
  */
-export async function GET(_request: NextRequest) {
-  try {
-    const { userEmail } = await getAuthContext()
+export const GET = withAuth(
+  async (_request: NextRequest, auth) => {
+    try {
+      const { userEmail } = auth;
+      const apiKeys = await listAPIKeys(userEmail);
 
-    const apiKeys = await listAPIKeys(userEmail)
+      const safeKeys = apiKeys.map((key) => ({
+        id: key.id,
+        name: key.name,
+        prefix: key.prefix,
+        createdAt: key.createdAt,
+        expiresAt: key.expiresAt,
+        lastUsedAt: key.lastUsedAt,
+        revokedAt: key.revokedAt,
+        usageCount: key.usageCount,
+      }));
 
-    // Don't send the actual key hashes to the client
-    const safeKeys = apiKeys.map((key) => ({
-      id: key.id,
-      name: key.name,
-      prefix: key.prefix,
-      createdAt: key.createdAt,
-      expiresAt: key.expiresAt,
-      lastUsedAt: key.lastUsedAt,
-      revokedAt: key.revokedAt,
-      usageCount: key.usageCount,
-    }))
-
-    return successResponse(safeKeys)
-  } catch (error) {
-    const response = errorResponse(error)
-    return response
+      return successResponse(safeKeys);
+    } catch (error) {
+      return errorResponse(error);
+    }
+  },
+  {
+    classification: 'authenticated',
+    rateLimitClass: 'standard',
+    auditSensitivity: 'medium',
   }
-}
+);
 
 /**
  * POST /api/api-keys
  * Create a new API key for the authenticated user
- * Protected: Requires authentication
- * 
- * Request body:
- * - name: Name for the API key
- * - expiresIn: Optional days until expiration (default: 365)
  */
-export async function POST(request: NextRequest) {
-  try {
-    const { userEmail } = await getAuthContext()
+export const POST = withAuth(
+  async (request: NextRequest, auth) => {
+    try {
+      const { userEmail } = auth;
+      const body = await request.json();
 
-    const body = await request.json()
+      const validation = CreateAPIKeySchema.safeParse(body);
+      if (!validation.success) {
+        throw ApiErrors.VALIDATION_ERROR('Invalid API key creation data');
+      }
 
-    // Validate request
-    const validation = CreateAPIKeySchema.safeParse(body)
-    if (!validation.success) {
-      throw ApiErrors.VALIDATION_ERROR('Invalid API key creation data')
-    }
+      const { name, expiresIn } = validation.data;
 
-    const { name, expiresIn } = validation.data
-
-    // Create API key
-    const result = await createAPIKey(
-      userEmail,
-      name,
-      expiresIn ? expiresIn * 24 * 60 * 60 * 1000 : undefined
-    )
-
-    return successResponse(
-      {
-        id: result.id,
+      const result = await createAPIKey(
+        userEmail,
         name,
-        key: result.key,
-        prefix: result.key.substring(0, 10),
-        message: 'Save your API key securely. You will not be able to see it again.',
-      },
-      201
-    )
-  } catch (error) {
-    const response = errorResponse(error)
-    return response
+        expiresIn ? expiresIn * 24 * 60 * 60 * 1000 : undefined
+      );
+
+      return successResponse(
+        {
+          id: result.id,
+          name,
+          key: result.key,
+          prefix: result.key.substring(0, 10),
+          message: 'Save your API key securely. You will not be able to see it again.',
+        },
+        201
+      );
+    } catch (error) {
+      return errorResponse(error);
+    }
+  },
+  {
+    classification: 'authenticated',
+    rateLimitClass: 'standard',
+    auditSensitivity: 'critical',
   }
-}
+);
 
 /**
  * DELETE /api/api-keys
  * Revoke/delete an API key
- * Protected: Requires authentication
- * 
- * Query parameters:
- * - keyId: ID of the API key to revoke
  */
-export async function DELETE(request: NextRequest) {
-  try {
-    const { userEmail } = await getAuthContext()
-    const { searchParams } = new URL(request.url)
-    const keyId = searchParams.get('keyId')
+export const DELETE = withAuth(
+  async (request: NextRequest, auth) => {
+    try {
+      const { userEmail } = auth;
+      const { searchParams } = new URL(request.url);
+      const keyId = searchParams.get('keyId');
 
-    if (!keyId) {
-      throw ApiErrors.INVALID_REQUEST('keyId query parameter is required')
+      if (!keyId) {
+        throw ApiErrors.INVALID_REQUEST('keyId query parameter is required');
+      }
+
+      const success = await revokeAPIKey(userEmail, keyId);
+
+      if (!success) {
+        throw ApiErrors.FORBIDDEN('API key');
+      }
+
+      return successResponse({
+        success: true,
+        message: 'API key revoked successfully',
+      });
+    } catch (error) {
+      return errorResponse(error);
     }
-
-    const success = await revokeAPIKey(userEmail, keyId)
-
-    if (!success) {
-      throw ApiErrors.FORBIDDEN('API key')
-    }
-
-    return successResponse({
-      success: true,
-      message: 'API key revoked successfully',
-    })
-  } catch (error) {
-    const response = errorResponse(error)
-    return response
+  },
+  {
+    classification: 'authenticated',
+    rateLimitClass: 'standard',
+    auditSensitivity: 'critical',
   }
-}
+);

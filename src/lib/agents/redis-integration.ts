@@ -14,17 +14,22 @@ import {
 } from '@/lib/realtime/events';
 import { AgentType as Phase2AgentType } from './prompts';
 
+export type ExtendedAgentType = Phase2AgentType | 'linkedin-profile' | 'linkedin-search' | 'indeed-search';
+
 /**
  * Map Phase 2 agent types to legacy agent types for Redis events
  */
-function mapAgentType(phase2Type: Phase2AgentType): LegacyAgentType {
-  const typeMap: Record<Phase2AgentType, LegacyAgentType> = {
+function mapAgentType(phase2Type: ExtendedAgentType): LegacyAgentType {
+  const typeMap: Record<string, LegacyAgentType> = {
     'resume-tailor': 'resume_tailor',
     'job-match': 'job_matching',
     'interview-prep': 'interview_prep',
     research: 'research',
     'follow-up': 'follow_up',
     networking: 'networking',
+    'linkedin-profile': 'research',
+    'linkedin-search': 'research',
+    'indeed-search': 'research',
   };
 
   return typeMap[phase2Type] || ('research' as LegacyAgentType);
@@ -58,7 +63,7 @@ function mapExecutionStatus(
 export async function publishAgentStarted(
   userId: string,
   executionId: string,
-  agentType: Phase2AgentType,
+  agentType: ExtendedAgentType,
   input: Record<string, any>
 ): Promise<void> {
   const event: AgentStartedEvent = {
@@ -86,12 +91,12 @@ export async function publishAgentStarted(
 export async function publishAgentCompleted(
   userId: string,
   executionId: string,
-  agentType: Phase2AgentType,
+  agentType: ExtendedAgentType,
   status: 'success' | 'failed',
   output: Record<string, any> | undefined,
-  error: string | undefined,
-  tokensUsed: number,
-  durationMs: number
+  error?: string | undefined,
+  tokensUsed: number = 0,
+  durationMs: number = 0
 ): Promise<void> {
   const event: AgentCompletedEvent = {
     type: 'agent:completed',
@@ -122,7 +127,7 @@ export async function publishAgentCompleted(
 export async function publishAgentStatus(
   userId: string,
   _executionId: string,
-  agentType: Phase2AgentType,
+  agentType: ExtendedAgentType,
   executionStatus: 'queued' | 'running' | 'completed' | 'failed' | 'paused',
   queueDepth: number = 0,
   currentTask?: string,

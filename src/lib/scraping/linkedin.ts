@@ -3,47 +3,17 @@
  *
  * ⚠️  RASUI-008 RISK NOTICE:
  * LinkedIn's Terms of Service (Section 8.2) prohibit automated scraping of their
- * platform without explicit written permission. Using this module exposes the
- * application to:
- *   - IP blocking / account suspension
- *   - Legal action from LinkedIn
- *   - Application credential revocation from LinkedIn's platform team
+ * platform without explicit written permission.
  *
- * This feature is DISABLED BY DEFAULT via LINKEDIN_SCRAPING_ENABLED env var.
- * Set LINKEDIN_SCRAPING_ENABLED=true only in controlled environments.
- *
- * TODO (Phase 3): Replace this module with the LinkedIn OAuth API or a licensed
- * data provider (Prospeo, Harmonic, RapidAPI LinkedIn aggregators) to eliminate
- * ToS risk and CSS-selector fragility. See RASUI-008.
- *
- * CSS SELECTOR FRAGILITY WARNING:
- * LinkedIn changes internal class names every 2-4 weeks. When extraction returns
- * empty results, update the selectors. Consider this module as requiring monthly
- * maintenance without a proper API replacement.
+ * This feature is Feature-Flagged and controlled via Centralized Governance.
  */
 
 import { log } from '@/lib/logging/logger';
-
-// ── Feature flag guard ────────────────────────────────────────────────────────
-
-/**
- * Hard feature flag gate. Throws at call time (not module load time) so the
- * error surfaces in the request that attempted to use scraping.
- */
-function assertScrapingEnabled(): void {
-  if (process.env.LINKEDIN_SCRAPING_ENABLED !== 'true') {
-    throw new Error(
-      'LinkedIn scraping is disabled. Set LINKEDIN_SCRAPING_ENABLED=true to enable it. ' +
-      'WARNING: This may violate LinkedIn\'s Terms of Service. ' +
-      'Consider migrating to the LinkedIn OAuth API. See RASUI-008.'
-    );
-  }
-}
+import { assertScrapingAllowed, ImportedJob } from './provider';
 
 // ── Browser pool ──────────────────────────────────────────────────────────────
 
 // Maximum concurrent Chromium instances to prevent OOM crashes.
-// Each Chromium instance consumes ~150-300MB RAM.
 const MAX_CONCURRENT_BROWSERS = 2;
 let activeBrowserCount = 0;
 
@@ -63,11 +33,6 @@ function releaseBrowserSlot(): void {
 
 // ── Selector health check ─────────────────────────────────────────────────────
 
-/**
- * Assert that critical CSS selectors returned non-empty results.
- * Throws a diagnostic error when LinkedIn's DOM changes break extraction,
- * surfacing the failure immediately rather than silently returning empty arrays.
- */
 function assertSelectorsHealthy(
   results: unknown[],
   selectorName: string,
@@ -76,8 +41,7 @@ function assertSelectorsHealthy(
   if (results.length === 0) {
     log.error(
       { selectorName, pageUrl },
-      '[LinkedIn Scraper] CSS selector returned empty results — ' +
-      'LinkedIn may have changed its DOM structure. Update selectors.'
+      '[LinkedIn Scraper] CSS selector returned empty results — LinkedIn DOM may have changed.'
     );
     throw new Error(
       `LinkedIn scraper: selector "${selectorName}" returned no results on ${pageUrl}. ` +
@@ -126,16 +90,13 @@ const USER_AGENT =
 
 /**
  * Search LinkedIn public job listings.
- * LinkedIn's public job search (/jobs/search) works without login.
- *
- * RASUI-008: Feature-flagged; browser count limited; selector health checked.
  */
 export async function searchLinkedInJobs(
   keywords: string,
   location = 'United States',
   limit = 20
 ): Promise<LinkedInJob[]> {
-  assertScrapingEnabled();
+  assertScrapingAllowed('linkedin');
   await acquireBrowserSlot();
 
   // Dynamic import to avoid Playwright being loaded when scraping is disabled
@@ -209,12 +170,9 @@ export async function searchLinkedInJobs(
 
 /**
  * Import a LinkedIn public profile by URL.
- * Only works for public profiles (no login wall).
- *
- * RASUI-008: Feature-flagged; browser count limited.
  */
 export async function importLinkedInProfile(profileUrl: string): Promise<LinkedInProfile> {
-  assertScrapingEnabled();
+  assertScrapingAllowed('linkedin');
   await acquireBrowserSlot();
 
   const { chromium } = await import('playwright');
@@ -284,9 +242,9 @@ export async function importLinkedInProfile(profileUrl: string): Promise<LinkedI
 }
 
 /** Normalize a LinkedIn job into the common ImportedJob shape. */
-export function normalizeLinkedIn(job: LinkedInJob) {
+export function normalizeLinkedIn(job: LinkedInJob): ImportedJob {
   return {
-    source: 'linkedin' as const,
+    source: 'linkedin',
     externalId: null,
     title: job.title,
     company: job.company,

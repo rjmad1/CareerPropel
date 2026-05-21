@@ -2,11 +2,13 @@
  * Indeed job search via Playwright headless browser.
  * Indeed blocks simple axios/fetch requests, so we use a real browser.
  *
- * Requires: playwright (already installed) + chromium
- *   npx playwright install chromium
+ * Upgraded to:
+ * - Use dynamic imports to prevent Playwright bundling in Main/Edge bundles.
+ * - Enforce feature flag checks.
  */
 
-import { chromium } from 'playwright';
+import { assertScrapingAllowed, ImportedJob } from './provider';
+import { log } from '@/lib/logging/logger';
 
 export interface IndeedJob {
   title: string;
@@ -30,6 +32,12 @@ export async function searchIndeed(
   location = 'Remote',
   limit = 20
 ): Promise<IndeedJob[]> {
+  assertScrapingAllowed('indeed');
+
+  // Dynamic import to prevent Playwright being bundled or loaded during app bootstrap
+  const { chromium } = await import('playwright');
+  log.info({ query, location, limit }, '[Indeed Scraper] Launching Chromium for Indeed search');
+
   const browser = await chromium.launch({ headless: true });
   try {
     const context = await browser.newContext({
@@ -54,7 +62,7 @@ export async function searchIndeed(
         const company = card.querySelector('[class*="companyName"], [data-testid="company-name"]')?.textContent?.trim() ?? '';
         const location = card.querySelector('[class*="companyLocation"], [data-testid="text-location"]')?.textContent?.trim() ?? '';
         const description = card.querySelector('[class*="summary"]')?.textContent?.trim() ?? '';
-        const salary = card.querySelector('[class*="salary-snippet"], [id*="salaryOnly"]')?.textContent?.trim();
+        const salary = card.querySelector('[class*="salary-snippet"], [data-testid="attribute_snippet-salary"]')?.textContent?.trim();
         const href = (card.querySelector('[data-jk]') as HTMLElement)?.closest('a')?.href ??
           `https://www.indeed.com/viewjob?jk=${card.getAttribute('data-jk')}`;
         const posted = card.querySelector('[class*="date"]')?.textContent?.trim() ?? '';
@@ -62,16 +70,20 @@ export async function searchIndeed(
       }).filter((j) => j.title);
     }, limit);
 
+    log.info({ count: jobs.length }, '[Indeed Scraper] Search completed successfully');
     return jobs;
+  } catch (error) {
+    log.error({ err: error }, '[Indeed Scraper] Failed during execution');
+    throw error;
   } finally {
     await browser.close();
   }
 }
 
 /** Normalize an Indeed job into the common ImportedJob shape. */
-export function normalizeIndeed(job: IndeedJob) {
+export function normalizeIndeed(job: IndeedJob): ImportedJob {
   return {
-    source: 'indeed' as const,
+    source: 'indeed',
     externalId: null,
     title: job.title,
     company: job.company,

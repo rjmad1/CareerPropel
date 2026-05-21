@@ -1,8 +1,8 @@
 import { NextRequest } from 'next/server';
-import { getAuthContext } from '@/lib/middleware/auth';
+import { withAuth } from '@/lib/middleware/withAuth';
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse';
-import { importLinkedInProfile } from '@/lib/scraping/linkedin';
-import { prisma } from '@/lib/db';
+import { scrapingQueue } from '@/lib/scraping/scrapingQueue';
+import { getCorrelationId } from '@/lib/logging/traceContext';
 import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
@@ -18,58 +18,43 @@ const Schema = z.object({
 
 /**
  * POST /api/linkedin/import-profile
- * Scrapes a public LinkedIn profile and upserts skills + experience
- * into the candidate's ProfileData record.
+ * Enqueues a public LinkedIn profile scraping task in the asynchronous worker.
  */
-export async function POST(request: NextRequest) {
-  try {
-    const { userEmail } = await getAuthContext();
+export const POST = withAuth(
+  async (request: NextRequest, auth) => {
+    try {
+      const body = await request.json();
+      const parsed = Schema.safeParse(body);
+      if (!parsed.success) {
+        return errorResponse(new Error(parsed.error.issues[0]?.message ?? 'Invalid URL'), 400);
+      }
 
-    const body = await request.json();
-    const parsed = Schema.safeParse(body);
-    if (!parsed.success) {
-      return errorResponse(new Error(parsed.error.issues[0]?.message ?? 'Invalid URL'));
+      const { profileUrl } = parsed.data;
+      const correlationId = getCorrelationId();
+
+      // Enqueue job asynchronously in background worker
+      const executionId = await scrapingQueue.enqueueProfileImport(
+        auth.userId,
+        profileUrl,
+        correlationId
+      );
+
+      return successResponse(
+        {
+          message: 'LinkedIn profile import enqueued successfully.',
+          jobId: executionId,
+          executionId,
+          status: 'queued',
+        },
+        202
+      );
+    } catch (error) {
+      return errorResponse(error);
     }
-
-    const { profileUrl } = parsed.data;
-
-    const candidate = await prisma.candidate.findUniqueOrThrow({
-      where: { email: userEmail },
-      select: { id: true },
-    });
-
-    const profile = await importLinkedInProfile(profileUrl);
-
-    // Upsert a "linkedin_export" ProfileData row
-    await prisma.profileData.upsert({
-      where: { candidateId_type: { candidateId: candidate.id, type: 'linkedin_export' } },
-      create: {
-        candidateId: candidate.id,
-        type: 'linkedin_export',
-        content: profile as object,
-      },
-      update: {
-        content: profile as object,
-      },
-    });
-
-    // Upsert skills extracted from LinkedIn
-    for (const skill of profile.skills) {
-      await prisma.skill.upsert({
-        where: { candidateId_name: { candidateId: candidate.id, name: skill } },
-        create: { candidateId: candidate.id, name: skill },
-        update: {},
-      });
-    }
-
-    return successResponse({
-      name: profile.name,
-      headline: profile.headline,
-      experience: profile.experience.length,
-      education: profile.education.length,
-      skills: profile.skills.length,
-    });
-  } catch (error) {
-    return errorResponse(error);
+  },
+  {
+    classification: 'authenticated',
+    rateLimitClass: 'heavy', // 5 req/min
+    auditSensitivity: 'high',
   }
-}
+);

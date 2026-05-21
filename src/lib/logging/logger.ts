@@ -15,6 +15,7 @@
  */
 
 import pino from 'pino';
+import { traceStore } from './traceContext';
 
 const level = (process.env.LOG_LEVEL as pino.Level | undefined) ?? 'info';
 
@@ -36,6 +37,10 @@ export const log = pino({
     hostname: undefined,
   },
   timestamp: pino.stdTimeFunctions.isoTime,
+  mixin() {
+    const store = traceStore.getStore();
+    return store?.correlationId ? { correlationId: store.correlationId } : {};
+  },
   formatters: {
     level(label) {
       return { level: label };
