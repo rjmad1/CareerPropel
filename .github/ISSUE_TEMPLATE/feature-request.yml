@@ -1,0 +1,63 @@
+name: Feature Request
+description: Propose a new feature or enhancement — requires a product spec before implementation.
+title: "feat: "
+labels: ["enhancement", "needs-spec"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > **Spec-driven workflow**: A product spec in `specs/active/` is required before implementation begins.
+        > Use `templates/spec-product.md` as a starting point and open a follow-up PR with the spec file.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What user problem or business objective does this address?
+      placeholder: "As a [persona], I need [capability] so that [outcome]."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: Proposed Solution
+      description: High-level description of the proposed feature.
+    validations:
+      required: true
+
+  - type: textarea
+    id: success-metrics
+    attributes:
+      label: Success Metrics
+      description: How will we know this is working? Quantitative metrics preferred.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: tier
+    attributes:
+      label: Complexity Tier
+      options:
+        - Small (< 1 day, no spec required)
+        - Medium (1-3 days, product spec required)
+        - Large (3+ days, product + technical spec required)
+        - Architectural (ADR required)
+    validations:
+      required: true
+
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Known Constraints / Risks
+      description: Technical, compliance, performance, or security constraints.
+
+  - type: checkboxes
+    id: spec-checklist
+    attributes:
+      label: Pre-Implementation Checklist
+      options:
+        - label: Product spec created at `specs/active/<feature-name>.md`
+        - label: Technical design spec created if complexity is Large+
+        - label: ADR created if architectural decision required
+        - label: Security review requested if auth/data boundary changes

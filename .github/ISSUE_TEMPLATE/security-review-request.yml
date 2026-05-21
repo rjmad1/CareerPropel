@@ -1,0 +1,55 @@
+name: Security Review Request
+description: Request a security review for auth, data, or AI-related changes.
+title: "security: "
+labels: ["security", "needs-review"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > Use `templates/security-review.md` to complete the threat model before implementation.
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Review Scope
+      description: What is being reviewed (endpoints, data flows, models, etc.)?
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: areas
+    attributes:
+      label: Security Areas Affected
+      options:
+        - label: Authentication / Authorization
+        - label: User data access or storage
+        - label: External API integration
+        - label: AI / LLM pipeline (prompt injection, PII)
+        - label: Secrets / credentials management
+        - label: Input validation / sanitization
+        - label: Rate limiting / abuse prevention
+        - label: Dependency / supply chain
+
+  - type: textarea
+    id: threat-summary
+    attributes:
+      label: Known Threat Surface
+      description: What attack vectors are you concerned about?
+    validations:
+      required: true
+
+  - type: textarea
+    id: mitigations
+    attributes:
+      label: Proposed Mitigations
+      description: Controls already in place or planned.
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-Review Checklist
+      options:
+        - label: Threat model completed using `templates/security-review.md`
+        - label: No secrets or credentials in code
+        - label: Input validation at API boundary verified
+        - label: RBAC / ownership checks verified for all affected routes

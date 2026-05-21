@@ -1,0 +1,69 @@
+name: ADR Proposal
+description: Propose an architectural decision that requires formal documentation.
+title: "adr: "
+labels: ["adr", "architecture", "needs-review"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > **Architecture Decision Records** are required for changes to: data model, auth boundaries,
+        > external service integrations, infrastructure topology, or any decision with long-term consequences.
+        > Use `templates/adr.md` to draft the full ADR in `docs/adr/`.
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Context and Problem Statement
+      description: What architectural decision needs to be made and why?
+    validations:
+      required: true
+
+  - type: textarea
+    id: drivers
+    attributes:
+      label: Decision Drivers
+      description: Forces, constraints, or requirements shaping the decision.
+    validations:
+      required: true
+
+  - type: textarea
+    id: options
+    attributes:
+      label: Options Considered
+      description: At least two alternatives evaluated.
+    validations:
+      required: true
+
+  - type: textarea
+    id: preferred
+    attributes:
+      label: Preferred Option
+      description: Which option do you recommend and why?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Impact Classification
+      options:
+        - Security / Auth boundary
+        - Data model / Schema
+        - External service integration
+        - Infrastructure / Deployment
+        - AI / LLM pipeline
+        - Performance / Scalability
+        - Developer Experience
+        - Other
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: ADR Checklist
+      options:
+        - label: ADR document drafted in `docs/adr/` using `templates/adr.md`
+        - label: Alternatives section covers at least two options with tradeoffs
+        - label: Operational implications documented
+        - label: Rollback / reversal strategy noted

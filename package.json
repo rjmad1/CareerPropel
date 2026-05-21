@@ -9,6 +9,7 @@
         "start": "node server.js",
         "lint": "eslint src",
         "type-check": "tsc --noEmit",
+        "spec:check": "node scripts/governance/spec-check.js",
         "security:audit": "npm audit --audit-level=moderate",
         "security:deps": "npm ls next ws postcss uuid --all",
         "security:secrets": "bash scripts/security/scan-secrets.sh",

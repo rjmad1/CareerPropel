@@ -39,6 +39,5 @@
     }
   },
   "css.lint.unknownAtRules": "ignore",
-  "snyk.advanced.organization": "cdd1c847-d2a7-4c82-af9e-8f3b7a93bd03",
   "snyk.advanced.autoSelectOrganization": true
 }

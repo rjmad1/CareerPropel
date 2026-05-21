@@ -54,3 +54,10 @@ tsconfig.tsbuildinfo
 # Claude Code local settings
 .claude/settings.local.json
 .vercel
+
+# Generated / tool artifacts
+scan_output.txt
+skills-lock.json
+dev.log
+test-results.log
+.agents/

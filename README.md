@@ -1,60 +1,66 @@
-# Career-Ops: AI-Native Career Operating System
+# CareerPropel — AI-Native Career Operations Platform
+
 <img width="2752" height="1536" alt="image-1779014074826" src="https://github.com/user-attachments/assets/c1157a7c-692f-4038-bb47-3baf3f87cb62" />
-<img width="2752" height="1536" alt="image-1779186313227" src="https://github.com/user-attachments/assets/d0980016-a8e6-42d8-9c97-c4708c2f61ee" />
 
+CareerPropel is an AI-assisted career management platform that turns job searching into an
+operationally transparent, intelligence-driven workflow — powered by autonomous agents, real-time
+pipeline visibility, and spec-driven engineering.
 
-Career-Ops is an autonomous job application orchestration platform that transforms career development into a visual, operationally transparent workflow.
+**Live**: [career-propel.vercel.app](https://career-propel.vercel.app)
 
-**Key Features:**
-- 🤖 Real-time agent visibility (resume tailoring, job matching, interview prep)
-- 🎯 Kanban pipeline with 13 application stages
-- 📊 Profile intelligence with completeness scoring and gap detection
-- 🎬 AI-assisted interview preparation with STAR stories and company research
-- 🔄 Asynchronous background automation with full transparency
-- 🚀 Built for power users seeking control and explainability
+---
 
-## Quick Links
+## Features
 
-### Core Documentation
-- **[System Architecture](./docs/ARCHITECTURE.md)** — High-level system overview, data flows, real-time patterns
-- **[API Design](./docs/API_DESIGN.md)** — Complete API endpoint reference with examples
-- **[Design Decisions](./docs/DESIGN_DECISIONS.md)** — Architectural rationale and tradeoffs
-- **[Implementation Roadmap](./docs/IMPLEMENTATION_ROADMAP.md)** — Timeline, milestones, and future phases
+- AI-powered interview preparation with STAR story generation and mock feedback
+- Kanban pipeline with 14 application stages and drag-and-drop
+- Profile intelligence: ATS analysis, skill gap detection, career narrative generation
+- Resume tailoring and document generation per job
+- Asynchronous job scraping (LinkedIn, Indeed) via isolated background workers
+- Real-time agent visibility via WebSocket
+- Full authentication: registration, email verification, password reset, 2FA, BYOK AI keys
 
-### Detailed Architecture
-- **[Agent System](./docs/architecture/AGENT_SYSTEM.md)** — Agent types, execution model, real-time updates
-- **[Profile Intelligence](./docs/architecture/PROFILE_INTELLIGENCE.md)** — Extraction, completeness scoring, recommendations
-- **[Database Schema](./docs/schema/DATABASE_SCHEMA.md)** — 20+ models, relationships, indexes
+---
 
-### Developer Guide
-- **[Setup Guide](./docs/development/SETUP_GUIDE.md)** — Local development environment setup
-- **[Component Patterns](./docs/development/COMPONENT_PATTERNS.md)** — React component architecture
-- **[Hook Patterns](./docs/development/HOOK_PATTERNS.md)** — Custom hook best practices
+## Quick Start
 
-## Project Status
+```bash
+git clone https://github.com/rjmad1/CareerPropel.git
+cd CareerPropel
+npm install
+cp .env.local.example .env.local   # fill in DATABASE_URL, NEXTAUTH_SECRET, etc.
+npx prisma migrate deploy
+npm run dev
+```
 
-**Week 6 Implementation: In Progress** 🔄
+See [docs/development/SETUP_GUIDE.md](docs/development/SETUP_GUIDE.md) for full setup including
+PostgreSQL and Redis.
 
-### Completed ✅
-- AgentRail UI with real-time status, progress bars, and logs
-- Profile Intelligence UI with completeness scoring and recommendations
-- API scaffolding for all 8 agent types
-- Integrated dashboard (3-column layout)
-- Real-time state management (WebSocket + polling)
-- 30+ React components and custom hooks
-- Complete TypeScript type definitions
-- API endpoint design
+---
 
-### In Progress 🔄
-- Database integration (Prisma migrations)
-- Claude API integration for content generation
-- Profile document extraction
-- Interview prep generation
-- Real WebSocket server setup
+## Documentation
 
-### Planned 📋
-- Phase 2: Interview simulation, cover letter generation, auto-application
-- Phase 3: Networking CRM, offer negotiation, analytics
+**[docs/INDEX.md](docs/INDEX.md)** — complete documentation index.
+
+Key documents:
+
+| Document | Purpose |
+|---|---|
+| [Spec Workflow](docs/governance/SPEC_WORKFLOW.md) | How features are built (spec → implement → deploy) |
+| [Engineering Standards](docs/governance/ENGINEERING_STANDARDS.md) | Coding and review standards |
+| [AI Governance](docs/governance/AI_GOVERNANCE.md) | LLM/prompt governance |
+| [Threat Model](docs/security/THREAT_MODEL.md) | Security model and controls |
+| [ADRs](docs/adr/) | Architecture decision records |
+| [Testing Strategy](docs/testing/TESTING_STRATEGY.md) | Test pyramid and strategy |
+| [Incident Response](docs/runbooks/INCIDENT_RESPONSE.md) | Production incident runbook |
+| [AI Dev Workflow](docs/development/AI_WORKFLOW.md) | Using Claude/Cursor with spec kit |
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). This project uses a spec-driven engineering model:
+feature specs are required before implementation for Medium+ changes. Templates in `templates/`.
 
 ## Architecture Overview
 

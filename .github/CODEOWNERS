@@ -1,0 +1,40 @@
+# CODEOWNERS — Governance boundaries for CareerPropel
+# Reviewers are required for changes in their domains.
+# Format: <pattern> <owner(s)>
+
+# Global fallback
+* @rjmad1
+
+# Governance and spec documents — mandatory review for all spec changes
+/docs/adr/ @rjmad1
+/docs/governance/ @rjmad1
+/specs/ @rjmad1
+/templates/ @rjmad1
+
+# Security-critical paths — security review required
+/src/lib/security/ @rjmad1
+/src/lib/middleware/ @rjmad1
+/src/lib/auth.ts @rjmad1
+/src/middleware.ts @rjmad1
+/src/app/api/auth/ @rjmad1
+/src/app/api/account/ @rjmad1
+/src/app/api/api-keys/ @rjmad1
+
+# AI/LLM pipeline — AI governance review required
+/src/lib/llm/ @rjmad1
+/src/lib/agents/ @rjmad1
+/src/lib/safety/ @rjmad1
+/src/lib/agent/ @rjmad1
+
+# Data model — ADR required for schema changes
+/prisma/ @rjmad1
+
+# Infrastructure and CI — reviewed for operational safety
+/.github/workflows/ @rjmad1
+/docker-compose.yml @rjmad1
+/vercel.json @rjmad1
+/next.config.js @rjmad1
+
+# Scraping / external integrations — isolation review required
+/src/lib/scraping/ @rjmad1
+/src/lib/queues/ @rjmad1
