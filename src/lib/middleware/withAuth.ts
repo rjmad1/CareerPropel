@@ -12,7 +12,6 @@ type AuthenticatedHandler = (
   params?: Record<string, string | string[]>
 ) => Promise<NextResponse> | NextResponse;
 
-
 /**
  * Wraps a Next.js App Router route handler with centralized route governance enforcement.
  * Enforces authentication, RBAC role restrictions, rate limiting, and audit logging.
@@ -24,7 +23,7 @@ type AuthenticatedHandler = (
 export function withAuth(handler: AuthenticatedHandler, policy: RoutePolicy) {
   return async function authenticatedRoute(
     request: NextRequest,
-    context?: { params?: Record<string, string | string[]> }
+    context: { params: Promise<Record<string, string>> }
   ): Promise<NextResponse> {
     const correlationId = request.headers.get('x-correlation-id') || request.headers.get('x-request-id') || undefined;
 
@@ -72,8 +71,9 @@ export function withAuth(handler: AuthenticatedHandler, policy: RoutePolicy) {
           return governanceBlockedResponse;
         }
 
-        // Execute actual handler
-        return await handler(request, auth, context?.params);
+        // Execute actual handler — await params for Next.js 16 compatibility
+        const params = await context.params;
+        return await handler(request, auth, params);
       } catch (error: any) {
         log.error({ err: error, path: request.nextUrl.pathname }, '[withAuth] Route handler execution crashed');
         return NextResponse.json(
