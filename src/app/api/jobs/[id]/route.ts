@@ -10,9 +10,9 @@ import { handleCorsPreFlight, applyCorsHeaders } from '@/lib/middleware/cors'
 
 export const dynamic = 'force-dynamic'
 
-const getJobLimiter = createRateLimiter(100, 60000)
-const updateJobLimiter = createRateLimiter(30, 60000)
-const deleteJobLimiter = createRateLimiter(30, 60000)
+const getJobLimiter = createRateLimiter(100, 60)
+const updateJobLimiter = createRateLimiter(30, 60)
+const deleteJobLimiter = createRateLimiter(30, 60)
 
 export async function GET(
   request: NextRequest,

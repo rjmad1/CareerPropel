@@ -8,7 +8,7 @@ import { createRateLimiter } from '@/lib/middleware/rateLimiter';
 
 export const dynamic = 'force-dynamic';
 
-const limiter = createRateLimiter(100, 60000);
+const limiter = createRateLimiter(100, 60);
 
 export async function GET(
   request: NextRequest,
