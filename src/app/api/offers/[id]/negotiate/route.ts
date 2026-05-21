@@ -3,6 +3,7 @@ import { getAuthContext } from '@/lib/middleware/auth';
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse';
 import { prisma } from '@/lib/db';
 import { z } from 'zod';
+import { OfferStatus } from '@prisma/client';
 
 export const dynamic = 'force-dynamic';
 
@@ -43,7 +44,7 @@ export async function POST(
     const { action, counterAmount, notes } = validation.data;
 
     // Determine new offer status
-    const statusMap: Record<string, string> = {
+    const statusMap: Record<string, OfferStatus> = {
       counter: 'negotiating',
       accept: 'accepted',
       reject: 'rejected',

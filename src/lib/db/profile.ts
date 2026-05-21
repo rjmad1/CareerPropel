@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db";
-import { Prisma } from '@prisma/client';
+import { Prisma, SkillProficiency } from '@prisma/client';
 import type { UpdateProfileInput } from '@/lib/validation/schemas';
 
 
@@ -75,7 +75,7 @@ export async function getProfileFields(userId: string, type?: string) {
 /**
  * Add skill to profile
  */
-export async function addSkill(userId: string, name: string, proficiency: string = 'intermediate') {
+export async function addSkill(userId: string, name: string, proficiency: SkillProficiency = 'intermediate') {
   return prisma.skill.create({
     data: {
       candidateId: userId,

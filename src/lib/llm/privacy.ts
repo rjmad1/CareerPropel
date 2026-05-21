@@ -15,7 +15,6 @@ import { log } from '@/lib/logging/logger';
 
 const ALGORITHM = 'aes-256-gcm';
 const IV_LENGTH = 12;
-const TAG_LENGTH = 16;
 
 /**
  * Encrypt a plain-text API key with AES-256-GCM
@@ -65,8 +64,8 @@ export function decryptApiKey(encryptedPayload: string, masterSecretHex: string)
     const decipher = crypto.createDecipheriv(ALGORITHM, key, iv);
     decipher.setAuthTag(tag);
 
-    let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
-    decrypted += decipher.final('utf8');
+    let decrypted = decipher.update(encryptedText).toString('utf8');
+    decrypted += decipher.final().toString('utf8');
     
     return decrypted;
   } catch (err) {

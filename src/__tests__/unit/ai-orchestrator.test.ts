@@ -7,7 +7,7 @@
  */
 
 import { encryptApiKey, decryptApiKey, redactPii, restorePii } from '../../lib/llm/privacy';
-import { AIProviderOrchestrator, CAPABILITY_PRESETS, ADAPTERS } from '../../lib/llm/orchestrator';
+import { CAPABILITY_PRESETS } from '../../lib/llm/orchestrator';
 
 describe('1. Cryptographic Key Governance (AES-256-GCM)', () => {
   const MASTER_SECRET = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'; // 64 hex characters (32 bytes)
@@ -65,7 +65,7 @@ describe('2. PII Redaction & Restoration Middleware', () => {
   });
 
   test('Should seamlessly restore redacted tokens back in inbound LLM outputs', () => {
-    const { redactedText, tokenMap } = redactPii(ORIGINAL_PROFILE);
+    const { tokenMap } = redactPii(ORIGINAL_PROFILE);
     
     // Simulate LLM returning redacted text
     const llmOutput = `Here is a resume template for Candidate [REDACTED_EMAIL_1] located in ZIP code [REDACTED_ZIP_4].`;

@@ -34,6 +34,7 @@ enum JobStage {
 enum AgentExecutionStatus {
   queued
   running
+  paused
   completed
   failed
 }
@@ -44,6 +45,7 @@ enum InterviewStatus {
   completed
   cancelled
   rescheduled
+  no_show
 }
 
 /// Job offer lifecycle states.

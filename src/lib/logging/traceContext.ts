@@ -7,7 +7,7 @@
  */
 
 import { AsyncLocalStorage } from 'async_hooks';
-import { v4 as uuidv4 } from 'uuid';
+import { randomUUID } from 'crypto';
 
 export interface TraceStore {
   correlationId: string;
@@ -20,7 +20,7 @@ export const traceStore = new AsyncLocalStorage<TraceStore>();
  * Generates a new correlation ID if not provided.
  */
 export function runWithTrace<T>(correlationId: string | undefined, fn: () => T): T {
-  const cid = correlationId || uuidv4();
+  const cid = correlationId || randomUUID();
   return traceStore.run({ correlationId: cid }, fn);
 }
 

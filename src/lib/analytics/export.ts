@@ -83,20 +83,20 @@ export function calculateAnalytics(jobs: Job[]): AnalyticsMetrics {
   const topCompanies = getTopCompanies(jobs);
 
   const rejectedCount = jobs.filter(
-    (job) => job.stage === 'REJECTED'
+    (job) => job.stage === 'rejected'
   ).length;
   const interviewCount = jobs.filter(
     (job) =>
       [
-        'RECRUITER_SCREEN',
-        'HIRING_MANAGER',
-        'TECHNICAL_INTERVIEW',
-        'SYSTEM_DESIGN',
-        'BEHAVIORAL',
-        'FINAL_ROUND',
+        'recruiter_screen',
+        'hiring_manager',
+        'technical_interview',
+        'system_design',
+        'behavioral',
+        'final_round',
       ].includes(job.stage)
   ).length;
-  const offeredCount = jobs.filter((job) => job.stage === 'OFFER').length;
+  const offeredCount = jobs.filter((job) => job.stage === 'offer').length;
 
   return {
     totalApplications: jobs.length,
@@ -169,21 +169,21 @@ function getMatchScoreDistribution(jobs: Job[]): Record<string, number> {
 
 function getOutcomesSummary(jobs: Job[]) {
   return {
-    interested: jobs.filter((job) => job.stage === 'INTERESTED').length,
-    applied: jobs.filter((job) => job.stage === 'APPLIED').length,
+    interested: jobs.filter((job) => job.stage === 'interested').length,
+    applied: jobs.filter((job) => job.stage === 'applied').length,
     interviewing: jobs.filter((job) =>
       [
-        'RECRUITER_SCREEN',
-        'HIRING_MANAGER',
-        'TECHNICAL_INTERVIEW',
-        'SYSTEM_DESIGN',
-        'BEHAVIORAL',
-        'FINAL_ROUND',
+        'recruiter_screen',
+        'hiring_manager',
+        'technical_interview',
+        'system_design',
+        'behavioral',
+        'final_round',
       ].includes(job.stage)
     ).length,
-    offered: jobs.filter((job) => job.stage === 'OFFER').length,
-    rejected: jobs.filter((job) => job.stage === 'REJECTED').length,
-    withdrawn: jobs.filter((job) => job.stage === 'WITHDRAWN').length,
+    offered: jobs.filter((job) => job.stage === 'offer').length,
+    rejected: jobs.filter((job) => job.stage === 'rejected').length,
+    withdrawn: jobs.filter((job) => job.stage === 'archived').length,
   };
 }
 
@@ -228,7 +228,7 @@ function getTopCompanies(
       companyStats[company] = { applications: 0, offers: 0 };
     }
     companyStats[company].applications++;
-    if (job.stage === 'OFFER') {
+    if (job.stage === 'offer') {
       companyStats[company].offers++;
     }
   });

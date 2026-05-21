@@ -36,6 +36,19 @@ export interface LLMCallResult {
   totalTokens: number;
 }
 
+export interface LLMProvider {
+  name: string;
+  getDefaultModel(): string;
+  callLLM(
+    messages: LLMMessage[],
+    options?: LLMCallOptions
+  ): Promise<LLMCallResult>;
+  streamLLM(
+    messages: LLMMessage[],
+    options?: LLMCallOptions
+  ): AsyncIterable<string>;
+}
+
 /**
  * Heuristically map a prompt request to the optimal capability preset
  */
