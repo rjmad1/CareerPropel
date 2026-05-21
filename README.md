@@ -321,6 +321,10 @@ npm test -- --coverage
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for development guidelines.
 
+## Credits & Open-Source Acknowledgements
+
+CareerPropel is conceptually inspired by the pioneering work of **Santiago Fernández de Valderrama** and his open-source project **[career-ops](https://github.com/santifer/career-ops)**. For a detailed list of all open-source libraries, credits, and code attributions, please refer to our official **[CONTRIBUTIONS.md](./CONTRIBUTIONS.md)** ledger.
+
 ## License
 
 MIT

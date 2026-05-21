@@ -7,7 +7,7 @@
  */
 
 export interface ImportedJob {
-  source: 'linkedin' | 'indeed' | 'greenhouse';
+  source: 'linkedin' | 'indeed' | 'greenhouse' | 'lever' | 'ashby';
   externalId: string | null;
   title: string;
   company: string;

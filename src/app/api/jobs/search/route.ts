@@ -2,6 +2,8 @@ import { NextRequest } from 'next/server';
 import { withAuth } from '@/lib/middleware/withAuth';
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse';
 import { searchGreenhouse, normalizeGreenhouse } from '@/lib/scraping/greenhouse';
+import { searchLever, normalizeLever } from '@/lib/scraping/lever';
+import { searchAshby, normalizeAshby } from '@/lib/scraping/ashby';
 import { scrapingQueue } from '@/lib/scraping/scrapingQueue';
 import { getCorrelationId } from '@/lib/logging/traceContext';
 import { z } from 'zod';
@@ -9,17 +11,17 @@ import { z } from 'zod';
 export const dynamic = 'force-dynamic';
 
 const SearchSchema = z.object({
-  source: z.enum(['greenhouse', 'indeed', 'linkedin']),
+  source: z.enum(['greenhouse', 'indeed', 'linkedin', 'lever', 'ashby']),
   query: z.string().min(1),
   location: z.string().optional(),
-  // Greenhouse-specific: board token (e.g. "stripe")
+  // Greenhouse/Lever/Ashby: board token / company handle (e.g. "stripe")
   boardToken: z.string().optional(),
   limit: z.coerce.number().int().min(1).max(50).default(20),
 });
 
 /**
  * POST /api/jobs/search
- * Search a job board. If the board is Greenhouse, it executes synchronously.
+ * Search a job board. If the board is Greenhouse, Lever, or Ashby, it executes synchronously.
  * If Indeed or LinkedIn, it enqueues the search job asynchronously in the scraping queue.
  */
 export const POST = withAuth(
@@ -38,6 +40,20 @@ export const POST = withAuth(
         if (!boardToken) return errorResponse(new Error('boardToken is required for Greenhouse'), 400);
         const jobs = await searchGreenhouse(boardToken, query, limit);
         const results = jobs.map((j) => normalizeGreenhouse(j, boardToken));
+        return successResponse({ jobs: results, count: results.length });
+      }
+
+      if (source === 'lever') {
+        if (!boardToken) return errorResponse(new Error('boardToken is required for Lever'), 400);
+        const jobs = await searchLever(boardToken, query, limit);
+        const results = jobs.map((j) => normalizeLever(j, boardToken));
+        return successResponse({ jobs: results, count: results.length });
+      }
+
+      if (source === 'ashby') {
+        if (!boardToken) return errorResponse(new Error('boardToken is required for Ashby'), 400);
+        const jobs = await searchAshby(boardToken, query, limit);
+        const results = jobs.map((j) => normalizeAshby(j, boardToken));
         return successResponse({ jobs: results, count: results.length });
       }
 

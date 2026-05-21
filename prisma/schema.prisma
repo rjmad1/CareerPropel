@@ -102,6 +102,8 @@ model Candidate {
   calendarTokens    CalendarToken[]
   calendarEvents    CalendarEvent[]
   jobImports        JobImport[]
+  accomplishments   Accomplishment[]
+  appraisalSessions AppraisalSession[]
 }
 
 // ─── Job Pipeline ────────────────────────────────────────────────────────────
@@ -686,5 +688,38 @@ model ModelHealthLog {
 
   @@index([providerName, modelName])
   @@index([timestamp])
+}
+
+model Accomplishment {
+  id          String    @id @default(cuid())
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  title       String
+  date        DateTime  @default(now())
+  category    String    // e.g. "Project", "Leadership", "Process Improvement", "Mentorship"
+  description String    // Markdown text of context/actions
+  metrics     String?   // JSON or text representing quantified results (e.g. "+15% speedup")
+  starContext String?   // Structured Situation-Task-Action-Result format
+  visibility  String    @default("private") // "private", "staged_for_appraisal", "public"
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([candidateId])
+}
+
+model AppraisalSession {
+  id          String    @id @default(cuid())
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  title       String    // e.g. "H1 2026 Performance Review"
+  startDate   DateTime
+  endDate     DateTime
+  status      String    @default("draft") // "draft", "compiled", "archived"
+  selfReview  String?   // Generated self-appraisal draft text
+  impactDraft String?   // Generated promotion business case text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([candidateId])
 }
 

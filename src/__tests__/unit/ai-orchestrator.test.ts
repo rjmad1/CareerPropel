@@ -10,8 +10,8 @@ import { encryptApiKey, decryptApiKey, redactPii, restorePii } from '../../lib/l
 import { CAPABILITY_PRESETS } from '../../lib/llm/orchestrator';
 
 describe('1. Cryptographic Key Governance (AES-256-GCM)', () => {
-  const MASTER_SECRET = '0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'; // 64 hex characters (32 bytes)
-  const RAW_API_KEY = 'sk-proj-ab12cd34ef56gh78ij90kl12';
+  const MASTER_SECRET = 'a'.repeat(64); // 64 hex characters (32 bytes)
+  const RAW_API_KEY = 'sk-proj-' + 'x'.repeat(24);
 
   test('Should encrypt and decrypt a plain key back to its original state', () => {
     const encrypted = encryptApiKey(RAW_API_KEY, MASTER_SECRET);

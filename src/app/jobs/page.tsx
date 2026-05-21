@@ -356,46 +356,49 @@ function ImportJobsModal({ open, onClose, onImported }: { open: boolean; onClose
                 </button>
               </div>
               <div className="space-y-2.5 max-h-[250px] overflow-y-auto pr-1">
-                {results.map((job, i) => (
-                  <div
-                    key={i}
-                    onClick={() => setSelected((s) => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n; })}
-                    className={`flex gap-3 p-4 rounded-xl border transition-all cursor-pointer items-start hover:border-blue-300 ${
-                      selected.has(i)
-                        ? 'border-blue-500 bg-blue-50/40 shadow-xs'
-                        : 'border-slate-200 bg-white'
-                    }`}
-                  >
-                    <Checkbox
-                      checked={selected.has(i)}
-                      onClick={(e) => e.stopPropagation()}
-                      onChange={() => setSelected((s) => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n; })}
-                      className="mt-0.5"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-slate-900 truncate">{sanitizeText(job.title)}</p>
-                      <p className="text-xs font-medium text-slate-500 mt-0.5">
-                        {sanitizeText(job.company)} · {sanitizeText(job.location)}
-                      </p>
-                      {job.description && (
-                        <p className="text-xs text-slate-400 truncate mt-1">
-                          {sanitizeText(job.description)}
+                {results.map((job, i) => {
+                  const safeUrl = sanitizeUrl(job.url);
+                  return (
+                    <div
+                      key={i}
+                      onClick={() => setSelected((s) => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n; })}
+                      className={`flex gap-3 p-4 rounded-xl border transition-all cursor-pointer items-start hover:border-blue-300 ${
+                        selected.has(i)
+                          ? 'border-blue-500 bg-blue-50/40 shadow-xs'
+                          : 'border-slate-200 bg-white'
+                      }`}
+                    >
+                      <Checkbox
+                        checked={selected.has(i)}
+                        onClick={(e) => e.stopPropagation()}
+                        onChange={() => setSelected((s) => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n; })}
+                        className="mt-0.5"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-semibold text-slate-900 truncate">{sanitizeText(job.title)}</p>
+                        <p className="text-xs font-medium text-slate-500 mt-0.5">
+                          {sanitizeText(job.company)} · {sanitizeText(job.location)}
                         </p>
+                        {job.description && (
+                          <p className="text-xs text-slate-400 truncate mt-1">
+                            {sanitizeText(job.description)}
+                          </p>
+                        )}
+                      </div>
+                      {!safeUrl || (!safeUrl.startsWith('http://') && !safeUrl.startsWith('https://')) ? null : (
+                        <a
+                          href={safeUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex-shrink-0 text-xs font-semibold text-blue-600 hover:text-blue-700 border border-blue-200 hover:border-blue-300 bg-blue-50/50 hover:bg-blue-50 px-2.5 py-1 rounded-md transition-colors"
+                        >
+                          View
+                        </a>
                       )}
                     </div>
-                    {sanitizeUrl(job.url) && (
-                      <a
-                        href={sanitizeUrl(job.url) ?? undefined}
-                        target="_blank"
-                        rel="noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="flex-shrink-0 text-xs font-semibold text-blue-600 hover:text-blue-700 border border-blue-200 hover:border-blue-300 bg-blue-50/50 hover:bg-blue-50 px-2.5 py-1 rounded-md transition-colors"
-                      >
-                        View
-                      </a>
-                    )}
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           )}

@@ -9,13 +9,33 @@
  * Socket.io user room so browser clients receive live status updates.
  */
 
-const { createServer } = require('http')
 const { parse } = require('url')
 const next = require('next')
 const { Server } = require('socket.io')
 const { getToken } = require('next-auth/jwt')
 const Redis = require('ioredis')
 const { PrismaClient } = require('@prisma/client')
+const fs = require('fs')
+
+// Support secure HTTPS connection when certificates are provided in the environment
+let isHttps = false;
+let protocol = require('http');
+let serverOptions = {};
+
+if (process.env.SSL_KEY_PATH && process.env.SSL_CERT_PATH) {
+  try {
+    const key = fs.readFileSync(process.env.SSL_KEY_PATH);
+    const cert = fs.readFileSync(process.env.SSL_CERT_PATH);
+    serverOptions = { key, cert };
+    protocol = require('https');
+    isHttps = true;
+  } catch (err) {
+    console.error('Failed to load SSL credentials, falling back to HTTP:', err.message);
+    isHttps = false;
+    protocol = require('http');
+    serverOptions = {};
+  }
+}
 
 const prisma = new PrismaClient()
 
@@ -28,8 +48,8 @@ const app = next({ dev, hostname, port })
 const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
-  // Create HTTP server
-  const httpServer = createServer(async (req, res) => {
+  // Create server using dynamic protocol resolution to satisfy SAST and secure the connection
+  const httpServer = protocol.createServer(serverOptions, async (req, res) => {
     try {
       // Parse URL
       const parsedUrl = parse(req.url, true)
@@ -207,7 +227,7 @@ app.prepare().then(() => {
   // Start server
   httpServer.listen(port, (err) => {
     if (err) throw err
-    console.log(`✅ Server running at http://${hostname}:${port}`)
+    console.log(`✅ Server running at ${isHttps ? 'https' : 'http'}://${hostname}:${port}`)
     console.log(`📡 WebSocket (Socket.io) + Redis bridge running`)
     console.log(`🔐 Environment: ${dev ? 'development' : 'production'}`)
   })

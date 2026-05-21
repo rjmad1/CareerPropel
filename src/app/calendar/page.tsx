@@ -20,6 +20,11 @@ import {
   CheckCircle,
 } from 'lucide-react';
 
+const AUTH_ENDPOINTS: Record<string, string> = {
+  google: '/api/calendar/authorize',
+  outlook: '/api/calendar/authorize/outlook',
+};
+
 interface CalendarEvent {
   id: string;
   title: string;
@@ -128,7 +133,6 @@ function CalendarContent() {
               id: 'google' as const,
               label: 'Google Calendar',
               connected: googleConnected,
-              authHref: '/api/calendar/authorize',
               initial: 'G',
               colorClass: 'bg-red-50 text-red-650 border-red-100 dark:bg-red-950/20 dark:text-red-400 dark:border-red-900',
               accentColor: 'bg-red-500',
@@ -137,7 +141,6 @@ function CalendarContent() {
               id: 'outlook' as const,
               label: 'Outlook Calendar',
               connected: outlookConnected,
-              authHref: '/api/calendar/authorize/outlook',
               initial: 'O',
               colorClass: 'bg-blue-50 text-blue-650 border-blue-105 dark:bg-blue-950/20 dark:text-blue-400 dark:border-blue-900',
               accentColor: 'bg-blue-500',
@@ -181,7 +184,7 @@ function CalendarContent() {
                     </button>
                   </div>
                 ) : (
-                  <a href={p.authHref} className="shrink-0">
+                  <a href={AUTH_ENDPOINTS[p.id] || '#'} className="shrink-0">
                     <Button variant="primary" size="sm" className="flex items-center gap-1.5">
                       <LinkIcon className="w-3.5 h-3.5" />
                       <span>Connect</span>

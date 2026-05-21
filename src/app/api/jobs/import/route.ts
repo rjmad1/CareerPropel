@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 
 const ImportSchema = z.object({
   jobs: z.array(z.object({
-    source: z.enum(['greenhouse', 'indeed', 'linkedin', 'manual']),
+    source: z.enum(['greenhouse', 'indeed', 'linkedin', 'manual', 'lever', 'ashby']),
     externalId: z.string().nullable().optional(),
     title: z.string(),
     company: z.string(),

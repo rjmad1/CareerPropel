@@ -140,6 +140,45 @@ export const ProfileCompleteness: React.FC<ProfileCompletenessProps> = ({
         </div>
       </div>
 
+      {/* Lifelong Career operations Staging */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-8 shadow-xl flex flex-col justify-between hover:border-indigo-500/50 transition duration-300">
+          <div className="space-y-3">
+            <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-widest block">Continuous Tracking</span>
+            <h3 className="text-lg font-bold text-slate-100 flex items-center gap-2">
+              📝 Accomplishment Journal
+            </h3>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Log daily code contributions, milestones, and system optimizations. Refine vague drafts instantly with the AI STAR metric quantifier.
+            </p>
+          </div>
+          <a
+            href="/profile/accomplishments"
+            className="mt-6 inline-flex items-center justify-center px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-md transition"
+          >
+            Launch Journal Feed →
+          </a>
+        </div>
+
+        <div className="bg-slate-900 border border-slate-800 rounded-xl p-8 shadow-xl flex flex-col justify-between hover:border-emerald-500/50 transition duration-300">
+          <div className="space-y-3">
+            <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block">Review staging</span>
+            <h3 className="text-lg font-bold text-slate-100 flex items-center gap-2">
+              📊 Performance Appraisals
+            </h3>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Stage accomplishments, map them to company core competencies, and compile annual reviews or promotion cases using the AI narrative generator.
+            </p>
+          </div>
+          <a
+            href="/profile/appraisals"
+            className="mt-6 inline-flex items-center justify-center px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-md transition"
+          >
+            Open Workspace →
+          </a>
+        </div>
+      </div>
+
       {/* Category Breakdown */}
       <div className="bg-white border border-gray-200 rounded-lg p-12">
         <button
