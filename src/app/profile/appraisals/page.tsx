@@ -3,6 +3,7 @@
 export const dynamic = 'force-dynamic';
 
 import { useState, useEffect, useCallback } from 'react';
+import { getNotificationManager } from '@/lib/notifications/manager';
 import { useSession } from 'next-auth/react';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import {
@@ -110,9 +111,11 @@ export default function AppraisalsPage() {
 
       if (data.success && data.content) {
         setCompiledNarrative(data.content);
+        getNotificationManager().success('Appraisal Ready', `${appraisalTitle} narrative compiled`);
       }
     } catch (e: any) {
       setError(e.message);
+      getNotificationManager().error('Compilation Failed', e.message ?? 'Could not compile appraisal');
     } finally {
       setCompiling(false);
     }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { getNotificationManager } from '@/lib/notifications/manager';
 import { Card, Button, Badge, Spinner } from '@/components/ui';
 import { 
   Cpu, 
@@ -57,7 +58,6 @@ export default function AiProvidersSettingsPage() {
   const [isScanning, setIsScanning] = useState(false);
   const [savingProvider, setSavingProvider] = useState<string | null>(null);
   const [savingPreset, setSavingPreset] = useState<string | null>(null);
-  const [notification, setNotification] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
 
   // Form State for Key Edits
   const [editingKeys, setEditingKeys] = useState<Record<string, string>>({});
@@ -109,8 +109,8 @@ export default function AiProvidersSettingsPage() {
   }, [fetchSettings, triggerLocalScan]);
 
   function showNotice(type: 'success' | 'error', message: string) {
-    setNotification({ type, message });
-    setTimeout(() => setNotification(null), 4000);
+    if (type === 'success') getNotificationManager().success('Settings Saved', message);
+    else getNotificationManager().error('Settings Error', message);
   }
 
   async function saveProvider(providerName: string, customUrl?: string) {
@@ -232,17 +232,6 @@ export default function AiProvidersSettingsPage() {
           )}
         </div>
       </div>
-
-      {/* Notifications */}
-      {notification && (
-        <div className={`p-4 rounded-2xl text-sm border flex items-center shadow-sm transition-all ${
-          notification.type === 'success' 
-            ? 'bg-emerald-50 text-emerald-800 border-emerald-100' 
-            : 'bg-rose-50 text-rose-800 border-rose-100'
-        }`}>
-          <span>{notification.message}</span>
-        </div>
-      )}
 
       {/* Grid Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

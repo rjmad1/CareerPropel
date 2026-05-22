@@ -3,6 +3,7 @@
 export const dynamic = 'force-dynamic';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { ProfileEditor } from '@/components/Profile/ProfileEditor';
@@ -111,6 +112,43 @@ export default function ProfilePage() {
               {!loading && !score && (
                 <EmptyProfileState onRefresh={refresh} />
               )}
+
+              {/* Career Journal tools */}
+              <div>
+                <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4">
+                  Career Journal
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <Link
+                    href="/profile/accomplishments"
+                    className="group flex items-start gap-4 rounded-xl border border-slate-200 bg-white p-5 hover:border-blue-400 hover:shadow-sm transition-all"
+                  >
+                    <span className="text-2xl">📓</span>
+                    <div>
+                      <div className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors text-sm">
+                        Accomplishment Journal
+                      </div>
+                      <div className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                        Log wins, metrics, and STAR moments continuously so nothing gets forgotten.
+                      </div>
+                    </div>
+                  </Link>
+                  <Link
+                    href="/profile/appraisals"
+                    className="group flex items-start gap-4 rounded-xl border border-slate-200 bg-white p-5 hover:border-purple-400 hover:shadow-sm transition-all"
+                  >
+                    <span className="text-2xl">📋</span>
+                    <div>
+                      <div className="font-semibold text-slate-900 group-hover:text-purple-600 transition-colors text-sm">
+                        Appraisal Compiler
+                      </div>
+                      <div className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                        Select accomplishments and generate a self-evaluation narrative for reviews.
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              </div>
             </div>
           )}
 

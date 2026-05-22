@@ -52,7 +52,7 @@ export const AgentExecutionTimeline: React.FC<AgentExecutionTimelineProps> = ({
   return (
     <div className="p-8 space-y-8">
       {/* Execution Summary */}
-      <div className="grid grid-cols-4 gap-8 mb-12">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-8 mb-12">
         <div className="bg-white p-6 rounded border border-gray-200">
           <p className="text-xs text-gray-600 font-semibold">Status</p>
           <p className="text-sm font-medium text-gray-900 mt-2 capitalize">{execution.status}</p>

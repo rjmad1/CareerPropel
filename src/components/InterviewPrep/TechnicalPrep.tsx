@@ -211,7 +211,7 @@ export const TechnicalPrep: React.FC<TechnicalPrepProps> = ({ prep }) => {
           <BarChart3 className="w-10 h-10 text-orange-600" />
           Practice Problem Roadmap
         </h3>
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <div className="bg-green-50 border border-green-200 rounded-lg p-8 text-center">
             <div className="text-2xl font-bold text-green-700">{practiceProblemsByDifficulty.easy}</div>
             <div className="text-sm text-green-800 font-medium">Easy</div>

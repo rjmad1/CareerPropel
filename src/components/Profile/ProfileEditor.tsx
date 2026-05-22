@@ -271,7 +271,7 @@ const AchievementsTab: React.FC<{ candidateId: string; onChangesMade: () => void
             rows={2}
             onChange={onChangesMade}
           />
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <input type="text" placeholder="Metric" className="px-6 py-4 border border-gray-300 rounded text-sm" onChange={onChangesMade} />
             <input type="text" placeholder="Value" className="px-6 py-4 border border-gray-300 rounded text-sm" onChange={onChangesMade} />
             <input type="text" placeholder="Unit" className="px-6 py-4 border border-gray-300 rounded text-sm" onChange={onChangesMade} />
