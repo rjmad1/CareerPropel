@@ -6,6 +6,7 @@ import { ResumeFragment } from '@/types/profile';
 interface ResumeFragmentsProps {
   fragments: ResumeFragment[];
   onAddFragment?: (fragment: Omit<ResumeFragment, 'id' | 'createdAt'>) => void;
+  candidateId?: string;
 }
 
 const CATEGORIES = [
@@ -19,6 +20,7 @@ const CATEGORIES = [
 export const ResumeFragments: React.FC<ResumeFragmentsProps> = ({
   fragments,
   onAddFragment,
+  candidateId,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -26,22 +28,28 @@ export const ResumeFragments: React.FC<ResumeFragmentsProps> = ({
 
   // New Fragment form state
   const [showAddForm, setShowAddForm] = useState(false);
-  const [newSection, setNewSection] = useState<'experience' | 'achievement' | 'skill' | 'project'>('experience');
+  type FragmentSection = 'experience' | 'achievement' | 'skill' | 'project';
+  const SECTION_VALUES: FragmentSection[] = ['experience', 'achievement', 'skill', 'project'];
+  const [newSection, setNewSection] = useState<FragmentSection>('experience');
   const [newContent, setNewContent] = useState('');
   const [newSource, setNewSource] = useState('');
   const [newJobTag, setNewJobTag] = useState('');
 
-  const handleCopy = (id: string, text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 1800);
+  const handleCopy = async (id: string, text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 1800);
+    } catch (err) {
+      console.error('Clipboard write failed:', err);
+    }
   };
 
   const handleAddFragmentSubmit = () => {
     if (!newContent.trim()) return;
     if (onAddFragment) {
       onAddFragment({
-        candidateId: 'temp_candidate',
+        candidateId: candidateId ?? 'temp_candidate',
         section: newSection,
         content: newContent,
         sourceDocument: newSource || 'Imported Workspace Resume',
@@ -109,7 +117,12 @@ export const ResumeFragments: React.FC<ResumeFragmentsProps> = ({
                 <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Section Category</label>
                 <select
                   value={newSection}
-                  onChange={(e) => setNewSection(e.target.value as any)}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                    const val = e.target.value;
+                    if (SECTION_VALUES.includes(val as FragmentSection)) {
+                      setNewSection(val as FragmentSection);
+                    }
+                  }}
                   className="w-full px-4 py-3 bg-slate-950/80 border border-slate-800 rounded-xl text-xs text-slate-400 focus:outline-none focus:border-indigo-500 transition"
                 >
                   <option value="experience">Experience Bullet</option>

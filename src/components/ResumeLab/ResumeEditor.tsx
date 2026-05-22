@@ -178,9 +178,12 @@ export const ResumeEditor: React.FC<ResumeEditorProps> = ({
             </h4>
             <div className="flex items-center justify-between">
               <span className="text-[11px] text-slate-400">Match score:</span>
-              <span className={`text-sm font-black ${
-                matchScore >= 80 ? 'text-emerald-400' : 'text-amber-400'
-              }`}>{matchScore}%</span>
+              <span
+                data-cy="ats-match-score"
+                className={`text-sm font-black ${
+                  matchScore >= 80 ? 'text-emerald-400' : 'text-amber-400'
+                }`}
+              >{matchScore}%</span>
             </div>
             <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden">
               <div
@@ -197,7 +200,7 @@ export const ResumeEditor: React.FC<ResumeEditorProps> = ({
               <h4 className="text-[10px] uppercase font-bold tracking-wider text-slate-500">
                 Key Keywords Alignment
               </h4>
-              <span className="text-[10px] font-black text-indigo-400">{matchedCount}/{keywords.length}</span>
+              <span data-cy="keyword-match-count" className="text-[10px] font-black text-indigo-400">{matchedCount}/{keywords.length}</span>
             </div>
             <div className="grid grid-cols-1 gap-2 max-h-[220px] overflow-y-auto pr-1">
               {keywords.map((kw) => (

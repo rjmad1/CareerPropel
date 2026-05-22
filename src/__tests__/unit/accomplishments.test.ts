@@ -62,8 +62,6 @@ describe('Continuous Performance System Tests', () => {
   });
 
   describe('1. Accomplishment Journal CRUD route handlers', () => {
-    let createdId: string;
-
     test('POST should create a new accomplishment log', async () => {
       const payload = {
         title: 'Built latencies compressor',
@@ -87,10 +85,24 @@ describe('Continuous Performance System Tests', () => {
       expect(body.accomplishment.title).toBe(payload.title);
       expect(body.accomplishment.visibility).toBe(payload.visibility);
 
-      createdId = body.accomplishment.id;
+      // Clean up local test creation
+      await prisma.accomplishment.delete({
+        where: { id: body.accomplishment.id },
+      });
     });
 
     test('GET should retrieve all user accomplishments', async () => {
+      const created = await prisma.accomplishment.create({
+        data: {
+          candidateId: 'test-candidate-001',
+          title: 'GET Test Latency Compressor',
+          category: 'Project',
+          description: 'Optimized server execution latency.',
+          metrics: '+40% speedup',
+          visibility: 'staged_for_appraisal',
+        },
+      });
+
       const req = new NextRequest('http://localhost/api/profile/accomplishments', {
         method: 'GET',
       });
@@ -100,13 +112,29 @@ describe('Continuous Performance System Tests', () => {
 
       const body = await res.json();
       expect(body.accomplishments).toBeDefined();
-      expect(body.accomplishments.length).toBeGreaterThanOrEqual(1);
-      expect(body.accomplishments[0].title).toBe('Built latencies compressor');
+      const match = body.accomplishments.find((acc: any) => acc.id === created.id);
+      expect(match).toBeDefined();
+      expect(match.title).toBe('GET Test Latency Compressor');
+
+      // Clean up
+      await prisma.accomplishment.delete({
+        where: { id: created.id },
+      });
     });
 
     test('PUT should modify existing accomplishment', async () => {
+      const created = await prisma.accomplishment.create({
+        data: {
+          candidateId: 'test-candidate-001',
+          title: 'Initial Title',
+          category: 'Project',
+          description: 'Initial Description',
+          visibility: 'staged_for_appraisal',
+        },
+      });
+
       const updatePayload = {
-        id: createdId,
+        id: created.id,
         title: 'Built Premium latencies compressor',
         visibility: 'public',
       };
@@ -122,10 +150,25 @@ describe('Continuous Performance System Tests', () => {
       const body = await res.json();
       expect(body.accomplishment.title).toBe(updatePayload.title);
       expect(body.accomplishment.visibility).toBe(updatePayload.visibility);
+
+      // Clean up
+      await prisma.accomplishment.delete({
+        where: { id: created.id },
+      });
     });
 
     test('DELETE should discard logged accomplishment', async () => {
-      const req = new NextRequest(`http://localhost/api/profile/accomplishments?id=${createdId}`, {
+      const created = await prisma.accomplishment.create({
+        data: {
+          candidateId: 'test-candidate-001',
+          title: 'To Be Deleted',
+          category: 'Project',
+          description: 'To Be Deleted Description',
+          visibility: 'staged_for_appraisal',
+        },
+      });
+
+      const req = new NextRequest(`http://localhost/api/profile/accomplishments?id=${created.id}`, {
         method: 'DELETE',
       });
 
@@ -137,7 +180,7 @@ describe('Continuous Performance System Tests', () => {
 
       // Verify deletion from database
       const record = await prisma.accomplishment.findUnique({
-        where: { id: createdId },
+        where: { id: created.id },
       });
       expect(record).toBeNull();
     });
@@ -159,13 +202,15 @@ describe('Continuous Performance System Tests', () => {
         totalTokens: 260,
       });
 
+      const payload = {
+        title: 'indexed postgres db',
+        description: 'made queries much faster',
+        category: 'Process Improvement',
+      };
+
       const req = new NextRequest('http://localhost/api/profile/quantify', {
         method: 'POST',
-        body: JSON.stringify({
-          title: 'indexed postgres db',
-          description: 'made queries much faster',
-          category: 'Process Improvement',
-        }),
+        body: JSON.stringify(payload),
       });
 
       const res = await quantifyAccomplishment(req);
@@ -176,6 +221,38 @@ describe('Continuous Performance System Tests', () => {
       expect(body.data.title).toBe('Refined Engine latency Optimizer');
       expect(body.data.metrics).toBe('+35% latency drop');
       expect(body.data.refinedDescription).toContain('queries');
+
+      // Assertions on LLM mock call parameters
+      expect(mockCallLLM).toHaveBeenCalledTimes(1);
+      const callArgs = mockCallLLM.mock.calls[0];
+      expect(callArgs[0]).toBeDefined(); // messages
+      expect(callArgs[0][0].content).toContain(payload.title);
+      expect(callArgs[0][0].content).toContain(payload.description);
+      expect(callArgs[0][0].content).toContain(payload.category);
+      expect(callArgs[1]).toEqual({
+        systemPrompt: expect.stringContaining("STAR-formatted accomplishment quantification"),
+        temperature: 0.3,
+      });
+    });
+
+    test('POST should handle LLM failures gracefully', async () => {
+      // Mock LLM failure
+      mockCallLLM.mockRejectedValueOnce(new Error('LLM call failed'));
+
+      const req = new NextRequest('http://localhost/api/profile/quantify', {
+        method: 'POST',
+        body: JSON.stringify({
+          title: 'indexed postgres db',
+          description: 'made queries much faster',
+          category: 'Process Improvement',
+        }),
+      });
+
+      const res = await quantifyAccomplishment(req);
+      expect(res.status).toBe(500);
+
+      const body = await res.json();
+      expect(body.error).toBe('LLM call failed');
     });
   });
 
@@ -225,6 +302,112 @@ describe('Continuous Performance System Tests', () => {
       expect(session).not.toBeNull();
       expect(session?.status).toBe('compiled');
       expect(session?.selfReview).toContain('Mid-Year Appraisal Draft');
+
+      // Assertions on LLM mock call parameters
+      expect(mockCallLLM).toHaveBeenCalledTimes(1);
+      const callArgs = mockCallLLM.mock.calls[0];
+      expect(callArgs[0]).toBeDefined(); // messages
+      expect(callArgs[0][0].content).toContain('Spearheaded auth migration');
+      expect(callArgs[0][0].content).toContain('0 downtime');
+      expect(callArgs[1]).toEqual({
+        systemPrompt: expect.stringContaining("Chief People Officer"),
+        temperature: 0.5,
+      });
+
+      // Clean up accomplishments and sessions
+      await prisma.appraisalSession.delete({
+        where: { id: session!.id },
+      });
+      await prisma.accomplishment.delete({
+        where: { id: a1.id },
+      });
+    });
+
+    test('POST with empty/missing ids should return a 400 and not create an appraisalSession', async () => {
+      const req = new NextRequest('http://localhost/api/profile/appraisal-compile', {
+        method: 'POST',
+        body: JSON.stringify({
+          title: 'H1 Midyear Review Cycle',
+          type: 'performance',
+        }),
+      });
+
+      const res = await compileAppraisal(req);
+      expect(res.status).toBe(400);
+
+      const body = await res.json();
+      expect(body.error).toContain('Staged accomplishment IDs are required');
+
+      // Check DB entry for session
+      const sessions = await prisma.appraisalSession.findMany({
+        where: { candidateId: 'test-candidate-001' },
+      });
+      expect(sessions.length).toBe(0);
+    });
+
+    test('POST with invalid/nonexistent ids should return a 404 and not create a session', async () => {
+      const req = new NextRequest('http://localhost/api/profile/appraisal-compile', {
+        method: 'POST',
+        body: JSON.stringify({
+          ids: ['nonexistent-id-123'],
+          title: 'H1 Midyear Review Cycle',
+          type: 'performance',
+        }),
+      });
+
+      const res = await compileAppraisal(req);
+      expect(res.status).toBe(404);
+
+      const body = await res.json();
+      expect(body.error).toContain('No matching accomplishments found');
+
+      // Check DB entry for session
+      const sessions = await prisma.appraisalSession.findMany({
+        where: { candidateId: 'test-candidate-001' },
+      });
+      expect(sessions.length).toBe(0);
+    });
+
+    test('POST should handle LLM failure gracefully and not create an appraisalSession', async () => {
+      // Create staged accomplishments
+      const a1 = await prisma.accomplishment.create({
+        data: {
+          candidateId: 'test-candidate-001',
+          title: 'Spearheaded auth migration',
+          category: 'Leadership',
+          description: 'Led two engineers to migrate next-auth secrets.',
+          metrics: '0 downtime',
+          visibility: 'staged_for_appraisal',
+        },
+      });
+
+      mockCallLLM.mockRejectedValueOnce(new Error('LLM call failed'));
+
+      const req = new NextRequest('http://localhost/api/profile/appraisal-compile', {
+        method: 'POST',
+        body: JSON.stringify({
+          ids: [a1.id],
+          title: 'H1 Midyear Review Cycle',
+          type: 'performance',
+        }),
+      });
+
+      const res = await compileAppraisal(req);
+      expect(res.status).toBe(500);
+
+      const body = await res.json();
+      expect(body.error).toBe('LLM call failed');
+
+      // Check DB entry for session
+      const sessions = await prisma.appraisalSession.findMany({
+        where: { candidateId: 'test-candidate-001' },
+      });
+      expect(sessions.length).toBe(0);
+
+      // Clean up
+      await prisma.accomplishment.delete({
+        where: { id: a1.id },
+      });
     });
   });
 });

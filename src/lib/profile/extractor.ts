@@ -46,7 +46,8 @@ const EXTRACTION_RULES = [
  */
 export function extractProfileEntities(
   text: string,
-  source: ProfileEntity['source'] = 'resume'
+  source: ProfileEntity['source'] = 'resume',
+  candidateId: string = 'temp_candidate'
 ): ProfileEntity[] {
   const entities: ProfileEntity[] = [];
   const lines = text.split(/[.\n]/).map((line) => line.trim()).filter((line) => line.length > 5);
@@ -59,10 +60,13 @@ export function extractProfileEntities(
           return;
         }
 
-        const id = `extracted_entity_${Date.now()}_${index}_${Math.floor(Math.random() * 1000)}`;
+        const uid = typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+          ? crypto.randomUUID()
+          : `${Date.now()}-${index}-${Math.random().toString(36).slice(2, 9)}`;
+        const id = `extracted_entity_${uid}`;
         entities.push({
           id,
-          candidateId: 'temp_candidate',
+          candidateId,
           type: rule.type,
           content: line,
           confidence: Math.round((rule.confidence + (Math.random() * 0.05 - 0.025)) * 100) / 100,
@@ -83,7 +87,7 @@ export function extractProfileEntities(
     defaultSkills.forEach((skill, index) => {
       entities.push({
         id: `def_skill_${index}`,
-        candidateId: 'temp_candidate',
+        candidateId,
         type: 'skill',
         content: skill,
         confidence: 0.95,
@@ -98,7 +102,7 @@ export function extractProfileEntities(
 
     entities.push({
       id: 'def_ach_1',
-      candidateId: 'temp_candidate',
+      candidateId,
       type: 'achievement',
       content: 'Reduced dashboard latency by 32% utilizing optimistic client state updates.',
       confidence: 0.88,

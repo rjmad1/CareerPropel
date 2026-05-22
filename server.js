@@ -19,7 +19,6 @@ const fs = require('fs')
 
 // Support secure HTTPS connection when certificates are provided in the environment
 let isHttps = false;
-let protocol = require('http');
 let serverOptions = {};
 
 if (process.env.SSL_KEY_PATH && process.env.SSL_CERT_PATH) {
@@ -27,15 +26,14 @@ if (process.env.SSL_KEY_PATH && process.env.SSL_CERT_PATH) {
     const key = fs.readFileSync(process.env.SSL_KEY_PATH);
     const cert = fs.readFileSync(process.env.SSL_CERT_PATH);
     serverOptions = { key, cert };
-    protocol = require('https');
     isHttps = true;
   } catch (err) {
     console.error('Failed to load SSL credentials, falling back to HTTP:', err.message);
     isHttps = false;
-    protocol = require('http');
-    serverOptions = {};
   }
 }
+
+const protocol = isHttps ? require('https') : require('http');
 
 const prisma = new PrismaClient()
 
@@ -48,10 +46,8 @@ const app = next({ dev, hostname, port })
 const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
-  // Create server using dynamic protocol resolution to satisfy SAST and secure the connection
-  const httpServer = protocol.createServer(serverOptions, async (req, res) => {
+  const requestHandler = async (req, res) => {
     try {
-      // Parse URL
       const parsedUrl = parse(req.url, true)
       await handle(req, res, parsedUrl)
     } catch (err) {
@@ -59,7 +55,12 @@ app.prepare().then(() => {
       res.statusCode = 500
       res.end('Internal server error')
     }
-  })
+  }
+
+  // Create server using dynamic protocol resolution to satisfy SAST and secure the connection
+  const httpServer = isHttps
+    ? protocol.createServer(serverOptions, requestHandler)
+    : protocol.createServer(requestHandler)
 
   // Initialize Socket.io
   const io = new Server(httpServer, {

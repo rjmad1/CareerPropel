@@ -17,7 +17,7 @@ Cypress.Commands.add('login', (email?: string, password?: string) => {
   cy.get('input[type="email"]').type(testEmail);
   cy.get('input[type="password"]').type(testPassword);
   cy.get('button[type="submit"]').click();
-  cy.url().should('not.include', '/signin');
+  cy.url().should('not.include', '/login');
 });
 
 // Create test job

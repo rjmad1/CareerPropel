@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { Achievement } from '@/types/profile';
 
+let _achIdCounter = 0;
+
 interface AchievementLibraryProps {
   achievements: Achievement[];
   onAddAchievement?: (achievement: Achievement) => void;
@@ -83,8 +85,11 @@ export const AchievementLibrary: React.FC<AchievementLibraryProps> = ({
     if (!newTitle.trim() || !newDescription.trim()) return;
 
     if (onAddAchievement) {
+      const achId = typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+        ? `ach_${crypto.randomUUID()}`
+        : `ach_${Date.now()}-${++_achIdCounter}-${Math.random().toString(36).slice(2, 9)}`;
       onAddAchievement({
-        id: `ach_${Date.now()}`,
+        id: achId,
         title: newTitle,
         description: newDescription,
         context: newContext || 'CareerPropel Workspace',
@@ -94,7 +99,11 @@ export const AchievementLibrary: React.FC<AchievementLibraryProps> = ({
           { metric: 'User Engagement', value: 15, unit: '%' }
         ],
         date: new Date(),
-        relevantSkills: [newCompetency, ...newSkills.split(',').map(s => s.trim()).filter(Boolean)]
+        relevantSkills: [newCompetency, ...newSkills.split(',').map(s => s.trim()).filter(Boolean)],
+        situation: newSituation || undefined,
+        task: newTask || undefined,
+        action: newAction || undefined,
+        result: newResult || undefined,
       });
     }
 
@@ -329,8 +338,12 @@ export const AchievementLibrary: React.FC<AchievementLibraryProps> = ({
               <p className="text-xs text-slate-300 leading-relaxed font-mono">{quantifiedResult}</p>
               <div className="flex gap-3 justify-end pt-1">
                 <button
-                  onClick={() => {
-                    navigator.clipboard.writeText(quantifiedResult);
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(quantifiedResult);
+                    } catch (err) {
+                      console.error('Clipboard write failed:', err);
+                    }
                   }}
                   className="text-[10px] text-slate-400 hover:text-indigo-400 font-semibold transition"
                   data-cy="copy-polished-btn"
@@ -427,30 +440,35 @@ export const AchievementLibrary: React.FC<AchievementLibraryProps> = ({
                       <p className="text-xs text-slate-300 leading-relaxed font-sans">{achievement.description}</p>
                     </div>
 
-                    {/* STAR Framework Visualizer (Special request requirement) */}
+                    {/* STAR Framework Visualizer */}
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 bg-slate-950/40 border border-slate-800/80 rounded-2xl p-5">
+                      {!(achievement.situation || achievement.task || achievement.action || achievement.result) && (
+                        <div className="md:col-span-4 text-center">
+                          <span className="text-[10px] font-bold text-slate-500 italic uppercase tracking-wider">Sample STAR Format — add STAR fields when creating or editing this milestone.</span>
+                        </div>
+                      )}
                       <div className="space-y-1 border-b md:border-b-0 md:border-r border-slate-900 pb-3 md:pb-0 md:pr-4">
                         <span className="text-[10px] font-black text-amber-400 uppercase tracking-widest block mb-0.5">Situation (S)</span>
                         <p className="text-xs text-slate-400 leading-relaxed">
-                          Refactoring lagging legacy dashboard architectures experiencing severe thread blocking.
+                          {achievement.situation || <span className="italic text-slate-600">Not specified</span>}
                         </p>
                       </div>
                       <div className="space-y-1 border-b md:border-b-0 md:border-r border-slate-900 pb-3 md:pb-0 md:px-4">
                         <span className="text-[10px] font-black text-sky-400 uppercase tracking-widest block mb-0.5">Task (T)</span>
                         <p className="text-xs text-slate-400 leading-relaxed">
-                          Optimize rendering lifecycle models, establish high coverage thresholds, and lower database latency.
+                          {achievement.task || <span className="italic text-slate-600">Not specified</span>}
                         </p>
                       </div>
                       <div className="space-y-1 border-b md:border-b-0 md:border-r border-slate-900 pb-3 md:pb-0 md:px-4">
                         <span className="text-[10px] font-black text-purple-400 uppercase tracking-widest block mb-0.5">Action (A)</span>
                         <p className="text-xs text-slate-400 leading-relaxed">
-                          Implemented state isolation buffers, integrated automated telemetry tracing, and introduced Redis caches.
+                          {achievement.action || <span className="italic text-slate-600">Not specified</span>}
                         </p>
                       </div>
                       <div className="space-y-1 md:pl-4">
                         <span className="text-[10px] font-black text-emerald-400 uppercase tracking-widest block mb-0.5">Result (R)</span>
                         <p className="text-xs text-slate-400 leading-relaxed">
-                          Latency plunged 32%, UI thread responsiveness bounded, and E2E test coverage elevated to 98%.
+                          {achievement.result || <span className="italic text-slate-600">Not specified</span>}
                         </p>
                       </div>
                     </div>

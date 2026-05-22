@@ -265,4 +265,93 @@ describe('Analytics Dashboard', () => {
       );
     });
   });
+
+  describe('Advanced Week 9 Analytics & Insights', () => {
+    it('should support switching tabs to view Advanced ROI, Career Trajectory, and Market Insights', () => {
+      // 1. Verify all tab selectors exist
+      cy.get('[data-cy="tab-roi"]').should('exist');
+      cy.get('[data-cy="tab-trajectory"]').should('exist');
+      cy.get('[data-cy="tab-market"]').should('exist');
+
+      // --- ROI FUNNEL TESTS ---
+      // 2. Click ROI & Funnel tab
+      cy.get('[data-cy="tab-roi"]').click();
+      
+      // 3. Verify ROI container and metric cards
+      cy.get('[data-cy="roi-metrics-container"]').should('exist');
+      cy.get('[data-cy="roi-metrics"]').within(() => {
+        cy.contains('Application Yield').should('exist');
+        cy.contains('Funnel Velocity').should('exist');
+        cy.contains('Offer Conversion').should('exist');
+      });
+
+      // 4. Verify Funnel stages list
+      cy.get('[data-cy="funnel-stage"]').should('have.length', 5);
+      cy.contains('Pipeline Conversion Funnel').should('be.visible');
+      cy.contains('Discovery & Sourced').should('be.visible');
+      cy.contains('Offers Received').should('be.visible');
+
+      // 5. Verify Turnaround Benchmarks
+      cy.contains('Stage Turnaround Benchmarks').should('be.visible');
+      cy.contains('Technical Assessment').should('exist');
+
+      // --- CAREER TRAJECTORY TESTS ---
+      // 6. Click Career Trajectory Map tab
+      cy.get('[data-cy="tab-trajectory"]').click();
+
+      // 7. Verify Trajectory Map rendering
+      cy.get('[data-cy="trajectory-card"]').should('exist');
+      cy.get('[data-cy="trajectory-svg"]').should('be.visible');
+
+      // 8. Verify default active details (Staff Software Engineer is selected/active by default)
+      cy.get('[data-cy="node-details"]').within(() => {
+        cy.contains('Staff Software Engineer').should('be.visible');
+        cy.contains('ACTIVE').should('exist');
+        cy.contains('Current Goal').should('exist');
+        cy.contains('Skill Gaps to Close').should('exist');
+        cy.contains('Required Milestones').should('exist');
+      });
+
+      // 9. Click on Director of Engineering node to test interactivity
+      cy.get('[data-cy="trajectory-node"][data-node-id="director-eng"]').click();
+
+      // 10. Inspector details should update for Director
+      cy.get('[data-cy="node-details"]').within(() => {
+        cy.contains('Director of Engineering').should('be.visible');
+        cy.contains('LOCKED').should('exist');
+        cy.contains('3-5 Years').should('exist');
+        cy.contains('Scale engineering department').should('exist');
+      });
+
+      // 11. Click on Completed Senior Engineer node
+      cy.get('[data-cy="trajectory-node"][data-node-id="senior-eng"]').click();
+      cy.get('[data-cy="node-details"]').within(() => {
+        cy.contains('Senior Software Engineer').should('be.visible');
+        cy.contains('COMPLETED').should('exist');
+        cy.contains('All Core Gaps Closed').should('be.visible');
+      });
+
+      // --- MARKET INSIGHTS TESTS ---
+      // 12. Click Market Timing & Demand tab
+      cy.get('[data-cy="tab-market"]').click();
+
+      // 13. Verify Market Insights rendering
+      cy.get('[data-cy="market-insights"]').should('exist');
+      cy.get('[data-cy="skill-demand-list"]').should('exist');
+      cy.get('[data-cy="salary-bench-list"]').should('exist');
+      cy.contains('Next.js 14/15 App Router').should('be.visible');
+      cy.contains('Salary Benchmarks').should('be.visible');
+
+      // 14. Switch mode to Onsite
+      cy.get('[data-cy="market-mode-btn-onsite"]').click();
+      cy.get('[data-cy="market-mode-btn-onsite"]').should('have.class', 'bg-indigo-600');
+      cy.contains('Salary Benchmarks (Onsite)').should('be.visible');
+
+      // 15. Switch mode to Remote
+      cy.get('[data-cy="market-mode-btn-remote"]').click();
+      cy.get('[data-cy="market-mode-btn-remote"]').should('have.class', 'bg-indigo-600');
+      cy.contains('Salary Benchmarks (Remote)').should('be.visible');
+    });
+  });
 });
+

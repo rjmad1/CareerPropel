@@ -62,7 +62,17 @@ export async function parseDocumentText(
   onProgress: (progress: number, log: ParsingLogEntry) => void
 ): Promise<string> {
   const extension = fileName.split('.').pop()?.toLowerCase();
-  const fileType = (extension === 'pdf' ? 'pdf' : extension === 'docx' ? 'docx' : 'json') as 'pdf' | 'docx' | 'json';
+  let fileType: 'pdf' | 'docx' | 'json';
+  if (extension === 'pdf') {
+    fileType = 'pdf';
+  } else if (extension === 'docx') {
+    fileType = 'docx';
+  } else if (extension === 'json') {
+    fileType = 'json';
+  } else {
+    console.warn(`Unsupported file extension "${extension}", falling back to json parsing.`);
+    fileType = 'json';
+  }
   const steps = LOG_TEMPLATES[fileType].length;
 
   for (let i = 0; i < steps; i++) {

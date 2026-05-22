@@ -40,7 +40,7 @@ export function extractSkillsFromText(text: string): SemanticSkill[] {
       if (skills.some((s) => s.name === standardName)) return;
 
       // Estimate years of experience based on standard mock metrics
-      const experienceYears = Math.max(1, Math.floor(Math.random() * 5) + 1);
+      const experienceYears = Math.floor(Math.random() * 5) + 1;
       
       // Map proficiency thresholds based on years
       const proficiency: SemanticSkill['proficiency'] = 

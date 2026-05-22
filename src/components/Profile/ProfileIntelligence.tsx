@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
+
+let _fragIdCounter = 0;
 import { ProfileSummary, Achievement, ResumeFragment, ProfileEntity } from '@/types/profile';
 import { buildProfileKnowledgeGraph } from '@/lib/profile/knowledge-builder';
 import { DocumentUpload } from './DocumentUpload';
@@ -199,12 +201,15 @@ export const ProfileIntelligence: React.FC = () => {
 
     // 4. Create resume fragments for new achievements
     const newFrags: ResumeFragment[] = newAchs.map((ach) => ({
-      id: `frag_${ach.id}`,
-      candidateId: 'temp_candidate',
-      section: 'achievement',
+      id: typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+        ? `frag_${crypto.randomUUID()}`
+        : `frag_${Date.now()}-${++_fragIdCounter}-${Math.random().toString(36).slice(2, 9)}`,
+      candidateId: summary.candidateId,
+      section: 'achievement' as const,
       content: ach.description,
       sourceDocument: 'Imported Resume Parsing',
       jobRelevance: ['General Application'],
+      achievementId: ach.id,
       createdAt: new Date()
     }));
     setFragments([...newFrags, ...fragments]);
@@ -227,12 +232,15 @@ export const ProfileIntelligence: React.FC = () => {
     setAchievements([newAch, ...achievements]);
     // Inject automatically into fragments library
     const newFrag: ResumeFragment = {
-      id: `frag_${newAch.id}`,
-      candidateId: 'temp_candidate',
+      id: typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+        ? `frag_${crypto.randomUUID()}`
+        : `frag_${Date.now()}-${++_fragIdCounter}-${Math.random().toString(36).slice(2, 9)}`,
+      candidateId: summary.candidateId,
       section: 'achievement',
       content: newAch.description,
       sourceDocument: 'Manual Achievement Entry',
       jobRelevance: newAch.relevantSkills,
+      achievementId: newAch.id,
       createdAt: new Date()
     };
     setFragments([newFrag, ...fragments]);
@@ -240,14 +248,17 @@ export const ProfileIntelligence: React.FC = () => {
 
   const handleDeleteAchievement = (id: string) => {
     setAchievements(achievements.filter((a) => a.id !== id));
-    setFragments(fragments.filter((f) => f.id !== `frag_${id}`));
+    setFragments(fragments.filter((f) => f.achievementId !== id));
   };
 
   const handleAddFragment = (newFrag: Omit<ResumeFragment, 'id' | 'createdAt'>) => {
+    const fragId = typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
+      ? `manual_frag_${crypto.randomUUID()}`
+      : `manual_frag_${Date.now()}-${++_fragIdCounter}-${Math.random().toString(36).slice(2, 9)}`;
     setFragments([
       {
         ...newFrag,
-        id: `manual_frag_${Date.now()}`,
+        id: fragId,
         createdAt: new Date()
       },
       ...fragments
@@ -446,7 +457,7 @@ export const ProfileIntelligence: React.FC = () => {
                         const finalHighlight = isHighlighted || matchesSearch;
 
                         // Scale size based on node importance
-                        const baseRadius = node.metadata?.isCenter ? 18 : node.type === 'skill' ? 10 : 8;
+                        const baseRadius = Boolean(node.metadata?.isCenter) ? 18 : node.type === 'skill' ? 10 : 8;
                         const finalRadius = finalHighlight ? baseRadius + 3 : baseRadius;
 
                         return (
@@ -541,11 +552,11 @@ export const ProfileIntelligence: React.FC = () => {
                                 <div className="grid grid-cols-2 gap-2 text-xs">
                                   <div>
                                     <span className="text-[9px] text-slate-500 block">Proficiency</span>
-                                    <span className="text-slate-300 font-bold capitalize">{node.metadata?.proficiency || 'expert'}</span>
+                                    <span className="text-slate-300 font-bold capitalize">{typeof node.metadata?.proficiency === 'string' ? node.metadata.proficiency : 'expert'}</span>
                                   </div>
                                   <div>
                                     <span className="text-[9px] text-slate-500 block">Market Demand</span>
-                                    <span className="text-indigo-400 font-bold capitalize">{node.metadata?.demand || 'high'}</span>
+                                    <span className="text-indigo-400 font-bold capitalize">{typeof node.metadata?.demand === 'string' ? node.metadata.demand : 'high'}</span>
                                   </div>
                                 </div>
                               </div>
@@ -555,9 +566,9 @@ export const ProfileIntelligence: React.FC = () => {
                               <div className="space-y-3 bg-slate-950/60 border border-slate-900 rounded-2xl p-4">
                                 <div>
                                   <span className="text-[9px] text-slate-500 block">Full Description</span>
-                                  <p className="text-xs text-slate-300 mt-1 leading-relaxed">{node.metadata?.description}</p>
+                                  <p className="text-xs text-slate-300 mt-1 leading-relaxed">{typeof node.metadata?.description === 'string' ? node.metadata.description : undefined}</p>
                                 </div>
-                                {node.metadata?.context && (
+                                {typeof node.metadata?.context === 'string' && node.metadata.context && (
                                   <div>
                                     <span className="text-[9px] text-slate-500 block">Accomplished Context</span>
                                     <span className="text-xs text-slate-400 font-semibold block mt-0.5">{node.metadata.context}</span>
@@ -581,7 +592,7 @@ export const ProfileIntelligence: React.FC = () => {
                   <div className="border-t border-slate-900/60 pt-4 mt-6">
                     <span className="text-[9px] text-slate-500 block uppercase font-bold tracking-wider">AI Narrative Context</span>
                     <p className="text-[11px] text-indigo-300/80 leading-relaxed italic mt-1.5">
-                      "{summary.careerNarrative}"
+                      &ldquo;{summary.careerNarrative}&rdquo;
                     </p>
                   </div>
                 </div>
@@ -644,6 +655,7 @@ export const ProfileIntelligence: React.FC = () => {
               <ResumeFragments
                 fragments={fragments}
                 onAddFragment={handleAddFragment}
+                candidateId={summary.candidateId}
               />
             </div>
           )}

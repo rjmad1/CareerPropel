@@ -11,11 +11,13 @@ import { RecommendationPanel } from '@/components/Profile/RecommendationPanel';
 import { SkillMatrix } from '@/components/Profile/SkillMatrix';
 import { AchievementExtractor } from '@/components/Profile/AchievementExtractor';
 import { useProfile } from '@/hooks/useProfile';
+import { ProfileIntelligence } from '@/components/Profile/ProfileIntelligence';
 
-type TabId = 'overview' | 'editor' | 'skills' | 'achievements' | 'recommendations' | 'import';
+type TabId = 'overview' | 'editor' | 'skills' | 'achievements' | 'recommendations' | 'import' | 'intelligence';
 
 const tabs: { id: TabId; label: string; icon: string }[] = [
   { id: 'overview', label: 'Overview', icon: '📊' },
+  { id: 'intelligence', label: 'Profile Intelligence', icon: '🧠' },
   { id: 'editor', label: 'Edit Profile', icon: '✏️' },
   { id: 'skills', label: 'Skills', icon: '🛠️' },
   { id: 'achievements', label: 'Achievements', icon: '⭐' },
@@ -76,6 +78,7 @@ export default function ProfilePage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
+              data-cy={`tab-${tab.id}`}
               className={`flex items-center gap-3 px-6 py-4 text-sm font-medium rounded-lg whitespace-nowrap transition ${
                 activeTab === tab.id
                   ? 'bg-white shadow-sm text-gray-900'
@@ -149,6 +152,10 @@ export default function ProfilePage() {
 
           {activeTab === 'import' && (
             <LinkedInImportPanel onImported={refresh} />
+          )}
+
+          {activeTab === 'intelligence' && (
+            <ProfileIntelligence />
           )}
 
           {activeTab === 'recommendations' && (

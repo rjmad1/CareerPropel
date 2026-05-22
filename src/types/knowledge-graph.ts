@@ -21,7 +21,7 @@ export interface GraphNode {
   importance: number; // 1-10 scale for visual scaling
   x?: number; // Visual coordinates for graph mapping
   y?: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface GraphEdge {

@@ -13,6 +13,7 @@ interface DocumentUploadProps {
 
 export const DocumentUpload: React.FC<DocumentUploadProps> = ({
   onEntitiesExtracted,
+  candidateId,
 }) => {
   const [dragActive, setDragActive] = useState(false);
   const [job, setJob] = useState<DocumentParsingJob | null>(null);
@@ -107,7 +108,7 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
       await new Promise((resolve) => setTimeout(resolve, 600));
 
       const source = file.name.endsWith('.json') ? 'linkedin' : 'resume';
-      const extracted = extractProfileEntities(parsedText, source);
+      const extracted = extractProfileEntities(parsedText, source, candidateId);
       const avgConfidence = parseFloat(
         (extracted.reduce((sum, e) => sum + e.confidence, 0) / Math.max(extracted.length, 1)).toFixed(2)
       );
@@ -133,7 +134,8 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
       });
 
       onEntitiesExtracted(extracted);
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unknown processing error';
       setJob((prev) => {
         if (!prev) return null;
         return {
@@ -145,7 +147,7 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
             {
               timestamp: new Date().toLocaleTimeString(),
               level: 'error',
-              message: `Parsing failure: ${err?.message || 'Unknown processing error'}`
+              message: `Parsing failure: ${message}`
             }
           ]
         };

@@ -101,6 +101,11 @@ export interface Achievement {
   sourceProject?: string;
   date: Date;
   relevantSkills: string[];
+  // Optional STAR framework fields
+  situation?: string;
+  task?: string;
+  action?: string;
+  result?: string;
 }
 
 /**
@@ -113,6 +118,7 @@ export interface ResumeFragment {
   content: string;
   sourceDocument: string;
   jobRelevance: string[]; // job IDs where this was tailored
+  achievementId?: string; // links fragment to a source achievement for clean deletion
   createdAt: Date;
   lastUsed?: Date;
 }

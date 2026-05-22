@@ -73,13 +73,28 @@ if __name__ == "__main__":
 
     # Design system takes priority
     if args.design_system:
+        import os
+        safe_page = None
+        if args.page:
+            base = os.path.basename(args.page)
+            safe_page = "".join(c for c in base if c.isalnum() or c in ('-', '_'))
+
+        safe_output_dir = None
+        if args.output_dir:
+            normalized = os.path.normpath(args.output_dir)
+            if ".." in normalized.split(os.path.sep):
+                raise ValueError("Path traversal sequence detected in output directory")
+            if os.path.isabs(normalized):
+                raise ValueError("Absolute paths not allowed for output directory")
+            safe_output_dir = normalized
+
         result = generate_design_system(
             args.query, 
             args.project_name, 
             args.format,
             persist=args.persist,
-            page=args.page,
-            output_dir=args.output_dir
+            page=safe_page,
+            output_dir=safe_output_dir
         )
         print(result)
         

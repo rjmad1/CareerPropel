@@ -6,6 +6,7 @@ import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
 import { sanitizeUserFeedback } from '@/lib/safety/promptSanitizer'
 import { withAuth } from '@/lib/middleware/withAuth'
 import { handleCorsPreFlight, applyCorsHeaders } from '@/lib/middleware/cors'
+import { scheduleMatchScore } from '@/lib/jobs/matchScorer'
 
 export const dynamic = 'force-dynamic'
 
@@ -132,6 +133,9 @@ export const POST = withAuth(
         },
         include: { activities: true },
       })
+
+      // Fire-and-forget: score the job against the candidate profile
+      scheduleMatchScore(job.id, candidate.id);
 
       const response = successResponse(job, 201)
       return applyCorsHeaders(request, response)

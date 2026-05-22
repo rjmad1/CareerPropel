@@ -7,13 +7,14 @@ import TimelineTab from './tabs/TimelineTab';
 import InterviewsTab from './tabs/InterviewsTab';
 import PrepTab from './tabs/PrepTab';
 import OffersTab from './tabs/OffersTab';
+import { MatchAnalysis } from '@/components/Jobs/MatchAnalysis';
 
 interface JobDetailPanelProps {
   jobId: string;
   onClose: () => void;
 }
 
-type TabType = 'overview' | 'timeline' | 'interviews' | 'prep' | 'offers';
+type TabType = 'overview' | 'timeline' | 'interviews' | 'prep' | 'offers' | 'match';
 
 const TAB_LABELS: Record<TabType, string> = {
   overview: 'Overview',
@@ -21,6 +22,7 @@ const TAB_LABELS: Record<TabType, string> = {
   interviews: 'Interviews',
   prep: 'Prep',
   offers: 'Offers',
+  match: 'AI Match',
 };
 
 const getMatchScoreColor = (score: number): string => {
@@ -151,8 +153,8 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-2 border-b border-gray-200" role="tablist">
-            {(['overview', 'timeline', 'interviews', 'prep', 'offers'] as TabType[]).map((tab) => (
+          <div className="flex gap-2 border-b border-gray-200 overflow-x-auto scrollbar-none" role="tablist">
+            {(['overview', 'timeline', 'interviews', 'prep', 'offers', 'match'] as TabType[]).map((tab) => (
               <button
                 key={tab}
                 role="tab"
@@ -179,6 +181,11 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
           {activeTab === 'interviews' && <InterviewsTab jobId={jobId} />}
           {activeTab === 'prep' && <PrepTab jobId={jobId} />}
           {activeTab === 'offers' && <OffersTab jobId={jobId} />}
+          {activeTab === 'match' && (
+            <div className="p-4">
+              <MatchAnalysis jobId={jobId} initialScore={job.matchScore ?? 0} />
+            </div>
+          )}
         </div>
       </div>
     </>

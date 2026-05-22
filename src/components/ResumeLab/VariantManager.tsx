@@ -167,6 +167,7 @@ export const VariantManager: React.FC<VariantManagerProps> = ({
                 onClick={() => onSelectVariant(v.id)}
                 onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelectVariant(v.id); } }}
                 data-cy={`variant-card-${v.id}`}
+                data-selected={isSelected ? 'true' : 'false'}
               >
                 <div className="flex justify-between items-start">
                   <div className="space-y-1">
