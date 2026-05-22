@@ -14,7 +14,7 @@ const ImportSchema = z.object({
     company: z.string(),
     location: z.string().optional(),
     description: z.string().optional(),
-    url: z.string().optional(),
+    url: z.string().url().optional(),
     salary: z.string().nullable().optional(),
     department: z.string().nullable().optional(),
     postedAt: z.string().optional(),

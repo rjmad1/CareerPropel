@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Briefcase, Calendar } from 'lucide-react';
 import { Job } from '@/types/job';
+import { sanitizeUrl } from '@/lib/security/sanitizeContent';
 import { useUpdateJobNotes } from '../../hooks/useMutations';
 
 interface OverviewTabProps {
@@ -147,11 +148,11 @@ export default function OverviewTab({ job }: OverviewTabProps) {
       )}
 
       {/* Job URL if available */}
-      {job.url && (
+      {sanitizeUrl(job.url) && (
         <div>
           <h3 className="text-sm font-semibold text-gray-900 mb-4">Job Listing</h3>
           <a
-            href={job.url}
+            href={sanitizeUrl(job.url) ?? undefined}
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-blue-600 hover:text-blue-700 underline"

@@ -8,6 +8,7 @@ export default [
       'prefer-const': 'warn',
       'no-var': 'warn',
       'react/no-unescaped-entities': 'warn',
+      'react/jsx-no-target-blank': 'error',
     },
   },
 ];

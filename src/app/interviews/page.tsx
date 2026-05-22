@@ -3,6 +3,7 @@
 export const dynamic = 'force-dynamic';
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { sanitizeUrl } from '@/lib/security/sanitizeContent';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import {
   Button,
@@ -490,9 +491,9 @@ function InterviewCard({ interview, onFeedback }: { interview: Interview; onFeed
         </div>
 
         <div className="flex items-center gap-1.5 flex-shrink-0 border-t md:border-t-0 pt-3 md:pt-0">
-          {interview.meetingLink && (
+          {sanitizeUrl(interview.meetingLink) && (
             <a
-              href={interview.meetingLink}
+              href={sanitizeUrl(interview.meetingLink) ?? undefined}
               target="_blank"
               rel="noopener noreferrer"
               title="Join meeting"
@@ -539,11 +540,11 @@ function InterviewCard({ interview, onFeedback }: { interview: Interview; onFeed
               <span>{interview.location}</span>
             </div>
           )}
-          {interview.meetingLink && (
+          {sanitizeUrl(interview.meetingLink) && (
             <div className="flex items-start gap-2 text-xs">
               <LinkIcon className="w-4 h-4 text-slate-400 mt-0.5" />
               <a
-                href={interview.meetingLink}
+                href={sanitizeUrl(interview.meetingLink) ?? undefined}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:underline font-semibold break-all"
