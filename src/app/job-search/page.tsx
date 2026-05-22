@@ -74,9 +74,12 @@ export default function JobSearchPage() {
   const [importing, setImporting] = useState<Set<number>>(new Set());
   const [imported, setImported] = useState<Set<number>>(new Set());
 
+  const esRef = useRef<EventSource | null>(null);
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const stopPolling = useCallback(() => {
+  const stopTracking = useCallback(() => {
+    esRef.current?.close();
+    esRef.current = null;
     if (pollRef.current) {
       clearInterval(pollRef.current);
       pollRef.current = null;
@@ -84,30 +87,85 @@ export default function JobSearchPage() {
   }, []);
 
   useEffect(() => {
-    return () => stopPolling();
-  }, [stopPolling]);
+    return () => stopTracking();
+  }, [stopTracking]);
 
-  const pollStatus = useCallback(async (jobId: string) => {
+  const fetchResults = useCallback(async (jobId: string) => {
     try {
       const res = await fetch(`/api/jobs/search/status?jobId=${encodeURIComponent(jobId)}`);
       const json = await res.json();
       const data = json.data ?? json;
-
-      setAsyncStatus(data.status);
-
-      if (data.status === 'completed') {
-        stopPolling();
-        setResults(data.jobs ?? []);
-        setSearching(false);
-      } else if (data.status === 'failed') {
-        stopPolling();
-        setError(data.error ?? 'Search failed');
-        setSearching(false);
-      }
+      setResults(data.jobs ?? []);
     } catch {
-      // keep polling silently
+      // results unavailable — show empty
     }
-  }, [stopPolling]);
+    setSearching(false);
+  }, []);
+
+  const startPollingFallback = useCallback((jobId: string) => {
+    pollRef.current = setInterval(async () => {
+      try {
+        const res = await fetch(`/api/jobs/search/status?jobId=${encodeURIComponent(jobId)}`);
+        const json = await res.json();
+        const data = json.data ?? json;
+        setAsyncStatus(data.status);
+        if (data.status === 'completed') {
+          stopTracking();
+          setResults(data.jobs ?? []);
+          setSearching(false);
+        } else if (data.status === 'failed') {
+          stopTracking();
+          setError(data.error ?? 'Search failed');
+          setSearching(false);
+        }
+      } catch {
+        // keep polling silently
+      }
+    }, 3000);
+  }, [stopTracking]);
+
+  const startSSETracking = useCallback((jobId: string) => {
+    try {
+      const es = new EventSource(`/api/jobs/search/${encodeURIComponent(jobId)}/events`);
+      esRef.current = es;
+      let opened = false;
+
+      es.onopen = () => { opened = true; };
+
+      es.addEventListener('status', (e: MessageEvent) => {
+        try {
+          const data = JSON.parse(e.data);
+          setAsyncStatus(data.status);
+          if (data.status === 'completed') {
+            es.close();
+            fetchResults(jobId);
+          } else if (data.status === 'failed') {
+            es.close();
+            setError('Search failed');
+            setSearching(false);
+          }
+        } catch { /* ignore parse errors */ }
+      });
+
+      es.addEventListener('error', (e: MessageEvent) => {
+        try {
+          const data = JSON.parse(e.data);
+          es.close();
+          setError(data.message ?? 'Search failed');
+          setSearching(false);
+        } catch { /* ignore */ }
+      });
+
+      es.onerror = () => {
+        es.close();
+        esRef.current = null;
+        if (!opened) startPollingFallback(jobId);
+      };
+    } catch {
+      // EventSource not available — fall back to polling
+      startPollingFallback(jobId);
+    }
+  }, [fetchResults, startPollingFallback]);
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -119,7 +177,7 @@ export default function JobSearchPage() {
     setImporting(new Set());
     setAsyncJobId(null);
     setAsyncStatus('idle');
-    stopPolling();
+    stopTracking();
 
     const isSync = SYNC_SOURCES.includes(source);
     setSearching(true);
@@ -146,11 +204,11 @@ export default function JobSearchPage() {
         setResults(data.jobs ?? []);
         setSearching(false);
       } else {
-        // async — poll
+        // async — track via SSE (polling fallback if SSE unavailable)
         const jobId = data.executionId ?? data.jobId;
         setAsyncJobId(jobId);
         setAsyncStatus('queued');
-        pollRef.current = setInterval(() => pollStatus(jobId), 3000);
+        startSSETracking(jobId);
       }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Search failed');
