@@ -6,7 +6,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { AnalyticsExportButtons } from '@/components/analytics/AnalyticsExportButtons';
 import { calculateAnalytics, AnalyticsMetrics } from '@/lib/analytics/export';
-import { Button, Card, CardBody } from '@/components/ui';
+import { Button, Card, CardBody, Skeleton } from '@/components/ui';
 import { RefreshCw, BarChart3, AlertCircle, Compass, Globe, Layers, Activity } from 'lucide-react';
 import { ApplicationAnalytics } from '@/components/analytics/ApplicationAnalytics';
 import { CareerTrajectory } from '@/components/analytics/CareerTrajectory';
@@ -151,8 +151,48 @@ export default function AnalyticsPage() {
         )}
 
         {loading ? (
-          <div className="flex justify-center py-20">
-            <div className="w-9 h-9 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          <div className="flex flex-col gap-6" role="status" aria-label="Loading analytics data">
+            {/* KPI skeleton cards */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[1, 2, 3, 4].map((i) => (
+                <Card key={i}>
+                  <CardBody className="p-5 flex flex-col gap-3">
+                    <Skeleton height="h-3" width="w-24" className="dark:bg-slate-800" />
+                    <Skeleton height="h-8" width="w-16" className="dark:bg-slate-800" />
+                  </CardBody>
+                </Card>
+              ))}
+            </div>
+            {/* Chart skeleton */}
+            <Card>
+              <CardBody className="p-6 flex flex-col gap-4">
+                <Skeleton height="h-4" width="w-48" className="dark:bg-slate-800" />
+                <div className="flex flex-col gap-3">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <div key={i} className="flex items-center gap-4">
+                      <Skeleton height="h-3" width="w-36" className="dark:bg-slate-800" />
+                      <Skeleton height="h-2.5" className="flex-1 dark:bg-slate-800" />
+                      <Skeleton height="h-3" width="w-6" className="dark:bg-slate-800" />
+                    </div>
+                  ))}
+                </div>
+              </CardBody>
+            </Card>
+            {/* Salary + Outcomes skeleton */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {[1, 2].map((i) => (
+                <Card key={i}>
+                  <CardBody className="p-6 flex flex-col gap-4">
+                    <Skeleton height="h-4" width="w-32" className="dark:bg-slate-800" />
+                    <div className="flex flex-col gap-3">
+                      {[1, 2, 3, 4].map((j) => (
+                        <Skeleton key={j} height="h-3" className="dark:bg-slate-800" />
+                      ))}
+                    </div>
+                  </CardBody>
+                </Card>
+              ))}
+            </div>
           </div>
         ) : (
           <div className="w-full">
