@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
           company: raw.company,
           location: raw.location ?? '',
           description: raw.description ?? '',
-          url: raw.url ?? '',
+          url: raw.url ?? null,
           stage: 'sourced',
           tags: [raw.source],
         },
