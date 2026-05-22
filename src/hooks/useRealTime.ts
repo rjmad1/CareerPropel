@@ -1,17 +1,10 @@
 'use client';
 
-/**
- * useRealTime Hook
- * React hook for managing WebSocket connections and real-time updates
- */
-
 import { useEffect, useCallback, useRef, useState } from 'react';
-import { getWebSocketClient, initWebSocket } from '@/lib/websocket/client';
 import { AnyWebSocketMessage, Agent, Notification, RealtimeJobUpdate } from '@/lib/websocket/types';
 
 interface UseRealTimeOptions {
   autoConnect?: boolean;
-  url?: string;
   channels?: string[];
 }
 
@@ -23,149 +16,110 @@ interface UseRealTimeReturn {
   unsubscribeFromChannels: (channels: string[]) => void;
 }
 
-/**
- * Hook for real-time WebSocket functionality
- */
-export function useRealTime(options: UseRealTimeOptions = {}): UseRealTimeReturn {
-  const { autoConnect = true, url = process.env.NEXT_PUBLIC_WEBSOCKET_URL, channels = [] } = options;
-  
-  const [connected, setConnected] = useState(false);
-  const clientRef = useRef<ReturnType<typeof getWebSocketClient> | null>(null);
-  const unsubscribeConnectionRef = useRef<(() => void) | null>(null);
+// SSE event types the server emits
+const SSE_EVENT_TYPES = [
+  'snapshot',
+  'agent:status_update',
+  'agent:execution_update',
+  'job:update',
+  'job:created',
+  'job:deleted',
+  'notification',
+];
 
-  // Initialize and connect
+export function useRealTime(options: UseRealTimeOptions = {}): UseRealTimeReturn {
+  const { autoConnect = true } = options;
+
+  const [connected, setConnected] = useState(false);
+  const handlersRef = useRef<Map<string, Set<(msg: AnyWebSocketMessage) => void>>>(new Map());
+  const esRef = useRef<EventSource | null>(null);
+
   useEffect(() => {
-    if (!autoConnect || !url) return;
+    if (!autoConnect || typeof window === 'undefined') return;
+
+    let es: EventSource;
 
     try {
-      if (!clientRef.current) {
-        clientRef.current = initWebSocket(url);
-      }
+      es = new EventSource('/api/agents/events');
+      esRef.current = es;
 
-      const client = clientRef.current;
+      es.onopen = () => setConnected(true);
+      es.onerror = () => setConnected(false);
 
-      // Subscribe to connection changes
-      unsubscribeConnectionRef.current = client.onConnectionChange((isConnected) => {
-        setConnected(isConnected);
+      // Route named SSE events to registered handlers
+      SSE_EVENT_TYPES.forEach((eventType) => {
+        es.addEventListener(eventType, (e: MessageEvent) => {
+          try {
+            const data = JSON.parse(e.data);
+            // Wrap in a shape compatible with AnyWebSocketMessage
+            const msg = { type: eventType, data } as unknown as AnyWebSocketMessage;
+            handlersRef.current.get(eventType)?.forEach((h) => h(msg));
+          } catch { /* ignore parse errors */ }
+        });
       });
-
-      // Connect
-      client.connect().then(() => {
-        console.log('WebSocket connected via useRealTime');
-        if (channels.length > 0) {
-          client.subscribeToChannels(channels);
-        }
-      }).catch((error) => {
-        console.error('WebSocket connection failed', error);
-      });
-    } catch (error) {
-      console.error('Failed to initialize WebSocket', error);
+    } catch {
+      // SSE not supported in this environment
     }
 
     return () => {
-      if (unsubscribeConnectionRef.current) {
-        unsubscribeConnectionRef.current();
-      }
+      esRef.current?.close();
+      esRef.current = null;
+      setConnected(false);
     };
-  }, [autoConnect, url, channels]);
+  }, [autoConnect]);
 
-  const subscribe = useCallback(
-    (type: string, handler: (msg: AnyWebSocketMessage) => void) => {
-      if (!clientRef.current) {
-        console.warn('WebSocket client not initialized');
-        return () => {};
-      }
-      return clientRef.current.subscribe(type, handler);
-    },
-    []
-  );
-
-  const send = useCallback((message: AnyWebSocketMessage) => {
-    if (!clientRef.current) {
-      console.warn('WebSocket client not initialized');
-      return;
+  const subscribe = useCallback((type: string, handler: (msg: AnyWebSocketMessage) => void) => {
+    if (!handlersRef.current.has(type)) {
+      handlersRef.current.set(type, new Set());
     }
-    clientRef.current.send(message);
+    handlersRef.current.get(type)!.add(handler);
+    return () => { handlersRef.current.get(type)?.delete(handler); };
   }, []);
 
-  const subscribeToChannels = useCallback((channelList: string[]) => {
-    if (!clientRef.current) {
-      console.warn('WebSocket client not initialized');
-      return;
-    }
-    clientRef.current.subscribeToChannels(channelList);
-  }, []);
+  // SSE is server-to-client only; mutations go through REST endpoints
+  const send = useCallback((_message: AnyWebSocketMessage) => {}, []);
+  const subscribeToChannels = useCallback((_channels: string[]) => {}, []);
+  const unsubscribeFromChannels = useCallback((_channels: string[]) => {}, []);
 
-  const unsubscribeFromChannels = useCallback((channelList: string[]) => {
-    if (!clientRef.current) {
-      console.warn('WebSocket client not initialized');
-      return;
-    }
-    clientRef.current.unsubscribeFromChannels(channelList);
-  }, []);
-
-  return {
-    connected,
-    subscribe,
-    send,
-    subscribeToChannels,
-    unsubscribeFromChannels,
-  };
+  return { connected, subscribe, send, subscribeToChannels, unsubscribeFromChannels };
 }
 
-/**
- * Hook for agent status updates
- */
+// ─── Derived hooks (same API as before) ──────────────────────────────────────
+
 export function useAgentStatus(agentId?: string) {
   const { subscribe, connected } = useRealTime();
   const [agent, setAgent] = useState<Agent | null>(null);
 
   useEffect(() => {
     if (!connected) return;
-
-    const unsubscribe = subscribe('agent:status', (message: AnyWebSocketMessage) => {
-      if (message.type === 'agent:status') {
-        const agentMsg = message as any;
-        if (!agentId || agentMsg.data.id === agentId) {
-          setAgent(agentMsg.data);
-        }
+    return subscribe('agent:status_update', (message: AnyWebSocketMessage) => {
+      const ev = message as any;
+      if (!agentId || ev.data?.agentType === agentId) {
+        setAgent(ev.data ?? null);
       }
     });
-
-    return unsubscribe;
   }, [agentId, connected, subscribe]);
 
   return { agent, connected };
 }
 
-/**
- * Hook for job updates
- */
 export function useJobUpdates(jobId?: string) {
   const { subscribe, connected } = useRealTime();
   const [update, setUpdate] = useState<RealtimeJobUpdate | null>(null);
 
   useEffect(() => {
     if (!connected) return;
-
-    const unsubscribe = subscribe('job:update', (message: AnyWebSocketMessage) => {
-      if (message.type === 'job:update') {
-        const jobMsg = message as any;
-        if (!jobId || jobMsg.data.jobId === jobId) {
-          setUpdate(jobMsg.data);
-        }
+    return subscribe('job:update', (message: AnyWebSocketMessage) => {
+      const ev = message as any;
+      if (!jobId || ev.data?.jobId === jobId) {
+        setUpdate(ev.data ?? null);
       }
     });
-
-    return unsubscribe;
   }, [jobId, connected, subscribe]);
 
   return { update, connected };
 }
 
-/**
- * Hook for notifications
- */
 export function useNotifications() {
   const { subscribe, connected } = useRealTime();
   const [notification, setNotification] = useState<Notification | null>(null);
@@ -173,30 +127,18 @@ export function useNotifications() {
 
   useEffect(() => {
     if (!connected) return;
-
-    const unsubscribe = subscribe('notification', (message: AnyWebSocketMessage) => {
-      if (message.type === 'notification') {
-        const notifMsg = message as any;
-        notificationsRef.current.push(notifMsg.data);
-        setNotification(notifMsg.data);
-
-        // Auto-clear after duration
-        if (notifMsg.data.duration) {
-          setTimeout(() => {
-            notificationsRef.current = notificationsRef.current.filter(
-              (n) => n.id !== notifMsg.data.id
-            );
-          }, notifMsg.data.duration);
-        }
+    return subscribe('notification', (message: AnyWebSocketMessage) => {
+      const ev = message as any;
+      const notif: Notification = ev.data;
+      notificationsRef.current.push(notif);
+      setNotification(notif);
+      if (notif.duration) {
+        setTimeout(() => {
+          notificationsRef.current = notificationsRef.current.filter((n) => n.id !== notif.id);
+        }, notif.duration);
       }
     });
-
-    return unsubscribe;
   }, [connected, subscribe]);
 
-  return {
-    notification,
-    notifications: notificationsRef.current,
-    connected,
-  };
+  return { notification, notifications: notificationsRef.current, connected };
 }

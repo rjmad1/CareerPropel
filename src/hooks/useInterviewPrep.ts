@@ -217,42 +217,80 @@ export function useInterviewPrepProgress(jobId: string) {
   useEffect(() => {
     if (status !== 'generating' || !jobId) return;
 
-    // Animate progress bar toward 85% while we wait for completion
+    // Animate progress bar toward 85% while waiting for completion
     const animTimer = setInterval(() => {
       progressRef.current = Math.min(progressRef.current + 2, 85);
       setProgress(progressRef.current);
     }, 600);
 
-    // Poll the prep status every 2.5 seconds
-    const pollTimer = setInterval(async () => {
-      try {
-        const res = await fetch(`/api/interview-prep/${jobId}`);
-        if (res.status === 404) return;
-        if (!res.ok) return;
-        const json = await res.json();
-        const prepStatus: string | undefined = json.data?.prepStatus;
+    let pollTimer: ReturnType<typeof setInterval> | null = null;
+    let es: EventSource | null = null;
 
-        if (prepStatus === 'ready') {
-          clearInterval(animTimer);
-          clearInterval(pollTimer);
-          setProgress(100);
-          setStatus('complete');
-          setMessage('Interview prep ready!');
-        } else if (prepStatus !== 'generating') {
-          // 'error' or unexpected value
-          clearInterval(animTimer);
-          clearInterval(pollTimer);
-          setStatus('error');
-          setMessage('Generation failed. Please try again.');
-        }
-      } catch {
-        // Silently ignore transient poll errors
+    const finish = (prepStatus: string) => {
+      clearInterval(animTimer);
+      if (prepStatus === 'ready') {
+        setProgress(100);
+        setStatus('complete');
+        setMessage('Interview prep ready!');
+      } else {
+        setStatus('error');
+        setMessage('Generation failed. Please try again.');
       }
-    }, 2500);
+    };
+
+    const startPolling = () => {
+      pollTimer = setInterval(async () => {
+        try {
+          const res = await fetch(`/api/interview-prep/${jobId}`);
+          if (!res.ok) return;
+          const json = await res.json();
+          const prepStatus: string | undefined = json.data?.prepStatus ?? json.prepStatus;
+          if (prepStatus === 'ready' || prepStatus === 'error') {
+            clearInterval(pollTimer!);
+            finish(prepStatus);
+          }
+        } catch {
+          // ignore transient errors
+        }
+      }, 2500);
+    };
+
+    // Try SSE first; fall back to polling if the endpoint is unavailable
+    try {
+      es = new EventSource(`/api/interview-prep/${jobId}/events`);
+      let sseOpened = false;
+
+      es.onopen = () => { sseOpened = true; };
+
+      es.addEventListener('status', (e: MessageEvent) => {
+        try {
+          const data = JSON.parse(e.data);
+          if (typeof data.progress === 'number') {
+            progressRef.current = data.progress;
+            setProgress(data.progress);
+          }
+          if (data.prepStatus === 'ready' || data.prepStatus === 'error') {
+            es?.close();
+            finish(data.prepStatus);
+          }
+        } catch { /* ignore parse errors */ }
+      });
+
+      es.onerror = () => {
+        es?.close();
+        es = null;
+        // Fall back to polling only if SSE never established a connection
+        if (!sseOpened) startPolling();
+      };
+    } catch {
+      // EventSource not supported in this environment — fall back to polling
+      startPolling();
+    }
 
     return () => {
       clearInterval(animTimer);
-      clearInterval(pollTimer);
+      if (pollTimer) clearInterval(pollTimer);
+      es?.close();
     };
   }, [jobId, status]);
 
