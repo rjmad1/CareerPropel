@@ -14,7 +14,6 @@ import {
   RefreshCw,
   Sparkles,
   AlertCircle,
-  X,
 } from 'lucide-react';
 
 type DocType = 'resume' | 'cover_letter';
@@ -42,7 +41,6 @@ interface HistoryEntry {
 export default function DocumentsPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [generating, setGenerating] = useState(false);
-  const [error, setError] = useState('');
   const [result, setResult] = useState<GeneratedDoc | null>(null);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [copied, setCopied] = useState(false);
@@ -63,7 +61,6 @@ export default function DocumentsPage() {
 
   const handleGenerate = useCallback(async () => {
     setGenerating(true);
-    setError('');
     setResult(null);
     setActiveHistory(null);
 
@@ -96,7 +93,6 @@ export default function DocumentsPage() {
         `${doc.wordCount} words generated${job ? ` for ${job.title} @ ${job.company}` : ''}`
       );
     } catch (err: any) {
-      setError(err.message ?? 'Something went wrong');
       getNotificationManager().error('Generation Failed', err.message ?? 'Something went wrong');
     } finally {
       setGenerating(false);
@@ -255,17 +251,6 @@ export default function DocumentsPage() {
                   {generating ? 'Generating…' : 'Generate with AI'}
                 </Button>
 
-                {error && (
-                  <div className="flex items-start justify-between p-3.5 text-sm text-red-800 border border-red-100 bg-red-50/50 rounded-xl dark:bg-red-950/20 dark:text-red-400 dark:border-red-900" role="alert">
-                    <div className="flex items-center gap-2.5">
-                      <AlertCircle className="w-4 h-4 text-red-650 shrink-0" />
-                      <span>{error}</span>
-                    </div>
-                    <button onClick={() => setError('')} className="p-1 hover:bg-red-150 dark:hover:bg-red-900/50 rounded text-red-500 transition-colors">
-                      <X className="w-4 h-4" />
-                    </button>
-                  </div>
-                )}
               </CardBody>
             </Card>
 

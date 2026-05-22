@@ -27,6 +27,9 @@ export interface InterviewPrep {
   resumeAlignment: ResumeAlignment;
   compensationGuide: CompensationGuide;
 
+  // AI-generated likely interview questions for this role
+  likelyQuestions?: string[];
+
   // Metadata
   prepStatus: 'not_started' | 'generating' | 'ready' | 'stale';
   confidenceScore: number; // 0-1, how confident the prep is

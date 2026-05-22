@@ -2,7 +2,7 @@
 
 export const dynamic = 'force-dynamic';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { NavLayout } from '@/components/Layout/NavLayout';
@@ -235,17 +235,82 @@ export default function ProfilePage() {
 
 // ─── LinkedIn Import Panel ────────────────────────────────────────────────────
 
+interface LinkedInProfileResult {
+  name: string;
+  headline: string;
+  experience: Array<{ title: string; company: string }>;
+  skills: string[];
+}
+
 function LinkedInImportPanel({ onImported }: { readonly onImported: () => void }) {
   const [url, setUrl] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<{ name: string; experience: number; skills: number } | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [executionId, setExecutionId] = useState<string | null>(null);
+  const [status, setStatus] = useState<'idle' | 'queued' | 'running' | 'completed' | 'failed'>('idle');
+  const [result, setResult] = useState<LinkedInProfileResult | null>(null);
   const [error, setError] = useState('');
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const pollStartRef = useRef<number>(0);
+  const abortRef = useRef<AbortController | null>(null);
+  const MAX_POLL_MS = 3 * 60 * 1000; // 3 minutes
+
+  useEffect(() => {
+    return () => {
+      stopPolling();
+      abortRef.current?.abort();
+    };
+  }, []);
+
+  function stopPolling() {
+    if (pollRef.current) {
+      clearInterval(pollRef.current);
+      pollRef.current = null;
+    }
+    abortRef.current?.abort();
+    abortRef.current = null;
+  }
+
+  async function pollExecution(id: string) {
+    if (Date.now() - pollStartRef.current > MAX_POLL_MS) {
+      stopPolling();
+      setStatus('failed');
+      setError('Import timed out after 3 minutes. Please try again.');
+      return;
+    }
+    const controller = new AbortController();
+    abortRef.current = controller;
+    try {
+      const res = await fetch(`/api/agents/execute?executionId=${encodeURIComponent(id)}`, {
+        signal: controller.signal,
+      });
+      const json = await res.json();
+      const execStatus = json.status ?? json.data?.status;
+      setStatus(execStatus);
+
+      if (execStatus === 'completed') {
+        stopPolling();
+        const output = json.output ?? json.data?.output;
+        if (output) setResult(output as LinkedInProfileResult);
+        onImported();
+      } else if (execStatus === 'failed') {
+        stopPolling();
+        setError(json.errorMessage ?? json.data?.errorMessage ?? 'Import failed in background worker');
+      }
+    } catch (err) {
+      if (err instanceof Error && err.name === 'AbortError') return;
+      // keep polling on transient network errors
+    }
+  }
 
   async function handleImport(e: React.FormEvent) {
     e.preventDefault();
     setError('');
     setResult(null);
-    setLoading(true);
+    setExecutionId(null);
+    setStatus('idle');
+    stopPolling();
+    setSubmitting(true);
+
     try {
       const res = await fetch('/api/linkedin/import-profile', {
         method: 'POST',
@@ -253,15 +318,22 @@ function LinkedInImportPanel({ onImported }: { readonly onImported: () => void }
         body: JSON.stringify({ profileUrl: url }),
       });
       const json = await res.json();
-      if (!res.ok) throw new Error(json.message ?? json.error?.message ?? 'Import failed');
-      setResult(json.data ?? json);
-      onImported();
-    } catch (e: unknown) {
-      setError(e instanceof Error ? e.message : 'Import failed');
+      if (!res.ok) throw new Error(json.message ?? json.error?.message ?? 'Failed to enqueue import');
+
+      const data = json.data ?? json;
+      const id = data.executionId ?? data.jobId;
+      setExecutionId(id);
+      setStatus('queued');
+      pollStartRef.current = Date.now();
+      pollRef.current = setInterval(() => pollExecution(id), 3000);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Import failed');
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   }
+
+  const isWorking = status === 'queued' || status === 'running';
 
   return (
     <div className="space-y-12">
@@ -278,20 +350,32 @@ function LinkedInImportPanel({ onImported }: { readonly onImported: () => void }
             placeholder="https://www.linkedin.com/in/your-profile"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            className="flex-1 px-6 py-4 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            disabled={submitting || isWorking}
+            className="flex-1 px-6 py-4 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-60"
           />
           <button
             type="submit"
-            disabled={loading}
+            disabled={submitting || isWorking}
             className="px-8 py-4 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 whitespace-nowrap"
           >
-            {loading ? 'Importing…' : 'Import'}
+            {submitting ? 'Queueing…' : 'Import'}
           </button>
         </form>
 
-        {loading && (
-          <p className="text-xs text-gray-400 mt-4">
-            Opening browser to read your profile — this takes 15–30 seconds.
+        {isWorking && (
+          <div className="mt-6 flex items-center gap-3 text-sm text-gray-500">
+            <div className="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin shrink-0" />
+            <span>
+              {status === 'queued'
+                ? 'Import queued — worker will open a browser to read your profile (15–30s)…'
+                : 'Reading profile…'}
+            </span>
+          </div>
+        )}
+
+        {executionId && (
+          <p className="mt-3 text-xs text-gray-400 font-mono">
+            Execution ID: {executionId}
           </p>
         )}
 
@@ -301,8 +385,11 @@ function LinkedInImportPanel({ onImported }: { readonly onImported: () => void }
 
         {result && (
           <div className="mt-8 p-8 bg-green-50 border border-green-200 rounded-lg text-sm text-green-800 space-y-2">
-            <p className="font-medium">Import complete for {result.name}</p>
-            <p>{result.experience} experience entries · {result.skills} skills added to your profile</p>
+            <p className="font-medium">Import complete — {result.name}</p>
+            {result.headline && <p className="text-green-700">{result.headline}</p>}
+            <p>
+              {result.experience?.length ?? 0} experience entries · {result.skills?.length ?? 0} skills imported
+            </p>
           </div>
         )}
       </div>

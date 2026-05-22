@@ -114,7 +114,6 @@ export default function AppraisalsPage() {
         getNotificationManager().success('Appraisal Ready', `${appraisalTitle} narrative compiled`);
       }
     } catch (e: any) {
-      setError(e.message);
       getNotificationManager().error('Compilation Failed', e.message ?? 'Could not compile appraisal');
     } finally {
       setCompiling(false);

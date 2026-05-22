@@ -86,7 +86,7 @@ function buildQuestions(prep: InterviewPrep): Question[] {
   const derived: Question[] = [];
 
   // Use likelyQuestions from prep if available
-  const likely: string[] = (prep as any).likelyQuestions ?? [];
+  const likely: string[] = prep.likelyQuestions ?? [];
   likely.slice(0, 3).forEach((q, i) => {
     derived.push({
       id: `prep-${i}`,
@@ -142,14 +142,18 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
   const [error, setError] = useState('');
   const sessionId = useRef(`session-${Date.now()}`);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const feedbackAbortRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    return () => { feedbackAbortRef.current?.abort(); };
+  }, []);
 
   const currentQ = questions[qIndex];
   const isOverTime = elapsed > currentQ?.timeLimit;
 
-  // Per-question timer
+  // Per-question timer — setElapsed(0) is called at transition sites to avoid extra render
   useEffect(() => {
     if (state !== 'answering') return;
-    setElapsed(0);
     timerRef.current = setInterval(() => setElapsed((s) => s + 1), 1000);
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
@@ -158,6 +162,7 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
 
   const handleStart = () => {
     setState('answering');
+    setElapsed(0);
     setQIndex(0);
     setAnswers([]);
     setCurrentAnswer('');
@@ -179,6 +184,7 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
       setShowHint(false);
 
       if (qIndex < questions.length - 1) {
+        setElapsed(0);
         setQIndex((i) => i + 1);
       } else {
         // All questions answered — submit for AI feedback
@@ -186,18 +192,28 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
         const responses: Array<[string, string]> = questions.map((q, i) => [q.id, newAnswers[i] ?? '[No answer]']);
         const qMeta = questions.map((q) => ({ id: q.id, text: q.question, category: q.category }));
 
+        feedbackAbortRef.current?.abort();
+        const controller = new AbortController();
+        feedbackAbortRef.current = controller;
+
         fetch('/api/interview-prep/mock/feedback', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ sessionId: sessionId.current, responses, questions: qMeta }),
+          signal: controller.signal,
         })
-          .then((r) => r.json())
+          .then((r) => {
+            if (!r.ok) throw new Error(`Request failed: ${r.status}`);
+            return r.json();
+          })
           .then((data: AiFeedback) => {
+            if (controller.signal.aborted) return;
             setFeedback(data);
             setState('results');
             getNotificationManager().success('Feedback Ready', `Overall score: ${Math.round(data.scores.overall * 10)}/100`);
           })
           .catch((err) => {
+            if (err.name === 'AbortError') return;
             setError(err.message ?? 'Failed to get feedback');
             setState('results');
             getNotificationManager().error('Feedback Error', 'Could not generate AI feedback. Showing fallback.');
@@ -342,6 +358,7 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
             onChange={(e) => setCurrentAnswer(e.target.value)}
             placeholder="Type your answer here…"
             rows={7}
+            aria-label="Your answer"
             className="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100 resize-none dark:bg-slate-900 dark:text-slate-100 dark:border-slate-700"
             data-cy="answer-textarea"
           />

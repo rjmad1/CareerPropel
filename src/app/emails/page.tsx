@@ -13,8 +13,6 @@ import {
   Sparkles,
   ChevronDown,
   ChevronUp,
-  AlertCircle,
-  X,
 } from 'lucide-react';
 
 type EmailType = 'thank_you' | 'follow_up' | 'counter_offer' | 'withdraw' | 'recruiter_reach_out';
@@ -81,7 +79,6 @@ const DEFAULT_FORM: EmailForm = {
 export default function EmailsPage() {
   const [form, setForm] = useState<EmailForm>(DEFAULT_FORM);
   const [generating, setGenerating] = useState(false);
-  const [error, setError] = useState('');
   const [result, setResult] = useState<GeneratedEmail | null>(null);
   const [copied, setCopied] = useState<'subject' | 'body' | 'all' | null>(null);
   const [history, setHistory] = useState<{ email: GeneratedEmail; type: EmailType; label: string }[]>([]);
@@ -96,7 +93,6 @@ export default function EmailsPage() {
 
   const handleGenerate = useCallback(async () => {
     setGenerating(true);
-    setError('');
     setResult(null);
     setActiveHistory(null);
 
@@ -132,7 +128,6 @@ export default function EmailsPage() {
       setHistory((prev) => [{ email, type: form.type, label }, ...prev].slice(0, 10));
       getNotificationManager().success('Email Ready', `${typeInfo.label} email drafted${label !== typeInfo.label ? ` for ${label}` : ''}`);
     } catch (err: any) {
-      setError(err.message ?? 'Something went wrong');
       getNotificationManager().error('Generation Failed', err.message ?? 'Something went wrong');
     } finally {
       setGenerating(false);
@@ -235,17 +230,6 @@ export default function EmailsPage() {
                   {generating ? 'Generating…' : 'Generate Email'}
                 </Button>
 
-                {error && (
-                  <div className="flex items-start justify-between p-3.5 text-sm text-red-800 border border-red-100 bg-red-50/50 rounded-xl dark:bg-red-950/20 dark:text-red-400 dark:border-red-900" role="alert">
-                    <div className="flex items-center gap-2.5">
-                      <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
-                      <span>{error}</span>
-                    </div>
-                    <button onClick={() => setError('')} className="p-1 hover:bg-red-100 dark:hover:bg-red-900/50 rounded text-red-500 transition-colors">
-                      <X className="w-4 h-4" />
-                    </button>
-                  </div>
-                )}
               </CardBody>
             </Card>
 
