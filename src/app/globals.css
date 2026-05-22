@@ -49,4 +49,44 @@
   * {
     @apply box-border;
   }
+
+  /* ===== Global focus ring system (WCAG 2.4.7) ===== */
+  /* All focusable elements get a visible indicator in keyboard navigation */
+  :focus-visible {
+    outline: 2px solid #6366f1;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Skip-navigation link for keyboard users */
+  .skip-nav {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    z-index: 9999;
+    padding: 0.5rem 1rem;
+    background: #6366f1;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.875rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+    text-decoration: none;
+    transition: top 0.2s;
+  }
+  .skip-nav:focus {
+    top: 0;
+    outline: none;
+  }
+
+  /* Reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
+

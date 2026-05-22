@@ -22,8 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
+        {/* Skip navigation link for keyboard users (WCAG 2.4.1) */}
+        <a href="#main-content" className="skip-nav">
+          Skip to main content
+        </a>
         <Providers>
-          {children}
+          <main id="main-content">
+            {children}
+          </main>
         </Providers>
       </body>
     </html>
