@@ -3,6 +3,7 @@
 import { SessionProvider } from 'next-auth/react'
 import { ReactNode, useState } from 'react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { NotificationCenter } from '@/components/Notifications/NotificationCenter'
 
 export function Providers({ children }: { children: ReactNode }) {
   // One QueryClient per browser session — stable reference via useState
@@ -24,6 +25,7 @@ export function Providers({ children }: { children: ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <SessionProvider>
         {children}
+        <NotificationCenter />
       </SessionProvider>
     </QueryClientProvider>
   )

@@ -3,6 +3,7 @@
 export const dynamic = 'force-dynamic';
 
 import { useState, useEffect, useCallback } from 'react';
+import { getNotificationManager } from '@/lib/notifications/manager';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { Button, Input, Textarea, Card, CardBody, Select } from '@/components/ui';
 import {
@@ -90,8 +91,13 @@ export default function DocumentsPage() {
 
       const job = jobs.find((j) => j.id === selectedJobId);
       setHistory((prev) => [{ doc, type: docType, jobTitle: job ? `${job.title} @ ${job.company}` : undefined }, ...prev].slice(0, 10));
+      getNotificationManager().success(
+        docType === 'cover_letter' ? 'Cover Letter Ready' : 'Resume Ready',
+        `${doc.wordCount} words generated${job ? ` for ${job.title} @ ${job.company}` : ''}`
+      );
     } catch (err: any) {
       setError(err.message ?? 'Something went wrong');
+      getNotificationManager().error('Generation Failed', err.message ?? 'Something went wrong');
     } finally {
       setGenerating(false);
     }

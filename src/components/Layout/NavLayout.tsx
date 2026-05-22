@@ -19,6 +19,7 @@ import {
   KeyRound,
   ShieldAlert,
   Settings,
+  FlaskConical,
   LogOut,
   Menu,
   X
@@ -33,6 +34,7 @@ const navItems = [
   { href: '/interviews', label: 'Interviews', icon: CalendarCheck },
   { href: '/offers', label: 'Offers', icon: CircleDollarSign },
   { href: '/documents', label: 'Documents', icon: FileText },
+  { href: '/resume-lab', label: 'Resume Lab', icon: FlaskConical },
   { href: '/emails', label: 'Emails', icon: Mail },
   { href: '/profile', label: 'Profile', icon: User },
   { href: '/calendar', label: 'Calendar', icon: Calendar },

@@ -9,6 +9,7 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { InterviewPrep } from '@/types/interview';
+import { getNotificationManager } from '@/lib/notifications/manager';
 
 interface UseInterviewPrepOptions {
   autoFetch?: boolean;
@@ -112,9 +113,11 @@ export function useInterviewPrep(
         setPrep(data);
         setLastFetchTime(Date.now());
         setError(null);
+        getNotificationManager().success('Interview Prep Ready', 'Your prep kit has been generated');
       } catch (err) {
         const error = err instanceof Error ? err : new Error(String(err));
         setError(error);
+        getNotificationManager().error('Prep Generation Failed', error.message);
       } finally {
         setLoading(false);
       }

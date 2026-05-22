@@ -3,6 +3,7 @@
 export const dynamic = 'force-dynamic';
 
 import { useState, useCallback } from 'react';
+import { getNotificationManager } from '@/lib/notifications/manager';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { Button, Input, Textarea, Card, CardBody } from '@/components/ui';
 import {
@@ -129,8 +130,10 @@ export default function EmailsPage() {
       const typeInfo = EMAIL_TYPES.find((t) => t.value === form.type)!;
       const label = [form.jobTitle, form.company].filter(Boolean).join(' @ ') || typeInfo.label;
       setHistory((prev) => [{ email, type: form.type, label }, ...prev].slice(0, 10));
+      getNotificationManager().success('Email Ready', `${typeInfo.label} email drafted${label !== typeInfo.label ? ` for ${label}` : ''}`);
     } catch (err: any) {
       setError(err.message ?? 'Something went wrong');
+      getNotificationManager().error('Generation Failed', err.message ?? 'Something went wrong');
     } finally {
       setGenerating(false);
     }
