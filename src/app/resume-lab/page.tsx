@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { ResumeLab } from '@/components/ResumeLab/ResumeLab';
 

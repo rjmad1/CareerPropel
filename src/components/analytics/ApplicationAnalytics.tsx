@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Card, CardBody, Badge } from '@/components/ui';
 import { TrendingUp, Clock, Activity, Percent, Layers } from 'lucide-react';
 

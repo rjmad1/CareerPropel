@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, CardBody, Badge } from '@/components/ui';
 import { CheckCircle2, ChevronRight, Award, Compass, ShieldAlert } from 'lucide-react';
 
