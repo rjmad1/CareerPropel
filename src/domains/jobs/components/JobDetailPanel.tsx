@@ -52,7 +52,7 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
           className="fixed inset-0 bg-black bg-opacity-20 z-30"
           onClick={onClose}
         />
-        <div className="fixed right-0 top-0 h-screen w-96 bg-white border-l border-gray-200 shadow-lg z-40 flex items-center justify-center" data-testid="panel-skeleton">
+        <div className="fixed right-0 top-0 h-screen w-full sm:w-96 bg-white border-l border-gray-200 shadow-lg z-40 flex items-center justify-center" data-testid="panel-skeleton">
           <div className="animate-spin rounded-full h-24 w-24 border-b-2 border-blue-600"></div>
         </div>
       </>
@@ -67,8 +67,8 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
           className="fixed inset-0 bg-black bg-opacity-20 z-30"
           onClick={onClose}
         />
-        <div className="fixed right-0 top-0 h-screen w-96 bg-white border-l border-gray-200 shadow-lg z-40 flex flex-col" data-testid="job-detail-panel">
-          <div className="flex items-center justify-between p-12 border-b border-gray-200" data-testid="job-detail-panel-header">
+        <div className="fixed right-0 top-0 h-screen w-full sm:w-96 bg-white border-l border-gray-200 shadow-lg z-40 flex flex-col" data-testid="job-detail-panel">
+          <div className="flex items-center justify-between p-5 border-b border-gray-200" data-testid="job-detail-panel-header">
             <h2 className="text-lg font-bold text-gray-900">Error</h2>
             <button
               onClick={onClose}
@@ -101,10 +101,10 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
         className="fixed inset-0 bg-black bg-opacity-20 z-30"
         onClick={onClose}
       />
-      <div className="fixed right-0 top-0 h-screen w-96 bg-white border-l border-gray-200 shadow-lg z-40 flex flex-col overflow-hidden" data-testid="job-detail-panel">
+      <div className="fixed right-0 top-0 h-screen w-full sm:w-96 bg-white border-l border-gray-200 shadow-lg z-40 flex flex-col overflow-hidden" data-testid="job-detail-panel">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 p-12 z-50" data-testid="job-detail-panel-header">
-          <div className="flex items-start justify-between mb-8">
+        <div className="sticky top-0 bg-white border-b border-gray-200 p-4 sm:p-6 z-50" data-testid="job-detail-panel-header">
+          <div className="flex items-start justify-between mb-4">
             <div className="flex-1">
               <h2 className="text-xl font-bold text-gray-900" data-testid="panel-job-title">{job.title}</h2>
               <p className="text-sm text-gray-600 mt-2" data-testid="panel-company-name">{job.company}</p>
@@ -120,25 +120,25 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 gap-4 mb-4">
-            <div className="bg-gray-50 rounded-lg p-4">
+          <div className="grid grid-cols-2 gap-3 mb-3">
+            <div className="bg-gray-50 rounded-lg p-3">
               <p className="text-xs text-gray-600">Match Score</p>
               <p
                 data-testid="panel-match-score"
-                className={`text-sm font-bold rounded px-4 py-2 inline-block ${getMatchScoreColor(job.matchScore / 100)}`}
+                className={`text-sm font-bold rounded px-2 py-1 inline-block mt-1 ${getMatchScoreColor(job.matchScore / 100)}`}
               >
                 {Math.round(job.matchScore)}%
               </p>
             </div>
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-gray-50 rounded-lg p-3">
               <p className="text-xs text-gray-600">Stage</p>
-              <p className="text-sm font-semibold text-gray-900" data-testid="panel-stage-badge">{STAGE_LABELS[job.stage] ?? job.stage}</p>
+              <p className="text-sm font-semibold text-gray-900 mt-1" data-testid="panel-stage-badge">{STAGE_LABELS[job.stage] ?? job.stage}</p>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            <div className="bg-gray-50 rounded-lg p-4">
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            <div className="bg-gray-50 rounded-lg p-3">
               <p className="text-xs text-gray-600">Salary</p>
-              <p className="text-sm font-semibold text-gray-900" data-testid="panel-salary-range">
+              <p className="text-sm font-semibold text-gray-900 mt-1" data-testid="panel-salary-range">
                 {(job as any).salary
                   ? typeof (job as any).salary === 'object'
                     ? `$${((job as any).salary.min || 0).toLocaleString()}${(job as any).salary.max ? `–$${(job as any).salary.max.toLocaleString()}` : '+'}`
@@ -146,9 +146,9 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
                   : '—'}
               </p>
             </div>
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="bg-gray-50 rounded-lg p-3">
               <p className="text-xs text-gray-600">Priority</p>
-              <p className="text-sm font-semibold text-gray-900 capitalize">{(job as any).priority || '—'}</p>
+              <p className="text-sm font-semibold text-gray-900 capitalize mt-1">{(job as any).priority || '—'}</p>
             </div>
           </div>
 
@@ -162,7 +162,7 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
                 data-testid={`tab-${tab}`}
                 data-active={activeTab === tab}
                 aria-selected={activeTab === tab}
-                className={`px-6 py-4 text-sm font-medium transition ${
+                className={`px-3 py-3 text-xs sm:text-sm font-medium transition whitespace-nowrap ${
                   activeTab === tab
                     ? 'text-blue-600 border-b-2 border-blue-600'
                     : 'text-gray-600 hover:text-gray-900'

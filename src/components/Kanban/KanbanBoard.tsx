@@ -3,6 +3,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Job, JobStage, PIPELINE_STAGES, STAGE_LABELS, STAGE_COLORS } from '@/types/job';
 import { Swimlane, SwimlaneConfig } from './Swimlane';
+import { JobCard } from './JobCard';
 import { JobDetailPanel } from '@/domains/jobs';
 import { useRealTime } from '@/hooks/useRealTime';
 import { AnyWebSocketMessage } from '@/lib/websocket/types';
@@ -123,6 +124,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
   const [jobs, setJobs] = useState<Job[]>(initialJobs);
   const [error, setError] = useState<string | null>(null);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
+  const [mobileStage, setMobileStage] = useState<JobStage>(PIPELINE_STAGES[0]);
   const isLoading = false;
 
   const { connected, subscribe } = useRealTime({
@@ -210,8 +212,67 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
         </div>
       )}
 
-      {/* Swimlanes */}
-      <div className="flex-1 overflow-x-auto overflow-y-hidden min-h-0" data-cy="swimlanes-container">
+      {/* Mobile: stage pill selector + vertical list */}
+      <div className="lg:hidden flex flex-col flex-1 min-h-0 overflow-hidden">
+        {/* Stage tabs — horizontal scroll */}
+        <div className="flex gap-1.5 overflow-x-auto px-3 py-2.5 border-b border-slate-200 bg-white scrollbar-none shrink-0">
+          {PIPELINE_STAGES.map((stage) => {
+            const count = groupedJobs[stage].length;
+            const cfg = STAGE_CONFIG[stage];
+            const isActive = mobileStage === stage;
+            return (
+              <button
+                key={stage}
+                onClick={() => setMobileStage(stage)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 transition-all border ${
+                  isActive
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                    : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+                }`}
+              >
+                <span>{cfg.icon}</span>
+                <span>{cfg.label}</span>
+                {count > 0 && (
+                  <span className={`ml-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
+                    isActive ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'
+                  }`}>
+                    {count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Jobs for selected stage */}
+        <div className="flex-1 overflow-y-auto p-3 space-y-3">
+          {groupedJobs[mobileStage].length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-16 text-slate-400">
+              <div className="text-3xl mb-2">{STAGE_CONFIG[mobileStage].icon}</div>
+              <p className="text-sm font-medium">No jobs in {STAGE_CONFIG[mobileStage].label}</p>
+            </div>
+          ) : (
+            groupedJobs[mobileStage].map((job) => (
+              <JobCard
+                key={job.id}
+                job={job}
+                onClick={() => {
+                  setSelectedJobId(job.id);
+                  onJobClick?.(job);
+                }}
+                onDragStart={(e: React.DragEvent<HTMLDivElement>) => {
+                  e.dataTransfer.effectAllowed = 'move';
+                  e.dataTransfer.setData('jobId', job.id);
+                }}
+                onMoveStage={handleJobDrop}
+              />
+            ))
+          )}
+        </div>
+      </div>
+
+      {/* Desktop: horizontal Kanban swimlanes */}
+      <div className="hidden lg:flex flex-1 overflow-x-auto overflow-y-hidden min-h-0" data-cy="swimlanes-container">
         <div className="inline-flex gap-0 h-full min-w-min">
           {PIPELINE_STAGES.map((stage) => (
             <Swimlane
