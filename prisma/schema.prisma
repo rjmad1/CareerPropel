@@ -104,6 +104,7 @@ model Candidate {
   jobImports        JobImport[]
   accomplishments   Accomplishment[]
   appraisalSessions AppraisalSession[]
+  contacts          Contact[]
 }
 
 // ─── Job Pipeline ────────────────────────────────────────────────────────────
@@ -721,5 +722,36 @@ model AppraisalSession {
   updatedAt   DateTime  @updatedAt
 
   @@index([candidateId])
+}
+
+// ─── Networking / Recruiter CRM ──────────────────────────────────────────────
+
+model Contact {
+  id          String   @id @default(cuid())
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  name        String
+  company     String?
+  role        String?
+  email       String?
+  phone       String?
+  linkedInUrl String?
+
+  // "recruiter" | "hiring_manager" | "referral" | "peer" | "other"
+  type        String   @default("recruiter")
+  // "to_contact" | "reached_out" | "responded" | "met" | "introduced" | "closed"
+  status      String   @default("to_contact")
+
+  jobId       String?  // optional link to a pipeline job
+  notes       String?
+  followUpAt  DateTime?
+  lastContactedAt DateTime?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([candidateId])
+  @@index([candidateId, status])
 }
 

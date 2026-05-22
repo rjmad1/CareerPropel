@@ -25,6 +25,8 @@ import {
   X,
   Globe,
   Plug,
+  Users,
+  Cpu,
 } from 'lucide-react';
 import { DemoBanner } from '@/components/ui/DemoBanner';
 import { DemoDataIndicator } from '@/components/ui/DemoDataBadge';
@@ -33,6 +35,7 @@ const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/jobs', label: 'Pipeline', icon: KanbanSquare },
   { href: '/job-search', label: 'Job Search', icon: Globe },
+  { href: '/networking', label: 'Networking', icon: Users },
   { href: '/interview-prep', label: 'Interview Prep', icon: Mic },
   { href: '/interviews', label: 'Interviews', icon: CalendarCheck },
   { href: '/offers', label: 'Offers', icon: CircleDollarSign },
@@ -45,6 +48,7 @@ const navItems = [
   { href: '/audit-logs', label: 'Audit Logs', icon: FileSpreadsheet },
   { href: '/api-keys', label: 'API Keys', icon: KeyRound },
   { href: '/settings/integrations', label: 'Integrations', icon: Plug },
+  { href: '/settings/ai-providers', label: 'AI Providers', icon: Cpu },
   { href: '/settings/security', label: 'Security', icon: ShieldAlert },
   { href: '/settings/account', label: 'Account', icon: Settings },
 ];

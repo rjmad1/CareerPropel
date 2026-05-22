@@ -1,7 +1,10 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useState, useEffect, useCallback } from 'react';
 import { getNotificationManager } from '@/lib/notifications/manager';
+import { NavLayout } from '@/components/Layout/NavLayout';
 import { Card, Button, Badge, Spinner } from '@/components/ui';
 import { 
   Cpu, 
@@ -185,14 +188,17 @@ export default function AiProvidersSettingsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
-        <Spinner className="w-10 h-10 text-indigo-600" />
-        <span className="text-sm text-slate-500 font-medium">Loading orchestrator preferences...</span>
-      </div>
+      <NavLayout title="AI Providers" subtitle="Configure LLM providers and workflow presets">
+        <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
+          <Spinner className="w-10 h-10 text-indigo-600" />
+          <span className="text-sm text-slate-500 font-medium">Loading orchestrator preferences...</span>
+        </div>
+      </NavLayout>
     );
   }
 
   return (
+    <NavLayout title="AI Providers" subtitle="Configure LLM providers, API keys, and workflow presets">
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
       {/* Page Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-6">
@@ -478,5 +484,6 @@ export default function AiProvidersSettingsPage() {
         </div>
       </div>
     </div>
+    </NavLayout>
   );
 }
