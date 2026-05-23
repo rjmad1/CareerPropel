@@ -1,13 +1,18 @@
-// Export components
 export { InterviewPrepWorkspace as InterviewPrep } from '@/components/InterviewPrep/InterviewPrepWorkspace';
-// TODO: Implement remaining Interview components in Phase 2
-// export { InterviewScheduler } from './components/InterviewScheduler';
-// export { InterviewNotes } from './components/InterviewNotes';
+export { MockInterview } from '@/components/InterviewPrep/MockInterview';
+export { BehavioralStories } from '@/components/InterviewPrep/BehavioralStories';
+export { CompanyIntelligence } from '@/components/InterviewPrep/CompanyIntelligence';
+export { TechnicalPrep } from '@/components/InterviewPrep/TechnicalPrep';
+export { SystemDesignTab } from '@/components/InterviewPrep/SystemDesignTab';
+export { RoleBreakdown } from '@/components/InterviewPrep/RoleBreakdown';
+export { ResumeAlignment } from '@/components/InterviewPrep/ResumeAlignment';
 
-// Export hooks
-// TODO: Implement Interview hooks in Phase 2
-// export { useInterviews } from './hooks/useInterviews';
+export {
+  useInterviewPrep,
+  useInterviewPrepProgress,
+  useMockInterview,
+} from '@/hooks/useInterviewPrep';
+export type { MockInterviewQuestion, MockInterviewSession } from '@/hooks/useInterviewPrep';
 
-// Export types
-// TODO: Implement Interview types in Phase 2
-// export type * from './types';
+export { useInterviews } from './hooks/useInterviews';
+export type { Interview } from './hooks/useInterviews';

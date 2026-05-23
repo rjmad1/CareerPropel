@@ -11,6 +11,15 @@ export type AgentType =
   | 'follow-up'
   | 'networking';
 
+export const VALID_AGENT_TYPES: AgentType[] = [
+  'resume-tailor',
+  'job-match',
+  'interview-prep',
+  'research',
+  'follow-up',
+  'networking',
+];
+
 export interface AgentPromptContext {
   resume?: string;
   jobDescription?: string;

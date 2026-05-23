@@ -133,9 +133,10 @@ model Candidate {
   calendarTokens    CalendarToken[]
   calendarEvents    CalendarEvent[]
   jobImports        JobImport[]
-  accomplishments   Accomplishment[]
-  appraisalSessions AppraisalSession[]
-  contacts          Contact[]
+  accomplishments       Accomplishment[]
+  appraisalSessions     AppraisalSession[]
+  contacts              Contact[]
+  mockInterviewSessions MockInterviewSession[]
 }
 
 // ─── Job Pipeline ────────────────────────────────────────────────────────────
@@ -161,13 +162,14 @@ model Job {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
-  candidate         Candidate           @relation(fields: [candidateId], references: [id], onDelete: Cascade)
-  activities        JobActivity[]
-  interviewFeedback InterviewFeedback[]
-  offers            Offer[]
-  interviews        Interview[]
-  documents         Document[]
-  interviewPrep     InterviewPrep?
+  candidate             Candidate             @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  activities            JobActivity[]
+  interviewFeedback     InterviewFeedback[]
+  offers                Offer[]
+  interviews            Interview[]
+  documents             Document[]
+  interviewPrep         InterviewPrep?
+  mockInterviewSessions MockInterviewSession[]
 
   @@index([candidateId])
   @@index([stage])
@@ -403,6 +405,7 @@ model AgentExecution {
   id           String               @id @default(cuid())
   userId       String // NextAuth user ID or email — not a FK
   agentType    String // resume-tailor, job-match, interview-prep, research, follow-up, networking
+  jobId        String? // denormalized from input.jobId for precise indexed queries
   status       AgentExecutionStatus @default(queued)
   input        String? // JSON-serialised AgentPromptContext
   output       String? // JSON-serialised result
@@ -449,6 +452,7 @@ model AgentExecution {
   @@index([status])
   @@index([executionSource])
   @@index([queuedAt])
+  @@index([jobId])
 }
 
 model ToolCall {
@@ -790,6 +794,31 @@ model AppraisalSession {
   updatedAt   DateTime  @updatedAt
 
   @@index([candidateId])
+}
+
+// ─── Mock Interview Sessions ─────────────────────────────────────────────────
+
+model MockInterviewSession {
+  id          String   @id @default(cuid())
+  candidateId String
+  jobId       String?
+  sessionId   String   // client-generated session identifier
+  questions   Json?    // Array<{ id, text, category, difficulty }>
+  responses   Json?    // Array<[questionId, answer]>
+  feedback    String?  // overall assessment text
+  scores      Json?    // { clarity, relevance, completeness, overall }
+  strengths   String[]
+  areasForImprovement String[]
+  suggestions String[]
+  completedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job?      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@unique([candidateId, sessionId])
+  @@index([candidateId])
+  @@index([jobId])
 }
 
 // ─── Networking / Recruiter CRM ──────────────────────────────────────────────

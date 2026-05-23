@@ -5,6 +5,9 @@ import {
   getAgentSystemPrompt,
   buildAgentUserPrompt,
 } from '@/lib/agents/prompts';
+import { buildAgentContext } from '@/lib/agents/contextBuilder';
+import { critiqueOutput } from '@/lib/agents/criticPrompt';
+import { checkChainDependencies, mergeUpstreamContext } from '@/lib/agents/chainExecutor';
 import {
   publishAgentStarted,
   publishAgentCompleted,
@@ -20,6 +23,7 @@ import {
   DRAIN_TIMEOUT_MS,
   HEALTH_CHECK_INTERVAL,
   createBullMQRedisConnection,
+  getAgentQueue,
 } from './job-definitions';
 
 const HEARTBEAT_INTERVAL_MS = 10_000;
@@ -84,7 +88,9 @@ async function appendRetryLineage(executionId: string, attempt: RetryAttempt): P
 }
 
 async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promise<void> {
-  const { executionId, agentType, userId, context } = job.data;
+  const { executionId, agentType, userId, context: rawContext } = job.data;
+  // mutableContext may be widened by chain-dep merging before the LLM call
+  let mutableContext: Record<string, unknown> = rawContext as Record<string, unknown>;
   const jobLog = log.child({ executionId, agentType, userId, jobId: job.id, workerId });
 
   // Check for duplicate execution (e.g. job redelivered after crash)
@@ -106,7 +112,7 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
   // Cost ceiling — fail-fast before touching the LLM
   let estimatedCost: number;
   try {
-    estimatedCost = await validateCostCeiling(agentType, context, retryCount);
+    estimatedCost = await validateCostCeiling(agentType, mutableContext, retryCount);
   } catch (err: any) {
     await prisma.agentExecution.update({
       where: { id: executionId },
@@ -143,7 +149,7 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
     HEARTBEAT_INTERVAL_MS,
   );
 
-  await publishAgentStarted(userId, executionId, agentType as any, context as any);
+  await publishAgentStarted(userId, executionId, agentType as any, mutableContext as any);
   await publishAgentStatus(userId, executionId, agentType as any, 'running', 0, `Starting ${agentType}...`);
 
   let fullResponse = '';
@@ -154,9 +160,40 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
     abortController.abort(new Error(`LLM stream timed out after 55s`));
   }, 55_000);
 
+  // enrichedContext is declared here so the critic gate below can reference it
+  let enrichedContext: Awaited<ReturnType<typeof buildAgentContext>> = {};
+
   try {
+    // Check multi-agent chain dependencies before touching the LLM
+    const pipelineJobId = (mutableContext as any).jobId as string | undefined;
+    if (pipelineJobId) {
+      const chain = await checkChainDependencies(agentType as any, userId, pipelineJobId);
+      if (!chain.ready) {
+        jobLog.info({ pendingDeps: chain.pendingDeps }, 'Chain deps not satisfied — requeueing');
+        const originalJobId = job.data.originalJobId ?? job.id;
+        await getAgentQueue().add(
+          'agent-execution',
+          { ...job.data, originalJobId },
+          { delay: 60_000, jobId: `dep-wait-${originalJobId}` },
+        );
+        await prisma.agentExecution.update({
+          where: { id: executionId },
+          data: { status: 'queued', errorMessage: `Waiting for: ${chain.pendingDeps.join(', ')}` },
+        });
+        return;
+      }
+      mutableContext = mergeUpstreamContext(agentType as any, mutableContext, chain.upstreamOutputs);
+    }
+
+    // Enrich context with real candidate data so agents never see placeholder text
+    enrichedContext = await buildAgentContext({
+      userId,
+      jobId: pipelineJobId,
+      overrides: mutableContext as any,
+    });
+
     const systemPrompt = getAgentSystemPrompt(agentType as any);
-    const userPrompt = buildAgentUserPrompt(agentType as any, context as any);
+    const userPrompt = buildAgentUserPrompt(agentType as any, enrichedContext);
 
     for await (const token of streamLLM(
       [{ role: 'user', content: userPrompt }],
@@ -213,6 +250,30 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
 
   const latencyMs = Date.now() - startTime;
 
+  // Critic quality-gate — runs before persistence
+  const userPromptForCritic = buildAgentUserPrompt(agentType as any, enrichedContext);
+  const criticResult = await critiqueOutput(agentType as any, userPromptForCritic, fullResponse);
+
+  if (!criticResult.accepted) {
+    jobLog.warn(
+      { score: criticResult.score, rationale: criticResult.rationale },
+      'Critic rejected agent output — marking failed'
+    );
+    await prisma.agentExecution.update({
+      where: { id: executionId },
+      data: {
+        status: 'failed',
+        completedAt: new Date(),
+        errorMessage: `Quality gate failed (score ${criticResult.score}/10): ${criticResult.rationale}`,
+        failureClassification: 'validation_error',
+        latencyMs,
+        output: JSON.stringify({ criticResult, rawResponse: fullResponse }),
+      },
+    });
+    await publishAgentStatus(userId, executionId, agentType as any, 'failed', 0, 'Quality gate failed');
+    return;
+  }
+
   // Parse JSON output
   let parsedOutput: Record<string, unknown> = {};
   try {
@@ -221,6 +282,8 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
   } catch {
     parsedOutput = { rawResponse: fullResponse };
   }
+  // Attach critic metadata to output for observability
+  parsedOutput._critic = { score: criticResult.score, rationale: criticResult.rationale };
 
   // Rough cost from actual token count
   const actualCost = getProjectedCost(agentType, tokenCount, retryCount > 0);

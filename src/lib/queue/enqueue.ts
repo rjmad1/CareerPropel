@@ -46,6 +46,7 @@ export async function enqueueAgentExecution(
     data: {
       userId,
       agentType,
+      jobId: typeof context.jobId === 'string' ? context.jobId : null,
       status: 'queued',
       input: JSON.stringify(context),
       executionSource: 'queue',

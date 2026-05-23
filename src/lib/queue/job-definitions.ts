@@ -9,6 +9,8 @@ export interface AgentJobData {
   idempotencyKey?: string;
   schemaVersion: number;
   executionVersion: number;
+  /** Stable ID for dedup-safe requeueing when chain deps aren't ready */
+  originalJobId?: string;
 }
 
 export const AGENT_QUEUE_NAME = 'agent-execution';

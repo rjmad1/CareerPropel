@@ -1,0 +1,30 @@
+name: Publish Docs
+on:
+  push:
+    branches: [main]
+
+# Cancel any in-flight docs deployment when a new push to main arrives
+concurrency:
+  group: docs-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  docs:
+    name: Build and Deploy Docs
+    runs-on: ubuntu-latest
+    permissions:
+      # write access required so peaceiris/actions-gh-pages can push to the gh-pages branch
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npm run docs
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/api
