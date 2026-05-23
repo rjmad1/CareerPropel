@@ -19,6 +19,90 @@ interface RouteParams {
   params: Promise<{ jobId: string }>;
 }
 
+type SendFn = (event: string, data: unknown) => void;
+
+function computeProgress(prepStatus: string, elapsed: number): number {
+  if (prepStatus === 'ready') return 100;
+  if (prepStatus === 'error') return 0;
+  return Math.min(90, Math.round((elapsed / MAX_WAIT_MS) * 90));
+}
+
+async function sendInitialStatus(
+  jobId: string,
+  userEmail: string,
+  send: SendFn,
+  cleanup: () => void,
+): Promise<string | null> {
+  try {
+    const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
+    if (!candidate) {
+      send('error', { message: 'Candidate not found' });
+      cleanup();
+      return null;
+    }
+
+    const prep = await prisma.interviewPrep.findUnique({ where: { jobId } });
+    if (!prep || prep?.candidateId !== candidate.id) {
+      send('error', { message: 'Interview prep not found' });
+      cleanup();
+      return null;
+    }
+
+    send('status', { prepStatus: prep.prepStatus, progress: prep.prepStatus === 'ready' ? 100 : 5 });
+
+    if (prep.prepStatus === 'ready' || prep.prepStatus === 'error') {
+      cleanup();
+      return null;
+    }
+
+    return candidate.id;
+  } catch {
+    send('error', { message: 'Database unavailable' });
+    cleanup();
+    return null;
+  }
+}
+
+async function pollTick(
+  jobId: string,
+  candidateId: string,
+  startedAt: number,
+  send: SendFn,
+  cleanup: () => void,
+): Promise<boolean> {
+  if (Date.now() - startedAt > MAX_WAIT_MS) {
+    send('error', { message: 'Timed out waiting for prep generation' });
+    cleanup();
+    return true;
+  }
+
+  try {
+    const prep = await prisma.interviewPrep.findUnique({ where: { jobId } });
+    if (!prep) {
+      send('error', { message: 'Interview prep not found', jobId });
+      cleanup();
+      return true;
+    }
+
+    if (prep.candidateId !== candidateId) {
+      send('error', { message: 'Authorization lost' });
+      cleanup();
+      return true;
+    }
+
+    const elapsed = Date.now() - startedAt;
+    send('status', { prepStatus: prep.prepStatus, progress: computeProgress(prep.prepStatus, elapsed) });
+
+    if (prep.prepStatus === 'ready' || prep.prepStatus === 'error') {
+      cleanup();
+      return true;
+    }
+  } catch {
+    // Transient DB error — keep trying
+  }
+  return false;
+}
+
 export async function GET(_request: NextRequest, { params }: RouteParams) {
   const { jobId } = await params;
 
@@ -33,7 +117,7 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
 
   const stream = new ReadableStream({
     async start(controller) {
-      const send = (event: string, data: unknown) => {
+      const send: SendFn = (event, data) => {
         try {
           controller.enqueue(
             encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`)
@@ -62,60 +146,14 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
         try { controller.close(); } catch { /* already closed */ }
       };
 
-      // Send initial status immediately
-      try {
-        const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
-        if (!candidate) {
-          send('error', { message: 'Candidate not found' });
-          cleanup();
-          return;
-        }
+      const candidateId = await sendInitialStatus(jobId, userEmail, send, cleanup);
+      if (!candidateId) return;
 
-        const prep = await prisma.interviewPrep.findUnique({ where: { jobId } });
-        if (!prep || prep.candidateId !== candidate.id) {
-          send('error', { message: 'Interview prep not found' });
-          cleanup();
-          return;
-        }
-
-        send('status', { prepStatus: prep.prepStatus, progress: prep.prepStatus === 'ready' ? 100 : 5 });
-
-        if (prep.prepStatus === 'ready' || prep.prepStatus === 'error') {
-          cleanup();
-          return;
-        }
-      } catch (err) {
-        send('error', { message: 'Database unavailable' });
-        cleanup();
-        return;
-      }
-
-      // Poll until ready / error / timeout
       while (!done) {
         await new Promise((r) => setTimeout(r, POLL_MS));
         if (done) break;
-
-        if (Date.now() - startedAt > MAX_WAIT_MS) {
-          send('error', { message: 'Timed out waiting for prep generation' });
-          cleanup();
-          break;
-        }
-
-        try {
-          const prep = await prisma.interviewPrep.findUnique({ where: { jobId } });
-          if (!prep) { cleanup(); break; }
-
-          send('status', { prepStatus: prep.prepStatus });
-
-          if (prep.prepStatus === 'ready' || prep.prepStatus === 'error') {
-            cleanup();
-          }
-        } catch {
-          // Transient DB error — keep trying
-        }
+        if (await pollTick(jobId, candidateId, startedAt, send, cleanup)) break;
       }
-
-      return cleanup;
     },
   });
 

@@ -165,6 +165,11 @@ export function useAgentRealTime(
         } catch { /* ignore */ }
       });
 
+      // Refresh execution list when an agent starts or completes so AgentRail
+      // reflects status transitions without waiting for the polling interval.
+      es.addEventListener('agent:started', () => { fetchExecutions(); });
+      es.addEventListener('agent:completed', () => { fetchExecutions(); });
+
       es.onopen = () => { setIsConnected(true); stopPolling(); };
       es.onerror = () => { setIsConnected(false); startPolling(); };
     } catch {

@@ -206,6 +206,7 @@ export function useInterviewPrepProgress(jobId: string) {
   const [status, setStatus] = useState<'idle' | 'generating' | 'complete' | 'error'>('idle');
   const [message, setMessage] = useState('');
   const progressRef = useRef(0);
+  const pollTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const startTracking = useCallback(() => {
     progressRef.current = 5;
@@ -223,7 +224,6 @@ export function useInterviewPrepProgress(jobId: string) {
       setProgress(progressRef.current);
     }, 600);
 
-    let pollTimer: ReturnType<typeof setInterval> | null = null;
     let es: EventSource | null = null;
 
     const finish = (prepStatus: string) => {
@@ -239,14 +239,15 @@ export function useInterviewPrepProgress(jobId: string) {
     };
 
     const startPolling = () => {
-      pollTimer = setInterval(async () => {
+      pollTimerRef.current = setInterval(async () => {
         try {
           const res = await fetch(`/api/interview-prep/${jobId}`);
           if (!res.ok) return;
           const json = await res.json();
-          const prepStatus: string | undefined = json.data?.prepStatus ?? json.prepStatus;
+          const prepStatus: string | undefined = json.data?.prepStatus;
           if (prepStatus === 'ready' || prepStatus === 'error') {
-            clearInterval(pollTimer!);
+            clearInterval(pollTimerRef.current ?? undefined);
+            pollTimerRef.current = null;
             finish(prepStatus);
           }
         } catch {
@@ -258,9 +259,7 @@ export function useInterviewPrepProgress(jobId: string) {
     // Try SSE first; fall back to polling if the endpoint is unavailable
     try {
       es = new EventSource(`/api/interview-prep/${jobId}/events`);
-      let sseOpened = false;
-
-      es.onopen = () => { sseOpened = true; };
+      let sseTerminalEventReceived = false;
 
       es.addEventListener('status', (e: MessageEvent) => {
         try {
@@ -270,6 +269,7 @@ export function useInterviewPrepProgress(jobId: string) {
             setProgress(data.progress);
           }
           if (data.prepStatus === 'ready' || data.prepStatus === 'error') {
+            sseTerminalEventReceived = true;
             es?.close();
             finish(data.prepStatus);
           }
@@ -279,8 +279,7 @@ export function useInterviewPrepProgress(jobId: string) {
       es.onerror = () => {
         es?.close();
         es = null;
-        // Fall back to polling only if SSE never established a connection
-        if (!sseOpened) startPolling();
+        if (!sseTerminalEventReceived) startPolling();
       };
     } catch {
       // EventSource not supported in this environment — fall back to polling
@@ -289,7 +288,7 @@ export function useInterviewPrepProgress(jobId: string) {
 
     return () => {
       clearInterval(animTimer);
-      if (pollTimer) clearInterval(pollTimer);
+      if (pollTimerRef.current) clearInterval(pollTimerRef.current);
       es?.close();
     };
   }, [jobId, status]);

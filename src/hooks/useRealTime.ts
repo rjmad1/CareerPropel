@@ -6,6 +6,7 @@ import { AnyWebSocketMessage, Agent, Notification, RealtimeJobUpdate } from '@/l
 interface UseRealTimeOptions {
   autoConnect?: boolean;
   channels?: string[];
+  endpoint?: string;
 }
 
 interface UseRealTimeReturn {
@@ -28,7 +29,7 @@ const SSE_EVENT_TYPES = [
 ];
 
 export function useRealTime(options: UseRealTimeOptions = {}): UseRealTimeReturn {
-  const { autoConnect = true } = options;
+  const { autoConnect = true, endpoint = '/api/agents/events' } = options;
 
   const [connected, setConnected] = useState(false);
   const handlersRef = useRef<Map<string, Set<(msg: AnyWebSocketMessage) => void>>>(new Map());
@@ -40,7 +41,7 @@ export function useRealTime(options: UseRealTimeOptions = {}): UseRealTimeReturn
     let es: EventSource;
 
     try {
-      es = new EventSource('/api/agents/events');
+      es = new EventSource(endpoint);
       esRef.current = es;
 
       es.onopen = () => setConnected(true);
@@ -66,7 +67,7 @@ export function useRealTime(options: UseRealTimeOptions = {}): UseRealTimeReturn
       esRef.current = null;
       setConnected(false);
     };
-  }, [autoConnect]);
+  }, [autoConnect, endpoint]);
 
   const subscribe = useCallback((type: string, handler: (msg: AnyWebSocketMessage) => void) => {
     if (!handlersRef.current.has(type)) {
@@ -86,7 +87,7 @@ export function useRealTime(options: UseRealTimeOptions = {}): UseRealTimeReturn
 
 // ─── Derived hooks (same API as before) ──────────────────────────────────────
 
-export function useAgentStatus(agentId?: string) {
+export function useAgentStatus(agentType?: string) {
   const { subscribe, connected } = useRealTime();
   const [agent, setAgent] = useState<Agent | null>(null);
 
@@ -94,11 +95,11 @@ export function useAgentStatus(agentId?: string) {
     if (!connected) return;
     return subscribe('agent:status_update', (message: AnyWebSocketMessage) => {
       const ev = message as any;
-      if (!agentId || ev.data?.agentType === agentId) {
+      if (!agentType || ev.data?.agentType === agentType) {
         setAgent(ev.data ?? null);
       }
     });
-  }, [agentId, connected, subscribe]);
+  }, [agentType, connected, subscribe]);
 
   return { agent, connected };
 }
@@ -123,22 +124,33 @@ export function useJobUpdates(jobId?: string) {
 export function useNotifications() {
   const { subscribe, connected } = useRealTime();
   const [notification, setNotification] = useState<Notification | null>(null);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   const notificationsRef = useRef<Notification[]>([]);
+  const timeoutsRef = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
 
   useEffect(() => {
     if (!connected) return;
-    return subscribe('notification', (message: AnyWebSocketMessage) => {
+    const unsubscribe = subscribe('notification', (message: AnyWebSocketMessage) => {
       const ev = message as any;
       const notif: Notification = ev.data;
-      notificationsRef.current.push(notif);
+      notificationsRef.current = [...notificationsRef.current, notif];
       setNotification(notif);
+      setNotifications(notificationsRef.current);
       if (notif.duration) {
-        setTimeout(() => {
+        const tid = setTimeout(() => {
+          timeoutsRef.current.delete(notif.id);
           notificationsRef.current = notificationsRef.current.filter((n) => n.id !== notif.id);
+          setNotifications([...notificationsRef.current]);
         }, notif.duration);
+        timeoutsRef.current.set(notif.id, tid);
       }
     });
+    return () => {
+      unsubscribe();
+      timeoutsRef.current.forEach((tid) => clearTimeout(tid));
+      timeoutsRef.current.clear();
+    };
   }, [connected, subscribe]);
 
-  return { notification, notifications: notificationsRef.current, connected };
+  return { notification, notifications, connected };
 }

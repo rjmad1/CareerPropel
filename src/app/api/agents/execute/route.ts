@@ -28,6 +28,8 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 import { AgentType } from '@/lib/agents/prompts';
+import { publishAgentStatus } from '@/lib/agents/redis-integration';
+import { enqueueAgentExecution } from '@/lib/queue/enqueue';
 
 // Mark as dynamic to prevent build-time static generation
 export const dynamic = 'force-dynamic'
@@ -71,17 +73,40 @@ export async function POST(request: NextRequest) {
     }
     const userId = session.user.email;
 
-    // Create execution record
+    // Feature flag: route to BullMQ queue or legacy cron path
+    const useQueue = process.env.QUEUE_EXECUTION_ENABLED === 'true';
+
+    if (useQueue) {
+      try {
+        const executionId = await enqueueAgentExecution(
+          agentType,
+          userId,
+          (context || {}) as Record<string, unknown>,
+        );
+        return NextResponse.json({
+          executionId,
+          status: 'queued',
+          message: 'Agent execution queued for processing',
+        }, { status: 202 });
+      } catch (enqueueErr: any) {
+        if (enqueueErr?.code === 'COST_CEILING_EXCEEDED') {
+          return NextResponse.json({ error: enqueueErr.message }, { status: 400 });
+        }
+        throw enqueueErr; // let outer catch handle unexpected errors
+      }
+    }
+
+    // ── Legacy cron path ────────────────────────────────────────────────────
     const execution = await prisma.agentExecution.create({
       data: {
         userId,
         agentType,
         status: 'queued',
         input: JSON.stringify(context || {}),
+        executionSource: 'cron',
       },
     });
 
-    // Log execution created
     await prisma.eventLog.create({
       data: {
         executionId: execution.id,
@@ -91,10 +116,14 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    publishAgentStatus(userId, execution.id, agentType, 'queued', 0, 'Queued for processing').catch(
+      () => { /* Redis unavailable — client will see state on next SSE snapshot */ }
+    );
+
     return NextResponse.json({
       executionId: execution.id,
       status: 'queued',
-      message: `Agent execution queued for processing`,
+      message: 'Agent execution queued for processing',
     });
   } catch (error) {
     console.error('[Agent Execute] Error:', error);

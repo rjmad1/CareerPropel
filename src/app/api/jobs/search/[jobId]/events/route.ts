@@ -21,13 +21,30 @@ interface RouteParams {
 export async function GET(_request: NextRequest, { params }: RouteParams) {
   const { jobId } = await params;
 
+  let userEmail: string;
   try {
-    await getAuthContext();
+    ({ userEmail } = await getAuthContext());
   } catch {
     return new Response('Unauthorized', { status: 401 });
   }
 
+  // Verify ownership before opening the stream
+  try {
+    const execution = await prisma.agentExecution.findUnique({ where: { id: jobId } });
+    if (!execution) {
+      return new Response('Not Found', { status: 404 });
+    }
+    if (execution.userId !== userEmail) {
+      return new Response('Forbidden', { status: 403 });
+    }
+  } catch {
+    return new Response('Service Unavailable', { status: 503 });
+  }
+
   const encoder = new TextEncoder();
+
+  // Shared cleanup reference so cancel() can tear down the stream
+  let cleanupFn: () => void = () => { /* no-op until start initializes */ };
 
   const stream = new ReadableStream({
     async start(controller) {
@@ -58,6 +75,7 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
         done = true;
         try { controller.close(); } catch { /* already closed */ }
       };
+      cleanupFn = cleanup;
 
       // Send initial status immediately
       try {
@@ -105,8 +123,9 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
           // Transient DB error — keep trying
         }
       }
-
-      return cleanup;
+    },
+    cancel() {
+      cleanupFn();
     },
   });
 
