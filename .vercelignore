@@ -1,0 +1,15 @@
+node_modules
+.gitnexus
+.next
+cypress
+*.log
+dev.log
+scan_output.txt
+tsconfig.tsbuildinfo
+architecture-overview.svg
+ARCHITECTURE_REPORT.md
+CODEBASE_INTELLIGENCE_REPORT.md
+WEEK*.md
+IMPLEMENTATION_STATUS.md
+docs
+.claude
