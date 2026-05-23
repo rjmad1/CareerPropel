@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: '320px',
+      },
       colors: {
         // Semantic colors
         primary: 'rgb(var(--color-primary))',
@@ -69,6 +72,18 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }) {
+      addUtilities({
+        '.scrollbar-none': {
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none',
+        },
+        '.scrollbar-none::-webkit-scrollbar': {
+          display: 'none',
+        },
+      });
+    },
+  ],
   darkMode: 'class',
 }

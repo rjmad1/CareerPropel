@@ -204,6 +204,26 @@ export const JobCard: React.FC<JobCardProps> = ({
       <div className="pt-2 text-[10px] font-semibold text-slate-400">
         Applied {formatDate(job.appliedAt || job.createdAt)}
       </div>
+
+      {/* Mobile: prev/next stage buttons */}
+      <div className="lg:hidden flex gap-1.5 pt-1 border-t border-slate-100">
+        <button
+          onClick={(e) => { e.stopPropagation(); moveStage('left'); }}
+          disabled={PIPELINE_STAGES.indexOf(job.stage) === 0}
+          aria-label="Move to previous stage"
+          className="flex-1 text-xs text-slate-500 hover:text-slate-700 py-1.5 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+        >
+          ← Prev
+        </button>
+        <button
+          onClick={(e) => { e.stopPropagation(); moveStage('right'); }}
+          disabled={PIPELINE_STAGES.indexOf(job.stage) === PIPELINE_STAGES.length - 1}
+          aria-label="Move to next stage"
+          className="flex-1 text-xs text-slate-500 hover:text-slate-700 py-1.5 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
+        >
+          Next →
+        </button>
+      </div>
     </div>
   );
 };

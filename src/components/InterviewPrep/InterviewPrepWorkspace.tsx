@@ -180,6 +180,7 @@ export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
           </div>
           <button
             onClick={onClose}
+            aria-label="Close interview preparation"
             className="text-slate-400 hover:text-slate-600 transition-colors ml-3 shrink-0"
             data-cy="close-interview-prep"
           >
@@ -301,6 +302,7 @@ export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
                 <h3 className="font-semibold text-slate-900">Quick Revision</h3>
                 <button
                   onClick={() => setShowQuickRevision(false)}
+                  aria-label="Close quick revision"
                   className="text-slate-400 hover:text-slate-600 p-1"
                 >
                   <X className="w-5 h-5" />

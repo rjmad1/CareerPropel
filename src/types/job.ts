@@ -49,6 +49,7 @@ export interface Job {
     max?: number;
     currency?: string;
   };
+  priority?: 'low' | 'medium' | 'high' | 'critical';
   description?: string;
   url?: string;
   recruiterName?: string;

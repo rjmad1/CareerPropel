@@ -125,6 +125,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
   const [error, setError] = useState<string | null>(null);
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [mobileStage, setMobileStage] = useState<JobStage>(PIPELINE_STAGES[0]);
+  const [dragOverStage, setDragOverStage] = useState<JobStage | null>(null);
   const isLoading = false;
 
   const { connected, subscribe } = useRealTime({
@@ -220,15 +221,25 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
             const count = groupedJobs[stage].length;
             const cfg = STAGE_CONFIG[stage];
             const isActive = mobileStage === stage;
+            const pillStyle = isActive
+              ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+              : dragOverStage === stage
+                ? 'bg-blue-100 border-blue-400 text-blue-700'
+                : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300';
             return (
               <button
                 key={stage}
                 onClick={() => setMobileStage(stage)}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 transition-all border ${
-                  isActive
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                    : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
-                }`}
+                onDragOver={(e) => { e.preventDefault(); setDragOverStage(stage); }}
+                onDragEnter={(e) => { e.preventDefault(); setDragOverStage(stage); }}
+                onDragLeave={() => setDragOverStage(null)}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  setDragOverStage(null);
+                  const jobId = e.dataTransfer.getData('jobId');
+                  if (jobId) handleJobDrop(jobId, stage);
+                }}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 transition-all border ${pillStyle}`}
               >
                 <span>{cfg.icon}</span>
                 <span>{cfg.label}</span>

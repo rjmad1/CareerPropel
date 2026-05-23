@@ -148,7 +148,7 @@ export default function JobDetailPanel({ jobId, onClose }: JobDetailPanelProps) 
             </div>
             <div className="bg-gray-50 rounded-lg p-3">
               <p className="text-xs text-gray-600">Priority</p>
-              <p className="text-sm font-semibold text-gray-900 capitalize mt-1">{(job as any).priority || '—'}</p>
+              <p className="text-sm font-semibold text-gray-900 capitalize mt-1">{job.priority || '—'}</p>
             </div>
           </div>
 
