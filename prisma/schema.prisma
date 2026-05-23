@@ -37,6 +37,37 @@ enum AgentExecutionStatus {
   paused
   completed
   failed
+  interrupted
+}
+
+/// Source that triggered an agent execution.
+enum ExecutionSource {
+  cron
+  queue
+  retry
+  fallback
+  manual
+}
+
+/// Reason an in-flight execution was interrupted.
+enum InterruptionReason {
+  deploy_shutdown
+  stall_detected
+  heartbeat_timeout
+}
+
+/// Classification of execution failure type.
+enum FailureClassification {
+  provider_error
+  timeout
+  cost_ceiling
+  validation_error
+}
+
+/// Deployment environment.
+enum DeploymentEnvironment {
+  staging
+  production
 }
 
 /// Interview lifecycle states.
@@ -383,11 +414,41 @@ model AgentExecution {
   createdAt    DateTime             @default(now())
   updatedAt    DateTime             @updatedAt
 
+  // Execution source & worker identity
+  executionSource    ExecutionSource?
+  workerId           String?
+  queuedAt           DateTime?
+  interruptedAt      DateTime?
+  interruptionReason InterruptionReason?
+
+  // Cost governance
+  estimatedCost Float?
+  actualCost    Float?
+  tokenUsage    Json? // { inputTokens: number, outputTokens: number }
+  provider      String?
+  model         String?
+  latencyMs     Int?
+
+  // Retry lineage
+  retryCount           Int                  @default(0)
+  retryLineage         Json? // array of retry attempt objects
+  failureClassification FailureClassification?
+
+  // Deployment provenance
+  deploymentVersion     String?
+  deploymentSha         String?
+  deploymentTimestamp   DateTime?
+  deploymentEnvironment DeploymentEnvironment?
+  railwayServiceId      String?
+  previousDeploymentVersion String?
+
   toolCalls ToolCall[]
   eventLogs EventLog[]
 
   @@index([userId])
   @@index([status])
+  @@index([executionSource])
+  @@index([queuedAt])
 }
 
 model ToolCall {
@@ -570,10 +631,17 @@ model CalendarToken {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
+  // Encryption versioning for key rotation
+  encryptionVersion Int      @default(1)
+  encryptionKeyId   String   @default("primary")
+  migratedAt        DateTime?
+  isLegacy          Boolean  @default(true)
+
   candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
 
   @@unique([candidateId, provider])
   @@index([candidateId])
+  @@index([isLegacy])
 }
 
 model CalendarEvent {

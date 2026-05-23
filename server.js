@@ -16,6 +16,12 @@ const { getToken } = require('next-auth/jwt')
 const Redis = require('ioredis')
 const { PrismaClient } = require('@prisma/client')
 const fs = require('fs')
+const path = require('path')
+
+// Register tsconfig path aliases for require() calls to compiled JS in production.
+// In dev, ts-node/tsx handles this automatically via tsconfig-paths.
+let queueScheduler = null;
+let sharedSubscriberEmitter = null;
 
 // Support secure HTTPS connection when certificates are provided in the environment
 let isHttps = false;
@@ -45,7 +51,31 @@ const port = parseInt(process.env.PORT || '3000', 10)
 const app = next({ dev, hostname, port })
 const handle = app.getRequestHandler()
 
-app.prepare().then(() => {
+app.prepare().then(async () => {
+  // ── Queue Scheduler (embedded in API runtime) ─────────────────────────────
+  // Runs health monitoring, stall detection, and interrupted-job recovery.
+  // Only starts when queue execution is enabled to avoid noise in legacy mode.
+  if (process.env.QUEUE_EXECUTION_ENABLED === 'true') {
+    try {
+      // Dynamically import compiled TS (works in both dev via tsx and prod via node dist/)
+      const { startQueueScheduler } = require('./src/lib/queue/scheduler');
+      queueScheduler = startQueueScheduler();
+      console.log('[Scheduler] Queue scheduler started');
+    } catch (err) {
+      console.error('[Scheduler] Failed to start queue scheduler (non-fatal):', err.message);
+    }
+
+    // ── Shared Redis Subscriber (SSE fanout) ─────────────────────────────────
+    // Replaces per-SSE-connection subscribers with a single shared subscriber.
+    try {
+      const { initializeSharedSubscriber } = require('./src/lib/realtime/shared-subscriber');
+      sharedSubscriberEmitter = await initializeSharedSubscriber();
+      console.log('[SharedSubscriber] Shared Redis subscriber started');
+    } catch (err) {
+      console.error('[SharedSubscriber] Failed to start shared subscriber (non-fatal):', err.message);
+    }
+  }
+
   const requestHandler = async (req, res) => {
     try {
       const parsedUrl = parse(req.url, true)
@@ -232,4 +262,27 @@ app.prepare().then(() => {
     console.log(`📡 WebSocket (Socket.io) + Redis bridge running`)
     console.log(`🔐 Environment: ${dev ? 'development' : 'production'}`)
   })
+
+  // Graceful shutdown
+  const gracefulShutdown = async (signal) => {
+    console.log(`[Server] ${signal} received — shutting down gracefully`)
+    if (queueScheduler) {
+      await queueScheduler.stop().catch((e) => console.error('[Scheduler] Shutdown error:', e.message))
+    }
+    if (sharedSubscriberEmitter) {
+      try {
+        const { shutdownSharedSubscriber } = require('./src/lib/realtime/shared-subscriber')
+        await shutdownSharedSubscriber()
+      } catch (e) {
+        console.error('[SharedSubscriber] Shutdown error:', e.message)
+      }
+    }
+    httpServer.close(() => {
+      console.log('[Server] HTTP server closed')
+      process.exit(0)
+    })
+  }
+
+  process.once('SIGTERM', () => gracefulShutdown('SIGTERM'))
+  process.once('SIGINT',  () => gracefulShutdown('SIGINT'))
 })
