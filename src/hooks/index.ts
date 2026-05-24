@@ -1,12 +1,19 @@
-export { useJobBoard, type UseJobBoardReturn } from './useJobBoard'
-
-// Additional hooks to be created:
-// - useAgent (agent status polling)
-// - useToast (toast notifications)
-// - useAuth (authentication)
-// - useMediaQuery (responsive design)
-// - useLocalStorage (persistence)
-// - useAsync (async operations)
-// - usePrevious (track previous value)
-// - useDebounce (debouncing)
-// - useTheme (dark mode)
+export { useJobBoard, type UseJobBoardReturn } from './useJobBoard';
+export { useJobs, useJob, useCreateJob, useUpdateJob, useDeleteJob, jobsQueryKeys } from './useJobs';
+export { useDocuments, useDocument, useUploadDocument, useDeleteDocument, documentsQueryKeys } from './useDocuments';
+export type { Document, DocumentsPage, DocumentUploadInput } from './useDocuments';
+export { useAgentExecutions, useAgentExecution as useAgentExecutionQuery, useExecuteAgent, useAgentQueue, agentsQueryKeys } from './useAgents';
+export type { AgentExecutionSummary, ExecuteAgentInput, ExecuteAgentResult } from './useAgents';
+export { useAgentExecution } from './useAgentExecution';
+export { useAgentRealTime } from './useAgentRealTime';
+export { useAgentStatus, useAgentStatusListener } from './useAgentStatus';
+export { useProfile } from './useProfile';
+export type { UseProfileResult } from './useProfile';
+export { useProfileCompletion } from './useProfileCompletion';
+export { useInterviewPrep, useInterviewPrepProgress, useMockInterview } from './useInterviewPrep';
+export type { MockInterviewQuestion, MockInterviewSession } from './useInterviewPrep';
+export { useRealTime } from './useRealTime';
+export { useSocket } from './useSocket';
+export { useUIStore } from './useUIStore';
+export { useJobStore } from './useJobStore';
+export { useMoveJob } from './useMoveJob';

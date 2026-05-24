@@ -21,6 +21,8 @@ export interface SwimlaneProps {
   onJobDrop?: (jobId: string, targetStage: JobStage) => void;
   onJobClick?: (job: Job) => void;
   onJobMoveStage?: (jobId: string, targetStage: JobStage) => void;
+  /** Optional custom renderer — replaces the default JobCard when provided */
+  renderJobCard?: (job: Job) => React.ReactNode;
 }
 
 /**
@@ -49,6 +51,7 @@ export const Swimlane: React.FC<SwimlaneProps> = ({
   onJobDrop,
   onJobClick,
   onJobMoveStage,
+  renderJobCard,
 }) => {
   const [dragOverJob, setDragOverJob] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -122,20 +125,24 @@ export const Swimlane: React.FC<SwimlaneProps> = ({
             ))}
           </div>
         ) : jobs.length > 0 ? (
-          // Job cards
-          jobs.map((job) => (
-            <JobCard
-              key={job.id}
-              job={job}
-              onClick={() => onJobClick?.(job)}
-              onDragStart={(e) => {
-                e.dataTransfer.effectAllowed = 'move';
-                e.dataTransfer.setData('jobId', job.id);
-              }}
-              isDraggedOver={dragOverJob === job.id}
-              onMoveStage={onJobMoveStage}
-            />
-          ))
+          // Job cards — use custom renderer when provided (e.g. to overlay agent badges)
+          jobs.map((job) =>
+            renderJobCard ? (
+              <React.Fragment key={job.id}>{renderJobCard(job)}</React.Fragment>
+            ) : (
+              <JobCard
+                key={job.id}
+                job={job}
+                onClick={() => onJobClick?.(job)}
+                onDragStart={(e) => {
+                  e.dataTransfer.effectAllowed = 'move';
+                  e.dataTransfer.setData('jobId', job.id);
+                }}
+                isDraggedOver={dragOverJob === job.id}
+                onMoveStage={onJobMoveStage}
+              />
+            )
+          )
         ) : (
           // Empty state
           <div className="flex items-center justify-center h-64 text-gray-500 text-sm">

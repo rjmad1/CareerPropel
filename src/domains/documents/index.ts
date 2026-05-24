@@ -1,12 +1,10 @@
-// Export components
-// TODO: Implement Document components in Phase 2
-// export { DocumentUpload } from './components/DocumentUpload';
-// export { DocumentGallery } from './components/DocumentGallery';
+export { DocumentUpload } from '@/components/Profile/DocumentUpload';
 
-// Export hooks
-// TODO: Implement Document hooks in Phase 2
-// export { useDocuments } from './hooks/useDocuments';
-
-// Export types
-// TODO: Implement Document types in Phase 2
-// export type * from './types';
+export {
+  useDocuments,
+  useDocument,
+  useUploadDocument,
+  useDeleteDocument,
+  documentsQueryKeys,
+} from '@/hooks/useDocuments';
+export type { Document, DocumentsPage, DocumentUploadInput } from '@/hooks/useDocuments';
