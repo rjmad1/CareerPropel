@@ -5,8 +5,9 @@
 
 import { AnthropicProvider } from './anthropic';
 import { NvidiaNimProvider } from './nvidia-nim';
+import { runStreamWithProviderResilience, runWithProviderResilience } from './resilience';
 
-export type LLMProvider = 'anthropic' | 'nvidia-nim';
+export type LLMProviderName = 'anthropic' | 'nvidia-nim';
 
 export interface LLMMessage {
   role: 'user' | 'assistant' | 'system';
@@ -30,8 +31,8 @@ export interface LLMCallResult {
   totalTokens: number;
 }
 
-export interface LLMProvider {
-  name: LLMProvider;
+export interface LLMProviderClient {
+  name: LLMProviderName;
   callLLM(messages: LLMMessage[], options?: LLMCallOptions): Promise<LLMCallResult>;
   streamLLM(
     messages: LLMMessage[],
@@ -40,9 +41,9 @@ export interface LLMProvider {
   getDefaultModel(): string;
 }
 
-let providerInstance: LLMProvider | null = null;
+let providerInstance: LLMProviderClient | null = null;
 
-export function initializeLLMProvider(): LLMProvider {
+export function initializeLLMProvider(): LLMProviderClient {
   if (providerInstance) return providerInstance;
 
   const provider = process.env.LLM_PROVIDER || 'anthropic';
@@ -61,7 +62,7 @@ export function initializeLLMProvider(): LLMProvider {
   return providerInstance;
 }
 
-export function getLLMProvider(): LLMProvider {
+export function getLLMProvider(): LLMProviderClient {
   if (!providerInstance) {
     return initializeLLMProvider();
   }
@@ -73,7 +74,7 @@ export async function callLLM(
   options?: LLMCallOptions
 ): Promise<LLMCallResult> {
   const provider = getLLMProvider();
-  return provider.callLLM(messages, options);
+  return runWithProviderResilience(provider.name, () => provider.callLLM(messages, options));
 }
 
 export async function* streamLLM(
@@ -81,5 +82,5 @@ export async function* streamLLM(
   options?: LLMCallOptions
 ): AsyncIterable<string> {
   const provider = getLLMProvider();
-  yield* provider.streamLLM(messages, options);
+  yield* runStreamWithProviderResilience(provider.name, () => provider.streamLLM(messages, options));
 }

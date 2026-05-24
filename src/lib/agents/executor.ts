@@ -5,6 +5,7 @@
 
 import { prisma } from '@/lib/db';
 import { streamLLM } from '@/lib/llm/provider';
+import { createLogger } from '@/lib/logging/logger';
 import {
   AgentType,
   AgentPromptContext,
@@ -16,6 +17,9 @@ import {
   publishAgentCompleted,
   publishAgentStatus,
 } from './redis-integration';
+import { appendExecutionLog } from './store';
+
+const executionLogger = createLogger({ component: 'agent-executor' });
 
 export interface ExecutionContext {
   executionId: string;
@@ -26,6 +30,7 @@ export interface ExecutionContext {
 
 export async function executeAgent(context: ExecutionContext): Promise<void> {
   const { executionId, agentType, promptContext, userId } = context;
+  const executionStartedAt = Date.now();
 
   try {
     // Transition to running state
@@ -57,6 +62,8 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
     const systemPrompt = getAgentSystemPrompt(agentType);
     const userPrompt = buildAgentUserPrompt(agentType, promptContext);
 
+    executionLogger.info({ executionId, agentType, userId }, 'Agent execution started');
+
     // Stream from Claude API
     let fullResponse = '';
     let tokenCount = 0;
@@ -81,13 +88,13 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
 
         // Log status update every 50 tokens for responsiveness
         if (tokenCount % 50 === 0) {
-          await prisma.eventLog.create({
-            data: {
-              executionId,
-              level: 'INFO',
-              message: `Streaming... (${tokenCount} tokens)`,
-            },
-          });
+          await appendExecutionLog(
+            executionId,
+            userId,
+            agentType,
+            'INFO',
+            `Streaming... (${tokenCount} tokens)`
+          );
         }
       }
     } catch (streamError) {
@@ -109,15 +116,15 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
         throw new Error('No JSON found in response');
       }
     } catch (parseError) {
-      console.error(`[Executor] Parse error for ${executionId}:`, parseError);
-      await prisma.eventLog.create({
-        data: {
-          executionId,
-          level: 'WARN',
-          message: `Failed to parse response as JSON. Raw response stored.`,
-          metadata: { rawResponseLength: fullResponse.length },
-        },
-      });
+      executionLogger.warn({ executionId, err: parseError }, 'Failed to parse model response as JSON');
+      await appendExecutionLog(
+        executionId,
+        userId,
+        agentType,
+        'WARN',
+        'Failed to parse response as JSON. Raw response stored.',
+        { rawResponseLength: fullResponse.length }
+      );
       // Store raw response if parsing fails
       parsedOutput = { rawResponse: fullResponse };
     }
@@ -136,14 +143,14 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
     });
 
     // Log final event
-    await prisma.eventLog.create({
-      data: {
-        executionId,
-        level: 'INFO',
-        message: `Agent execution completed successfully`,
-        metadata: { tokenCount, durationMs: elapsedMs },
-      },
-    });
+    await appendExecutionLog(
+      executionId,
+      userId,
+      agentType,
+      'INFO',
+      'Agent execution completed successfully',
+      { tokenCount, durationMs: elapsedMs }
+    );
 
     // Publish completion events to Redis
     await publishAgentCompleted(
@@ -165,11 +172,12 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       'Complete',
       tokenCount
     );
+    executionLogger.info({ executionId, agentType, tokenCount, durationMs: elapsedMs }, 'Agent execution completed');
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : String(error);
 
-    console.error(`[Executor] Execution failed for ${executionId}:`, error);
+    executionLogger.error({ executionId, agentType, err: error }, 'Agent execution failed');
 
     // Persist error state
     await prisma.agentExecution.update({
@@ -182,13 +190,13 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
     });
 
     // Log error event
-    await prisma.eventLog.create({
-      data: {
-        executionId,
-        level: 'ERROR',
-        message: `Agent execution failed: ${errorMessage}`,
-      },
-    });
+    await appendExecutionLog(
+      executionId,
+      userId,
+      agentType,
+      'ERROR',
+      `Agent execution failed: ${errorMessage}`
+    );
 
     // Publish failure events to Redis
     await publishAgentCompleted(
@@ -199,7 +207,7 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       undefined,
       errorMessage,
       0,
-      Date.now() - Date.parse(new Date().toISOString())
+      Date.now() - executionStartedAt
     );
     await publishAgentStatus(
       userId,
@@ -236,8 +244,9 @@ export async function processPendingExecutions(): Promise<number> {
       });
 
       if (running >= 5) {
-        console.log(
-          `[Executor] User ${execution.userId} at concurrency limit (5), deferring execution ${execution.id}`
+        executionLogger.warn(
+          { executionId: execution.id, userId: execution.userId },
+          'Execution deferred due to legacy concurrency gate'
         );
         continue;
       }
@@ -257,10 +266,7 @@ export async function processPendingExecutions(): Promise<number> {
 
       processed++;
     } catch (error) {
-      console.error(
-        `[Executor] Failed to process execution ${execution.id}:`,
-        error
-      );
+      executionLogger.error({ executionId: execution.id, err: error }, 'Failed to process pending execution');
       // Mark as failed and continue
       await prisma.agentExecution.update({
         where: { id: execution.id },
