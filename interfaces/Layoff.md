@@ -1,0 +1,67 @@
+[**CareerPropel API Reference**](../README.md)
+
+***
+
+[CareerPropel API Reference](../globals.md) / Layoff
+
+# Interface: Layoff
+
+Defined in: [src/types/company.ts:184](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L184)
+
+Layoff information
+
+## Properties
+
+### count
+
+> **count**: `number`
+
+Defined in: [src/types/company.ts:186](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L186)
+
+***
+
+### date
+
+> **date**: `Date`
+
+Defined in: [src/types/company.ts:185](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L185)
+
+***
+
+### departments
+
+> **departments**: `string`[]
+
+Defined in: [src/types/company.ts:188](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L188)
+
+***
+
+### percentage
+
+> **percentage**: `number`
+
+Defined in: [src/types/company.ts:187](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L187)
+
+***
+
+### reason?
+
+> `optional` **reason?**: `string`
+
+Defined in: [src/types/company.ts:189](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L189)
+
+***
+
+### source
+
+> **source**: `string`
+
+Defined in: [src/types/company.ts:190](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L190)
+
+***
+
+### url?
+
+> `optional` **url?**: `string`
+
+Defined in: [src/types/company.ts:191](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L191)

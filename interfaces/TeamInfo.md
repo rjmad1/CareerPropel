@@ -1,0 +1,75 @@
+[**CareerPropel API Reference**](../README.md)
+
+***
+
+[CareerPropel API Reference](../globals.md) / TeamInfo
+
+# Interface: TeamInfo
+
+Defined in: [src/types/company.ts:203](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L203)
+
+Team and manager information
+
+## Properties
+
+### companyId
+
+> **companyId**: `string`
+
+Defined in: [src/types/company.ts:205](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L205)
+
+***
+
+### department
+
+> **department**: `string`
+
+Defined in: [src/types/company.ts:206](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L206)
+
+***
+
+### id
+
+> **id**: `string`
+
+Defined in: [src/types/company.ts:204](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L204)
+
+***
+
+### manager
+
+> **manager**: [`Manager`](Manager.md)
+
+Defined in: [src/types/company.ts:209](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L209)
+
+***
+
+### name
+
+> **name**: `string`
+
+Defined in: [src/types/company.ts:207](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L207)
+
+***
+
+### organizationLevel
+
+> **organizationLevel**: `number`
+
+Defined in: [src/types/company.ts:211](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L211)
+
+***
+
+### siblingTeams
+
+> **siblingTeams**: `string`[]
+
+Defined in: [src/types/company.ts:210](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L210)
+
+***
+
+### size
+
+> **size**: `number`
+
+Defined in: [src/types/company.ts:208](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L208)

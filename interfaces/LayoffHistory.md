@@ -1,0 +1,33 @@
+[**CareerPropel API Reference**](../README.md)
+
+***
+
+[CareerPropel API Reference](../globals.md) / LayoffHistory
+
+# Interface: LayoffHistory
+
+Defined in: [src/types/company.ts:194](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L194)
+
+## Properties
+
+### hasHadLayoffs
+
+> **hasHadLayoffs**: `boolean`
+
+Defined in: [src/types/company.ts:195](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L195)
+
+***
+
+### pattern?
+
+> `optional` **pattern?**: `string`
+
+Defined in: [src/types/company.ts:197](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L197)
+
+***
+
+### recentLayoffs
+
+> **recentLayoffs**: [`Layoff`](Layoff.md)[]
+
+Defined in: [src/types/company.ts:196](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L196)
