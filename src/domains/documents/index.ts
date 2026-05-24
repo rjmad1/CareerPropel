@@ -1,5 +1,4 @@
-export { DocumentUpload } from '@/components/Profile/DocumentUpload';
-
+// DocumentUpload is canonical in @/domains/profile — import it from there.
 export {
   useDocuments,
   useDocument,

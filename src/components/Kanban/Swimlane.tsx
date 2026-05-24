@@ -21,8 +21,20 @@ export interface SwimlaneProps {
   onJobDrop?: (jobId: string, targetStage: JobStage) => void;
   onJobClick?: (job: Job) => void;
   onJobMoveStage?: (jobId: string, targetStage: JobStage) => void;
-  /** Optional custom renderer — replaces the default JobCard when provided */
-  renderJobCard?: (job: Job) => React.ReactNode;
+  /** Optional custom renderer — replaces the default JobCard when provided.
+   *  Receives the job plus all handlers so consumers can wrap/enhance JobCard
+   *  without reimplementing drag-and-drop or click logic. */
+  renderJobCard?: (
+    job: Job,
+    handlers: {
+      onDragStart: (e: React.DragEvent<HTMLDivElement>) => void;
+      onDragEnd: (e: React.DragEvent<HTMLDivElement>) => void;
+      onDragOver?: (e: React.DragEvent<HTMLDivElement>) => void;
+      onClick: (job: Job) => void;
+      draggableProps?: Record<string, unknown>;
+      isDragging?: boolean;
+    },
+  ) => React.ReactNode;
 }
 
 /**
@@ -126,23 +138,32 @@ export const Swimlane: React.FC<SwimlaneProps> = ({
           </div>
         ) : jobs.length > 0 ? (
           // Job cards — use custom renderer when provided (e.g. to overlay agent badges)
-          jobs.map((job) =>
-            renderJobCard ? (
-              <React.Fragment key={job.id}>{renderJobCard(job)}</React.Fragment>
+          jobs.map((job) => {
+            const cardHandlers = {
+              onDragStart: (e: React.DragEvent<HTMLDivElement>) => {
+                e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('jobId', job.id);
+              },
+              onDragEnd: (_e: React.DragEvent<HTMLDivElement>) => {
+                setDragOverJob(null);
+              },
+              onClick: (j: Job) => onJobClick?.(j),
+              isDragging: dragOverJob === job.id,
+            };
+
+            return renderJobCard ? (
+              <React.Fragment key={job.id}>{renderJobCard(job, cardHandlers)}</React.Fragment>
             ) : (
               <JobCard
                 key={job.id}
                 job={job}
                 onClick={() => onJobClick?.(job)}
-                onDragStart={(e) => {
-                  e.dataTransfer.effectAllowed = 'move';
-                  e.dataTransfer.setData('jobId', job.id);
-                }}
+                onDragStart={cardHandlers.onDragStart}
                 isDraggedOver={dragOverJob === job.id}
                 onMoveStage={onJobMoveStage}
               />
-            )
-          )
+            );
+          })
         ) : (
           // Empty state
           <div className="flex items-center justify-center h-64 text-gray-500 text-sm">
