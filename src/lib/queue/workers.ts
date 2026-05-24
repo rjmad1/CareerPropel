@@ -1,0 +1,228 @@
+import { Job, QueueEvents, Worker } from 'bullmq';
+import { prisma } from '@/lib/db';
+import { executeAgent } from '@/lib/agents/executor';
+import { createLogger } from '@/lib/logging/logger';
+import { recordQueueMetric, recordWorkerExecution, recordWorkerRetry } from '@/lib/observability/metrics';
+import { startTraceSpan } from '@/lib/observability/tracing';
+import { acquireExecutionSlots, releaseExecutionSlots } from '@/lib/queue/concurrency';
+import { enqueueDeadLetter } from '@/lib/queue/queues';
+import { publishRealtimeEvent } from '@/lib/queue/events';
+import { getExecutionQueue, type ExecutionJobData } from '@/lib/queue/queues';
+import { ConcurrencyLimitError, isRetryableError, NonRetryableExecutionError } from '@/lib/queue/retry-policy';
+import { createRedisClient, disconnectRedisClient } from '@/lib/redis/redisClient';
+import { runtimeSettings } from '@/lib/runtime/settings';
+
+const workerLogger = createLogger({ component: 'worker' });
+const workerConnection = createRedisClient('career-propel:worker');
+const queueEventsConnection = createRedisClient('career-propel:queue-events');
+
+let executionWorker: Worker<ExecutionJobData> | null = null;
+let queueEvents: QueueEvents | null = null;
+
+function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      reject(new Error(`Execution exceeded timeout of ${timeoutMs}ms`));
+    }, timeoutMs);
+
+    promise
+      .then((result) => {
+        clearTimeout(timeout);
+        resolve(result);
+      })
+      .catch((error) => {
+        clearTimeout(timeout);
+        reject(error);
+      });
+  });
+}
+
+async function processExecution(job: Job<ExecutionJobData>) {
+  const startedAt = Date.now();
+  const { executionId, userId, agentType, promptContext, correlationId, requestId } = job.data;
+  const trace = startTraceSpan('queue.execute-agent', {
+    executionId,
+    userId,
+    agentType,
+    queueJobId: job.id,
+  });
+
+  const acquired = await acquireExecutionSlots(userId, agentType, executionId);
+  if (!acquired) {
+    recordWorkerRetry('agent-worker');
+    throw new ConcurrencyLimitError(`Concurrency limit reached for user ${userId}`);
+  }
+
+  try {
+    workerLogger.info(
+      { executionId, userId, agentType, queueJobId: job.id, correlationId, requestId },
+      'Worker picked up execution'
+    );
+
+    await prisma.agentExecution.update({
+      where: { id: executionId },
+      data: {
+        queueJobId: String(job.id),
+        attempts: job.attemptsMade,
+        correlationId,
+        requestId,
+      },
+    });
+
+    await publishRealtimeEvent(userId, {
+      type: 'execution:started',
+      executionId,
+      userId,
+      agentType,
+      status: 'running',
+      currentTask: `Starting ${agentType}`,
+      correlationId,
+      requestId,
+      queueJobId: String(job.id),
+      timestamp: new Date().toISOString(),
+    });
+
+    await withTimeout(
+      executeAgent({
+        executionId,
+        agentType: agentType as never,
+        promptContext,
+        userId,
+      }),
+      runtimeSettings.executionTimeoutMs
+    );
+
+    const durationMs = Date.now() - startedAt;
+    recordQueueMetric(runtimeSettings.executionQueueName, durationMs, true);
+    recordWorkerExecution('agent-worker', durationMs, true);
+    trace.end({ success: true, durationMs });
+  } catch (error) {
+    const durationMs = Date.now() - startedAt;
+    recordQueueMetric(runtimeSettings.executionQueueName, durationMs, false);
+    recordWorkerExecution('agent-worker', durationMs, false);
+    trace.addEvent('execution.failed', {
+      message: error instanceof Error ? error.message : String(error),
+    });
+    trace.end({ success: false, durationMs });
+
+    if (!isRetryableError(error)) {
+      throw new NonRetryableExecutionError(
+        error instanceof Error ? error.message : 'Execution failed permanently'
+      );
+    }
+
+    throw error;
+  } finally {
+    await releaseExecutionSlots(userId, agentType, executionId);
+  }
+}
+
+export function createExecutionWorker() {
+  if (executionWorker) {
+    return executionWorker;
+  }
+
+  executionWorker = new Worker<ExecutionJobData>(
+    runtimeSettings.executionQueueName,
+    processExecution,
+    {
+      connection: workerConnection,
+      concurrency: runtimeSettings.queueConcurrency,
+      autorun: false,
+      maxStalledCount: runtimeSettings.queueMaxStalledCount,
+      lockDuration: runtimeSettings.executionTimeoutMs,
+      metrics: {
+        maxDataPoints: 1000,
+      },
+    }
+  );
+
+  queueEvents = new QueueEvents(runtimeSettings.executionQueueName, {
+    connection: queueEventsConnection,
+  });
+
+  executionWorker.on('failed', async (job, error) => {
+    if (!job) {
+      return;
+    }
+
+    workerLogger.error(
+      {
+        executionId: job.data.executionId,
+        queueJobId: job.id,
+        attemptsMade: job.attemptsMade,
+        err: error,
+      },
+      'Execution job failed'
+    );
+
+    if (job.attemptsMade >= (job.opts.attempts || runtimeSettings.queueAttempts)) {
+      await enqueueDeadLetter({
+        executionId: job.data.executionId,
+        queueJobId: String(job.id),
+        userId: job.data.userId,
+        agentType: job.data.agentType,
+        failedAt: new Date().toISOString(),
+        reason: error.message,
+        attemptsMade: job.attemptsMade,
+        correlationId: job.data.correlationId,
+        requestId: job.data.requestId,
+      });
+
+      await publishRealtimeEvent(job.data.userId, {
+        type: 'execution:failed',
+        executionId: job.data.executionId,
+        userId: job.data.userId,
+        agentType: job.data.agentType,
+        status: 'failed',
+        currentTask: error.message,
+        correlationId: job.data.correlationId,
+        requestId: job.data.requestId,
+        queueJobId: String(job.id),
+        timestamp: new Date().toISOString(),
+      });
+    }
+  });
+
+  executionWorker.on('completed', (job) => {
+    workerLogger.info(
+      {
+        executionId: job.data.executionId,
+        queueJobId: job.id,
+        attemptsMade: job.attemptsMade,
+      },
+      'Execution job completed'
+    );
+  });
+
+  queueEvents.on('stalled', ({ jobId }) => {
+    workerLogger.warn({ jobId }, 'Execution job stalled');
+  });
+
+  return executionWorker;
+}
+
+export async function startExecutionWorker() {
+  const worker = createExecutionWorker();
+  await queueEvents?.waitUntilReady();
+  await worker.run();
+  return worker;
+}
+
+export async function closeExecutionWorker() {
+  await Promise.all([
+    executionWorker?.close(),
+    queueEvents?.close(),
+    disconnectRedisClient(workerConnection),
+    disconnectRedisClient(queueEventsConnection),
+  ]);
+  executionWorker = null;
+  queueEvents = null;
+}
+
+export async function getWorkerHeartbeat() {
+  return {
+    queue: await getExecutionQueue().getJobCounts('waiting', 'active', 'failed'),
+    timestamp: new Date().toISOString(),
+  };
+}
