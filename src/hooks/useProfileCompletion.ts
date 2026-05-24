@@ -119,7 +119,6 @@ export function useProfileCompletion(
   const jobDescKey = JSON.stringify(targetJobDescriptions ?? []);
   useEffect(() => {
     if (candidateId) fetchSkillGaps(JSON.parse(jobDescKey) as string[]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [candidateId, jobDescKey, fetchSkillGaps]);
 
   return {
