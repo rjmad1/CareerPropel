@@ -47,3 +47,6 @@ Thumbs.db
 # Cache
 .next
 .turbo
+
+# Graphify generated output
+graphify-out/
