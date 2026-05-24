@@ -11,6 +11,7 @@ import { RefreshCw, BarChart3, AlertCircle, Compass, Globe, Layers, Activity } f
 import { ApplicationAnalytics } from '@/components/analytics/ApplicationAnalytics';
 import { CareerTrajectory } from '@/components/analytics/CareerTrajectory';
 import { MarketInsights } from '@/components/analytics/MarketInsights';
+import { AnalyticsTimingPanel, ROIData, ForecastData } from '@/components/analytics/AnalyticsTimingPanel';
 
 interface Job {
   id: string;
@@ -59,7 +60,31 @@ export default function AnalyticsPage() {
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState<'pipeline' | 'roi' | 'trajectory' | 'market'>('pipeline');
 
+  // ROI + Forecast state (fetched lazily when tab opens)
+  const [roiData, setRoiData] = useState<ROIData | null>(null);
+  const [forecastData, setForecastData] = useState<ForecastData | null>(null);
+  const [roiLoading, setRoiLoading] = useState(false);
+  const [roiError, setRoiError] = useState('');
+
   useEffect(() => { fetchJobs(); }, []);
+
+  // Lazy-load ROI + forecast when the ROI tab first opens
+  useEffect(() => {
+    if (activeTab !== 'roi' || roiData || roiLoading) return;
+    setRoiLoading(true);
+    setRoiError('');
+    Promise.all([
+      fetch('/api/analytics/roi').then((r) => r.json()),
+      fetch('/api/analytics/forecast').then((r) => r.json()),
+    ])
+      .then(([roi, forecast]) => {
+        if (roi.error) throw new Error(roi.error);
+        setRoiData(roi as ROIData);
+        setForecastData(forecast as ForecastData);
+      })
+      .catch((e) => setRoiError(e.message ?? 'Failed to load ROI data'))
+      .finally(() => setRoiLoading(false));
+  }, [activeTab, roiData, roiLoading]);
 
   async function fetchJobs() {
     try {
@@ -445,7 +470,17 @@ export default function AnalyticsPage() {
 
             {/* 2. ROI & Funnel tab content */}
             {activeTab === 'roi' && (
-              <ApplicationAnalytics jobs={jobs} />
+              <div className="flex flex-col gap-8">
+                {/* Existing funnel / ROI component (client-side from jobs list) */}
+                <ApplicationAnalytics jobs={jobs} />
+                {/* New DB-backed timing panel + forecast */}
+                <AnalyticsTimingPanel
+                  roi={roiData}
+                  forecast={forecastData}
+                  loading={roiLoading}
+                  error={roiError}
+                />
+              </div>
             )}
 
             {/* 3. Career Trajectory tab content */}

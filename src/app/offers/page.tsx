@@ -700,6 +700,33 @@ interface NegotiationScript {
   redLines: string[];
 }
 
+interface DecisionWeights {
+  compensation: number;
+  growth: number;
+  culture: number;
+  wlb: number;
+  security: number;
+  location: number;
+}
+
+interface DecisionResult {
+  overallScore: number;
+  dimensionScores: DecisionWeights;
+  recommendation: string;
+  pros: string[];
+  cons: string[];
+  summary: string;
+}
+
+const DECISION_DIMENSIONS: { key: keyof DecisionWeights; label: string; description: string }[] = [
+  { key: 'compensation', label: 'Compensation', description: 'Base, bonus & equity' },
+  { key: 'growth', label: 'Career Growth', description: 'Advancement & learning' },
+  { key: 'culture', label: 'Culture & Team', description: 'Fit and environment' },
+  { key: 'wlb', label: 'Work-Life Balance', description: 'Hours, flexibility & remote' },
+  { key: 'security', label: 'Job Security', description: 'Company stability & stage' },
+  { key: 'location', label: 'Location', description: 'Commute, city & remote policy' },
+];
+
 function NegotiateModal({
   offer,
   onClose,
@@ -726,6 +753,15 @@ function NegotiateModal({
   const [script, setScript] = useState<NegotiationScript | null>(null);
   const [scriptError, setScriptError] = useState('');
   const [showScript, setShowScript] = useState(false);
+
+  // Decision scoring state
+  const [weights, setWeights] = useState<DecisionWeights>({
+    compensation: 7, growth: 7, culture: 5, wlb: 5, security: 5, location: 3,
+  });
+  const [userContext, setUserContext] = useState('');
+  const [scoringDecision, setScoringDecision] = useState(false);
+  const [decisionResult, setDecisionResult] = useState<DecisionResult | null>(null);
+  const [decisionError, setDecisionError] = useState('');
 
   useEffect(() => {
     fetch(`/api/offers/${offer.id}/negotiate`)
@@ -809,6 +845,30 @@ function NegotiateModal({
     info_request: 'Request Information',
   };
 
+  async function handleScore(e: React.FormEvent) {
+    e.preventDefault();
+    setScoringDecision(true);
+    setDecisionError('');
+    setDecisionResult(null);
+    try {
+      const res = await fetch(`/api/offers/${offer.id}/decision`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ weights, context: userContext || undefined }),
+      });
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err?.error?.message ?? 'Scoring failed');
+      }
+      const json = await res.json();
+      setDecisionResult(json.data ?? json);
+    } catch (err: any) {
+      setDecisionError(err.message ?? 'Something went wrong');
+    } finally {
+      setScoringDecision(false);
+    }
+  }
+
   return (
     <Modal isOpen onClose={onClose} className="max-w-xl">
       <ModalHeader onClose={onClose}>
@@ -823,12 +883,12 @@ function NegotiateModal({
         </div>
       </ModalHeader>
 
-      <div className="flex border-b border-slate-100 px-6">
-        {['History', 'Record Action', 'AI Script'].map((label, idx) => (
+      <div className="flex border-b border-slate-100 px-6 overflow-x-auto">
+        {['History', 'Record Action', 'AI Script', 'Decision Score'].map((label, idx) => (
           <button
             key={label}
             onClick={() => setTab(idx)}
-            className={`px-4 py-3 text-sm font-semibold border-b-2 transition-all -mb-[1px] ${
+            className={`px-3 py-3 text-sm font-semibold border-b-2 transition-all -mb-[1px] whitespace-nowrap ${
               tab === idx
                 ? 'border-blue-600 text-blue-600'
                 : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
@@ -1044,6 +1104,155 @@ function NegotiateModal({
                     </div>
                   </div>
                 )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Decision Score Tab */}
+        {tab === 3 && (
+          <div className="flex flex-col gap-5">
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Set how much each factor matters to you (0 = not at all, 10 = critical), then let AI score this offer.
+            </p>
+
+            <form onSubmit={handleScore} className="flex flex-col gap-4">
+              {/* Weight sliders */}
+              <div className="flex flex-col gap-3">
+                {DECISION_DIMENSIONS.map(({ key, label, description }) => (
+                  <div key={key}>
+                    <div className="flex items-center justify-between mb-1">
+                      <div>
+                        <span className="text-xs font-semibold text-slate-700">{label}</span>
+                        <span className="text-[10px] text-slate-400 ml-2">{description}</span>
+                      </div>
+                      <span className="text-xs font-bold text-slate-700 w-5 text-right">{weights[key]}</span>
+                    </div>
+                    <input
+                      type="range"
+                      min={0}
+                      max={10}
+                      step={1}
+                      value={weights[key]}
+                      onChange={(e) =>
+                        setWeights((w) => ({ ...w, [key]: parseInt(e.target.value, 10) }))
+                      }
+                      className="w-full accent-blue-600 h-1.5 rounded-full cursor-pointer"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-600 mb-1">
+                  Additional context <span className="text-slate-400 font-normal">(optional)</span>
+                </label>
+                <textarea
+                  value={userContext}
+                  onChange={(e) => setUserContext(e.target.value)}
+                  placeholder="e.g. I prefer remote-first companies, relocating is a deal-breaker..."
+                  rows={2}
+                  className="w-full text-xs border border-slate-200 rounded-xl px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-400 bg-white dark:bg-slate-900 dark:border-slate-700 text-slate-800 dark:text-white"
+                />
+              </div>
+
+              {decisionError && (
+                <div className="flex items-start gap-2.5 p-3 bg-rose-50 border border-rose-100 text-rose-800 text-xs rounded-xl">
+                  <AlertTriangle className="w-3.5 h-3.5 text-rose-600 shrink-0 mt-0.5" />
+                  <span>{decisionError}</span>
+                </div>
+              )}
+
+              <Button
+                type="submit"
+                disabled={scoringDecision}
+                loading={scoringDecision}
+                className="w-full flex items-center justify-center gap-1.5"
+              >
+                {!scoringDecision && <Sparkles className="w-4 h-4" />}
+                Score This Offer
+              </Button>
+            </form>
+
+            {/* Results */}
+            {decisionResult && (
+              <div className="border-t border-slate-100 pt-4 flex flex-col gap-4">
+                {/* Overall score ring */}
+                <div className="flex items-center gap-4 p-4 bg-slate-50 border border-slate-100 rounded-xl">
+                  <div className="relative w-16 h-16 shrink-0">
+                    <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
+                      <circle cx="18" cy="18" r="15.9155" fill="none" stroke="#e2e8f0" strokeWidth="3" />
+                      <circle
+                        cx="18" cy="18" r="15.9155" fill="none"
+                        stroke={decisionResult.overallScore >= 70 ? '#16a34a' : decisionResult.overallScore >= 50 ? '#d97706' : '#dc2626'}
+                        strokeWidth="3"
+                        strokeDasharray={`${decisionResult.overallScore} ${100 - decisionResult.overallScore}`}
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                    <span className="absolute inset-0 flex items-center justify-center text-base font-extrabold text-slate-800">
+                      {decisionResult.overallScore}
+                    </span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-bold text-slate-900 leading-snug mb-1">
+                      {decisionResult.recommendation}
+                    </p>
+                    <p className="text-xs text-slate-500 leading-relaxed">{decisionResult.summary}</p>
+                  </div>
+                </div>
+
+                {/* Dimension scores */}
+                <div className="flex flex-col gap-2">
+                  <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Dimension Scores</h4>
+                  {DECISION_DIMENSIONS.map(({ key, label }) => {
+                    const score = decisionResult.dimensionScores[key];
+                    return (
+                      <div key={key} className="flex items-center gap-3 text-xs">
+                        <span className="w-28 text-slate-600 font-medium shrink-0">{label}</span>
+                        <div className="flex-1 bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                          <div
+                            className={`h-full rounded-full transition-all duration-500 ${
+                              score >= 70 ? 'bg-emerald-500' : score >= 50 ? 'bg-amber-400' : 'bg-rose-400'
+                            }`}
+                            style={{ width: `${score}%` }}
+                          />
+                        </div>
+                        <span className="w-7 text-right font-bold text-slate-700 shrink-0">{score}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Pros & Cons */}
+                <div className="grid grid-cols-2 gap-3">
+                  {decisionResult.pros.length > 0 && (
+                    <div>
+                      <h4 className="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-2">Pros</h4>
+                      <div className="flex flex-col gap-1.5">
+                        {decisionResult.pros.map((p, i) => (
+                          <div key={i} className="flex gap-1.5 items-start text-xs text-slate-600">
+                            <Check className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
+                            <span className="leading-relaxed">{p}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {decisionResult.cons.length > 0 && (
+                    <div>
+                      <h4 className="text-[10px] font-bold text-rose-500 uppercase tracking-widest mb-2">Cons</h4>
+                      <div className="flex flex-col gap-1.5">
+                        {decisionResult.cons.map((c, i) => (
+                          <div key={i} className="flex gap-1.5 items-start text-xs text-slate-600">
+                            <X className="w-3 h-3 text-rose-400 shrink-0 mt-0.5" />
+                            <span className="leading-relaxed">{c}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
