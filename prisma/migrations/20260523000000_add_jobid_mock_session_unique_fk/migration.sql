@@ -39,7 +39,7 @@ DO $$ BEGIN
     WHERE constraint_name = 'MockInterviewSession_jobId_fkey'
   ) THEN
     ALTER TABLE "MockInterviewSession" ADD CONSTRAINT "MockInterviewSession_jobId_fkey"
-      FOREIGN KEY ("jobId") REFERENCES "Job"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+      FOREIGN KEY ("jobId") REFERENCES "Job"("id") ON DELETE CASCADE ON UPDATE CASCADE;
   END IF;
 END $$;
 
