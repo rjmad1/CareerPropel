@@ -5,29 +5,29 @@
  * for that stage, enqueues it automatically.
  *
  * Body: { stage: JobStage }
- * Response: { job, executionId? }
+ * Response: { job, agentType: string|null, executionId: string|null }
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 import { JobStage, PIPELINE_STAGES } from '@/types/job';
 import { getAgentForStage } from '@/lib/agents/stageTriggerMap';
 import { enqueueAgentExecution } from '@/lib/queue/enqueue';
+import { getAuthContext } from '@/lib/middleware/auth';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> },
 ) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.email) {
-      return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+    const { userEmail } = await getAuthContext();
+
+    const { id } = await context.params;
+    if (!id || id.length < 5) {
+      return NextResponse.json({ error: 'Invalid job ID format' }, { status: 400 });
     }
-    const email = session.user.email;
 
     let body: { stage?: unknown };
     try {
@@ -42,30 +42,30 @@ export async function POST(
     }
     const validStage = stage as JobStage;
 
-    // Verify ownership (only email needed — candidate.id unused)
+    // Verify ownership
     const job = await prisma.job.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: { candidate: { select: { email: true } } },
     });
 
     if (!job) {
       return NextResponse.json({ error: 'Job not found' }, { status: 404 });
     }
-    if (job.candidate.email !== email) {
+    if (job.candidate.email !== userEmail) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     }
 
-    const previousStage = job.stage;
+    const previousStage = job.stage as JobStage;
 
     // Persist stage change + audit record atomically
     const [updated] = await prisma.$transaction([
       prisma.job.update({
-        where: { id: params.id },
+        where: { id },
         data: { stage: validStage, updatedAt: new Date() },
       }),
       prisma.jobActivity.create({
         data: {
-          jobId: params.id,
+          jobId: id,
           action: 'stage_changed',
           metadata: { from: previousStage, to: validStage },
         },
@@ -80,8 +80,8 @@ export async function POST(
       const useQueue = process.env.QUEUE_EXECUTION_ENABLED === 'true';
       if (useQueue) {
         try {
-          executionId = await enqueueAgentExecution(agentType, email, {
-            jobId: params.id,
+          executionId = await enqueueAgentExecution(agentType, userEmail, {
+            jobId: id,
             companyName: job.company,
             jobDescription: job.description ?? '',
             stage: validStage,
@@ -91,16 +91,16 @@ export async function POST(
           console.warn('[move] Agent enqueue skipped:', (enqueueErr as Error).message);
         }
       } else {
-        // Legacy path: create execution record directly
+        // Legacy path: create execution record directly (no Redis needed)
         try {
           const execution = await prisma.agentExecution.create({
             data: {
-              userId: email,
+              userId: userEmail,
               agentType,
-              jobId: params.id,
+              jobId: id,
               status: 'queued',
               input: JSON.stringify({
-                jobId: params.id,
+                jobId: id,
                 companyName: job.company,
                 jobDescription: job.description ?? '',
                 stage: validStage,
@@ -124,7 +124,7 @@ export async function POST(
     console.error('[move] Error:', error);
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Unknown error' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
