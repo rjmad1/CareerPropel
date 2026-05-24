@@ -10,7 +10,13 @@ const customConfig = {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
   testMatch: [
-    '<rootDir>/src/__tests__/**/*.test.{ts,tsx}',
+    '<rootDir>/src/__tests__/unit/**/*.test.{ts,tsx}',
+    '<rootDir>/src/__tests__/regression/**/*.test.{ts,tsx}',
+  ],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    // Integration tests require live DB/Redis — run via test:integration
+    '/src/__tests__/integration/',
   ],
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
