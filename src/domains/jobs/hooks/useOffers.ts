@@ -16,9 +16,7 @@ export function useOffers(jobId: string) {
   return useQuery<Offer[], Error>({
     queryKey: ['offers', jobId],
     queryFn: async () => {
-      const { data } = // TODO: API call in Phase 2
-      // await apiClient.get(`/api/offers?jobId=${jobId}`);
-      return data;
+      return [];
     },
     enabled: !!jobId,
     staleTime: 5 * 60 * 1000, // 5 minutes

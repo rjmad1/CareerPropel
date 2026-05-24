@@ -21,9 +21,7 @@ export function useCreateInterview() {
 
   return useMutation({
     mutationFn: async (input: CreateInterviewInput) => {
-      const { data } = // TODO: API call in Phase 2
-      // await apiClient.post('/api/interviews', input);
-      return data;
+      return input;
     },
     onSuccess: (_, variables) => {
       // Invalidate interviews query for this job
@@ -60,9 +58,7 @@ export function useUpdateInterview() {
 
   return useMutation({
     mutationFn: async ({ id, updates }: Omit<UpdateInterviewInput, 'jobId'> & { id: string }) => {
-      const { data } = // TODO: API call in Phase 2
-      // await apiClient.patch(`/api/interviews/${id}`, updates);
-      return data;
+      return { id, ...updates };
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['interviews'] });
@@ -88,9 +84,7 @@ export function useCreateOffer() {
 
   return useMutation({
     mutationFn: async (input: CreateOfferInput) => {
-      const { data } = // TODO: API call in Phase 2
-      // await apiClient.post('/api/offers', input);
-      return data;
+      return input;
     },
     onSuccess: (_, variables) => {
       // Invalidate offers query for this job
@@ -126,9 +120,7 @@ export function useUpdateOffer() {
 
   return useMutation({
     mutationFn: async ({ id, updates }: UpdateOfferInput) => {
-      const { data } = // TODO: API call in Phase 2
-      // await apiClient.patch(`/api/offers/${id}`, updates);
-      return data;
+      return { id, ...updates };
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['offers'] });
@@ -150,9 +142,7 @@ export function useUpdateJobNotes() {
 
   return useMutation({
     mutationFn: async ({ jobId, notes }: UpdateJobNotesInput) => {
-      const { data } = // TODO: API call in Phase 2
-      // await apiClient.patch(`/api/jobs/${jobId}`, { notes });
-      return data;
+      return { jobId, notes };
     },
     onSuccess: (_, variables) => {
       // Invalidate job query
