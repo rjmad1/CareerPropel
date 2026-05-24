@@ -6,6 +6,37 @@ import { callLLM } from '@/lib/llm/provider';
 export const dynamic = 'force-dynamic';
 
 /**
+ * GET /api/profile/appraisal-compile
+ * Returns all past AppraisalSession records for the logged-in candidate.
+ */
+export async function GET(_request: NextRequest) {
+  try {
+    const { userEmail } = await getAuthContext();
+
+    const candidate = await prisma.candidate.findUnique({
+      where: { email: userEmail },
+      select: { id: true },
+    });
+    if (!candidate) {
+      return NextResponse.json({ error: 'Candidate not found' }, { status: 404 });
+    }
+
+    const sessions = await prisma.appraisalSession.findMany({
+      where: { candidateId: candidate.id },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return NextResponse.json({ sessions }, { status: 200 });
+  } catch (error) {
+    console.error('Error fetching appraisal sessions:', error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Internal Server Error' },
+      { status: 500 },
+    );
+  }
+}
+
+/**
  * POST /api/profile/appraisal-compile
  * Takes a list of staged accomplishment IDs and compiles them into a comprehensive
  * performance appraisal self-evaluation or a promotion business case.
