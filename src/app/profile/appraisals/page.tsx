@@ -15,7 +15,17 @@ import {
   Printer,
   FileText,
   ClipboardList,
+  History,
 } from 'lucide-react';
+
+interface AppraisalSession {
+  id: string;
+  title: string;
+  status: string;
+  selfReview: string | null;
+  impactDraft: string | null;
+  createdAt: string;
+}
 
 interface Accomplishment {
   id: string;
@@ -44,16 +54,20 @@ export default function AppraisalsPage() {
   const [compiledNarrative, setCompiledNarrative] = useState('');
   const [copied, setCopied] = useState(false);
 
+  // Past sessions history
+  const [pastSessions, setPastSessions] = useState<AppraisalSession[]>([]);
+  const [viewingSession, setViewingSession] = useState<AppraisalSession | null>(null);
+
   const fetchAccomplishments = useCallback(async () => {
     try {
       setLoading(true);
       const res = await fetch('/api/profile/accomplishments');
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to load accomplishments');
-      
+
       const list = data.accomplishments || [];
       setAccomplishments(list);
-      
+
       // Auto-select staged accomplishments by default
       const stagedIds = list
         .filter((a: Accomplishment) => a.visibility === 'staged_for_appraisal')
@@ -66,11 +80,23 @@ export default function AppraisalsPage() {
     }
   }, []);
 
+  const fetchPastSessions = useCallback(async () => {
+    try {
+      const res = await fetch('/api/profile/appraisal-compile');
+      if (!res.ok) return;
+      const data = await res.json();
+      setPastSessions(data.sessions ?? []);
+    } catch {
+      // Non-critical — history panel just stays empty
+    }
+  }, []);
+
   useEffect(() => {
     if (session) {
       fetchAccomplishments();
+      fetchPastSessions();
     }
-  }, [session, fetchAccomplishments]);
+  }, [session, fetchAccomplishments, fetchPastSessions]);
 
   const handleToggleSelect = (id: string) => {
     setSelectedIds((prev) =>
@@ -112,6 +138,7 @@ export default function AppraisalsPage() {
       if (data.success && data.content) {
         setCompiledNarrative(data.content);
         getNotificationManager().success('Appraisal Ready', `${appraisalTitle} narrative compiled`);
+        fetchPastSessions();
       }
     } catch (e: any) {
       getNotificationManager().error('Compilation Failed', e.message ?? 'Could not compile appraisal');
@@ -376,6 +403,49 @@ export default function AppraisalsPage() {
             )}
           </div>
         </div>
+
+        {/* Past Appraisal Sessions */}
+        {pastSessions.length > 0 && (
+          <div className="print:hidden space-y-4">
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-400 uppercase tracking-wider">
+              <History className="h-4 w-4" />
+              <span>Past Compilations ({pastSessions.length})</span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              {pastSessions.map((s) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  className="w-full text-left bg-slate-900 border border-slate-800 hover:border-indigo-500/40 rounded-xl p-4 space-y-2 transition"
+                  onClick={() => setViewingSession(viewingSession?.id === s.id ? null : s)}
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="text-sm font-semibold text-slate-200 leading-snug line-clamp-2">
+                      {s.title}
+                    </p>
+                    <span className={`shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+                      s.status === 'compiled'
+                        ? 'bg-emerald-950/50 border-emerald-800/60 text-emerald-300'
+                        : 'bg-slate-950 border-slate-800 text-slate-400'
+                    }`}>
+                      {s.status}
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-500">
+                    {new Date(s.createdAt).toLocaleDateString(undefined, {
+                      year: 'numeric', month: 'short', day: 'numeric',
+                    })}
+                  </p>
+                  {viewingSession?.id === s.id && s.selfReview && (
+                    <div className="mt-3 pt-3 border-t border-slate-800 text-xs text-slate-400 whitespace-pre-line line-clamp-6">
+                      {s.selfReview}
+                    </div>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </NavLayout>
   );
