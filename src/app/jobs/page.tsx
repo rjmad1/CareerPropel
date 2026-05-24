@@ -6,7 +6,9 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { KanbanBoard } from '@/components/Kanban/KanbanBoard';
-import { Job } from '@/types/job';
+import { Job, JobStage } from '@/types/job';
+import { MoveResult } from '@/hooks/useJobBoard';
+import { getNotificationManager } from '@/lib/notifications/manager';
 import { sanitizeText, sanitizeUrl } from '@/lib/security/sanitizeContent';
 import { Plus, Upload as LucideUpload } from 'lucide-react';
 import {
@@ -42,6 +44,29 @@ async function patchJob(jobId: string, updates: Partial<Job>): Promise<Job> {
   const json = await res.json();
   return json.data ?? json;
 }
+
+async function moveJobStage(jobId: string, newStage: JobStage): Promise<MoveResult> {
+  const res = await fetch(`/api/jobs/${jobId}/move`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ stage: newStage }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err?.error || 'Failed to move job');
+  }
+  const json = await res.json();
+  return { agentType: json.agentType ?? null, executionId: json.executionId ?? null };
+}
+
+const AGENT_LABELS: Record<string, string> = {
+  'job-match':      'Job Match',
+  'resume-tailor':  'Resume Tailor',
+  'research':       'Company Research',
+  'interview-prep': 'Interview Prep',
+  'follow-up':      'Follow-Up',
+  'networking':     'Networking',
+};
 
 async function createJob(input: { title: string; company: string; url?: string }): Promise<Job> {
   const res = await fetch('/api/jobs', {
@@ -86,6 +111,23 @@ export default function JobsPage() {
 
   const handleJobUpdate = async (jobId: string, updates: Partial<Job>) => {
     await updateMutation.mutateAsync({ jobId, updates });
+  };
+
+  const handleJobMove = async (jobId: string, newStage: JobStage): Promise<MoveResult> => {
+    const result = await moveJobStage(jobId, newStage);
+    // Sync server-side changes (stage + activity log)
+    queryClient.invalidateQueries({ queryKey: ['jobs'] });
+    if (result.agentType) {
+      const label = AGENT_LABELS[result.agentType] ?? result.agentType;
+      const stageName = newStage.replaceAll('_', ' ');
+      getNotificationManager().notify(
+        'info',
+        `${label} agent triggered`,
+        `Moving to "${stageName}" — ${label} is running in the background.`,
+        { duration: 5000 },
+      );
+    }
+    return result;
   };
 
   const stats = {
@@ -154,6 +196,7 @@ export default function JobsPage() {
           <KanbanBoard
             initialJobs={jobs}
             onJobUpdate={handleJobUpdate}
+            onJobMove={handleJobMove}
           />
         </div>
       </div>
