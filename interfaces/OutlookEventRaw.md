@@ -6,7 +6,7 @@
 
 # Interface: OutlookEventRaw
 
-Defined in: [src/lib/calendar/outlookCalendar.ts:131](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/calendar/outlookCalendar.ts#L131)
+Defined in: [src/lib/calendar/outlookCalendar.ts:131](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/calendar/outlookCalendar.ts#L131)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/calendar/outlookCalendar.ts:131](https://github.com/rjmad1/
 
 > `optional` **body?**: `object`
 
-Defined in: [src/lib/calendar/outlookCalendar.ts:134](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/calendar/outlookCalendar.ts#L134)
+Defined in: [src/lib/calendar/outlookCalendar.ts:134](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/calendar/outlookCalendar.ts#L134)
 
 #### content
 
@@ -26,7 +26,7 @@ Defined in: [src/lib/calendar/outlookCalendar.ts:134](https://github.com/rjmad1/
 
 > `optional` **end?**: `object`
 
-Defined in: [src/lib/calendar/outlookCalendar.ts:136](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/calendar/outlookCalendar.ts#L136)
+Defined in: [src/lib/calendar/outlookCalendar.ts:136](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/calendar/outlookCalendar.ts#L136)
 
 #### dateTime
 
@@ -42,7 +42,7 @@ Defined in: [src/lib/calendar/outlookCalendar.ts:136](https://github.com/rjmad1/
 
 > **id**: `string`
 
-Defined in: [src/lib/calendar/outlookCalendar.ts:132](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/calendar/outlookCalendar.ts#L132)
+Defined in: [src/lib/calendar/outlookCalendar.ts:132](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/calendar/outlookCalendar.ts#L132)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [src/lib/calendar/outlookCalendar.ts:132](https://github.com/rjmad1/
 
 > `optional` **location?**: `object`
 
-Defined in: [src/lib/calendar/outlookCalendar.ts:137](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/calendar/outlookCalendar.ts#L137)
+Defined in: [src/lib/calendar/outlookCalendar.ts:137](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/calendar/outlookCalendar.ts#L137)
 
 #### displayName
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/calendar/outlookCalendar.ts:137](https://github.com/rjmad1/
 
 > `optional` **onlineMeeting?**: `object`
 
-Defined in: [src/lib/calendar/outlookCalendar.ts:138](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/calendar/outlookCalendar.ts#L138)
+Defined in: [src/lib/calendar/outlookCalendar.ts:138](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/calendar/outlookCalendar.ts#L138)
 
 #### joinUrl
 
@@ -74,7 +74,7 @@ Defined in: [src/lib/calendar/outlookCalendar.ts:138](https://github.com/rjmad1/
 
 > `optional` **start?**: `object`
 
-Defined in: [src/lib/calendar/outlookCalendar.ts:135](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/calendar/outlookCalendar.ts#L135)
+Defined in: [src/lib/calendar/outlookCalendar.ts:135](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/calendar/outlookCalendar.ts#L135)
 
 #### dateTime
 
@@ -90,7 +90,7 @@ Defined in: [src/lib/calendar/outlookCalendar.ts:135](https://github.com/rjmad1/
 
 > `optional` **subject?**: `string`
 
-Defined in: [src/lib/calendar/outlookCalendar.ts:133](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/calendar/outlookCalendar.ts#L133)
+Defined in: [src/lib/calendar/outlookCalendar.ts:133](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/calendar/outlookCalendar.ts#L133)
 
 ***
 
@@ -98,4 +98,4 @@ Defined in: [src/lib/calendar/outlookCalendar.ts:133](https://github.com/rjmad1/
 
 > `optional` **webLink?**: `string`
 
-Defined in: [src/lib/calendar/outlookCalendar.ts:139](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/calendar/outlookCalendar.ts#L139)
+Defined in: [src/lib/calendar/outlookCalendar.ts:139](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/calendar/outlookCalendar.ts#L139)

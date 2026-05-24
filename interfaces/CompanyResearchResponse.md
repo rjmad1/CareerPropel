@@ -6,7 +6,7 @@
 
 # Interface: CompanyResearchResponse
 
-Defined in: [src/types/company.ts:286](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L286)
+Defined in: [src/types/company.ts:286](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L286)
 
 Company research response
 
@@ -16,7 +16,7 @@ Company research response
 
 > **highlights**: `string`[]
 
-Defined in: [src/types/company.ts:289](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L289)
+Defined in: [src/types/company.ts:289](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L289)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/company.ts:289](https://github.com/rjmad1/CareerPropel/bl
 
 > **profile**: [`CompanyProfile`](CompanyProfile.md)
 
-Defined in: [src/types/company.ts:287](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L287)
+Defined in: [src/types/company.ts:287](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L287)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/company.ts:287](https://github.com/rjmad1/CareerPropel/bl
 
 > **questionsToAsk**: `string`[]
 
-Defined in: [src/types/company.ts:291](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L291)
+Defined in: [src/types/company.ts:291](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L291)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/company.ts:291](https://github.com/rjmad1/CareerPropel/bl
 
 > **redFlags**: `string`[]
 
-Defined in: [src/types/company.ts:290](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L290)
+Defined in: [src/types/company.ts:290](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L290)
 
 ***
 
@@ -48,4 +48,4 @@ Defined in: [src/types/company.ts:290](https://github.com/rjmad1/CareerPropel/bl
 
 > **research**: [`ResearchSummary`](ResearchSummary.md)
 
-Defined in: [src/types/company.ts:288](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L288)
+Defined in: [src/types/company.ts:288](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L288)

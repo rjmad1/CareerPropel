@@ -6,7 +6,7 @@
 
 # Interface: SpinnerProps
 
-Defined in: [src/components/ui/Spinner.tsx:4](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Spinner.tsx#L4)
+Defined in: [src/components/ui/Spinner.tsx:4](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Spinner.tsx#L4)
 
 ## Extends
 
@@ -3475,7 +3475,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2961
 
 > `optional` **size?**: `"sm"` \| `"md"` \| `"lg"`
 
-Defined in: [src/components/ui/Spinner.tsx:5](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Spinner.tsx#L5)
+Defined in: [src/components/ui/Spinner.tsx:5](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Spinner.tsx#L5)
 
 ***
 

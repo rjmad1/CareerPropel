@@ -6,7 +6,7 @@
 
 # Interface: StudySession
 
-Defined in: [src/types/preparation.ts:73](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L73)
+Defined in: [src/types/preparation.ts:73](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L73)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/preparation.ts:73](https://github.com/rjmad1/CareerPropel
 
 > **completed**: `boolean`
 
-Defined in: [src/types/preparation.ts:79](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L79)
+Defined in: [src/types/preparation.ts:79](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L79)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/preparation.ts:79](https://github.com/rjmad1/CareerPropel
 
 > `optional` **completedAt?**: `Date`
 
-Defined in: [src/types/preparation.ts:80](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L80)
+Defined in: [src/types/preparation.ts:80](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L80)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/preparation.ts:80](https://github.com/rjmad1/CareerPropel
 
 > **durationMinutes**: `number`
 
-Defined in: [src/types/preparation.ts:76](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L76)
+Defined in: [src/types/preparation.ts:76](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L76)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/preparation.ts:76](https://github.com/rjmad1/CareerPropel
 
 > **materials**: `string`[]
 
-Defined in: [src/types/preparation.ts:77](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L77)
+Defined in: [src/types/preparation.ts:77](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L77)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/preparation.ts:77](https://github.com/rjmad1/CareerPropel
 
 > **objectives**: `string`[]
 
-Defined in: [src/types/preparation.ts:78](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L78)
+Defined in: [src/types/preparation.ts:78](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L78)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/types/preparation.ts:78](https://github.com/rjmad1/CareerPropel
 
 > `optional` **sessionNotes?**: `string`
 
-Defined in: [src/types/preparation.ts:81](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L81)
+Defined in: [src/types/preparation.ts:81](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L81)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/types/preparation.ts:81](https://github.com/rjmad1/CareerPropel
 
 > **topic**: `string`
 
-Defined in: [src/types/preparation.ts:75](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L75)
+Defined in: [src/types/preparation.ts:75](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L75)
 
 ***
 
@@ -70,4 +70,4 @@ Defined in: [src/types/preparation.ts:75](https://github.com/rjmad1/CareerPropel
 
 > **type**: `"system_design"` \| `"behavioral"` \| `"technical"` \| `"review"`
 
-Defined in: [src/types/preparation.ts:74](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L74)
+Defined in: [src/types/preparation.ts:74](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L74)

@@ -6,7 +6,7 @@
 
 # Interface: Weakness
 
-Defined in: [src/types/preparation.ts:338](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L338)
+Defined in: [src/types/preparation.ts:338](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L338)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/preparation.ts:338](https://github.com/rjmad1/CareerPrope
 
 > **category**: `"system_design"` \| `"behavioral"` \| `"technical"` \| `"communication"` \| `"domain_knowledge"`
 
-Defined in: [src/types/preparation.ts:340](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L340)
+Defined in: [src/types/preparation.ts:340](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L340)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/preparation.ts:340](https://github.com/rjmad1/CareerPrope
 
 > **description**: `string`
 
-Defined in: [src/types/preparation.ts:341](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L341)
+Defined in: [src/types/preparation.ts:341](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L341)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/preparation.ts:341](https://github.com/rjmad1/CareerPrope
 
 > **evidence**: `string`[]
 
-Defined in: [src/types/preparation.ts:343](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L343)
+Defined in: [src/types/preparation.ts:343](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L343)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/preparation.ts:343](https://github.com/rjmad1/CareerPrope
 
 > **id**: `string`
 
-Defined in: [src/types/preparation.ts:339](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L339)
+Defined in: [src/types/preparation.ts:339](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L339)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/preparation.ts:339](https://github.com/rjmad1/CareerPrope
 
 > **impact**: `string`
 
-Defined in: [src/types/preparation.ts:344](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L344)
+Defined in: [src/types/preparation.ts:344](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L344)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/types/preparation.ts:344](https://github.com/rjmad1/CareerPrope
 
 > **remediation**: [`RemediationStep`](RemediationStep.md)[]
 
-Defined in: [src/types/preparation.ts:345](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L345)
+Defined in: [src/types/preparation.ts:345](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L345)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/types/preparation.ts:345](https://github.com/rjmad1/CareerPrope
 
 > **severity**: `number`
 
-Defined in: [src/types/preparation.ts:342](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L342)
+Defined in: [src/types/preparation.ts:342](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L342)
 
 ***
 
@@ -70,4 +70,4 @@ Defined in: [src/types/preparation.ts:342](https://github.com/rjmad1/CareerPrope
 
 > **targetDate**: `Date`
 
-Defined in: [src/types/preparation.ts:346](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/preparation.ts#L346)
+Defined in: [src/types/preparation.ts:346](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L346)

@@ -6,7 +6,7 @@
 
 # Interface: CheckboxProps
 
-Defined in: [src/components/ui/Checkbox.tsx:5](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Checkbox.tsx#L5)
+Defined in: [src/components/ui/Checkbox.tsx:5](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Checkbox.tsx#L5)
 
 ## Extends
 
@@ -1151,7 +1151,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2907
 
 > `optional` **description?**: `string`
 
-Defined in: [src/components/ui/Checkbox.tsx:7](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Checkbox.tsx#L7)
+Defined in: [src/components/ui/Checkbox.tsx:7](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Checkbox.tsx#L7)
 
 ***
 
@@ -1207,7 +1207,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2920
 
 > `optional` **error?**: `string`
 
-Defined in: [src/components/ui/Checkbox.tsx:8](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Checkbox.tsx#L8)
+Defined in: [src/components/ui/Checkbox.tsx:8](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Checkbox.tsx#L8)
 
 ***
 
@@ -1463,7 +1463,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2957
 
 > `optional` **label?**: `string`
 
-Defined in: [src/components/ui/Checkbox.tsx:6](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Checkbox.tsx#L6)
+Defined in: [src/components/ui/Checkbox.tsx:6](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Checkbox.tsx#L6)
 
 ***
 
@@ -3787,7 +3787,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2961
 
 > `optional` **size?**: `"sm"` \| `"md"`
 
-Defined in: [src/components/ui/Checkbox.tsx:9](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Checkbox.tsx#L9)
+Defined in: [src/components/ui/Checkbox.tsx:9](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Checkbox.tsx#L9)
 
 ***
 

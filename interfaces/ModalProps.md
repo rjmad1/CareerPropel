@@ -6,7 +6,7 @@
 
 # Interface: ModalProps
 
-Defined in: [src/components/ui/Modal.tsx:4](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Modal.tsx#L4)
+Defined in: [src/components/ui/Modal.tsx:4](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Modal.tsx#L4)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/ui/Modal.tsx:4](https://github.com/rjmad1/CareerProp
 
 > **children**: `ReactNode`
 
-Defined in: [src/components/ui/Modal.tsx:7](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Modal.tsx#L7)
+Defined in: [src/components/ui/Modal.tsx:7](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Modal.tsx#L7)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/components/ui/Modal.tsx:7](https://github.com/rjmad1/CareerProp
 
 > `optional` **className?**: `string`
 
-Defined in: [src/components/ui/Modal.tsx:8](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Modal.tsx#L8)
+Defined in: [src/components/ui/Modal.tsx:8](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Modal.tsx#L8)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/components/ui/Modal.tsx:8](https://github.com/rjmad1/CareerProp
 
 > **isOpen**: `boolean`
 
-Defined in: [src/components/ui/Modal.tsx:5](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Modal.tsx#L5)
+Defined in: [src/components/ui/Modal.tsx:5](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Modal.tsx#L5)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/components/ui/Modal.tsx:5](https://github.com/rjmad1/CareerProp
 
 > **onClose**: () => `void`
 
-Defined in: [src/components/ui/Modal.tsx:6](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Modal.tsx#L6)
+Defined in: [src/components/ui/Modal.tsx:6](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Modal.tsx#L6)
 
 #### Returns
 

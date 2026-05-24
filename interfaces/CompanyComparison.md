@@ -6,7 +6,7 @@
 
 # Interface: CompanyComparison
 
-Defined in: [src/types/company.ts:262](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L262)
+Defined in: [src/types/company.ts:262](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L262)
 
 Company comparison
 
@@ -16,7 +16,7 @@ Company comparison
 
 > **company1**: `string`
 
-Defined in: [src/types/company.ts:263](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L263)
+Defined in: [src/types/company.ts:263](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L263)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/company.ts:263](https://github.com/rjmad1/CareerPropel/bl
 
 > **company1Score**: `number`
 
-Defined in: [src/types/company.ts:266](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L266)
+Defined in: [src/types/company.ts:266](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L266)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/company.ts:266](https://github.com/rjmad1/CareerPropel/bl
 
 > **company2**: `string`
 
-Defined in: [src/types/company.ts:264](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L264)
+Defined in: [src/types/company.ts:264](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L264)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/company.ts:264](https://github.com/rjmad1/CareerPropel/bl
 
 > **company2Score**: `number`
 
-Defined in: [src/types/company.ts:267](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L267)
+Defined in: [src/types/company.ts:267](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L267)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/company.ts:267](https://github.com/rjmad1/CareerPropel/bl
 
 > **dimension**: `string`
 
-Defined in: [src/types/company.ts:265](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L265)
+Defined in: [src/types/company.ts:265](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L265)
 
 ***
 
@@ -56,4 +56,4 @@ Defined in: [src/types/company.ts:265](https://github.com/rjmad1/CareerPropel/bl
 
 > **reasoning**: `string`
 
-Defined in: [src/types/company.ts:268](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L268)
+Defined in: [src/types/company.ts:268](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L268)

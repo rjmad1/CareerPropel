@@ -8,7 +8,7 @@
 
 > **refinePrepFromSessions**(`candidateId`, `jobId`): `Promise`\<`RefinementResult`\>
 
-Defined in: [src/lib/interviews/prepRefinementService.ts:148](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/interviews/prepRefinementService.ts#L148)
+Defined in: [src/lib/interviews/prepRefinementService.ts:148](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/interviews/prepRefinementService.ts#L148)
 
 Main entry point: run after a mock session is persisted to update the
 InterviewPrep record with the latest readiness score + coaching notes.

@@ -6,7 +6,7 @@
 
 # Interface: APIErrorResponse
 
-Defined in: [src/lib/api/client.ts:7](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/api/client.ts#L7)
+Defined in: [src/lib/api/client.ts:7](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/api/client.ts#L7)
 
 API Client
 Fetch wrapper with error handling and token refresh logic.
@@ -18,7 +18,7 @@ Authentication is handled by NextAuth session cookies — no manual token manage
 
 > **code**: `string`
 
-Defined in: [src/lib/api/client.ts:8](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/api/client.ts#L8)
+Defined in: [src/lib/api/client.ts:8](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/api/client.ts#L8)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [src/lib/api/client.ts:8](https://github.com/rjmad1/CareerPropel/blo
 
 > `optional` **details?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [src/lib/api/client.ts:10](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/api/client.ts#L10)
+Defined in: [src/lib/api/client.ts:10](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/api/client.ts#L10)
 
 ***
 
@@ -34,4 +34,4 @@ Defined in: [src/lib/api/client.ts:10](https://github.com/rjmad1/CareerPropel/bl
 
 > **message**: `string`
 
-Defined in: [src/lib/api/client.ts:9](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/api/client.ts#L9)
+Defined in: [src/lib/api/client.ts:9](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/api/client.ts#L9)

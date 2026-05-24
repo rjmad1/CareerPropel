@@ -8,7 +8,7 @@
 
 > **verifyOwnership**(`resourceOwnerId`, `userId`): `void`
 
-Defined in: [src/app/api/middleware/auth.ts:103](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/app/api/middleware/auth.ts#L103)
+Defined in: [src/app/api/middleware/auth.ts:103](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/app/api/middleware/auth.ts#L103)
 
 Verify user owns the resource
 

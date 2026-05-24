@@ -6,7 +6,7 @@
 
 # Interface: Concept
 
-Defined in: [src/types/interview.ts:149](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L149)
+Defined in: [src/types/interview.ts:149](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L149)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/interview.ts:149](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **example?**: `string`
 
-Defined in: [src/types/interview.ts:155](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L155)
+Defined in: [src/types/interview.ts:155](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L155)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/interview.ts:155](https://github.com/rjmad1/CareerPropel/
 
 > **importance**: `"critical"` \| `"important"` \| `"useful"`
 
-Defined in: [src/types/interview.ts:151](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L151)
+Defined in: [src/types/interview.ts:151](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L151)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/interview.ts:151](https://github.com/rjmad1/CareerPropel/
 
 > **name**: `string`
 
-Defined in: [src/types/interview.ts:150](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L150)
+Defined in: [src/types/interview.ts:150](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L150)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/interview.ts:150](https://github.com/rjmad1/CareerPropel/
 
 > **relatedConcepts**: `string`[]
 
-Defined in: [src/types/interview.ts:156](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L156)
+Defined in: [src/types/interview.ts:156](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L156)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/interview.ts:156](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **reviewDate?**: `Date`
 
-Defined in: [src/types/interview.ts:157](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L157)
+Defined in: [src/types/interview.ts:157](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L157)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/types/interview.ts:157](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **spaceComplexity?**: `string`
 
-Defined in: [src/types/interview.ts:153](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L153)
+Defined in: [src/types/interview.ts:153](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L153)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/types/interview.ts:153](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **timeComplexity?**: `string`
 
-Defined in: [src/types/interview.ts:152](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L152)
+Defined in: [src/types/interview.ts:152](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L152)
 
 ***
 
@@ -70,4 +70,4 @@ Defined in: [src/types/interview.ts:152](https://github.com/rjmad1/CareerPropel/
 
 > **useCase**: `string`
 
-Defined in: [src/types/interview.ts:154](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L154)
+Defined in: [src/types/interview.ts:154](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L154)

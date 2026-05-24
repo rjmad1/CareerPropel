@@ -8,7 +8,7 @@
 
 > **AgentType** = `"resume-tailor"` \| `"job-match"` \| `"interview-prep"` \| `"research"` \| `"follow-up"` \| `"networking"`
 
-Defined in: [src/lib/agents/prompts.ts:6](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/agents/prompts.ts#L6)
+Defined in: [src/lib/agents/prompts.ts:6](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/agents/prompts.ts#L6)
 
 Agent Type → Claude Prompt Mapping
 Specialized prompts for each agent type with context injection

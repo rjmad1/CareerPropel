@@ -6,7 +6,7 @@
 
 # Class: WebSocketClient
 
-Defined in: [src/lib/websocket/client.ts:18](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/websocket/client.ts#L18)
+Defined in: [src/lib/websocket/client.ts:18](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/client.ts#L18)
 
 ## Constructors
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/websocket/client.ts:18](https://github.com/rjmad1/CareerPro
 
 > **new WebSocketClient**(`config`): `WebSocketClient`
 
-Defined in: [src/lib/websocket/client.ts:28](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/websocket/client.ts#L28)
+Defined in: [src/lib/websocket/client.ts:28](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/client.ts#L28)
 
 #### Parameters
 
@@ -32,7 +32,7 @@ Defined in: [src/lib/websocket/client.ts:28](https://github.com/rjmad1/CareerPro
 
 > **connect**(): `Promise`\<`void`\>
 
-Defined in: [src/lib/websocket/client.ts:40](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/websocket/client.ts#L40)
+Defined in: [src/lib/websocket/client.ts:40](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/client.ts#L40)
 
 Connect to WebSocket server
 
@@ -46,7 +46,7 @@ Connect to WebSocket server
 
 > **disconnect**(): `void`
 
-Defined in: [src/lib/websocket/client.ts:92](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/websocket/client.ts#L92)
+Defined in: [src/lib/websocket/client.ts:92](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/client.ts#L92)
 
 Disconnect from WebSocket
 
@@ -60,7 +60,7 @@ Disconnect from WebSocket
 
 > **isConnected**(): `boolean`
 
-Defined in: [src/lib/websocket/client.ts:146](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/websocket/client.ts#L146)
+Defined in: [src/lib/websocket/client.ts:146](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/client.ts#L146)
 
 Check if connected
 
@@ -74,7 +74,7 @@ Check if connected
 
 > **onConnectionChange**(`handler`): () => `void`
 
-Defined in: [src/lib/websocket/client.ts:134](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/websocket/client.ts#L134)
+Defined in: [src/lib/websocket/client.ts:134](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/client.ts#L134)
 
 Subscribe to connection state changes
 
@@ -94,7 +94,7 @@ Subscribe to connection state changes
 
 > **send**(`message`): `void`
 
-Defined in: [src/lib/websocket/client.ts:104](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/websocket/client.ts#L104)
+Defined in: [src/lib/websocket/client.ts:104](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/client.ts#L104)
 
 Send a message to the server
 
@@ -114,7 +114,7 @@ Send a message to the server
 
 > **subscribe**(`type`, `handler`): () => `void`
 
-Defined in: [src/lib/websocket/client.ts:116](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/websocket/client.ts#L116)
+Defined in: [src/lib/websocket/client.ts:116](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/client.ts#L116)
 
 Subscribe to message types
 
@@ -138,7 +138,7 @@ Subscribe to message types
 
 > **subscribeToChannels**(`channels`): `void`
 
-Defined in: [src/lib/websocket/client.ts:153](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/websocket/client.ts#L153)
+Defined in: [src/lib/websocket/client.ts:153](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/client.ts#L153)
 
 Request subscription to channels
 
@@ -158,7 +158,7 @@ Request subscription to channels
 
 > **unsubscribeFromChannels**(`channels`): `void`
 
-Defined in: [src/lib/websocket/client.ts:164](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/websocket/client.ts#L164)
+Defined in: [src/lib/websocket/client.ts:164](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/client.ts#L164)
 
 Request unsubscription from channels
 

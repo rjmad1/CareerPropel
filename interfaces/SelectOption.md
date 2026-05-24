@@ -6,7 +6,7 @@
 
 # Interface: SelectOption
 
-Defined in: [src/components/ui/Select.tsx:7](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Select.tsx#L7)
+Defined in: [src/components/ui/Select.tsx:7](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Select.tsx#L7)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/ui/Select.tsx:7](https://github.com/rjmad1/CareerPro
 
 > `optional` **disabled?**: `boolean`
 
-Defined in: [src/components/ui/Select.tsx:10](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Select.tsx#L10)
+Defined in: [src/components/ui/Select.tsx:10](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Select.tsx#L10)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/components/ui/Select.tsx:10](https://github.com/rjmad1/CareerPr
 
 > **label**: `string`
 
-Defined in: [src/components/ui/Select.tsx:9](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Select.tsx#L9)
+Defined in: [src/components/ui/Select.tsx:9](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Select.tsx#L9)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/components/ui/Select.tsx:9](https://github.com/rjmad1/CareerPro
 
 > **value**: `string`
 
-Defined in: [src/components/ui/Select.tsx:8](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/ui/Select.tsx#L8)
+Defined in: [src/components/ui/Select.tsx:8](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Select.tsx#L8)

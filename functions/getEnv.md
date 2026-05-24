@@ -8,7 +8,7 @@
 
 > **getEnv**(): `object`
 
-Defined in: [src/config/env.ts:60](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/config/env.ts#L60)
+Defined in: [src/config/env.ts:60](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/config/env.ts#L60)
 
 Validates and caches the environment variables.
 Fails fast with clear error reporting if the configuration is invalid.

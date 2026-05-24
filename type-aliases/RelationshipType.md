@@ -8,4 +8,4 @@
 
 > **RelationshipType** = `"demonstrates"` \| `"requires"` \| `"worked_at"` \| `"achieved_at"` \| `"associated_with"`
 
-Defined in: [src/types/knowledge-graph.ts:10](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/knowledge-graph.ts#L10)
+Defined in: [src/types/knowledge-graph.ts:10](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/knowledge-graph.ts#L10)

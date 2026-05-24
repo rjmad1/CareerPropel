@@ -6,7 +6,7 @@
 
 # Interface: SwimlaneConfig
 
-Defined in: [src/components/Kanban/Swimlane.tsx:7](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/Kanban/Swimlane.tsx#L7)
+Defined in: [src/components/Kanban/Swimlane.tsx:7](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L7)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:7](https://github.com/rjmad1/Car
 
 > `optional` **bgColor?**: `string`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:10](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/Kanban/Swimlane.tsx#L10)
+Defined in: [src/components/Kanban/Swimlane.tsx:10](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L10)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:10](https://github.com/rjmad1/Ca
 
 > **borderColor**: `string`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:9](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/Kanban/Swimlane.tsx#L9)
+Defined in: [src/components/Kanban/Swimlane.tsx:9](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L9)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:9](https://github.com/rjmad1/Car
 
 > `optional` **color?**: `string`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:11](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/Kanban/Swimlane.tsx#L11)
+Defined in: [src/components/Kanban/Swimlane.tsx:11](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L11)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:11](https://github.com/rjmad1/Ca
 
 > `optional` **description?**: `string`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:13](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/Kanban/Swimlane.tsx#L13)
+Defined in: [src/components/Kanban/Swimlane.tsx:13](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L13)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:13](https://github.com/rjmad1/Ca
 
 > `optional` **icon?**: `string`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:12](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/Kanban/Swimlane.tsx#L12)
+Defined in: [src/components/Kanban/Swimlane.tsx:12](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L12)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/components/Kanban/Swimlane.tsx:12](https://github.com/rjmad1/Ca
 
 > **label**: `string`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:8](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/Kanban/Swimlane.tsx#L8)
+Defined in: [src/components/Kanban/Swimlane.tsx:8](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L8)

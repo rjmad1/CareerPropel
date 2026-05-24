@@ -8,7 +8,7 @@
 
 > `const` **Swimlane**: `React.FC`\<[`SwimlaneProps`](../interfaces/SwimlaneProps.md)\>
 
-Defined in: [src/components/Kanban/Swimlane.tsx:58](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/Kanban/Swimlane.tsx#L58)
+Defined in: [src/components/Kanban/Swimlane.tsx:58](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L58)
 
 Swimlane - A vertical column representing one job application stage
 

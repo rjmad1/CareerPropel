@@ -6,7 +6,7 @@
 
 # Interface: Interview
 
-Defined in: [src/domains/jobs/hooks/useInterviews.ts:3](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useInterviews.ts#L3)
+Defined in: [src/domains/jobs/hooks/useInterviews.ts:3](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useInterviews.ts#L3)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/domains/jobs/hooks/useInterviews.ts:3](https://github.com/rjmad
 
 > **date**: `string`
 
-Defined in: [src/domains/jobs/hooks/useInterviews.ts:6](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useInterviews.ts#L6)
+Defined in: [src/domains/jobs/hooks/useInterviews.ts:6](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useInterviews.ts#L6)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/domains/jobs/hooks/useInterviews.ts:6](https://github.com/rjmad
 
 > **id**: `string`
 
-Defined in: [src/domains/jobs/hooks/useInterviews.ts:4](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useInterviews.ts#L4)
+Defined in: [src/domains/jobs/hooks/useInterviews.ts:4](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useInterviews.ts#L4)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/domains/jobs/hooks/useInterviews.ts:4](https://github.com/rjmad
 
 > `optional` **interviewer?**: `string`
 
-Defined in: [src/domains/jobs/hooks/useInterviews.ts:8](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useInterviews.ts#L8)
+Defined in: [src/domains/jobs/hooks/useInterviews.ts:8](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useInterviews.ts#L8)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/domains/jobs/hooks/useInterviews.ts:8](https://github.com/rjmad
 
 > `optional` **location?**: `string`
 
-Defined in: [src/domains/jobs/hooks/useInterviews.ts:9](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useInterviews.ts#L9)
+Defined in: [src/domains/jobs/hooks/useInterviews.ts:9](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useInterviews.ts#L9)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/domains/jobs/hooks/useInterviews.ts:9](https://github.com/rjmad
 
 > `optional` **meetingLink?**: `string`
 
-Defined in: [src/domains/jobs/hooks/useInterviews.ts:10](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useInterviews.ts#L10)
+Defined in: [src/domains/jobs/hooks/useInterviews.ts:10](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useInterviews.ts#L10)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/domains/jobs/hooks/useInterviews.ts:10](https://github.com/rjma
 
 > `optional` **notes?**: `string`
 
-Defined in: [src/domains/jobs/hooks/useInterviews.ts:11](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useInterviews.ts#L11)
+Defined in: [src/domains/jobs/hooks/useInterviews.ts:11](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useInterviews.ts#L11)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/domains/jobs/hooks/useInterviews.ts:11](https://github.com/rjma
 
 > **status**: `"completed"` \| `"scheduled"` \| `"cancelled"`
 
-Defined in: [src/domains/jobs/hooks/useInterviews.ts:12](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useInterviews.ts#L12)
+Defined in: [src/domains/jobs/hooks/useInterviews.ts:12](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useInterviews.ts#L12)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/domains/jobs/hooks/useInterviews.ts:12](https://github.com/rjma
 
 > **time**: `string`
 
-Defined in: [src/domains/jobs/hooks/useInterviews.ts:7](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useInterviews.ts#L7)
+Defined in: [src/domains/jobs/hooks/useInterviews.ts:7](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useInterviews.ts#L7)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [src/domains/jobs/hooks/useInterviews.ts:7](https://github.com/rjmad
 
 > **type**: `"system_design"` \| `"behavioral"` \| `"final_round"` \| `"technical"` \| `"phone_screen"` \| `"offer_discussion"`
 
-Defined in: [src/domains/jobs/hooks/useInterviews.ts:5](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useInterviews.ts#L5)
+Defined in: [src/domains/jobs/hooks/useInterviews.ts:5](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useInterviews.ts#L5)

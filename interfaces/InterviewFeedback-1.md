@@ -6,7 +6,7 @@
 
 # Interface: InterviewFeedback
 
-Defined in: [src/types/interview.ts:353](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L353)
+Defined in: [src/types/interview.ts:353](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L353)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/interview.ts:353](https://github.com/rjmad1/CareerPropel/
 
 > **nextSteps**: `string`[]
 
-Defined in: [src/types/interview.ts:358](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L358)
+Defined in: [src/types/interview.ts:358](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L358)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/interview.ts:358](https://github.com/rjmad1/CareerPropel/
 
 > **overallScore**: `number`
 
-Defined in: [src/types/interview.ts:354](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L354)
+Defined in: [src/types/interview.ts:354](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L354)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/interview.ts:354](https://github.com/rjmad1/CareerPropel/
 
 > **strengths**: `string`[]
 
-Defined in: [src/types/interview.ts:355](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L355)
+Defined in: [src/types/interview.ts:355](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L355)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/interview.ts:355](https://github.com/rjmad1/CareerPropel/
 
 > **suggestions**: `string`[]
 
-Defined in: [src/types/interview.ts:357](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L357)
+Defined in: [src/types/interview.ts:357](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L357)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/types/interview.ts:357](https://github.com/rjmad1/CareerPropel/
 
 > **weaknesses**: `string`[]
 
-Defined in: [src/types/interview.ts:356](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L356)
+Defined in: [src/types/interview.ts:356](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L356)

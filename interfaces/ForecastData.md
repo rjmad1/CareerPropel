@@ -6,7 +6,7 @@
 
 # Interface: ForecastData
 
-Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:24](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/analytics/AnalyticsTimingPanel.tsx#L24)
+Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:24](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/analytics/AnalyticsTimingPanel.tsx#L24)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:24](https://githu
 
 > **forecasts**: `object`[]
 
-Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:25](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/analytics/AnalyticsTimingPanel.tsx#L25)
+Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:25](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/analytics/AnalyticsTimingPanel.tsx#L25)
 
 #### company
 
@@ -58,7 +58,7 @@ Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:25](https://githu
 
 > **generatedAt**: `string`
 
-Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:37](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/analytics/AnalyticsTimingPanel.tsx#L37)
+Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:37](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/analytics/AnalyticsTimingPanel.tsx#L37)
 
 ***
 
@@ -66,4 +66,4 @@ Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:37](https://githu
 
 > **usedPersonalData**: `boolean`
 
-Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:36](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/analytics/AnalyticsTimingPanel.tsx#L36)
+Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:36](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/analytics/AnalyticsTimingPanel.tsx#L36)

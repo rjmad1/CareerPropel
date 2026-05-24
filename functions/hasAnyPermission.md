@@ -8,7 +8,7 @@
 
 > **hasAnyPermission**(`email`, `permissions`): `Promise`\<`boolean`\>
 
-Defined in: [src/lib/security/rbac.ts:221](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/security/rbac.ts#L221)
+Defined in: [src/lib/security/rbac.ts:221](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/security/rbac.ts#L221)
 
 ## Parameters
 

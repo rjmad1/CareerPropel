@@ -6,7 +6,7 @@
 
 # Interface: RedisConfig
 
-Defined in: [src/infrastructure/redis/config.ts:6](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/infrastructure/redis/config.ts#L6)
+Defined in: [src/infrastructure/redis/config.ts:6](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/infrastructure/redis/config.ts#L6)
 
 ## Extends
 
@@ -192,7 +192,7 @@ Defined in: node\_modules/ioredis/built/redis/RedisOptions.d.ts:7
 
 > **connectTimeout**: `number`
 
-Defined in: [src/infrastructure/redis/config.ts:7](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/infrastructure/redis/config.ts#L7)
+Defined in: [src/infrastructure/redis/config.ts:7](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/infrastructure/redis/config.ts#L7)
 
 How long the client will wait before killing a socket due to inactivity during initial connection.
 
@@ -482,7 +482,7 @@ until the connection is alive again.
 
 > **maxRetryDelay**: `number`
 
-Defined in: [src/infrastructure/redis/config.ts:8](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/infrastructure/redis/config.ts#L8)
+Defined in: [src/infrastructure/redis/config.ts:8](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/infrastructure/redis/config.ts#L8)
 
 ***
 
@@ -680,7 +680,7 @@ null
 
 > **retryBudget**: `number`
 
-Defined in: [src/infrastructure/redis/config.ts:9](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/infrastructure/redis/config.ts#L9)
+Defined in: [src/infrastructure/redis/config.ts:9](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/infrastructure/redis/config.ts#L9)
 
 ***
 

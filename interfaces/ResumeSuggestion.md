@@ -6,7 +6,7 @@
 
 # Interface: ResumeSuggestion
 
-Defined in: [src/types/interview.ts:283](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L283)
+Defined in: [src/types/interview.ts:283](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L283)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/interview.ts:283](https://github.com/rjmad1/CareerPropel/
 
 > **impact**: `number`
 
-Defined in: [src/types/interview.ts:288](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L288)
+Defined in: [src/types/interview.ts:288](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L288)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/interview.ts:288](https://github.com/rjmad1/CareerPropel/
 
 > **originalContent**: `string`
 
-Defined in: [src/types/interview.ts:285](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L285)
+Defined in: [src/types/interview.ts:285](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L285)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/interview.ts:285](https://github.com/rjmad1/CareerPropel/
 
 > **reason**: `string`
 
-Defined in: [src/types/interview.ts:287](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L287)
+Defined in: [src/types/interview.ts:287](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L287)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/interview.ts:287](https://github.com/rjmad1/CareerPropel/
 
 > **section**: `string`
 
-Defined in: [src/types/interview.ts:284](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L284)
+Defined in: [src/types/interview.ts:284](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L284)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/types/interview.ts:284](https://github.com/rjmad1/CareerPropel/
 
 > **suggestedContent**: `string`
 
-Defined in: [src/types/interview.ts:286](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L286)
+Defined in: [src/types/interview.ts:286](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L286)

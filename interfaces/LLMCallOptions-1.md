@@ -6,7 +6,7 @@
 
 # Interface: LLMCallOptions
 
-Defined in: [src/lib/llm/provider.ts:22](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/llm/provider.ts#L22)
+Defined in: [src/lib/llm/provider.ts:22](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/llm/provider.ts#L22)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/llm/provider.ts:22](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **jsonMode?**: `boolean`
 
-Defined in: [src/lib/llm/provider.ts:28](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/llm/provider.ts#L28)
+Defined in: [src/lib/llm/provider.ts:28](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/llm/provider.ts#L28)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/llm/provider.ts:28](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **maxTokens?**: `number`
 
-Defined in: [src/lib/llm/provider.ts:24](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/llm/provider.ts#L24)
+Defined in: [src/lib/llm/provider.ts:24](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/llm/provider.ts#L24)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/llm/provider.ts:24](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **model?**: `string`
 
-Defined in: [src/lib/llm/provider.ts:23](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/llm/provider.ts#L23)
+Defined in: [src/lib/llm/provider.ts:23](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/llm/provider.ts#L23)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/llm/provider.ts:23](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **systemPrompt?**: `string`
 
-Defined in: [src/lib/llm/provider.ts:27](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/llm/provider.ts#L27)
+Defined in: [src/lib/llm/provider.ts:27](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/llm/provider.ts#L27)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/llm/provider.ts:27](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **temperature?**: `number`
 
-Defined in: [src/lib/llm/provider.ts:25](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/llm/provider.ts#L25)
+Defined in: [src/lib/llm/provider.ts:25](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/llm/provider.ts#L25)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/lib/llm/provider.ts:25](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **topP?**: `number`
 
-Defined in: [src/lib/llm/provider.ts:26](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/llm/provider.ts#L26)
+Defined in: [src/lib/llm/provider.ts:26](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/llm/provider.ts#L26)

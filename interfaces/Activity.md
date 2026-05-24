@@ -6,7 +6,7 @@
 
 # Interface: Activity
 
-Defined in: [src/domains/jobs/hooks/useJobActivities.ts:4](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useJobActivities.ts#L4)
+Defined in: [src/domains/jobs/hooks/useJobActivities.ts:4](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useJobActivities.ts#L4)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/domains/jobs/hooks/useJobActivities.ts:4](https://github.com/rj
 
 > **description**: `string`
 
-Defined in: [src/domains/jobs/hooks/useJobActivities.ts:8](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useJobActivities.ts#L8)
+Defined in: [src/domains/jobs/hooks/useJobActivities.ts:8](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useJobActivities.ts#L8)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/domains/jobs/hooks/useJobActivities.ts:8](https://github.com/rj
 
 > **id**: `string`
 
-Defined in: [src/domains/jobs/hooks/useJobActivities.ts:5](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useJobActivities.ts#L5)
+Defined in: [src/domains/jobs/hooks/useJobActivities.ts:5](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useJobActivities.ts#L5)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/domains/jobs/hooks/useJobActivities.ts:5](https://github.com/rj
 
 > `optional` **metadata?**: `Record`\<`string`, `any`\>
 
-Defined in: [src/domains/jobs/hooks/useJobActivities.ts:9](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useJobActivities.ts#L9)
+Defined in: [src/domains/jobs/hooks/useJobActivities.ts:9](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useJobActivities.ts#L9)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/domains/jobs/hooks/useJobActivities.ts:9](https://github.com/rj
 
 > **timestamp**: `string`
 
-Defined in: [src/domains/jobs/hooks/useJobActivities.ts:7](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useJobActivities.ts#L7)
+Defined in: [src/domains/jobs/hooks/useJobActivities.ts:7](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useJobActivities.ts#L7)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/domains/jobs/hooks/useJobActivities.ts:7](https://github.com/rj
 
 > **type**: `"applied"` \| `"rejected"` \| `"offered"` \| `"stage_changed"` \| `"interview_scheduled"` \| `"interview_completed"` \| `"note_added"` \| `"agent_action"`
 
-Defined in: [src/domains/jobs/hooks/useJobActivities.ts:6](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/domains/jobs/hooks/useJobActivities.ts#L6)
+Defined in: [src/domains/jobs/hooks/useJobActivities.ts:6](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useJobActivities.ts#L6)

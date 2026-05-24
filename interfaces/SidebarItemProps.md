@@ -6,7 +6,7 @@
 
 # Interface: SidebarItemProps
 
-Defined in: [src/components/Layout/AppLayout.tsx:59](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/Layout/AppLayout.tsx#L59)
+Defined in: [src/components/Layout/AppLayout.tsx:59](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Layout/AppLayout.tsx#L59)
 
 ## Extends
 
@@ -42,7 +42,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2912
 
 > `optional` **active?**: `boolean`
 
-Defined in: [src/components/Layout/AppLayout.tsx:62](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/Layout/AppLayout.tsx#L62)
+Defined in: [src/components/Layout/AppLayout.tsx:62](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Layout/AppLayout.tsx#L62)
 
 ***
 
@@ -975,7 +975,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2953
 
 > `optional` **children?**: `ReactNode`
 
-Defined in: [src/components/Layout/AppLayout.tsx:63](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/Layout/AppLayout.tsx#L63)
+Defined in: [src/components/Layout/AppLayout.tsx:63](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Layout/AppLayout.tsx#L63)
 
 #### Overrides
 
@@ -1247,7 +1247,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2921
 
 > `optional` **icon?**: `ReactNode`
 
-Defined in: [src/components/Layout/AppLayout.tsx:60](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/Layout/AppLayout.tsx#L60)
+Defined in: [src/components/Layout/AppLayout.tsx:60](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Layout/AppLayout.tsx#L60)
 
 ***
 
@@ -1391,7 +1391,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2957
 
 > **label**: `string`
 
-Defined in: [src/components/Layout/AppLayout.tsx:61](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/components/Layout/AppLayout.tsx#L61)
+Defined in: [src/components/Layout/AppLayout.tsx:61](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Layout/AppLayout.tsx#L61)
 
 ***
 

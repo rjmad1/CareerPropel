@@ -6,7 +6,7 @@
 
 # Interface: LeverJob
 
-Defined in: [src/lib/scraping/lever.ts:12](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/lever.ts#L12)
+Defined in: [src/lib/scraping/lever.ts:12](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/lever.ts#L12)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/scraping/lever.ts:12](https://github.com/rjmad1/CareerPrope
 
 > `optional` **additional?**: `string`
 
-Defined in: [src/lib/scraping/lever.ts:22](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/lever.ts#L22)
+Defined in: [src/lib/scraping/lever.ts:22](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/lever.ts#L22)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/scraping/lever.ts:22](https://github.com/rjmad1/CareerPrope
 
 > `optional` **additionalPlain?**: `string`
 
-Defined in: [src/lib/scraping/lever.ts:23](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/lever.ts#L23)
+Defined in: [src/lib/scraping/lever.ts:23](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/lever.ts#L23)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/scraping/lever.ts:23](https://github.com/rjmad1/CareerPrope
 
 > **applyUrl**: `string`
 
-Defined in: [src/lib/scraping/lever.ts:31](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/lever.ts#L31)
+Defined in: [src/lib/scraping/lever.ts:31](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/lever.ts#L31)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/scraping/lever.ts:31](https://github.com/rjmad1/CareerPrope
 
 > `optional` **categories?**: `object`
 
-Defined in: [src/lib/scraping/lever.ts:24](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/lever.ts#L24)
+Defined in: [src/lib/scraping/lever.ts:24](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/lever.ts#L24)
 
 #### commitment?
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/scraping/lever.ts:24](https://github.com/rjmad1/CareerPrope
 
 > **createdAt**: `number`
 
-Defined in: [src/lib/scraping/lever.ts:15](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/lever.ts#L15)
+Defined in: [src/lib/scraping/lever.ts:15](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/lever.ts#L15)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/scraping/lever.ts:15](https://github.com/rjmad1/CareerPrope
 
 > **description**: `string`
 
-Defined in: [src/lib/scraping/lever.ts:16](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/lever.ts#L16)
+Defined in: [src/lib/scraping/lever.ts:16](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/lever.ts#L16)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/lib/scraping/lever.ts:16](https://github.com/rjmad1/CareerPrope
 
 > **descriptionPlain**: `string`
 
-Defined in: [src/lib/scraping/lever.ts:17](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/lever.ts#L17)
+Defined in: [src/lib/scraping/lever.ts:17](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/lever.ts#L17)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [src/lib/scraping/lever.ts:17](https://github.com/rjmad1/CareerPrope
 
 > **hostedUrl**: `string`
 
-Defined in: [src/lib/scraping/lever.ts:30](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/lever.ts#L30)
+Defined in: [src/lib/scraping/lever.ts:30](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/lever.ts#L30)
 
 ***
 
@@ -94,7 +94,7 @@ Defined in: [src/lib/scraping/lever.ts:30](https://github.com/rjmad1/CareerPrope
 
 > **id**: `string`
 
-Defined in: [src/lib/scraping/lever.ts:13](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/lever.ts#L13)
+Defined in: [src/lib/scraping/lever.ts:13](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/lever.ts#L13)
 
 ***
 
@@ -102,7 +102,7 @@ Defined in: [src/lib/scraping/lever.ts:13](https://github.com/rjmad1/CareerPrope
 
 > `optional` **lists?**: `object`[]
 
-Defined in: [src/lib/scraping/lever.ts:18](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/lever.ts#L18)
+Defined in: [src/lib/scraping/lever.ts:18](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/lever.ts#L18)
 
 #### content
 
@@ -118,4 +118,4 @@ Defined in: [src/lib/scraping/lever.ts:18](https://github.com/rjmad1/CareerPrope
 
 > **text**: `string`
 
-Defined in: [src/lib/scraping/lever.ts:14](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/lever.ts#L14)
+Defined in: [src/lib/scraping/lever.ts:14](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/lever.ts#L14)

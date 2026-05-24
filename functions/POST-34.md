@@ -8,7 +8,7 @@
 
 > **POST**(`request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `content`: `string`; `session`: \{ `candidateId`: `string`; `createdAt`: `Date`; `endDate`: `Date`; `id`: `string`; `impactDraft`: `string` \| `null`; `selfReview`: `string` \| `null`; `startDate`: `Date`; `status`: `string`; `title`: `string`; `updatedAt`: `Date`; \}; `success`: `boolean`; \}\>\>
 
-Defined in: [src/app/api/profile/appraisal-compile/route.ts:44](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/app/api/profile/appraisal-compile/route.ts#L44)
+Defined in: [src/app/api/profile/appraisal-compile/route.ts:44](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/app/api/profile/appraisal-compile/route.ts#L44)
 
 POST /api/profile/appraisal-compile
 Takes a list of staged accomplishment IDs and compiles them into a comprehensive

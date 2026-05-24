@@ -6,7 +6,7 @@
 
 # Interface: TeamInfo
 
-Defined in: [src/types/company.ts:203](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L203)
+Defined in: [src/types/company.ts:203](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L203)
 
 Team and manager information
 
@@ -16,7 +16,7 @@ Team and manager information
 
 > **companyId**: `string`
 
-Defined in: [src/types/company.ts:205](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L205)
+Defined in: [src/types/company.ts:205](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L205)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/company.ts:205](https://github.com/rjmad1/CareerPropel/bl
 
 > **department**: `string`
 
-Defined in: [src/types/company.ts:206](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L206)
+Defined in: [src/types/company.ts:206](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L206)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/company.ts:206](https://github.com/rjmad1/CareerPropel/bl
 
 > **id**: `string`
 
-Defined in: [src/types/company.ts:204](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L204)
+Defined in: [src/types/company.ts:204](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L204)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/company.ts:204](https://github.com/rjmad1/CareerPropel/bl
 
 > **manager**: [`Manager`](Manager.md)
 
-Defined in: [src/types/company.ts:209](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L209)
+Defined in: [src/types/company.ts:209](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L209)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/company.ts:209](https://github.com/rjmad1/CareerPropel/bl
 
 > **name**: `string`
 
-Defined in: [src/types/company.ts:207](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L207)
+Defined in: [src/types/company.ts:207](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L207)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/types/company.ts:207](https://github.com/rjmad1/CareerPropel/bl
 
 > **organizationLevel**: `number`
 
-Defined in: [src/types/company.ts:211](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L211)
+Defined in: [src/types/company.ts:211](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L211)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [src/types/company.ts:211](https://github.com/rjmad1/CareerPropel/bl
 
 > **siblingTeams**: `string`[]
 
-Defined in: [src/types/company.ts:210](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L210)
+Defined in: [src/types/company.ts:210](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L210)
 
 ***
 
@@ -72,4 +72,4 @@ Defined in: [src/types/company.ts:210](https://github.com/rjmad1/CareerPropel/bl
 
 > **size**: `number`
 
-Defined in: [src/types/company.ts:208](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L208)
+Defined in: [src/types/company.ts:208](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L208)

@@ -6,7 +6,7 @@
 
 # Interface: ImportedJob
 
-Defined in: [src/lib/scraping/provider.ts:9](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/provider.ts#L9)
+Defined in: [src/lib/scraping/provider.ts:9](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/provider.ts#L9)
 
 Scraping Provider Abstraction Layer & Contracts
 
@@ -20,7 +20,7 @@ OAuth APIs (such as LinkedIn Partner APIs) in the future.
 
 > **company**: `string`
 
-Defined in: [src/lib/scraping/provider.ts:13](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/provider.ts#L13)
+Defined in: [src/lib/scraping/provider.ts:13](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/provider.ts#L13)
 
 ***
 
@@ -28,7 +28,7 @@ Defined in: [src/lib/scraping/provider.ts:13](https://github.com/rjmad1/CareerPr
 
 > **department**: `string` \| `null`
 
-Defined in: [src/lib/scraping/provider.ts:19](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/provider.ts#L19)
+Defined in: [src/lib/scraping/provider.ts:19](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/provider.ts#L19)
 
 ***
 
@@ -36,7 +36,7 @@ Defined in: [src/lib/scraping/provider.ts:19](https://github.com/rjmad1/CareerPr
 
 > **description**: `string`
 
-Defined in: [src/lib/scraping/provider.ts:15](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/provider.ts#L15)
+Defined in: [src/lib/scraping/provider.ts:15](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/provider.ts#L15)
 
 ***
 
@@ -44,7 +44,7 @@ Defined in: [src/lib/scraping/provider.ts:15](https://github.com/rjmad1/CareerPr
 
 > **externalId**: `string` \| `null`
 
-Defined in: [src/lib/scraping/provider.ts:11](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/provider.ts#L11)
+Defined in: [src/lib/scraping/provider.ts:11](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/provider.ts#L11)
 
 ***
 
@@ -52,7 +52,7 @@ Defined in: [src/lib/scraping/provider.ts:11](https://github.com/rjmad1/CareerPr
 
 > **location**: `string`
 
-Defined in: [src/lib/scraping/provider.ts:14](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/provider.ts#L14)
+Defined in: [src/lib/scraping/provider.ts:14](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/provider.ts#L14)
 
 ***
 
@@ -60,7 +60,7 @@ Defined in: [src/lib/scraping/provider.ts:14](https://github.com/rjmad1/CareerPr
 
 > **postedAt**: `string`
 
-Defined in: [src/lib/scraping/provider.ts:17](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/provider.ts#L17)
+Defined in: [src/lib/scraping/provider.ts:17](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/provider.ts#L17)
 
 ***
 
@@ -68,7 +68,7 @@ Defined in: [src/lib/scraping/provider.ts:17](https://github.com/rjmad1/CareerPr
 
 > **salary**: `string` \| `null`
 
-Defined in: [src/lib/scraping/provider.ts:18](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/provider.ts#L18)
+Defined in: [src/lib/scraping/provider.ts:18](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/provider.ts#L18)
 
 ***
 
@@ -76,7 +76,7 @@ Defined in: [src/lib/scraping/provider.ts:18](https://github.com/rjmad1/CareerPr
 
 > **source**: `"linkedin"` \| `"indeed"` \| `"greenhouse"` \| `"lever"` \| `"ashby"`
 
-Defined in: [src/lib/scraping/provider.ts:10](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/provider.ts#L10)
+Defined in: [src/lib/scraping/provider.ts:10](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/provider.ts#L10)
 
 ***
 
@@ -84,7 +84,7 @@ Defined in: [src/lib/scraping/provider.ts:10](https://github.com/rjmad1/CareerPr
 
 > **title**: `string`
 
-Defined in: [src/lib/scraping/provider.ts:12](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/provider.ts#L12)
+Defined in: [src/lib/scraping/provider.ts:12](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/provider.ts#L12)
 
 ***
 
@@ -92,4 +92,4 @@ Defined in: [src/lib/scraping/provider.ts:12](https://github.com/rjmad1/CareerPr
 
 > **url**: `string`
 
-Defined in: [src/lib/scraping/provider.ts:16](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/lib/scraping/provider.ts#L16)
+Defined in: [src/lib/scraping/provider.ts:16](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/provider.ts#L16)

@@ -6,7 +6,7 @@
 
 # Interface: ResearchSummary
 
-Defined in: [src/types/company.ts:294](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L294)
+Defined in: [src/types/company.ts:294](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L294)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/company.ts:294](https://github.com/rjmad1/CareerPropel/bl
 
 > **hiringInsights**: `string`
 
-Defined in: [src/types/company.ts:296](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L296)
+Defined in: [src/types/company.ts:296](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L296)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/company.ts:296](https://github.com/rjmad1/CareerPropel/bl
 
 > **overviewFromWeb**: `string`
 
-Defined in: [src/types/company.ts:295](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L295)
+Defined in: [src/types/company.ts:295](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L295)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/company.ts:295](https://github.com/rjmad1/CareerPropel/bl
 
 > **reputationSummary**: `string`
 
-Defined in: [src/types/company.ts:297](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L297)
+Defined in: [src/types/company.ts:297](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L297)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/types/company.ts:297](https://github.com/rjmad1/CareerPropel/bl
 
 > **trendingTopics**: `string`[]
 
-Defined in: [src/types/company.ts:298](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/company.ts#L298)
+Defined in: [src/types/company.ts:298](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L298)

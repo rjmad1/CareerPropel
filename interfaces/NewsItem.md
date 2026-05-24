@@ -6,7 +6,7 @@
 
 # Interface: NewsItem
 
-Defined in: [src/types/interview.ts:63](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L63)
+Defined in: [src/types/interview.ts:63](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L63)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/interview.ts:63](https://github.com/rjmad1/CareerPropel/b
 
 > **date**: `Date`
 
-Defined in: [src/types/interview.ts:64](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L64)
+Defined in: [src/types/interview.ts:64](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L64)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/interview.ts:64](https://github.com/rjmad1/CareerPropel/b
 
 > **source**: `string`
 
-Defined in: [src/types/interview.ts:66](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L66)
+Defined in: [src/types/interview.ts:66](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L66)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/interview.ts:66](https://github.com/rjmad1/CareerPropel/b
 
 > **summary**: `string`
 
-Defined in: [src/types/interview.ts:68](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L68)
+Defined in: [src/types/interview.ts:68](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L68)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/interview.ts:68](https://github.com/rjmad1/CareerPropel/b
 
 > **title**: `string`
 
-Defined in: [src/types/interview.ts:65](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L65)
+Defined in: [src/types/interview.ts:65](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L65)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/types/interview.ts:65](https://github.com/rjmad1/CareerPropel/b
 
 > **url**: `string`
 
-Defined in: [src/types/interview.ts:67](https://github.com/rjmad1/CareerPropel/blob/41bfc0cd19012c8b6055aff45ba5794ece20280a/src/types/interview.ts#L67)
+Defined in: [src/types/interview.ts:67](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L67)
