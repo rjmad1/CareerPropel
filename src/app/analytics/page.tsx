@@ -73,9 +73,17 @@ export default function AnalyticsPage() {
     if (activeTab !== 'roi' || roiData || roiLoading) return;
     setRoiLoading(true);
     setRoiError('');
+    async function fetchJson(url: string) {
+      const r = await fetch(url);
+      if (!r.ok) {
+        const text = await r.text().catch(() => '');
+        throw new Error(`${url} returned ${r.status}: ${text}`);
+      }
+      return r.json();
+    }
     Promise.all([
-      fetch('/api/analytics/roi').then((r) => r.json()),
-      fetch('/api/analytics/forecast').then((r) => r.json()),
+      fetchJson('/api/analytics/roi'),
+      fetchJson('/api/analytics/forecast'),
     ])
       .then(([roi, forecast]) => {
         if (roi.error) throw new Error(roi.error);

@@ -83,7 +83,11 @@ export default function AppraisalsPage() {
   const fetchPastSessions = useCallback(async () => {
     try {
       const res = await fetch('/api/profile/appraisal-compile');
-      if (!res.ok) return;
+      if (res.status === 404) return;
+      if (!res.ok) {
+        console.error('[appraisals] fetchPastSessions failed:', res.status, res.statusText);
+        return;
+      }
       const data = await res.json();
       setPastSessions(data.sessions ?? []);
     } catch {

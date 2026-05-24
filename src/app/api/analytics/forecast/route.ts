@@ -10,6 +10,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getAuthContext } from '@/lib/middleware/auth';
 import { prisma } from '@/lib/db';
 import { PIPELINE_STAGES, JobStage } from '@/types/job';
+import { MS_PER_DAY } from '@/lib/utils/constants';
 
 export const dynamic = 'force-dynamic';
 
@@ -84,10 +85,10 @@ export async function GET(_req: NextRequest) {
       for (let i = 0; i < PIPELINE_STAGES.length - 1; i++) {
         const stage = PIPELINE_STAGES[i];
         const nextStage = PIPELINE_STAGES[i + 1];
-        const enteredAt: Date = entries[stage] ?? (i === 0 ? job.createdAt : null as unknown as Date);
-        const exitedAt: Date = entries[nextStage];
+        const enteredAt: Date | null = entries[stage] ?? (i === 0 ? job.createdAt : null);
+        const exitedAt: Date | undefined = entries[nextStage];
         if (!enteredAt || !exitedAt) continue;
-        const days = (exitedAt.getTime() - enteredAt.getTime()) / 86_400_000;
+        const days = (exitedAt.getTime() - enteredAt.getTime()) / MS_PER_DAY;
         if (days >= 0 && days < 180) {
           stageDurationAccum[stage] ??= [];
           stageDurationAccum[stage].push(days);
@@ -118,7 +119,7 @@ export async function GET(_req: NextRequest) {
         const currentStageEnteredAt: Date =
           entries[job.stage] ?? job.updatedAt;
         const daysInCurrentStage = Math.round(
-          (Date.now() - currentStageEnteredAt.getTime()) / 86_400_000
+          (Date.now() - currentStageEnteredAt.getTime()) / MS_PER_DAY
         );
         const avgCurrentStageDays = avgDaysForStage(job.stage as JobStage);
         const remainingInCurrentStage = Math.max(
@@ -128,7 +129,7 @@ export async function GET(_req: NextRequest) {
 
         const totalRemainingDays = remainingInCurrentStage + remainingDays;
         const estimatedOfferDate = new Date(
-          Date.now() + totalRemainingDays * 86_400_000
+          Date.now() + totalRemainingDays * MS_PER_DAY
         );
 
         return {

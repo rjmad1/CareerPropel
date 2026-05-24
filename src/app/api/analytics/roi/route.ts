@@ -14,6 +14,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAuthContext } from '@/lib/middleware/auth';
 import { prisma } from '@/lib/db';
+import { MS_PER_DAY } from '@/lib/utils/constants';
 
 export const dynamic = 'force-dynamic';
 
@@ -102,7 +103,7 @@ export async function GET(_req: NextRequest) {
     }
 
     // ---- Application velocity: apps/week in last 90 days ----
-    const ninetyDaysAgo = new Date(Date.now() - 90 * 86_400_000);
+    const ninetyDaysAgo = new Date(Date.now() - 90 * MS_PER_DAY);
     const recentApplied = jobs.filter(
       (j) =>
         APPLIED_AND_BEYOND.has(j.stage) &&
@@ -145,16 +146,10 @@ export async function GET(_req: NextRequest) {
       const appliedAt =
         entries['applied'] ?? job.appliedAt ?? null;
       if (!appliedAt) continue;
-      const firstInterviewAt = INTERVIEW_STAGES
-        .values()
-        // @ts-ignore -- TS lib target
-        .toArray?.()
-        ?.concat?.([...INTERVIEW_STAGES])
-        ? [...INTERVIEW_STAGES]
-            .map((s) => entries[s])
-            .filter(Boolean)
-            .sort((a, b) => a.getTime() - b.getTime())[0]
-        : undefined;
+      const firstInterviewAt = [...INTERVIEW_STAGES]
+        .map((s) => entries[s])
+        .filter(Boolean)
+        .sort((a, b) => a.getTime() - b.getTime())[0];
       if (!firstInterviewAt) continue;
       const days =
         (firstInterviewAt.getTime() - appliedAt.getTime()) / 86_400_000;
@@ -200,7 +195,6 @@ export async function GET(_req: NextRequest) {
     }
 
     const companySuccessRates = Object.entries(companyStats)
-      .filter(([, s]) => s.total >= 1)
       .map(([company, s]) => ({
         company,
         total: s.total,

@@ -66,7 +66,7 @@ interface DecisionResult {
   summary: string;
 }
 
-/** Weighted geometric-mean composite, normalised to 0-100. */
+/** Weighted arithmetic mean composite, normalized to 0-100. Falls back to 50 when totalWeight === 0. */
 function computeComposite(
   scores: DimensionScores,
   weights: z.infer<typeof WeightsSchema>
@@ -171,24 +171,24 @@ Return ONLY valid JSON (no markdown fences):
       );
 
       const raw = llmResult.content.replace(/^```(?:json)?\n?/m, '').replace(/\n?```$/m, '').trim();
-      const parsed = JSON.parse(raw);
+      const llmParsed = JSON.parse(raw);
 
       const scores: DimensionScores = {
-        compensation: Math.max(0, Math.min(100, parsed.dimensionScores?.compensation ?? 50)),
-        growth: Math.max(0, Math.min(100, parsed.dimensionScores?.growth ?? 50)),
-        culture: Math.max(0, Math.min(100, parsed.dimensionScores?.culture ?? 50)),
-        wlb: Math.max(0, Math.min(100, parsed.dimensionScores?.wlb ?? 50)),
-        security: Math.max(0, Math.min(100, parsed.dimensionScores?.security ?? 50)),
-        location: Math.max(0, Math.min(100, parsed.dimensionScores?.location ?? 50)),
+        compensation: Math.max(0, Math.min(100, llmParsed.dimensionScores?.compensation ?? 50)),
+        growth: Math.max(0, Math.min(100, llmParsed.dimensionScores?.growth ?? 50)),
+        culture: Math.max(0, Math.min(100, llmParsed.dimensionScores?.culture ?? 50)),
+        wlb: Math.max(0, Math.min(100, llmParsed.dimensionScores?.wlb ?? 50)),
+        security: Math.max(0, Math.min(100, llmParsed.dimensionScores?.security ?? 50)),
+        location: Math.max(0, Math.min(100, llmParsed.dimensionScores?.location ?? 50)),
       };
 
       result = {
         overallScore: computeComposite(scores, weights),
         dimensionScores: scores,
-        recommendation: parsed.recommendation ?? 'Evaluate against competing offers.',
-        pros: Array.isArray(parsed.pros) ? parsed.pros.slice(0, 5) : [],
-        cons: Array.isArray(parsed.cons) ? parsed.cons.slice(0, 5) : [],
-        summary: parsed.summary ?? '',
+        recommendation: llmParsed.recommendation ?? 'Evaluate against competing offers.',
+        pros: Array.isArray(llmParsed.pros) ? llmParsed.pros.slice(0, 5) : [],
+        cons: Array.isArray(llmParsed.cons) ? llmParsed.cons.slice(0, 5) : [],
+        summary: llmParsed.summary ?? '',
       };
     } catch {
       // Graceful fallback — neutral scores
