@@ -6,7 +6,7 @@
 
 # Interface: GreenhouseJob
 
-Defined in: [src/lib/scraping/greenhouse.ts:11](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/greenhouse.ts#L11)
+Defined in: [src/lib/scraping/greenhouse.ts:11](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/greenhouse.ts#L11)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/scraping/greenhouse.ts:11](https://github.com/rjmad1/Career
 
 > **absolute\_url**: `string`
 
-Defined in: [src/lib/scraping/greenhouse.ts:17](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/greenhouse.ts#L17)
+Defined in: [src/lib/scraping/greenhouse.ts:17](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/greenhouse.ts#L17)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/scraping/greenhouse.ts:17](https://github.com/rjmad1/Career
 
 > **content**: `string`
 
-Defined in: [src/lib/scraping/greenhouse.ts:15](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/greenhouse.ts#L15)
+Defined in: [src/lib/scraping/greenhouse.ts:15](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/greenhouse.ts#L15)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/scraping/greenhouse.ts:15](https://github.com/rjmad1/Career
 
 > `optional` **departments?**: `object`[]
 
-Defined in: [src/lib/scraping/greenhouse.ts:18](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/greenhouse.ts#L18)
+Defined in: [src/lib/scraping/greenhouse.ts:18](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/greenhouse.ts#L18)
 
 #### name
 
@@ -42,7 +42,7 @@ Defined in: [src/lib/scraping/greenhouse.ts:18](https://github.com/rjmad1/Career
 
 > **id**: `number`
 
-Defined in: [src/lib/scraping/greenhouse.ts:12](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/greenhouse.ts#L12)
+Defined in: [src/lib/scraping/greenhouse.ts:12](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/greenhouse.ts#L12)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [src/lib/scraping/greenhouse.ts:12](https://github.com/rjmad1/Career
 
 > **location**: `object`
 
-Defined in: [src/lib/scraping/greenhouse.ts:14](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/greenhouse.ts#L14)
+Defined in: [src/lib/scraping/greenhouse.ts:14](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/greenhouse.ts#L14)
 
 #### name
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/scraping/greenhouse.ts:14](https://github.com/rjmad1/Career
 
 > `optional` **offices?**: `object`[]
 
-Defined in: [src/lib/scraping/greenhouse.ts:19](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/greenhouse.ts#L19)
+Defined in: [src/lib/scraping/greenhouse.ts:19](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/greenhouse.ts#L19)
 
 #### name
 
@@ -74,7 +74,7 @@ Defined in: [src/lib/scraping/greenhouse.ts:19](https://github.com/rjmad1/Career
 
 > **title**: `string`
 
-Defined in: [src/lib/scraping/greenhouse.ts:13](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/greenhouse.ts#L13)
+Defined in: [src/lib/scraping/greenhouse.ts:13](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/greenhouse.ts#L13)
 
 ***
 
@@ -82,4 +82,4 @@ Defined in: [src/lib/scraping/greenhouse.ts:13](https://github.com/rjmad1/Career
 
 > **updated\_at**: `string`
 
-Defined in: [src/lib/scraping/greenhouse.ts:16](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/greenhouse.ts#L16)
+Defined in: [src/lib/scraping/greenhouse.ts:16](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/greenhouse.ts#L16)

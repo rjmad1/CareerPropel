@@ -6,7 +6,7 @@
 
 # Interface: AshbyJob
 
-Defined in: [src/lib/scraping/ashby.ts:12](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/ashby.ts#L12)
+Defined in: [src/lib/scraping/ashby.ts:12](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/ashby.ts#L12)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/scraping/ashby.ts:12](https://github.com/rjmad1/CareerPrope
 
 > **applyUrl**: `string`
 
-Defined in: [src/lib/scraping/ashby.ts:21](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/ashby.ts#L21)
+Defined in: [src/lib/scraping/ashby.ts:21](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/ashby.ts#L21)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/scraping/ashby.ts:21](https://github.com/rjmad1/CareerPrope
 
 > `optional` **department?**: `string`
 
-Defined in: [src/lib/scraping/ashby.ts:15](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/ashby.ts#L15)
+Defined in: [src/lib/scraping/ashby.ts:15](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/ashby.ts#L15)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/scraping/ashby.ts:15](https://github.com/rjmad1/CareerPrope
 
 > `optional` **descriptionHtml?**: `string`
 
-Defined in: [src/lib/scraping/ashby.ts:22](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/ashby.ts#L22)
+Defined in: [src/lib/scraping/ashby.ts:22](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/ashby.ts#L22)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/scraping/ashby.ts:22](https://github.com/rjmad1/CareerPrope
 
 > `optional` **descriptionPlain?**: `string`
 
-Defined in: [src/lib/scraping/ashby.ts:23](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/ashby.ts#L23)
+Defined in: [src/lib/scraping/ashby.ts:23](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/ashby.ts#L23)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/scraping/ashby.ts:23](https://github.com/rjmad1/CareerPrope
 
 > `optional` **employmentType?**: `string`
 
-Defined in: [src/lib/scraping/ashby.ts:17](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/ashby.ts#L17)
+Defined in: [src/lib/scraping/ashby.ts:17](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/ashby.ts#L17)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/scraping/ashby.ts:17](https://github.com/rjmad1/CareerPrope
 
 > **id**: `string`
 
-Defined in: [src/lib/scraping/ashby.ts:13](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/ashby.ts#L13)
+Defined in: [src/lib/scraping/ashby.ts:13](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/ashby.ts#L13)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/scraping/ashby.ts:13](https://github.com/rjmad1/CareerPrope
 
 > **jobUrl**: `string`
 
-Defined in: [src/lib/scraping/ashby.ts:20](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/ashby.ts#L20)
+Defined in: [src/lib/scraping/ashby.ts:20](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/ashby.ts#L20)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/scraping/ashby.ts:20](https://github.com/rjmad1/CareerPrope
 
 > **location**: `string`
 
-Defined in: [src/lib/scraping/ashby.ts:18](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/ashby.ts#L18)
+Defined in: [src/lib/scraping/ashby.ts:18](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/ashby.ts#L18)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/lib/scraping/ashby.ts:18](https://github.com/rjmad1/CareerPrope
 
 > **publishedAt**: `string`
 
-Defined in: [src/lib/scraping/ashby.ts:19](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/ashby.ts#L19)
+Defined in: [src/lib/scraping/ashby.ts:19](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/ashby.ts#L19)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [src/lib/scraping/ashby.ts:19](https://github.com/rjmad1/CareerPrope
 
 > `optional` **team?**: `string`
 
-Defined in: [src/lib/scraping/ashby.ts:16](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/ashby.ts#L16)
+Defined in: [src/lib/scraping/ashby.ts:16](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/ashby.ts#L16)
 
 ***
 
@@ -94,4 +94,4 @@ Defined in: [src/lib/scraping/ashby.ts:16](https://github.com/rjmad1/CareerPrope
 
 > **title**: `string`
 
-Defined in: [src/lib/scraping/ashby.ts:14](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/ashby.ts#L14)
+Defined in: [src/lib/scraping/ashby.ts:14](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/ashby.ts#L14)

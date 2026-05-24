@@ -6,7 +6,7 @@
 
 # Class: JobQueue
 
-Defined in: [src/lib/queues/jobQueue.ts:45](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/queues/jobQueue.ts#L45)
+Defined in: [src/lib/queues/jobQueue.ts:45](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/queues/jobQueue.ts#L45)
 
 ## Constructors
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/queues/jobQueue.ts:45](https://github.com/rjmad1/CareerProp
 
 > **new JobQueue**(`config?`): `JobQueue`
 
-Defined in: [src/lib/queues/jobQueue.ts:48](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/queues/jobQueue.ts#L48)
+Defined in: [src/lib/queues/jobQueue.ts:48](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/queues/jobQueue.ts#L48)
 
 #### Parameters
 
@@ -32,7 +32,7 @@ Defined in: [src/lib/queues/jobQueue.ts:48](https://github.com/rjmad1/CareerProp
 
 > **complete**(`queuedJobId`, `result`): `Promise`\<`void`\>
 
-Defined in: [src/lib/queues/jobQueue.ts:122](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/queues/jobQueue.ts#L122)
+Defined in: [src/lib/queues/jobQueue.ts:122](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/queues/jobQueue.ts#L122)
 
 #### Parameters
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/queues/jobQueue.ts:122](https://github.com/rjmad1/CareerPro
 
 > **dequeueNext**(`agentType`): `Promise`\<[`QueuedJob`](../interfaces/QueuedJob.md) \| `null`\>
 
-Defined in: [src/lib/queues/jobQueue.ts:86](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/queues/jobQueue.ts#L86)
+Defined in: [src/lib/queues/jobQueue.ts:86](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/queues/jobQueue.ts#L86)
 
 #### Parameters
 
@@ -72,7 +72,7 @@ Defined in: [src/lib/queues/jobQueue.ts:86](https://github.com/rjmad1/CareerProp
 
 > **enqueue**(`agentType`, `jobId`, `userId`, `payload`, `priority?`): `Promise`\<`string`\>
 
-Defined in: [src/lib/queues/jobQueue.ts:52](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/queues/jobQueue.ts#L52)
+Defined in: [src/lib/queues/jobQueue.ts:52](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/queues/jobQueue.ts#L52)
 
 #### Parameters
 
@@ -106,7 +106,7 @@ Defined in: [src/lib/queues/jobQueue.ts:52](https://github.com/rjmad1/CareerProp
 
 > **fail**(`queuedJobId`, `error`): `Promise`\<`boolean`\>
 
-Defined in: [src/lib/queues/jobQueue.ts:145](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/queues/jobQueue.ts#L145)
+Defined in: [src/lib/queues/jobQueue.ts:145](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/queues/jobQueue.ts#L145)
 
 #### Parameters
 
@@ -128,7 +128,7 @@ Defined in: [src/lib/queues/jobQueue.ts:145](https://github.com/rjmad1/CareerPro
 
 > **getStats**(`agentType?`): `Promise`\<`Record`\<`string`, `any`\>\>
 
-Defined in: [src/lib/queues/jobQueue.ts:189](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/queues/jobQueue.ts#L189)
+Defined in: [src/lib/queues/jobQueue.ts:189](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/queues/jobQueue.ts#L189)
 
 #### Parameters
 
@@ -146,7 +146,7 @@ Defined in: [src/lib/queues/jobQueue.ts:189](https://github.com/rjmad1/CareerPro
 
 > **watchJobCompletion**(`jobId`, `callback`): `void`
 
-Defined in: [src/lib/queues/jobQueue.ts:218](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/queues/jobQueue.ts#L218)
+Defined in: [src/lib/queues/jobQueue.ts:218](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/queues/jobQueue.ts#L218)
 
 Watch for completion of a specific job via Redis pub/sub.
 

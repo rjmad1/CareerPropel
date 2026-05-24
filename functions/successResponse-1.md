@@ -8,7 +8,7 @@
 
 > **successResponse**\<`T`\>(`data`, `statusCode?`): `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<`T`\>\>
 
-Defined in: [src/lib/utils/apiResponse.ts:10](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/utils/apiResponse.ts#L10)
+Defined in: [src/lib/utils/apiResponse.ts:10](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/utils/apiResponse.ts#L10)
 
 ## Type Parameters
 

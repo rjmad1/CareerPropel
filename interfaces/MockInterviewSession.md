@@ -6,7 +6,7 @@
 
 # Interface: MockInterviewSession
 
-Defined in: [src/hooks/useInterviewPrep.ts:310](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/hooks/useInterviewPrep.ts#L310)
+Defined in: [src/hooks/useInterviewPrep.ts:310](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/hooks/useInterviewPrep.ts#L310)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/hooks/useInterviewPrep.ts:310](https://github.com/rjmad1/Career
 
 > **currentQuestionIndex**: `number`
 
-Defined in: [src/hooks/useInterviewPrep.ts:313](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/hooks/useInterviewPrep.ts#L313)
+Defined in: [src/hooks/useInterviewPrep.ts:313](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/hooks/useInterviewPrep.ts#L313)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/hooks/useInterviewPrep.ts:313](https://github.com/rjmad1/Career
 
 > **id**: `string`
 
-Defined in: [src/hooks/useInterviewPrep.ts:311](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/hooks/useInterviewPrep.ts#L311)
+Defined in: [src/hooks/useInterviewPrep.ts:311](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/hooks/useInterviewPrep.ts#L311)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/hooks/useInterviewPrep.ts:311](https://github.com/rjmad1/Career
 
 > **isComplete**: `boolean`
 
-Defined in: [src/hooks/useInterviewPrep.ts:317](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/hooks/useInterviewPrep.ts#L317)
+Defined in: [src/hooks/useInterviewPrep.ts:317](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/hooks/useInterviewPrep.ts#L317)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/hooks/useInterviewPrep.ts:317](https://github.com/rjmad1/Career
 
 > **questions**: [`MockInterviewQuestion`](MockInterviewQuestion.md)[]
 
-Defined in: [src/hooks/useInterviewPrep.ts:314](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/hooks/useInterviewPrep.ts#L314)
+Defined in: [src/hooks/useInterviewPrep.ts:314](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/hooks/useInterviewPrep.ts#L314)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/hooks/useInterviewPrep.ts:314](https://github.com/rjmad1/Career
 
 > **startedAt**: `Date`
 
-Defined in: [src/hooks/useInterviewPrep.ts:312](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/hooks/useInterviewPrep.ts#L312)
+Defined in: [src/hooks/useInterviewPrep.ts:312](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/hooks/useInterviewPrep.ts#L312)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/hooks/useInterviewPrep.ts:312](https://github.com/rjmad1/Career
 
 > **timeRemaining**: `number`
 
-Defined in: [src/hooks/useInterviewPrep.ts:316](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/hooks/useInterviewPrep.ts#L316)
+Defined in: [src/hooks/useInterviewPrep.ts:316](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/hooks/useInterviewPrep.ts#L316)
 
 ***
 
@@ -62,4 +62,4 @@ Defined in: [src/hooks/useInterviewPrep.ts:316](https://github.com/rjmad1/Career
 
 > **userResponses**: `Map`\<`string`, `string`\>
 
-Defined in: [src/hooks/useInterviewPrep.ts:315](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/hooks/useInterviewPrep.ts#L315)
+Defined in: [src/hooks/useInterviewPrep.ts:315](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/hooks/useInterviewPrep.ts#L315)

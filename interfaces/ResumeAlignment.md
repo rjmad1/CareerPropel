@@ -6,7 +6,7 @@
 
 # Interface: ResumeAlignment
 
-Defined in: [src/types/interview.ts:268](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L268)
+Defined in: [src/types/interview.ts:268](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L268)
 
 Resume alignment with job description
 
@@ -16,7 +16,7 @@ Resume alignment with job description
 
 > **highlightedExperience**: [`HighlightedExperience`](HighlightedExperience.md)[]
 
-Defined in: [src/types/interview.ts:273](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L273)
+Defined in: [src/types/interview.ts:273](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L273)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/interview.ts:273](https://github.com/rjmad1/CareerPropel/
 
 > **keywordMatches**: [`KeywordMatch`](KeywordMatch.md)[]
 
-Defined in: [src/types/interview.ts:270](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L270)
+Defined in: [src/types/interview.ts:270](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L270)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/interview.ts:270](https://github.com/rjmad1/CareerPropel/
 
 > **missingKeywords**: `string`[]
 
-Defined in: [src/types/interview.ts:271](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L271)
+Defined in: [src/types/interview.ts:271](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L271)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/interview.ts:271](https://github.com/rjmad1/CareerPropel/
 
 > **overallMatch**: `number`
 
-Defined in: [src/types/interview.ts:269](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L269)
+Defined in: [src/types/interview.ts:269](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L269)
 
 ***
 
@@ -48,4 +48,4 @@ Defined in: [src/types/interview.ts:269](https://github.com/rjmad1/CareerPropel/
 
 > **suggestedResumeUpdates**: [`ResumeSuggestion`](ResumeSuggestion.md)[]
 
-Defined in: [src/types/interview.ts:272](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L272)
+Defined in: [src/types/interview.ts:272](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L272)

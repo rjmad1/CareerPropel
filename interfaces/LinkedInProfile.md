@@ -6,7 +6,7 @@
 
 # Interface: LinkedInProfile
 
-Defined in: [src/lib/scraping/linkedin.ts:66](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/linkedin.ts#L66)
+Defined in: [src/lib/scraping/linkedin.ts:66](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L66)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/scraping/linkedin.ts:66](https://github.com/rjmad1/CareerPr
 
 > **about**: `string`
 
-Defined in: [src/lib/scraping/linkedin.ts:70](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/linkedin.ts#L70)
+Defined in: [src/lib/scraping/linkedin.ts:70](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L70)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/scraping/linkedin.ts:70](https://github.com/rjmad1/CareerPr
 
 > **education**: `object`[]
 
-Defined in: [src/lib/scraping/linkedin.ts:77](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/linkedin.ts#L77)
+Defined in: [src/lib/scraping/linkedin.ts:77](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L77)
 
 #### degree
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/scraping/linkedin.ts:77](https://github.com/rjmad1/CareerPr
 
 > **experience**: `object`[]
 
-Defined in: [src/lib/scraping/linkedin.ts:71](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/linkedin.ts#L71)
+Defined in: [src/lib/scraping/linkedin.ts:71](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L71)
 
 #### company
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/scraping/linkedin.ts:71](https://github.com/rjmad1/CareerPr
 
 > **headline**: `string`
 
-Defined in: [src/lib/scraping/linkedin.ts:68](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/linkedin.ts#L68)
+Defined in: [src/lib/scraping/linkedin.ts:68](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L68)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/lib/scraping/linkedin.ts:68](https://github.com/rjmad1/CareerPr
 
 > **location**: `string`
 
-Defined in: [src/lib/scraping/linkedin.ts:69](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/linkedin.ts#L69)
+Defined in: [src/lib/scraping/linkedin.ts:69](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L69)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [src/lib/scraping/linkedin.ts:69](https://github.com/rjmad1/CareerPr
 
 > **name**: `string`
 
-Defined in: [src/lib/scraping/linkedin.ts:67](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/linkedin.ts#L67)
+Defined in: [src/lib/scraping/linkedin.ts:67](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L67)
 
 ***
 
@@ -94,4 +94,4 @@ Defined in: [src/lib/scraping/linkedin.ts:67](https://github.com/rjmad1/CareerPr
 
 > **skills**: `string`[]
 
-Defined in: [src/lib/scraping/linkedin.ts:83](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/scraping/linkedin.ts#L83)
+Defined in: [src/lib/scraping/linkedin.ts:83](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L83)

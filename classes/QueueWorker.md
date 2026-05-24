@@ -6,7 +6,7 @@
 
 # ~~Class: QueueWorker~~
 
-Defined in: [src/lib/queues/workers.ts:22](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/queues/workers.ts#L22)
+Defined in: [src/lib/queues/workers.ts:22](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/queues/workers.ts#L22)
 
 ## Deprecated
 
@@ -45,7 +45,7 @@ Root cause eliminated: dual execution path removed; DB executor is canonical
 
 > **start**(): `Promise`\<`never`\>
 
-Defined in: [src/lib/queues/workers.ts:23](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/queues/workers.ts#L23)
+Defined in: [src/lib/queues/workers.ts:23](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/queues/workers.ts#L23)
 
 #### Returns
 
@@ -57,7 +57,7 @@ Defined in: [src/lib/queues/workers.ts:23](https://github.com/rjmad1/CareerPrope
 
 > **stop**(): `void`
 
-Defined in: [src/lib/queues/workers.ts:31](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/queues/workers.ts#L31)
+Defined in: [src/lib/queues/workers.ts:31](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/queues/workers.ts#L31)
 
 #### Returns
 

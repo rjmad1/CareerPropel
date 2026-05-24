@@ -8,4 +8,4 @@
 
 > `const` **CAPABILITY\_PRESETS**: `Record`\<`string`, [`CapabilityPreset`](../interfaces/CapabilityPreset.md)\>
 
-Defined in: [src/lib/llm/orchestrator.ts:60](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/llm/orchestrator.ts#L60)
+Defined in: [src/lib/llm/orchestrator.ts:60](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/llm/orchestrator.ts#L60)

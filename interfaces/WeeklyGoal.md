@@ -6,7 +6,7 @@
 
 # Interface: WeeklyGoal
 
-Defined in: [src/types/preparation.ts:366](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L366)
+Defined in: [src/types/preparation.ts:366](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L366)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/preparation.ts:366](https://github.com/rjmad1/CareerPrope
 
 > **completed**: `boolean`
 
-Defined in: [src/types/preparation.ts:371](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L371)
+Defined in: [src/types/preparation.ts:371](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L371)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/preparation.ts:371](https://github.com/rjmad1/CareerPrope
 
 > **focus**: `string`
 
-Defined in: [src/types/preparation.ts:368](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L368)
+Defined in: [src/types/preparation.ts:368](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L368)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/preparation.ts:368](https://github.com/rjmad1/CareerPrope
 
 > `optional` **notes?**: `string`
 
-Defined in: [src/types/preparation.ts:372](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L372)
+Defined in: [src/types/preparation.ts:372](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L372)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/preparation.ts:372](https://github.com/rjmad1/CareerPrope
 
 > **specificTasks**: `string`[]
 
-Defined in: [src/types/preparation.ts:369](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L369)
+Defined in: [src/types/preparation.ts:369](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L369)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/preparation.ts:369](https://github.com/rjmad1/CareerPrope
 
 > **targetCompletion**: `Date`
 
-Defined in: [src/types/preparation.ts:370](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L370)
+Defined in: [src/types/preparation.ts:370](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L370)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/types/preparation.ts:370](https://github.com/rjmad1/CareerPrope
 
 > **weekNumber**: `number`
 
-Defined in: [src/types/preparation.ts:367](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L367)
+Defined in: [src/types/preparation.ts:367](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L367)

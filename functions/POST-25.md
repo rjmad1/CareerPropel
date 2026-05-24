@@ -8,7 +8,7 @@
 
 > **POST**(`_request`, `context`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<[`MatchAnalysis`](../interfaces/MatchAnalysis.md)\>\>\>
 
-Defined in: [src/app/api/jobs/\[id\]/match/route.ts:50](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/app/api/jobs/[id]/match/route.ts#L50)
+Defined in: [src/app/api/jobs/\[id\]/match/route.ts:50](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/app/api/jobs/[id]/match/route.ts#L50)
 
 POST /api/jobs/:id/match
 Run AI match scoring against the candidate's profile.

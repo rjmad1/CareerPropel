@@ -6,7 +6,7 @@
 
 # Interface: SuccessResponse\<T\>
 
-Defined in: [src/lib/utils/apiResponse.ts:5](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/utils/apiResponse.ts#L5)
+Defined in: [src/lib/utils/apiResponse.ts:5](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/utils/apiResponse.ts#L5)
 
 ## Type Parameters
 
@@ -20,7 +20,7 @@ Defined in: [src/lib/utils/apiResponse.ts:5](https://github.com/rjmad1/CareerPro
 
 > **data**: `T`
 
-Defined in: [src/lib/utils/apiResponse.ts:6](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/utils/apiResponse.ts#L6)
+Defined in: [src/lib/utils/apiResponse.ts:6](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/utils/apiResponse.ts#L6)
 
 ***
 
@@ -28,4 +28,4 @@ Defined in: [src/lib/utils/apiResponse.ts:6](https://github.com/rjmad1/CareerPro
 
 > **success**: `true`
 
-Defined in: [src/lib/utils/apiResponse.ts:7](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/utils/apiResponse.ts#L7)
+Defined in: [src/lib/utils/apiResponse.ts:7](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/utils/apiResponse.ts#L7)

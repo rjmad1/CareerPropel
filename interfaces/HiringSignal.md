@@ -6,7 +6,7 @@
 
 # Interface: HiringSignal
 
-Defined in: [src/types/company.ts:304](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L304)
+Defined in: [src/types/company.ts:304](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/company.ts#L304)
 
 Hiring signals
 
@@ -16,7 +16,7 @@ Hiring signals
 
 > **company**: `string`
 
-Defined in: [src/types/company.ts:305](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L305)
+Defined in: [src/types/company.ts:305](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/company.ts#L305)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/company.ts:305](https://github.com/rjmad1/CareerPropel/bl
 
 > **date**: `Date`
 
-Defined in: [src/types/company.ts:308](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L308)
+Defined in: [src/types/company.ts:308](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/company.ts#L308)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/company.ts:308](https://github.com/rjmad1/CareerPropel/bl
 
 > **explanation**: `string`
 
-Defined in: [src/types/company.ts:310](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L310)
+Defined in: [src/types/company.ts:310](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/company.ts#L310)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/company.ts:310](https://github.com/rjmad1/CareerPropel/bl
 
 > **signal**: `string`
 
-Defined in: [src/types/company.ts:306](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L306)
+Defined in: [src/types/company.ts:306](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/company.ts#L306)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/company.ts:306](https://github.com/rjmad1/CareerPropel/bl
 
 > **source**: `string`
 
-Defined in: [src/types/company.ts:309](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L309)
+Defined in: [src/types/company.ts:309](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/company.ts#L309)
 
 ***
 
@@ -56,4 +56,4 @@ Defined in: [src/types/company.ts:309](https://github.com/rjmad1/CareerPropel/bl
 
 > **strength**: `"medium"` \| `"strong"` \| `"weak"`
 
-Defined in: [src/types/company.ts:307](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/company.ts#L307)
+Defined in: [src/types/company.ts:307](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/company.ts#L307)

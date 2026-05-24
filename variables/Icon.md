@@ -8,7 +8,7 @@
 
 > `const` **Icon**: `ForwardRefExoticComponent`\<[`IconProps`](../interfaces/IconProps.md) & `RefAttributes`\<`SVGSVGElement`\>\>
 
-Defined in: [src/components/ui/Icon.tsx:22](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/ui/Icon.tsx#L22)
+Defined in: [src/components/ui/Icon.tsx:22](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/ui/Icon.tsx#L22)
 
 Icon Component
 SVG icon wrapper with size variants.

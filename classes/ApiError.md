@@ -6,7 +6,7 @@
 
 # Class: ApiError
 
-Defined in: [src/lib/errors/ApiError.ts:9](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/errors/ApiError.ts#L9)
+Defined in: [src/lib/errors/ApiError.ts:9](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/errors/ApiError.ts#L9)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/errors/ApiError.ts:9](https://github.com/rjmad1/CareerPrope
 
 > **new ApiError**(`statusCode`, `code`, `message`, `internalError?`): `ApiError`
 
-Defined in: [src/lib/errors/ApiError.ts:10](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/errors/ApiError.ts#L10)
+Defined in: [src/lib/errors/ApiError.ts:10](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/errors/ApiError.ts#L10)
 
 #### Parameters
 
@@ -64,7 +64,7 @@ Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:26
 
 > **code**: `string`
 
-Defined in: [src/lib/errors/ApiError.ts:12](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/errors/ApiError.ts#L12)
+Defined in: [src/lib/errors/ApiError.ts:12](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/errors/ApiError.ts#L12)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [src/lib/errors/ApiError.ts:12](https://github.com/rjmad1/CareerProp
 
 > `optional` **internalError?**: `unknown`
 
-Defined in: [src/lib/errors/ApiError.ts:14](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/errors/ApiError.ts#L14)
+Defined in: [src/lib/errors/ApiError.ts:14](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/errors/ApiError.ts#L14)
 
 ***
 
@@ -116,7 +116,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1078
 
 > **statusCode**: `number`
 
-Defined in: [src/lib/errors/ApiError.ts:11](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/errors/ApiError.ts#L11)
+Defined in: [src/lib/errors/ApiError.ts:11](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/errors/ApiError.ts#L11)
 
 ***
 
@@ -146,7 +146,7 @@ not capture any frames.
 
 > **log**(): `void`
 
-Defined in: [src/lib/errors/ApiError.ts:39](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/errors/ApiError.ts#L39)
+Defined in: [src/lib/errors/ApiError.ts:39](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/errors/ApiError.ts#L39)
 
 #### Returns
 
@@ -158,7 +158,7 @@ Defined in: [src/lib/errors/ApiError.ts:39](https://github.com/rjmad1/CareerProp
 
 > **toJSON**(`includeDetails?`): [`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)
 
-Defined in: [src/lib/errors/ApiError.ts:20](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/errors/ApiError.ts#L20)
+Defined in: [src/lib/errors/ApiError.ts:20](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/errors/ApiError.ts#L20)
 
 #### Parameters
 

@@ -8,4 +8,4 @@
 
 > `const` **STAGE\_TRIGGER\_MAP**: `Record`\<[`JobStage`](../type-aliases/JobStage-1.md), [`AgentType`](../type-aliases/AgentType.md) \| `null`\>
 
-Defined in: [src/lib/agents/stageTriggerMap.ts:11](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/agents/stageTriggerMap.ts#L11)
+Defined in: [src/lib/agents/stageTriggerMap.ts:11](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/agents/stageTriggerMap.ts#L11)

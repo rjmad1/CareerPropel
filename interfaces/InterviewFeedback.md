@@ -6,7 +6,7 @@
 
 # Interface: InterviewFeedback
 
-Defined in: [src/types/index.ts:48](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/index.ts#L48)
+Defined in: [src/types/index.ts:48](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/index.ts#L48)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/index.ts:48](https://github.com/rjmad1/CareerPropel/blob/
 
 > **id**: `string`
 
-Defined in: [src/types/index.ts:49](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/index.ts#L49)
+Defined in: [src/types/index.ts:49](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/index.ts#L49)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/index.ts:49](https://github.com/rjmad1/CareerPropel/blob/
 
 > **jobId**: `string`
 
-Defined in: [src/types/index.ts:50](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/index.ts#L50)
+Defined in: [src/types/index.ts:50](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/index.ts#L50)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/index.ts:50](https://github.com/rjmad1/CareerPropel/blob/
 
 > **notes**: `string`
 
-Defined in: [src/types/index.ts:53](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/index.ts#L53)
+Defined in: [src/types/index.ts:53](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/index.ts#L53)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/index.ts:53](https://github.com/rjmad1/CareerPropel/blob/
 
 > **selfRating**: `number`
 
-Defined in: [src/types/index.ts:52](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/index.ts#L52)
+Defined in: [src/types/index.ts:52](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/index.ts#L52)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/index.ts:52](https://github.com/rjmad1/CareerPropel/blob/
 
 > **timestamp**: `Date`
 
-Defined in: [src/types/index.ts:54](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/index.ts#L54)
+Defined in: [src/types/index.ts:54](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/index.ts#L54)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/types/index.ts:54](https://github.com/rjmad1/CareerPropel/blob/
 
 > **type**: `"other"` \| `"system_design"` \| `"behavioral"` \| `"technical"`
 
-Defined in: [src/types/index.ts:51](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/index.ts#L51)
+Defined in: [src/types/index.ts:51](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/index.ts#L51)

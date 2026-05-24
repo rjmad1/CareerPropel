@@ -6,7 +6,7 @@
 
 # Interface: ConfidenceScore
 
-Defined in: [src/types/preparation.ts:378](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L378)
+Defined in: [src/types/preparation.ts:378](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L378)
 
 Confidence scoring
 
@@ -16,7 +16,7 @@ Confidence scoring
 
 > **confidence\_factors**: `object`
 
-Defined in: [src/types/preparation.ts:388](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L388)
+Defined in: [src/types/preparation.ts:388](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L388)
 
 #### concerns
 
@@ -32,7 +32,7 @@ Defined in: [src/types/preparation.ts:388](https://github.com/rjmad1/CareerPrope
 
 > **dimensions**: `object`
 
-Defined in: [src/types/preparation.ts:381](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L381)
+Defined in: [src/types/preparation.ts:381](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L381)
 
 #### behavioral
 
@@ -60,7 +60,7 @@ Defined in: [src/types/preparation.ts:381](https://github.com/rjmad1/CareerPrope
 
 > **jobId**: `string`
 
-Defined in: [src/types/preparation.ts:379](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L379)
+Defined in: [src/types/preparation.ts:379](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L379)
 
 ***
 
@@ -68,7 +68,7 @@ Defined in: [src/types/preparation.ts:379](https://github.com/rjmad1/CareerPrope
 
 > **lastCalculatedAt**: `Date`
 
-Defined in: [src/types/preparation.ts:392](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L392)
+Defined in: [src/types/preparation.ts:392](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L392)
 
 ***
 
@@ -76,7 +76,7 @@ Defined in: [src/types/preparation.ts:392](https://github.com/rjmad1/CareerPrope
 
 > **overallConfidence**: `number`
 
-Defined in: [src/types/preparation.ts:380](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L380)
+Defined in: [src/types/preparation.ts:380](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L380)
 
 ***
 
@@ -84,4 +84,4 @@ Defined in: [src/types/preparation.ts:380](https://github.com/rjmad1/CareerPrope
 
 > **trend**: `"stable"` \| `"improving"` \| `"declining"`
 
-Defined in: [src/types/preparation.ts:393](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L393)
+Defined in: [src/types/preparation.ts:393](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L393)

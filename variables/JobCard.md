@@ -8,7 +8,7 @@
 
 > `const` **JobCard**: `React.FC`\<[`JobCardProps`](../interfaces/JobCardProps.md)\>
 
-Defined in: [src/components/Kanban/JobCard.tsx:28](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/JobCard.tsx#L28)
+Defined in: [src/components/Kanban/JobCard.tsx:28](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/JobCard.tsx#L28)
 
 JobCard - Individual job application card in the Kanban board
 

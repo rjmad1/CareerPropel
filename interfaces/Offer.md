@@ -6,7 +6,7 @@
 
 # Interface: Offer
 
-Defined in: [src/domains/jobs/hooks/useOffers.ts:3](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useOffers.ts#L3)
+Defined in: [src/domains/jobs/hooks/useOffers.ts:3](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/domains/jobs/hooks/useOffers.ts#L3)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/domains/jobs/hooks/useOffers.ts:3](https://github.com/rjmad1/Ca
 
 > **baseSalary**: `number`
 
-Defined in: [src/domains/jobs/hooks/useOffers.ts:6](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useOffers.ts#L6)
+Defined in: [src/domains/jobs/hooks/useOffers.ts:6](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/domains/jobs/hooks/useOffers.ts#L6)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/domains/jobs/hooks/useOffers.ts:6](https://github.com/rjmad1/Ca
 
 > **bonusPercent**: `number`
 
-Defined in: [src/domains/jobs/hooks/useOffers.ts:7](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useOffers.ts#L7)
+Defined in: [src/domains/jobs/hooks/useOffers.ts:7](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/domains/jobs/hooks/useOffers.ts#L7)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/domains/jobs/hooks/useOffers.ts:7](https://github.com/rjmad1/Ca
 
 > **equity**: `string`
 
-Defined in: [src/domains/jobs/hooks/useOffers.ts:8](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useOffers.ts#L8)
+Defined in: [src/domains/jobs/hooks/useOffers.ts:8](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/domains/jobs/hooks/useOffers.ts#L8)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/domains/jobs/hooks/useOffers.ts:8](https://github.com/rjmad1/Ca
 
 > **id**: `string`
 
-Defined in: [src/domains/jobs/hooks/useOffers.ts:4](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useOffers.ts#L4)
+Defined in: [src/domains/jobs/hooks/useOffers.ts:4](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/domains/jobs/hooks/useOffers.ts#L4)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/domains/jobs/hooks/useOffers.ts:4](https://github.com/rjmad1/Ca
 
 > **jobId**: `string`
 
-Defined in: [src/domains/jobs/hooks/useOffers.ts:5](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useOffers.ts#L5)
+Defined in: [src/domains/jobs/hooks/useOffers.ts:5](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/domains/jobs/hooks/useOffers.ts#L5)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/domains/jobs/hooks/useOffers.ts:5](https://github.com/rjmad1/Ca
 
 > `optional` **notes?**: `string`
 
-Defined in: [src/domains/jobs/hooks/useOffers.ts:11](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useOffers.ts#L11)
+Defined in: [src/domains/jobs/hooks/useOffers.ts:11](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/domains/jobs/hooks/useOffers.ts#L11)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/domains/jobs/hooks/useOffers.ts:11](https://github.com/rjmad1/C
 
 > **startDate**: `string`
 
-Defined in: [src/domains/jobs/hooks/useOffers.ts:9](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useOffers.ts#L9)
+Defined in: [src/domains/jobs/hooks/useOffers.ts:9](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/domains/jobs/hooks/useOffers.ts#L9)
 
 ***
 
@@ -70,4 +70,4 @@ Defined in: [src/domains/jobs/hooks/useOffers.ts:9](https://github.com/rjmad1/Ca
 
 > **status**: `"pending"` \| `"rejected"` \| `"accepted"`
 
-Defined in: [src/domains/jobs/hooks/useOffers.ts:10](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/domains/jobs/hooks/useOffers.ts#L10)
+Defined in: [src/domains/jobs/hooks/useOffers.ts:10](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/domains/jobs/hooks/useOffers.ts#L10)

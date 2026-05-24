@@ -6,7 +6,7 @@
 
 # Interface: SwimlaneProps
 
-Defined in: [src/components/Kanban/Swimlane.tsx:16](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L16)
+Defined in: [src/components/Kanban/Swimlane.tsx:16](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/Swimlane.tsx#L16)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:16](https://github.com/rjmad1/Ca
 
 > **config**: [`SwimlaneConfig`](SwimlaneConfig.md)
 
-Defined in: [src/components/Kanban/Swimlane.tsx:18](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L18)
+Defined in: [src/components/Kanban/Swimlane.tsx:18](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/Swimlane.tsx#L18)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:18](https://github.com/rjmad1/Ca
 
 > `optional` **isLoading?**: `boolean`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:20](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L20)
+Defined in: [src/components/Kanban/Swimlane.tsx:20](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/Swimlane.tsx#L20)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:20](https://github.com/rjmad1/Ca
 
 > **jobs**: [`Job`](Job-1.md)[]
 
-Defined in: [src/components/Kanban/Swimlane.tsx:19](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L19)
+Defined in: [src/components/Kanban/Swimlane.tsx:19](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/Swimlane.tsx#L19)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:19](https://github.com/rjmad1/Ca
 
 > `optional` **onJobClick?**: (`job`) => `void`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:22](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L22)
+Defined in: [src/components/Kanban/Swimlane.tsx:22](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/Swimlane.tsx#L22)
 
 #### Parameters
 
@@ -56,7 +56,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:22](https://github.com/rjmad1/Ca
 
 > `optional` **onJobDrop?**: (`jobId`, `targetStage`) => `void`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:21](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L21)
+Defined in: [src/components/Kanban/Swimlane.tsx:21](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/Swimlane.tsx#L21)
 
 #### Parameters
 
@@ -78,7 +78,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:21](https://github.com/rjmad1/Ca
 
 > `optional` **onJobMoveStage?**: (`jobId`, `targetStage`) => `void`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:23](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L23)
+Defined in: [src/components/Kanban/Swimlane.tsx:23](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/Swimlane.tsx#L23)
 
 #### Parameters
 
@@ -100,7 +100,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:23](https://github.com/rjmad1/Ca
 
 > `optional` **renderJobCard?**: (`job`, `handlers`) => `ReactNode`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:27](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L27)
+Defined in: [src/components/Kanban/Swimlane.tsx:27](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/Swimlane.tsx#L27)
 
 Optional custom renderer — replaces the default JobCard when provided.
  Receives the job plus all handlers so consumers can wrap/enhance JobCard
@@ -148,4 +148,4 @@ Optional custom renderer — replaces the default JobCard when provided.
 
 > **stage**: [`JobStage`](../type-aliases/JobStage-1.md)
 
-Defined in: [src/components/Kanban/Swimlane.tsx:17](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/Swimlane.tsx#L17)
+Defined in: [src/components/Kanban/Swimlane.tsx:17](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/Swimlane.tsx#L17)

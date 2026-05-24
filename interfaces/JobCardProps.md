@@ -6,7 +6,7 @@
 
 # Interface: JobCardProps
 
-Defined in: [src/components/Kanban/JobCard.tsx:7](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/JobCard.tsx#L7)
+Defined in: [src/components/Kanban/JobCard.tsx:7](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/JobCard.tsx#L7)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/Kanban/JobCard.tsx:7](https://github.com/rjmad1/Care
 
 > `optional` **isDraggedOver?**: `boolean`
 
-Defined in: [src/components/Kanban/JobCard.tsx:11](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/JobCard.tsx#L11)
+Defined in: [src/components/Kanban/JobCard.tsx:11](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/JobCard.tsx#L11)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/components/Kanban/JobCard.tsx:11](https://github.com/rjmad1/Car
 
 > **job**: [`Job`](Job-1.md)
 
-Defined in: [src/components/Kanban/JobCard.tsx:8](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/JobCard.tsx#L8)
+Defined in: [src/components/Kanban/JobCard.tsx:8](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/JobCard.tsx#L8)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/components/Kanban/JobCard.tsx:8](https://github.com/rjmad1/Care
 
 > `optional` **onClick?**: () => `void`
 
-Defined in: [src/components/Kanban/JobCard.tsx:9](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/JobCard.tsx#L9)
+Defined in: [src/components/Kanban/JobCard.tsx:9](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/JobCard.tsx#L9)
 
 #### Returns
 
@@ -42,7 +42,7 @@ Defined in: [src/components/Kanban/JobCard.tsx:9](https://github.com/rjmad1/Care
 
 > `optional` **onDragStart?**: (`e`) => `void`
 
-Defined in: [src/components/Kanban/JobCard.tsx:10](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/JobCard.tsx#L10)
+Defined in: [src/components/Kanban/JobCard.tsx:10](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/JobCard.tsx#L10)
 
 #### Parameters
 
@@ -60,7 +60,7 @@ Defined in: [src/components/Kanban/JobCard.tsx:10](https://github.com/rjmad1/Car
 
 > `optional` **onMoveStage?**: (`jobId`, `targetStage`) => `void`
 
-Defined in: [src/components/Kanban/JobCard.tsx:12](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/components/Kanban/JobCard.tsx#L12)
+Defined in: [src/components/Kanban/JobCard.tsx:12](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/JobCard.tsx#L12)
 
 #### Parameters
 

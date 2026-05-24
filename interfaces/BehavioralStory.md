@@ -6,7 +6,7 @@
 
 # Interface: BehavioralStory
 
-Defined in: [src/types/interview.ts:107](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L107)
+Defined in: [src/types/interview.ts:107](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L107)
 
 STAR story (Situation, Task, Action, Result)
 
@@ -16,7 +16,7 @@ STAR story (Situation, Task, Action, Result)
 
 > **action**: `string`
 
-Defined in: [src/types/interview.ts:115](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L115)
+Defined in: [src/types/interview.ts:115](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L115)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/interview.ts:115](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **competencies?**: `string`[]
 
-Defined in: [src/types/interview.ts:110](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L110)
+Defined in: [src/types/interview.ts:110](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L110)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/interview.ts:110](https://github.com/rjmad1/CareerPropel/
 
 > **competency**: `string`
 
-Defined in: [src/types/interview.ts:109](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L109)
+Defined in: [src/types/interview.ts:109](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L109)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/interview.ts:109](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **confidence?**: `number`
 
-Defined in: [src/types/interview.ts:121](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L121)
+Defined in: [src/types/interview.ts:121](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L121)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/interview.ts:121](https://github.com/rjmad1/CareerPropel/
 
 > **id**: `string`
 
-Defined in: [src/types/interview.ts:108](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L108)
+Defined in: [src/types/interview.ts:108](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L108)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/types/interview.ts:108](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **interviewQuestions?**: `string`[]
 
-Defined in: [src/types/interview.ts:122](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L122)
+Defined in: [src/types/interview.ts:122](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L122)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [src/types/interview.ts:122](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **metrics?**: `string` \| `string`[]
 
-Defined in: [src/types/interview.ts:117](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L117)
+Defined in: [src/types/interview.ts:117](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L117)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [src/types/interview.ts:117](https://github.com/rjmad1/CareerPropel/
 
 > **relevanceScore**: `number`
 
-Defined in: [src/types/interview.ts:119](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L119)
+Defined in: [src/types/interview.ts:119](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L119)
 
 ***
 
@@ -80,7 +80,7 @@ Defined in: [src/types/interview.ts:119](https://github.com/rjmad1/CareerPropel/
 
 > **result**: `string`
 
-Defined in: [src/types/interview.ts:116](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L116)
+Defined in: [src/types/interview.ts:116](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L116)
 
 ***
 
@@ -88,7 +88,7 @@ Defined in: [src/types/interview.ts:116](https://github.com/rjmad1/CareerPropel/
 
 > **situation**: `string`
 
-Defined in: [src/types/interview.ts:113](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L113)
+Defined in: [src/types/interview.ts:113](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L113)
 
 ***
 
@@ -96,7 +96,7 @@ Defined in: [src/types/interview.ts:113](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **sourceProject?**: `string`
 
-Defined in: [src/types/interview.ts:118](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L118)
+Defined in: [src/types/interview.ts:118](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L118)
 
 ***
 
@@ -104,7 +104,7 @@ Defined in: [src/types/interview.ts:118](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **summary?**: `string`
 
-Defined in: [src/types/interview.ts:112](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L112)
+Defined in: [src/types/interview.ts:112](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L112)
 
 ***
 
@@ -112,7 +112,7 @@ Defined in: [src/types/interview.ts:112](https://github.com/rjmad1/CareerPropel/
 
 > **task**: `string`
 
-Defined in: [src/types/interview.ts:114](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L114)
+Defined in: [src/types/interview.ts:114](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L114)
 
 ***
 
@@ -120,7 +120,7 @@ Defined in: [src/types/interview.ts:114](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **timeToTell?**: `number`
 
-Defined in: [src/types/interview.ts:120](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L120)
+Defined in: [src/types/interview.ts:120](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L120)
 
 ***
 
@@ -128,7 +128,7 @@ Defined in: [src/types/interview.ts:120](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **title?**: `string`
 
-Defined in: [src/types/interview.ts:111](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L111)
+Defined in: [src/types/interview.ts:111](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L111)
 
 ***
 
@@ -136,4 +136,4 @@ Defined in: [src/types/interview.ts:111](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **variations?**: `BehavioralStory`[]
 
-Defined in: [src/types/interview.ts:123](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/interview.ts#L123)
+Defined in: [src/types/interview.ts:123](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L123)

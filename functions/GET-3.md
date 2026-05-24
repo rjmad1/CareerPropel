@@ -8,7 +8,7 @@
 
 > **GET**(`request`, `context`): `Promise`\<`NextResponse`\<\{ `limit`: `number`; `logs`: `object`[]; `offset`: `number`; `total`: `number`; \}\> \| `NextResponse`\<\{ `error`: `string`; \}\>\>
 
-Defined in: [src/app/api/agent/execution/\[executionId\]/logs/route.ts:11](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/app/api/agent/execution/[executionId]/logs/route.ts#L11)
+Defined in: [src/app/api/agent/execution/\[executionId\]/logs/route.ts:11](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/app/api/agent/execution/[executionId]/logs/route.ts#L11)
 
 GET /api/agent/execution/[executionId]/logs
 Fetch execution logs

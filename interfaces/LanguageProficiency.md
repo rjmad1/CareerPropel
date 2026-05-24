@@ -6,7 +6,7 @@
 
 # Interface: LanguageProficiency
 
-Defined in: [src/types/preparation.ts:146](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L146)
+Defined in: [src/types/preparation.ts:146](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L146)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/preparation.ts:146](https://github.com/rjmad1/CareerPrope
 
 > **language**: `string`
 
-Defined in: [src/types/preparation.ts:147](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L147)
+Defined in: [src/types/preparation.ts:147](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L147)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/preparation.ts:147](https://github.com/rjmad1/CareerPrope
 
 > `optional` **lastUsed?**: `Date`
 
-Defined in: [src/types/preparation.ts:150](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L150)
+Defined in: [src/types/preparation.ts:150](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L150)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/preparation.ts:150](https://github.com/rjmad1/CareerPrope
 
 > **level**: `"beginner"` \| `"intermediate"` \| `"advanced"` \| `"expert"`
 
-Defined in: [src/types/preparation.ts:148](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L148)
+Defined in: [src/types/preparation.ts:148](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L148)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/types/preparation.ts:148](https://github.com/rjmad1/CareerPrope
 
 > **yearsOfExperience**: `number`
 
-Defined in: [src/types/preparation.ts:149](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/preparation.ts#L149)
+Defined in: [src/types/preparation.ts:149](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L149)

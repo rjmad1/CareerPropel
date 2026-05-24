@@ -8,7 +8,7 @@
 
 > **publishAgentStatus**(`userId`, `_executionId`, `agentType`, `executionStatus`, `queueDepth?`, `currentTask?`, `tokensUsed?`, `confidence?`): `Promise`\<`void`\>
 
-Defined in: [src/lib/agents/redis-integration.ts:127](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/agents/redis-integration.ts#L127)
+Defined in: [src/lib/agents/redis-integration.ts:127](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/agents/redis-integration.ts#L127)
 
 Publish agent status update to Redis
 

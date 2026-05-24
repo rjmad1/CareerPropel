@@ -6,7 +6,7 @@
 
 # Interface: CreateJobInput
 
-Defined in: [src/types/job.ts:92](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/job.ts#L92)
+Defined in: [src/types/job.ts:92](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/job.ts#L92)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/job.ts:92](https://github.com/rjmad1/CareerPropel/blob/9c
 
 > **company**: `string`
 
-Defined in: [src/types/job.ts:94](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/job.ts#L94)
+Defined in: [src/types/job.ts:94](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/job.ts#L94)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/job.ts:94](https://github.com/rjmad1/CareerPropel/blob/9c
 
 > `optional` **description?**: `string`
 
-Defined in: [src/types/job.ts:96](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/job.ts#L96)
+Defined in: [src/types/job.ts:96](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/job.ts#L96)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/job.ts:96](https://github.com/rjmad1/CareerPropel/blob/9c
 
 > **location**: `string`
 
-Defined in: [src/types/job.ts:95](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/job.ts#L95)
+Defined in: [src/types/job.ts:95](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/job.ts#L95)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/job.ts:95](https://github.com/rjmad1/CareerPropel/blob/9c
 
 > `optional` **salary?**: `object`
 
-Defined in: [src/types/job.ts:98](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/job.ts#L98)
+Defined in: [src/types/job.ts:98](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/job.ts#L98)
 
 #### currency?
 
@@ -58,7 +58,7 @@ Defined in: [src/types/job.ts:98](https://github.com/rjmad1/CareerPropel/blob/9c
 
 > **title**: `string`
 
-Defined in: [src/types/job.ts:93](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/job.ts#L93)
+Defined in: [src/types/job.ts:93](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/job.ts#L93)
 
 ***
 
@@ -66,4 +66,4 @@ Defined in: [src/types/job.ts:93](https://github.com/rjmad1/CareerPropel/blob/9c
 
 > `optional` **url?**: `string`
 
-Defined in: [src/types/job.ts:97](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/types/job.ts#L97)
+Defined in: [src/types/job.ts:97](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/job.ts#L97)

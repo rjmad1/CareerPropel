@@ -8,7 +8,7 @@
 
 > **registerUserConnection**(`userId`, `ws`): `void`
 
-Defined in: [src/lib/websocket/broadcast.ts:37](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/broadcast.ts#L37)
+Defined in: [src/lib/websocket/broadcast.ts:37](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/broadcast.ts#L37)
 
 Register a WebSocket connection for a user
 

@@ -6,7 +6,7 @@
 
 # Interface: JobUpdateMessage
 
-Defined in: [src/lib/websocket/types.ts:81](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/types.ts#L81)
+Defined in: [src/lib/websocket/types.ts:81](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L81)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/websocket/types.ts:81](https://github.com/rjmad1/CareerProp
 
 > **data**: [`RealtimeJobUpdate`](RealtimeJobUpdate.md)
 
-Defined in: [src/lib/websocket/types.ts:67](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/types.ts#L67)
+Defined in: [src/lib/websocket/types.ts:67](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L67)
 
 #### Inherited from
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/websocket/types.ts:67](https://github.com/rjmad1/CareerProp
 
 > **messageId**: `string`
 
-Defined in: [src/lib/websocket/types.ts:69](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/types.ts#L69)
+Defined in: [src/lib/websocket/types.ts:69](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L69)
 
 #### Inherited from
 
@@ -42,7 +42,7 @@ Defined in: [src/lib/websocket/types.ts:69](https://github.com/rjmad1/CareerProp
 
 > **timestamp**: `Date`
 
-Defined in: [src/lib/websocket/types.ts:68](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/types.ts#L68)
+Defined in: [src/lib/websocket/types.ts:68](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L68)
 
 #### Inherited from
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/websocket/types.ts:68](https://github.com/rjmad1/CareerProp
 
 > **type**: `"job:update"`
 
-Defined in: [src/lib/websocket/types.ts:82](https://github.com/rjmad1/CareerPropel/blob/9ca97abe8c0b77564443149665a511377590c3e8/src/lib/websocket/types.ts#L82)
+Defined in: [src/lib/websocket/types.ts:82](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L82)
 
 #### Overrides
 
