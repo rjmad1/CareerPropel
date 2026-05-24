@@ -6,7 +6,7 @@
 
 # Interface: SubscriptionMessage
 
-Defined in: [src/lib/websocket/types.ts:120](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L120)
+Defined in: [src/lib/websocket/types.ts:120](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L120)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/websocket/types.ts:120](https://github.com/rjmad1/CareerPro
 
 > **channels**: `string`[]
 
-Defined in: [src/lib/websocket/types.ts:122](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L122)
+Defined in: [src/lib/websocket/types.ts:122](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L122)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [src/lib/websocket/types.ts:122](https://github.com/rjmad1/CareerPro
 
 > **type**: `"subscribe"` \| `"unsubscribe"`
 
-Defined in: [src/lib/websocket/types.ts:121](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L121)
+Defined in: [src/lib/websocket/types.ts:121](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L121)

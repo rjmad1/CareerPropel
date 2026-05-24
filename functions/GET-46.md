@@ -8,7 +8,7 @@
 
 > **GET**(`_request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `candidateId`: `string`; `completenessScore`: \{ `calculatedAt`: `Date`; `candidateId`: `string`; `id`: `string`; `overall`: `number`; `recommendations`: `JsonValue`; `sections`: `JsonValue`; `updatedAt`: `Date`; \} \| `null`; `email`: `string`; `extractionQuality`: \{ `averageConfidence`: `number`; `documentCount`: `number`; `lastExtraction`: `Date`; `totalEntities`: `number`; \}; `name`: `string`; `recentAchievements`: `object`[]; `topSkills`: `object`[]; \}\>\>
 
-Defined in: [src/app/api/profile/route.ts:12](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/app/api/profile/route.ts#L12)
+Defined in: [src/app/api/profile/route.ts:12](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/profile/route.ts#L12)
 
 GET /api/profile
 Fetch the authenticated user's profile summary.

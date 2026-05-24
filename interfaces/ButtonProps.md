@@ -6,7 +6,7 @@
 
 # Interface: ButtonProps
 
-Defined in: [src/components/ui/Button.tsx:4](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/ui/Button.tsx#L4)
+Defined in: [src/components/ui/Button.tsx:4](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Button.tsx#L4)
 
 ## Extends
 
@@ -967,7 +967,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2953
 
 > **children**: `ReactNode`
 
-Defined in: [src/components/ui/Button.tsx:8](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/ui/Button.tsx#L8)
+Defined in: [src/components/ui/Button.tsx:8](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Button.tsx#L8)
 
 #### Overrides
 
@@ -1387,7 +1387,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2923
 
 > `optional` **loading?**: `boolean`
 
-Defined in: [src/components/ui/Button.tsx:7](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/ui/Button.tsx#L7)
+Defined in: [src/components/ui/Button.tsx:7](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Button.tsx#L7)
 
 ***
 
@@ -3579,7 +3579,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2961
 
 > `optional` **size?**: `"xs"` \| `"sm"` \| `"md"` \| `"lg"`
 
-Defined in: [src/components/ui/Button.tsx:6](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/ui/Button.tsx#L6)
+Defined in: [src/components/ui/Button.tsx:6](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Button.tsx#L6)
 
 ***
 
@@ -3751,7 +3751,7 @@ Defined in: node\_modules/@types/react/index.d.ts:3175
 
 > `optional` **variant?**: `"link"` \| `"primary"` \| `"secondary"` \| `"outline"` \| `"danger"` \| `"ghost"`
 
-Defined in: [src/components/ui/Button.tsx:5](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/ui/Button.tsx#L5)
+Defined in: [src/components/ui/Button.tsx:5](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Button.tsx#L5)
 
 ***
 

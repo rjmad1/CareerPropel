@@ -540,6 +540,7 @@
 - [ModalHeader](variables/ModalHeader.md)
 - [ModalTitle](variables/ModalTitle.md)
 - [MODEL\_COSTS](variables/MODEL_COSTS.md)
+- [MS\_PER\_DAY](variables/MS_PER_DAY.md)
 - [NotificationCenter](variables/NotificationCenter.md)
 - [PERMISSION\_MATRIX](variables/PERMISSION_MATRIX.md)
 - [PIPELINE\_STAGES](variables/PIPELINE_STAGES.md)

@@ -6,7 +6,7 @@
 
 # Interface: ScrapingProvider
 
-Defined in: [src/lib/scraping/provider.ts:42](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/provider.ts#L42)
+Defined in: [src/lib/scraping/provider.ts:42](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/scraping/provider.ts#L42)
 
 ## Methods
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/scraping/provider.ts:42](https://github.com/rjmad1/CareerPr
 
 > `optional` **importProfile**(`profileUrl`): `Promise`\<[`ImportedProfile`](ImportedProfile.md)\>
 
-Defined in: [src/lib/scraping/provider.ts:44](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/provider.ts#L44)
+Defined in: [src/lib/scraping/provider.ts:44](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/scraping/provider.ts#L44)
 
 #### Parameters
 
@@ -32,7 +32,7 @@ Defined in: [src/lib/scraping/provider.ts:44](https://github.com/rjmad1/CareerPr
 
 > **searchJobs**(`query`, `location?`, `limit?`): `Promise`\<[`ImportedJob`](ImportedJob.md)[]\>
 
-Defined in: [src/lib/scraping/provider.ts:43](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/provider.ts#L43)
+Defined in: [src/lib/scraping/provider.ts:43](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/scraping/provider.ts#L43)
 
 #### Parameters
 

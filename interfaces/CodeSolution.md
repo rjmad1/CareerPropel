@@ -6,7 +6,7 @@
 
 # Interface: CodeSolution
 
-Defined in: [src/types/preparation.ts:189](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L189)
+Defined in: [src/types/preparation.ts:189](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L189)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/preparation.ts:189](https://github.com/rjmad1/CareerPrope
 
 > **code**: `string`
 
-Defined in: [src/types/preparation.ts:193](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L193)
+Defined in: [src/types/preparation.ts:193](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L193)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/preparation.ts:193](https://github.com/rjmad1/CareerPrope
 
 > `optional` **executionTime?**: `number`
 
-Defined in: [src/types/preparation.ts:196](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L196)
+Defined in: [src/types/preparation.ts:196](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L196)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/preparation.ts:196](https://github.com/rjmad1/CareerPrope
 
 > `optional` **feedback?**: `string`
 
-Defined in: [src/types/preparation.ts:198](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L198)
+Defined in: [src/types/preparation.ts:198](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L198)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/preparation.ts:198](https://github.com/rjmad1/CareerPrope
 
 > **id**: `string`
 
-Defined in: [src/types/preparation.ts:190](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L190)
+Defined in: [src/types/preparation.ts:190](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L190)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/preparation.ts:190](https://github.com/rjmad1/CareerPrope
 
 > **language**: `string`
 
-Defined in: [src/types/preparation.ts:192](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L192)
+Defined in: [src/types/preparation.ts:192](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L192)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/types/preparation.ts:192](https://github.com/rjmad1/CareerPrope
 
 > `optional` **memoryUsed?**: `number`
 
-Defined in: [src/types/preparation.ts:197](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L197)
+Defined in: [src/types/preparation.ts:197](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L197)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/types/preparation.ts:197](https://github.com/rjmad1/CareerPrope
 
 > `optional` **score?**: `number`
 
-Defined in: [src/types/preparation.ts:199](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L199)
+Defined in: [src/types/preparation.ts:199](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L199)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/types/preparation.ts:199](https://github.com/rjmad1/CareerPrope
 
 > **submittedAt**: `Date`
 
-Defined in: [src/types/preparation.ts:191](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L191)
+Defined in: [src/types/preparation.ts:191](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L191)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/types/preparation.ts:191](https://github.com/rjmad1/CareerPrope
 
 > **testsPassed**: `number`
 
-Defined in: [src/types/preparation.ts:194](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L194)
+Defined in: [src/types/preparation.ts:194](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L194)
 
 ***
 
@@ -86,4 +86,4 @@ Defined in: [src/types/preparation.ts:194](https://github.com/rjmad1/CareerPrope
 
 > **totalTests**: `number`
 
-Defined in: [src/types/preparation.ts:195](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L195)
+Defined in: [src/types/preparation.ts:195](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L195)

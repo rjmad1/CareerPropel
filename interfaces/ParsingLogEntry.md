@@ -6,7 +6,7 @@
 
 # Interface: ParsingLogEntry
 
-Defined in: [src/types/knowledge-graph.ts:55](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/knowledge-graph.ts#L55)
+Defined in: [src/types/knowledge-graph.ts:55](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L55)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/knowledge-graph.ts:55](https://github.com/rjmad1/CareerPr
 
 > **level**: `"info"` \| `"warn"` \| `"error"` \| `"success"`
 
-Defined in: [src/types/knowledge-graph.ts:57](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/knowledge-graph.ts#L57)
+Defined in: [src/types/knowledge-graph.ts:57](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L57)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/knowledge-graph.ts:57](https://github.com/rjmad1/CareerPr
 
 > **message**: `string`
 
-Defined in: [src/types/knowledge-graph.ts:58](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/knowledge-graph.ts#L58)
+Defined in: [src/types/knowledge-graph.ts:58](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L58)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/types/knowledge-graph.ts:58](https://github.com/rjmad1/CareerPr
 
 > **timestamp**: `string`
 
-Defined in: [src/types/knowledge-graph.ts:56](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/knowledge-graph.ts#L56)
+Defined in: [src/types/knowledge-graph.ts:56](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L56)

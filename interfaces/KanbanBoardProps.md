@@ -6,7 +6,7 @@
 
 # Interface: KanbanBoardProps
 
-Defined in: [src/components/Kanban/KanbanBoard.tsx:46](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/KanbanBoard.tsx#L46)
+Defined in: [src/components/Kanban/KanbanBoard.tsx:46](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/Kanban/KanbanBoard.tsx#L46)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/Kanban/KanbanBoard.tsx:46](https://github.com/rjmad1
 
 > `optional` **initialJobs?**: [`Job`](Job-1.md)[]
 
-Defined in: [src/components/Kanban/KanbanBoard.tsx:47](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/KanbanBoard.tsx#L47)
+Defined in: [src/components/Kanban/KanbanBoard.tsx:47](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/Kanban/KanbanBoard.tsx#L47)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/components/Kanban/KanbanBoard.tsx:47](https://github.com/rjmad1
 
 > `optional` **onJobClick?**: (`job`) => `void`
 
-Defined in: [src/components/Kanban/KanbanBoard.tsx:52](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/KanbanBoard.tsx#L52)
+Defined in: [src/components/Kanban/KanbanBoard.tsx:52](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/Kanban/KanbanBoard.tsx#L52)
 
 #### Parameters
 
@@ -40,7 +40,7 @@ Defined in: [src/components/Kanban/KanbanBoard.tsx:52](https://github.com/rjmad1
 
 > `optional` **onJobMove?**: (`jobId`, `newStage`) => `Promise`\<[`MoveResult`](MoveResult.md)\>
 
-Defined in: [src/components/Kanban/KanbanBoard.tsx:51](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/KanbanBoard.tsx#L51)
+Defined in: [src/components/Kanban/KanbanBoard.tsx:51](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/Kanban/KanbanBoard.tsx#L51)
 
 Called for stage changes; returns MoveResult with optional executionId
 
@@ -64,7 +64,7 @@ Called for stage changes; returns MoveResult with optional executionId
 
 > `optional` **onJobUpdate?**: (`jobId`, `updates`) => `Promise`\<`void`\>
 
-Defined in: [src/components/Kanban/KanbanBoard.tsx:49](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/Kanban/KanbanBoard.tsx#L49)
+Defined in: [src/components/Kanban/KanbanBoard.tsx:49](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/Kanban/KanbanBoard.tsx#L49)
 
 Called for non-stage updates (notes, priority, etc.)
 

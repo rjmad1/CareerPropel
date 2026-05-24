@@ -6,7 +6,7 @@
 
 # Interface: PlannerInput
 
-Defined in: [src/lib/agents/plannerPrompt.ts:14](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/agents/plannerPrompt.ts#L14)
+Defined in: [src/lib/agents/plannerPrompt.ts:14](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/agents/plannerPrompt.ts#L14)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/agents/plannerPrompt.ts:14](https://github.com/rjmad1/Caree
 
 > **company**: `string`
 
-Defined in: [src/lib/agents/plannerPrompt.ts:16](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/agents/plannerPrompt.ts#L16)
+Defined in: [src/lib/agents/plannerPrompt.ts:16](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/agents/plannerPrompt.ts#L16)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/agents/plannerPrompt.ts:16](https://github.com/rjmad1/Caree
 
 > **daysSinceLastActivity**: `number`
 
-Defined in: [src/lib/agents/plannerPrompt.ts:22](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/agents/plannerPrompt.ts#L22)
+Defined in: [src/lib/agents/plannerPrompt.ts:22](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/agents/plannerPrompt.ts#L22)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/agents/plannerPrompt.ts:22](https://github.com/rjmad1/Caree
 
 > **hasInterviewPrep**: `boolean`
 
-Defined in: [src/lib/agents/plannerPrompt.ts:21](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/agents/plannerPrompt.ts#L21)
+Defined in: [src/lib/agents/plannerPrompt.ts:21](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/agents/plannerPrompt.ts#L21)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/agents/plannerPrompt.ts:21](https://github.com/rjmad1/Caree
 
 > **hasResearch**: `boolean`
 
-Defined in: [src/lib/agents/plannerPrompt.ts:20](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/agents/plannerPrompt.ts#L20)
+Defined in: [src/lib/agents/plannerPrompt.ts:20](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/agents/plannerPrompt.ts#L20)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/agents/plannerPrompt.ts:20](https://github.com/rjmad1/Caree
 
 > **hasResume**: `boolean`
 
-Defined in: [src/lib/agents/plannerPrompt.ts:19](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/agents/plannerPrompt.ts#L19)
+Defined in: [src/lib/agents/plannerPrompt.ts:19](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/agents/plannerPrompt.ts#L19)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/agents/plannerPrompt.ts:19](https://github.com/rjmad1/Caree
 
 > **jobTitle**: `string`
 
-Defined in: [src/lib/agents/plannerPrompt.ts:15](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/agents/plannerPrompt.ts#L15)
+Defined in: [src/lib/agents/plannerPrompt.ts:15](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/agents/plannerPrompt.ts#L15)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/agents/plannerPrompt.ts:15](https://github.com/rjmad1/Caree
 
 > **matchScore**: `number`
 
-Defined in: [src/lib/agents/plannerPrompt.ts:18](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/agents/plannerPrompt.ts#L18)
+Defined in: [src/lib/agents/plannerPrompt.ts:18](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/agents/plannerPrompt.ts#L18)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/agents/plannerPrompt.ts:18](https://github.com/rjmad1/Caree
 
 > **stage**: [`JobStage`](../type-aliases/JobStage-1.md)
 
-Defined in: [src/lib/agents/plannerPrompt.ts:17](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/agents/plannerPrompt.ts#L17)
+Defined in: [src/lib/agents/plannerPrompt.ts:17](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/agents/plannerPrompt.ts#L17)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [src/lib/agents/plannerPrompt.ts:17](https://github.com/rjmad1/Caree
 
 > **upcomingInterviewDays**: `number` \| `null`
 
-Defined in: [src/lib/agents/plannerPrompt.ts:23](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/agents/plannerPrompt.ts#L23)
+Defined in: [src/lib/agents/plannerPrompt.ts:23](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/agents/plannerPrompt.ts#L23)

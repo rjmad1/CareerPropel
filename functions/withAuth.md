@@ -8,7 +8,7 @@
 
 > **withAuth**(`handler`, `policy`): (`request`, `context`) => `Promise`\<`NextResponse`\<`unknown`\>\>
 
-Defined in: [src/lib/middleware/withAuth.ts:23](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/middleware/withAuth.ts#L23)
+Defined in: [src/lib/middleware/withAuth.ts:23](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/middleware/withAuth.ts#L23)
 
 Wraps a Next.js App Router route handler with centralized route governance enforcement.
 Enforces authentication, RBAC role restrictions, rate limiting, and audit logging.

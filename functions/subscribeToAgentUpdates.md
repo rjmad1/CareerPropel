@@ -8,7 +8,7 @@
 
 > **subscribeToAgentUpdates**(`clientId`, `userId`, `socket`): `Promise`\<`void`\>
 
-Defined in: [src/lib/realtime/wsServer.ts:46](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/realtime/wsServer.ts#L46)
+Defined in: [src/lib/realtime/wsServer.ts:46](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/realtime/wsServer.ts#L46)
 
 Subscribe a client to agent updates for a specific user.
 

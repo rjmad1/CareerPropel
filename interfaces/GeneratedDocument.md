@@ -6,7 +6,7 @@
 
 # Interface: GeneratedDocument
 
-Defined in: [src/lib/document/generator.ts:21](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/document/generator.ts#L21)
+Defined in: [src/lib/document/generator.ts:21](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/document/generator.ts#L21)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/document/generator.ts:21](https://github.com/rjmad1/CareerP
 
 > **content**: `string`
 
-Defined in: [src/lib/document/generator.ts:23](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/document/generator.ts#L23)
+Defined in: [src/lib/document/generator.ts:23](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/document/generator.ts#L23)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/document/generator.ts:23](https://github.com/rjmad1/CareerP
 
 > **generatedAt**: `string`
 
-Defined in: [src/lib/document/generator.ts:25](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/document/generator.ts#L25)
+Defined in: [src/lib/document/generator.ts:25](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/document/generator.ts#L25)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/document/generator.ts:25](https://github.com/rjmad1/CareerP
 
 > **title**: `string`
 
-Defined in: [src/lib/document/generator.ts:22](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/document/generator.ts#L22)
+Defined in: [src/lib/document/generator.ts:22](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/document/generator.ts#L22)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/lib/document/generator.ts:22](https://github.com/rjmad1/CareerP
 
 > **wordCount**: `number`
 
-Defined in: [src/lib/document/generator.ts:24](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/document/generator.ts#L24)
+Defined in: [src/lib/document/generator.ts:24](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/document/generator.ts#L24)

@@ -6,7 +6,7 @@
 
 # Interface: OnboardingParams
 
-Defined in: [src/\_\_tests\_\_/unit/onboarding-presets.test.ts:9](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/__tests__/unit/onboarding-presets.test.ts#L9)
+Defined in: [src/\_\_tests\_\_/unit/onboarding-presets.test.ts:9](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/__tests__/unit/onboarding-presets.test.ts#L9)
 
 Unit Test Suite for AI Onboarding and Preset Mapping
 Verifies:
@@ -20,7 +20,7 @@ Verifies:
 
 > **computeTier**: `"free"` \| `"managed"` \| `"byo"`
 
-Defined in: [src/\_\_tests\_\_/unit/onboarding-presets.test.ts:11](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/__tests__/unit/onboarding-presets.test.ts#L11)
+Defined in: [src/\_\_tests\_\_/unit/onboarding-presets.test.ts:11](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/__tests__/unit/onboarding-presets.test.ts#L11)
 
 ***
 
@@ -28,7 +28,7 @@ Defined in: [src/\_\_tests\_\_/unit/onboarding-presets.test.ts:11](https://githu
 
 > **presetKey**: `string`
 
-Defined in: [src/\_\_tests\_\_/unit/onboarding-presets.test.ts:12](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/__tests__/unit/onboarding-presets.test.ts#L12)
+Defined in: [src/\_\_tests\_\_/unit/onboarding-presets.test.ts:12](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/__tests__/unit/onboarding-presets.test.ts#L12)
 
 ***
 
@@ -36,4 +36,4 @@ Defined in: [src/\_\_tests\_\_/unit/onboarding-presets.test.ts:12](https://githu
 
 > **privacyMode**: `"local"` \| `"zero_retention"` \| `"enterprise"`
 
-Defined in: [src/\_\_tests\_\_/unit/onboarding-presets.test.ts:10](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/__tests__/unit/onboarding-presets.test.ts#L10)
+Defined in: [src/\_\_tests\_\_/unit/onboarding-presets.test.ts:10](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/__tests__/unit/onboarding-presets.test.ts#L10)

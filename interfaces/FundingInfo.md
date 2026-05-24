@@ -6,7 +6,7 @@
 
 # Interface: FundingInfo
 
-Defined in: [src/types/company.ts:101](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/company.ts#L101)
+Defined in: [src/types/company.ts:101](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L101)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/company.ts:101](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **currency?**: `string`
 
-Defined in: [src/types/company.ts:110](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/company.ts#L110)
+Defined in: [src/types/company.ts:110](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L110)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/company.ts:110](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **lastRound?**: `object`
 
-Defined in: [src/types/company.ts:103](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/company.ts#L103)
+Defined in: [src/types/company.ts:103](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L103)
 
 #### amount
 
@@ -46,7 +46,7 @@ Defined in: [src/types/company.ts:103](https://github.com/rjmad1/CareerPropel/bl
 
 > **stage**: `"public"` \| `"seed"` \| `"bootstrap"` \| `"series_a"` \| `"series_b"` \| `"series_c"` \| `"later"` \| `"acquired"`
 
-Defined in: [src/types/company.ts:102](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/company.ts#L102)
+Defined in: [src/types/company.ts:102](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L102)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/types/company.ts:102](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **totalFunded?**: `number`
 
-Defined in: [src/types/company.ts:109](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/company.ts#L109)
+Defined in: [src/types/company.ts:109](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L109)

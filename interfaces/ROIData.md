@@ -6,7 +6,7 @@
 
 # Interface: ROIData
 
-Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:6](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/analytics/AnalyticsTimingPanel.tsx#L6)
+Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:6](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/analytics/AnalyticsTimingPanel.tsx#L6)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:6](https://github
 
 > **applicationVelocity**: `number` \| `null`
 
-Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:10](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/analytics/AnalyticsTimingPanel.tsx#L10)
+Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:10](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/analytics/AnalyticsTimingPanel.tsx#L10)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:10](https://githu
 
 > **avgDaysToApply**: `number` \| `null`
 
-Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:12](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/analytics/AnalyticsTimingPanel.tsx#L12)
+Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:12](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/analytics/AnalyticsTimingPanel.tsx#L12)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:12](https://githu
 
 > **avgDaysToFirstInterview**: `number` \| `null`
 
-Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:13](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/analytics/AnalyticsTimingPanel.tsx#L13)
+Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:13](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/analytics/AnalyticsTimingPanel.tsx#L13)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:13](https://githu
 
 > **avgDaysToOffer**: `number` \| `null`
 
-Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:14](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/analytics/AnalyticsTimingPanel.tsx#L14)
+Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:14](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/analytics/AnalyticsTimingPanel.tsx#L14)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:14](https://githu
 
 > **companySuccessRates**: `object`[]
 
-Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:15](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/analytics/AnalyticsTimingPanel.tsx#L15)
+Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:15](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/analytics/AnalyticsTimingPanel.tsx#L15)
 
 #### company
 
@@ -70,7 +70,7 @@ Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:15](https://githu
 
 > **generatedAt**: `string`
 
-Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:21](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/analytics/AnalyticsTimingPanel.tsx#L21)
+Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:21](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/analytics/AnalyticsTimingPanel.tsx#L21)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:21](https://githu
 
 > **gotResponse**: `number`
 
-Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:9](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/analytics/AnalyticsTimingPanel.tsx#L9)
+Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:9](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/analytics/AnalyticsTimingPanel.tsx#L9)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:9](https://github
 
 > **responseRate**: `number` \| `null`
 
-Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:11](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/analytics/AnalyticsTimingPanel.tsx#L11)
+Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:11](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/analytics/AnalyticsTimingPanel.tsx#L11)
 
 ***
 
@@ -94,7 +94,7 @@ Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:11](https://githu
 
 > **totalApplied**: `number`
 
-Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:8](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/analytics/AnalyticsTimingPanel.tsx#L8)
+Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:8](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/analytics/AnalyticsTimingPanel.tsx#L8)
 
 ***
 
@@ -102,4 +102,4 @@ Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:8](https://github
 
 > **totalJobs**: `number`
 
-Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:7](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/components/analytics/AnalyticsTimingPanel.tsx#L7)
+Defined in: [src/components/analytics/AnalyticsTimingPanel.tsx:7](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/analytics/AnalyticsTimingPanel.tsx#L7)

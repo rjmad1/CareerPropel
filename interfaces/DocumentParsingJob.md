@@ -6,7 +6,7 @@
 
 # Interface: DocumentParsingJob
 
-Defined in: [src/types/knowledge-graph.ts:42](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/knowledge-graph.ts#L42)
+Defined in: [src/types/knowledge-graph.ts:42](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L42)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/knowledge-graph.ts:42](https://github.com/rjmad1/CareerPr
 
 > `optional` **completedAt?**: `string`
 
-Defined in: [src/types/knowledge-graph.ts:49](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/knowledge-graph.ts#L49)
+Defined in: [src/types/knowledge-graph.ts:49](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L49)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/knowledge-graph.ts:49](https://github.com/rjmad1/CareerPr
 
 > **confidenceScore**: `number`
 
-Defined in: [src/types/knowledge-graph.ts:50](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/knowledge-graph.ts#L50)
+Defined in: [src/types/knowledge-graph.ts:50](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L50)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/knowledge-graph.ts:50](https://github.com/rjmad1/CareerPr
 
 > **entitiesExtracted**: `number`
 
-Defined in: [src/types/knowledge-graph.ts:51](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/knowledge-graph.ts#L51)
+Defined in: [src/types/knowledge-graph.ts:51](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L51)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/knowledge-graph.ts:51](https://github.com/rjmad1/CareerPr
 
 > **fileName**: `string`
 
-Defined in: [src/types/knowledge-graph.ts:44](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/knowledge-graph.ts#L44)
+Defined in: [src/types/knowledge-graph.ts:44](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L44)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/knowledge-graph.ts:44](https://github.com/rjmad1/CareerPr
 
 > **fileSize**: `number`
 
-Defined in: [src/types/knowledge-graph.ts:45](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/knowledge-graph.ts#L45)
+Defined in: [src/types/knowledge-graph.ts:45](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L45)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/types/knowledge-graph.ts:45](https://github.com/rjmad1/CareerPr
 
 > **id**: `string`
 
-Defined in: [src/types/knowledge-graph.ts:43](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/knowledge-graph.ts#L43)
+Defined in: [src/types/knowledge-graph.ts:43](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L43)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/types/knowledge-graph.ts:43](https://github.com/rjmad1/CareerPr
 
 > **logs**: [`ParsingLogEntry`](ParsingLogEntry.md)[]
 
-Defined in: [src/types/knowledge-graph.ts:52](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/knowledge-graph.ts#L52)
+Defined in: [src/types/knowledge-graph.ts:52](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L52)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/types/knowledge-graph.ts:52](https://github.com/rjmad1/CareerPr
 
 > **progress**: `number`
 
-Defined in: [src/types/knowledge-graph.ts:47](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/knowledge-graph.ts#L47)
+Defined in: [src/types/knowledge-graph.ts:47](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L47)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/types/knowledge-graph.ts:47](https://github.com/rjmad1/CareerPr
 
 > **startedAt**: `string`
 
-Defined in: [src/types/knowledge-graph.ts:48](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/knowledge-graph.ts#L48)
+Defined in: [src/types/knowledge-graph.ts:48](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L48)
 
 ***
 
@@ -86,4 +86,4 @@ Defined in: [src/types/knowledge-graph.ts:48](https://github.com/rjmad1/CareerPr
 
 > **status**: [`ParsingJobStatus`](../type-aliases/ParsingJobStatus.md)
 
-Defined in: [src/types/knowledge-graph.ts:46](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/knowledge-graph.ts#L46)
+Defined in: [src/types/knowledge-graph.ts:46](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L46)

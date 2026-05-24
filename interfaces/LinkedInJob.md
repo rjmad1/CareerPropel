@@ -6,7 +6,7 @@
 
 # Interface: LinkedInJob
 
-Defined in: [src/lib/scraping/linkedin.ts:55](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L55)
+Defined in: [src/lib/scraping/linkedin.ts:55](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/scraping/linkedin.ts#L55)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/scraping/linkedin.ts:55](https://github.com/rjmad1/CareerPr
 
 > **company**: `string`
 
-Defined in: [src/lib/scraping/linkedin.ts:57](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L57)
+Defined in: [src/lib/scraping/linkedin.ts:57](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/scraping/linkedin.ts#L57)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/scraping/linkedin.ts:57](https://github.com/rjmad1/CareerPr
 
 > **description**: `string`
 
-Defined in: [src/lib/scraping/linkedin.ts:59](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L59)
+Defined in: [src/lib/scraping/linkedin.ts:59](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/scraping/linkedin.ts#L59)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/scraping/linkedin.ts:59](https://github.com/rjmad1/CareerPr
 
 > `optional` **employmentType?**: `string`
 
-Defined in: [src/lib/scraping/linkedin.ts:62](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L62)
+Defined in: [src/lib/scraping/linkedin.ts:62](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/scraping/linkedin.ts#L62)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/scraping/linkedin.ts:62](https://github.com/rjmad1/CareerPr
 
 > **location**: `string`
 
-Defined in: [src/lib/scraping/linkedin.ts:58](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L58)
+Defined in: [src/lib/scraping/linkedin.ts:58](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/scraping/linkedin.ts#L58)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/scraping/linkedin.ts:58](https://github.com/rjmad1/CareerPr
 
 > **postedAt**: `string`
 
-Defined in: [src/lib/scraping/linkedin.ts:61](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L61)
+Defined in: [src/lib/scraping/linkedin.ts:61](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/scraping/linkedin.ts#L61)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/scraping/linkedin.ts:61](https://github.com/rjmad1/CareerPr
 
 > `optional` **seniorityLevel?**: `string`
 
-Defined in: [src/lib/scraping/linkedin.ts:63](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L63)
+Defined in: [src/lib/scraping/linkedin.ts:63](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/scraping/linkedin.ts#L63)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/scraping/linkedin.ts:63](https://github.com/rjmad1/CareerPr
 
 > **title**: `string`
 
-Defined in: [src/lib/scraping/linkedin.ts:56](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L56)
+Defined in: [src/lib/scraping/linkedin.ts:56](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/scraping/linkedin.ts#L56)
 
 ***
 
@@ -70,4 +70,4 @@ Defined in: [src/lib/scraping/linkedin.ts:56](https://github.com/rjmad1/CareerPr
 
 > **url**: `string`
 
-Defined in: [src/lib/scraping/linkedin.ts:60](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/scraping/linkedin.ts#L60)
+Defined in: [src/lib/scraping/linkedin.ts:60](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/scraping/linkedin.ts#L60)

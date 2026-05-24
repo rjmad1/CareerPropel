@@ -8,7 +8,7 @@
 
 > **useProfile**(`candidateId`, `options?`): [`UseProfileResult`](../interfaces/UseProfileResult.md)
 
-Defined in: [src/hooks/useProfile.ts:42](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/hooks/useProfile.ts#L42)
+Defined in: [src/hooks/useProfile.ts:42](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L42)
 
 Hook for managing user profile state
 

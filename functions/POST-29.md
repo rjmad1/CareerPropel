@@ -8,7 +8,7 @@
 
 > **POST**(`request`, `context`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `event`: \{ `action`: `"accept"` \| `"counter"` \| `"reject"` \| `"info_request"`; `counterAmount`: `number` \| `null`; `newStatus`: `OfferStatus`; `notes`: `string` \| `null`; `previousStatus`: `OfferStatus`; `timestamp`: `string`; \}; `offer`: `object` & `object`; \}\>\>\>
 
-Defined in: [src/app/api/offers/\[id\]/negotiate/route.ts:21](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/app/api/offers/[id]/negotiate/route.ts#L21)
+Defined in: [src/app/api/offers/\[id\]/negotiate/route.ts:21](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/offers/[id]/negotiate/route.ts#L21)
 
 POST /api/offers/[id]/negotiate
 Record a negotiation action on an offer.

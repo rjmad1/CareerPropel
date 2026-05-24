@@ -6,7 +6,7 @@
 
 # Interface: CapabilityPreset
 
-Defined in: [src/lib/llm/orchestrator.ts:48](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/llm/orchestrator.ts#L48)
+Defined in: [src/lib/llm/orchestrator.ts:48](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/orchestrator.ts#L48)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/llm/orchestrator.ts:48](https://github.com/rjmad1/CareerPro
 
 > **costWeight**: `"free"` \| `"low"` \| `"medium"` \| `"high"`
 
-Defined in: [src/lib/llm/orchestrator.ts:57](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/llm/orchestrator.ts#L57)
+Defined in: [src/lib/llm/orchestrator.ts:57](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/orchestrator.ts#L57)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/llm/orchestrator.ts:57](https://github.com/rjmad1/CareerPro
 
 > **description**: `string`
 
-Defined in: [src/lib/llm/orchestrator.ts:50](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/llm/orchestrator.ts#L50)
+Defined in: [src/lib/llm/orchestrator.ts:50](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/orchestrator.ts#L50)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/llm/orchestrator.ts:50](https://github.com/rjmad1/CareerPro
 
 > **fallbackChain**: `string`[]
 
-Defined in: [src/lib/llm/orchestrator.ts:53](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/llm/orchestrator.ts#L53)
+Defined in: [src/lib/llm/orchestrator.ts:53](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/orchestrator.ts#L53)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/llm/orchestrator.ts:53](https://github.com/rjmad1/CareerPro
 
 > **maxTokens**: `number`
 
-Defined in: [src/lib/llm/orchestrator.ts:54](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/llm/orchestrator.ts#L54)
+Defined in: [src/lib/llm/orchestrator.ts:54](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/orchestrator.ts#L54)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/llm/orchestrator.ts:54](https://github.com/rjmad1/CareerPro
 
 > **name**: `string`
 
-Defined in: [src/lib/llm/orchestrator.ts:49](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/llm/orchestrator.ts#L49)
+Defined in: [src/lib/llm/orchestrator.ts:49](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/orchestrator.ts#L49)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/llm/orchestrator.ts:49](https://github.com/rjmad1/CareerPro
 
 > **primaryModel**: `string`
 
-Defined in: [src/lib/llm/orchestrator.ts:52](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/llm/orchestrator.ts#L52)
+Defined in: [src/lib/llm/orchestrator.ts:52](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/orchestrator.ts#L52)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/llm/orchestrator.ts:52](https://github.com/rjmad1/CareerPro
 
 > **primaryProvider**: `string`
 
-Defined in: [src/lib/llm/orchestrator.ts:51](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/llm/orchestrator.ts#L51)
+Defined in: [src/lib/llm/orchestrator.ts:51](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/orchestrator.ts#L51)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/llm/orchestrator.ts:51](https://github.com/rjmad1/CareerPro
 
 > **systemPromptName**: `string`
 
-Defined in: [src/lib/llm/orchestrator.ts:56](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/llm/orchestrator.ts#L56)
+Defined in: [src/lib/llm/orchestrator.ts:56](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/orchestrator.ts#L56)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [src/lib/llm/orchestrator.ts:56](https://github.com/rjmad1/CareerPro
 
 > **temperature**: `number`
 
-Defined in: [src/lib/llm/orchestrator.ts:55](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/llm/orchestrator.ts#L55)
+Defined in: [src/lib/llm/orchestrator.ts:55](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/orchestrator.ts#L55)

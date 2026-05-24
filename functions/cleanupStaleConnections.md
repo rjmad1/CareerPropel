@@ -8,7 +8,7 @@
 
 > **cleanupStaleConnections**(`maxAgeMinutes?`): `Promise`\<`void`\>
 
-Defined in: [src/lib/realtime/wsServer.ts:234](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/realtime/wsServer.ts#L234)
+Defined in: [src/lib/realtime/wsServer.ts:234](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/realtime/wsServer.ts#L234)
 
 Clean up stale connections (no heartbeat response in X minutes).
 

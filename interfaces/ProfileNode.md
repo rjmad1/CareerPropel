@@ -6,7 +6,7 @@
 
 # Interface: ProfileNode
 
-Defined in: [src/types/profile.ts:129](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/profile.ts#L129)
+Defined in: [src/types/profile.ts:129](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/profile.ts#L129)
 
 Profile knowledge graph node
 
@@ -16,7 +16,7 @@ Profile knowledge graph node
 
 > **confidence**: `number`
 
-Defined in: [src/types/profile.ts:135](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/profile.ts#L135)
+Defined in: [src/types/profile.ts:135](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/profile.ts#L135)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/profile.ts:135](https://github.com/rjmad1/CareerPropel/bl
 
 > **connections**: `string`[]
 
-Defined in: [src/types/profile.ts:134](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/profile.ts#L134)
+Defined in: [src/types/profile.ts:134](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/profile.ts#L134)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/profile.ts:134](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **description?**: `string`
 
-Defined in: [src/types/profile.ts:133](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/profile.ts#L133)
+Defined in: [src/types/profile.ts:133](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/profile.ts#L133)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/profile.ts:133](https://github.com/rjmad1/CareerPropel/bl
 
 > **id**: `string`
 
-Defined in: [src/types/profile.ts:130](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/profile.ts#L130)
+Defined in: [src/types/profile.ts:130](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/profile.ts#L130)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/profile.ts:130](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **metadata?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [src/types/profile.ts:136](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/profile.ts#L136)
+Defined in: [src/types/profile.ts:136](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/profile.ts#L136)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/types/profile.ts:136](https://github.com/rjmad1/CareerPropel/bl
 
 > **name**: `string`
 
-Defined in: [src/types/profile.ts:132](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/profile.ts#L132)
+Defined in: [src/types/profile.ts:132](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/profile.ts#L132)
 
 ***
 
@@ -64,4 +64,4 @@ Defined in: [src/types/profile.ts:132](https://github.com/rjmad1/CareerPropel/bl
 
 > **type**: `"skill"` \| `"achievement"` \| `"company"` \| `"project"` \| `"person"`
 
-Defined in: [src/types/profile.ts:131](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/profile.ts#L131)
+Defined in: [src/types/profile.ts:131](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/profile.ts#L131)

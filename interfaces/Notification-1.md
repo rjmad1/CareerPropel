@@ -6,7 +6,7 @@
 
 # Interface: Notification
 
-Defined in: [src/lib/websocket/types.ts:53](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L53)
+Defined in: [src/lib/websocket/types.ts:53](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L53)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/websocket/types.ts:53](https://github.com/rjmad1/CareerProp
 
 > `optional` **actionLabel?**: `string`
 
-Defined in: [src/lib/websocket/types.ts:61](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L61)
+Defined in: [src/lib/websocket/types.ts:61](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L61)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/websocket/types.ts:61](https://github.com/rjmad1/CareerProp
 
 > `optional` **actionUrl?**: `string`
 
-Defined in: [src/lib/websocket/types.ts:60](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L60)
+Defined in: [src/lib/websocket/types.ts:60](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L60)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/websocket/types.ts:60](https://github.com/rjmad1/CareerProp
 
 > `optional` **duration?**: `number`
 
-Defined in: [src/lib/websocket/types.ts:59](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L59)
+Defined in: [src/lib/websocket/types.ts:59](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L59)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/websocket/types.ts:59](https://github.com/rjmad1/CareerProp
 
 > **id**: `string`
 
-Defined in: [src/lib/websocket/types.ts:54](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L54)
+Defined in: [src/lib/websocket/types.ts:54](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L54)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/websocket/types.ts:54](https://github.com/rjmad1/CareerProp
 
 > **message**: `string`
 
-Defined in: [src/lib/websocket/types.ts:57](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L57)
+Defined in: [src/lib/websocket/types.ts:57](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L57)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/websocket/types.ts:57](https://github.com/rjmad1/CareerProp
 
 > **timestamp**: `Date`
 
-Defined in: [src/lib/websocket/types.ts:58](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L58)
+Defined in: [src/lib/websocket/types.ts:58](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L58)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/websocket/types.ts:58](https://github.com/rjmad1/CareerProp
 
 > **title**: `string`
 
-Defined in: [src/lib/websocket/types.ts:56](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L56)
+Defined in: [src/lib/websocket/types.ts:56](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L56)
 
 ***
 
@@ -70,4 +70,4 @@ Defined in: [src/lib/websocket/types.ts:56](https://github.com/rjmad1/CareerProp
 
 > **type**: `"info"` \| `"error"` \| `"warning"` \| `"success"`
 
-Defined in: [src/lib/websocket/types.ts:55](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/websocket/types.ts#L55)
+Defined in: [src/lib/websocket/types.ts:55](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L55)

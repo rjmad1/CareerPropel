@@ -6,7 +6,7 @@
 
 # Class: AIProviderOrchestrator
 
-Defined in: [src/lib/llm/orchestrator.ts:274](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/llm/orchestrator.ts#L274)
+Defined in: [src/lib/llm/orchestrator.ts:274](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/orchestrator.ts#L274)
 
 ## Constructors
 
@@ -24,7 +24,7 @@ Defined in: [src/lib/llm/orchestrator.ts:274](https://github.com/rjmad1/CareerPr
 
 > `static` **executeWithFallback**(`presetKey`, `messages`, `candidateId?`): `Promise`\<[`LLMCallResult`](../interfaces/LLMCallResult.md)\>
 
-Defined in: [src/lib/llm/orchestrator.ts:323](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/llm/orchestrator.ts#L323)
+Defined in: [src/lib/llm/orchestrator.ts:323](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/orchestrator.ts#L323)
 
 Core routing executor with exponential retries and multi-tier failover chains
 
@@ -52,7 +52,7 @@ Core routing executor with exponential retries and multi-tier failover chains
 
 > `static` **streamWithFallback**(`presetKey`, `messages`): `AsyncIterable`\<`string`\>
 
-Defined in: [src/lib/llm/orchestrator.ts:422](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/lib/llm/orchestrator.ts#L422)
+Defined in: [src/lib/llm/orchestrator.ts:422](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/orchestrator.ts#L422)
 
 Core routing streaming executor with multi-tier failover chains
 

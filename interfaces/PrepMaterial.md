@@ -6,7 +6,7 @@
 
 # Interface: PrepMaterial
 
-Defined in: [src/types/interview.ts:374](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L374)
+Defined in: [src/types/interview.ts:374](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L374)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/interview.ts:374](https://github.com/rjmad1/CareerPropel/
 
 > **confidenceLevel**: `number`
 
-Defined in: [src/types/interview.ts:380](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L380)
+Defined in: [src/types/interview.ts:380](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L380)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/interview.ts:380](https://github.com/rjmad1/CareerPropel/
 
 > **content**: `string`
 
-Defined in: [src/types/interview.ts:378](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L378)
+Defined in: [src/types/interview.ts:378](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L378)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/interview.ts:378](https://github.com/rjmad1/CareerPropel/
 
 > **createdAt**: `Date`
 
-Defined in: [src/types/interview.ts:381](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L381)
+Defined in: [src/types/interview.ts:381](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L381)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/interview.ts:381](https://github.com/rjmad1/CareerPropel/
 
 > **id**: `string`
 
-Defined in: [src/types/interview.ts:375](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L375)
+Defined in: [src/types/interview.ts:375](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L375)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/interview.ts:375](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **lastReviewedAt?**: `Date`
 
-Defined in: [src/types/interview.ts:382](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L382)
+Defined in: [src/types/interview.ts:382](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L382)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/types/interview.ts:382](https://github.com/rjmad1/CareerPropel/
 
 > **reviewCount**: `number`
 
-Defined in: [src/types/interview.ts:383](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L383)
+Defined in: [src/types/interview.ts:383](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L383)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/types/interview.ts:383](https://github.com/rjmad1/CareerPropel/
 
 > **tags**: `string`[]
 
-Defined in: [src/types/interview.ts:379](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L379)
+Defined in: [src/types/interview.ts:379](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L379)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/types/interview.ts:379](https://github.com/rjmad1/CareerPropel/
 
 > **title**: `string`
 
-Defined in: [src/types/interview.ts:377](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L377)
+Defined in: [src/types/interview.ts:377](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L377)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [src/types/interview.ts:377](https://github.com/rjmad1/CareerPropel/
 
 > **type**: [`PrepMaterialType`](../type-aliases/PrepMaterialType.md)
 
-Defined in: [src/types/interview.ts:376](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/interview.ts#L376)
+Defined in: [src/types/interview.ts:376](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L376)

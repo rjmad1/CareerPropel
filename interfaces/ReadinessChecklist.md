@@ -6,7 +6,7 @@
 
 # Interface: ReadinessChecklist
 
-Defined in: [src/types/preparation.ts:399](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L399)
+Defined in: [src/types/preparation.ts:399](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L399)
 
 Readiness checklist
 
@@ -16,7 +16,7 @@ Readiness checklist
 
 > **completionPercentage**: `number`
 
-Defined in: [src/types/preparation.ts:402](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L402)
+Defined in: [src/types/preparation.ts:402](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L402)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/preparation.ts:402](https://github.com/rjmad1/CareerPrope
 
 > **items**: [`ChecklistItem`](ChecklistItem.md)[]
 
-Defined in: [src/types/preparation.ts:401](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L401)
+Defined in: [src/types/preparation.ts:401](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L401)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/preparation.ts:401](https://github.com/rjmad1/CareerPrope
 
 > **jobId**: `string`
 
-Defined in: [src/types/preparation.ts:400](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L400)
+Defined in: [src/types/preparation.ts:400](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L400)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/preparation.ts:400](https://github.com/rjmad1/CareerPrope
 
 > **lastUpdatedAt**: `Date`
 
-Defined in: [src/types/preparation.ts:404](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L404)
+Defined in: [src/types/preparation.ts:404](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L404)
 
 ***
 
@@ -48,4 +48,4 @@ Defined in: [src/types/preparation.ts:404](https://github.com/rjmad1/CareerPrope
 
 > **overallReady**: `boolean`
 
-Defined in: [src/types/preparation.ts:403](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/types/preparation.ts#L403)
+Defined in: [src/types/preparation.ts:403](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L403)

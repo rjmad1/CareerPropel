@@ -8,7 +8,7 @@
 
 > **GET**(): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `enabled`: `boolean`; \}\>\>\>
 
-Defined in: [src/app/api/auth/2fa/status/route.ts:8](https://github.com/rjmad1/CareerPropel/blob/696daa5eca6f5c3d803d391773100ae70ced93d0/src/app/api/auth/2fa/status/route.ts#L8)
+Defined in: [src/app/api/auth/2fa/status/route.ts:8](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/auth/2fa/status/route.ts#L8)
 
 GET /api/auth/2fa/status — returns whether 2FA is currently enabled
 
