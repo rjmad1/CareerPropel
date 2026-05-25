@@ -137,6 +137,10 @@ model Candidate {
   appraisalSessions     AppraisalSession[]
   contacts              Contact[]
   mockInterviewSessions MockInterviewSession[]
+  workflowExecutions    WorkflowExecution[]
+  approvalRequests      ApprovalRequest[]
+  opportunityPlans      OpportunityPlan[]
+  workflowSchedules     WorkflowSchedule[]
 }
 
 // ─── Job Pipeline ────────────────────────────────────────────────────────────
@@ -850,5 +854,193 @@ model Contact {
 
   @@index([candidateId])
   @@index([candidateId, status])
+}
+
+// ─── Workflow Orchestration ───────────────────────────────────────────────────
+
+enum WorkflowStatus {
+  queued
+  running
+  waiting_for_approval
+  blocked
+  failed
+  completed
+  cancelled
+}
+
+enum StepStatus {
+  pending
+  running
+  waiting_for_approval
+  completed
+  failed
+  skipped
+}
+
+enum StepType {
+  agent_call
+  approval
+  condition
+  notification
+  delay
+}
+
+enum ApprovalDecision {
+  approved
+  rejected
+  modified
+}
+
+enum ApprovalActionType {
+  send_outreach
+  send_followup
+  submit_document
+  compensation_comm
+  networking_comm
+}
+
+enum ScheduleTriggerType {
+  recurring
+  one_time
+  inactivity
+  stage_change
+}
+
+model WorkflowDefinition {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  displayName String
+  description String?
+  version     Int      @default(1)
+  isActive    Boolean  @default(true)
+  steps       Json
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  executions WorkflowExecution[]
+
+  @@index([name])
+  @@index([isActive])
+}
+
+model WorkflowExecution {
+  id               String         @id @default(cuid())
+  candidateId      String
+  jobId            String?
+  definitionId     String
+  status           WorkflowStatus @default(queued)
+  currentStepIndex Int            @default(0)
+  context          Json?
+  metadata         Json?
+  triggeredBy      String?
+  startedAt        DateTime?
+  completedAt      DateTime?
+  cancelledAt      DateTime?
+  failedAt         DateTime?
+  errorMessage     String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  candidate  Candidate              @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  definition WorkflowDefinition     @relation(fields: [definitionId], references: [id])
+  steps      WorkflowStepExecution[]
+  approvals  ApprovalRequest[]
+
+  @@index([candidateId])
+  @@index([jobId])
+  @@index([status])
+  @@index([definitionId])
+}
+
+model WorkflowStepExecution {
+  id               String     @id @default(cuid())
+  workflowId       String
+  stepKey          String
+  stepIndex        Int
+  stepType         StepType
+  status           StepStatus @default(pending)
+  agentExecutionId String?
+  input            Json?
+  output           Json?
+  errorMessage     String?
+  startedAt        DateTime?
+  completedAt      DateTime?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  workflow WorkflowExecution @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  @@index([workflowId])
+  @@index([stepKey])
+  @@index([status])
+}
+
+model ApprovalRequest {
+  id              String             @id @default(cuid())
+  workflowId      String
+  stepKey         String
+  candidateId     String
+  actionType      ApprovalActionType
+  payload         Json
+  modifiedPayload Json?
+  decision        ApprovalDecision?
+  decisionNote    String?
+  decidedAt       DateTime?
+  expiresAt       DateTime?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  workflow  WorkflowExecution @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  candidate Candidate         @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([workflowId])
+  @@index([candidateId])
+  @@index([decision])
+  @@index([createdAt])
+}
+
+model OpportunityPlan {
+  id                String    @id @default(cuid())
+  candidateId       String
+  jobId             String    @unique
+  urgencyScore      Float     @default(0)
+  readinessScore    Float     @default(0)
+  momentumScore     Float     @default(0)
+  actions           Json
+  healthBreakdown   Json?
+  suggestedWorkflow String?
+  generatedAt       DateTime  @default(now())
+  expiresAt         DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([jobId])
+}
+
+model WorkflowSchedule {
+  id              String              @id @default(cuid())
+  candidateId     String
+  jobId           String?
+  definitionId    String?
+  triggerType     ScheduleTriggerType
+  cronExpression  String?
+  scheduledAt     DateTime?
+  inactivityDays  Int?
+  isActive        Boolean             @default(true)
+  lastTriggeredAt DateTime?
+  nextTriggerAt   DateTime?
+  metadata        Json?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([isActive])
+  @@index([nextTriggerAt])
 }
 

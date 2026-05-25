@@ -21,6 +21,7 @@ const path = require('path')
 // Register tsconfig path aliases for require() calls to compiled JS in production.
 // In dev, ts-node/tsx handles this automatically via tsconfig-paths.
 let queueScheduler = null;
+let workflowScheduler = null;
 let sharedSubscriberEmitter = null;
 
 // Support secure HTTPS connection when certificates are provided in the environment
@@ -63,6 +64,16 @@ app.prepare().then(async () => {
       console.log('[Scheduler] Queue scheduler started');
     } catch (err) {
       console.error('[Scheduler] Failed to start queue scheduler (non-fatal):', err.message);
+    }
+
+    // ── Workflow Scheduler ────────────────────────────────────────────────────
+    // Drives workflow schedule triggers, inactivity detection, and approval expiry.
+    try {
+      const { startWorkflowScheduler } = require('./src/lib/workflow/scheduler');
+      workflowScheduler = startWorkflowScheduler();
+      console.log('[WorkflowScheduler] Workflow scheduler started');
+    } catch (err) {
+      console.error('[WorkflowScheduler] Failed to start workflow scheduler (non-fatal):', err.message);
     }
 
     // ── Shared Redis Subscriber (SSE fanout) ─────────────────────────────────
@@ -268,6 +279,9 @@ app.prepare().then(async () => {
     console.log(`[Server] ${signal} received — shutting down gracefully`)
     if (queueScheduler) {
       await queueScheduler.stop().catch((e) => console.error('[Scheduler] Shutdown error:', e.message))
+    }
+    if (workflowScheduler) {
+      workflowScheduler.stop()
     }
     if (sharedSubscriberEmitter) {
       try {

@@ -8,13 +8,17 @@ import 'dotenv/config';
 import { log } from '@/lib/logging/logger';
 import { getDeploymentMetadata } from '@/lib/deployment/metadata';
 import { startWorker } from '@/lib/queue/worker';
+import { startWorkflowWorker } from '@/lib/workflow/worker';
 
 async function main() {
   const deployment = getDeploymentMetadata();
   log.info({ ...deployment }, 'CareerPropel Worker service starting');
 
   startWorker();
-  log.info('Worker listening for jobs');
+  log.info('Agent worker listening for jobs');
+
+  startWorkflowWorker();
+  log.info('Workflow worker listening for jobs');
 }
 
 main().catch((err) => {
