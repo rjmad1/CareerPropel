@@ -1,9 +1,9 @@
 import { prisma } from '@/lib/db';
 import { scoreOpportunityHealth } from './health-scorer';
+import { buildOpportunityHealthInput } from './health-input-builder';
 import type {
   OpportunityPlanResult,
   RecommendedAction,
-  OpportunityHealthInput,
   ActionPriority,
   HealthScoreBreakdown,
 } from './types';
@@ -162,61 +162,20 @@ export async function generateOpportunityPlan(
   jobId: string,
   candidateId: string,
 ): Promise<OpportunityPlanResult> {
-  const job = await prisma.job.findUnique({
-    where: { id: jobId },
+  // Single ownership-filtered fetch + shared health-input builder
+  const healthInput = await buildOpportunityHealthInput(jobId, candidateId);
+  if (!healthInput) throw Object.assign(new Error('Job not found'), { status: 404 });
+
+  // Fetch artefact readiness fields not included in the health input.
+  // Ownership and stage are already verified/provided by buildOpportunityHealthInput.
+  const job = await prisma.job.findFirst({
+    where: { id: jobId, candidateId },
     select: {
-      id: true,
-      stage: true,
-      matchScore: true,
-      recruiterName: true,
-      recruiterEmail: true,
-      activities: {
-        orderBy: { createdAt: 'desc' },
-        take: 1,
-        select: { createdAt: true },
-      },
-      interviews: { select: { id: true } },
       documents: { where: { type: 'resume' }, select: { id: true } },
       interviewPrep: { select: { id: true, prepStatus: true } },
     },
   });
-
   if (!job) throw Object.assign(new Error('Job not found'), { status: 404 });
-
-  // Verify job belongs to candidate
-  const ownership = await prisma.job.findFirst({
-    where: { id: jobId, candidateId },
-    select: { id: true },
-  });
-  if (!ownership) throw Object.assign(new Error('Forbidden'), { status: 403 });
-
-  const contactCount = await prisma.contact.count({ where: { candidateId, jobId } });
-  const activeWorkflowCount = await prisma.workflowExecution.count({
-    where: {
-      candidateId,
-      jobId,
-      status: { in: ['queued', 'running', 'waiting_for_approval'] },
-    },
-  });
-
-  const lastActivity = job.activities[0]?.createdAt ?? new Date(0);
-  const daysSinceLastActivity = Math.floor(
-    (Date.now() - lastActivity.getTime()) / (1000 * 60 * 60 * 24),
-  );
-
-  const healthInput: OpportunityHealthInput = {
-    jobId,
-    candidateId,
-    matchScore: job.matchScore ?? 0,
-    stage: job.stage,
-    daysSinceLastActivity,
-    hasRecruiterContact: Boolean(job.recruiterEmail ?? job.recruiterName),
-    recruiterResponseCount: contactCount,
-    interviewCount: job.interviews.length,
-    pendingFollowUp: daysSinceLastActivity > 5,
-    contactCount,
-    activeWorkflowCount,
-  };
 
   const health = scoreOpportunityHealth(healthInput);
 
@@ -227,11 +186,11 @@ export async function generateOpportunityPlan(
 
   const actions = generateActions(
     jobId,
-    job.stage,
+    healthInput.stage,
     health,
     hasInterviewPrep,
     hasTailoredResume,
-    daysSinceLastActivity,
+    healthInput.daysSinceLastActivity,
   );
 
   // Urgency: driven primarily by inactivity + critical stage proximity

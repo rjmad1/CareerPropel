@@ -143,7 +143,7 @@ const POST_INTERVIEW_FOLLOWUP: WorkflowTemplate = {
       key: 'wait_for_response',
       name: 'Wait for Response',
       type: 'delay',
-      delayMs: 5 * 24 * 60 * 60 * 1000, // 5 business days
+      delayMs: 5 * 24 * 60 * 60 * 1000, // 5 calendar days
       description: 'Wait 5 days before second follow-up',
     },
     {

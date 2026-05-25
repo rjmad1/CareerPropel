@@ -50,6 +50,13 @@ export interface KanbanBoardProps {
   /** Called for stage changes; returns MoveResult with optional executionId */
   onJobMove?: (jobId: string, newStage: JobStage) => Promise<MoveResult>;
   onJobClick?: (job: Job) => void;
+  /**
+   * Externally controlled selected job id.
+   * When provided, the board mirrors this selection rather than managing its own.
+   */
+  selectedJobId?: string | null;
+  /** Called when the user selects or deselects a job from the board. */
+  onJobSelect?: (jobId: string | null) => void;
 }
 
 export const KanbanBoard: React.FC<KanbanBoardProps> = ({
@@ -57,10 +64,19 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
   onJobUpdate,
   onJobMove,
   onJobClick,
+  selectedJobId: selectedJobIdProp,
+  onJobSelect,
 }) => {
   const [jobs, setJobs] = useState<Job[]>(initialJobs);
   const [error, setError] = useState<string | null>(null);
-  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
+  // Internal selection — used when no external control is provided
+  const [internalSelectedJobId, setInternalSelectedJobId] = useState<string | null>(null);
+  // Use external control if provided, otherwise internal
+  const selectedJobId = selectedJobIdProp !== undefined ? selectedJobIdProp : internalSelectedJobId;
+  const setSelectedJobId = (id: string | null) => {
+    setInternalSelectedJobId(id);
+    onJobSelect?.(id);
+  };
   const [mobileStage, setMobileStage] = useState<JobStage>(PIPELINE_STAGES[0]);
   const [dragOverStage, setDragOverStage] = useState<JobStage | null>(null);
   // Agent badges: jobId → badge info

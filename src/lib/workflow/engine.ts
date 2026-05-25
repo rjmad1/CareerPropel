@@ -40,17 +40,14 @@ export async function createWorkflow(params: CreateWorkflowParams): Promise<stri
   const template = getTemplate(templateId);
   if (!template) throw Object.assign(new Error(`Template not found: ${templateId}`), { status: 404 });
 
-  // Upsert WorkflowDefinition from template
-  const definition = await prisma.workflowDefinition.upsert({
+  // Find or create a WorkflowDefinition for this template version.
+  // We intentionally never update an existing definition record so that
+  // in-flight executions referencing it see a stable steps snapshot.
+  const existingDefinition = await prisma.workflowDefinition.findUnique({
     where: { name: template.id },
-    update: {
-      displayName: template.displayName,
-      description: template.description ?? null,
-      version: template.version,
-      steps: template.steps as any,
-      metadata: template.metadata as any,
-    },
-    create: {
+  });
+  const definition = existingDefinition ?? await prisma.workflowDefinition.create({
+    data: {
       name: template.id,
       displayName: template.displayName,
       description: template.description ?? null,
@@ -189,9 +186,13 @@ export async function advanceWorkflow(workflowExecutionId: string): Promise<void
     return;
   }
 
+  // Extract userId from context early — needed by advanceToNextStep below.
+  const wfContext = (execution.context ?? {}) as WorkflowContext;
+  const contextUserId = wfContext.userId;
+
   // Skip already-completed or skipped steps
   if (isTerminalStepStatus(stepExec.status as any)) {
-    await advanceToNextStep(workflowExecutionId, currentIndex, execution.candidateId);
+    await advanceToNextStep(workflowExecutionId, currentIndex, execution.candidateId, undefined, contextUserId);
     return;
   }
 
@@ -202,9 +203,6 @@ export async function advanceWorkflow(workflowExecutionId: string): Promise<void
   });
 
   wfLog.info({ stepKey: stepDef.key, stepIndex: currentIndex }, 'Executing step');
-
-  // Build current context from execution context
-  const wfContext = (execution.context ?? {}) as WorkflowContext;
 
   // Execute the step
   const result = await executeStep(stepDef, wfContext, workflowExecutionId);
@@ -244,7 +242,7 @@ export async function advanceWorkflow(workflowExecutionId: string): Promise<void
         where: { id: stepExec.id },
         data: { status: 'skipped', errorMessage: result.error ?? 'Optional step skipped on failure' },
       });
-      await advanceToNextStep(workflowExecutionId, currentIndex, execution.candidateId);
+      await advanceToNextStep(workflowExecutionId, currentIndex, execution.candidateId, undefined, contextUserId);
       return;
     }
 
@@ -369,7 +367,20 @@ async function advanceToNextStep(
     return;
   }
 
-  const resolvedUserId = userId ?? (execution.context as any)?.userId as string;
+  const resolvedUserId = userId ?? ((execution.context as any)?.userId as string | undefined);
+
+  if (!resolvedUserId) {
+    await prisma.workflowExecution.update({
+      where: { id: workflowExecutionId },
+      data: {
+        status: 'failed',
+        failedAt: new Date(),
+        errorMessage: `advanceToNextStep: userId missing — cannot enqueue step ${resolvedNextIndex}`,
+      },
+    });
+    log.error({ workflowExecutionId, resolvedNextIndex }, 'advanceToNextStep: userId missing — workflow failed');
+    return;
+  }
 
   await prisma.workflowExecution.update({
     where: { id: workflowExecutionId },
@@ -395,7 +406,7 @@ async function advanceToNextStep(
 export async function pauseWorkflow(workflowId: string, candidateId: string): Promise<void> {
   const execution = await prisma.workflowExecution.findUnique({
     where: { id: workflowId },
-    select: { status: true, candidateId: true },
+    select: { status: true, candidateId: true, metadata: true },
   });
 
   if (!execution) throw Object.assign(new Error('Workflow not found'), { status: 404 });
@@ -409,9 +420,15 @@ export async function pauseWorkflow(workflowId: string, candidateId: string): Pr
     );
   }
 
+  // Merge pausedAt into existing metadata rather than overwriting the whole field.
+  const existingMeta = (execution.metadata && typeof execution.metadata === 'object')
+    ? (execution.metadata as Record<string, unknown>)
+    : {};
+  const mergedMeta = { ...existingMeta, pausedAt: new Date().toISOString() };
+
   await prisma.workflowExecution.update({
     where: { id: workflowId },
-    data: { status: next, metadata: { pausedAt: new Date().toISOString() } as any },
+    data: { status: next, metadata: mergedMeta as any },
   });
 }
 
@@ -435,7 +452,19 @@ export async function resumeWorkflow(workflowId: string, candidateId: string): P
     );
   }
 
-  const userId = (execution.context as any)?.userId as string;
+  const userId = (execution.context as any)?.userId as string | undefined;
+  if (!userId) {
+    throw Object.assign(new Error('Cannot resume: userId missing from workflow context'), { status: 500 });
+  }
+
+  // Verify the current step is not already running/queued to avoid duplicate concurrent processing.
+  const currentStep = await prisma.workflowStepExecution.findFirst({
+    where: { workflowId, stepIndex: execution.currentStepIndex },
+    select: { status: true },
+  });
+  if (currentStep?.status === 'running' || currentStep?.status === 'queued') {
+    throw Object.assign(new Error('Cannot resume: current step is already running or queued'), { status: 409 });
+  }
 
   await prisma.workflowExecution.update({
     where: { id: workflowId },
@@ -467,8 +496,10 @@ export async function cancelWorkflow(workflowId: string, candidateId: string, re
   if (!execution) throw Object.assign(new Error('Workflow not found'), { status: 404 });
   if (execution.candidateId !== candidateId) throw Object.assign(new Error('Forbidden'), { status: 403 });
 
-  if (isTerminalWorkflowStatus(execution.status as WorkflowStatus)) {
-    return; // Already terminal — no-op
+  // 'completed' and 'cancelled' are truly irrecoverable — skip silently.
+  // 'failed' retains a valid 'cancel' transition in the state machine so we allow it through.
+  if (execution.status === 'completed' || execution.status === 'cancelled') {
+    return; // Already in an irrecoverable terminal state — no-op
   }
 
   await prisma.workflowExecution.update({
@@ -566,4 +597,60 @@ export async function handleApprovalDecision(
       timestamp: new Date(),
     });
   }
+}
+
+/**
+ * Recover a failed workflow by re-queuing it from the current step.
+ * This is the only sanctioned way to leave the 'failed' state (the 'recover' transition).
+ */
+export async function recoverWorkflow(workflowId: string, candidateId: string): Promise<void> {
+  const execution = await prisma.workflowExecution.findUnique({
+    where: { id: workflowId },
+    select: { status: true, candidateId: true, currentStepIndex: true, context: true },
+  });
+
+  if (!execution) throw Object.assign(new Error('Workflow not found'), { status: 404 });
+  if (execution.candidateId !== candidateId) throw Object.assign(new Error('Forbidden'), { status: 403 });
+
+  if (execution.status !== 'failed') {
+    throw Object.assign(
+      new Error(`Cannot recover workflow in status: ${execution.status} — only 'failed' workflows can be recovered`),
+      { status: 400 },
+    );
+  }
+
+  const userId = (execution.context as any)?.userId as string | undefined;
+  if (!userId) {
+    throw Object.assign(new Error('Cannot recover: userId missing from workflow context'), { status: 500 });
+  }
+
+  // Transition failed → queued (the 'recover' event in the state machine)
+  await prisma.workflowExecution.update({
+    where: { id: workflowId },
+    data: { status: 'queued', errorMessage: null, failedAt: null },
+  });
+
+  // Reset the current step from 'failed' to 'pending' so advanceWorkflow will retry it
+  // rather than treating it as already terminal.
+  await prisma.workflowStepExecution.updateMany({
+    where: { workflowId, stepIndex: execution.currentStepIndex, status: 'failed' },
+    data: { status: 'pending', errorMessage: null },
+  });
+
+  await getWorkflowQueue().add(
+    'workflow-step',
+    {
+      workflowExecutionId: workflowId,
+      stepIndex: execution.currentStepIndex,
+      userId,
+      schemaVersion: WORKFLOW_SCHEMA_VERSION,
+    },
+    WORKFLOW_JOB_DEFAULTS,
+  );
+
+  await publishWorkflowEvent(candidateId, {
+    type: 'workflow:recovered',
+    workflowId,
+    timestamp: new Date(),
+  });
 }

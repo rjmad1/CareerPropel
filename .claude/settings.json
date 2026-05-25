@@ -83,7 +83,23 @@
       "Bash(curl -s -L http://localhost:3000/login -w \"\\\\nHTTP %{http_code}\")",
       "Bash(curl -s http://localhost:3001/ -o /dev/null -w \"%{http_code}\")",
       "Bash(curl -s http://localhost:3002/ -o /dev/null -w \"%{http_code}\")",
-      "Bash(echo \"PID: $!\")"
+      "Bash(echo \"PID: $!\")",
+      "Bash(New-Item -ItemType Directory -Force -Path \"c:\\\\Users\\\\rajaj\\\\career-ops\\\\src\\\\lib\\\\workflow\\\\templates\")",
+      "Bash(mkdir -p /c/Users/rajaj/career-ops/src/app/api/workflows/\\\\[id\\\\]/pause)",
+      "Bash(mkdir -p /c/Users/rajaj/career-ops/src/app/api/workflows/\\\\[id\\\\]/resume)",
+      "Bash(mkdir -p /c/Users/rajaj/career-ops/src/app/api/workflows/\\\\[id\\\\]/cancel)",
+      "Bash(mkdir -p /c/Users/rajaj/career-ops/src/app/api/opportunities/\\\\[jobId\\\\]/plan)",
+      "Bash(mkdir -p /c/Users/rajaj/career-ops/src/app/api/opportunities/\\\\[jobId\\\\]/health)",
+      "Bash(mkdir -p /c/Users/rajaj/career-ops/src/app/api/opportunities/\\\\[jobId\\\\]/health /c/Users/rajaj/career-ops/src/app/api/approvals/\\\\[id\\\\]/decide)",
+      "Bash(echo \"Exit: $?\")",
+      "Bash(New-Item -ItemType Directory -Force \"c:\\\\Users\\\\rajaj\\\\career-ops\\\\src\\\\lib\\\\route-helpers\")",
+      "Bash(ls src/lib/utils/)",
+      "Bash(ls src/lib/analytics/)",
+      "Bash(sed -i \"s|from '../routes'|from '@/lib/navigation/routes'|g\" routes.test.ts)",
+      "Bash(sed -i \"s|from '../state'|from '@/lib/navigation/state'|g\" state.test.ts)",
+      "Bash(sed -i \"s|from '../breadcrumbs'|from '@/lib/navigation/breadcrumbs'|g\" breadcrumbs.test.ts)",
+      "Bash(sed -i \"s|from '../deep-link'|from '@/lib/navigation/deep-link'|g\" deep-link.test.ts)",
+      "Bash(sed -i \"s|from '../restoration'|from '@/lib/navigation/restoration'|g\" restoration.test.ts)"
     ],
     "deny": [
       "Read(./.env)",
@@ -91,7 +107,8 @@
       "Read(./secrets/**)"
     ],
     "additionalDirectories": [
-      "c:\\Users\\rajaj\\.claude\\projects\\c--Users-rajaj-career-ops\\memory"
+      "c:\\Users\\rajaj\\.claude\\projects\\c--Users-rajaj-career-ops\\memory",
+      "C:\\Users\\rajaj\\career-ops\\src\\app\\api\\opportunities\\[jobId]\\health"
     ]
   },
   "hooks": {

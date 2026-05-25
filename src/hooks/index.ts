@@ -1,4 +1,9 @@
 export { useJobBoard, type UseJobBoardReturn } from './useJobBoard';
+export { useNavigation } from './useNavigation';
+export { useRouteState, useUrlParam } from './useRouteState';
+export { useRestorableScroll } from './useRestorableScroll';
+export { useNavigationAnalytics } from './useNavigationAnalytics';
+export { useUnsavedChangesGuard } from './useUnsavedChangesGuard';
 export { useJobs, useJob, useCreateJob, useUpdateJob, useDeleteJob, jobsQueryKeys } from './useJobs';
 export { useDocuments, useDocument, useUploadDocument, useDeleteDocument, documentsQueryKeys } from './useDocuments';
 export type { Document, DocumentsPage, DocumentUploadInput } from './useDocuments';

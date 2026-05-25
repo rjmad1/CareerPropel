@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/db';
+import { log } from '@/lib/logging/logger';
 import type { AgentType } from '@/lib/agents/prompts';
 
 const RECENCY_WINDOW_MS = 72 * 60 * 60 * 1000; // 72 hours
@@ -37,7 +38,16 @@ export async function findCachedExecution(
   try {
     const output = JSON.parse(existing.output) as Record<string, unknown>;
     return { cached: true, executionId: existing.id, output };
-  } catch {
+  } catch (err) {
+    const outputLen = existing.output?.length ?? 0;
+    const truncSuffix = outputLen > 200 ? '…' : '';
+    const preview = typeof existing.output === 'string'
+      ? existing.output.slice(0, 200) + truncSuffix
+      : '[non-string output]';
+    log.warn(
+      { err, executionId: existing.id, outputLength: outputLen, rawOutputPreview: preview },
+      'findCachedExecution: failed to parse cached output — skipping cache',
+    );
     return null;
   }
 }

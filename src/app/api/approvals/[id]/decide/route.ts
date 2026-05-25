@@ -6,6 +6,7 @@ import type { ApprovalDecision, ApprovalPayload } from '@/lib/workflow/types';
 
 export const dynamic = 'force-dynamic';
 
+// Mirrors the ApprovalDecision union type in @/lib/workflow/types — update both if the type changes.
 const VALID_DECISIONS: ApprovalDecision[] = ['approved', 'rejected', 'modified'];
 
 export async function POST(
@@ -14,11 +15,11 @@ export async function POST(
 ) {
   try {
     const { userEmail } = await getAuthContext();
-    const c = await prisma.candidate.findUnique({
+    const candidate = await prisma.candidate.findUnique({
       where: { email: userEmail },
       select: { id: true },
     });
-    if (!c) return NextResponse.json({ error: { message: 'Profile not found' } }, { status: 404 });
+    if (!candidate) return NextResponse.json({ error: { message: 'Profile not found' } }, { status: 404 });
 
     const body = await req.json();
     const { decision, note, modifiedPayload } = body as {
@@ -34,7 +35,7 @@ export async function POST(
       );
     }
 
-    await handleApprovalDecision(params.id, c.id, decision, note, modifiedPayload);
+    await handleApprovalDecision(params.id, candidate.id, decision, note, modifiedPayload);
 
     return NextResponse.json({ data: { recorded: true, decision } });
   } catch (err: any) {

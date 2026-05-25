@@ -8,13 +8,13 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   try {
     const { userEmail } = await getAuthContext();
-    const c = await prisma.candidate.findUnique({
+    const candidate = await prisma.candidate.findUnique({
       where: { email: userEmail },
       select: { id: true },
     });
-    if (!c) return NextResponse.json({ error: { message: 'Profile not found' } }, { status: 404 });
+    if (!candidate) return NextResponse.json({ error: { message: 'Profile not found' } }, { status: 404 });
 
-    const approvals = await getPendingApprovals(c.id);
+    const approvals = await getPendingApprovals(candidate.id);
     return NextResponse.json({ data: approvals, total: approvals.length });
   } catch (err: any) {
     return NextResponse.json(

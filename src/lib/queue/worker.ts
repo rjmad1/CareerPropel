@@ -318,7 +318,7 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
   jobLog.info({ tokenCount, latencyMs, actualCost }, 'Agent job completed');
 }
 
-export function startWorker(): Worker<AgentJobData> {
+export function startWorker(): { worker: Worker<AgentJobData>; workerId: string } {
   const workerId = `worker-${process.pid}-${Date.now()}`;
   const deployment = getDeploymentMetadata();
 
@@ -345,27 +345,45 @@ export function startWorker(): Worker<AgentJobData> {
     log.error({ err }, 'Worker error');
   });
 
-  // Graceful shutdown
-  const shutdown = async (signal: string) => {
-    log.info({ signal, workerId }, 'Shutdown signal received — draining worker');
-    await worker.pause();
+  // Shutdown is coordinated externally by bin/worker.ts.
+  // Call worker.close() directly or use drainAndClose() for graceful drain.
 
-    const drainDeadline = Date.now() + DRAIN_TIMEOUT_MS;
+  return { worker, workerId };
+}
+
+/**
+ * Gracefully drain and close the agent worker.
+ * Poll actual active-job count; wait up to DRAIN_TIMEOUT_MS before forcing close.
+ */
+export async function drainAndCloseAgentWorker(
+  worker: Worker<AgentJobData>,
+  workerId: string,
+): Promise<void> {
+  log.info({ workerId }, 'Agent worker draining');
+  await worker.pause();
+
+  const drainDeadline = Date.now() + DRAIN_TIMEOUT_MS;
+  await new Promise<void>((resolve) => {
     const checkInterval = setInterval(async () => {
-      // BullMQ Worker doesn't expose getActiveCount; check via queue instead
-      const active = 0; // drain completes when all in-flight jobs finish naturally
-      if (active === 0 || Date.now() >= drainDeadline) {
-        clearInterval(checkInterval);
-        await worker.close();
-        log.info({ workerId }, 'Worker drained and closed');
-        process.exit(0);
+      try {
+        const counts = await getAgentQueue().getJobCounts('active');
+        const active = counts.active ?? 0;
+        if (active === 0 || Date.now() >= drainDeadline) {
+          clearInterval(checkInterval);
+          resolve();
+        } else {
+          log.info({ active, remainingMs: drainDeadline - Date.now() }, 'Agent drain in progress');
+        }
+      } catch (err) {
+        log.error({ err }, 'Error during agent drain check');
+        if (Date.now() >= drainDeadline) {
+          clearInterval(checkInterval);
+          resolve();
+        }
       }
-      log.info({ active, remainingMs: drainDeadline - Date.now() }, 'Drain in progress');
     }, HEALTH_CHECK_INTERVAL);
-  };
+  });
 
-  process.once('SIGTERM', () => shutdown('SIGTERM'));
-  process.once('SIGINT',  () => shutdown('SIGINT'));
-
-  return worker;
+  await worker.close();
+  log.info({ workerId }, 'Agent worker drained and closed');
 }

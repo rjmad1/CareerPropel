@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { VariantManager, ResumeVariant } from './VariantManager';
 import { ResumeEditor } from './ResumeEditor';
 import { Sparkles } from 'lucide-react';
+import { useUnsavedChangesGuard } from '@/hooks/useUnsavedChangesGuard';
+import { UnsavedChangesModal } from '@/components/Navigation/UnsavedChangesModal';
 
 let _varIdCounter = 0;
 
@@ -59,12 +61,35 @@ Backend specialist focused on high-throughput database sharding, memory caching 
 export const ResumeLab: React.FC = () => {
   const [variants, setVariants] = useState<ResumeVariant[]>(INITIAL_VARIANTS);
   const [selectedVariantId, setSelectedVariantId] = useState<string>('var_1');
+  const savedContentRef = useRef<Record<string, string>>({});
 
-  const activeVariant = variants.find((v) => v.id === selectedVariantId) ?? variants[0];
+  // Guard — mark dirty whenever content differs from last saved state
+  const isDirtyFn = () => {
+    return variants.some((v) => {
+      const saved = savedContentRef.current[v.id];
+      return saved !== undefined && saved !== v.content;
+    });
+  };
 
+  const {
+    showConfirm,
+    onConfirmDiscard,
+    onCancelDiscard,
+  } = useUnsavedChangesGuard({
+    message: 'You have unsaved resume changes. Leave without saving?',
+    isDirtyExternal: isDirtyFn(),
+  });
+
+  // Mark baseline when variant is first loaded
   const handleSelectVariant = (id: string) => {
+    const found = variants.find((v) => v.id === id);
+    if (found && !(id in savedContentRef.current)) {
+      savedContentRef.current[id] = found.content;
+    }
     setSelectedVariantId(id);
   };
+
+  const activeVariant = variants.find((v) => v.id === selectedVariantId) ?? variants[0];
 
   const handleContentChange = (newContent: string) => {
     // Dynamic word counting and formatting check
@@ -128,6 +153,14 @@ export const ResumeLab: React.FC = () => {
   }
 
   return (
+    <>
+    {/* Unsaved-changes confirmation modal */}
+    <UnsavedChangesModal
+      open={showConfirm}
+      message="You have unsaved resume changes. Leave without saving?"
+      onConfirm={onConfirmDiscard}
+      onCancel={onCancelDiscard}
+    />
     <div className="min-h-screen bg-[#07090e] text-slate-100 antialiased p-6 md:p-10" data-cy="resume-lab-workspace">
       <div className="max-w-7xl mx-auto space-y-10">
         
@@ -186,6 +219,7 @@ export const ResumeLab: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

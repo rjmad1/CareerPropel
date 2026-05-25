@@ -56,7 +56,21 @@ export function isValidWorkflowTransition(
   return getNextWorkflowStatus(from, event) !== null;
 }
 
+/**
+ * Returns true for statuses that the automatic advance loop should never re-enter.
+ * NOTE: 'failed' is intentionally excluded here so that:
+ *   - cancelWorkflow can still cancel a failed workflow (valid transition in WORKFLOW_TRANSITIONS)
+ *   - recoverWorkflow can re-queue a failed workflow for retry
+ * Use isIrrecoverableWorkflowStatus() when you want to include failed in the check.
+ */
 export function isTerminalWorkflowStatus(status: WorkflowStatus): boolean {
+  return status === 'completed' || status === 'cancelled';
+}
+
+/**
+ * Returns true for statuses that cannot transition further under any circumstances.
+ */
+export function isIrrecoverableWorkflowStatus(status: WorkflowStatus): boolean {
   return status === 'completed' || status === 'cancelled' || status === 'failed';
 }
 

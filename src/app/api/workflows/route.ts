@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { getAuthContext } from '@/lib/middleware/auth';
+import { getCandidate } from '@/lib/route-helpers/candidate';
 import { createWorkflow } from '@/lib/workflow/engine';
+import type { WorkflowStatus } from '@/lib/workflow/types';
 
 export const dynamic = 'force-dynamic';
 
-async function getCandidate(email: string) {
-  const c = await prisma.candidate.findUnique({ where: { email }, select: { id: true } });
-  if (!c) throw Object.assign(new Error('Profile not found'), { status: 404 });
-  return c;
-}
+const VALID_WORKFLOW_STATUSES: WorkflowStatus[] = [
+  'queued', 'running', 'waiting_for_approval', 'blocked', 'failed', 'completed', 'cancelled',
+];
 
 export async function GET(req: NextRequest) {
   try {
@@ -17,18 +17,33 @@ export async function GET(req: NextRequest) {
     const candidate = await getCandidate(userEmail);
 
     const { searchParams } = req.nextUrl;
-    const status = searchParams.get('status') ?? undefined;
+    const rawStatus = searchParams.get('status') ?? undefined;
     const jobId = searchParams.get('jobId') ?? undefined;
-    const limit = Math.min(parseInt(searchParams.get('limit') ?? '20', 10), 100);
-    const offset = parseInt(searchParams.get('offset') ?? '0', 10);
+    const limit = Math.min(Number.parseInt(searchParams.get('limit') ?? '20', 10), 100);
+    const offset = Number.parseInt(searchParams.get('offset') ?? '0', 10);
+
+    // Validate status against the known enum values to avoid unsafe casts
+    const status: WorkflowStatus | undefined =
+      rawStatus && (VALID_WORKFLOW_STATUSES as string[]).includes(rawStatus)
+        ? (rawStatus as WorkflowStatus)
+        : undefined;
+
+    if (rawStatus && !status) {
+      return NextResponse.json(
+        { error: { message: `Invalid status. Must be one of: ${VALID_WORKFLOW_STATUSES.join(', ')}` } },
+        { status: 400 },
+      );
+    }
+
+    const where = {
+      candidateId: candidate.id,
+      ...(status ? { status } : {}),
+      ...(jobId ? { jobId } : {}),
+    };
 
     const [executions, total] = await Promise.all([
       prisma.workflowExecution.findMany({
-        where: {
-          candidateId: candidate.id,
-          ...(status ? { status: status as any } : {}),
-          ...(jobId ? { jobId } : {}),
-        },
+        where,
         include: {
           definition: { select: { name: true, displayName: true } },
           steps: { select: { stepKey: true, stepIndex: true, status: true, stepType: true, startedAt: true, completedAt: true } },
@@ -38,13 +53,7 @@ export async function GET(req: NextRequest) {
         take: limit,
         skip: offset,
       }),
-      prisma.workflowExecution.count({
-        where: {
-          candidateId: candidate.id,
-          ...(status ? { status: status as any } : {}),
-          ...(jobId ? { jobId } : {}),
-        },
-      }),
+      prisma.workflowExecution.count({ where }),
     ]);
 
     return NextResponse.json({ data: executions, total, limit, offset });
@@ -66,6 +75,10 @@ export async function POST(req: NextRequest) {
 
     if (!templateId || typeof templateId !== 'string') {
       return NextResponse.json({ error: { message: 'templateId is required' } }, { status: 400 });
+    }
+
+    if (jobId != null && typeof jobId !== 'string') {
+      return NextResponse.json({ error: { message: 'jobId must be a string' } }, { status: 400 });
     }
 
     const workflowId = await createWorkflow({

@@ -22,3 +22,19 @@ export function getWorkflowQueue(): Queue<WorkflowJobData> {
   }
   return _workflowQueue;
 }
+
+/**
+ * Gracefully close the singleton Queue and release its Redis connection.
+ * Idempotent — safe to call multiple times during shutdown.
+ */
+export async function closeWorkflowQueue(): Promise<void> {
+  if (!_workflowQueue) return;
+  const q = _workflowQueue;
+  _workflowQueue = null; // prevent re-use before close completes
+  try {
+    await q.close();
+  } catch (err) {
+    // Re-throw so callers can decide whether to log/ignore
+    throw err;
+  }
+}

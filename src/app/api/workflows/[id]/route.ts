@@ -1,15 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
 import { getAuthContext } from '@/lib/middleware/auth';
+import { getCandidate } from '@/lib/route-helpers/candidate';
 import { cancelWorkflow } from '@/lib/workflow/engine';
+import { prisma } from '@/lib/db';
+import { log } from '@/lib/logging/logger';
 
 export const dynamic = 'force-dynamic';
-
-async function getCandidate(email: string) {
-  const c = await prisma.candidate.findUnique({ where: { email }, select: { id: true } });
-  if (!c) throw Object.assign(new Error('Profile not found'), { status: 404 });
-  return c;
-}
 
 export async function GET(
   _req: NextRequest,
@@ -52,8 +48,19 @@ export async function DELETE(
     const { userEmail } = await getAuthContext();
     const candidate = await getCandidate(userEmail);
 
-    const body = await req.json().catch(() => ({}));
-    await cancelWorkflow(params.id, candidate.id, body.reason);
+    let reason: string | undefined;
+    try {
+      const body = await req.json();
+      reason = typeof body?.reason === 'string' ? body.reason : undefined;
+    } catch (parseErr) {
+      log.warn({ err: parseErr }, 'DELETE /workflows/[id]: invalid JSON body');
+      return NextResponse.json(
+        { error: { message: 'Invalid JSON in request body' } },
+        { status: 400 },
+      );
+    }
+
+    await cancelWorkflow(params.id, candidate.id, reason);
 
     return NextResponse.json({ data: { cancelled: true } });
   } catch (err: any) {

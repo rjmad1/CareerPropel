@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { NavLayout } from '@/components/Layout/NavLayout';
 import { KanbanBoard } from '@/components/Kanban/KanbanBoard';
 import { Job, JobStage } from '@/types/job';
@@ -21,6 +21,8 @@ import {
   ModalFooter,
   Checkbox,
 } from '@/components/ui';
+import { parseJobsState, buildUrl } from '@/lib/navigation/state';
+import { useRestorableScroll } from '@/hooks/useRestorableScroll';
 
 // ─── Data fetching ────────────────────────────────────────────────────────────
 
@@ -82,15 +84,29 @@ async function createJob(input: { title: string; company: string; url?: string }
   return json.data ?? json;
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
+// ─── Inner page (needs Suspense for useSearchParams) ─────────────────────────
 
-export default function JobsPage() {
+function JobsContent() {
   const { status } = useSession();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const queryClient = useQueryClient();
+
+  // ── URL state (canonical for filters/selected job) ──
+  const urlState = parseJobsState(searchParams);
+  const selectedJobId = urlState.job || null;
+
+  function setSelectedJobId(id: string | null) {
+    const next = buildUrl(pathname, { job: id }, searchParams);
+    router.replace(next, { scroll: false });
+  }
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [showImportModal, setShowImportModal] = useState(false);
+
+  // Scroll restoration for the kanban board
+  useRestorableScroll({ key: '/jobs' });
 
   const { data: jobs = [], error } = useQuery({
     queryKey: ['jobs'],
@@ -115,7 +131,6 @@ export default function JobsPage() {
 
   const handleJobMove = async (jobId: string, newStage: JobStage): Promise<MoveResult> => {
     const result = await moveJobStage(jobId, newStage);
-    // Sync server-side changes (stage + activity log)
     queryClient.invalidateQueries({ queryKey: ['jobs'] });
     if (result.agentType) {
       const label = AGENT_LABELS[result.agentType] ?? result.agentType;
@@ -131,9 +146,9 @@ export default function JobsPage() {
   };
 
   const stats = {
-    total: jobs.length,
-    active: jobs.filter((j) => j.stage !== 'rejected' && j.stage !== 'archived' && j.stage !== 'offer').length,
-    offers: jobs.filter((j) => j.stage === 'offer').length,
+    total:    jobs.length,
+    active:   jobs.filter((j) => j.stage !== 'rejected' && j.stage !== 'archived' && j.stage !== 'offer').length,
+    offers:   jobs.filter((j) => j.stage === 'offer').length,
     rejected: jobs.filter((j) => j.stage === 'rejected').length,
   };
 
@@ -145,9 +160,9 @@ export default function JobsPage() {
           {/* Stats indicators */}
           <div className="flex flex-wrap items-center gap-4">
             {[
-              { label: 'Total', value: stats.total, color: 'text-slate-900 border-slate-200 bg-slate-50' },
-              { label: 'Active', value: stats.active, color: 'text-blue-700 border-blue-100 bg-blue-50/50' },
-              { label: 'Offers', value: stats.offers, color: 'text-emerald-700 border-emerald-100 bg-emerald-50/50' },
+              { label: 'Total',    value: stats.total,    color: 'text-slate-900 border-slate-200 bg-slate-50' },
+              { label: 'Active',   value: stats.active,   color: 'text-blue-700 border-blue-100 bg-blue-50/50' },
+              { label: 'Offers',   value: stats.offers,   color: 'text-emerald-700 border-emerald-100 bg-emerald-50/50' },
               { label: 'Rejected', value: stats.rejected, color: 'text-rose-700 border-rose-100 bg-rose-50/50' },
             ].map(({ label, value, color }) => (
               <div key={label} className={`flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-semibold ${color}`}>
@@ -162,29 +177,32 @@ export default function JobsPage() {
             <button
               onClick={() => setShowImportModal(true)}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 active:bg-slate-100 transition-colors shadow-xs"
+              type="button"
             >
-              <LucideUpload className="h-3.5 w-3.5" />
+              <LucideUpload className="h-3.5 w-3.5" aria-hidden="true" />
               <span>Import Jobs</span>
             </button>
             <button
               onClick={() => setShowAddModal(true)}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-600 text-xs font-semibold text-white hover:bg-blue-700 active:bg-blue-800 transition-colors shadow-sm"
+              type="button"
             >
-              <Plus className="h-3.5 w-3.5" />
+              <Plus className="h-3.5 w-3.5" aria-hidden="true" />
               <span>Add Job</span>
             </button>
           </div>
         </div>
 
         {error && (
-          <div className="flex-shrink-0 bg-rose-50 border-b border-rose-100 px-6 py-3 flex items-center justify-between text-rose-800 text-xs font-semibold">
+          <div className="flex-shrink-0 bg-rose-50 border-b border-rose-100 px-6 py-3 flex items-center justify-between text-rose-800 text-xs font-semibold" role="alert">
             <div className="flex items-center gap-2">
-              <span>⚠️</span>
+              <span aria-hidden="true">⚠️</span>
               <span>Failed to load jobs.</span>
             </div>
             <button
               onClick={() => queryClient.invalidateQueries({ queryKey: ['jobs'] })}
               className="px-2.5 py-1 rounded-lg bg-rose-100 hover:bg-rose-200 active:bg-rose-300 font-bold transition-all text-[10px] uppercase tracking-wider text-rose-700"
+              type="button"
             >
               Retry
             </button>
@@ -197,6 +215,8 @@ export default function JobsPage() {
             initialJobs={jobs}
             onJobUpdate={handleJobUpdate}
             onJobMove={handleJobMove}
+            selectedJobId={selectedJobId}
+            onJobSelect={setSelectedJobId}
           />
         </div>
       </div>
@@ -219,6 +239,20 @@ export default function JobsPage() {
         }}
       />
     </NavLayout>
+  );
+}
+
+export default function JobsPage() {
+  return (
+    <Suspense fallback={
+      <NavLayout title="Job Pipeline" subtitle="Loading...">
+        <div className="flex justify-center items-center h-64">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" role="status" />
+        </div>
+      </NavLayout>
+    }>
+      <JobsContent />
+    </Suspense>
   );
 }
 
@@ -302,21 +336,20 @@ function ImportJobsModal({ open, onClose, onImported }: { open: boolean; onClose
       <ModalHeader onClose={onClose}>
         <div>
           <ModalTitle>Import Jobs</ModalTitle>
-          <p className="text-xs text-slate-500 mt-1 font-medium">
-            Search job boards and add matching roles to your pipeline.
-          </p>
+          <p className="text-xs text-slate-500 mt-1 font-medium">Search job boards and add matching roles to your pipeline.</p>
         </div>
       </ModalHeader>
 
       <ModalBody className="flex-1 overflow-y-auto p-6 space-y-6">
         <div className="flex flex-col gap-6">
           {/* Source Toggle */}
-          <div className="flex rounded-lg border border-slate-200 p-0.5 bg-slate-50 self-start">
+          <div className="flex rounded-lg border border-slate-200 p-0.5 bg-slate-50 self-start" role="group" aria-label="Job source">
             {(['greenhouse', 'indeed', 'linkedin'] as ImportSource[]).map((s) => (
               <button
                 key={s}
                 type="button"
                 onClick={() => setSource(s)}
+                aria-pressed={source === s}
                 className={`px-3 py-1.5 rounded-md text-xs font-semibold capitalize transition-all ${
                   source === s
                     ? 'bg-white text-slate-900 shadow-xs border border-slate-200/50 font-bold'
@@ -331,54 +364,32 @@ function ImportJobsModal({ open, onClose, onImported }: { open: boolean; onClose
           {/* Search Form */}
           <form onSubmit={handleSearch} className="space-y-4">
             {source === 'greenhouse' && (
-              <Input
-                placeholder="Company board token (e.g. stripe, airbnb)"
-                value={boardToken}
-                onChange={(e) => setBoardToken(e.target.value)}
-                label="Company Board Token"
-                required
-              />
+              <Input placeholder="Company board token (e.g. stripe, airbnb)" value={boardToken} onChange={(e) => setBoardToken(e.target.value)} label="Company Board Token" required />
             )}
             <div className="flex flex-col sm:flex-row gap-3 items-end">
               <div className="flex-1 w-full">
-                <Input
-                  required
-                  placeholder="Job title or keywords"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  label="Keywords"
-                />
+                <Input required placeholder="Job title or keywords" value={query} onChange={(e) => setQuery(e.target.value)} label="Keywords" />
               </div>
               {source !== 'greenhouse' && (
                 <div className="w-full sm:w-48">
-                  <Input
-                    placeholder="Location"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    label="Location"
-                  />
+                  <Input placeholder="Location" value={location} onChange={(e) => setLocation(e.target.value)} label="Location" />
                 </div>
               )}
-              <Button
-                type="submit"
-                disabled={searching}
-                loading={searching}
-                className="w-full sm:w-auto h-9 whitespace-nowrap"
-              >
+              <Button type="submit" disabled={searching} loading={searching} className="w-full sm:w-auto h-9 whitespace-nowrap">
                 {searching ? 'Searching…' : 'Search'}
               </Button>
             </div>
             {(source === 'indeed' || source === 'linkedin') && (
-              <div className="flex items-center gap-2 p-3 bg-amber-50 border border-amber-100 rounded-lg text-amber-800 text-xs font-medium">
-                <span>⚠️</span>
+              <div className="flex items-center gap-2 p-3 bg-amber-50 border border-amber-100 rounded-lg text-amber-800 text-xs font-medium" role="note">
+                <span aria-hidden="true">⚠️</span>
                 <span>{source === 'linkedin' ? 'LinkedIn' : 'Indeed'} search uses a headless browser and may take 20–40 seconds.</span>
               </div>
             )}
           </form>
 
           {error && (
-            <div className="flex items-center gap-2 p-3 bg-rose-50 border border-rose-100 rounded-lg text-rose-800 text-xs font-semibold">
-              <span>⚠️</span>
+            <div className="flex items-center gap-2 p-3 bg-rose-50 border border-rose-100 rounded-lg text-rose-800 text-xs font-semibold" role="alert">
+              <span aria-hidden="true">⚠️</span>
               <span>{error}</span>
             </div>
           )}
@@ -387,14 +398,8 @@ function ImportJobsModal({ open, onClose, onImported }: { open: boolean; onClose
           {results.length > 0 && (
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <p className="text-xs font-bold text-slate-500">
-                  {results.length} result{results.length !== 1 ? 's' : ''}
-                </p>
-                <button
-                  type="button"
-                  onClick={toggleAll}
-                  className="text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors"
-                >
+                <p className="text-xs font-bold text-slate-500">{results.length} result{results.length !== 1 ? 's' : ''}</p>
+                <button type="button" onClick={toggleAll} className="text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors">
                   {selected.size === results.length ? 'Deselect all' : 'Select all'}
                 </button>
               </div>
@@ -406,36 +411,21 @@ function ImportJobsModal({ open, onClose, onImported }: { open: boolean; onClose
                       key={i}
                       onClick={() => setSelected((s) => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n; })}
                       className={`flex gap-3 p-4 rounded-xl border transition-all cursor-pointer items-start hover:border-blue-300 ${
-                        selected.has(i)
-                          ? 'border-blue-500 bg-blue-50/40 shadow-xs'
-                          : 'border-slate-200 bg-white'
+                        selected.has(i) ? 'border-blue-500 bg-blue-50/40 shadow-xs' : 'border-slate-200 bg-white'
                       }`}
+                      role="checkbox"
+                      aria-checked={selected.has(i)}
+                      tabIndex={0}
+                      onKeyDown={(e) => { if (e.key === ' ' || e.key === 'Enter') setSelected((s) => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n; }); }}
                     >
-                      <Checkbox
-                        checked={selected.has(i)}
-                        onClick={(e) => e.stopPropagation()}
-                        onChange={() => setSelected((s) => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n; })}
-                        className="mt-0.5"
-                      />
+                      <Checkbox checked={selected.has(i)} onClick={(e) => e.stopPropagation()} onChange={() => setSelected((s) => { const n = new Set(s); n.has(i) ? n.delete(i) : n.add(i); return n; })} className="mt-0.5" />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-slate-900 truncate">{sanitizeText(job.title)}</p>
-                        <p className="text-xs font-medium text-slate-500 mt-0.5">
-                          {sanitizeText(job.company)} · {sanitizeText(job.location)}
-                        </p>
-                        {job.description && (
-                          <p className="text-xs text-slate-400 truncate mt-1">
-                            {sanitizeText(job.description)}
-                          </p>
-                        )}
+                        <p className="text-xs font-medium text-slate-500 mt-0.5">{sanitizeText(job.company)} · {sanitizeText(job.location)}</p>
+                        {job.description && <p className="text-xs text-slate-400 truncate mt-1">{sanitizeText(job.description)}</p>}
                       </div>
                       {!safeUrl || (!safeUrl.startsWith('http://') && !safeUrl.startsWith('https://')) ? null : (
-                        <a
-                          href={safeUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="flex-shrink-0 text-xs font-semibold text-blue-600 hover:text-blue-700 border border-blue-200 hover:border-blue-300 bg-blue-50/50 hover:bg-blue-50 px-2.5 py-1 rounded-md transition-colors"
-                        >
+                        <a href={safeUrl} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} className="flex-shrink-0 text-xs font-semibold text-blue-600 hover:text-blue-700 border border-blue-200 hover:border-blue-300 bg-blue-50/50 hover:bg-blue-50 px-2.5 py-1 rounded-md transition-colors">
                           View
                         </a>
                       )}
@@ -449,15 +439,8 @@ function ImportJobsModal({ open, onClose, onImported }: { open: boolean; onClose
       </ModalBody>
 
       <ModalFooter>
-        <Button variant="outline" onClick={onClose} disabled={importing} size="sm">
-          Cancel
-        </Button>
-        <Button
-          onClick={handleImport}
-          disabled={importing || selected.size === 0}
-          loading={importing}
-          size="sm"
-        >
+        <Button variant="outline" onClick={onClose} disabled={importing} size="sm">Cancel</Button>
+        <Button onClick={handleImport} disabled={importing || selected.size === 0} loading={importing} size="sm">
           {importing ? 'Importing…' : `Import ${selected.size > 0 ? selected.size : ''} Job${selected.size !== 1 ? 's' : ''}`}
         </Button>
       </ModalFooter>
@@ -482,10 +465,7 @@ function AddJobModal({ open, onClose, onCreated }: { open: boolean; onClose: () 
     try {
       await createJob({ title: title.trim(), company: company.trim(), url: url.trim() || undefined });
       onCreated();
-      // Reset form
-      setTitle('');
-      setCompany('');
-      setUrl('');
+      setTitle(''); setCompany(''); setUrl('');
     } catch (err: any) {
       setError(err.message || 'Failed to add job');
     } finally {
@@ -500,45 +480,19 @@ function AddJobModal({ open, onClose, onCreated }: { open: boolean; onClose: () 
       </ModalHeader>
       <form onSubmit={handleSubmit}>
         <ModalBody className="space-y-5 p-6">
-          <Input
-            label="Job Title"
-            required
-            placeholder="e.g. Senior Software Engineer"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            autoFocus
-          />
-          <Input
-            label="Company"
-            required
-            placeholder="e.g. Acme Corp"
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-          />
-          <Input
-            label="Job Posting URL"
-            type="url"
-            placeholder="https://…"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-          />
+          <Input label="Job Title" required placeholder="e.g. Senior Software Engineer" value={title} onChange={(e) => setTitle(e.target.value)} autoFocus />
+          <Input label="Company" required placeholder="e.g. Acme Corp" value={company} onChange={(e) => setCompany(e.target.value)} />
+          <Input label="Job Posting URL" type="url" placeholder="https://…" value={url} onChange={(e) => setUrl(e.target.value)} />
           {error && (
-            <div className="flex items-center gap-2 p-3 bg-rose-50 border border-rose-100 rounded-lg text-rose-800 text-xs font-semibold">
-              <span>⚠️</span>
+            <div className="flex items-center gap-2 p-3 bg-rose-50 border border-rose-100 rounded-lg text-rose-800 text-xs font-semibold" role="alert">
+              <span aria-hidden="true">⚠️</span>
               <span>{error}</span>
             </div>
           )}
         </ModalBody>
         <ModalFooter>
-          <Button variant="outline" onClick={onClose} disabled={saving} size="sm">
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            disabled={saving || !title.trim() || !company.trim()}
-            loading={saving}
-            size="sm"
-          >
+          <Button variant="outline" onClick={onClose} disabled={saving} size="sm">Cancel</Button>
+          <Button type="submit" disabled={saving || !title.trim() || !company.trim()} loading={saving} size="sm">
             {saving ? 'Adding…' : 'Add Job'}
           </Button>
         </ModalFooter>

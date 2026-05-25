@@ -2,7 +2,7 @@ import { Worker, Job } from 'bullmq';
 import { log } from '@/lib/logging/logger';
 import { advanceWorkflow } from './engine';
 import { createBullMQRedisConnection } from '@/lib/queue/job-definitions';
-import { WORKFLOW_QUEUE_NAME } from './queue';
+import { WORKFLOW_QUEUE_NAME, getWorkflowQueue } from './queue';
 import type { WorkflowJobData } from './types';
 
 const DRAIN_TIMEOUT_MS = 120_000;
@@ -13,13 +13,11 @@ async function processWorkflowStep(job: Job<WorkflowJobData>): Promise<void> {
   const jobLog = log.child({ workflowExecutionId, stepIndex, jobId: job.id });
 
   jobLog.info('Processing workflow step');
-
   await advanceWorkflow(workflowExecutionId);
-
   jobLog.info('Workflow step processed');
 }
 
-export function startWorkflowWorker(): Worker<WorkflowJobData> {
+export function startWorkflowWorker(): { worker: Worker<WorkflowJobData>; workerId: string } {
   const workerId = `wf-worker-${process.pid}-${Date.now()}`;
 
   log.info({ workerId }, 'Workflow BullMQ worker starting');
@@ -45,23 +43,45 @@ export function startWorkflowWorker(): Worker<WorkflowJobData> {
     log.error({ err }, 'Workflow worker error');
   });
 
-  // Graceful shutdown — mirrors agent worker pattern
-  const shutdown = async (signal: string) => {
-    log.info({ signal, workerId }, 'Workflow worker shutdown signal received — draining');
-    await worker.pause();
+  // Shutdown is coordinated externally by bin/worker.ts via drainAndCloseWorkflowWorker().
 
-    const deadline = Date.now() + DRAIN_TIMEOUT_MS;
+  return { worker, workerId };
+}
+
+/**
+ * Gracefully drain and close the workflow worker.
+ * Polls the actual active-job count so the process waits for in-flight steps to finish.
+ * Exported so bin/worker.ts can coordinate shutdown alongside the agent worker.
+ */
+export async function drainAndCloseWorkflowWorker(
+  worker: Worker<WorkflowJobData>,
+  workerId: string,
+): Promise<void> {
+  log.info({ workerId }, 'Workflow worker draining');
+  await worker.pause();
+
+  const deadline = Date.now() + DRAIN_TIMEOUT_MS;
+  await new Promise<void>((resolve) => {
     const check = setInterval(async () => {
-      if (Date.now() >= deadline) {
-        clearInterval(check);
-        await worker.close();
-        log.info({ workerId }, 'Workflow worker drained and closed');
+      try {
+        const counts = await getWorkflowQueue().getJobCounts('active');
+        const activeCount = counts.active ?? 0;
+        if (activeCount === 0 || Date.now() >= deadline) {
+          clearInterval(check);
+          resolve();
+        } else {
+          log.info({ activeCount, remainingMs: deadline - Date.now() }, 'Workflow drain in progress');
+        }
+      } catch (err) {
+        log.error({ err }, 'Error during workflow drain check');
+        if (Date.now() >= deadline) {
+          clearInterval(check);
+          resolve();
+        }
       }
     }, HEALTH_CHECK_INTERVAL_MS);
-  };
+  });
 
-  process.once('SIGTERM', () => shutdown('SIGTERM'));
-  process.once('SIGINT', () => shutdown('SIGINT'));
-
-  return worker;
+  await worker.close();
+  log.info({ workerId }, 'Workflow worker drained and closed');
 }

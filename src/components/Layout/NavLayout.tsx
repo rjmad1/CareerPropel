@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
@@ -27,43 +27,121 @@ import {
   Plug,
   Users,
   Cpu,
+  ChevronRight,
 } from 'lucide-react';
 import { DemoBanner } from '@/components/ui/DemoBanner';
 import { DemoDataIndicator } from '@/components/ui/DemoDataBadge';
+import { registerRouter } from '@/lib/navigation/navigation';
+import { buildBreadcrumbs, type Breadcrumb } from '@/lib/navigation/breadcrumbs';
+
+// ─── Nav item definitions (single source of truth) ───────────────────────────
 
 const navItems = [
-  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/jobs', label: 'Pipeline', icon: KanbanSquare },
-  { href: '/job-search', label: 'Job Search', icon: Globe },
-  { href: '/networking', label: 'Networking', icon: Users },
-  { href: '/interview-prep', label: 'Interview Prep', icon: Mic },
-  { href: '/interviews', label: 'Interviews', icon: CalendarCheck },
-  { href: '/offers', label: 'Offers', icon: CircleDollarSign },
-  { href: '/documents', label: 'Documents', icon: FileText },
-  { href: '/resume-lab', label: 'Resume Lab', icon: FlaskConical },
-  { href: '/emails', label: 'Emails', icon: Mail },
-  { href: '/profile', label: 'Profile', icon: User },
-  { href: '/calendar', label: 'Calendar', icon: Calendar },
-  { href: '/analytics', label: 'Analytics', icon: BarChart3 },
-  { href: '/audit-logs', label: 'Audit Logs', icon: FileSpreadsheet },
-  { href: '/api-keys', label: 'API Keys', icon: KeyRound },
-  { href: '/settings/integrations', label: 'Integrations', icon: Plug },
-  { href: '/settings/ai-providers', label: 'AI Providers', icon: Cpu },
-  { href: '/settings/security', label: 'Security', icon: ShieldAlert },
-  { href: '/settings/account', label: 'Account', icon: Settings },
-];
+  { href: '/dashboard',             label: 'Dashboard',     icon: LayoutDashboard },
+  { href: '/jobs',                  label: 'Pipeline',      icon: KanbanSquare },
+  { href: '/job-search',            label: 'Job Search',    icon: Globe },
+  { href: '/networking',            label: 'Networking',    icon: Users },
+  { href: '/interview-prep',        label: 'Interview Prep',icon: Mic },
+  { href: '/interviews',            label: 'Interviews',    icon: CalendarCheck },
+  { href: '/offers',                label: 'Offers',        icon: CircleDollarSign },
+  { href: '/documents',             label: 'Documents',     icon: FileText },
+  { href: '/resume-lab',            label: 'Resume Lab',    icon: FlaskConical },
+  { href: '/emails',                label: 'Emails',        icon: Mail },
+  { href: '/profile',               label: 'Profile',       icon: User },
+  { href: '/calendar',              label: 'Calendar',      icon: Calendar },
+  { href: '/analytics',             label: 'Analytics',     icon: BarChart3 },
+  { href: '/audit-logs',            label: 'Audit Logs',    icon: FileSpreadsheet },
+  { href: '/api-keys',              label: 'API Keys',      icon: KeyRound },
+  { href: '/settings/integrations', label: 'Integrations',  icon: Plug },
+  { href: '/settings/ai-providers', label: 'AI Providers',  icon: Cpu },
+  { href: '/settings/security',     label: 'Security',      icon: ShieldAlert },
+  { href: '/settings/account',      label: 'Account',       icon: Settings },
+] as const;
+
+// ─── Route announcer (WCAG 4.1.3 — screen reader live region) ───────────────
+
+function RouteAnnouncer({ title }: { title?: string }) {
+  const pathname = usePathname();
+  const [announcement, setAnnouncement] = useState('');
+
+  useEffect(() => {
+    const label = title ?? navItems.find(
+      (item) => pathname === item.href || pathname?.startsWith(item.href + '/'),
+    )?.label ?? 'Page';
+    setAnnouncement(`${label} — CareerPropel`);
+  }, [pathname, title]);
+
+  return (
+    <div
+      aria-live="polite"
+      aria-atomic="true"
+      className="sr-only"
+      role="status"
+    >
+      {announcement}
+    </div>
+  );
+}
+
+// ─── Breadcrumb bar ───────────────────────────────────────────────────────────
+
+function BreadcrumbBar({ crumbs }: { crumbs: Breadcrumb[] }) {
+  if (crumbs.length <= 1) return null;
+  return (
+    <nav aria-label="Breadcrumb" className="flex items-center gap-1 text-xs text-slate-500 font-medium">
+      {crumbs.map((crumb, idx) => (
+        <React.Fragment key={crumb.href + idx}>
+          {idx > 0 && (
+            <ChevronRight className="h-3 w-3 text-slate-400 shrink-0" aria-hidden="true" />
+          )}
+          {crumb.current ? (
+            <span className="text-slate-700 font-semibold" aria-current="page">
+              {crumb.label}
+            </span>
+          ) : (
+            <Link
+              href={crumb.href}
+              className="hover:text-blue-600 transition-colors"
+            >
+              {crumb.label}
+            </Link>
+          )}
+        </React.Fragment>
+      ))}
+    </nav>
+  );
+}
+
+// ─── Props ────────────────────────────────────────────────────────────────────
 
 interface NavLayoutProps {
   readonly children: React.ReactNode;
   readonly title?: string;
   readonly subtitle?: string;
+  /** Override breadcrumbs entirely (e.g. for dynamic entity labels) */
+  readonly breadcrumbs?: Breadcrumb[];
+  /** Extra entity label appended to auto-generated breadcrumbs */
+  readonly entityLabel?: string;
 }
 
-export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
+// ─── NavLayout ────────────────────────────────────────────────────────────────
+
+export function NavLayout({
+  children,
+  title,
+  subtitle,
+  breadcrumbs: crumbsProp,
+  entityLabel,
+}: NavLayoutProps) {
   const pathname = usePathname();
   const { data: session, status } = useSession();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Register router for module-level navigate() calls
+  useEffect(() => {
+    registerRouter(router);
+  }, [router]);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -76,10 +154,24 @@ export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
     setSidebarOpen(false);
   }, [pathname]);
 
+  const handleSignOut = useCallback(() => {
+    signOut({ callbackUrl: '/login' });
+  }, []);
+
+  // Auto-generate breadcrumbs from route metadata if not overridden
+  const breadcrumbs: Breadcrumb[] = crumbsProp ?? buildBreadcrumbs(
+    pathname ?? '/',
+    { entityLabel },
+  );
+
   if (status === 'loading') {
     return (
       <div className="flex h-screen items-center justify-center bg-slate-50">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
+        <div
+          className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"
+          role="status"
+          aria-label="Loading"
+        />
       </div>
     );
   }
@@ -107,14 +199,20 @@ export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
       </div>
 
       {/* Nav Items */}
-      <nav className="flex-1 overflow-y-auto px-4 py-4 space-y-1 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
+      <nav
+        aria-label="Main navigation"
+        className="flex-1 overflow-y-auto px-4 py-4 space-y-1 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent"
+      >
         {navItems.map((item) => {
-          const isActive = pathname === item.href || (pathname?.startsWith(item.href + '/') && item.href !== '/');
+          const isActive =
+            pathname === item.href ||
+            (pathname?.startsWith(item.href + '/') && (item.href as string) !== '/');
           const IconComponent = item.icon;
           return (
             <Link
               key={item.href}
               href={item.href}
+              aria-current={isActive ? 'page' : undefined}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs transition-all duration-150 group ${
                 isActive
                   ? 'bg-blue-600 text-white font-medium shadow-sm shadow-blue-500/10'
@@ -125,6 +223,7 @@ export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
                 className={`h-4 w-4 shrink-0 transition-colors ${
                   isActive ? 'text-white' : 'text-slate-400 group-hover:text-white'
                 }`}
+                aria-hidden="true"
               />
               <span className="truncate">{item.label}</span>
             </Link>
@@ -153,114 +252,135 @@ export function NavLayout({ children, title, subtitle }: NavLayoutProps) {
           </div>
         </div>
         <button
-          onClick={() => signOut({ callbackUrl: '/login' })}
+          onClick={handleSignOut}
           className="flex items-center gap-2 text-slate-500 hover:text-red-400 transition-colors duration-150 w-full text-left py-1 text-xs group"
+          type="button"
         >
-          <LogOut className="h-3.5 w-3.5 group-hover:text-red-400 transition-colors" />
+          <LogOut className="h-3.5 w-3.5 group-hover:text-red-400 transition-colors" aria-hidden="true" />
           <span>Sign out</span>
         </button>
       </div>
     </div>
   );
 
-  // Detect demo session for DemoDataIndicator
   const isDemo = (session?.user?.email ?? '').startsWith('demo+');
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 text-slate-900 overflow-hidden relative">
+      {/* Screen reader route announcer */}
+      <RouteAnnouncer title={title} />
+
       {/* Demo Environment Banner — only shown to demo accounts */}
       <DemoBanner />
-      <div className="flex flex-1 overflow-hidden relative">
-      {/* Sidebar - Desktop */}
-      <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:z-30 border-r border-slate-800 bg-slate-900 shrink-0">
-        {renderSidebarContent()}
-      </aside>
 
-      {/* Sidebar - Mobile Sliding Drawer */}
-      <div
-        className={`fixed inset-0 z-40 lg:hidden ${sidebarOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
-      >
-        {/* Backdrop overlay */}
-        <button
-          type="button"
-          aria-label="Close sidebar"
-          className={`absolute inset-0 w-full bg-slate-950/60 backdrop-blur-xs transition-opacity duration-350 ease-in-out cursor-default ${
-            sidebarOpen ? 'opacity-100' : 'opacity-0'
-          }`}
-          onClick={() => setSidebarOpen(false)}
-        />
-        {/* Sliding Panel */}
+      <div className="flex flex-1 overflow-hidden relative">
+        {/* Sidebar - Desktop */}
         <aside
-          className={`absolute inset-y-0 left-0 w-64 bg-slate-900 shadow-2xl transition-transform duration-350 ease-in-out ${
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
+          className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:z-30 border-r border-slate-800 bg-slate-900 shrink-0"
+          aria-label="Sidebar navigation"
         >
-          <button
-            onClick={() => setSidebarOpen(false)}
-            className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-md bg-slate-800/40 hover:bg-slate-800 transition-all z-50 lg:hidden"
-            aria-label="Close sidebar"
-          >
-            <X className="h-4 w-4" />
-          </button>
           {renderSidebarContent()}
         </aside>
-      </div>
 
-      {/* Main Content Layout */}
-      <div className="flex flex-col flex-1 min-w-0 lg:pl-64 min-h-screen relative">
-        {/* Top Mobile Navbar */}
-        <header className="lg:hidden h-16 border-b border-slate-200 bg-white flex items-center justify-between px-4 sticky top-0 z-20 shrink-0 shadow-xs">
-          <div className="flex items-center gap-3">
+        {/* Sidebar - Mobile Sliding Drawer */}
+        <div
+          className={`fixed inset-0 z-40 lg:hidden ${sidebarOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
+        >
+          {/* Backdrop overlay */}
+          <button
+            type="button"
+            aria-label="Close sidebar"
+            className={`absolute inset-0 w-full bg-slate-950/60 backdrop-blur-xs transition-opacity duration-350 ease-in-out cursor-default ${
+              sidebarOpen ? 'opacity-100' : 'opacity-0'
+            }`}
+            onClick={() => setSidebarOpen(false)}
+          />
+          {/* Sliding Panel */}
+          <aside
+            className={`absolute inset-y-0 left-0 w-64 bg-slate-900 shadow-2xl transition-transform duration-350 ease-in-out ${
+              sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}
+            aria-label="Mobile sidebar navigation"
+            aria-hidden={!sidebarOpen}
+          >
             <button
-              onClick={() => setSidebarOpen(true)}
-              className="p-1.5 rounded-lg text-slate-600 hover:bg-slate-100 active:bg-slate-200 transition-all"
-              aria-label="Open sidebar"
+              onClick={() => setSidebarOpen(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-md bg-slate-800/40 hover:bg-slate-800 transition-all z-50 lg:hidden"
+              aria-label="Close sidebar"
+              type="button"
             >
-              <Menu className="h-5 w-5" />
+              <X className="h-4 w-4" aria-hidden="true" />
             </button>
-            <Link href="/dashboard" className="flex flex-col">
-              <span className="text-sm font-bold text-slate-900 tracking-wide">
-                CareerPropel
-              </span>
-              <span className="text-[9px] font-semibold text-blue-600 uppercase tracking-wider -mt-1">
-                AI Career Platform
-              </span>
-            </Link>
-          </div>
-          <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-semibold overflow-hidden shrink-0 border border-slate-200">
-            {avatarUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={avatarUrl} alt={session.user?.name || 'User'} className="h-full w-full object-cover" />
-            ) : (
-              initials
-            )}
-          </div>
-        </header>
+            {renderSidebarContent()}
+          </aside>
+        </div>
 
-        {/* Page Header (Desktop & Mobile fluid) */}
-        {(title || subtitle) && (
-          <header className="bg-white border-b border-slate-200 px-6 py-4 shrink-0 shadow-xs relative">
-            <div className="flex flex-col gap-0.5">
-              {title && (
-                <h1 className="text-xl font-bold text-slate-900 leading-tight tracking-tight">
-                  {title}
-                </h1>
-              )}
-              {subtitle && (
-                <p className="text-xs text-slate-500 font-medium">
-                  {subtitle}
-                </p>
+        {/* Main Content Layout */}
+        <div className="flex flex-col flex-1 min-w-0 lg:pl-64 min-h-screen relative">
+          {/* Top Mobile Navbar */}
+          <header className="lg:hidden h-16 border-b border-slate-200 bg-white flex items-center justify-between px-4 sticky top-0 z-20 shrink-0 shadow-xs">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="p-1.5 rounded-lg text-slate-600 hover:bg-slate-100 active:bg-slate-200 transition-all"
+                aria-label="Open sidebar"
+                aria-expanded={sidebarOpen}
+                aria-controls="mobile-sidebar"
+                type="button"
+              >
+                <Menu className="h-5 w-5" aria-hidden="true" />
+              </button>
+              <Link href="/dashboard" className="flex flex-col">
+                <span className="text-sm font-bold text-slate-900 tracking-wide">
+                  CareerPropel
+                </span>
+                <span className="text-[9px] font-semibold text-blue-600 uppercase tracking-wider -mt-1">
+                  AI Career Platform
+                </span>
+              </Link>
+            </div>
+            <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-xs font-semibold overflow-hidden shrink-0 border border-slate-200">
+              {avatarUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={avatarUrl} alt={session.user?.name || 'User'} className="h-full w-full object-cover" />
+              ) : (
+                initials
               )}
             </div>
           </header>
-        )}
 
-        {/* Scrollable Page Body */}
-        <main className="flex-1 overflow-y-auto relative bg-slate-50 focus:outline-none">
-          {children}
-        </main>
+          {/* Page Header (Desktop & Mobile fluid) */}
+          {(title || subtitle || breadcrumbs.length > 1) && (
+            <header className="bg-white border-b border-slate-200 px-6 py-4 shrink-0 shadow-xs relative">
+              <div className="flex flex-col gap-1">
+                {/* Breadcrumbs */}
+                <BreadcrumbBar crumbs={breadcrumbs} />
+
+                {title && (
+                  <h1 className="text-xl font-bold text-slate-900 leading-tight tracking-tight">
+                    {title}
+                  </h1>
+                )}
+                {subtitle && (
+                  <p className="text-xs text-slate-500 font-medium">
+                    {subtitle}
+                  </p>
+                )}
+              </div>
+            </header>
+          )}
+
+          {/* Scrollable Page Body */}
+          <main
+            id="main-content"
+            className="flex-1 overflow-y-auto relative bg-slate-50 focus:outline-none"
+            tabIndex={-1}
+          >
+            {children}
+          </main>
+        </div>
       </div>
-      </div>
+
       {/* Subtle demo watermark — bottom-right, only for demo accounts */}
       {isDemo && <DemoDataIndicator />}
     </div>

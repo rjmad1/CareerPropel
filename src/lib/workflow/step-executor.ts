@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/db';
+import { log } from '@/lib/logging/logger';
 import { enqueueAgentExecution } from '@/lib/queue/enqueue';
 import type { AgentType } from '@/lib/agents/prompts';
 import { findCachedExecution } from './ai-coordinator';
@@ -12,6 +13,14 @@ import type {
 
 const AGENT_POLL_TIMEOUT_MS = 120_000; // 2 minutes max poll
 const AGENT_POLL_INTERVAL_MS = 3_000;
+
+/**
+ * Error codes that should propagate as failures even when the step is optional.
+ * Transient / retriable errors are excluded so optional steps can be skipped gracefully.
+ */
+const FATAL_ERROR_CODES = new Set(['COST_CEILING_EXCEEDED']);
+
+// ─── Internal helpers ─────────────────────────────────────────────────────────
 
 /**
  * Poll DB until AgentExecution reaches a terminal state.
@@ -28,7 +37,10 @@ async function waitForAgentExecution(executionId: string): Promise<{
       select: { status: true, output: true },
     });
 
-    if (!exec) return { status: 'failed', output: null };
+    if (!exec) {
+      log.warn({ executionId }, 'waitForAgentExecution: execution record not found');
+      return { status: 'not_found', output: null };
+    }
 
     if (exec.status === 'completed') {
       try {
@@ -63,6 +75,28 @@ function getNestedValue(obj: Record<string, unknown>, path: string): unknown {
 }
 
 /**
+ * Resolve contextFromSteps entries into the base context object.
+ * Extracted to keep buildStepContext within cognitive-complexity limits.
+ */
+function applyContextFromSteps(
+  base: Record<string, unknown>,
+  contextFromSteps: Record<string, string>,
+  wfContext: WorkflowContext,
+): void {
+  for (const [targetKey, sourcePath] of Object.entries(contextFromSteps)) {
+    const [stepKey, ...fieldParts] = sourcePath.split('.');
+    const stepOutput = wfContext[stepKey];
+    if (!stepOutput || typeof stepOutput !== 'object') continue;
+    const value = getNestedValue(stepOutput as Record<string, unknown>, fieldParts.join('.'));
+    if (value === undefined) continue;
+    // Preserve primitive types (number, boolean, null); only stringify objects/arrays.
+    base[targetKey] = (typeof value === 'object' && value !== null)
+      ? JSON.stringify(value)
+      : value;
+  }
+}
+
+/**
  * Build the agent context for a step, merging workflow context + step overrides + context-from-steps.
  */
 function buildStepContext(
@@ -76,25 +110,12 @@ function buildStepContext(
     userId: wfContext.userId,
   };
 
-  // Static overrides from template definition
   if (step.contextOverrides) {
     Object.assign(base, step.contextOverrides);
   }
 
-  // Pull values from prior step outputs
   if (step.contextFromSteps) {
-    for (const [targetKey, sourcePath] of Object.entries(step.contextFromSteps)) {
-      // sourcePath is like 'research_company.cultureSummary'
-      // The step output is stored in wfContext under the step key
-      const [stepKey, ...fieldParts] = sourcePath.split('.');
-      const stepOutput = wfContext[stepKey];
-      if (stepOutput && typeof stepOutput === 'object') {
-        const value = getNestedValue(stepOutput as Record<string, unknown>, fieldParts.join('.'));
-        if (value !== undefined) {
-          base[targetKey] = typeof value === 'string' ? value : JSON.stringify(value);
-        }
-      }
-    }
+    applyContextFromSteps(base, step.contextFromSteps, wfContext);
   }
 
   return base;
@@ -128,6 +149,56 @@ function buildApprovalPayload(
 }
 
 /**
+ * Handle the agent_call step type. Extracted to keep executeStep within complexity limits.
+ */
+async function executeAgentCallStep(
+  step: WorkflowStepDefinition,
+  wfContext: WorkflowContext,
+): Promise<StepResult> {
+  if (!step.agentType) {
+    return { success: false, error: `Step ${step.key} missing agentType` };
+  }
+
+  const agentType: AgentType = step.agentType;
+  const stepContext = buildStepContext(step, wfContext);
+
+  // Check coordinator cache first
+  const cached = await findCachedExecution(wfContext.userId, agentType, wfContext.jobId);
+  if (cached) {
+    return { success: true, output: cached.output, agentExecutionId: cached.executionId };
+  }
+
+  // Enqueue and wait
+  let executionId: string;
+  try {
+    executionId = await enqueueAgentExecution(agentType, wfContext.userId, stepContext);
+  } catch (err: any) {
+    log.warn({ err, stepKey: step.key }, 'executeStep: enqueue failed');
+    if (step.optional && !FATAL_ERROR_CODES.has(err.code)) {
+      return { success: true, skipped: true };
+    }
+    return { success: false, error: err.message };
+  }
+
+  const result = await waitForAgentExecution(executionId);
+
+  if (result.status === 'completed') {
+    return { success: true, output: result.output ?? {}, agentExecutionId: executionId };
+  }
+
+  if (step.optional && result.status === 'not_found') {
+    // Record was never persisted — treat as skipped rather than a real failure.
+    return { success: true, skipped: true, agentExecutionId: executionId };
+  }
+
+  // 'failed', 'timeout', 'interrupted', or any unexpected status — surface as a failure
+  // even for optional steps so real errors are not silently swallowed.
+  return { success: false, error: `Agent ${agentType} ${result.status}`, agentExecutionId: executionId };
+}
+
+// ─── Public API ───────────────────────────────────────────────────────────────
+
+/**
  * Execute a single workflow step. Returns a StepResult.
  */
 export async function executeStep(
@@ -136,46 +207,11 @@ export async function executeStep(
   workflowId: string,
 ): Promise<StepResult> {
   switch (step.type) {
-    case 'agent_call': {
-      if (!step.agentType) {
-        return { success: false, error: `Step ${step.key} missing agentType` };
-      }
-
-      const agentType = step.agentType as AgentType;
-      const stepContext = buildStepContext(step, wfContext);
-
-      // Check coordinator cache first
-      const cached = await findCachedExecution(wfContext.userId, agentType, wfContext.jobId);
-      if (cached) {
-        return {
-          success: true,
-          output: cached.output,
-          agentExecutionId: cached.executionId,
-        };
-      }
-
-      // Enqueue and wait
-      let executionId: string;
-      try {
-        executionId = await enqueueAgentExecution(agentType, wfContext.userId, stepContext);
-      } catch (err: any) {
-        if (step.optional) return { success: true, skipped: true };
-        return { success: false, error: err.message };
-      }
-
-      const result = await waitForAgentExecution(executionId);
-
-      if (result.status !== 'completed') {
-        if (step.optional) return { success: true, skipped: true, agentExecutionId: executionId };
-        return { success: false, error: `Agent ${agentType} ${result.status}`, agentExecutionId: executionId };
-      }
-
-      return { success: true, output: result.output ?? {}, agentExecutionId: executionId };
-    }
+    case 'agent_call':
+      return executeAgentCallStep(step, wfContext);
 
     case 'approval': {
       const payload = buildApprovalPayload(step, wfContext);
-
       const approvalId = await createApprovalRequest({
         workflowId,
         stepKey: step.key,
@@ -184,7 +220,6 @@ export async function executeStep(
         payload,
         rationale: step.approvalRationale,
       });
-
       return {
         success: false, // signals engine to halt
         approvalRequestId: approvalId,
@@ -206,7 +241,6 @@ export async function executeStep(
     }
 
     case 'notification': {
-      // Publish a Redis notification event
       try {
         const { redis } = await import('@/lib/redis/redisClient');
         await redis.publish(
@@ -225,9 +259,8 @@ export async function executeStep(
       return { success: true, output: { notified: true } };
     }
 
-    case 'delay': {
-      // Delays are handled by the engine via BullMQ delayed jobs, not here
-      // The step executor just records the intent
+    case 'delay':
+      // Delays are handled by the engine via BullMQ delayed jobs; executor just records the intent.
       return {
         success: true,
         output: {
@@ -235,9 +268,11 @@ export async function executeStep(
           resumeAt: new Date(Date.now() + (step.delayMs ?? 0)).toISOString(),
         },
       };
-    }
 
-    default:
-      return { success: false, error: `Unknown step type: ${(step as any).type}` };
+    default: {
+      // After exhausting all StepType cases, step.type is `never`; cast through string for the error message.
+      const unknownType = step.type as unknown as string;
+      return { success: false, error: `Unknown step type: ${unknownType}` };
+    }
   }
 }

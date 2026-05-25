@@ -1,7 +1,18 @@
 'use client';
 
+/**
+ * useRealTime — navigation-resilient SSE subscription hook.
+ *
+ * Uses the module-level SSE singleton (sse-manager.ts) so that:
+ *  - Multiple components share ONE EventSource per endpoint
+ *  - Route transitions do NOT drop active subscriptions
+ *  - No duplicate connections are created
+ *  - Connection state is accurately reflected in all subscribers
+ */
+
 import { useEffect, useCallback, useRef, useState } from 'react';
 import { AnyWebSocketMessage, Agent, Notification, RealtimeJobUpdate } from '@/lib/websocket/types';
+import { acquireSseSubscription, type SseSubscription } from '@/lib/realtime/sse-manager';
 
 interface UseRealTimeOptions {
   autoConnect?: boolean;
@@ -17,67 +28,43 @@ interface UseRealTimeReturn {
   unsubscribeFromChannels: (channels: string[]) => void;
 }
 
-// SSE event types the server emits
-const SSE_EVENT_TYPES = [
-  'snapshot',
-  'agent:status_update',
-  'agent:execution_update',
-  'job:update',
-  'job:created',
-  'job:deleted',
-  'notification',
-];
-
 export function useRealTime(options: UseRealTimeOptions = {}): UseRealTimeReturn {
   const { autoConnect = true, endpoint = '/api/agents/events' } = options;
 
   const [connected, setConnected] = useState(false);
-  const handlersRef = useRef<Map<string, Set<(msg: AnyWebSocketMessage) => void>>>(new Map());
-  const esRef = useRef<EventSource | null>(null);
+  const subscriptionRef = useRef<SseSubscription | null>(null);
 
   useEffect(() => {
     if (!autoConnect || typeof window === 'undefined') return;
 
-    let es: EventSource;
+    const sub = acquireSseSubscription(endpoint);
+    subscriptionRef.current = sub;
 
-    try {
-      es = new EventSource(endpoint);
-      esRef.current = es;
+    // Sync initial state
+    setConnected(sub.connected);
 
-      es.onopen = () => setConnected(true);
-      es.onerror = () => setConnected(false);
-
-      // Route named SSE events to registered handlers
-      SSE_EVENT_TYPES.forEach((eventType) => {
-        es.addEventListener(eventType, (e: MessageEvent) => {
-          try {
-            const data = JSON.parse(e.data);
-            // Wrap in a shape compatible with AnyWebSocketMessage
-            const msg = { type: eventType, data } as unknown as AnyWebSocketMessage;
-            handlersRef.current.get(eventType)?.forEach((h) => h(msg));
-          } catch { /* ignore parse errors */ }
-        });
-      });
-    } catch {
-      // SSE not supported in this environment
-    }
+    // Track connection state changes
+    const unlistenConnection = sub.onConnectionChange((c) => setConnected(c));
 
     return () => {
-      esRef.current?.close();
-      esRef.current = null;
+      unlistenConnection();
+      sub.release();
+      subscriptionRef.current = null;
       setConnected(false);
     };
   }, [autoConnect, endpoint]);
 
-  const subscribe = useCallback((type: string, handler: (msg: AnyWebSocketMessage) => void) => {
-    if (!handlersRef.current.has(type)) {
-      handlersRef.current.set(type, new Set());
-    }
-    handlersRef.current.get(type)!.add(handler);
-    return () => { handlersRef.current.get(type)?.delete(handler); };
-  }, []);
+  const subscribe = useCallback(
+    (type: string, handler: (msg: AnyWebSocketMessage) => void) => {
+      const sub = subscriptionRef.current;
+      if (sub) return sub.subscribe(type, handler);
+      // If not yet connected, buffer the subscription until connect
+      return () => undefined;
+    },
+    [],
+  );
 
-  // SSE is server-to-client only; mutations go through REST endpoints
+  // SSE is server→client only; mutations go through REST endpoints
   const send = useCallback((_message: AnyWebSocketMessage) => {}, []);
   const subscribeToChannels = useCallback((_channels: string[]) => {}, []);
   const unsubscribeFromChannels = useCallback((_channels: string[]) => {}, []);

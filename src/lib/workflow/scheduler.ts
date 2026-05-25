@@ -173,6 +173,9 @@ export function startWorkflowScheduler(): { stop: () => void } {
     }
   };
 
+  // Fire once immediately so schedules are processed at startup, not just after the first interval.
+  void tick();
+
   const interval = setInterval(tick, SCHEDULE_CHECK_INTERVAL_MS);
   log.info('Workflow scheduler started');
 

@@ -141,6 +141,12 @@ model Candidate {
   approvalRequests      ApprovalRequest[]
   opportunityPlans      OpportunityPlan[]
   workflowSchedules     WorkflowSchedule[]
+  // Document orchestration
+  accomplishmentBankItems AccomplishmentBankItem[]
+  resumeVariants          ResumeVariant[]
+  keywordAlignmentAudits  KeywordAlignmentAudit[]
+  parserValidationReports ParserValidationReport[]
+  applicationPackages     ApplicationPackage[]
 }
 
 // ─── Job Pipeline ────────────────────────────────────────────────────────────
@@ -174,6 +180,8 @@ model Job {
   documents             Document[]
   interviewPrep         InterviewPrep?
   mockInterviewSessions MockInterviewSession[]
+  opportunityPlan       OpportunityPlan?
+  resumeVariants        ResumeVariant[]
 
   @@index([candidateId])
   @@index([stage])
@@ -919,6 +927,7 @@ model WorkflowDefinition {
   updatedAt   DateTime @updatedAt
 
   executions WorkflowExecution[]
+  schedules  WorkflowSchedule[]
 
   @@index([name])
   @@index([isActive])
@@ -1016,6 +1025,7 @@ model OpportunityPlan {
   updatedAt         DateTime  @updatedAt
 
   candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
 
   @@index([candidateId])
   @@index([jobId])
@@ -1037,10 +1047,258 @@ model WorkflowSchedule {
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
 
-  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  candidate  Candidate            @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  definition WorkflowDefinition?  @relation(fields: [definitionId], references: [id], onDelete: SetNull)
 
   @@index([candidateId])
   @@index([isActive])
   @@index([nextTriggerAt])
+  @@index([definitionId])
+}
+
+// ─── Document Orchestration System ───────────────────────────────────────────
+
+/// ATS parsing result status
+enum ParserStatus {
+  pending
+  passed
+  failed
+  warning
+}
+
+/// Document export format
+enum ExportFormat {
+  markdown
+  docx
+  pdf
+  html
+}
+
+/// Application package assembly status
+enum PackageStatus {
+  draft
+  audit_pending
+  audit_passed
+  audit_failed
+  finalized
+  submitted
+}
+
+/// Accomplishment bank item — structured, evidence-backed career statement
+model AccomplishmentBankItem {
+  id          String    @id @default(cuid())
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  // Structured STAR+ fields
+  action          String   // strong verb phrase: "Reduced", "Designed", "Led"
+  scope           String   // what/who was affected: "18 regional teams"
+  result          String   // outcome statement: "42% reduction in processing time"
+  metric          String?  // quantified figure: "42%", "$2M ARR"
+  evidence        String?  // proof source: "verified via Q3 eng metrics"
+
+  // Classification
+  category        String   // "leadership" | "technical" | "process" | "business_impact"
+  function        String?  // "engineering" | "product" | "ops" | "sales"
+  industry        String?  // "fintech" | "healthcare" | "saas"
+  domain          String?  // "cloud" | "frontend" | "data"
+  competency      String?  // "communication" | "execution" | "strategy"
+  operationalScale String? // "startup" | "growth" | "enterprise"
+
+  // Associations
+  associatedSkills String[]
+  associatedRoles  String[]
+  associatedTools  String[]
+
+  // Governance
+  isVerified   Boolean  @default(false)
+  sourceAccomplishmentId String? // links back to raw Accomplishment if derived
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([candidateId])
+  @@index([category])
+  @@index([function])
+}
+
+/// Role-specific ATS-optimized resume variant
+model ResumeVariant {
+  id          String    @id @default(cuid())
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  jobId       String?   // optional link to a pipeline Job
+  job         Job?      @relation(fields: [jobId], references: [id], onDelete: SetNull)
+
+  // Targeting
+  targetRole     String
+  targetIndustry String?
+  targetCompany  String?
+  variantName    String   // human label: "Senior PM — Fintech Focus"
+
+  // Content (Markdown — ATS-safe)
+  content        String   // full resume markdown
+
+  // Scoring
+  atsScore                 Float?  // 0–100 overall ATS score
+  keywordCoverage          Float?  // 0–1 fraction of JD keywords present
+  recruiterOptimizationScore Float? // 0–100 skim-optimization score
+  topThirdScore            Float?  // 0–100 top-third quality score
+  bulletQualityScore       Float?  // 0–100 bullet quantification score
+
+  // Provenance
+  generatedFromProfileVersion String? // hash/version of master profile used
+  promptVersion               String? // prompt template version
+  aiModel                     String? // model that generated this
+  generationCostUsd           Float?
+
+  // Validation
+  parserValidationStatus ParserStatus @default(pending)
+  parserReportId         String?      // FK to ParserValidationReport
+
+  // Versioning
+  version        Int      @default(1)
+  isCurrent      Boolean  @default(true) // only one current per (candidateId, targetRole, targetCompany)
+  parentVariantId String? // previous version
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  keywordAudits      KeywordAlignmentAudit[]
+  applicationPackages ApplicationPackageItem[]
+  parserReport        ParserValidationReport?  @relation(fields: [parserReportId], references: [id])
+
+  @@index([candidateId])
+  @@index([jobId])
+  @@index([targetRole])
+  @@index([isCurrent])
+}
+
+/// Keyword alignment audit record — snapshot of JD vs resume keyword coverage
+model KeywordAlignmentAudit {
+  id             String    @id @default(cuid())
+  candidateId    String
+  candidate      Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  resumeVariantId String?
+  resumeVariant   ResumeVariant? @relation(fields: [resumeVariantId], references: [id], onDelete: SetNull)
+  jobId          String?
+
+  // Input snapshot
+  jobTitle            String?
+  jobDescriptionHash  String?  // SHA-256 of JD text for dedup
+  jobDescriptionText  String?
+
+  // Extracted keywords
+  requiredKeywords    String[] // exact phrases from JD required section
+  preferredKeywords   String[] // from preferred/nice-to-have
+  titleKeywords       String[] // from job title
+  toolKeywords        String[] // tools, tech, platforms
+  domainKeywords      String[] // industry/domain terms
+  actionVerbKeywords  String[] // action verbs the JD uses
+
+  // Coverage
+  matchedKeywords     String[] // keywords present in resume (exact)
+  missingKeywords     String[] // keywords absent from resume
+  overusedKeywords    String[] // keywords appearing too frequently
+  synonymizedKeywords Json?    // { original: string, used: string }[] — flagged synonymizations
+
+  // Scores
+  coverageScore       Float?   // 0–1
+  exactMatchRate      Float?   // 0–1
+  synonymPenalty      Float?   // reduction for synonymized high-value terms
+
+  auditedAt  DateTime @default(now())
+  createdAt  DateTime @default(now())
+
+  @@index([candidateId])
+  @@index([resumeVariantId])
+  @@index([jobId])
+}
+
+/// ATS parser simulation validation report
+model ParserValidationReport {
+  id          String    @id @default(cuid())
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  // Validation checks
+  headingRecognition    ParserStatus @default(pending) // required headings detected
+  chronologyExtraction  ParserStatus @default(pending) // dates parsed correctly
+  keywordExtraction     ParserStatus @default(pending) // keywords extractable
+  sectionDetection      ParserStatus @default(pending) // sections identified
+  dateParsing           ParserStatus @default(pending) // consistent date formats
+  contactParsing        ParserStatus @default(pending) // name/email/phone extractable
+  overallStatus         ParserStatus @default(pending)
+
+  // Findings
+  warnings      String[] // non-fatal issues
+  errors        String[] // critical failures
+  recommendations String[] // suggestions for improvement
+
+  // Metadata
+  testedContent String?  // content that was tested (first 500 chars for dedup)
+  testedAt      DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  resumeVariants ResumeVariant[]
+
+  @@index([candidateId])
+  @@index([overallStatus])
+}
+
+/// Bundled application package — resume + cover letter + supporting docs
+model ApplicationPackage {
+  id          String    @id @default(cuid())
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  jobId       String?
+
+  packageName    String
+  targetRole     String
+  targetCompany  String?
+
+  // Status
+  status         PackageStatus @default(draft)
+
+  // Audit results (JSON snapshots)
+  atsAuditResult        Json?  // ATSAuditReport
+  consistencyAuditResult Json? // ConsistencyAuditReport
+  recruiterAuditResult  Json?  // RecruiterAuditReport
+  governanceAuditResult Json?  // GovernanceAuditReport
+
+  // Governance
+  finalizedAt    DateTime?
+  exportFormat   ExportFormat @default(markdown)
+  exportUrl      String?
+
+  // Provenance
+  profileVersionHash String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items ApplicationPackageItem[]
+
+  @@index([candidateId])
+  @@index([jobId])
+  @@index([status])
+}
+
+/// Individual item within an application package
+model ApplicationPackageItem {
+  id        String @id @default(cuid())
+  packageId String
+  package   ApplicationPackage @relation(fields: [packageId], references: [id], onDelete: Cascade)
+
+  itemType       String  // "resume" | "cover_letter" | "recruiter_note" | "linkedin_summary" | "follow_up_template"
+  resumeVariantId String?
+  resumeVariant   ResumeVariant? @relation(fields: [resumeVariantId], references: [id], onDelete: SetNull)
+  documentId     String? // link to existing Document
+  content        String? // inline content for smaller artifacts
+
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  @@index([packageId])
+  @@index([resumeVariantId])
 }
 

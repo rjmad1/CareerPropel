@@ -22,6 +22,10 @@ import MockInterview from './MockInterview';
 interface InterviewPrepWorkspaceProps {
   jobId: string;
   onClose: () => void;
+  /** Initial tab to open (synced from URL state) */
+  initialTab?: string;
+  /** Called when the user switches tabs so the URL can be updated */
+  onTabChange?: (tab: string) => void;
 }
 
 type TabType = 'company' | 'role' | 'behavioral' | 'technical' | 'system-design' | 'resume' | 'mock';
@@ -41,8 +45,17 @@ type TabType = 'company' | 'role' | 'behavioral' | 'technical' | 'system-design'
 export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
   jobId,
   onClose,
+  initialTab,
+  onTabChange,
 }) => {
-  const [activeTab, setActiveTab] = useState<TabType>('company');
+  const [activeTab, setActiveTab] = useState<TabType>(
+    (initialTab as TabType | undefined) ?? 'company',
+  );
+
+  function handleTabChange(tab: TabType) {
+    setActiveTab(tab);
+    onTabChange?.(tab);
+  }
   const [nightBeforeMode, setNightBeforeMode] = useState(false);
   const [showQuickRevision, setShowQuickRevision] = useState(false);
 
@@ -266,7 +279,7 @@ export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
           {tabs.map(tab => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as TabType)}
+              onClick={() => handleTabChange(tab.id as TabType)}
               className={`py-3 px-3 sm:px-5 font-medium text-xs sm:text-sm border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'border-blue-600 text-blue-600'
@@ -331,7 +344,7 @@ export const InterviewPrepWorkspace: React.FC<InterviewPrepWorkspaceProps> = ({
             {nightBeforeMode && '🌙 Night Before Mode: Quick, focused content only'}
           </p>
           <button
-            onClick={() => setActiveTab('mock')}
+            onClick={() => handleTabChange('mock')}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-5 sm:py-3 sm:px-6 rounded-lg transition-colors text-sm ml-auto"
             data-cy="start-mock-interview"
           >
