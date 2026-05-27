@@ -6,7 +6,7 @@
 
 # Interface: BehavioralAnalytics
 
-Defined in: [src/lib/analytics/types.ts:106](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L106)
+Defined in: [src/lib/analytics/types.ts:106](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L106)
 
 ## Extended by
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/analytics/types.ts:106](https://github.com/rjmad1/CareerPro
 
 > **applicationCadence**: [`CadenceMetric`](CadenceMetric.md)
 
-Defined in: [src/lib/analytics/types.ts:107](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L107)
+Defined in: [src/lib/analytics/types.ts:107](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L107)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [src/lib/analytics/types.ts:107](https://github.com/rjmad1/CareerPro
 
 > **burnoutRisk**: [`ScoredMetric`](ScoredMetric.md)\<`"high"` \| `"low"` \| `"medium"`\>
 
-Defined in: [src/lib/analytics/types.ts:110](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L110)
+Defined in: [src/lib/analytics/types.ts:110](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L110)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [src/lib/analytics/types.ts:110](https://github.com/rjmad1/CareerPro
 
 > **followUpConsistency**: [`ScoredMetric`](ScoredMetric.md)\<`number`\>
 
-Defined in: [src/lib/analytics/types.ts:108](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L108)
+Defined in: [src/lib/analytics/types.ts:108](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L108)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [src/lib/analytics/types.ts:108](https://github.com/rjmad1/CareerPro
 
 > **insights**: [`BehavioralInsight`](BehavioralInsight.md)[]
 
-Defined in: [src/lib/analytics/types.ts:112](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L112)
+Defined in: [src/lib/analytics/types.ts:112](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L112)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [src/lib/analytics/types.ts:112](https://github.com/rjmad1/CareerPro
 
 > **recruiterResponsePatterns**: [`ResponsePattern`](ResponsePattern.md)
 
-Defined in: [src/lib/analytics/types.ts:109](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L109)
+Defined in: [src/lib/analytics/types.ts:109](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L109)
 
 ***
 
@@ -58,4 +58,4 @@ Defined in: [src/lib/analytics/types.ts:109](https://github.com/rjmad1/CareerPro
 
 > **workflowEffectiveness**: [`ScoredMetric`](ScoredMetric.md)\<`number`\>
 
-Defined in: [src/lib/analytics/types.ts:111](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L111)
+Defined in: [src/lib/analytics/types.ts:111](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L111)

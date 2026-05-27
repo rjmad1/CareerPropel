@@ -8,7 +8,7 @@
 
 > **isTerminalWorkflowStatus**(`status`): `boolean`
 
-Defined in: [src/lib/workflow/state-machine.ts:66](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/workflow/state-machine.ts#L66)
+Defined in: [src/lib/workflow/state-machine.ts:66](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/state-machine.ts#L66)
 
 Returns true for statuses that the automatic advance loop should never re-enter.
 NOTE: 'failed' is intentionally excluded here so that:

@@ -6,7 +6,7 @@
 
 # Interface: KeywordMatch
 
-Defined in: [src/types/interview.ts:276](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L276)
+Defined in: [src/types/interview.ts:276](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L276)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/interview.ts:276](https://github.com/rjmad1/CareerPropel/
 
 > **foundInResume**: `boolean`
 
-Defined in: [src/types/interview.ts:278](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L278)
+Defined in: [src/types/interview.ts:278](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L278)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/interview.ts:278](https://github.com/rjmad1/CareerPropel/
 
 > **frequency**: `number`
 
-Defined in: [src/types/interview.ts:279](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L279)
+Defined in: [src/types/interview.ts:279](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L279)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/interview.ts:279](https://github.com/rjmad1/CareerPropel/
 
 > **importance**: `"critical"` \| `"important"` \| `"useful"`
 
-Defined in: [src/types/interview.ts:280](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L280)
+Defined in: [src/types/interview.ts:280](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L280)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/types/interview.ts:280](https://github.com/rjmad1/CareerPropel/
 
 > **keyword**: `string`
 
-Defined in: [src/types/interview.ts:277](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L277)
+Defined in: [src/types/interview.ts:277](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L277)

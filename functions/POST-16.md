@@ -8,7 +8,7 @@
 
 > **POST**(`request`): `Promise`\<`NextResponse`\<`unknown`\>\>
 
-Defined in: [src/app/api/documents/compile/route.ts:30](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/app/api/documents/compile/route.ts#L30)
+Defined in: [src/app/api/documents/compile/route.ts:30](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/documents/compile/route.ts#L30)
 
 POST /api/documents/compile
 Compiles a structured, tailored resume into a high-fidelity downloadable PDF.

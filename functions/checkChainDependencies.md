@@ -8,7 +8,7 @@
 
 > **checkChainDependencies**(`agentType`, `userId`, `jobId`): `Promise`\<[`ChainContext`](../interfaces/ChainContext.md)\>
 
-Defined in: [src/lib/agents/chainExecutor.ts:46](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/agents/chainExecutor.ts#L46)
+Defined in: [src/lib/agents/chainExecutor.ts:46](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/agents/chainExecutor.ts#L46)
 
 Check whether all upstream dependencies for `agentType` are satisfied
 for a given job.  Returns upstream outputs that can be merged into context.

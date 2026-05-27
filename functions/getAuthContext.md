@@ -8,7 +8,7 @@
 
 > **getAuthContext**(): `Promise`\<\{ `session`: `Session`; `userEmail`: `string`; `userId`: `string`; \}\>
 
-Defined in: [src/lib/middleware/auth.ts:44](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/middleware/auth.ts#L44)
+Defined in: [src/lib/middleware/auth.ts:44](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/middleware/auth.ts#L44)
 
 ## Returns
 

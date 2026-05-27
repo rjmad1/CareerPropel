@@ -6,7 +6,7 @@
 
 # Interface: CalendarEventRaw
 
-Defined in: [src/lib/calendar/googleCalendar.ts:154](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/calendar/googleCalendar.ts#L154)
+Defined in: [src/lib/calendar/googleCalendar.ts:154](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/calendar/googleCalendar.ts#L154)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/calendar/googleCalendar.ts:154](https://github.com/rjmad1/C
 
 > `optional` **conferenceData?**: `object`
 
-Defined in: [src/lib/calendar/googleCalendar.ts:162](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/calendar/googleCalendar.ts#L162)
+Defined in: [src/lib/calendar/googleCalendar.ts:162](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/calendar/googleCalendar.ts#L162)
 
 #### entryPoints?
 
@@ -26,7 +26,7 @@ Defined in: [src/lib/calendar/googleCalendar.ts:162](https://github.com/rjmad1/C
 
 > `optional` **description?**: `string`
 
-Defined in: [src/lib/calendar/googleCalendar.ts:157](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/calendar/googleCalendar.ts#L157)
+Defined in: [src/lib/calendar/googleCalendar.ts:157](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/calendar/googleCalendar.ts#L157)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [src/lib/calendar/googleCalendar.ts:157](https://github.com/rjmad1/C
 
 > `optional` **end?**: `object`
 
-Defined in: [src/lib/calendar/googleCalendar.ts:159](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/calendar/googleCalendar.ts#L159)
+Defined in: [src/lib/calendar/googleCalendar.ts:159](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/calendar/googleCalendar.ts#L159)
 
 #### date?
 
@@ -50,7 +50,7 @@ Defined in: [src/lib/calendar/googleCalendar.ts:159](https://github.com/rjmad1/C
 
 > `optional` **hangoutLink?**: `string`
 
-Defined in: [src/lib/calendar/googleCalendar.ts:161](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/calendar/googleCalendar.ts#L161)
+Defined in: [src/lib/calendar/googleCalendar.ts:161](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/calendar/googleCalendar.ts#L161)
 
 ***
 
@@ -58,7 +58,7 @@ Defined in: [src/lib/calendar/googleCalendar.ts:161](https://github.com/rjmad1/C
 
 > **id**: `string`
 
-Defined in: [src/lib/calendar/googleCalendar.ts:155](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/calendar/googleCalendar.ts#L155)
+Defined in: [src/lib/calendar/googleCalendar.ts:155](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/calendar/googleCalendar.ts#L155)
 
 ***
 
@@ -66,7 +66,7 @@ Defined in: [src/lib/calendar/googleCalendar.ts:155](https://github.com/rjmad1/C
 
 > `optional` **location?**: `string`
 
-Defined in: [src/lib/calendar/googleCalendar.ts:160](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/calendar/googleCalendar.ts#L160)
+Defined in: [src/lib/calendar/googleCalendar.ts:160](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/calendar/googleCalendar.ts#L160)
 
 ***
 
@@ -74,7 +74,7 @@ Defined in: [src/lib/calendar/googleCalendar.ts:160](https://github.com/rjmad1/C
 
 > `optional` **start?**: `object`
 
-Defined in: [src/lib/calendar/googleCalendar.ts:158](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/calendar/googleCalendar.ts#L158)
+Defined in: [src/lib/calendar/googleCalendar.ts:158](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/calendar/googleCalendar.ts#L158)
 
 #### date?
 
@@ -90,4 +90,4 @@ Defined in: [src/lib/calendar/googleCalendar.ts:158](https://github.com/rjmad1/C
 
 > `optional` **summary?**: `string`
 
-Defined in: [src/lib/calendar/googleCalendar.ts:156](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/calendar/googleCalendar.ts#L156)
+Defined in: [src/lib/calendar/googleCalendar.ts:156](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/calendar/googleCalendar.ts#L156)

@@ -8,7 +8,7 @@
 
 > **closeWorkflowQueue**(): `Promise`\<`void`\>
 
-Defined in: [src/lib/workflow/queue.ts:30](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/workflow/queue.ts#L30)
+Defined in: [src/lib/workflow/queue.ts:30](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/queue.ts#L30)
 
 Gracefully close the singleton Queue and release its Redis connection.
 Idempotent — safe to call multiple times during shutdown.

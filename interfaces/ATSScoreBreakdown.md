@@ -6,7 +6,7 @@
 
 # Interface: ATSScoreBreakdown
 
-Defined in: [src/lib/ats/atsScorer.ts:17](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/atsScorer.ts#L17)
+Defined in: [src/lib/ats/atsScorer.ts:17](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/atsScorer.ts#L17)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/ats/atsScorer.ts:17](https://github.com/rjmad1/CareerPropel
 
 > **chronologyScore**: `number`
 
-Defined in: [src/lib/ats/atsScorer.ts:27](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/atsScorer.ts#L27)
+Defined in: [src/lib/ats/atsScorer.ts:27](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/atsScorer.ts#L27)
 
 0–10 contribution from clean chronology
 
@@ -24,7 +24,7 @@ Defined in: [src/lib/ats/atsScorer.ts:27](https://github.com/rjmad1/CareerPropel
 
 > **exactMatchRate**: `number`
 
-Defined in: [src/lib/ats/atsScorer.ts:23](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/atsScorer.ts#L23)
+Defined in: [src/lib/ats/atsScorer.ts:23](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/atsScorer.ts#L23)
 
 0–25 contribution from exact required keyword matches
 
@@ -34,7 +34,7 @@ Defined in: [src/lib/ats/atsScorer.ts:23](https://github.com/rjmad1/CareerPropel
 
 > **formatCompliance**: `number`
 
-Defined in: [src/lib/ats/atsScorer.ts:25](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/atsScorer.ts#L25)
+Defined in: [src/lib/ats/atsScorer.ts:25](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/atsScorer.ts#L25)
 
 0–20 contribution from format/parser compliance
 
@@ -44,7 +44,7 @@ Defined in: [src/lib/ats/atsScorer.ts:25](https://github.com/rjmad1/CareerPropel
 
 > **keywordCoverage**: `number`
 
-Defined in: [src/lib/ats/atsScorer.ts:21](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/atsScorer.ts#L21)
+Defined in: [src/lib/ats/atsScorer.ts:21](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/atsScorer.ts#L21)
 
 0–40 contribution from keyword coverage
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/ats/atsScorer.ts:21](https://github.com/rjmad1/CareerPropel
 
 > **overall**: `number`
 
-Defined in: [src/lib/ats/atsScorer.ts:19](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/atsScorer.ts#L19)
+Defined in: [src/lib/ats/atsScorer.ts:19](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/atsScorer.ts#L19)
 
 0–100 composite score
 
@@ -64,7 +64,7 @@ Defined in: [src/lib/ats/atsScorer.ts:19](https://github.com/rjmad1/CareerPropel
 
 > **recommendations**: `string`[]
 
-Defined in: [src/lib/ats/atsScorer.ts:33](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/atsScorer.ts#L33)
+Defined in: [src/lib/ats/atsScorer.ts:33](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/atsScorer.ts#L33)
 
 Prioritized list of improvement actions
 
@@ -74,7 +74,7 @@ Prioritized list of improvement actions
 
 > **riskLevel**: `"high"` \| `"low"` \| `"medium"` \| `"critical"`
 
-Defined in: [src/lib/ats/atsScorer.ts:31](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/atsScorer.ts#L31)
+Defined in: [src/lib/ats/atsScorer.ts:31](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/atsScorer.ts#L31)
 
 Human-readable risk level
 
@@ -84,6 +84,6 @@ Human-readable risk level
 
 > **synonymPenalty**: `number`
 
-Defined in: [src/lib/ats/atsScorer.ts:29](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/atsScorer.ts#L29)
+Defined in: [src/lib/ats/atsScorer.ts:29](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/atsScorer.ts#L29)
 
 0–5 deduction for synonymizations

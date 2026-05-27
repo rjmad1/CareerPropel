@@ -6,7 +6,7 @@
 
 # Interface: Job
 
-Defined in: [src/types/index.ts:11](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L11)
+Defined in: [src/types/index.ts:11](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L11)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/index.ts:11](https://github.com/rjmad1/CareerPropel/blob/
 
 > `optional` **appliedAt?**: `Date`
 
-Defined in: [src/types/index.ts:18](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L18)
+Defined in: [src/types/index.ts:18](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L18)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/index.ts:18](https://github.com/rjmad1/CareerPropel/blob/
 
 > **company**: `string`
 
-Defined in: [src/types/index.ts:14](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L14)
+Defined in: [src/types/index.ts:14](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L14)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/index.ts:14](https://github.com/rjmad1/CareerPropel/blob/
 
 > **createdAt**: `Date`
 
-Defined in: [src/types/index.ts:19](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L19)
+Defined in: [src/types/index.ts:19](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L19)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/index.ts:19](https://github.com/rjmad1/CareerPropel/blob/
 
 > **description**: `string`
 
-Defined in: [src/types/index.ts:16](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L16)
+Defined in: [src/types/index.ts:16](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L16)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/index.ts:16](https://github.com/rjmad1/CareerPropel/blob/
 
 > **id**: `string`
 
-Defined in: [src/types/index.ts:12](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L12)
+Defined in: [src/types/index.ts:12](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L12)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/types/index.ts:12](https://github.com/rjmad1/CareerPropel/blob/
 
 > **stage**: [`JobStage`](../type-aliases/JobStage.md)
 
-Defined in: [src/types/index.ts:15](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L15)
+Defined in: [src/types/index.ts:15](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L15)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/types/index.ts:15](https://github.com/rjmad1/CareerPropel/blob/
 
 > **title**: `string`
 
-Defined in: [src/types/index.ts:13](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L13)
+Defined in: [src/types/index.ts:13](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L13)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/types/index.ts:13](https://github.com/rjmad1/CareerPropel/blob/
 
 > **updatedAt**: `Date`
 
-Defined in: [src/types/index.ts:20](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L20)
+Defined in: [src/types/index.ts:20](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L20)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [src/types/index.ts:20](https://github.com/rjmad1/CareerPropel/blob/
 
 > `optional` **url?**: `string`
 
-Defined in: [src/types/index.ts:17](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L17)
+Defined in: [src/types/index.ts:17](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L17)

@@ -8,7 +8,7 @@
 
 > **GET**(`req`): `Promise`\<`NextResponse`\<`any`\>\>
 
-Defined in: [src/app/api/interviews/route.ts:16](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/app/api/interviews/route.ts#L16)
+Defined in: [src/app/api/interviews/route.ts:16](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/interviews/route.ts#L16)
 
 GET /api/interviews
 List interviews for authenticated user

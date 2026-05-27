@@ -8,7 +8,7 @@
 
 > **logSessionActivity**(`email`, `sessionId`, `action`, `ipAddress?`, `userAgent?`): `Promise`\<`void`\>
 
-Defined in: [src/lib/security/threatDetection.ts:36](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/security/threatDetection.ts#L36)
+Defined in: [src/lib/security/threatDetection.ts:36](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/security/threatDetection.ts#L36)
 
 Log session activity for threat analysis
 

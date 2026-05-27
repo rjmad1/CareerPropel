@@ -6,7 +6,7 @@
 
 # Interface: ConsistencyAuditReport
 
-Defined in: [src/lib/profile/consistency/types.ts:25](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/consistency/types.ts#L25)
+Defined in: [src/lib/profile/consistency/types.ts:25](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/consistency/types.ts#L25)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/profile/consistency/types.ts:25](https://github.com/rjmad1/
 
 > **auditedAt**: `string`
 
-Defined in: [src/lib/profile/consistency/types.ts:27](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/consistency/types.ts#L27)
+Defined in: [src/lib/profile/consistency/types.ts:27](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/consistency/types.ts#L27)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/profile/consistency/types.ts:27](https://github.com/rjmad1/
 
 > **candidateId**: `string`
 
-Defined in: [src/lib/profile/consistency/types.ts:26](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/consistency/types.ts#L26)
+Defined in: [src/lib/profile/consistency/types.ts:26](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/consistency/types.ts#L26)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/profile/consistency/types.ts:26](https://github.com/rjmad1/
 
 > **errorCount**: `number`
 
-Defined in: [src/lib/profile/consistency/types.ts:30](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/consistency/types.ts#L30)
+Defined in: [src/lib/profile/consistency/types.ts:30](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/consistency/types.ts#L30)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/profile/consistency/types.ts:30](https://github.com/rjmad1/
 
 > **issues**: [`ConsistencyIssue`](ConsistencyIssue.md)[]
 
-Defined in: [src/lib/profile/consistency/types.ts:29](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/consistency/types.ts#L29)
+Defined in: [src/lib/profile/consistency/types.ts:29](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/consistency/types.ts#L29)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/profile/consistency/types.ts:29](https://github.com/rjmad1/
 
 > **overallScore**: `number`
 
-Defined in: [src/lib/profile/consistency/types.ts:28](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/consistency/types.ts#L28)
+Defined in: [src/lib/profile/consistency/types.ts:28](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/consistency/types.ts#L28)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/profile/consistency/types.ts:28](https://github.com/rjmad1/
 
 > **passed**: `boolean`
 
-Defined in: [src/lib/profile/consistency/types.ts:32](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/consistency/types.ts#L32)
+Defined in: [src/lib/profile/consistency/types.ts:32](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/consistency/types.ts#L32)
 
 ***
 
@@ -62,4 +62,4 @@ Defined in: [src/lib/profile/consistency/types.ts:32](https://github.com/rjmad1/
 
 > **warningCount**: `number`
 
-Defined in: [src/lib/profile/consistency/types.ts:31](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/consistency/types.ts#L31)
+Defined in: [src/lib/profile/consistency/types.ts:31](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/consistency/types.ts#L31)

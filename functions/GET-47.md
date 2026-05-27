@@ -8,7 +8,7 @@
 
 > **GET**(`_req`, `context`): `Promise`\<`NextResponse`\<`any`\>\>
 
-Defined in: [src/app/api/offers/\[id\]/route.ts:15](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/app/api/offers/[id]/route.ts#L15)
+Defined in: [src/app/api/offers/\[id\]/route.ts:15](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/offers/[id]/route.ts#L15)
 
 GET /api/offers/[id]
 Get a single offer

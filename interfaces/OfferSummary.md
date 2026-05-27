@@ -6,7 +6,7 @@
 
 # Interface: OfferSummary
 
-Defined in: [src/lib/analytics/types.ts:80](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L80)
+Defined in: [src/lib/analytics/types.ts:80](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L80)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/types.ts:80](https://github.com/rjmad1/CareerProp
 
 > **bonus**: `number` \| `null`
 
-Defined in: [src/lib/analytics/types.ts:86](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L86)
+Defined in: [src/lib/analytics/types.ts:86](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L86)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/types.ts:86](https://github.com/rjmad1/CareerProp
 
 > **company**: `string`
 
-Defined in: [src/lib/analytics/types.ts:82](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L82)
+Defined in: [src/lib/analytics/types.ts:82](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L82)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/analytics/types.ts:82](https://github.com/rjmad1/CareerProp
 
 > **equity**: `string` \| `null`
 
-Defined in: [src/lib/analytics/types.ts:85](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L85)
+Defined in: [src/lib/analytics/types.ts:85](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L85)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/analytics/types.ts:85](https://github.com/rjmad1/CareerProp
 
 > **jobId**: `string`
 
-Defined in: [src/lib/analytics/types.ts:81](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L81)
+Defined in: [src/lib/analytics/types.ts:81](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L81)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/analytics/types.ts:81](https://github.com/rjmad1/CareerProp
 
 > **negotiated**: `boolean`
 
-Defined in: [src/lib/analytics/types.ts:88](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L88)
+Defined in: [src/lib/analytics/types.ts:88](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L88)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/analytics/types.ts:88](https://github.com/rjmad1/CareerProp
 
 > **salary**: `number` \| `null`
 
-Defined in: [src/lib/analytics/types.ts:84](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L84)
+Defined in: [src/lib/analytics/types.ts:84](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L84)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/analytics/types.ts:84](https://github.com/rjmad1/CareerProp
 
 > **status**: `string`
 
-Defined in: [src/lib/analytics/types.ts:87](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L87)
+Defined in: [src/lib/analytics/types.ts:87](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L87)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/analytics/types.ts:87](https://github.com/rjmad1/CareerProp
 
 > **title**: `string`
 
-Defined in: [src/lib/analytics/types.ts:83](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L83)
+Defined in: [src/lib/analytics/types.ts:83](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L83)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [src/lib/analytics/types.ts:83](https://github.com/rjmad1/CareerProp
 
 > **totalComp**: `number` \| `null`
 
-Defined in: [src/lib/analytics/types.ts:89](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L89)
+Defined in: [src/lib/analytics/types.ts:89](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L89)

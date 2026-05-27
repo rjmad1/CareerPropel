@@ -6,7 +6,7 @@
 
 # Interface: CoordinatorResult
 
-Defined in: [src/lib/workflow/ai-coordinator.ts:7](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/workflow/ai-coordinator.ts#L7)
+Defined in: [src/lib/workflow/ai-coordinator.ts:7](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/ai-coordinator.ts#L7)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/workflow/ai-coordinator.ts:7](https://github.com/rjmad1/Car
 
 > **cached**: `boolean`
 
-Defined in: [src/lib/workflow/ai-coordinator.ts:8](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/workflow/ai-coordinator.ts#L8)
+Defined in: [src/lib/workflow/ai-coordinator.ts:8](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/ai-coordinator.ts#L8)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/workflow/ai-coordinator.ts:8](https://github.com/rjmad1/Car
 
 > **executionId**: `string`
 
-Defined in: [src/lib/workflow/ai-coordinator.ts:9](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/workflow/ai-coordinator.ts#L9)
+Defined in: [src/lib/workflow/ai-coordinator.ts:9](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/ai-coordinator.ts#L9)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/lib/workflow/ai-coordinator.ts:9](https://github.com/rjmad1/Car
 
 > **output**: `Record`\<`string`, `unknown`\>
 
-Defined in: [src/lib/workflow/ai-coordinator.ts:10](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/workflow/ai-coordinator.ts#L10)
+Defined in: [src/lib/workflow/ai-coordinator.ts:10](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/ai-coordinator.ts#L10)

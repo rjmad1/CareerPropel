@@ -6,7 +6,7 @@
 
 # Interface: BankSelectionResult
 
-Defined in: [src/lib/profile/accomplishment-bank/types.ts:24](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/accomplishment-bank/types.ts#L24)
+Defined in: [src/lib/profile/accomplishment-bank/types.ts:24](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/accomplishment-bank/types.ts#L24)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/profile/accomplishment-bank/types.ts:24](https://github.com
 
 > **scoreThreshold**: `number`
 
-Defined in: [src/lib/profile/accomplishment-bank/types.ts:27](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/accomplishment-bank/types.ts#L27)
+Defined in: [src/lib/profile/accomplishment-bank/types.ts:27](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/accomplishment-bank/types.ts#L27)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/profile/accomplishment-bank/types.ts:27](https://github.com
 
 > **selected**: [`RankedAccomplishment`](RankedAccomplishment.md)[]
 
-Defined in: [src/lib/profile/accomplishment-bank/types.ts:25](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/accomplishment-bank/types.ts#L25)
+Defined in: [src/lib/profile/accomplishment-bank/types.ts:25](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/accomplishment-bank/types.ts#L25)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/lib/profile/accomplishment-bank/types.ts:25](https://github.com
 
 > **totalInBank**: `number`
 
-Defined in: [src/lib/profile/accomplishment-bank/types.ts:26](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/accomplishment-bank/types.ts#L26)
+Defined in: [src/lib/profile/accomplishment-bank/types.ts:26](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/accomplishment-bank/types.ts#L26)

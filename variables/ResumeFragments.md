@@ -8,4 +8,4 @@
 
 > `const` **ResumeFragments**: `React.FC`\<`ResumeFragmentsProps`\>
 
-Defined in: [src/components/Profile/ResumeFragments.tsx:20](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Profile/ResumeFragments.tsx#L20)
+Defined in: [src/components/Profile/ResumeFragments.tsx:20](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Profile/ResumeFragments.tsx#L20)

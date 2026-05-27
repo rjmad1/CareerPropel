@@ -6,7 +6,7 @@
 
 # Interface: RoleInfo
 
-Defined in: [src/types/company.ts:228](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/company.ts#L228)
+Defined in: [src/types/company.ts:228](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L228)
 
 Role-specific information
 
@@ -16,7 +16,7 @@ Role-specific information
 
 > **companyId**: `string`
 
-Defined in: [src/types/company.ts:230](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/company.ts#L230)
+Defined in: [src/types/company.ts:230](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L230)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/company.ts:230](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **compensation?**: `object`
 
-Defined in: [src/types/company.ts:240](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/company.ts#L240)
+Defined in: [src/types/company.ts:240](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L240)
 
 #### bonus?
 
@@ -52,7 +52,7 @@ Defined in: [src/types/company.ts:240](https://github.com/rjmad1/CareerPropel/bl
 
 > **id**: `string`
 
-Defined in: [src/types/company.ts:229](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/company.ts#L229)
+Defined in: [src/types/company.ts:229](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L229)
 
 ***
 
@@ -60,7 +60,7 @@ Defined in: [src/types/company.ts:229](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **jobDescription?**: `string`
 
-Defined in: [src/types/company.ts:236](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/company.ts#L236)
+Defined in: [src/types/company.ts:236](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L236)
 
 ***
 
@@ -68,7 +68,7 @@ Defined in: [src/types/company.ts:236](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **jobDescriptionUrl?**: `string`
 
-Defined in: [src/types/company.ts:235](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/company.ts#L235)
+Defined in: [src/types/company.ts:235](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L235)
 
 ***
 
@@ -76,7 +76,7 @@ Defined in: [src/types/company.ts:235](https://github.com/rjmad1/CareerPropel/bl
 
 > **level**: `string`
 
-Defined in: [src/types/company.ts:232](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/company.ts#L232)
+Defined in: [src/types/company.ts:232](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L232)
 
 ***
 
@@ -84,7 +84,7 @@ Defined in: [src/types/company.ts:232](https://github.com/rjmad1/CareerPropel/bl
 
 > **niceToHave**: `string`[]
 
-Defined in: [src/types/company.ts:239](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/company.ts#L239)
+Defined in: [src/types/company.ts:239](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L239)
 
 ***
 
@@ -92,7 +92,7 @@ Defined in: [src/types/company.ts:239](https://github.com/rjmad1/CareerPropel/bl
 
 > **reportingLine**: `string`
 
-Defined in: [src/types/company.ts:234](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/company.ts#L234)
+Defined in: [src/types/company.ts:234](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L234)
 
 ***
 
@@ -100,7 +100,7 @@ Defined in: [src/types/company.ts:234](https://github.com/rjmad1/CareerPropel/bl
 
 > **requirements**: `string`[]
 
-Defined in: [src/types/company.ts:238](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/company.ts#L238)
+Defined in: [src/types/company.ts:238](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L238)
 
 ***
 
@@ -108,7 +108,7 @@ Defined in: [src/types/company.ts:238](https://github.com/rjmad1/CareerPropel/bl
 
 > **responsibilities**: `string`[]
 
-Defined in: [src/types/company.ts:237](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/company.ts#L237)
+Defined in: [src/types/company.ts:237](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L237)
 
 ***
 
@@ -116,7 +116,7 @@ Defined in: [src/types/company.ts:237](https://github.com/rjmad1/CareerPropel/bl
 
 > **team**: `string`
 
-Defined in: [src/types/company.ts:233](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/company.ts#L233)
+Defined in: [src/types/company.ts:233](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L233)
 
 ***
 
@@ -124,7 +124,7 @@ Defined in: [src/types/company.ts:233](https://github.com/rjmad1/CareerPropel/bl
 
 > **timeline**: `object`
 
-Defined in: [src/types/company.ts:252](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/company.ts#L252)
+Defined in: [src/types/company.ts:252](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L252)
 
 #### closingDate?
 
@@ -144,7 +144,7 @@ Defined in: [src/types/company.ts:252](https://github.com/rjmad1/CareerPropel/bl
 
 > **title**: `string`
 
-Defined in: [src/types/company.ts:231](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/company.ts#L231)
+Defined in: [src/types/company.ts:231](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L231)
 
 ***
 
@@ -152,7 +152,7 @@ Defined in: [src/types/company.ts:231](https://github.com/rjmad1/CareerPropel/bl
 
 > **workEnvironment**: `object`
 
-Defined in: [src/types/company.ts:247](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/company.ts#L247)
+Defined in: [src/types/company.ts:247](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L247)
 
 #### location
 

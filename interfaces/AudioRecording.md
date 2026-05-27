@@ -6,7 +6,7 @@
 
 # Interface: AudioRecording
 
-Defined in: [src/types/preparation.ts:125](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L125)
+Defined in: [src/types/preparation.ts:125](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L125)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/preparation.ts:125](https://github.com/rjmad1/CareerPrope
 
 > **durationSeconds**: `number`
 
-Defined in: [src/types/preparation.ts:128](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L128)
+Defined in: [src/types/preparation.ts:128](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L128)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/preparation.ts:128](https://github.com/rjmad1/CareerPrope
 
 > `optional` **feedback?**: `string`
 
-Defined in: [src/types/preparation.ts:131](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L131)
+Defined in: [src/types/preparation.ts:131](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L131)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/preparation.ts:131](https://github.com/rjmad1/CareerPrope
 
 > **id**: `string`
 
-Defined in: [src/types/preparation.ts:126](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L126)
+Defined in: [src/types/preparation.ts:126](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L126)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/preparation.ts:126](https://github.com/rjmad1/CareerPrope
 
 > **recordedAt**: `Date`
 
-Defined in: [src/types/preparation.ts:127](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L127)
+Defined in: [src/types/preparation.ts:127](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L127)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/preparation.ts:127](https://github.com/rjmad1/CareerPrope
 
 > `optional` **transcription?**: `string`
 
-Defined in: [src/types/preparation.ts:130](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L130)
+Defined in: [src/types/preparation.ts:130](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L130)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/types/preparation.ts:130](https://github.com/rjmad1/CareerPrope
 
 > **url**: `string`
 
-Defined in: [src/types/preparation.ts:129](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L129)
+Defined in: [src/types/preparation.ts:129](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L129)

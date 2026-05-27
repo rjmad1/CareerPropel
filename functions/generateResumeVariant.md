@@ -8,7 +8,7 @@
 
 > **generateResumeVariant**(`input`): `Promise`\<[`VariantGenerationResult`](../interfaces/VariantGenerationResult.md)\>
 
-Defined in: [src/lib/document/variantGenerator.ts:180](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L180)
+Defined in: [src/lib/document/variantGenerator.ts:180](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/variantGenerator.ts#L180)
 
 ## Parameters
 

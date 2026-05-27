@@ -6,7 +6,7 @@
 
 # Interface: ErrorEvent
 
-Defined in: [src/lib/realtime/events.ts:100](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/realtime/events.ts#L100)
+Defined in: [src/lib/realtime/events.ts:100](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L100)
 
 Error event
 Published when something goes wrong
@@ -17,7 +17,7 @@ Published when something goes wrong
 
 > **code**: `string`
 
-Defined in: [src/lib/realtime/events.ts:104](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/realtime/events.ts#L104)
+Defined in: [src/lib/realtime/events.ts:104](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L104)
 
 ***
 
@@ -25,7 +25,7 @@ Defined in: [src/lib/realtime/events.ts:104](https://github.com/rjmad1/CareerPro
 
 > **message**: `string`
 
-Defined in: [src/lib/realtime/events.ts:103](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/realtime/events.ts#L103)
+Defined in: [src/lib/realtime/events.ts:103](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L103)
 
 ***
 
@@ -33,7 +33,7 @@ Defined in: [src/lib/realtime/events.ts:103](https://github.com/rjmad1/CareerPro
 
 > **timestamp**: `Date`
 
-Defined in: [src/lib/realtime/events.ts:105](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/realtime/events.ts#L105)
+Defined in: [src/lib/realtime/events.ts:105](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L105)
 
 ***
 
@@ -41,7 +41,7 @@ Defined in: [src/lib/realtime/events.ts:105](https://github.com/rjmad1/CareerPro
 
 > **type**: `"error"`
 
-Defined in: [src/lib/realtime/events.ts:101](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/realtime/events.ts#L101)
+Defined in: [src/lib/realtime/events.ts:101](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L101)
 
 ***
 
@@ -49,4 +49,4 @@ Defined in: [src/lib/realtime/events.ts:101](https://github.com/rjmad1/CareerPro
 
 > **userId**: `string`
 
-Defined in: [src/lib/realtime/events.ts:102](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/realtime/events.ts#L102)
+Defined in: [src/lib/realtime/events.ts:102](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L102)

@@ -6,7 +6,7 @@
 
 # Interface: ExecutionBoundary
 
-Defined in: [src/lib/governance/boundedExecution.ts:13](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L13)
+Defined in: [src/lib/governance/boundedExecution.ts:13](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/boundedExecution.ts#L13)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/governance/boundedExecution.ts:13](https://github.com/rjmad
 
 > **ancestorIds**: `string`[]
 
-Defined in: [src/lib/governance/boundedExecution.ts:25](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L25)
+Defined in: [src/lib/governance/boundedExecution.ts:25](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/boundedExecution.ts#L25)
 
 IDs of ancestor executions (prevents circular invocation)
 
@@ -24,7 +24,7 @@ IDs of ancestor executions (prevents circular invocation)
 
 > **depth**: `number`
 
-Defined in: [src/lib/governance/boundedExecution.ts:17](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L17)
+Defined in: [src/lib/governance/boundedExecution.ts:17](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/boundedExecution.ts#L17)
 
 Current execution depth (0 = top-level)
 
@@ -34,7 +34,7 @@ Current execution depth (0 = top-level)
 
 > **isolated**: `boolean`
 
-Defined in: [src/lib/governance/boundedExecution.ts:31](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L31)
+Defined in: [src/lib/governance/boundedExecution.ts:31](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/boundedExecution.ts#L31)
 
 Whether this execution is isolated (cannot spawn children)
 
@@ -44,7 +44,7 @@ Whether this execution is isolated (cannot spawn children)
 
 > **maxDepth**: `number`
 
-Defined in: [src/lib/governance/boundedExecution.ts:19](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L19)
+Defined in: [src/lib/governance/boundedExecution.ts:19](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/boundedExecution.ts#L19)
 
 Max allowed depth before recursion is blocked
 
@@ -54,7 +54,7 @@ Max allowed depth before recursion is blocked
 
 > **startedAt**: `number`
 
-Defined in: [src/lib/governance/boundedExecution.ts:21](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L21)
+Defined in: [src/lib/governance/boundedExecution.ts:21](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/boundedExecution.ts#L21)
 
 Execution start time (Unix ms)
 
@@ -64,7 +64,7 @@ Execution start time (Unix ms)
 
 > **tokenBudgetRemaining**: `number`
 
-Defined in: [src/lib/governance/boundedExecution.ts:29](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L29)
+Defined in: [src/lib/governance/boundedExecution.ts:29](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/boundedExecution.ts#L29)
 
 Budget remaining in tokens
 
@@ -74,7 +74,7 @@ Budget remaining in tokens
 
 > **traceId**: `string`
 
-Defined in: [src/lib/governance/boundedExecution.ts:15](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L15)
+Defined in: [src/lib/governance/boundedExecution.ts:15](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/boundedExecution.ts#L15)
 
 Root trace ID for the entire workflow
 
@@ -84,7 +84,7 @@ Root trace ID for the entire workflow
 
 > **ttlMs**: `number`
 
-Defined in: [src/lib/governance/boundedExecution.ts:23](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L23)
+Defined in: [src/lib/governance/boundedExecution.ts:23](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/boundedExecution.ts#L23)
 
 TTL in ms from startedAt
 
@@ -94,6 +94,6 @@ TTL in ms from startedAt
 
 > **userId**: `string`
 
-Defined in: [src/lib/governance/boundedExecution.ts:27](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L27)
+Defined in: [src/lib/governance/boundedExecution.ts:27](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/boundedExecution.ts#L27)
 
 User ID owning this trace

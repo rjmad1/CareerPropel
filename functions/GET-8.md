@@ -8,7 +8,7 @@
 
 > **GET**(`request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `executions`: `object`[]; `page`: `number`; `pageSize`: `number`; `total`: `number`; \}\>\>
 
-Defined in: [src/app/api/agents/executions/route.ts:14](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/app/api/agents/executions/route.ts#L14)
+Defined in: [src/app/api/agents/executions/route.ts:14](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/agents/executions/route.ts#L14)
 
 ## Parameters
 

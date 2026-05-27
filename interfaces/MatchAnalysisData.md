@@ -6,7 +6,7 @@
 
 # Interface: MatchAnalysisData
 
-Defined in: [src/components/Jobs/MatchAnalysis.tsx:7](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Jobs/MatchAnalysis.tsx#L7)
+Defined in: [src/components/Jobs/MatchAnalysis.tsx:7](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Jobs/MatchAnalysis.tsx#L7)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/Jobs/MatchAnalysis.tsx:7](https://github.com/rjmad1/
 
 > **gaps**: `string`[]
 
-Defined in: [src/components/Jobs/MatchAnalysis.tsx:11](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Jobs/MatchAnalysis.tsx#L11)
+Defined in: [src/components/Jobs/MatchAnalysis.tsx:11](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Jobs/MatchAnalysis.tsx#L11)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/components/Jobs/MatchAnalysis.tsx:11](https://github.com/rjmad1
 
 > **nextSteps**: `string`[]
 
-Defined in: [src/components/Jobs/MatchAnalysis.tsx:12](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Jobs/MatchAnalysis.tsx#L12)
+Defined in: [src/components/Jobs/MatchAnalysis.tsx:12](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Jobs/MatchAnalysis.tsx#L12)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/components/Jobs/MatchAnalysis.tsx:12](https://github.com/rjmad1
 
 > **score**: `number`
 
-Defined in: [src/components/Jobs/MatchAnalysis.tsx:8](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Jobs/MatchAnalysis.tsx#L8)
+Defined in: [src/components/Jobs/MatchAnalysis.tsx:8](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Jobs/MatchAnalysis.tsx#L8)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/components/Jobs/MatchAnalysis.tsx:8](https://github.com/rjmad1/
 
 > **scoredAt**: `string`
 
-Defined in: [src/components/Jobs/MatchAnalysis.tsx:13](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Jobs/MatchAnalysis.tsx#L13)
+Defined in: [src/components/Jobs/MatchAnalysis.tsx:13](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Jobs/MatchAnalysis.tsx#L13)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/components/Jobs/MatchAnalysis.tsx:13](https://github.com/rjmad1
 
 > **strengths**: `string`[]
 
-Defined in: [src/components/Jobs/MatchAnalysis.tsx:10](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Jobs/MatchAnalysis.tsx#L10)
+Defined in: [src/components/Jobs/MatchAnalysis.tsx:10](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Jobs/MatchAnalysis.tsx#L10)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/components/Jobs/MatchAnalysis.tsx:10](https://github.com/rjmad1
 
 > **summary**: `string`
 
-Defined in: [src/components/Jobs/MatchAnalysis.tsx:9](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Jobs/MatchAnalysis.tsx#L9)
+Defined in: [src/components/Jobs/MatchAnalysis.tsx:9](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Jobs/MatchAnalysis.tsx#L9)

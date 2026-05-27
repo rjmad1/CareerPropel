@@ -6,7 +6,7 @@
 
 # Interface: MasterRole
 
-Defined in: [src/lib/profile/master-profile/types.ts:20](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/master-profile/types.ts#L20)
+Defined in: [src/lib/profile/master-profile/types.ts:20](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/master-profile/types.ts#L20)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/profile/master-profile/types.ts:20](https://github.com/rjma
 
 > **bullets**: [`MasterBullet`](MasterBullet.md)[]
 
-Defined in: [src/lib/profile/master-profile/types.ts:27](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/master-profile/types.ts#L27)
+Defined in: [src/lib/profile/master-profile/types.ts:27](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/master-profile/types.ts#L27)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/profile/master-profile/types.ts:27](https://github.com/rjma
 
 > **company**: `string`
 
-Defined in: [src/lib/profile/master-profile/types.ts:22](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/master-profile/types.ts#L22)
+Defined in: [src/lib/profile/master-profile/types.ts:22](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/master-profile/types.ts#L22)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/profile/master-profile/types.ts:22](https://github.com/rjma
 
 > `optional` **endDate?**: `string`
 
-Defined in: [src/lib/profile/master-profile/types.ts:25](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/master-profile/types.ts#L25)
+Defined in: [src/lib/profile/master-profile/types.ts:25](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/master-profile/types.ts#L25)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/profile/master-profile/types.ts:25](https://github.com/rjma
 
 > `optional` **industry?**: `string`
 
-Defined in: [src/lib/profile/master-profile/types.ts:29](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/master-profile/types.ts#L29)
+Defined in: [src/lib/profile/master-profile/types.ts:29](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/master-profile/types.ts#L29)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/profile/master-profile/types.ts:29](https://github.com/rjma
 
 > **isCurrent**: `boolean`
 
-Defined in: [src/lib/profile/master-profile/types.ts:26](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/master-profile/types.ts#L26)
+Defined in: [src/lib/profile/master-profile/types.ts:26](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/master-profile/types.ts#L26)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/profile/master-profile/types.ts:26](https://github.com/rjma
 
 > `optional` **location?**: `string`
 
-Defined in: [src/lib/profile/master-profile/types.ts:23](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/master-profile/types.ts#L23)
+Defined in: [src/lib/profile/master-profile/types.ts:23](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/master-profile/types.ts#L23)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/profile/master-profile/types.ts:23](https://github.com/rjma
 
 > **skills**: `string`[]
 
-Defined in: [src/lib/profile/master-profile/types.ts:28](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/master-profile/types.ts#L28)
+Defined in: [src/lib/profile/master-profile/types.ts:28](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/master-profile/types.ts#L28)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/profile/master-profile/types.ts:28](https://github.com/rjma
 
 > **startDate**: `string`
 
-Defined in: [src/lib/profile/master-profile/types.ts:24](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/master-profile/types.ts#L24)
+Defined in: [src/lib/profile/master-profile/types.ts:24](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/master-profile/types.ts#L24)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [src/lib/profile/master-profile/types.ts:24](https://github.com/rjma
 
 > **title**: `string`
 
-Defined in: [src/lib/profile/master-profile/types.ts:21](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/profile/master-profile/types.ts#L21)
+Defined in: [src/lib/profile/master-profile/types.ts:21](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/master-profile/types.ts#L21)

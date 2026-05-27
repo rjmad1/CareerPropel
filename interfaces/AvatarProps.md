@@ -6,7 +6,7 @@
 
 # Interface: AvatarProps
 
-Defined in: [src/components/ui/Avatar.tsx:4](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/ui/Avatar.tsx#L4)
+Defined in: [src/components/ui/Avatar.tsx:4](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/ui/Avatar.tsx#L4)
 
 ## Extends
 
@@ -1179,7 +1179,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2978
 
 > `optional` **fallbackColor?**: `string`
 
-Defined in: [src/components/ui/Avatar.tsx:7](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/ui/Avatar.tsx#L7)
+Defined in: [src/components/ui/Avatar.tsx:7](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/ui/Avatar.tsx#L7)
 
 ***
 
@@ -1251,7 +1251,7 @@ Defined in: node\_modules/@types/react/experimental.d.ts:130
 
 > `optional` **initials?**: `string`
 
-Defined in: [src/components/ui/Avatar.tsx:5](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/ui/Avatar.tsx#L5)
+Defined in: [src/components/ui/Avatar.tsx:5](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/ui/Avatar.tsx#L5)
 
 ***
 
@@ -3575,7 +3575,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2961
 
 > `optional` **size?**: `"lg"` \| `"sm"` \| `"md"`
 
-Defined in: [src/components/ui/Avatar.tsx:6](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/ui/Avatar.tsx#L6)
+Defined in: [src/components/ui/Avatar.tsx:6](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/ui/Avatar.tsx#L6)
 
 ***
 

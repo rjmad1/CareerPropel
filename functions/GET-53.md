@@ -8,7 +8,7 @@
 
 > **GET**(`_req`): `Promise`\<`NextResponse`\<\{ `counts`: \{\[`index`: `string`\]: `number`; \}; `items`: `object`[]; `timestamp`: `string`; \}\>\>
 
-Defined in: [src/app/api/ops/dlq/route.ts:16](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/app/api/ops/dlq/route.ts#L16)
+Defined in: [src/app/api/ops/dlq/route.ts:16](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/ops/dlq/route.ts#L16)
 
 ## Parameters
 

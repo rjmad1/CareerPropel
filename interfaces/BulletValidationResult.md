@@ -6,7 +6,7 @@
 
 # Interface: BulletValidationResult
 
-Defined in: [src/lib/document/bulletValidator.ts:11](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/bulletValidator.ts#L11)
+Defined in: [src/lib/document/bulletValidator.ts:11](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/bulletValidator.ts#L11)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/document/bulletValidator.ts:11](https://github.com/rjmad1/C
 
 > **issues**: `string`[]
 
-Defined in: [src/lib/document/bulletValidator.ts:14](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/bulletValidator.ts#L14)
+Defined in: [src/lib/document/bulletValidator.ts:14](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/bulletValidator.ts#L14)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/document/bulletValidator.ts:14](https://github.com/rjmad1/C
 
 > **original**: `string`
 
-Defined in: [src/lib/document/bulletValidator.ts:12](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/bulletValidator.ts#L12)
+Defined in: [src/lib/document/bulletValidator.ts:12](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/bulletValidator.ts#L12)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/document/bulletValidator.ts:12](https://github.com/rjmad1/C
 
 > **status**: [`BulletValidationStatus`](../type-aliases/BulletValidationStatus.md)
 
-Defined in: [src/lib/document/bulletValidator.ts:13](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/bulletValidator.ts#L13)
+Defined in: [src/lib/document/bulletValidator.ts:13](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/bulletValidator.ts#L13)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/lib/document/bulletValidator.ts:13](https://github.com/rjmad1/C
 
 > `optional` **suggestion?**: `string`
 
-Defined in: [src/lib/document/bulletValidator.ts:15](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/bulletValidator.ts#L15)
+Defined in: [src/lib/document/bulletValidator.ts:15](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/bulletValidator.ts#L15)

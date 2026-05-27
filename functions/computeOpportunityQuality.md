@@ -8,7 +8,7 @@
 
 > **computeOpportunityQuality**(`candidateId`): `Promise`\<[`OpportunityQualityResult`](../interfaces/OpportunityQualityResult.md)\>
 
-Defined in: [src/lib/analytics/opportunity-intelligence.ts:54](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/opportunity-intelligence.ts#L54)
+Defined in: [src/lib/analytics/opportunity-intelligence.ts:54](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/opportunity-intelligence.ts#L54)
 
 ## Parameters
 

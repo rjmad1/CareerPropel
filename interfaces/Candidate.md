@@ -6,7 +6,7 @@
 
 # Interface: Candidate
 
-Defined in: [src/types/index.ts:3](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L3)
+Defined in: [src/types/index.ts:3](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L3)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/index.ts:3](https://github.com/rjmad1/CareerPropel/blob/5
 
 > **createdAt**: `Date`
 
-Defined in: [src/types/index.ts:7](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L7)
+Defined in: [src/types/index.ts:7](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L7)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/index.ts:7](https://github.com/rjmad1/CareerPropel/blob/5
 
 > **email**: `string`
 
-Defined in: [src/types/index.ts:5](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L5)
+Defined in: [src/types/index.ts:5](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L5)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/index.ts:5](https://github.com/rjmad1/CareerPropel/blob/5
 
 > **id**: `string`
 
-Defined in: [src/types/index.ts:4](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L4)
+Defined in: [src/types/index.ts:4](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L4)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/index.ts:4](https://github.com/rjmad1/CareerPropel/blob/5
 
 > **name**: `string`
 
-Defined in: [src/types/index.ts:6](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L6)
+Defined in: [src/types/index.ts:6](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L6)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/types/index.ts:6](https://github.com/rjmad1/CareerPropel/blob/5
 
 > **updatedAt**: `Date`
 
-Defined in: [src/types/index.ts:8](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/index.ts#L8)
+Defined in: [src/types/index.ts:8](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/index.ts#L8)

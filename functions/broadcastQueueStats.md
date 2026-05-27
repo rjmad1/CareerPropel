@@ -8,7 +8,7 @@
 
 > **broadcastQueueStats**(`userId`, `pending`, `running`, `completed`, `failed`, `avgProcessingTime`, `throughputPerMin`): `Promise`\<`void`\>
 
-Defined in: [src/lib/realtime/agentStatusBroadcaster.ts:196](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/realtime/agentStatusBroadcaster.ts#L196)
+Defined in: [src/lib/realtime/agentStatusBroadcaster.ts:196](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/agentStatusBroadcaster.ts#L196)
 
 Broadcast queue statistics
 

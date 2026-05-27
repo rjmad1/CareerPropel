@@ -8,4 +8,4 @@
 
 > `const` **SidebarItem**: `ForwardRefExoticComponent`\<[`SidebarItemProps`](../interfaces/SidebarItemProps.md) & `RefAttributes`\<`HTMLButtonElement`\>\>
 
-Defined in: [src/components/Layout/AppLayout.tsx:66](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Layout/AppLayout.tsx#L66)
+Defined in: [src/components/Layout/AppLayout.tsx:66](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Layout/AppLayout.tsx#L66)

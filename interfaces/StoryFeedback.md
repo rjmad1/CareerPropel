@@ -6,7 +6,7 @@
 
 # Interface: StoryFeedback
 
-Defined in: [src/types/preparation.ts:134](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L134)
+Defined in: [src/types/preparation.ts:134](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L134)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/preparation.ts:134](https://github.com/rjmad1/CareerPrope
 
 > **clarity**: `number`
 
-Defined in: [src/types/preparation.ts:135](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L135)
+Defined in: [src/types/preparation.ts:135](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L135)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/preparation.ts:135](https://github.com/rjmad1/CareerPrope
 
 > **conciseness**: `number`
 
-Defined in: [src/types/preparation.ts:136](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L136)
+Defined in: [src/types/preparation.ts:136](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L136)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/preparation.ts:136](https://github.com/rjmad1/CareerPrope
 
 > **delivery**: `number`
 
-Defined in: [src/types/preparation.ts:139](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L139)
+Defined in: [src/types/preparation.ts:139](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L139)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/preparation.ts:139](https://github.com/rjmad1/CareerPrope
 
 > **impact**: `number`
 
-Defined in: [src/types/preparation.ts:137](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L137)
+Defined in: [src/types/preparation.ts:137](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L137)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/preparation.ts:137](https://github.com/rjmad1/CareerPrope
 
 > **improvements**: `string`[]
 
-Defined in: [src/types/preparation.ts:142](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L142)
+Defined in: [src/types/preparation.ts:142](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L142)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/types/preparation.ts:142](https://github.com/rjmad1/CareerPrope
 
 > **overallScore**: `number`
 
-Defined in: [src/types/preparation.ts:140](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L140)
+Defined in: [src/types/preparation.ts:140](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L140)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/types/preparation.ts:140](https://github.com/rjmad1/CareerPrope
 
 > **relevance**: `number`
 
-Defined in: [src/types/preparation.ts:138](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L138)
+Defined in: [src/types/preparation.ts:138](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L138)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/types/preparation.ts:138](https://github.com/rjmad1/CareerPrope
 
 > **strengths**: `string`[]
 
-Defined in: [src/types/preparation.ts:141](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L141)
+Defined in: [src/types/preparation.ts:141](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L141)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [src/types/preparation.ts:141](https://github.com/rjmad1/CareerPrope
 
 > **timestamp**: `Date`
 
-Defined in: [src/types/preparation.ts:143](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L143)
+Defined in: [src/types/preparation.ts:143](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L143)

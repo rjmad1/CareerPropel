@@ -6,7 +6,7 @@
 
 # Class: NvidiaNimProvider
 
-Defined in: [src/lib/llm/nvidia-nim.ts:18](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/llm/nvidia-nim.ts#L18)
+Defined in: [src/lib/llm/nvidia-nim.ts:18](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/nvidia-nim.ts#L18)
 
 ## Implements
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/llm/nvidia-nim.ts:18](https://github.com/rjmad1/CareerPrope
 
 > **new NvidiaNimProvider**(): `NvidiaNimProvider`
 
-Defined in: [src/lib/llm/nvidia-nim.ts:24](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/llm/nvidia-nim.ts#L24)
+Defined in: [src/lib/llm/nvidia-nim.ts:24](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/nvidia-nim.ts#L24)
 
 #### Returns
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/llm/nvidia-nim.ts:24](https://github.com/rjmad1/CareerPrope
 
 > **name**: `"nvidia-nim"`
 
-Defined in: [src/lib/llm/nvidia-nim.ts:19](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/llm/nvidia-nim.ts#L19)
+Defined in: [src/lib/llm/nvidia-nim.ts:19](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/nvidia-nim.ts#L19)
 
 #### Implementation of
 
@@ -42,7 +42,7 @@ Defined in: [src/lib/llm/nvidia-nim.ts:19](https://github.com/rjmad1/CareerPrope
 
 > **callLLM**(`messages`, `options?`): `Promise`\<[`LLMCallResult`](../interfaces/LLMCallResult-1.md)\>
 
-Defined in: [src/lib/llm/nvidia-nim.ts:41](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/llm/nvidia-nim.ts#L41)
+Defined in: [src/lib/llm/nvidia-nim.ts:41](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/nvidia-nim.ts#L41)
 
 #### Parameters
 
@@ -68,7 +68,7 @@ Defined in: [src/lib/llm/nvidia-nim.ts:41](https://github.com/rjmad1/CareerPrope
 
 > **getDefaultModel**(): `string`
 
-Defined in: [src/lib/llm/nvidia-nim.ts:37](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/llm/nvidia-nim.ts#L37)
+Defined in: [src/lib/llm/nvidia-nim.ts:37](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/nvidia-nim.ts#L37)
 
 #### Returns
 
@@ -84,7 +84,7 @@ Defined in: [src/lib/llm/nvidia-nim.ts:37](https://github.com/rjmad1/CareerPrope
 
 > **streamLLM**(`messages`, `options?`): `AsyncIterable`\<`string`\>
 
-Defined in: [src/lib/llm/nvidia-nim.ts:105](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/llm/nvidia-nim.ts#L105)
+Defined in: [src/lib/llm/nvidia-nim.ts:105](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/nvidia-nim.ts#L105)
 
 #### Parameters
 

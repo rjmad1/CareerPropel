@@ -8,7 +8,7 @@
 
 > **createRedisClient**(): `Redis`
 
-Defined in: [src/infrastructure/redis/factory.ts:8](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/infrastructure/redis/factory.ts#L8)
+Defined in: [src/infrastructure/redis/factory.ts:8](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/infrastructure/redis/factory.ts#L8)
 
 Creates and registers observability hooks on a new Redis client instance
 

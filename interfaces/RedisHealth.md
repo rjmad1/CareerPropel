@@ -6,7 +6,7 @@
 
 # Interface: RedisHealth
 
-Defined in: [src/infrastructure/redis/health.ts:4](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/infrastructure/redis/health.ts#L4)
+Defined in: [src/infrastructure/redis/health.ts:4](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/infrastructure/redis/health.ts#L4)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/infrastructure/redis/health.ts:4](https://github.com/rjmad1/Car
 
 > `optional` **error?**: `string`
 
-Defined in: [src/infrastructure/redis/health.ts:7](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/infrastructure/redis/health.ts#L7)
+Defined in: [src/infrastructure/redis/health.ts:7](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/infrastructure/redis/health.ts#L7)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/infrastructure/redis/health.ts:7](https://github.com/rjmad1/Car
 
 > `optional` **latencyMs?**: `number`
 
-Defined in: [src/infrastructure/redis/health.ts:6](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/infrastructure/redis/health.ts#L6)
+Defined in: [src/infrastructure/redis/health.ts:6](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/infrastructure/redis/health.ts#L6)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/infrastructure/redis/health.ts:6](https://github.com/rjmad1/Car
 
 > **status**: `"healthy"` \| `"degraded"` \| `"unhealthy"`
 
-Defined in: [src/infrastructure/redis/health.ts:5](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/infrastructure/redis/health.ts#L5)
+Defined in: [src/infrastructure/redis/health.ts:5](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/infrastructure/redis/health.ts#L5)

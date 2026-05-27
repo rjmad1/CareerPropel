@@ -6,7 +6,7 @@
 
 # Interface: HeaderProps
 
-Defined in: [src/components/Layout/AppLayout.tsx:88](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Layout/AppLayout.tsx#L88)
+Defined in: [src/components/Layout/AppLayout.tsx:88](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Layout/AppLayout.tsx#L88)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/Layout/AppLayout.tsx:88](https://github.com/rjmad1/C
 
 > `optional` **actions?**: `ReactNode`
 
-Defined in: [src/components/Layout/AppLayout.tsx:91](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Layout/AppLayout.tsx#L91)
+Defined in: [src/components/Layout/AppLayout.tsx:91](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Layout/AppLayout.tsx#L91)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/components/Layout/AppLayout.tsx:91](https://github.com/rjmad1/C
 
 > `optional` **subtitle?**: `string`
 
-Defined in: [src/components/Layout/AppLayout.tsx:90](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Layout/AppLayout.tsx#L90)
+Defined in: [src/components/Layout/AppLayout.tsx:90](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Layout/AppLayout.tsx#L90)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/components/Layout/AppLayout.tsx:90](https://github.com/rjmad1/C
 
 > `optional` **title?**: `string`
 
-Defined in: [src/components/Layout/AppLayout.tsx:89](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Layout/AppLayout.tsx#L89)
+Defined in: [src/components/Layout/AppLayout.tsx:89](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Layout/AppLayout.tsx#L89)

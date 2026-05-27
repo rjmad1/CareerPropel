@@ -8,7 +8,7 @@
 
 > **useUnsavedChangesGuard**(`options?`): `UseUnsavedChangesGuardReturn`
 
-Defined in: [src/hooks/useUnsavedChangesGuard.ts:50](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/hooks/useUnsavedChangesGuard.ts#L50)
+Defined in: [src/hooks/useUnsavedChangesGuard.ts:50](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useUnsavedChangesGuard.ts#L50)
 
 ## Parameters
 

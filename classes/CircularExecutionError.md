@@ -6,7 +6,7 @@
 
 # Class: CircularExecutionError
 
-Defined in: [src/lib/governance/boundedExecution.ts:85](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L85)
+Defined in: [src/lib/governance/boundedExecution.ts:85](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/boundedExecution.ts#L85)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/governance/boundedExecution.ts:85](https://github.com/rjmad
 
 > **new CircularExecutionError**(`executionId`, `traceId`): `CircularExecutionError`
 
-Defined in: [src/lib/governance/boundedExecution.ts:86](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L86)
+Defined in: [src/lib/governance/boundedExecution.ts:86](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/boundedExecution.ts#L86)
 
 #### Parameters
 

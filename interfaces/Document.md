@@ -6,7 +6,7 @@
 
 # Interface: Document
 
-Defined in: [src/hooks/useDocuments.ts:14](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/hooks/useDocuments.ts#L14)
+Defined in: [src/hooks/useDocuments.ts:14](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useDocuments.ts#L14)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/hooks/useDocuments.ts:14](https://github.com/rjmad1/CareerPrope
 
 > **candidateId**: `string`
 
-Defined in: [src/hooks/useDocuments.ts:16](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/hooks/useDocuments.ts#L16)
+Defined in: [src/hooks/useDocuments.ts:16](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useDocuments.ts#L16)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/hooks/useDocuments.ts:16](https://github.com/rjmad1/CareerPrope
 
 > `optional` **content?**: `string`
 
-Defined in: [src/hooks/useDocuments.ts:19](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/hooks/useDocuments.ts#L19)
+Defined in: [src/hooks/useDocuments.ts:19](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useDocuments.ts#L19)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/hooks/useDocuments.ts:19](https://github.com/rjmad1/CareerPrope
 
 > **createdAt**: `string`
 
-Defined in: [src/hooks/useDocuments.ts:24](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/hooks/useDocuments.ts#L24)
+Defined in: [src/hooks/useDocuments.ts:24](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useDocuments.ts#L24)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/hooks/useDocuments.ts:24](https://github.com/rjmad1/CareerPrope
 
 > `optional` **fileUrl?**: `string`
 
-Defined in: [src/hooks/useDocuments.ts:20](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/hooks/useDocuments.ts#L20)
+Defined in: [src/hooks/useDocuments.ts:20](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useDocuments.ts#L20)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/hooks/useDocuments.ts:20](https://github.com/rjmad1/CareerPrope
 
 > **id**: `string`
 
-Defined in: [src/hooks/useDocuments.ts:15](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/hooks/useDocuments.ts#L15)
+Defined in: [src/hooks/useDocuments.ts:15](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useDocuments.ts#L15)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/hooks/useDocuments.ts:15](https://github.com/rjmad1/CareerPrope
 
 > `optional` **jobId?**: `string`
 
-Defined in: [src/hooks/useDocuments.ts:21](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/hooks/useDocuments.ts#L21)
+Defined in: [src/hooks/useDocuments.ts:21](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useDocuments.ts#L21)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/hooks/useDocuments.ts:21](https://github.com/rjmad1/CareerPrope
 
 > **title**: `string`
 
-Defined in: [src/hooks/useDocuments.ts:18](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/hooks/useDocuments.ts#L18)
+Defined in: [src/hooks/useDocuments.ts:18](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useDocuments.ts#L18)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/hooks/useDocuments.ts:18](https://github.com/rjmad1/CareerPrope
 
 > **type**: `"other"` \| `"resume"` \| `"cover_letter"` \| `"portfolio"` \| `"transcript"`
 
-Defined in: [src/hooks/useDocuments.ts:17](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/hooks/useDocuments.ts#L17)
+Defined in: [src/hooks/useDocuments.ts:17](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useDocuments.ts#L17)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/hooks/useDocuments.ts:17](https://github.com/rjmad1/CareerPrope
 
 > **updatedAt**: `string`
 
-Defined in: [src/hooks/useDocuments.ts:25](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/hooks/useDocuments.ts#L25)
+Defined in: [src/hooks/useDocuments.ts:25](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useDocuments.ts#L25)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [src/hooks/useDocuments.ts:25](https://github.com/rjmad1/CareerPrope
 
 > `optional` **version?**: `number`
 
-Defined in: [src/hooks/useDocuments.ts:22](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/hooks/useDocuments.ts#L22)
+Defined in: [src/hooks/useDocuments.ts:22](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useDocuments.ts#L22)
 
 ***
 
@@ -94,4 +94,4 @@ Defined in: [src/hooks/useDocuments.ts:22](https://github.com/rjmad1/CareerPrope
 
 > `optional` **wordCount?**: `number`
 
-Defined in: [src/hooks/useDocuments.ts:23](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/hooks/useDocuments.ts#L23)
+Defined in: [src/hooks/useDocuments.ts:23](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useDocuments.ts#L23)

@@ -6,7 +6,7 @@
 
 # Interface: MatchAnalysis
 
-Defined in: [src/lib/jobs/matchScorer.ts:4](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/jobs/matchScorer.ts#L4)
+Defined in: [src/lib/jobs/matchScorer.ts:4](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/jobs/matchScorer.ts#L4)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/jobs/matchScorer.ts:4](https://github.com/rjmad1/CareerProp
 
 > **gaps**: `string`[]
 
-Defined in: [src/lib/jobs/matchScorer.ts:8](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/jobs/matchScorer.ts#L8)
+Defined in: [src/lib/jobs/matchScorer.ts:8](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/jobs/matchScorer.ts#L8)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/jobs/matchScorer.ts:8](https://github.com/rjmad1/CareerProp
 
 > **nextSteps**: `string`[]
 
-Defined in: [src/lib/jobs/matchScorer.ts:9](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/jobs/matchScorer.ts#L9)
+Defined in: [src/lib/jobs/matchScorer.ts:9](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/jobs/matchScorer.ts#L9)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/jobs/matchScorer.ts:9](https://github.com/rjmad1/CareerProp
 
 > **score**: `number`
 
-Defined in: [src/lib/jobs/matchScorer.ts:5](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/jobs/matchScorer.ts#L5)
+Defined in: [src/lib/jobs/matchScorer.ts:5](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/jobs/matchScorer.ts#L5)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/jobs/matchScorer.ts:5](https://github.com/rjmad1/CareerProp
 
 > **scoredAt**: `string`
 
-Defined in: [src/lib/jobs/matchScorer.ts:10](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/jobs/matchScorer.ts#L10)
+Defined in: [src/lib/jobs/matchScorer.ts:10](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/jobs/matchScorer.ts#L10)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/jobs/matchScorer.ts:10](https://github.com/rjmad1/CareerPro
 
 > **strengths**: `string`[]
 
-Defined in: [src/lib/jobs/matchScorer.ts:7](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/jobs/matchScorer.ts#L7)
+Defined in: [src/lib/jobs/matchScorer.ts:7](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/jobs/matchScorer.ts#L7)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/lib/jobs/matchScorer.ts:7](https://github.com/rjmad1/CareerProp
 
 > **summary**: `string`
 
-Defined in: [src/lib/jobs/matchScorer.ts:6](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/jobs/matchScorer.ts#L6)
+Defined in: [src/lib/jobs/matchScorer.ts:6](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/jobs/matchScorer.ts#L6)

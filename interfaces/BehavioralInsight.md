@@ -6,7 +6,7 @@
 
 # Interface: BehavioralInsight
 
-Defined in: [src/lib/analytics/types.ts:128](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L128)
+Defined in: [src/lib/analytics/types.ts:128](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L128)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/types.ts:128](https://github.com/rjmad1/CareerPro
 
 > **category**: `"follow_up"` \| `"cadence"` \| `"burnout"` \| `"effectiveness"` \| `"timing"`
 
-Defined in: [src/lib/analytics/types.ts:129](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L129)
+Defined in: [src/lib/analytics/types.ts:129](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L129)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/types.ts:129](https://github.com/rjmad1/CareerPro
 
 > **message**: `string`
 
-Defined in: [src/lib/analytics/types.ts:131](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L131)
+Defined in: [src/lib/analytics/types.ts:131](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L131)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/analytics/types.ts:131](https://github.com/rjmad1/CareerPro
 
 > **recommendation**: `string`
 
-Defined in: [src/lib/analytics/types.ts:132](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L132)
+Defined in: [src/lib/analytics/types.ts:132](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L132)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/lib/analytics/types.ts:132](https://github.com/rjmad1/CareerPro
 
 > **severity**: `"info"` \| `"warning"` \| `"critical"`
 
-Defined in: [src/lib/analytics/types.ts:130](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L130)
+Defined in: [src/lib/analytics/types.ts:130](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L130)

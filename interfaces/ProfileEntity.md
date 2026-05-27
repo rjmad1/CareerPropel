@@ -6,7 +6,7 @@
 
 # Interface: ProfileEntity
 
-Defined in: [src/types/profile.ts:11](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L11)
+Defined in: [src/types/profile.ts:11](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/profile.ts#L11)
 
 Extracted entity from user documents (resume, cover letter, etc.)
 
@@ -16,7 +16,7 @@ Extracted entity from user documents (resume, cover letter, etc.)
 
 > **candidateId**: `string`
 
-Defined in: [src/types/profile.ts:13](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L13)
+Defined in: [src/types/profile.ts:13](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/profile.ts#L13)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/profile.ts:13](https://github.com/rjmad1/CareerPropel/blo
 
 > **confidence**: `number`
 
-Defined in: [src/types/profile.ts:16](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L16)
+Defined in: [src/types/profile.ts:16](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/profile.ts#L16)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/profile.ts:16](https://github.com/rjmad1/CareerPropel/blo
 
 > **content**: `string`
 
-Defined in: [src/types/profile.ts:15](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L15)
+Defined in: [src/types/profile.ts:15](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/profile.ts#L15)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/profile.ts:15](https://github.com/rjmad1/CareerPropel/blo
 
 > **createdAt**: `Date`
 
-Defined in: [src/types/profile.ts:21](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L21)
+Defined in: [src/types/profile.ts:21](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/profile.ts#L21)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/profile.ts:21](https://github.com/rjmad1/CareerPropel/blo
 
 > **extractedAt**: `Date`
 
-Defined in: [src/types/profile.ts:20](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L20)
+Defined in: [src/types/profile.ts:20](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/profile.ts#L20)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/types/profile.ts:20](https://github.com/rjmad1/CareerPropel/blo
 
 > **id**: `string`
 
-Defined in: [src/types/profile.ts:12](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L12)
+Defined in: [src/types/profile.ts:12](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/profile.ts#L12)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [src/types/profile.ts:12](https://github.com/rjmad1/CareerPropel/blo
 
 > **relatedEntityIds**: `string`[]
 
-Defined in: [src/types/profile.ts:19](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L19)
+Defined in: [src/types/profile.ts:19](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/profile.ts#L19)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [src/types/profile.ts:19](https://github.com/rjmad1/CareerPropel/blo
 
 > **source**: `"manual"` \| `"linkedin"` \| `"resume"` \| `"cover_letter"`
 
-Defined in: [src/types/profile.ts:17](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L17)
+Defined in: [src/types/profile.ts:17](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/profile.ts#L17)
 
 ***
 
@@ -80,7 +80,7 @@ Defined in: [src/types/profile.ts:17](https://github.com/rjmad1/CareerPropel/blo
 
 > **tags**: `string`[]
 
-Defined in: [src/types/profile.ts:18](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L18)
+Defined in: [src/types/profile.ts:18](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/profile.ts#L18)
 
 ***
 
@@ -88,7 +88,7 @@ Defined in: [src/types/profile.ts:18](https://github.com/rjmad1/CareerPropel/blo
 
 > **type**: `"skill"` \| `"achievement"` \| `"experience"` \| `"education"` \| `"certification"` \| `"language"`
 
-Defined in: [src/types/profile.ts:14](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L14)
+Defined in: [src/types/profile.ts:14](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/profile.ts#L14)
 
 ***
 
@@ -96,4 +96,4 @@ Defined in: [src/types/profile.ts:14](https://github.com/rjmad1/CareerPropel/blo
 
 > **updatedAt**: `Date`
 
-Defined in: [src/types/profile.ts:22](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L22)
+Defined in: [src/types/profile.ts:22](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/profile.ts#L22)

@@ -8,7 +8,7 @@
 
 > **dataFreshness**(`lastActivityAt`): [`FreshnessResult`](../interfaces/FreshnessResult.md)
 
-Defined in: [src/lib/analytics/governance.ts:94](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/governance.ts#L94)
+Defined in: [src/lib/analytics/governance.ts:94](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/governance.ts#L94)
 
 Return how stale a dataset is based on its most-recent activity timestamp.
 

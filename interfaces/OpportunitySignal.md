@@ -6,7 +6,7 @@
 
 # Interface: OpportunitySignal
 
-Defined in: [src/lib/analytics/types.ts:52](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L52)
+Defined in: [src/lib/analytics/types.ts:52](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L52)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/types.ts:52](https://github.com/rjmad1/CareerProp
 
 > **evidence**: `string`
 
-Defined in: [src/lib/analytics/types.ts:55](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L55)
+Defined in: [src/lib/analytics/types.ts:55](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L55)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/types.ts:55](https://github.com/rjmad1/CareerProp
 
 > **label**: `string`
 
-Defined in: [src/lib/analytics/types.ts:54](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L54)
+Defined in: [src/lib/analytics/types.ts:54](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L54)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/lib/analytics/types.ts:54](https://github.com/rjmad1/CareerProp
 
 > **type**: `"positive"` \| `"negative"` \| `"neutral"`
 
-Defined in: [src/lib/analytics/types.ts:53](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L53)
+Defined in: [src/lib/analytics/types.ts:53](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L53)

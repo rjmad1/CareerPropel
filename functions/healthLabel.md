@@ -8,7 +8,7 @@
 
 > **healthLabel**(`score`): `"active"` \| `"stale"` \| `"at_risk"` \| `"momentum"` \| `"hot"`
 
-Defined in: [src/lib/workflow/health-scorer.ts:79](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/workflow/health-scorer.ts#L79)
+Defined in: [src/lib/workflow/health-scorer.ts:79](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/health-scorer.ts#L79)
 
 Categorize a health score into a label
 

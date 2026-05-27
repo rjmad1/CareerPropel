@@ -8,7 +8,7 @@
 
 > **getQueueMetrics**(): `Promise`\<\{ `averageLatencyMs`: `number`; `counts`: \{\[`index`: `string`\]: `number`; \}; \}\>
 
-Defined in: [src/lib/queue/queues.ts:63](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/queue/queues.ts#L63)
+Defined in: [src/lib/queue/queues.ts:63](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/queue/queues.ts#L63)
 
 ## Returns
 

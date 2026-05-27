@@ -6,7 +6,7 @@
 
 # Class: ConcurrencyLimitError
 
-Defined in: [src/lib/queue/retry-policy.ts:18](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/queue/retry-policy.ts#L18)
+Defined in: [src/lib/queue/retry-policy.ts:18](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/queue/retry-policy.ts#L18)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/queue/retry-policy.ts:18](https://github.com/rjmad1/CareerP
 
 > **new ConcurrencyLimitError**(`message`): `ConcurrencyLimitError`
 
-Defined in: [src/lib/queue/retry-policy.ts:19](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/queue/retry-policy.ts#L19)
+Defined in: [src/lib/queue/retry-policy.ts:19](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/queue/retry-policy.ts#L19)
 
 #### Parameters
 

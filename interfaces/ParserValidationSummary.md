@@ -6,7 +6,7 @@
 
 # Interface: ParserValidationSummary
 
-Defined in: [src/lib/ats/parsers/index.ts:8](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/parsers/index.ts#L8)
+Defined in: [src/lib/ats/parsers/index.ts:8](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/parsers/index.ts#L8)
 
 ATS Parser Validation Pipeline
 
@@ -19,7 +19,7 @@ Validates machine-readability across six dimensions.
 
 > **chronologyScore**: `number`
 
-Defined in: [src/lib/ats/parsers/index.ts:17](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/parsers/index.ts#L17)
+Defined in: [src/lib/ats/parsers/index.ts:17](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/parsers/index.ts#L17)
 
 0–10 for ATS score chronology component
 
@@ -29,7 +29,7 @@ Defined in: [src/lib/ats/parsers/index.ts:17](https://github.com/rjmad1/CareerPr
 
 > **chronologyValid**: `boolean`
 
-Defined in: [src/lib/ats/parsers/index.ts:13](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/parsers/index.ts#L13)
+Defined in: [src/lib/ats/parsers/index.ts:13](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/parsers/index.ts#L13)
 
 ***
 
@@ -37,7 +37,7 @@ Defined in: [src/lib/ats/parsers/index.ts:13](https://github.com/rjmad1/CareerPr
 
 > **contactValid**: `boolean`
 
-Defined in: [src/lib/ats/parsers/index.ts:11](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/parsers/index.ts#L11)
+Defined in: [src/lib/ats/parsers/index.ts:11](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/parsers/index.ts#L11)
 
 ***
 
@@ -45,7 +45,7 @@ Defined in: [src/lib/ats/parsers/index.ts:11](https://github.com/rjmad1/CareerPr
 
 > **datesValid**: `boolean`
 
-Defined in: [src/lib/ats/parsers/index.ts:10](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/parsers/index.ts#L10)
+Defined in: [src/lib/ats/parsers/index.ts:10](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/parsers/index.ts#L10)
 
 ***
 
@@ -53,7 +53,7 @@ Defined in: [src/lib/ats/parsers/index.ts:10](https://github.com/rjmad1/CareerPr
 
 > **errors**: `string`[]
 
-Defined in: [src/lib/ats/parsers/index.ts:19](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/parsers/index.ts#L19)
+Defined in: [src/lib/ats/parsers/index.ts:19](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/parsers/index.ts#L19)
 
 ***
 
@@ -61,7 +61,7 @@ Defined in: [src/lib/ats/parsers/index.ts:19](https://github.com/rjmad1/CareerPr
 
 > **formatScore**: `number`
 
-Defined in: [src/lib/ats/parsers/index.ts:15](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/parsers/index.ts#L15)
+Defined in: [src/lib/ats/parsers/index.ts:15](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/parsers/index.ts#L15)
 
 0–20 for ATS score format component
 
@@ -71,7 +71,7 @@ Defined in: [src/lib/ats/parsers/index.ts:15](https://github.com/rjmad1/CareerPr
 
 > **headingsValid**: `boolean`
 
-Defined in: [src/lib/ats/parsers/index.ts:9](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/parsers/index.ts#L9)
+Defined in: [src/lib/ats/parsers/index.ts:9](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/parsers/index.ts#L9)
 
 ***
 
@@ -79,7 +79,7 @@ Defined in: [src/lib/ats/parsers/index.ts:9](https://github.com/rjmad1/CareerPro
 
 > **recommendations**: `string`[]
 
-Defined in: [src/lib/ats/parsers/index.ts:20](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/parsers/index.ts#L20)
+Defined in: [src/lib/ats/parsers/index.ts:20](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/parsers/index.ts#L20)
 
 ***
 
@@ -87,7 +87,7 @@ Defined in: [src/lib/ats/parsers/index.ts:20](https://github.com/rjmad1/CareerPr
 
 > **sectionsDetected**: `string`[]
 
-Defined in: [src/lib/ats/parsers/index.ts:12](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/parsers/index.ts#L12)
+Defined in: [src/lib/ats/parsers/index.ts:12](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/parsers/index.ts#L12)
 
 ***
 
@@ -95,4 +95,4 @@ Defined in: [src/lib/ats/parsers/index.ts:12](https://github.com/rjmad1/CareerPr
 
 > **warnings**: `string`[]
 
-Defined in: [src/lib/ats/parsers/index.ts:18](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/parsers/index.ts#L18)
+Defined in: [src/lib/ats/parsers/index.ts:18](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/parsers/index.ts#L18)

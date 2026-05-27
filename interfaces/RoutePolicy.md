@@ -6,7 +6,7 @@
 
 # Interface: RoutePolicy
 
-Defined in: [src/lib/middleware/routeGovernance.ts:21](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/middleware/routeGovernance.ts#L21)
+Defined in: [src/lib/middleware/routeGovernance.ts:21](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/middleware/routeGovernance.ts#L21)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/middleware/routeGovernance.ts:21](https://github.com/rjmad1
 
 > **auditSensitivity**: [`AuditSensitivity`](../type-aliases/AuditSensitivity.md)
 
-Defined in: [src/lib/middleware/routeGovernance.ts:25](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/middleware/routeGovernance.ts#L25)
+Defined in: [src/lib/middleware/routeGovernance.ts:25](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/middleware/routeGovernance.ts#L25)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/middleware/routeGovernance.ts:25](https://github.com/rjmad1
 
 > **classification**: [`RouteClassification`](../type-aliases/RouteClassification.md)
 
-Defined in: [src/lib/middleware/routeGovernance.ts:22](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/middleware/routeGovernance.ts#L22)
+Defined in: [src/lib/middleware/routeGovernance.ts:22](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/middleware/routeGovernance.ts#L22)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/middleware/routeGovernance.ts:22](https://github.com/rjmad1
 
 > `optional` **ownershipModel?**: [`OwnershipModel`](../type-aliases/OwnershipModel.md)
 
-Defined in: [src/lib/middleware/routeGovernance.ts:26](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/middleware/routeGovernance.ts#L26)
+Defined in: [src/lib/middleware/routeGovernance.ts:26](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/middleware/routeGovernance.ts#L26)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/middleware/routeGovernance.ts:26](https://github.com/rjmad1
 
 > **rateLimitClass**: [`RateLimitClass`](../type-aliases/RateLimitClass.md)
 
-Defined in: [src/lib/middleware/routeGovernance.ts:24](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/middleware/routeGovernance.ts#L24)
+Defined in: [src/lib/middleware/routeGovernance.ts:24](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/middleware/routeGovernance.ts#L24)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/lib/middleware/routeGovernance.ts:24](https://github.com/rjmad1
 
 > `optional` **roles?**: `string`[]
 
-Defined in: [src/lib/middleware/routeGovernance.ts:23](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/middleware/routeGovernance.ts#L23)
+Defined in: [src/lib/middleware/routeGovernance.ts:23](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/middleware/routeGovernance.ts#L23)

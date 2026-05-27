@@ -6,7 +6,7 @@
 
 # Interface: SidebarProps
 
-Defined in: [src/components/Layout/AppLayout.tsx:49](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Layout/AppLayout.tsx#L49)
+Defined in: [src/components/Layout/AppLayout.tsx:49](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Layout/AppLayout.tsx#L49)
 
 ## Properties
 
@@ -14,4 +14,4 @@ Defined in: [src/components/Layout/AppLayout.tsx:49](https://github.com/rjmad1/C
 
 > **children**: `ReactNode`
 
-Defined in: [src/components/Layout/AppLayout.tsx:50](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Layout/AppLayout.tsx#L50)
+Defined in: [src/components/Layout/AppLayout.tsx:50](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Layout/AppLayout.tsx#L50)

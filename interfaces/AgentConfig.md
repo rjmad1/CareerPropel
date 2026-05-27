@@ -6,7 +6,7 @@
 
 # Interface: AgentConfig
 
-Defined in: [src/types/agent.ts:80](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/agent.ts#L80)
+Defined in: [src/types/agent.ts:80](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L80)
 
 Agent configuration
 
@@ -16,7 +16,7 @@ Agent configuration
 
 > **color**: `string`
 
-Defined in: [src/types/agent.ts:85](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/agent.ts#L85)
+Defined in: [src/types/agent.ts:85](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L85)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/agent.ts:85](https://github.com/rjmad1/CareerPropel/blob/
 
 > **description**: `string`
 
-Defined in: [src/types/agent.ts:83](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/agent.ts#L83)
+Defined in: [src/types/agent.ts:83](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L83)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/agent.ts:83](https://github.com/rjmad1/CareerPropel/blob/
 
 > **icon**: `string`
 
-Defined in: [src/types/agent.ts:84](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/agent.ts#L84)
+Defined in: [src/types/agent.ts:84](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L84)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/agent.ts:84](https://github.com/rjmad1/CareerPropel/blob/
 
 > **name**: `string`
 
-Defined in: [src/types/agent.ts:82](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/agent.ts#L82)
+Defined in: [src/types/agent.ts:82](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L82)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/agent.ts:82](https://github.com/rjmad1/CareerPropel/blob/
 
 > **queueDepth**: `number`
 
-Defined in: [src/types/agent.ts:92](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/agent.ts#L92)
+Defined in: [src/types/agent.ts:92](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L92)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/types/agent.ts:92](https://github.com/rjmad1/CareerPropel/blob/
 
 > **retryPolicy**: `object`
 
-Defined in: [src/types/agent.ts:87](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/agent.ts#L87)
+Defined in: [src/types/agent.ts:87](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L87)
 
 #### backoffMultiplier
 
@@ -76,7 +76,7 @@ Defined in: [src/types/agent.ts:87](https://github.com/rjmad1/CareerPropel/blob/
 
 > **timeout**: `number`
 
-Defined in: [src/types/agent.ts:86](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/agent.ts#L86)
+Defined in: [src/types/agent.ts:86](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L86)
 
 ***
 
@@ -84,4 +84,4 @@ Defined in: [src/types/agent.ts:86](https://github.com/rjmad1/CareerPropel/blob/
 
 > **type**: [`AgentType`](../type-aliases/AgentType-2.md)
 
-Defined in: [src/types/agent.ts:81](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/agent.ts#L81)
+Defined in: [src/types/agent.ts:81](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L81)

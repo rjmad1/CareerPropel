@@ -8,7 +8,7 @@
 
 > **getInterviewById**(`userId`, `interviewId`): `Promise`\<`object` & `object` \| `null`\>
 
-Defined in: [src/lib/db/interviews.ts:58](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/db/interviews.ts#L58)
+Defined in: [src/lib/db/interviews.ts:58](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/db/interviews.ts#L58)
 
 Get a single interview
 

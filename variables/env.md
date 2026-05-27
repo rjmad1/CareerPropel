@@ -8,7 +8,7 @@
 
 > `const` **env**: `object`
 
-Defined in: [src/config/env.ts:85](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/config/env.ts#L85)
+Defined in: [src/config/env.ts:85](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/config/env.ts#L85)
 
 ## Type Declaration
 

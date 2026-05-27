@@ -6,7 +6,7 @@
 
 # Interface: OrchestrationContext
 
-Defined in: [src/lib/governance/multiAgentCoordination.ts:46](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/multiAgentCoordination.ts#L46)
+Defined in: [src/lib/governance/multiAgentCoordination.ts:46](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/multiAgentCoordination.ts#L46)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/governance/multiAgentCoordination.ts:46](https://github.com
 
 > **boundary**: [`ExecutionBoundary`](ExecutionBoundary.md)
 
-Defined in: [src/lib/governance/multiAgentCoordination.ts:48](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/multiAgentCoordination.ts#L48)
+Defined in: [src/lib/governance/multiAgentCoordination.ts:48](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/multiAgentCoordination.ts#L48)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/governance/multiAgentCoordination.ts:48](https://github.com
 
 > **completedSteps**: `Map`\<`string`, `Record`\<`string`, `unknown`\>\>
 
-Defined in: [src/lib/governance/multiAgentCoordination.ts:49](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/multiAgentCoordination.ts#L49)
+Defined in: [src/lib/governance/multiAgentCoordination.ts:49](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/multiAgentCoordination.ts#L49)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/governance/multiAgentCoordination.ts:49](https://github.com
 
 > **planId**: `string`
 
-Defined in: [src/lib/governance/multiAgentCoordination.ts:47](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/multiAgentCoordination.ts#L47)
+Defined in: [src/lib/governance/multiAgentCoordination.ts:47](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/multiAgentCoordination.ts#L47)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/lib/governance/multiAgentCoordination.ts:47](https://github.com
 
 > **remainingBudget**: `number`
 
-Defined in: [src/lib/governance/multiAgentCoordination.ts:50](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/multiAgentCoordination.ts#L50)
+Defined in: [src/lib/governance/multiAgentCoordination.ts:50](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/multiAgentCoordination.ts#L50)

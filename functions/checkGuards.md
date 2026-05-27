@@ -8,7 +8,7 @@
 
 > **checkGuards**(): `string` \| `null`
 
-Defined in: [src/lib/navigation/guards.ts:87](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/navigation/guards.ts#L87)
+Defined in: [src/lib/navigation/guards.ts:87](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/navigation/guards.ts#L87)
 
 Check if any active guard is dirty.
 Returns the first dirty guard's message, or null if clean.

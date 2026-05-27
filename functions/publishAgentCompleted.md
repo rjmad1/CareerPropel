@@ -8,7 +8,7 @@
 
 > **publishAgentCompleted**(`userId`, `executionId`, `agentType`, `status`, `output`, `error?`, `tokensUsed?`, `durationMs?`): `Promise`\<`void`\>
 
-Defined in: [src/lib/agents/redis-integration.ts:102](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/agents/redis-integration.ts#L102)
+Defined in: [src/lib/agents/redis-integration.ts:102](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/agents/redis-integration.ts#L102)
 
 Publish agent completed event to Redis
 

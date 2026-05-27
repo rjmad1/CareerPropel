@@ -6,7 +6,7 @@
 
 # Interface: IAIProviderAdapter
 
-Defined in: [src/lib/llm/orchestrator.ts:40](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/llm/orchestrator.ts#L40)
+Defined in: [src/lib/llm/orchestrator.ts:40](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L40)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/llm/orchestrator.ts:40](https://github.com/rjmad1/CareerPro
 
 > **name**: `string`
 
-Defined in: [src/lib/llm/orchestrator.ts:41](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/llm/orchestrator.ts#L41)
+Defined in: [src/lib/llm/orchestrator.ts:41](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L41)
 
 ## Methods
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/llm/orchestrator.ts:41](https://github.com/rjmad1/CareerPro
 
 > **call**(`messages`, `options`): `Promise`\<[`LLMCallResult`](LLMCallResult.md)\>
 
-Defined in: [src/lib/llm/orchestrator.ts:42](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/llm/orchestrator.ts#L42)
+Defined in: [src/lib/llm/orchestrator.ts:42](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L42)
 
 #### Parameters
 
@@ -44,7 +44,7 @@ Defined in: [src/lib/llm/orchestrator.ts:42](https://github.com/rjmad1/CareerPro
 
 > **stream**(`messages`, `options`): `AsyncIterable`\<`string`\>
 
-Defined in: [src/lib/llm/orchestrator.ts:43](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/llm/orchestrator.ts#L43)
+Defined in: [src/lib/llm/orchestrator.ts:43](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L43)
 
 #### Parameters
 

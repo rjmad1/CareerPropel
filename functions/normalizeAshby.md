@@ -8,7 +8,7 @@
 
 > **normalizeAshby**(`job`, `company`): [`ImportedJob`](../interfaces/ImportedJob.md)
 
-Defined in: [src/lib/scraping/ashby.ts:67](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/scraping/ashby.ts#L67)
+Defined in: [src/lib/scraping/ashby.ts:67](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/ashby.ts#L67)
 
 Normalize an Ashby job into the common ImportedJob shape.
 

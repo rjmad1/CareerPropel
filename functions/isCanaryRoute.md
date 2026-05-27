@@ -8,7 +8,7 @@
 
 > **isCanaryRoute**(`userId`, `agentType`, `canaryPercent`): `boolean`
 
-Defined in: [src/lib/governance/multiAgentCoordination.ts:181](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/multiAgentCoordination.ts#L181)
+Defined in: [src/lib/governance/multiAgentCoordination.ts:181](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/multiAgentCoordination.ts#L181)
 
 Determines whether a given execution should be routed to the canary prompt.
 Uses a deterministic hash of userId + agentType so the same user gets consistent routing.

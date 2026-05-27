@@ -6,7 +6,7 @@
 
 # Interface: ApprovalPayload
 
-Defined in: [src/lib/workflow/types.ts:136](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/workflow/types.ts#L136)
+Defined in: [src/lib/workflow/types.ts:136](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L136)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/workflow/types.ts:136](https://github.com/rjmad1/CareerProp
 
 > **actionType**: [`ApprovalActionType`](../type-aliases/ApprovalActionType.md)
 
-Defined in: [src/lib/workflow/types.ts:137](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/workflow/types.ts#L137)
+Defined in: [src/lib/workflow/types.ts:137](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L137)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/workflow/types.ts:137](https://github.com/rjmad1/CareerProp
 
 > `optional` **body?**: `string`
 
-Defined in: [src/lib/workflow/types.ts:139](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/workflow/types.ts#L139)
+Defined in: [src/lib/workflow/types.ts:139](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L139)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/workflow/types.ts:139](https://github.com/rjmad1/CareerProp
 
 > `optional` **documentId?**: `string`
 
-Defined in: [src/lib/workflow/types.ts:142](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/workflow/types.ts#L142)
+Defined in: [src/lib/workflow/types.ts:142](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L142)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/workflow/types.ts:142](https://github.com/rjmad1/CareerProp
 
 > `optional` **metadata?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [src/lib/workflow/types.ts:143](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/workflow/types.ts#L143)
+Defined in: [src/lib/workflow/types.ts:143](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L143)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/workflow/types.ts:143](https://github.com/rjmad1/CareerProp
 
 > `optional` **recipientEmail?**: `string`
 
-Defined in: [src/lib/workflow/types.ts:140](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/workflow/types.ts#L140)
+Defined in: [src/lib/workflow/types.ts:140](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L140)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/workflow/types.ts:140](https://github.com/rjmad1/CareerProp
 
 > `optional` **recipientName?**: `string`
 
-Defined in: [src/lib/workflow/types.ts:141](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/workflow/types.ts#L141)
+Defined in: [src/lib/workflow/types.ts:141](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L141)
 
 ***
 
@@ -62,4 +62,4 @@ Defined in: [src/lib/workflow/types.ts:141](https://github.com/rjmad1/CareerProp
 
 > `optional` **subject?**: `string`
 
-Defined in: [src/lib/workflow/types.ts:138](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/workflow/types.ts#L138)
+Defined in: [src/lib/workflow/types.ts:138](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L138)

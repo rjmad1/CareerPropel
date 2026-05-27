@@ -6,7 +6,7 @@
 
 # Interface: AppLayoutProps
 
-Defined in: [src/components/Layout/AppLayout.tsx:4](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Layout/AppLayout.tsx#L4)
+Defined in: [src/components/Layout/AppLayout.tsx:4](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Layout/AppLayout.tsx#L4)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/Layout/AppLayout.tsx:4](https://github.com/rjmad1/Ca
 
 > **children**: `ReactNode`
 
-Defined in: [src/components/Layout/AppLayout.tsx:5](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Layout/AppLayout.tsx#L5)
+Defined in: [src/components/Layout/AppLayout.tsx:5](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Layout/AppLayout.tsx#L5)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/components/Layout/AppLayout.tsx:5](https://github.com/rjmad1/Ca
 
 > `optional` **header?**: `ReactNode`
 
-Defined in: [src/components/Layout/AppLayout.tsx:8](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Layout/AppLayout.tsx#L8)
+Defined in: [src/components/Layout/AppLayout.tsx:8](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Layout/AppLayout.tsx#L8)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/components/Layout/AppLayout.tsx:8](https://github.com/rjmad1/Ca
 
 > `optional` **sidebar?**: `ReactNode`
 
-Defined in: [src/components/Layout/AppLayout.tsx:6](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Layout/AppLayout.tsx#L6)
+Defined in: [src/components/Layout/AppLayout.tsx:6](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Layout/AppLayout.tsx#L6)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/components/Layout/AppLayout.tsx:6](https://github.com/rjmad1/Ca
 
 > `optional` **sidePanel?**: `ReactNode`
 
-Defined in: [src/components/Layout/AppLayout.tsx:7](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Layout/AppLayout.tsx#L7)
+Defined in: [src/components/Layout/AppLayout.tsx:7](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Layout/AppLayout.tsx#L7)

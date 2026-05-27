@@ -8,7 +8,7 @@
 
 > **scoreProvider**(`agentType`, `provider`, `modelId`): `number`
 
-Defined in: [src/lib/governance/providerQualification.ts:152](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/providerQualification.ts#L152)
+Defined in: [src/lib/governance/providerQualification.ts:152](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/providerQualification.ts#L152)
 
 Score a provider for a given agent type (higher = more preferred).
 
