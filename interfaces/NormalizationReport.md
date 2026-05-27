@@ -6,7 +6,7 @@
 
 # Interface: NormalizationReport
 
-Defined in: [src/lib/profile/master-profile/types.ts:162](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/profile/master-profile/types.ts#L162)
+Defined in: [src/lib/profile/master-profile/types.ts:162](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/profile/master-profile/types.ts#L162)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/profile/master-profile/types.ts:162](https://github.com/rjm
 
 > **bulletsStrengthened**: `number`
 
-Defined in: [src/lib/profile/master-profile/types.ts:165](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/profile/master-profile/types.ts#L165)
+Defined in: [src/lib/profile/master-profile/types.ts:165](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/profile/master-profile/types.ts#L165)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/profile/master-profile/types.ts:165](https://github.com/rjm
 
 > **duplicatesRemoved**: `number`
 
-Defined in: [src/lib/profile/master-profile/types.ts:163](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/profile/master-profile/types.ts#L163)
+Defined in: [src/lib/profile/master-profile/types.ts:163](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/profile/master-profile/types.ts#L163)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/profile/master-profile/types.ts:163](https://github.com/rjm
 
 > **skillsNormalized**: `number`
 
-Defined in: [src/lib/profile/master-profile/types.ts:164](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/profile/master-profile/types.ts#L164)
+Defined in: [src/lib/profile/master-profile/types.ts:164](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/profile/master-profile/types.ts#L164)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/profile/master-profile/types.ts:164](https://github.com/rjm
 
 > **warnings**: `string`[]
 
-Defined in: [src/lib/profile/master-profile/types.ts:167](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/profile/master-profile/types.ts#L167)
+Defined in: [src/lib/profile/master-profile/types.ts:167](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/profile/master-profile/types.ts#L167)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/lib/profile/master-profile/types.ts:167](https://github.com/rjm
 
 > **weakBulletsRejected**: `string`[]
 
-Defined in: [src/lib/profile/master-profile/types.ts:166](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/profile/master-profile/types.ts#L166)
+Defined in: [src/lib/profile/master-profile/types.ts:166](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/profile/master-profile/types.ts#L166)

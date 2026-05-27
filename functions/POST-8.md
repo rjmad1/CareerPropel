@@ -8,7 +8,7 @@
 
 > **POST**(`request`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `message`: `string`; `success`: `boolean`; \}\>\>\>
 
-Defined in: [src/app/api/auth/2fa/disable/route.ts:19](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/auth/2fa/disable/route.ts#L19)
+Defined in: [src/app/api/auth/2fa/disable/route.ts:19](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/app/api/auth/2fa/disable/route.ts#L19)
 
 POST /api/auth/2fa/disable
 Disable 2FA for the authenticated user. Requires current TOTP code to confirm.

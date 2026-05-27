@@ -8,7 +8,7 @@
 
 > **DemoDataIndicator**(): `Element`
 
-Defined in: [src/components/ui/DemoDataBadge.tsx:72](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/DemoDataBadge.tsx#L72)
+Defined in: [src/components/ui/DemoDataBadge.tsx:72](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/ui/DemoDataBadge.tsx#L72)
 
 DemoDataIndicator
 A subtle fixed position watermark shown on pages with demo data.

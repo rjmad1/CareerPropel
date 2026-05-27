@@ -6,7 +6,7 @@
 
 # Class: AnthropicProvider
 
-Defined in: [src/lib/llm/anthropic.ts:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/anthropic.ts#L13)
+Defined in: [src/lib/llm/anthropic.ts:13](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/anthropic.ts#L13)
 
 ## Implements
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/llm/anthropic.ts:13](https://github.com/rjmad1/CareerPropel
 
 > **new AnthropicProvider**(): `AnthropicProvider`
 
-Defined in: [src/lib/llm/anthropic.ts:18](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/anthropic.ts#L18)
+Defined in: [src/lib/llm/anthropic.ts:18](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/anthropic.ts#L18)
 
 #### Returns
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/llm/anthropic.ts:18](https://github.com/rjmad1/CareerPropel
 
 > **name**: `"anthropic"`
 
-Defined in: [src/lib/llm/anthropic.ts:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/anthropic.ts#L14)
+Defined in: [src/lib/llm/anthropic.ts:14](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/anthropic.ts#L14)
 
 #### Implementation of
 
@@ -42,7 +42,7 @@ Defined in: [src/lib/llm/anthropic.ts:14](https://github.com/rjmad1/CareerPropel
 
 > **callLLM**(`messages`, `options?`): `Promise`\<[`LLMCallResult`](../interfaces/LLMCallResult-1.md)\>
 
-Defined in: [src/lib/llm/anthropic.ts:32](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/anthropic.ts#L32)
+Defined in: [src/lib/llm/anthropic.ts:32](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/anthropic.ts#L32)
 
 #### Parameters
 
@@ -68,7 +68,7 @@ Defined in: [src/lib/llm/anthropic.ts:32](https://github.com/rjmad1/CareerPropel
 
 > **getDefaultModel**(): `string`
 
-Defined in: [src/lib/llm/anthropic.ts:28](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/anthropic.ts#L28)
+Defined in: [src/lib/llm/anthropic.ts:28](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/anthropic.ts#L28)
 
 #### Returns
 
@@ -84,7 +84,7 @@ Defined in: [src/lib/llm/anthropic.ts:28](https://github.com/rjmad1/CareerPropel
 
 > **streamLLM**(`messages`, `options?`): `AsyncIterable`\<`string`\>
 
-Defined in: [src/lib/llm/anthropic.ts:78](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/anthropic.ts#L78)
+Defined in: [src/lib/llm/anthropic.ts:78](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/anthropic.ts#L78)
 
 #### Parameters
 

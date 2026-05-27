@@ -6,7 +6,7 @@
 
 # Interface: MockInterviewAttempt
 
-Defined in: [src/types/preparation.ts:260](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L260)
+Defined in: [src/types/preparation.ts:260](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L260)
 
 Mock interview attempt
 
@@ -16,7 +16,7 @@ Mock interview attempt
 
 > **attemptedAt**: `Date`
 
-Defined in: [src/types/preparation.ts:265](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L265)
+Defined in: [src/types/preparation.ts:265](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L265)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/preparation.ts:265](https://github.com/rjmad1/CareerPrope
 
 > **attemptNumber**: `number`
 
-Defined in: [src/types/preparation.ts:264](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L264)
+Defined in: [src/types/preparation.ts:264](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L264)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/preparation.ts:264](https://github.com/rjmad1/CareerPrope
 
 > **durationMinutes**: `number`
 
-Defined in: [src/types/preparation.ts:266](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L266)
+Defined in: [src/types/preparation.ts:266](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L266)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/preparation.ts:266](https://github.com/rjmad1/CareerPrope
 
 > `optional` **feedback?**: [`MockInterviewFeedback`](MockInterviewFeedback.md)
 
-Defined in: [src/types/preparation.ts:269](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L269)
+Defined in: [src/types/preparation.ts:269](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L269)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/preparation.ts:269](https://github.com/rjmad1/CareerPrope
 
 > **id**: `string`
 
-Defined in: [src/types/preparation.ts:261](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L261)
+Defined in: [src/types/preparation.ts:261](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L261)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/types/preparation.ts:261](https://github.com/rjmad1/CareerPrope
 
 > **jobId**: `string`
 
-Defined in: [src/types/preparation.ts:262](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L262)
+Defined in: [src/types/preparation.ts:262](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L262)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [src/types/preparation.ts:262](https://github.com/rjmad1/CareerPrope
 
 > **overallScore**: `number`
 
-Defined in: [src/types/preparation.ts:268](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L268)
+Defined in: [src/types/preparation.ts:268](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L268)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [src/types/preparation.ts:268](https://github.com/rjmad1/CareerPrope
 
 > **questions**: [`MockInterviewQuestion`](MockInterviewQuestion-1.md)[]
 
-Defined in: [src/types/preparation.ts:267](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L267)
+Defined in: [src/types/preparation.ts:267](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L267)
 
 ***
 
@@ -80,7 +80,7 @@ Defined in: [src/types/preparation.ts:267](https://github.com/rjmad1/CareerPrope
 
 > `optional` **recording?**: `object`
 
-Defined in: [src/types/preparation.ts:270](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L270)
+Defined in: [src/types/preparation.ts:270](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L270)
 
 #### duration
 
@@ -96,4 +96,4 @@ Defined in: [src/types/preparation.ts:270](https://github.com/rjmad1/CareerPrope
 
 > **type**: `"behavioral"` \| `"technical"` \| `"system_design"` \| `"full_loop"`
 
-Defined in: [src/types/preparation.ts:263](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L263)
+Defined in: [src/types/preparation.ts:263](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L263)

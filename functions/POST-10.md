@@ -8,7 +8,7 @@
 
 > **POST**(`_request`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `backupCodes`: `string`[]; `message`: `string`; `qrCode`: `string`; `secret`: `any`; \}\>\>\>
 
-Defined in: [src/app/api/auth/2fa/setup/route.ts:16](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/auth/2fa/setup/route.ts#L16)
+Defined in: [src/app/api/auth/2fa/setup/route.ts:16](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/app/api/auth/2fa/setup/route.ts#L16)
 
 POST /api/auth/2fa/setup
 Generate TOTP secret and backup codes for 2FA setup

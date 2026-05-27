@@ -8,7 +8,7 @@
 
 > **registerGuard**(`isDirty`, `options?`): `UnregisterFn`
 
-Defined in: [src/lib/navigation/guards.ts:66](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/navigation/guards.ts#L66)
+Defined in: [src/lib/navigation/guards.ts:66](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/navigation/guards.ts#L66)
 
 Register a navigation guard.
 

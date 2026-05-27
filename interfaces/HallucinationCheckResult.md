@@ -6,7 +6,7 @@
 
 # Interface: HallucinationCheckResult
 
-Defined in: [src/lib/governance/hallucinationControls.ts:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/hallucinationControls.ts#L14)
+Defined in: [src/lib/governance/hallucinationControls.ts:14](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/hallucinationControls.ts#L14)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/governance/hallucinationControls.ts:14](https://github.com/
 
 > **claimConfidences**: `Record`\<`string`, [`ClaimConfidence`](../type-aliases/ClaimConfidence.md)\>
 
-Defined in: [src/lib/governance/hallucinationControls.ts:17](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/hallucinationControls.ts#L17)
+Defined in: [src/lib/governance/hallucinationControls.ts:17](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/hallucinationControls.ts#L17)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/governance/hallucinationControls.ts:17](https://github.com/
 
 > **promptInjectionDetected**: `boolean`
 
-Defined in: [src/lib/governance/hallucinationControls.ts:19](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/hallucinationControls.ts#L19)
+Defined in: [src/lib/governance/hallucinationControls.ts:19](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/hallucinationControls.ts#L19)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/governance/hallucinationControls.ts:19](https://github.com/
 
 > **safe**: `boolean`
 
-Defined in: [src/lib/governance/hallucinationControls.ts:15](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/hallucinationControls.ts#L15)
+Defined in: [src/lib/governance/hallucinationControls.ts:15](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/hallucinationControls.ts#L15)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/governance/hallucinationControls.ts:15](https://github.com/
 
 > **suspicions**: [`HallucinationSuspicion`](HallucinationSuspicion.md)[]
 
-Defined in: [src/lib/governance/hallucinationControls.ts:16](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/hallucinationControls.ts#L16)
+Defined in: [src/lib/governance/hallucinationControls.ts:16](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/hallucinationControls.ts#L16)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/lib/governance/hallucinationControls.ts:16](https://github.com/
 
 > **unsupportedClaimsDetected**: `boolean`
 
-Defined in: [src/lib/governance/hallucinationControls.ts:18](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/hallucinationControls.ts#L18)
+Defined in: [src/lib/governance/hallucinationControls.ts:18](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/hallucinationControls.ts#L18)

@@ -8,7 +8,7 @@
 
 > **generateStrategicRecommendations**(`candidateId`): `Promise`\<[`RecommendationsResult`](../interfaces/RecommendationsResult.md)\>
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:420](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L420)
+Defined in: [src/lib/analytics/recommendations-engine.ts:420](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L420)
 
 ## Parameters
 

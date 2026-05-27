@@ -6,7 +6,7 @@
 
 # Interface: QualificationResult
 
-Defined in: [src/lib/governance/providerQualification.ts:98](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/providerQualification.ts#L98)
+Defined in: [src/lib/governance/providerQualification.ts:98](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/providerQualification.ts#L98)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/governance/providerQualification.ts:98](https://github.com/
 
 > **qualified**: `boolean`
 
-Defined in: [src/lib/governance/providerQualification.ts:99](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/providerQualification.ts#L99)
+Defined in: [src/lib/governance/providerQualification.ts:99](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/providerQualification.ts#L99)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/governance/providerQualification.ts:99](https://github.com/
 
 > `optional` **reason?**: `string`
 
-Defined in: [src/lib/governance/providerQualification.ts:100](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/providerQualification.ts#L100)
+Defined in: [src/lib/governance/providerQualification.ts:100](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/providerQualification.ts#L100)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/lib/governance/providerQualification.ts:100](https://github.com
 
 > **spec**: [`ProviderCapabilitySpec`](ProviderCapabilitySpec.md)
 
-Defined in: [src/lib/governance/providerQualification.ts:101](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/providerQualification.ts#L101)
+Defined in: [src/lib/governance/providerQualification.ts:101](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/providerQualification.ts#L101)

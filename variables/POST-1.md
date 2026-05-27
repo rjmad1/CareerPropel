@@ -8,7 +8,7 @@
 
 > `const` **POST**: (`request`, `context`) => `Promise`\<`NextResponse`\<`unknown`\>\>
 
-Defined in: [src/app/api/jobs/search/route.ts:27](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/jobs/search/route.ts#L27)
+Defined in: [src/app/api/jobs/search/route.ts:27](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/app/api/jobs/search/route.ts#L27)
 
 POST /api/jobs/search
 Search a job board. If the board is Greenhouse, Lever, or Ashby, it executes synchronously.

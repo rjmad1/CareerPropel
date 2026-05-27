@@ -6,7 +6,7 @@
 
 # Interface: SkeletonProps
 
-Defined in: [src/components/ui/Skeleton.tsx:4](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Skeleton.tsx#L4)
+Defined in: [src/components/ui/Skeleton.tsx:4](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/ui/Skeleton.tsx#L4)
 
 ## Extends
 
@@ -979,7 +979,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2398
 
 > `optional` **circle?**: `boolean`
 
-Defined in: [src/components/ui/Skeleton.tsx:16](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Skeleton.tsx#L16)
+Defined in: [src/components/ui/Skeleton.tsx:16](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/ui/Skeleton.tsx#L16)
 
 Make skeleton circular (for avatars)
 
@@ -1153,7 +1153,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2978
 
 > `optional` **height?**: `string`
 
-Defined in: [src/components/ui/Skeleton.tsx:12](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Skeleton.tsx#L12)
+Defined in: [src/components/ui/Skeleton.tsx:12](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/ui/Skeleton.tsx#L12)
 
 Height of the skeleton. Supports Tailwind height classes or custom CSS
 
@@ -3647,6 +3647,6 @@ Defined in: node\_modules/@types/react/index.d.ts:2949
 
 > `optional` **width?**: `string`
 
-Defined in: [src/components/ui/Skeleton.tsx:8](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Skeleton.tsx#L8)
+Defined in: [src/components/ui/Skeleton.tsx:8](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/ui/Skeleton.tsx#L8)
 
 Width of the skeleton. Supports Tailwind width classes or custom CSS

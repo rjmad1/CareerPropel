@@ -6,7 +6,7 @@
 
 # Enumeration: AuditAction
 
-Defined in: [src/lib/logging/auditLog.ts:3](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L3)
+Defined in: [src/lib/logging/auditLog.ts:3](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L3)
 
 ## Enumeration Members
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/logging/auditLog.ts:3](https://github.com/rjmad1/CareerProp
 
 > **API\_KEY\_CREATED**: `"API_KEY_CREATED"`
 
-Defined in: [src/lib/logging/auditLog.ts:28](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L28)
+Defined in: [src/lib/logging/auditLog.ts:28](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L28)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/logging/auditLog.ts:28](https://github.com/rjmad1/CareerPro
 
 > **API\_KEY\_REVOKED**: `"API_KEY_REVOKED"`
 
-Defined in: [src/lib/logging/auditLog.ts:29](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L29)
+Defined in: [src/lib/logging/auditLog.ts:29](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L29)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/logging/auditLog.ts:29](https://github.com/rjmad1/CareerPro
 
 > **API\_KEY\_USED**: `"API_KEY_USED"`
 
-Defined in: [src/lib/logging/auditLog.ts:30](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L30)
+Defined in: [src/lib/logging/auditLog.ts:30](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L30)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/logging/auditLog.ts:30](https://github.com/rjmad1/CareerPro
 
 > **EMAIL\_CHANGED**: `"EMAIL_CHANGED"`
 
-Defined in: [src/lib/logging/auditLog.ts:24](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L24)
+Defined in: [src/lib/logging/auditLog.ts:24](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L24)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/logging/auditLog.ts:24](https://github.com/rjmad1/CareerPro
 
 > **JOB\_CREATED**: `"JOB_CREATED"`
 
-Defined in: [src/lib/logging/auditLog.ts:17](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L17)
+Defined in: [src/lib/logging/auditLog.ts:17](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L17)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/logging/auditLog.ts:17](https://github.com/rjmad1/CareerPro
 
 > **JOB\_DELETED**: `"JOB_DELETED"`
 
-Defined in: [src/lib/logging/auditLog.ts:19](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L19)
+Defined in: [src/lib/logging/auditLog.ts:19](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L19)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/logging/auditLog.ts:19](https://github.com/rjmad1/CareerPro
 
 > **JOB\_STAGE\_CHANGED**: `"JOB_STAGE_CHANGED"`
 
-Defined in: [src/lib/logging/auditLog.ts:20](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L20)
+Defined in: [src/lib/logging/auditLog.ts:20](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L20)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/logging/auditLog.ts:20](https://github.com/rjmad1/CareerPro
 
 > **JOB\_UPDATED**: `"JOB_UPDATED"`
 
-Defined in: [src/lib/logging/auditLog.ts:18](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L18)
+Defined in: [src/lib/logging/auditLog.ts:18](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L18)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/lib/logging/auditLog.ts:18](https://github.com/rjmad1/CareerPro
 
 > **LOGIN**: `"LOGIN"`
 
-Defined in: [src/lib/logging/auditLog.ts:5](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L5)
+Defined in: [src/lib/logging/auditLog.ts:5](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L5)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [src/lib/logging/auditLog.ts:5](https://github.com/rjmad1/CareerProp
 
 > **LOGOUT**: `"LOGOUT"`
 
-Defined in: [src/lib/logging/auditLog.ts:6](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L6)
+Defined in: [src/lib/logging/auditLog.ts:6](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L6)
 
 ***
 
@@ -94,7 +94,7 @@ Defined in: [src/lib/logging/auditLog.ts:6](https://github.com/rjmad1/CareerProp
 
 > **PASSWORD\_CHANGE**: `"PASSWORD_CHANGE"`
 
-Defined in: [src/lib/logging/auditLog.ts:8](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L8)
+Defined in: [src/lib/logging/auditLog.ts:8](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L8)
 
 ***
 
@@ -102,7 +102,7 @@ Defined in: [src/lib/logging/auditLog.ts:8](https://github.com/rjmad1/CareerProp
 
 > **PASSWORD\_RESET**: `"PASSWORD_RESET"`
 
-Defined in: [src/lib/logging/auditLog.ts:9](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L9)
+Defined in: [src/lib/logging/auditLog.ts:9](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L9)
 
 ***
 
@@ -110,7 +110,7 @@ Defined in: [src/lib/logging/auditLog.ts:9](https://github.com/rjmad1/CareerProp
 
 > **PERMISSION\_GRANTED**: `"PERMISSION_GRANTED"`
 
-Defined in: [src/lib/logging/auditLog.ts:34](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L34)
+Defined in: [src/lib/logging/auditLog.ts:34](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L34)
 
 ***
 
@@ -118,7 +118,7 @@ Defined in: [src/lib/logging/auditLog.ts:34](https://github.com/rjmad1/CareerPro
 
 > **PERMISSION\_REVOKED**: `"PERMISSION_REVOKED"`
 
-Defined in: [src/lib/logging/auditLog.ts:35](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L35)
+Defined in: [src/lib/logging/auditLog.ts:35](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L35)
 
 ***
 
@@ -126,7 +126,7 @@ Defined in: [src/lib/logging/auditLog.ts:35](https://github.com/rjmad1/CareerPro
 
 > **PROFILE\_UPDATED**: `"PROFILE_UPDATED"`
 
-Defined in: [src/lib/logging/auditLog.ts:23](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L23)
+Defined in: [src/lib/logging/auditLog.ts:23](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L23)
 
 ***
 
@@ -134,7 +134,7 @@ Defined in: [src/lib/logging/auditLog.ts:23](https://github.com/rjmad1/CareerPro
 
 > **RATE\_LIMIT\_EXCEEDED**: `"RATE_LIMIT_EXCEEDED"`
 
-Defined in: [src/lib/logging/auditLog.ts:39](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L39)
+Defined in: [src/lib/logging/auditLog.ts:39](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L39)
 
 ***
 
@@ -142,7 +142,7 @@ Defined in: [src/lib/logging/auditLog.ts:39](https://github.com/rjmad1/CareerPro
 
 > **ROLE\_CHANGED**: `"ROLE_CHANGED"`
 
-Defined in: [src/lib/logging/auditLog.ts:33](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L33)
+Defined in: [src/lib/logging/auditLog.ts:33](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L33)
 
 ***
 
@@ -150,7 +150,7 @@ Defined in: [src/lib/logging/auditLog.ts:33](https://github.com/rjmad1/CareerPro
 
 > **SETTINGS\_UPDATED**: `"SETTINGS_UPDATED"`
 
-Defined in: [src/lib/logging/auditLog.ts:25](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L25)
+Defined in: [src/lib/logging/auditLog.ts:25](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L25)
 
 ***
 
@@ -158,7 +158,7 @@ Defined in: [src/lib/logging/auditLog.ts:25](https://github.com/rjmad1/CareerPro
 
 > **SIGNUP**: `"SIGNUP"`
 
-Defined in: [src/lib/logging/auditLog.ts:7](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L7)
+Defined in: [src/lib/logging/auditLog.ts:7](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L7)
 
 ***
 
@@ -166,7 +166,7 @@ Defined in: [src/lib/logging/auditLog.ts:7](https://github.com/rjmad1/CareerProp
 
 > **SUSPICIOUS\_ACTIVITY**: `"SUSPICIOUS_ACTIVITY"`
 
-Defined in: [src/lib/logging/auditLog.ts:40](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L40)
+Defined in: [src/lib/logging/auditLog.ts:40](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L40)
 
 ***
 
@@ -174,7 +174,7 @@ Defined in: [src/lib/logging/auditLog.ts:40](https://github.com/rjmad1/CareerPro
 
 > **TWO\_FACTOR\_DISABLED**: `"TWO_FACTOR_DISABLED"`
 
-Defined in: [src/lib/logging/auditLog.ts:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L13)
+Defined in: [src/lib/logging/auditLog.ts:13](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L13)
 
 ***
 
@@ -182,7 +182,7 @@ Defined in: [src/lib/logging/auditLog.ts:13](https://github.com/rjmad1/CareerPro
 
 > **TWO\_FACTOR\_ENABLED**: `"TWO_FACTOR_ENABLED"`
 
-Defined in: [src/lib/logging/auditLog.ts:12](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L12)
+Defined in: [src/lib/logging/auditLog.ts:12](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L12)
 
 ***
 
@@ -190,7 +190,7 @@ Defined in: [src/lib/logging/auditLog.ts:12](https://github.com/rjmad1/CareerPro
 
 > **TWO\_FACTOR\_VERIFIED**: `"TWO_FACTOR_VERIFIED"`
 
-Defined in: [src/lib/logging/auditLog.ts:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L14)
+Defined in: [src/lib/logging/auditLog.ts:14](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L14)
 
 ***
 
@@ -198,4 +198,4 @@ Defined in: [src/lib/logging/auditLog.ts:14](https://github.com/rjmad1/CareerPro
 
 > **UNAUTHORIZED\_ACCESS**: `"UNAUTHORIZED_ACCESS"`
 
-Defined in: [src/lib/logging/auditLog.ts:38](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L38)
+Defined in: [src/lib/logging/auditLog.ts:38](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/logging/auditLog.ts#L38)

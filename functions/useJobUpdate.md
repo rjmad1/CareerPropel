@@ -8,7 +8,7 @@
 
 > **useJobUpdate**(`jobId`): `object`
 
-Defined in: [src/hooks/useSocket.ts:240](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useSocket.ts#L240)
+Defined in: [src/hooks/useSocket.ts:240](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useSocket.ts#L240)
 
 Hook to emit job updates
 

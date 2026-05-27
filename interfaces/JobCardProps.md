@@ -6,7 +6,7 @@
 
 # Interface: JobCardProps
 
-Defined in: [src/components/Kanban/JobCard.tsx:7](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/JobCard.tsx#L7)
+Defined in: [src/components/Kanban/JobCard.tsx:7](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/JobCard.tsx#L7)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/Kanban/JobCard.tsx:7](https://github.com/rjmad1/Care
 
 > `optional` **isDraggedOver?**: `boolean`
 
-Defined in: [src/components/Kanban/JobCard.tsx:11](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/JobCard.tsx#L11)
+Defined in: [src/components/Kanban/JobCard.tsx:11](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/JobCard.tsx#L11)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/components/Kanban/JobCard.tsx:11](https://github.com/rjmad1/Car
 
 > **job**: [`Job`](Job-1.md)
 
-Defined in: [src/components/Kanban/JobCard.tsx:8](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/JobCard.tsx#L8)
+Defined in: [src/components/Kanban/JobCard.tsx:8](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/JobCard.tsx#L8)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/components/Kanban/JobCard.tsx:8](https://github.com/rjmad1/Care
 
 > `optional` **onClick?**: () => `void`
 
-Defined in: [src/components/Kanban/JobCard.tsx:9](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/JobCard.tsx#L9)
+Defined in: [src/components/Kanban/JobCard.tsx:9](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/JobCard.tsx#L9)
 
 #### Returns
 
@@ -42,7 +42,7 @@ Defined in: [src/components/Kanban/JobCard.tsx:9](https://github.com/rjmad1/Care
 
 > `optional` **onDragStart?**: (`e`) => `void`
 
-Defined in: [src/components/Kanban/JobCard.tsx:10](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/JobCard.tsx#L10)
+Defined in: [src/components/Kanban/JobCard.tsx:10](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/JobCard.tsx#L10)
 
 #### Parameters
 

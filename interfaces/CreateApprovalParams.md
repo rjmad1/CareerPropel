@@ -6,7 +6,7 @@
 
 # Interface: CreateApprovalParams
 
-Defined in: [src/lib/workflow/approval-manager.ts:5](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/approval-manager.ts#L5)
+Defined in: [src/lib/workflow/approval-manager.ts:5](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/approval-manager.ts#L5)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/workflow/approval-manager.ts:5](https://github.com/rjmad1/C
 
 > **actionType**: [`ApprovalActionType`](../type-aliases/ApprovalActionType.md)
 
-Defined in: [src/lib/workflow/approval-manager.ts:9](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/approval-manager.ts#L9)
+Defined in: [src/lib/workflow/approval-manager.ts:9](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/approval-manager.ts#L9)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/workflow/approval-manager.ts:9](https://github.com/rjmad1/C
 
 > **candidateId**: `string`
 
-Defined in: [src/lib/workflow/approval-manager.ts:8](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/approval-manager.ts#L8)
+Defined in: [src/lib/workflow/approval-manager.ts:8](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/approval-manager.ts#L8)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/workflow/approval-manager.ts:8](https://github.com/rjmad1/C
 
 > `optional` **expiresInHours?**: `number`
 
-Defined in: [src/lib/workflow/approval-manager.ts:12](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/approval-manager.ts#L12)
+Defined in: [src/lib/workflow/approval-manager.ts:12](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/approval-manager.ts#L12)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/workflow/approval-manager.ts:12](https://github.com/rjmad1/
 
 > **payload**: [`ApprovalPayload`](ApprovalPayload.md)
 
-Defined in: [src/lib/workflow/approval-manager.ts:10](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/approval-manager.ts#L10)
+Defined in: [src/lib/workflow/approval-manager.ts:10](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/approval-manager.ts#L10)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/workflow/approval-manager.ts:10](https://github.com/rjmad1/
 
 > `optional` **rationale?**: `string`
 
-Defined in: [src/lib/workflow/approval-manager.ts:11](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/approval-manager.ts#L11)
+Defined in: [src/lib/workflow/approval-manager.ts:11](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/approval-manager.ts#L11)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/workflow/approval-manager.ts:11](https://github.com/rjmad1/
 
 > **stepKey**: `string`
 
-Defined in: [src/lib/workflow/approval-manager.ts:7](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/approval-manager.ts#L7)
+Defined in: [src/lib/workflow/approval-manager.ts:7](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/approval-manager.ts#L7)
 
 ***
 
@@ -62,4 +62,4 @@ Defined in: [src/lib/workflow/approval-manager.ts:7](https://github.com/rjmad1/C
 
 > **workflowId**: `string`
 
-Defined in: [src/lib/workflow/approval-manager.ts:6](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/approval-manager.ts#L6)
+Defined in: [src/lib/workflow/approval-manager.ts:6](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/approval-manager.ts#L6)

@@ -6,7 +6,7 @@
 
 # Interface: StudyPlan
 
-Defined in: [src/types/preparation.ts:40](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L40)
+Defined in: [src/types/preparation.ts:40](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L40)
 
 Study plan
 
@@ -16,7 +16,7 @@ Study plan
 
 > **adherenceRate**: `number`
 
-Defined in: [src/types/preparation.ts:56](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L56)
+Defined in: [src/types/preparation.ts:56](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L56)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/preparation.ts:56](https://github.com/rjmad1/CareerPropel
 
 > **adjustments**: [`StudyAdjustment`](StudyAdjustment.md)[]
 
-Defined in: [src/types/preparation.ts:57](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L57)
+Defined in: [src/types/preparation.ts:57](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L57)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/preparation.ts:57](https://github.com/rjmad1/CareerPropel
 
 > **completedDays**: `number`
 
-Defined in: [src/types/preparation.ts:54](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L54)
+Defined in: [src/types/preparation.ts:54](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L54)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/preparation.ts:54](https://github.com/rjmad1/CareerPropel
 
 > **createdAt**: `Date`
 
-Defined in: [src/types/preparation.ts:43](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L43)
+Defined in: [src/types/preparation.ts:43](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L43)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/preparation.ts:43](https://github.com/rjmad1/CareerPropel
 
 > **dailyPlan**: [`DailyStudyBlock`](DailyStudyBlock.md)[]
 
-Defined in: [src/types/preparation.ts:51](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L51)
+Defined in: [src/types/preparation.ts:51](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L51)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/types/preparation.ts:51](https://github.com/rjmad1/CareerPropel
 
 > **endDate**: `Date`
 
-Defined in: [src/types/preparation.ts:45](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L45)
+Defined in: [src/types/preparation.ts:45](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L45)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [src/types/preparation.ts:45](https://github.com/rjmad1/CareerPropel
 
 > **hoursPerDay**: `number`
 
-Defined in: [src/types/preparation.ts:47](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L47)
+Defined in: [src/types/preparation.ts:47](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L47)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [src/types/preparation.ts:47](https://github.com/rjmad1/CareerPropel
 
 > **id**: `string`
 
-Defined in: [src/types/preparation.ts:41](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L41)
+Defined in: [src/types/preparation.ts:41](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L41)
 
 ***
 
@@ -80,7 +80,7 @@ Defined in: [src/types/preparation.ts:41](https://github.com/rjmad1/CareerPropel
 
 > **jobId**: `string`
 
-Defined in: [src/types/preparation.ts:42](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L42)
+Defined in: [src/types/preparation.ts:42](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L42)
 
 ***
 
@@ -88,7 +88,7 @@ Defined in: [src/types/preparation.ts:42](https://github.com/rjmad1/CareerPropel
 
 > **startDate**: `Date`
 
-Defined in: [src/types/preparation.ts:44](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L44)
+Defined in: [src/types/preparation.ts:44](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L44)
 
 ***
 
@@ -96,7 +96,7 @@ Defined in: [src/types/preparation.ts:44](https://github.com/rjmad1/CareerPropel
 
 > **totalDays**: `number`
 
-Defined in: [src/types/preparation.ts:46](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L46)
+Defined in: [src/types/preparation.ts:46](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L46)
 
 ***
 
@@ -104,7 +104,7 @@ Defined in: [src/types/preparation.ts:46](https://github.com/rjmad1/CareerPropel
 
 > **totalHours**: `number`
 
-Defined in: [src/types/preparation.ts:48](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L48)
+Defined in: [src/types/preparation.ts:48](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L48)
 
 ***
 
@@ -112,4 +112,4 @@ Defined in: [src/types/preparation.ts:48](https://github.com/rjmad1/CareerPropel
 
 > **totalPlannedDays**: `number`
 
-Defined in: [src/types/preparation.ts:55](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L55)
+Defined in: [src/types/preparation.ts:55](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L55)

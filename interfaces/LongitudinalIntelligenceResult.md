@@ -6,7 +6,7 @@
 
 # Interface: LongitudinalIntelligenceResult
 
-Defined in: [src/lib/analytics/longitudinal-intelligence.ts:49](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/longitudinal-intelligence.ts#L49)
+Defined in: [src/lib/analytics/longitudinal-intelligence.ts:49](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/longitudinal-intelligence.ts#L49)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/analytics/longitudinal-intelligence.ts:49](https://github.c
 
 > **compensationGrowth**: [`ScoredMetric`](ScoredMetric.md)\<[`GrowthMetric`](GrowthMetric.md)\>
 
-Defined in: [src/lib/analytics/types.ts:138](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/types.ts#L138)
+Defined in: [src/lib/analytics/types.ts:138](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L138)
 
 #### Inherited from
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/analytics/types.ts:138](https://github.com/rjmad1/CareerPro
 
 > **generatedAt**: `string`
 
-Defined in: [src/lib/analytics/longitudinal-intelligence.ts:50](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/longitudinal-intelligence.ts#L50)
+Defined in: [src/lib/analytics/longitudinal-intelligence.ts:50](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/longitudinal-intelligence.ts#L50)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/analytics/longitudinal-intelligence.ts:50](https://github.c
 
 > **interviewPerformanceTrend**: [`ScoredMetric`](ScoredMetric.md)\<[`PerformanceTrend`](PerformanceTrend.md)\>
 
-Defined in: [src/lib/analytics/types.ts:140](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/types.ts#L140)
+Defined in: [src/lib/analytics/types.ts:140](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L140)
 
 #### Inherited from
 
@@ -50,7 +50,7 @@ Defined in: [src/lib/analytics/types.ts:140](https://github.com/rjmad1/CareerPro
 
 > **marketAlignment**: [`ScoredMetric`](ScoredMetric.md)\<`number`\>
 
-Defined in: [src/lib/analytics/types.ts:143](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/types.ts#L143)
+Defined in: [src/lib/analytics/types.ts:143](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L143)
 
 #### Inherited from
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/analytics/types.ts:143](https://github.com/rjmad1/CareerPro
 
 > **networkingExpansion**: [`GrowthMetric`](GrowthMetric.md)
 
-Defined in: [src/lib/analytics/types.ts:141](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/types.ts#L141)
+Defined in: [src/lib/analytics/types.ts:141](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L141)
 
 #### Inherited from
 
@@ -74,7 +74,7 @@ Defined in: [src/lib/analytics/types.ts:141](https://github.com/rjmad1/CareerPro
 
 > **pipelineHealthTrend**: [`PipelineHealthPoint`](PipelineHealthPoint.md)[]
 
-Defined in: [src/lib/analytics/types.ts:142](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/types.ts#L142)
+Defined in: [src/lib/analytics/types.ts:142](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L142)
 
 #### Inherited from
 
@@ -86,7 +86,7 @@ Defined in: [src/lib/analytics/types.ts:142](https://github.com/rjmad1/CareerPro
 
 > **skillEvolution**: [`SkillSnapshot`](SkillSnapshot.md)[]
 
-Defined in: [src/lib/analytics/types.ts:139](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/types.ts#L139)
+Defined in: [src/lib/analytics/types.ts:139](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L139)
 
 #### Inherited from
 

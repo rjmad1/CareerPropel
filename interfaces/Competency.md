@@ -6,7 +6,7 @@
 
 # Interface: Competency
 
-Defined in: [src/types/preparation.ts:102](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L102)
+Defined in: [src/types/preparation.ts:102](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L102)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/preparation.ts:102](https://github.com/rjmad1/CareerPrope
 
 > **importance**: `"critical"` \| `"important"` \| `"useful"`
 
-Defined in: [src/types/preparation.ts:104](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L104)
+Defined in: [src/types/preparation.ts:104](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L104)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/preparation.ts:104](https://github.com/rjmad1/CareerPrope
 
 > **name**: `string`
 
-Defined in: [src/types/preparation.ts:103](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L103)
+Defined in: [src/types/preparation.ts:103](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L103)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/preparation.ts:103](https://github.com/rjmad1/CareerPrope
 
 > **storiesNeeded**: `number`
 
-Defined in: [src/types/preparation.ts:106](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L106)
+Defined in: [src/types/preparation.ts:106](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L106)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/types/preparation.ts:106](https://github.com/rjmad1/CareerPrope
 
 > **storiesPrepared**: `number`
 
-Defined in: [src/types/preparation.ts:105](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L105)
+Defined in: [src/types/preparation.ts:105](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L105)

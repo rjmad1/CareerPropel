@@ -6,7 +6,7 @@
 
 # Interface: PromptVersionRecord
 
-Defined in: [src/lib/governance/promptRegistry.ts:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L13)
+Defined in: [src/lib/governance/promptRegistry.ts:13](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L13)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/governance/promptRegistry.ts:13](https://github.com/rjmad1/
 
 > **agentType**: `string`
 
-Defined in: [src/lib/governance/promptRegistry.ts:15](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L15)
+Defined in: [src/lib/governance/promptRegistry.ts:15](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L15)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/governance/promptRegistry.ts:15](https://github.com/rjmad1/
 
 > **canaryPercent**: `number` \| `null`
 
-Defined in: [src/lib/governance/promptRegistry.ts:26](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L26)
+Defined in: [src/lib/governance/promptRegistry.ts:26](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L26)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/governance/promptRegistry.ts:26](https://github.com/rjmad1/
 
 > **changelog**: `string` \| `null`
 
-Defined in: [src/lib/governance/promptRegistry.ts:24](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L24)
+Defined in: [src/lib/governance/promptRegistry.ts:24](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L24)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/governance/promptRegistry.ts:24](https://github.com/rjmad1/
 
 > **createdAt**: `Date`
 
-Defined in: [src/lib/governance/promptRegistry.ts:28](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L28)
+Defined in: [src/lib/governance/promptRegistry.ts:28](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L28)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/governance/promptRegistry.ts:28](https://github.com/rjmad1/
 
 > **createdBy**: `string` \| `null`
 
-Defined in: [src/lib/governance/promptRegistry.ts:27](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L27)
+Defined in: [src/lib/governance/promptRegistry.ts:27](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L27)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/governance/promptRegistry.ts:27](https://github.com/rjmad1/
 
 > **id**: `string`
 
-Defined in: [src/lib/governance/promptRegistry.ts:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L14)
+Defined in: [src/lib/governance/promptRegistry.ts:14](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L14)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/governance/promptRegistry.ts:14](https://github.com/rjmad1/
 
 > **isActive**: `boolean`
 
-Defined in: [src/lib/governance/promptRegistry.ts:25](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L25)
+Defined in: [src/lib/governance/promptRegistry.ts:25](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L25)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/governance/promptRegistry.ts:25](https://github.com/rjmad1/
 
 > **outputSchemaVersion**: `string`
 
-Defined in: [src/lib/governance/promptRegistry.ts:23](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L23)
+Defined in: [src/lib/governance/promptRegistry.ts:23](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L23)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/lib/governance/promptRegistry.ts:23](https://github.com/rjmad1/
 
 > **preprocessingVersion**: `string`
 
-Defined in: [src/lib/governance/promptRegistry.ts:21](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L21)
+Defined in: [src/lib/governance/promptRegistry.ts:21](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L21)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [src/lib/governance/promptRegistry.ts:21](https://github.com/rjmad1/
 
 > **sanitizerVersion**: `string`
 
-Defined in: [src/lib/governance/promptRegistry.ts:22](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L22)
+Defined in: [src/lib/governance/promptRegistry.ts:22](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L22)
 
 ***
 
@@ -94,7 +94,7 @@ Defined in: [src/lib/governance/promptRegistry.ts:22](https://github.com/rjmad1/
 
 > **systemHash**: `string`
 
-Defined in: [src/lib/governance/promptRegistry.ts:18](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L18)
+Defined in: [src/lib/governance/promptRegistry.ts:18](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L18)
 
 ***
 
@@ -102,7 +102,7 @@ Defined in: [src/lib/governance/promptRegistry.ts:18](https://github.com/rjmad1/
 
 > **systemPrompt**: `string`
 
-Defined in: [src/lib/governance/promptRegistry.ts:17](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L17)
+Defined in: [src/lib/governance/promptRegistry.ts:17](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L17)
 
 ***
 
@@ -110,7 +110,7 @@ Defined in: [src/lib/governance/promptRegistry.ts:17](https://github.com/rjmad1/
 
 > **userPromptHash**: `string`
 
-Defined in: [src/lib/governance/promptRegistry.ts:20](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L20)
+Defined in: [src/lib/governance/promptRegistry.ts:20](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L20)
 
 ***
 
@@ -118,7 +118,7 @@ Defined in: [src/lib/governance/promptRegistry.ts:20](https://github.com/rjmad1/
 
 > **userPromptTemplate**: `string`
 
-Defined in: [src/lib/governance/promptRegistry.ts:19](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L19)
+Defined in: [src/lib/governance/promptRegistry.ts:19](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L19)
 
 ***
 
@@ -126,4 +126,4 @@ Defined in: [src/lib/governance/promptRegistry.ts:19](https://github.com/rjmad1/
 
 > **version**: `string`
 
-Defined in: [src/lib/governance/promptRegistry.ts:16](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/promptRegistry.ts#L16)
+Defined in: [src/lib/governance/promptRegistry.ts:16](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L16)

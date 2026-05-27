@@ -6,7 +6,7 @@
 
 # Interface: KeywordGapReport
 
-Defined in: [src/lib/ats/keywordGapAnalyzer.ts:11](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/ats/keywordGapAnalyzer.ts#L11)
+Defined in: [src/lib/ats/keywordGapAnalyzer.ts:11](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordGapAnalyzer.ts#L11)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/ats/keywordGapAnalyzer.ts:11](https://github.com/rjmad1/Car
 
 > **coverageScore**: `number`
 
-Defined in: [src/lib/ats/keywordGapAnalyzer.ts:21](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/ats/keywordGapAnalyzer.ts#L21)
+Defined in: [src/lib/ats/keywordGapAnalyzer.ts:21](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordGapAnalyzer.ts#L21)
 
 0–1 fraction of required keywords covered
 
@@ -24,7 +24,7 @@ Defined in: [src/lib/ats/keywordGapAnalyzer.ts:21](https://github.com/rjmad1/Car
 
 > **exactMatchRate**: `number`
 
-Defined in: [src/lib/ats/keywordGapAnalyzer.ts:23](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/ats/keywordGapAnalyzer.ts#L23)
+Defined in: [src/lib/ats/keywordGapAnalyzer.ts:23](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordGapAnalyzer.ts#L23)
 
 0–1 exact match rate
 
@@ -34,7 +34,7 @@ Defined in: [src/lib/ats/keywordGapAnalyzer.ts:23](https://github.com/rjmad1/Car
 
 > **matched**: `string`[]
 
-Defined in: [src/lib/ats/keywordGapAnalyzer.ts:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/ats/keywordGapAnalyzer.ts#L13)
+Defined in: [src/lib/ats/keywordGapAnalyzer.ts:13](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordGapAnalyzer.ts#L13)
 
 Keywords present in resume (exact or near-exact)
 
@@ -44,7 +44,7 @@ Keywords present in resume (exact or near-exact)
 
 > **missing**: `string`[]
 
-Defined in: [src/lib/ats/keywordGapAnalyzer.ts:15](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/ats/keywordGapAnalyzer.ts#L15)
+Defined in: [src/lib/ats/keywordGapAnalyzer.ts:15](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordGapAnalyzer.ts#L15)
 
 Keywords in JD but absent from resume
 
@@ -54,7 +54,7 @@ Keywords in JD but absent from resume
 
 > **overused**: `string`[]
 
-Defined in: [src/lib/ats/keywordGapAnalyzer.ts:17](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/ats/keywordGapAnalyzer.ts#L17)
+Defined in: [src/lib/ats/keywordGapAnalyzer.ts:17](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordGapAnalyzer.ts#L17)
 
 Keywords that appear so often they look like spam
 
@@ -64,7 +64,7 @@ Keywords that appear so often they look like spam
 
 > **synonymized**: `object`[]
 
-Defined in: [src/lib/ats/keywordGapAnalyzer.ts:19](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/ats/keywordGapAnalyzer.ts#L19)
+Defined in: [src/lib/ats/keywordGapAnalyzer.ts:19](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordGapAnalyzer.ts#L19)
 
 Synonymization warnings — JD says X, resume says Y instead
 
@@ -82,6 +82,6 @@ Synonymization warnings — JD says X, resume says Y instead
 
 > **synonymPenalty**: `number`
 
-Defined in: [src/lib/ats/keywordGapAnalyzer.ts:25](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/ats/keywordGapAnalyzer.ts#L25)
+Defined in: [src/lib/ats/keywordGapAnalyzer.ts:25](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordGapAnalyzer.ts#L25)
 
 Penalty applied for synonymizations

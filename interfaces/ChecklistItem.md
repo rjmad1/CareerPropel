@@ -6,7 +6,7 @@
 
 # Interface: ChecklistItem
 
-Defined in: [src/types/preparation.ts:414](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L414)
+Defined in: [src/types/preparation.ts:414](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L414)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/preparation.ts:414](https://github.com/rjmad1/CareerPrope
 
 > **category**: `string`
 
-Defined in: [src/types/preparation.ts:416](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L416)
+Defined in: [src/types/preparation.ts:416](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L416)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/preparation.ts:416](https://github.com/rjmad1/CareerPrope
 
 > **completed**: `boolean`
 
-Defined in: [src/types/preparation.ts:418](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L418)
+Defined in: [src/types/preparation.ts:418](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L418)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/preparation.ts:418](https://github.com/rjmad1/CareerPrope
 
 > `optional` **completedAt?**: `Date`
 
-Defined in: [src/types/preparation.ts:419](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L419)
+Defined in: [src/types/preparation.ts:419](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L419)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/preparation.ts:419](https://github.com/rjmad1/CareerPrope
 
 > **description**: `string`
 
-Defined in: [src/types/preparation.ts:417](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L417)
+Defined in: [src/types/preparation.ts:417](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L417)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/preparation.ts:417](https://github.com/rjmad1/CareerPrope
 
 > `optional` **dueDate?**: `Date`
 
-Defined in: [src/types/preparation.ts:421](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L421)
+Defined in: [src/types/preparation.ts:421](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L421)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/types/preparation.ts:421](https://github.com/rjmad1/CareerPrope
 
 > **id**: `string`
 
-Defined in: [src/types/preparation.ts:415](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L415)
+Defined in: [src/types/preparation.ts:415](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L415)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/types/preparation.ts:415](https://github.com/rjmad1/CareerPrope
 
 > `optional` **notes?**: `string`
 
-Defined in: [src/types/preparation.ts:422](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L422)
+Defined in: [src/types/preparation.ts:422](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L422)
 
 ***
 
@@ -70,4 +70,4 @@ Defined in: [src/types/preparation.ts:422](https://github.com/rjmad1/CareerPrope
 
 > **priority**: `"must_have"` \| `"nice_to_have"` \| `"should_have"`
 
-Defined in: [src/types/preparation.ts:420](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L420)
+Defined in: [src/types/preparation.ts:420](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L420)

@@ -6,7 +6,7 @@
 
 # Interface: FormatViolation
 
-Defined in: [src/lib/document/atsFormatter.ts:21](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/document/atsFormatter.ts#L21)
+Defined in: [src/lib/document/atsFormatter.ts:21](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/document/atsFormatter.ts#L21)
 
 ATS Formatter
 
@@ -32,7 +32,7 @@ FORBIDDEN:
 
 > `optional` **line?**: `number`
 
-Defined in: [src/lib/document/atsFormatter.ts:24](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/document/atsFormatter.ts#L24)
+Defined in: [src/lib/document/atsFormatter.ts:24](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/document/atsFormatter.ts#L24)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/lib/document/atsFormatter.ts:24](https://github.com/rjmad1/Care
 
 > **message**: `string`
 
-Defined in: [src/lib/document/atsFormatter.ts:23](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/document/atsFormatter.ts#L23)
+Defined in: [src/lib/document/atsFormatter.ts:23](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/document/atsFormatter.ts#L23)
 
 ***
 
@@ -48,4 +48,4 @@ Defined in: [src/lib/document/atsFormatter.ts:23](https://github.com/rjmad1/Care
 
 > **type**: `string`
 
-Defined in: [src/lib/document/atsFormatter.ts:22](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/document/atsFormatter.ts#L22)
+Defined in: [src/lib/document/atsFormatter.ts:22](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/document/atsFormatter.ts#L22)

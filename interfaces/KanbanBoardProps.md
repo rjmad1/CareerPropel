@@ -6,7 +6,7 @@
 
 # Interface: KanbanBoardProps
 
-Defined in: [src/components/Kanban/KanbanBoard.tsx:10](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/KanbanBoard.tsx#L10)
+Defined in: [src/components/Kanban/KanbanBoard.tsx:10](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/KanbanBoard.tsx#L10)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/Kanban/KanbanBoard.tsx:10](https://github.com/rjmad1
 
 > `optional` **initialJobs?**: [`Job`](Job-1.md)[]
 
-Defined in: [src/components/Kanban/KanbanBoard.tsx:11](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/KanbanBoard.tsx#L11)
+Defined in: [src/components/Kanban/KanbanBoard.tsx:11](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/KanbanBoard.tsx#L11)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/components/Kanban/KanbanBoard.tsx:11](https://github.com/rjmad1
 
 > `optional` **onJobClick?**: (`job`) => `void`
 
-Defined in: [src/components/Kanban/KanbanBoard.tsx:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/KanbanBoard.tsx#L14)
+Defined in: [src/components/Kanban/KanbanBoard.tsx:14](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/KanbanBoard.tsx#L14)
 
 #### Parameters
 
@@ -40,7 +40,7 @@ Defined in: [src/components/Kanban/KanbanBoard.tsx:14](https://github.com/rjmad1
 
 > `optional` **onJobMove?**: (`jobId`, `newStage`) => `void` \| `Promise`\<[`MoveResult`](MoveResult.md)\>
 
-Defined in: [src/components/Kanban/KanbanBoard.tsx:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/KanbanBoard.tsx#L13)
+Defined in: [src/components/Kanban/KanbanBoard.tsx:13](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/KanbanBoard.tsx#L13)
 
 #### Parameters
 
@@ -62,7 +62,7 @@ Defined in: [src/components/Kanban/KanbanBoard.tsx:13](https://github.com/rjmad1
 
 > `optional` **onJobSelect?**: (`id`) => `void`
 
-Defined in: [src/components/Kanban/KanbanBoard.tsx:16](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/KanbanBoard.tsx#L16)
+Defined in: [src/components/Kanban/KanbanBoard.tsx:16](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/KanbanBoard.tsx#L16)
 
 #### Parameters
 
@@ -80,7 +80,7 @@ Defined in: [src/components/Kanban/KanbanBoard.tsx:16](https://github.com/rjmad1
 
 > `optional` **onJobUpdate?**: (`jobId`, `updates`) => `Promise`\<`void`\>
 
-Defined in: [src/components/Kanban/KanbanBoard.tsx:12](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/KanbanBoard.tsx#L12)
+Defined in: [src/components/Kanban/KanbanBoard.tsx:12](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/KanbanBoard.tsx#L12)
 
 #### Parameters
 
@@ -102,4 +102,4 @@ Defined in: [src/components/Kanban/KanbanBoard.tsx:12](https://github.com/rjmad1
 
 > `optional` **selectedJobId?**: `string` \| `null`
 
-Defined in: [src/components/Kanban/KanbanBoard.tsx:15](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/KanbanBoard.tsx#L15)
+Defined in: [src/components/Kanban/KanbanBoard.tsx:15](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/KanbanBoard.tsx#L15)

@@ -6,7 +6,7 @@
 
 # Class: QualificationError
 
-Defined in: [src/lib/governance/providerQualification.ts:139](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/providerQualification.ts#L139)
+Defined in: [src/lib/governance/providerQualification.ts:139](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/providerQualification.ts#L139)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/governance/providerQualification.ts:139](https://github.com
 
 > **new QualificationError**(`message`, `agentType`, `provider`, `modelId`): `QualificationError`
 
-Defined in: [src/lib/governance/providerQualification.ts:140](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/providerQualification.ts#L140)
+Defined in: [src/lib/governance/providerQualification.ts:140](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/providerQualification.ts#L140)
 
 #### Parameters
 
@@ -52,7 +52,7 @@ Defined in: [src/lib/governance/providerQualification.ts:140](https://github.com
 
 > `readonly` **agentType**: [`AgentType`](../type-aliases/AgentType.md)
 
-Defined in: [src/lib/governance/providerQualification.ts:142](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/providerQualification.ts#L142)
+Defined in: [src/lib/governance/providerQualification.ts:142](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/providerQualification.ts#L142)
 
 ***
 
@@ -84,7 +84,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1077
 
 > `readonly` **modelId**: `string`
 
-Defined in: [src/lib/governance/providerQualification.ts:144](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/providerQualification.ts#L144)
+Defined in: [src/lib/governance/providerQualification.ts:144](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/providerQualification.ts#L144)
 
 ***
 
@@ -104,7 +104,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
 
 > `readonly` **provider**: [`LLMProviderName`](../type-aliases/LLMProviderName.md)
 
-Defined in: [src/lib/governance/providerQualification.ts:143](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/governance/providerQualification.ts#L143)
+Defined in: [src/lib/governance/providerQualification.ts:143](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/providerQualification.ts#L143)
 
 ***
 

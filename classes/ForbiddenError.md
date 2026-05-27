@@ -6,7 +6,7 @@
 
 # Class: ForbiddenError
 
-Defined in: [src/app/api/middleware/auth.ts:83](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/middleware/auth.ts#L83)
+Defined in: [src/app/api/middleware/auth.ts:83](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/app/api/middleware/auth.ts#L83)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [src/app/api/middleware/auth.ts:83](https://github.com/rjmad1/Career
 
 > **new ForbiddenError**(`message?`): `ForbiddenError`
 
-Defined in: [src/app/api/middleware/auth.ts:84](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/middleware/auth.ts#L84)
+Defined in: [src/app/api/middleware/auth.ts:84](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/app/api/middleware/auth.ts#L84)
 
 #### Parameters
 

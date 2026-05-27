@@ -8,7 +8,7 @@
 
 > **useMoveJobMutation**(`options?`): `UseMutationResult`\<`AxiosResponse`\<`any`, `any`, \{ \}\>, `Error`, \{ `jobId`: `string`; `newStage`: [`JobStage`](../type-aliases/JobStage-1.md); \}, [`Job`](../interfaces/Job-1.md) \| `undefined`\>
 
-Defined in: [src/hooks/useMoveJob.ts:65](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useMoveJob.ts#L65)
+Defined in: [src/hooks/useMoveJob.ts:65](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useMoveJob.ts#L65)
 
 Alternative: Mutation-based approach for more control
 

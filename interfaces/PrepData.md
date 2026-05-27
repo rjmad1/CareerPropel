@@ -6,7 +6,7 @@
 
 # Interface: PrepData
 
-Defined in: [src/domains/jobs/hooks/useInterviewPrep.ts:3](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useInterviewPrep.ts#L3)
+Defined in: [src/domains/jobs/hooks/useInterviewPrep.ts:3](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useInterviewPrep.ts#L3)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/domains/jobs/hooks/useInterviewPrep.ts:3](https://github.com/rj
 
 > **companyIntelligence**: `object`
 
-Defined in: [src/domains/jobs/hooks/useInterviewPrep.ts:15](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useInterviewPrep.ts#L15)
+Defined in: [src/domains/jobs/hooks/useInterviewPrep.ts:15](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useInterviewPrep.ts#L15)
 
 #### culture
 
@@ -34,7 +34,7 @@ Defined in: [src/domains/jobs/hooks/useInterviewPrep.ts:15](https://github.com/r
 
 > **likelyQuestions**: `string`[]
 
-Defined in: [src/domains/jobs/hooks/useInterviewPrep.ts:20](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useInterviewPrep.ts#L20)
+Defined in: [src/domains/jobs/hooks/useInterviewPrep.ts:20](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useInterviewPrep.ts#L20)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [src/domains/jobs/hooks/useInterviewPrep.ts:20](https://github.com/r
 
 > **starStories**: `object`[]
 
-Defined in: [src/domains/jobs/hooks/useInterviewPrep.ts:4](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useInterviewPrep.ts#L4)
+Defined in: [src/domains/jobs/hooks/useInterviewPrep.ts:4](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useInterviewPrep.ts#L4)
 
 #### action
 
@@ -70,7 +70,7 @@ Defined in: [src/domains/jobs/hooks/useInterviewPrep.ts:4](https://github.com/rj
 
 > **technicalConcepts**: `object`[]
 
-Defined in: [src/domains/jobs/hooks/useInterviewPrep.ts:11](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useInterviewPrep.ts#L11)
+Defined in: [src/domains/jobs/hooks/useInterviewPrep.ts:11](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useInterviewPrep.ts#L11)
 
 #### keyPoints
 

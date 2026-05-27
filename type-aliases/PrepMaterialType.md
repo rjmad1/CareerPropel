@@ -8,6 +8,6 @@
 
 > **PrepMaterialType** = `"cheat_sheet"` \| `"star_story"` \| `"talking_point"` \| `"concept_refresher"` \| `"company_research"` \| `"likely_question"` \| `"compensation_research"` \| `"objection_handler"`
 
-Defined in: [src/types/interview.ts:364](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/interview.ts#L364)
+Defined in: [src/types/interview.ts:364](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/interview.ts#L364)
 
 Prep material types

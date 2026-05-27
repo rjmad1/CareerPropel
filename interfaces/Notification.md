@@ -6,7 +6,7 @@
 
 # Interface: Notification
 
-Defined in: [src/lib/notifications/manager.ts:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/notifications/manager.ts#L14)
+Defined in: [src/lib/notifications/manager.ts:14](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/notifications/manager.ts#L14)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/notifications/manager.ts:14](https://github.com/rjmad1/Care
 
 > `optional` **action?**: `object`
 
-Defined in: [src/lib/notifications/manager.ts:20](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/notifications/manager.ts#L20)
+Defined in: [src/lib/notifications/manager.ts:20](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/notifications/manager.ts#L20)
 
 #### label
 
@@ -34,7 +34,7 @@ Defined in: [src/lib/notifications/manager.ts:20](https://github.com/rjmad1/Care
 
 > **createdAt**: `number`
 
-Defined in: [src/lib/notifications/manager.ts:24](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/notifications/manager.ts#L24)
+Defined in: [src/lib/notifications/manager.ts:24](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/notifications/manager.ts#L24)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [src/lib/notifications/manager.ts:24](https://github.com/rjmad1/Care
 
 > `optional` **duration?**: `number`
 
-Defined in: [src/lib/notifications/manager.ts:19](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/notifications/manager.ts#L19)
+Defined in: [src/lib/notifications/manager.ts:19](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/notifications/manager.ts#L19)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [src/lib/notifications/manager.ts:19](https://github.com/rjmad1/Care
 
 > **id**: `string`
 
-Defined in: [src/lib/notifications/manager.ts:15](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/notifications/manager.ts#L15)
+Defined in: [src/lib/notifications/manager.ts:15](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/notifications/manager.ts#L15)
 
 ***
 
@@ -58,7 +58,7 @@ Defined in: [src/lib/notifications/manager.ts:15](https://github.com/rjmad1/Care
 
 > **message**: `string`
 
-Defined in: [src/lib/notifications/manager.ts:18](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/notifications/manager.ts#L18)
+Defined in: [src/lib/notifications/manager.ts:18](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/notifications/manager.ts#L18)
 
 ***
 
@@ -66,7 +66,7 @@ Defined in: [src/lib/notifications/manager.ts:18](https://github.com/rjmad1/Care
 
 > **title**: `string`
 
-Defined in: [src/lib/notifications/manager.ts:17](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/notifications/manager.ts#L17)
+Defined in: [src/lib/notifications/manager.ts:17](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/notifications/manager.ts#L17)
 
 ***
 
@@ -74,4 +74,4 @@ Defined in: [src/lib/notifications/manager.ts:17](https://github.com/rjmad1/Care
 
 > **type**: [`NotificationType`](../type-aliases/NotificationType.md)
 
-Defined in: [src/lib/notifications/manager.ts:16](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/notifications/manager.ts#L16)
+Defined in: [src/lib/notifications/manager.ts:16](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/notifications/manager.ts#L16)

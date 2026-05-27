@@ -8,7 +8,7 @@
 
 > **POST**(`request`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `message`: `string`; `success`: `boolean`; \}\>\>\>
 
-Defined in: [src/app/api/auth/2fa/enable/route.ts:24](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/auth/2fa/enable/route.ts#L24)
+Defined in: [src/app/api/auth/2fa/enable/route.ts:24](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/app/api/auth/2fa/enable/route.ts#L24)
 
 POST /api/auth/2fa/enable
 Enable 2FA for the authenticated user

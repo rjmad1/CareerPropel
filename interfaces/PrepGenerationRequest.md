@@ -6,7 +6,7 @@
 
 # Interface: PrepGenerationRequest
 
-Defined in: [src/lib/interview/prepService.ts:31](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/interview/prepService.ts#L31)
+Defined in: [src/lib/interview/prepService.ts:31](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/interview/prepService.ts#L31)
 
 Interview prep generation request
 
@@ -16,7 +16,7 @@ Interview prep generation request
 
 > **company**: `string`
 
-Defined in: [src/lib/interview/prepService.ts:35](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/interview/prepService.ts#L35)
+Defined in: [src/lib/interview/prepService.ts:35](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/interview/prepService.ts#L35)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/lib/interview/prepService.ts:35](https://github.com/rjmad1/Care
 
 > `optional` **interviewStage?**: `string`
 
-Defined in: [src/lib/interview/prepService.ts:38](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/interview/prepService.ts#L38)
+Defined in: [src/lib/interview/prepService.ts:38](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/interview/prepService.ts#L38)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/lib/interview/prepService.ts:38](https://github.com/rjmad1/Care
 
 > `optional` **interviewType?**: `"behavioral"` \| `"technical"` \| `"system_design"` \| `"final_round"` \| `"phone_screen"`
 
-Defined in: [src/lib/interview/prepService.ts:39](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/interview/prepService.ts#L39)
+Defined in: [src/lib/interview/prepService.ts:39](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/interview/prepService.ts#L39)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/lib/interview/prepService.ts:39](https://github.com/rjmad1/Care
 
 > **jobDescription**: `string`
 
-Defined in: [src/lib/interview/prepService.ts:33](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/interview/prepService.ts#L33)
+Defined in: [src/lib/interview/prepService.ts:33](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/interview/prepService.ts#L33)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/lib/interview/prepService.ts:33](https://github.com/rjmad1/Care
 
 > **jobId**: `string`
 
-Defined in: [src/lib/interview/prepService.ts:32](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/interview/prepService.ts#L32)
+Defined in: [src/lib/interview/prepService.ts:32](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/interview/prepService.ts#L32)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/lib/interview/prepService.ts:32](https://github.com/rjmad1/Care
 
 > **jobTitle**: `string`
 
-Defined in: [src/lib/interview/prepService.ts:34](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/interview/prepService.ts#L34)
+Defined in: [src/lib/interview/prepService.ts:34](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/interview/prepService.ts#L34)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [src/lib/interview/prepService.ts:34](https://github.com/rjmad1/Care
 
 > `optional` **userProjects?**: `string`[]
 
-Defined in: [src/lib/interview/prepService.ts:37](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/interview/prepService.ts#L37)
+Defined in: [src/lib/interview/prepService.ts:37](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/interview/prepService.ts#L37)
 
 ***
 
@@ -72,4 +72,4 @@ Defined in: [src/lib/interview/prepService.ts:37](https://github.com/rjmad1/Care
 
 > **userResume**: `string`
 
-Defined in: [src/lib/interview/prepService.ts:36](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/interview/prepService.ts#L36)
+Defined in: [src/lib/interview/prepService.ts:36](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/interview/prepService.ts#L36)

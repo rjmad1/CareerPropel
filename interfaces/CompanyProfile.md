@@ -6,7 +6,7 @@
 
 # Interface: CompanyProfile
 
-Defined in: [src/types/company.ts:11](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L11)
+Defined in: [src/types/company.ts:11](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L11)
 
 Company profile with research data
 
@@ -16,7 +16,7 @@ Company profile with research data
 
 > **benefits**: `object`
 
-Defined in: [src/types/company.ts:60](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L60)
+Defined in: [src/types/company.ts:60](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L60)
 
 #### bonusStructure?
 
@@ -64,7 +64,7 @@ Defined in: [src/types/company.ts:60](https://github.com/rjmad1/CareerPropel/blo
 
 > **competitors**: `string`[]
 
-Defined in: [src/types/company.ts:82](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L82)
+Defined in: [src/types/company.ts:82](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L82)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [src/types/company.ts:82](https://github.com/rjmad1/CareerPropel/blo
 
 > **createdAt**: `Date`
 
-Defined in: [src/types/company.ts:87](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L87)
+Defined in: [src/types/company.ts:87](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L87)
 
 ***
 
@@ -80,7 +80,7 @@ Defined in: [src/types/company.ts:87](https://github.com/rjmad1/CareerPropel/blo
 
 > **culture**: `object`
 
-Defined in: [src/types/company.ts:50](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L50)
+Defined in: [src/types/company.ts:50](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L50)
 
 #### description
 
@@ -116,7 +116,7 @@ Defined in: [src/types/company.ts:50](https://github.com/rjmad1/CareerPropel/blo
 
 > **dataQuality**: `"high"` \| `"low"` \| `"medium"` \| `"verified"`
 
-Defined in: [src/types/company.ts:89](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L89)
+Defined in: [src/types/company.ts:89](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L89)
 
 ***
 
@@ -124,7 +124,7 @@ Defined in: [src/types/company.ts:89](https://github.com/rjmad1/CareerPropel/blo
 
 > **description**: `string`
 
-Defined in: [src/types/company.ts:24](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L24)
+Defined in: [src/types/company.ts:24](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L24)
 
 ***
 
@@ -132,7 +132,7 @@ Defined in: [src/types/company.ts:24](https://github.com/rjmad1/CareerPropel/blo
 
 > **employees**: `object`
 
-Defined in: [src/types/company.ts:39](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L39)
+Defined in: [src/types/company.ts:39](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L39)
 
 #### engineering
 
@@ -152,7 +152,7 @@ Defined in: [src/types/company.ts:39](https://github.com/rjmad1/CareerPropel/blo
 
 > **founded**: `number`
 
-Defined in: [src/types/company.ts:18](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L18)
+Defined in: [src/types/company.ts:18](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L18)
 
 ***
 
@@ -160,7 +160,7 @@ Defined in: [src/types/company.ts:18](https://github.com/rjmad1/CareerPropel/blo
 
 > **funding**: [`FundingInfo`](FundingInfo.md)
 
-Defined in: [src/types/company.ts:29](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L29)
+Defined in: [src/types/company.ts:29](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L29)
 
 ***
 
@@ -168,7 +168,7 @@ Defined in: [src/types/company.ts:29](https://github.com/rjmad1/CareerPropel/blo
 
 > `optional` **growthRate?**: `number`
 
-Defined in: [src/types/company.ts:36](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L36)
+Defined in: [src/types/company.ts:36](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L36)
 
 ***
 
@@ -176,7 +176,7 @@ Defined in: [src/types/company.ts:36](https://github.com/rjmad1/CareerPropel/blo
 
 > **headquarters**: `object`
 
-Defined in: [src/types/company.ts:19](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L19)
+Defined in: [src/types/company.ts:19](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L19)
 
 #### city
 
@@ -196,7 +196,7 @@ Defined in: [src/types/company.ts:19](https://github.com/rjmad1/CareerPropel/blo
 
 > **hiringPatterns**: [`HiringPattern`](HiringPattern.md)
 
-Defined in: [src/types/company.ts:74](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L74)
+Defined in: [src/types/company.ts:74](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L74)
 
 ***
 
@@ -204,7 +204,7 @@ Defined in: [src/types/company.ts:74](https://github.com/rjmad1/CareerPropel/blo
 
 > **id**: `string`
 
-Defined in: [src/types/company.ts:12](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L12)
+Defined in: [src/types/company.ts:12](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L12)
 
 ***
 
@@ -212,7 +212,7 @@ Defined in: [src/types/company.ts:12](https://github.com/rjmad1/CareerPropel/blo
 
 > **industry**: `string`
 
-Defined in: [src/types/company.ts:15](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L15)
+Defined in: [src/types/company.ts:15](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L15)
 
 ***
 
@@ -220,7 +220,7 @@ Defined in: [src/types/company.ts:15](https://github.com/rjmad1/CareerPropel/blo
 
 > **infrastructure**: `string`[]
 
-Defined in: [src/types/company.ts:47](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L47)
+Defined in: [src/types/company.ts:47](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L47)
 
 ***
 
@@ -228,7 +228,7 @@ Defined in: [src/types/company.ts:47](https://github.com/rjmad1/CareerPropel/blo
 
 > **interviewProcess**: [`InterviewProcessInfo`](InterviewProcessInfo.md)
 
-Defined in: [src/types/company.ts:75](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L75)
+Defined in: [src/types/company.ts:75](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L75)
 
 ***
 
@@ -236,7 +236,7 @@ Defined in: [src/types/company.ts:75](https://github.com/rjmad1/CareerPropel/blo
 
 > **investors**: `string`[]
 
-Defined in: [src/types/company.ts:84](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L84)
+Defined in: [src/types/company.ts:84](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L84)
 
 ***
 
@@ -244,7 +244,7 @@ Defined in: [src/types/company.ts:84](https://github.com/rjmad1/CareerPropel/blo
 
 > **lastUpdated**: `Date`
 
-Defined in: [src/types/company.ts:88](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L88)
+Defined in: [src/types/company.ts:88](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L88)
 
 ***
 
@@ -252,7 +252,7 @@ Defined in: [src/types/company.ts:88](https://github.com/rjmad1/CareerPropel/blo
 
 > `optional` **mission?**: `string`
 
-Defined in: [src/types/company.ts:25](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L25)
+Defined in: [src/types/company.ts:25](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L25)
 
 ***
 
@@ -260,7 +260,7 @@ Defined in: [src/types/company.ts:25](https://github.com/rjmad1/CareerPropel/blo
 
 > **name**: `string`
 
-Defined in: [src/types/company.ts:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L13)
+Defined in: [src/types/company.ts:13](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L13)
 
 ***
 
@@ -268,7 +268,7 @@ Defined in: [src/types/company.ts:13](https://github.com/rjmad1/CareerPropel/blo
 
 > **partners**: `string`[]
 
-Defined in: [src/types/company.ts:83](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L83)
+Defined in: [src/types/company.ts:83](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L83)
 
 ***
 
@@ -276,7 +276,7 @@ Defined in: [src/types/company.ts:83](https://github.com/rjmad1/CareerPropel/blo
 
 > `optional` **recentLayoffs?**: [`Layoff`](Layoff.md)[]
 
-Defined in: [src/types/company.ts:79](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L79)
+Defined in: [src/types/company.ts:79](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L79)
 
 ***
 
@@ -284,7 +284,7 @@ Defined in: [src/types/company.ts:79](https://github.com/rjmad1/CareerPropel/blo
 
 > **recentNews**: [`NewsArticle`](NewsArticle.md)[]
 
-Defined in: [src/types/company.ts:78](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L78)
+Defined in: [src/types/company.ts:78](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L78)
 
 ***
 
@@ -292,7 +292,7 @@ Defined in: [src/types/company.ts:78](https://github.com/rjmad1/CareerPropel/blo
 
 > `optional` **revenue?**: `object`
 
-Defined in: [src/types/company.ts:30](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L30)
+Defined in: [src/types/company.ts:30](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L30)
 
 #### annualRevenue?
 
@@ -316,7 +316,7 @@ Defined in: [src/types/company.ts:30](https://github.com/rjmad1/CareerPropel/blo
 
 > **size**: [`CompanySize`](../type-aliases/CompanySize.md)
 
-Defined in: [src/types/company.ts:17](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L17)
+Defined in: [src/types/company.ts:17](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L17)
 
 ***
 
@@ -324,7 +324,7 @@ Defined in: [src/types/company.ts:17](https://github.com/rjmad1/CareerPropel/blo
 
 > **sources**: `string`[]
 
-Defined in: [src/types/company.ts:90](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L90)
+Defined in: [src/types/company.ts:90](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L90)
 
 ***
 
@@ -332,7 +332,7 @@ Defined in: [src/types/company.ts:90](https://github.com/rjmad1/CareerPropel/blo
 
 > `optional` **subIndustry?**: `string`
 
-Defined in: [src/types/company.ts:16](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L16)
+Defined in: [src/types/company.ts:16](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L16)
 
 ***
 
@@ -340,7 +340,7 @@ Defined in: [src/types/company.ts:16](https://github.com/rjmad1/CareerPropel/blo
 
 > **technicalStack**: [`TechStackItem`](TechStackItem.md)[]
 
-Defined in: [src/types/company.ts:46](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L46)
+Defined in: [src/types/company.ts:46](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L46)
 
 ***
 
@@ -348,7 +348,7 @@ Defined in: [src/types/company.ts:46](https://github.com/rjmad1/CareerPropel/blo
 
 > `optional` **vision?**: `string`
 
-Defined in: [src/types/company.ts:26](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L26)
+Defined in: [src/types/company.ts:26](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L26)
 
 ***
 
@@ -356,4 +356,4 @@ Defined in: [src/types/company.ts:26](https://github.com/rjmad1/CareerPropel/blo
 
 > `optional` **website?**: `string`
 
-Defined in: [src/types/company.ts:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L14)
+Defined in: [src/types/company.ts:14](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L14)

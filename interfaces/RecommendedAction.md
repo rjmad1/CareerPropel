@@ -6,7 +6,7 @@
 
 # Interface: RecommendedAction
 
-Defined in: [src/lib/workflow/types.ts:112](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/types.ts#L112)
+Defined in: [src/lib/workflow/types.ts:112](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L112)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/workflow/types.ts:112](https://github.com/rjmad1/CareerProp
 
 > **actionType**: `"run_workflow"` \| `"run_agent"` \| `"manual_task"`
 
-Defined in: [src/lib/workflow/types.ts:117](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/types.ts#L117)
+Defined in: [src/lib/workflow/types.ts:117](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L117)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/workflow/types.ts:117](https://github.com/rjmad1/CareerProp
 
 > `optional` **agentType?**: [`AgentType`](../type-aliases/AgentType.md)
 
-Defined in: [src/lib/workflow/types.ts:119](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/types.ts#L119)
+Defined in: [src/lib/workflow/types.ts:119](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L119)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/workflow/types.ts:119](https://github.com/rjmad1/CareerProp
 
 > **description**: `string`
 
-Defined in: [src/lib/workflow/types.ts:115](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/types.ts#L115)
+Defined in: [src/lib/workflow/types.ts:115](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L115)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/workflow/types.ts:115](https://github.com/rjmad1/CareerProp
 
 > `optional` **dueInDays?**: `number`
 
-Defined in: [src/lib/workflow/types.ts:121](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/types.ts#L121)
+Defined in: [src/lib/workflow/types.ts:121](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L121)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/workflow/types.ts:121](https://github.com/rjmad1/CareerProp
 
 > **id**: `string`
 
-Defined in: [src/lib/workflow/types.ts:113](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/types.ts#L113)
+Defined in: [src/lib/workflow/types.ts:113](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L113)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/workflow/types.ts:113](https://github.com/rjmad1/CareerProp
 
 > **priority**: [`ActionPriority`](../type-aliases/ActionPriority.md)
 
-Defined in: [src/lib/workflow/types.ts:116](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/types.ts#L116)
+Defined in: [src/lib/workflow/types.ts:116](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L116)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/workflow/types.ts:116](https://github.com/rjmad1/CareerProp
 
 > **rationale**: `string`
 
-Defined in: [src/lib/workflow/types.ts:120](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/types.ts#L120)
+Defined in: [src/lib/workflow/types.ts:120](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L120)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/workflow/types.ts:120](https://github.com/rjmad1/CareerProp
 
 > **title**: `string`
 
-Defined in: [src/lib/workflow/types.ts:114](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/types.ts#L114)
+Defined in: [src/lib/workflow/types.ts:114](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L114)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [src/lib/workflow/types.ts:114](https://github.com/rjmad1/CareerProp
 
 > `optional` **workflowTemplateId?**: `string`
 
-Defined in: [src/lib/workflow/types.ts:118](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/workflow/types.ts#L118)
+Defined in: [src/lib/workflow/types.ts:118](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L118)

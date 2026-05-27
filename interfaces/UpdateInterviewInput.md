@@ -6,7 +6,7 @@
 
 # Interface: UpdateInterviewInput
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:53](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useMutations.ts#L53)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:53](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useMutations.ts#L53)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/domains/jobs/hooks/useMutations.ts:53](https://github.com/rjmad
 
 > **id**: `string`
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:54](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useMutations.ts#L54)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:54](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useMutations.ts#L54)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/domains/jobs/hooks/useMutations.ts:54](https://github.com/rjmad
 
 > **jobId**: `string`
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:55](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useMutations.ts#L55)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:55](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useMutations.ts#L55)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/domains/jobs/hooks/useMutations.ts:55](https://github.com/rjmad
 
 > **updates**: `Partial`\<[`CreateInterviewInput`](CreateInterviewInput.md)\>
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:56](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useMutations.ts#L56)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:56](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useMutations.ts#L56)

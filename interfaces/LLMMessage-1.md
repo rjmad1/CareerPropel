@@ -6,7 +6,7 @@
 
 # Interface: LLMMessage
 
-Defined in: [src/lib/llm/provider.ts:12](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/provider.ts#L12)
+Defined in: [src/lib/llm/provider.ts:12](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/provider.ts#L12)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/llm/provider.ts:12](https://github.com/rjmad1/CareerPropel/
 
 > **content**: `string`
 
-Defined in: [src/lib/llm/provider.ts:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/provider.ts#L14)
+Defined in: [src/lib/llm/provider.ts:14](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/provider.ts#L14)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [src/lib/llm/provider.ts:14](https://github.com/rjmad1/CareerPropel/
 
 > **role**: `"user"` \| `"system"` \| `"assistant"`
 
-Defined in: [src/lib/llm/provider.ts:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/provider.ts#L13)
+Defined in: [src/lib/llm/provider.ts:13](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/provider.ts#L13)

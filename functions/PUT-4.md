@@ -8,7 +8,7 @@
 
 > **PUT**(`request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `accomplishment`: \{ `candidateId`: `string`; `category`: `string`; `createdAt`: `Date`; `date`: `Date`; `description`: `string`; `id`: `string`; `metrics`: `string` \| `null`; `starContext`: `string` \| `null`; `title`: `string`; `updatedAt`: `Date`; `visibility`: `string`; \}; \}\>\>
 
-Defined in: [src/app/api/profile/accomplishments/route.ts:99](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/profile/accomplishments/route.ts#L99)
+Defined in: [src/app/api/profile/accomplishments/route.ts:99](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/app/api/profile/accomplishments/route.ts#L99)
 
 PUT /api/profile/accomplishments
 Edit an existing accomplishment.

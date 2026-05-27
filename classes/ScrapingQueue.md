@@ -6,7 +6,7 @@
 
 # Class: ScrapingQueue
 
-Defined in: [src/lib/scraping/scrapingQueue.ts:36](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/scraping/scrapingQueue.ts#L36)
+Defined in: [src/lib/scraping/scrapingQueue.ts:36](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/scraping/scrapingQueue.ts#L36)
 
 ## Constructors
 
@@ -24,7 +24,7 @@ Defined in: [src/lib/scraping/scrapingQueue.ts:36](https://github.com/rjmad1/Car
 
 > **complete**(`executionId`, `userId`, `agentType`, `result`): `Promise`\<`void`\>
 
-Defined in: [src/lib/scraping/scrapingQueue.ts:160](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/scraping/scrapingQueue.ts#L160)
+Defined in: [src/lib/scraping/scrapingQueue.ts:160](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/scraping/scrapingQueue.ts#L160)
 
 Mark a scraping job as successfully completed.
 
@@ -56,7 +56,7 @@ Mark a scraping job as successfully completed.
 
 > **dequeueNext**(): `Promise`\<[`ScrapingJobPayload`](../interfaces/ScrapingJobPayload.md) \| `null`\>
 
-Defined in: [src/lib/scraping/scrapingQueue.ts:132](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/scraping/scrapingQueue.ts#L132)
+Defined in: [src/lib/scraping/scrapingQueue.ts:132](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/scraping/scrapingQueue.ts#L132)
 
 Dequeue the next task in the queue, checking for tripped circuit breakers.
 
@@ -70,7 +70,7 @@ Dequeue the next task in the queue, checking for tripped circuit breakers.
 
 > **enqueueJobSearch**(`userId`, `provider`, `query`, `location?`, `limit?`, `correlationId?`): `Promise`\<`string`\>
 
-Defined in: [src/lib/scraping/scrapingQueue.ts:84](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/scraping/scrapingQueue.ts#L84)
+Defined in: [src/lib/scraping/scrapingQueue.ts:84](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/scraping/scrapingQueue.ts#L84)
 
 Enqueue a job search.
 
@@ -110,7 +110,7 @@ Enqueue a job search.
 
 > **enqueueProfileImport**(`userId`, `profileUrl`, `correlationId?`): `Promise`\<`string`\>
 
-Defined in: [src/lib/scraping/scrapingQueue.ts:40](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/scraping/scrapingQueue.ts#L40)
+Defined in: [src/lib/scraping/scrapingQueue.ts:40](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/scraping/scrapingQueue.ts#L40)
 
 Enqueue a LinkedIn profile import job.
 
@@ -138,7 +138,7 @@ Enqueue a LinkedIn profile import job.
 
 > **fail**(`job`, `error`): `Promise`\<`void`\>
 
-Defined in: [src/lib/scraping/scrapingQueue.ts:184](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/scraping/scrapingQueue.ts#L184)
+Defined in: [src/lib/scraping/scrapingQueue.ts:184](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/scraping/scrapingQueue.ts#L184)
 
 Handle job failures, supporting retries, dead-letters, and circuit breakers.
 

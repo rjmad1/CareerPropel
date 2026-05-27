@@ -8,4 +8,4 @@
 
 > **ConsistencyIssueType** = `"title_mismatch"` \| `"chronology_gap"` \| `"chronology_overlap"` \| `"skill_missing_in_resume"` \| `"skill_missing_in_linkedin"` \| `"technology_contradiction"` \| `"date_mismatch"` \| `"employer_mismatch"` \| `"metric_contradiction"` \| `"keyword_terminology_drift"`
 
-Defined in: [src/lib/profile/consistency/types.ts:3](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/profile/consistency/types.ts#L3)
+Defined in: [src/lib/profile/consistency/types.ts:3](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/profile/consistency/types.ts#L3)

@@ -6,7 +6,7 @@
 
 # Interface: DocumentsPage
 
-Defined in: [src/hooks/useDocuments.ts:28](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useDocuments.ts#L28)
+Defined in: [src/hooks/useDocuments.ts:28](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useDocuments.ts#L28)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/hooks/useDocuments.ts:28](https://github.com/rjmad1/CareerPrope
 
 > **items**: [`Document`](Document.md)[]
 
-Defined in: [src/hooks/useDocuments.ts:29](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useDocuments.ts#L29)
+Defined in: [src/hooks/useDocuments.ts:29](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useDocuments.ts#L29)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/hooks/useDocuments.ts:29](https://github.com/rjmad1/CareerPrope
 
 > **limit**: `number`
 
-Defined in: [src/hooks/useDocuments.ts:31](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useDocuments.ts#L31)
+Defined in: [src/hooks/useDocuments.ts:31](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useDocuments.ts#L31)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/hooks/useDocuments.ts:31](https://github.com/rjmad1/CareerPrope
 
 > **offset**: `number`
 
-Defined in: [src/hooks/useDocuments.ts:32](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useDocuments.ts#L32)
+Defined in: [src/hooks/useDocuments.ts:32](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useDocuments.ts#L32)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/hooks/useDocuments.ts:32](https://github.com/rjmad1/CareerPrope
 
 > **total**: `number`
 
-Defined in: [src/hooks/useDocuments.ts:30](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useDocuments.ts#L30)
+Defined in: [src/hooks/useDocuments.ts:30](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useDocuments.ts#L30)

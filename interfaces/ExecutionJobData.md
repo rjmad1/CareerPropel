@@ -6,7 +6,7 @@
 
 # Interface: ExecutionJobData
 
-Defined in: [src/lib/queue/queues.ts:11](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/queue/queues.ts#L11)
+Defined in: [src/lib/queue/queues.ts:11](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/queues.ts#L11)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/queue/queues.ts:11](https://github.com/rjmad1/CareerPropel/
 
 > **agentType**: `string`
 
-Defined in: [src/lib/queue/queues.ts:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/queue/queues.ts#L14)
+Defined in: [src/lib/queue/queues.ts:14](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/queues.ts#L14)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/queue/queues.ts:14](https://github.com/rjmad1/CareerPropel/
 
 > **correlationId**: `string`
 
-Defined in: [src/lib/queue/queues.ts:17](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/queue/queues.ts#L17)
+Defined in: [src/lib/queue/queues.ts:17](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/queues.ts#L17)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/queue/queues.ts:17](https://github.com/rjmad1/CareerPropel/
 
 > **executionId**: `string`
 
-Defined in: [src/lib/queue/queues.ts:12](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/queue/queues.ts#L12)
+Defined in: [src/lib/queue/queues.ts:12](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/queues.ts#L12)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/queue/queues.ts:12](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **jobId?**: `string`
 
-Defined in: [src/lib/queue/queues.ts:19](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/queue/queues.ts#L19)
+Defined in: [src/lib/queue/queues.ts:19](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/queues.ts#L19)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/queue/queues.ts:19](https://github.com/rjmad1/CareerPropel/
 
 > **promptContext**: `Record`\<`string`, `string` \| `undefined`\>
 
-Defined in: [src/lib/queue/queues.ts:15](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/queue/queues.ts#L15)
+Defined in: [src/lib/queue/queues.ts:15](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/queues.ts#L15)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/queue/queues.ts:15](https://github.com/rjmad1/CareerPropel/
 
 > **requestId**: `string`
 
-Defined in: [src/lib/queue/queues.ts:16](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/queue/queues.ts#L16)
+Defined in: [src/lib/queue/queues.ts:16](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/queues.ts#L16)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/queue/queues.ts:16](https://github.com/rjmad1/CareerPropel/
 
 > **submittedAt**: `string`
 
-Defined in: [src/lib/queue/queues.ts:18](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/queue/queues.ts#L18)
+Defined in: [src/lib/queue/queues.ts:18](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/queues.ts#L18)
 
 ***
 
@@ -70,4 +70,4 @@ Defined in: [src/lib/queue/queues.ts:18](https://github.com/rjmad1/CareerPropel/
 
 > **userId**: `string`
 
-Defined in: [src/lib/queue/queues.ts:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/queue/queues.ts#L13)
+Defined in: [src/lib/queue/queues.ts:13](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/queues.ts#L13)

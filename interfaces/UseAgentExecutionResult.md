@@ -6,7 +6,7 @@
 
 # Interface: UseAgentExecutionResult
 
-Defined in: [src/hooks/useAgentExecution.ts:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L13)
+Defined in: [src/hooks/useAgentExecution.ts:13](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L13)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/hooks/useAgentExecution.ts:13](https://github.com/rjmad1/Career
 
 > **cancel**: () => `Promise`\<`void`\>
 
-Defined in: [src/hooks/useAgentExecution.ts:35](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L35)
+Defined in: [src/hooks/useAgentExecution.ts:35](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L35)
 
 #### Returns
 
@@ -26,7 +26,7 @@ Defined in: [src/hooks/useAgentExecution.ts:35](https://github.com/rjmad1/Career
 
 > **currentPage**: `number`
 
-Defined in: [src/hooks/useAgentExecution.ts:23](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L23)
+Defined in: [src/hooks/useAgentExecution.ts:23](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L23)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [src/hooks/useAgentExecution.ts:23](https://github.com/rjmad1/Career
 
 > **error**: `Error` \| `null`
 
-Defined in: [src/hooks/useAgentExecution.ts:18](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L18)
+Defined in: [src/hooks/useAgentExecution.ts:18](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L18)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [src/hooks/useAgentExecution.ts:18](https://github.com/rjmad1/Career
 
 > **execution**: [`AgentExecution`](AgentExecution.md) \| `null`
 
-Defined in: [src/hooks/useAgentExecution.ts:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L14)
+Defined in: [src/hooks/useAgentExecution.ts:14](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L14)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [src/hooks/useAgentExecution.ts:14](https://github.com/rjmad1/Career
 
 > **filterLevel**: `string` \| `null`
 
-Defined in: [src/hooks/useAgentExecution.ts:29](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L29)
+Defined in: [src/hooks/useAgentExecution.ts:29](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L29)
 
 ***
 
@@ -58,7 +58,7 @@ Defined in: [src/hooks/useAgentExecution.ts:29](https://github.com/rjmad1/Career
 
 > **goToPage**: (`page`) => `Promise`\<`void`\>
 
-Defined in: [src/hooks/useAgentExecution.ts:26](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L26)
+Defined in: [src/hooks/useAgentExecution.ts:26](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L26)
 
 #### Parameters
 
@@ -76,7 +76,7 @@ Defined in: [src/hooks/useAgentExecution.ts:26](https://github.com/rjmad1/Career
 
 > **isCancelLoading**: `boolean`
 
-Defined in: [src/hooks/useAgentExecution.ts:41](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L41)
+Defined in: [src/hooks/useAgentExecution.ts:41](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L41)
 
 ***
 
@@ -84,7 +84,7 @@ Defined in: [src/hooks/useAgentExecution.ts:41](https://github.com/rjmad1/Career
 
 > **isLoading**: `boolean`
 
-Defined in: [src/hooks/useAgentExecution.ts:19](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L19)
+Defined in: [src/hooks/useAgentExecution.ts:19](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L19)
 
 ***
 
@@ -92,7 +92,7 @@ Defined in: [src/hooks/useAgentExecution.ts:19](https://github.com/rjmad1/Career
 
 > **isPauseLoading**: `boolean`
 
-Defined in: [src/hooks/useAgentExecution.ts:39](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L39)
+Defined in: [src/hooks/useAgentExecution.ts:39](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L39)
 
 ***
 
@@ -100,7 +100,7 @@ Defined in: [src/hooks/useAgentExecution.ts:39](https://github.com/rjmad1/Career
 
 > **isResumeLoading**: `boolean`
 
-Defined in: [src/hooks/useAgentExecution.ts:40](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L40)
+Defined in: [src/hooks/useAgentExecution.ts:40](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L40)
 
 ***
 
@@ -108,7 +108,7 @@ Defined in: [src/hooks/useAgentExecution.ts:40](https://github.com/rjmad1/Career
 
 > **isRunning**: `boolean`
 
-Defined in: [src/hooks/useAgentExecution.ts:20](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L20)
+Defined in: [src/hooks/useAgentExecution.ts:20](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L20)
 
 ***
 
@@ -116,7 +116,7 @@ Defined in: [src/hooks/useAgentExecution.ts:20](https://github.com/rjmad1/Career
 
 > **logs**: [`EventLog`](EventLog.md)[]
 
-Defined in: [src/hooks/useAgentExecution.ts:16](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L16)
+Defined in: [src/hooks/useAgentExecution.ts:16](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L16)
 
 ***
 
@@ -124,7 +124,7 @@ Defined in: [src/hooks/useAgentExecution.ts:16](https://github.com/rjmad1/Career
 
 > **logsPerPage**: `number`
 
-Defined in: [src/hooks/useAgentExecution.ts:25](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L25)
+Defined in: [src/hooks/useAgentExecution.ts:25](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L25)
 
 ***
 
@@ -132,7 +132,7 @@ Defined in: [src/hooks/useAgentExecution.ts:25](https://github.com/rjmad1/Career
 
 > **pause**: () => `Promise`\<`void`\>
 
-Defined in: [src/hooks/useAgentExecution.ts:33](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L33)
+Defined in: [src/hooks/useAgentExecution.ts:33](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L33)
 
 #### Returns
 
@@ -144,7 +144,7 @@ Defined in: [src/hooks/useAgentExecution.ts:33](https://github.com/rjmad1/Career
 
 > **refresh**: () => `Promise`\<`void`\>
 
-Defined in: [src/hooks/useAgentExecution.ts:36](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L36)
+Defined in: [src/hooks/useAgentExecution.ts:36](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L36)
 
 #### Returns
 
@@ -156,7 +156,7 @@ Defined in: [src/hooks/useAgentExecution.ts:36](https://github.com/rjmad1/Career
 
 > **resume**: () => `Promise`\<`void`\>
 
-Defined in: [src/hooks/useAgentExecution.ts:34](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L34)
+Defined in: [src/hooks/useAgentExecution.ts:34](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L34)
 
 #### Returns
 
@@ -168,7 +168,7 @@ Defined in: [src/hooks/useAgentExecution.ts:34](https://github.com/rjmad1/Career
 
 > **setFilterLevel**: (`level`) => `void`
 
-Defined in: [src/hooks/useAgentExecution.ts:30](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L30)
+Defined in: [src/hooks/useAgentExecution.ts:30](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L30)
 
 #### Parameters
 
@@ -186,7 +186,7 @@ Defined in: [src/hooks/useAgentExecution.ts:30](https://github.com/rjmad1/Career
 
 > **status**: `"error"` \| `"loading"` \| `"ready"` \| `"idle"`
 
-Defined in: [src/hooks/useAgentExecution.ts:17](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L17)
+Defined in: [src/hooks/useAgentExecution.ts:17](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L17)
 
 ***
 
@@ -194,7 +194,7 @@ Defined in: [src/hooks/useAgentExecution.ts:17](https://github.com/rjmad1/Career
 
 > **toolCalls**: [`ToolCall`](ToolCall.md)[]
 
-Defined in: [src/hooks/useAgentExecution.ts:15](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L15)
+Defined in: [src/hooks/useAgentExecution.ts:15](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L15)
 
 ***
 
@@ -202,4 +202,4 @@ Defined in: [src/hooks/useAgentExecution.ts:15](https://github.com/rjmad1/Career
 
 > **totalLogs**: `number`
 
-Defined in: [src/hooks/useAgentExecution.ts:24](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentExecution.ts#L24)
+Defined in: [src/hooks/useAgentExecution.ts:24](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useAgentExecution.ts#L24)

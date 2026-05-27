@@ -8,7 +8,7 @@
 
 > **acquireSseSubscription**(`endpoint`): [`SseSubscription`](../interfaces/SseSubscription.md)
 
-Defined in: [src/lib/realtime/sse-manager.ts:123](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/realtime/sse-manager.ts#L123)
+Defined in: [src/lib/realtime/sse-manager.ts:123](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/realtime/sse-manager.ts#L123)
 
 Acquire a subscription to the SSE endpoint.
 Multiple calls with the same endpoint share one EventSource.

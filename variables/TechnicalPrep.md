@@ -8,7 +8,7 @@
 
 > `const` **TechnicalPrep**: `React.FC`\<`TechnicalPrepProps`\>
 
-Defined in: [src/components/InterviewPrep/TechnicalPrep.tsx:26](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/InterviewPrep/TechnicalPrep.tsx#L26)
+Defined in: [src/components/InterviewPrep/TechnicalPrep.tsx:26](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/InterviewPrep/TechnicalPrep.tsx#L26)
 
 TechnicalPrep Tab
 Displays technical interview preparation:

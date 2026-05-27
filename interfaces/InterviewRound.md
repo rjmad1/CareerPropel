@@ -6,7 +6,7 @@
 
 # Interface: InterviewRound
 
-Defined in: [src/types/company.ts:157](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L157)
+Defined in: [src/types/company.ts:157](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L157)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/company.ts:157](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **commonQuestions?**: `string`[]
 
-Defined in: [src/types/company.ts:162](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L162)
+Defined in: [src/types/company.ts:162](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L162)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/company.ts:162](https://github.com/rjmad1/CareerPropel/bl
 
 > **description**: `string`
 
-Defined in: [src/types/company.ts:161](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L161)
+Defined in: [src/types/company.ts:161](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L161)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/company.ts:161](https://github.com/rjmad1/CareerPropel/bl
 
 > **duration**: `number`
 
-Defined in: [src/types/company.ts:160](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L160)
+Defined in: [src/types/company.ts:160](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L160)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/company.ts:160](https://github.com/rjmad1/CareerPropel/bl
 
 > **order**: `number`
 
-Defined in: [src/types/company.ts:158](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L158)
+Defined in: [src/types/company.ts:158](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L158)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/company.ts:158](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **passingCriteria?**: `string`
 
-Defined in: [src/types/company.ts:163](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L163)
+Defined in: [src/types/company.ts:163](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L163)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/types/company.ts:163](https://github.com/rjmad1/CareerPropel/bl
 
 > **type**: `"behavioral"` \| `"technical"` \| `"system_design"` \| `"phone_screen"` \| `"culture_fit"` \| `"final"`
 
-Defined in: [src/types/company.ts:159](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L159)
+Defined in: [src/types/company.ts:159](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/company.ts#L159)

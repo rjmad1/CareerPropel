@@ -6,7 +6,7 @@
 
 # Interface: RecommendationContext
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:27](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L27)
+Defined in: [src/lib/analytics/recommendations-engine.ts:27](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L27)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:27](https://github.com/
 
 > **activeJobs**: `number`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:29](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L29)
+Defined in: [src/lib/analytics/recommendations-engine.ts:29](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L29)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:29](https://github.com/
 
 > **appsLast30Days**: `number`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:44](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L44)
+Defined in: [src/lib/analytics/recommendations-engine.ts:44](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L44)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:44](https://github.com/
 
 > **appsPerWeek**: `number`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:33](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L33)
+Defined in: [src/lib/analytics/recommendations-engine.ts:33](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L33)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:33](https://github.com/
 
 > **appsPrev30Days**: `number`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:45](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L45)
+Defined in: [src/lib/analytics/recommendations-engine.ts:45](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L45)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:45](https://github.com/
 
 > **avgMatchScore**: `number` \| `null`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:35](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L35)
+Defined in: [src/lib/analytics/recommendations-engine.ts:35](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L35)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:35](https://github.com/
 
 > **burnoutRisk**: `"high"` \| `"low"` \| `"medium"`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:36](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L36)
+Defined in: [src/lib/analytics/recommendations-engine.ts:36](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L36)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:36](https://github.com/
 
 > **compensationDataPoints**: `number`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:41](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L41)
+Defined in: [src/lib/analytics/recommendations-engine.ts:41](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L41)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:41](https://github.com/
 
 > **followUpConsistency**: `number`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:37](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L37)
+Defined in: [src/lib/analytics/recommendations-engine.ts:37](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L37)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:37](https://github.com/
 
 > **inactivityDays**: `number`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:43](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L43)
+Defined in: [src/lib/analytics/recommendations-engine.ts:43](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L43)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:43](https://github.com/
 
 > **offerCount**: `number`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:30](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L30)
+Defined in: [src/lib/analytics/recommendations-engine.ts:30](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L30)
 
 ***
 
@@ -94,7 +94,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:30](https://github.com/
 
 > **overallConversionRate**: `number` \| `null`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:32](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L32)
+Defined in: [src/lib/analytics/recommendations-engine.ts:32](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L32)
 
 ***
 
@@ -102,7 +102,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:32](https://github.com/
 
 > **overdueFollowUps**: `number`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:38](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L38)
+Defined in: [src/lib/analytics/recommendations-engine.ts:38](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L38)
 
 ***
 
@@ -110,7 +110,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:38](https://github.com/
 
 > **profileScore**: `number` \| `null`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:40](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L40)
+Defined in: [src/lib/analytics/recommendations-engine.ts:40](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L40)
 
 ***
 
@@ -118,7 +118,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:40](https://github.com/
 
 > **rejectionCount**: `number`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:31](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L31)
+Defined in: [src/lib/analytics/recommendations-engine.ts:31](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L31)
 
 ***
 
@@ -126,7 +126,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:31](https://github.com/
 
 > **responseRate**: `number` \| `null`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:34](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L34)
+Defined in: [src/lib/analytics/recommendations-engine.ts:34](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L34)
 
 ***
 
@@ -134,7 +134,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:34](https://github.com/
 
 > **skillCount**: `number`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:42](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L42)
+Defined in: [src/lib/analytics/recommendations-engine.ts:42](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L42)
 
 ***
 
@@ -142,7 +142,7 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:42](https://github.com/
 
 > **topWeaknesses**: `string`[]
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:39](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L39)
+Defined in: [src/lib/analytics/recommendations-engine.ts:39](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L39)
 
 ***
 
@@ -150,4 +150,4 @@ Defined in: [src/lib/analytics/recommendations-engine.ts:39](https://github.com/
 
 > **totalJobs**: `number`
 
-Defined in: [src/lib/analytics/recommendations-engine.ts:28](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/analytics/recommendations-engine.ts#L28)
+Defined in: [src/lib/analytics/recommendations-engine.ts:28](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/recommendations-engine.ts#L28)

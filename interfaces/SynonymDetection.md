@@ -6,7 +6,7 @@
 
 # Interface: SynonymDetection
 
-Defined in: [src/lib/ats/keywordNormalizer.ts:85](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/ats/keywordNormalizer.ts#L85)
+Defined in: [src/lib/ats/keywordNormalizer.ts:85](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordNormalizer.ts#L85)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/ats/keywordNormalizer.ts:85](https://github.com/rjmad1/Care
 
 > **jdTerm**: `string`
 
-Defined in: [src/lib/ats/keywordNormalizer.ts:86](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/ats/keywordNormalizer.ts#L86)
+Defined in: [src/lib/ats/keywordNormalizer.ts:86](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordNormalizer.ts#L86)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [src/lib/ats/keywordNormalizer.ts:86](https://github.com/rjmad1/Care
 
 > **resumeTerm**: `string`
 
-Defined in: [src/lib/ats/keywordNormalizer.ts:87](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/ats/keywordNormalizer.ts#L87)
+Defined in: [src/lib/ats/keywordNormalizer.ts:87](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordNormalizer.ts#L87)

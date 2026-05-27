@@ -6,7 +6,7 @@
 
 # Class: NotFoundError
 
-Defined in: [src/lib/errors.ts:6](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/errors.ts#L6)
+Defined in: [src/lib/errors.ts:6](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/errors.ts#L6)
 
 Shared typed error classes for route helpers and domain logic.
 Typed status codes let consuming code inspect error.status without `as any` casts.
@@ -21,7 +21,7 @@ Typed status codes let consuming code inspect error.status without `as any` cast
 
 > **new NotFoundError**(`message`): `NotFoundError`
 
-Defined in: [src/lib/errors.ts:10](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/errors.ts#L10)
+Defined in: [src/lib/errors.ts:10](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/errors.ts#L10)
 
 #### Parameters
 
@@ -67,7 +67,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1077
 
 > `readonly` **name**: `"NotFoundError"` = `'NotFoundError'`
 
-Defined in: [src/lib/errors.ts:8](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/errors.ts#L8)
+Defined in: [src/lib/errors.ts:8](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/errors.ts#L8)
 
 #### Overrides
 
@@ -91,7 +91,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1078
 
 > `readonly` **status**: `404` = `404`
 
-Defined in: [src/lib/errors.ts:7](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/errors.ts#L7)
+Defined in: [src/lib/errors.ts:7](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/errors.ts#L7)
 
 ***
 

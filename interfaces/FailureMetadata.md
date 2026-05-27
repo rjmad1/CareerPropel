@@ -6,7 +6,7 @@
 
 # Interface: FailureMetadata
 
-Defined in: [src/lib/observability/failure-classification.ts:25](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/observability/failure-classification.ts#L25)
+Defined in: [src/lib/observability/failure-classification.ts:25](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/failure-classification.ts#L25)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/observability/failure-classification.ts:25](https://github.
 
 > **classifiedAt**: `string`
 
-Defined in: [src/lib/observability/failure-classification.ts:33](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/observability/failure-classification.ts#L33)
+Defined in: [src/lib/observability/failure-classification.ts:33](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/failure-classification.ts#L33)
 
 ISO timestamp of classification
 
@@ -24,7 +24,7 @@ ISO timestamp of classification
 
 > `optional` **context?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [src/lib/observability/failure-classification.ts:35](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/observability/failure-classification.ts#L35)
+Defined in: [src/lib/observability/failure-classification.ts:35](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/failure-classification.ts#L35)
 
 Additional context from the call site
 
@@ -34,7 +34,7 @@ Additional context from the call site
 
 > **errorClass**: `string`
 
-Defined in: [src/lib/observability/failure-classification.ts:31](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/observability/failure-classification.ts#L31)
+Defined in: [src/lib/observability/failure-classification.ts:31](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/failure-classification.ts#L31)
 
 Original error class name
 
@@ -44,7 +44,7 @@ Original error class name
 
 > **failureType**: [`FailureType`](../type-aliases/FailureType.md)
 
-Defined in: [src/lib/observability/failure-classification.ts:26](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/observability/failure-classification.ts#L26)
+Defined in: [src/lib/observability/failure-classification.ts:26](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/failure-classification.ts#L26)
 
 ***
 
@@ -52,7 +52,7 @@ Defined in: [src/lib/observability/failure-classification.ts:26](https://github.
 
 > **reason**: `string`
 
-Defined in: [src/lib/observability/failure-classification.ts:29](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/observability/failure-classification.ts#L29)
+Defined in: [src/lib/observability/failure-classification.ts:29](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/failure-classification.ts#L29)
 
 Derived from error.message
 
@@ -62,4 +62,4 @@ Derived from error.message
 
 > **retryable**: `boolean`
 
-Defined in: [src/lib/observability/failure-classification.ts:27](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/observability/failure-classification.ts#L27)
+Defined in: [src/lib/observability/failure-classification.ts:27](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/failure-classification.ts#L27)

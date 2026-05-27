@@ -6,7 +6,7 @@
 
 # Interface: PrepReadiness
 
-Defined in: [src/types/preparation.ts:11](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L11)
+Defined in: [src/types/preparation.ts:11](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L11)
 
 Overall preparation status for a job
 
@@ -16,7 +16,7 @@ Overall preparation status for a job
 
 > **components**: `object`
 
-Defined in: [src/types/preparation.ts:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L14)
+Defined in: [src/types/preparation.ts:14](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L14)
 
 #### behavioral
 
@@ -48,7 +48,7 @@ Defined in: [src/types/preparation.ts:14](https://github.com/rjmad1/CareerPropel
 
 > **jobId**: `string`
 
-Defined in: [src/types/preparation.ts:12](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L12)
+Defined in: [src/types/preparation.ts:12](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L12)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/types/preparation.ts:12](https://github.com/rjmad1/CareerPropel
 
 > `optional` **nextInterviewDate?**: `Date`
 
-Defined in: [src/types/preparation.ts:22](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L22)
+Defined in: [src/types/preparation.ts:22](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L22)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [src/types/preparation.ts:22](https://github.com/rjmad1/CareerPropel
 
 > **overallReadiness**: `number`
 
-Defined in: [src/types/preparation.ts:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L13)
+Defined in: [src/types/preparation.ts:13](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L13)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [src/types/preparation.ts:13](https://github.com/rjmad1/CareerPropel
 
 > `optional` **prepDeadline?**: `Date`
 
-Defined in: [src/types/preparation.ts:23](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L23)
+Defined in: [src/types/preparation.ts:23](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L23)
 
 ***
 
@@ -80,4 +80,4 @@ Defined in: [src/types/preparation.ts:23](https://github.com/rjmad1/CareerPropel
 
 > **status**: `"ready"` \| `"not_started"` \| `"in_progress"` \| `"interview_today"`
 
-Defined in: [src/types/preparation.ts:24](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L24)
+Defined in: [src/types/preparation.ts:24](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L24)
