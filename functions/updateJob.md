@@ -8,7 +8,7 @@
 
 > **updateJob**(`userId`, `jobId`, `data`): `Promise`\<\{ `appliedAt`: `Date` \| `null`; `candidateId`: `string`; `company`: `string`; `createdAt`: `Date`; `description`: `string` \| `null`; `id`: `string`; `location`: `string` \| `null`; `matchScore`: `number` \| `null`; `notes`: `string` \| `null`; `priority`: `string`; `recruiterEmail`: `string` \| `null`; `recruiterName`: `string` \| `null`; `recruiterPhone`: `string` \| `null`; `salary`: `number` \| `null`; `stage`: `JobStage`; `tags`: `string`[]; `title`: `string`; `updatedAt`: `Date`; `url`: `string` \| `null`; \} \| `null`\>
 
-Defined in: [src/lib/db/jobs.ts:153](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/db/jobs.ts#L153)
+Defined in: [src/lib/db/jobs.ts:150](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/db/jobs.ts#L150)
 
 Update a job
 
@@ -46,7 +46,7 @@ Update a job
 
 #### priority?
 
-`"low"` \| `"medium"` \| `"high"` = `...`
+`"high"` \| `"low"` \| `"medium"` = `...`
 
 #### recruiter?
 
@@ -82,7 +82,7 @@ Update a job
 
 #### stage?
 
-`"offer"` \| `"sourced"` \| `"applied"` \| `"interested"` \| `"resume_tailoring"` \| `"recruiter_screen"` \| `"hiring_manager"` \| `"technical_interview"` \| `"system_design"` \| `"behavioral"` \| `"final_round"` \| `"negotiation"` \| `"rejected"` \| `"archived"` = `...`
+`"behavioral"` \| `"sourced"` \| `"interested"` \| `"resume_tailoring"` \| `"applied"` \| `"recruiter_screen"` \| `"hiring_manager"` \| `"technical_interview"` \| `"system_design"` \| `"final_round"` \| `"offer"` \| `"negotiation"` \| `"rejected"` \| `"archived"` = `...`
 
 #### status?
 

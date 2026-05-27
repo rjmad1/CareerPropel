@@ -8,7 +8,7 @@
 
 > `const` **env**: `object`
 
-Defined in: [src/config/env.ts:85](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/config/env.ts#L85)
+Defined in: [src/config/env.ts:85](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/config/env.ts#L85)
 
 ## Type Declaration
 
@@ -30,7 +30,7 @@ Defined in: [src/config/env.ts:85](https://github.com/rjmad1/CareerPropel/blob/0
 
 ### LOG\_LEVEL
 
-> **LOG\_LEVEL**: `"info"` \| `"warn"` \| `"error"` \| `"debug"`
+> **LOG\_LEVEL**: `"info"` \| `"error"` \| `"warn"` \| `"debug"`
 
 ### NEXTAUTH\_SECRET
 

@@ -8,7 +8,7 @@
 
 > **createRateLimiter**(`maxRequests?`, `windowSecs?`): (`request`) => `Promise`\<`NextResponse`\<`unknown`\> \| `null`\>
 
-Defined in: [src/lib/middleware/rateLimiter.ts:93](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/middleware/rateLimiter.ts#L93)
+Defined in: [src/lib/middleware/rateLimiter.ts:93](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/middleware/rateLimiter.ts#L93)
 
 Create a scoped rate limiter for a specific endpoint.
 

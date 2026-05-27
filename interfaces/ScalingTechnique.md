@@ -6,7 +6,7 @@
 
 # Interface: ScalingTechnique
 
-Defined in: [src/types/interview.ts:223](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L223)
+Defined in: [src/types/interview.ts:223](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/interview.ts#L223)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/interview.ts:223](https://github.com/rjmad1/CareerPropel/
 
 > **description**: `string`
 
-Defined in: [src/types/interview.ts:225](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L225)
+Defined in: [src/types/interview.ts:225](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/interview.ts#L225)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/interview.ts:225](https://github.com/rjmad1/CareerPropel/
 
 > **examples**: `string`[]
 
-Defined in: [src/types/interview.ts:227](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L227)
+Defined in: [src/types/interview.ts:227](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/interview.ts#L227)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/interview.ts:227](https://github.com/rjmad1/CareerPropel/
 
 > **name**: `string`
 
-Defined in: [src/types/interview.ts:224](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L224)
+Defined in: [src/types/interview.ts:224](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/interview.ts#L224)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/interview.ts:224](https://github.com/rjmad1/CareerPropel/
 
 > **tradeoffs**: `string`
 
-Defined in: [src/types/interview.ts:228](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L228)
+Defined in: [src/types/interview.ts:228](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/interview.ts#L228)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/types/interview.ts:228](https://github.com/rjmad1/CareerPropel/
 
 > **whenToApply**: `string`
 
-Defined in: [src/types/interview.ts:226](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L226)
+Defined in: [src/types/interview.ts:226](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/interview.ts#L226)

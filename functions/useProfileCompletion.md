@@ -6,15 +6,27 @@
 
 # Function: useProfileCompletion()
 
-> **useProfileCompletion**(`candidateId`, `targetJobDescriptions?`): [`UseProfileCompletionResult`](../interfaces/UseProfileCompletionResult.md)
+> **useProfileCompletion**(`candidateId`, `profile?`, `targetJobDescriptions?`): [`UseProfileCompletionResult`](../interfaces/UseProfileCompletionResult.md)
 
-Defined in: [src/hooks/useProfileCompletion.ts:21](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfileCompletion.ts#L21)
+Defined in: [src/hooks/useProfileCompletion.ts:29](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfileCompletion.ts#L29)
+
+Hook for tracking profile completeness and improvements
+
+Features:
+- Real-time completeness tracking
+- Milestone celebrations
+- Skill gap detection
+- Progress visualization
 
 ## Parameters
 
 ### candidateId
 
 `string`
+
+### profile?
+
+`any`
 
 ### targetJobDescriptions?
 

@@ -6,16 +6,14 @@
 
 # Function: GET()
 
-> **GET**(`_request`): `Promise`\<`Response`\>
+> **GET**(): `Promise`\<`NextResponse`\<`unknown`\>\>
 
-Defined in: [src/app/api/debug/db-check/route.ts:7](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/debug/db-check/route.ts#L7)
+Defined in: [src/app/api/calendar/authorize/route.ts:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/calendar/authorize/route.ts#L14)
 
-## Parameters
-
-### \_request
-
-`Request`
+GET /api/calendar/authorize
+Redirects the authenticated user to Google's OAuth2 consent screen.
+The `state` param is HMAC-signed to prevent CSRF / account-linking attacks.
 
 ## Returns
 
-`Promise`\<`Response`\>
+`Promise`\<`NextResponse`\<`unknown`\>\>

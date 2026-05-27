@@ -6,12 +6,16 @@
 
 # Function: GET()
 
-> **GET**(): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `enabled`: `boolean`; \}\>\>\>
+> **GET**(`_req`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<[`LongitudinalIntelligenceResult`](../interfaces/LongitudinalIntelligenceResult.md)\>\>
 
-Defined in: [src/app/api/auth/2fa/status/route.ts:8](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/auth/2fa/status/route.ts#L8)
+Defined in: [src/app/api/analytics/longitudinal/route.ts:23](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/analytics/longitudinal/route.ts#L23)
 
-GET /api/auth/2fa/status — returns whether 2FA is currently enabled
+## Parameters
+
+### \_req
+
+`NextRequest`
 
 ## Returns
 
-`Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `enabled`: `boolean`; \}\>\>\>
+`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<[`LongitudinalIntelligenceResult`](../interfaces/LongitudinalIntelligenceResult.md)\>\>

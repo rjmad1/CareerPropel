@@ -6,14 +6,9 @@
 
 # Function: POST()
 
-> **POST**(`request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `message`: `string`; `processed`: `number`; `timestamp`: `string`; \}\>\>
+> **POST**(`request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `decision`: [`PlannerDecision`](../interfaces/PlannerDecision.md); `executionId`: `string` \| `null`; \}\>\>
 
-Defined in: [src/app/api/agents/execute-pending/route.ts:101](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/agents/execute-pending/route.ts#L101)
-
-POST /api/agents/execute-pending?immediate=true
-
-Development-only synchronous trigger. Requires EXECUTOR_SECRET even in dev
-if the secret is configured, and is completely blocked in production.
+Defined in: [src/app/api/agents/plan/route.ts:17](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/agents/plan/route.ts#L17)
 
 ## Parameters
 
@@ -23,4 +18,4 @@ if the secret is configured, and is completely blocked in production.
 
 ## Returns
 
-`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `message`: `string`; `processed`: `number`; `timestamp`: `string`; \}\>\>
+`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `decision`: [`PlannerDecision`](../interfaces/PlannerDecision.md); `executionId`: `string` \| `null`; \}\>\>

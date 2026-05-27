@@ -6,15 +6,15 @@
 
 # Interface: Weakness
 
-Defined in: [src/types/preparation.ts:338](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L338)
+Defined in: [src/types/preparation.ts:345](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L345)
 
 ## Properties
 
 ### category
 
-> **category**: `"system_design"` \| `"behavioral"` \| `"technical"` \| `"communication"` \| `"domain_knowledge"`
+> **category**: `"behavioral"` \| `"technical"` \| `"system_design"` \| `"communication"` \| `"domain_knowledge"`
 
-Defined in: [src/types/preparation.ts:340](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L340)
+Defined in: [src/types/preparation.ts:347](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L347)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/preparation.ts:340](https://github.com/rjmad1/CareerPrope
 
 > **description**: `string`
 
-Defined in: [src/types/preparation.ts:341](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L341)
+Defined in: [src/types/preparation.ts:348](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L348)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/preparation.ts:341](https://github.com/rjmad1/CareerPrope
 
 > **evidence**: `string`[]
 
-Defined in: [src/types/preparation.ts:343](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L343)
+Defined in: [src/types/preparation.ts:350](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L350)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/preparation.ts:343](https://github.com/rjmad1/CareerPrope
 
 > **id**: `string`
 
-Defined in: [src/types/preparation.ts:339](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L339)
+Defined in: [src/types/preparation.ts:346](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L346)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/preparation.ts:339](https://github.com/rjmad1/CareerPrope
 
 > **impact**: `string`
 
-Defined in: [src/types/preparation.ts:344](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L344)
+Defined in: [src/types/preparation.ts:351](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L351)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/types/preparation.ts:344](https://github.com/rjmad1/CareerPrope
 
 > **remediation**: [`RemediationStep`](RemediationStep.md)[]
 
-Defined in: [src/types/preparation.ts:345](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L345)
+Defined in: [src/types/preparation.ts:352](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L352)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/types/preparation.ts:345](https://github.com/rjmad1/CareerPrope
 
 > **severity**: `number`
 
-Defined in: [src/types/preparation.ts:342](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L342)
+Defined in: [src/types/preparation.ts:349](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L349)
 
 ***
 
@@ -70,4 +70,4 @@ Defined in: [src/types/preparation.ts:342](https://github.com/rjmad1/CareerPrope
 
 > **targetDate**: `Date`
 
-Defined in: [src/types/preparation.ts:346](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L346)
+Defined in: [src/types/preparation.ts:353](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L353)

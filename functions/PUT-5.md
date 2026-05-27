@@ -6,19 +6,16 @@
 
 # Function: PUT()
 
-> **PUT**(`request`): `Promise`\<`NextResponse`\<\{ `calculatedAt`: `Date`; `candidateId`: `string`; `id`: `string`; `overall`: `number`; `recommendations`: `JsonValue`; `sections`: `JsonValue`; `updatedAt`: `Date`; \}\> \| `NextResponse`\<\{ `error`: `string`; \}\>\>
+> **PUT**(`_request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\>\>
 
-Defined in: [src/app/api/profile/completeness/route.ts:47](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/profile/completeness/route.ts#L47)
-
-PUT /api/profile/completeness?candidateId={id}
-Update profile completeness score
+Defined in: [src/app/api/profile/completeness/route.ts:49](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/profile/completeness/route.ts#L49)
 
 ## Parameters
 
-### request
+### \_request
 
 `NextRequest`
 
 ## Returns
 
-`Promise`\<`NextResponse`\<\{ `calculatedAt`: `Date`; `candidateId`: `string`; `id`: `string`; `overall`: `number`; `recommendations`: `JsonValue`; `sections`: `JsonValue`; `updatedAt`: `Date`; \}\> \| `NextResponse`\<\{ `error`: `string`; \}\>\>
+`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\>\>

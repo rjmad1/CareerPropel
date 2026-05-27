@@ -8,12 +8,4 @@
 
 > `const` **dynamic**: `"force-dynamic"` = `'force-dynamic'`
 
-Defined in: [src/app/api/debug/auth-config/route.ts:11](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/debug/auth-config/route.ts#L11)
-
-Debug endpoint: Auth Configuration Validation
-
-SECURITY: This endpoint should ONLY be enabled in development
-In production, restrict or remove this endpoint
-
-Usage: GET /api/debug/auth-config
-Response: Status of NextAuth environment variables and configuration
+Defined in: [src/app/api/calendar/callback/route.ts:6](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/calendar/callback/route.ts#L6)

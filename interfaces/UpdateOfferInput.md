@@ -6,7 +6,7 @@
 
 # Interface: UpdateOfferInput
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:186](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/domains/jobs/hooks/useMutations.ts#L186)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:112](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useMutations.ts#L112)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/domains/jobs/hooks/useMutations.ts:186](https://github.com/rjma
 
 > **id**: `string`
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:187](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/domains/jobs/hooks/useMutations.ts#L187)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:113](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useMutations.ts#L113)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [src/domains/jobs/hooks/useMutations.ts:187](https://github.com/rjma
 
 > **updates**: `Partial`\<[`CreateOfferInput`](CreateOfferInput.md)\>
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:188](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/domains/jobs/hooks/useMutations.ts#L188)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:114](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useMutations.ts#L114)

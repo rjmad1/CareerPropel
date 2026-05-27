@@ -6,7 +6,7 @@
 
 # Class: ValidationError
 
-Defined in: [src/app/api/middleware/auth.ts:90](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/middleware/auth.ts#L90)
+Defined in: [src/app/api/middleware/auth.ts:90](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/middleware/auth.ts#L90)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [src/app/api/middleware/auth.ts:90](https://github.com/rjmad1/Career
 
 > **new ValidationError**(`message?`, `details?`): `ValidationError`
 
-Defined in: [src/app/api/middleware/auth.ts:93](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/middleware/auth.ts#L93)
+Defined in: [src/app/api/middleware/auth.ts:93](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/middleware/auth.ts#L93)
 
 #### Parameters
 
@@ -56,7 +56,7 @@ Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:26
 
 > **details**: `Record`\<`string`, `string`[]\>
 
-Defined in: [src/app/api/middleware/auth.ts:91](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/middleware/auth.ts#L91)
+Defined in: [src/app/api/middleware/auth.ts:91](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/middleware/auth.ts#L91)
 
 ***
 

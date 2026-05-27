@@ -6,7 +6,7 @@
 
 # Interface: UseJobBoardReturn
 
-Defined in: [src/hooks/useJobBoard.ts:10](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useJobBoard.ts#L10)
+Defined in: [src/hooks/useJobBoard.ts:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useJobBoard.ts#L13)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/hooks/useJobBoard.ts:10](https://github.com/rjmad1/CareerPropel
 
 > **addJob**: (`job`) => `void`
 
-Defined in: [src/hooks/useJobBoard.ts:15](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useJobBoard.ts#L15)
+Defined in: [src/hooks/useJobBoard.ts:18](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useJobBoard.ts#L18)
 
 #### Parameters
 
@@ -32,7 +32,7 @@ Defined in: [src/hooks/useJobBoard.ts:15](https://github.com/rjmad1/CareerPropel
 
 > **deleteJob**: (`id`) => `void`
 
-Defined in: [src/hooks/useJobBoard.ts:17](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useJobBoard.ts#L17)
+Defined in: [src/hooks/useJobBoard.ts:20](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useJobBoard.ts#L20)
 
 #### Parameters
 
@@ -50,7 +50,7 @@ Defined in: [src/hooks/useJobBoard.ts:17](https://github.com/rjmad1/CareerPropel
 
 > **error**: `Error` \| `null`
 
-Defined in: [src/hooks/useJobBoard.ts:14](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useJobBoard.ts#L14)
+Defined in: [src/hooks/useJobBoard.ts:17](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useJobBoard.ts#L17)
 
 ***
 
@@ -58,7 +58,7 @@ Defined in: [src/hooks/useJobBoard.ts:14](https://github.com/rjmad1/CareerPropel
 
 > **getJobById**: (`id`) => [`Job`](Job-1.md) \| `undefined`
 
-Defined in: [src/hooks/useJobBoard.ts:20](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useJobBoard.ts#L20)
+Defined in: [src/hooks/useJobBoard.ts:23](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useJobBoard.ts#L23)
 
 #### Parameters
 
@@ -76,13 +76,13 @@ Defined in: [src/hooks/useJobBoard.ts:20](https://github.com/rjmad1/CareerPropel
 
 > **getJobsByStage**: (`stage`) => [`Job`](Job-1.md)[]
 
-Defined in: [src/hooks/useJobBoard.ts:21](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useJobBoard.ts#L21)
+Defined in: [src/hooks/useJobBoard.ts:24](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useJobBoard.ts#L24)
 
 #### Parameters
 
 ##### stage
 
-[`JobStage`](../type-aliases/JobStage-1.md)
+`"behavioral"` \| `"system-design"` \| `"sourced"` \| `"interested"` \| `"applied"` \| `"offer"` \| `"negotiation"` \| `"rejected"` \| `"archived"` \| `"resume-tailoring"` \| `"recruiter-screen"` \| `"hiring-manager"` \| `"technical-interview"` \| `"final-round"`
 
 #### Returns
 
@@ -94,7 +94,7 @@ Defined in: [src/hooks/useJobBoard.ts:21](https://github.com/rjmad1/CareerPropel
 
 > **jobs**: [`Job`](Job-1.md)[]
 
-Defined in: [src/hooks/useJobBoard.ts:11](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useJobBoard.ts#L11)
+Defined in: [src/hooks/useJobBoard.ts:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useJobBoard.ts#L14)
 
 ***
 
@@ -102,15 +102,15 @@ Defined in: [src/hooks/useJobBoard.ts:11](https://github.com/rjmad1/CareerPropel
 
 > **loading**: `boolean`
 
-Defined in: [src/hooks/useJobBoard.ts:13](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useJobBoard.ts#L13)
+Defined in: [src/hooks/useJobBoard.ts:16](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useJobBoard.ts#L16)
 
 ***
 
 ### moveJob
 
-> **moveJob**: (`id`, `newStage`) => `Promise`\<[`MoveResult`](MoveResult.md)\>
+> **moveJob**: (`id`, `newStage`) => `void`
 
-Defined in: [src/hooks/useJobBoard.ts:18](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useJobBoard.ts#L18)
+Defined in: [src/hooks/useJobBoard.ts:21](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useJobBoard.ts#L21)
 
 #### Parameters
 
@@ -120,23 +120,11 @@ Defined in: [src/hooks/useJobBoard.ts:18](https://github.com/rjmad1/CareerPropel
 
 ##### newStage
 
-[`JobStage`](../type-aliases/JobStage-1.md)
+`"behavioral"` \| `"system-design"` \| `"sourced"` \| `"interested"` \| `"applied"` \| `"offer"` \| `"negotiation"` \| `"rejected"` \| `"archived"` \| `"resume-tailoring"` \| `"recruiter-screen"` \| `"hiring-manager"` \| `"technical-interview"` \| `"final-round"`
 
 #### Returns
 
-`Promise`\<[`MoveResult`](MoveResult.md)\>
-
-***
-
-### refetch
-
-> **refetch**: () => `Promise`\<`void`\>
-
-Defined in: [src/hooks/useJobBoard.ts:22](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useJobBoard.ts#L22)
-
-#### Returns
-
-`Promise`\<`void`\>
+`void`
 
 ***
 
@@ -144,7 +132,7 @@ Defined in: [src/hooks/useJobBoard.ts:22](https://github.com/rjmad1/CareerPropel
 
 > **selectedJobId**: `string` \| `null`
 
-Defined in: [src/hooks/useJobBoard.ts:12](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useJobBoard.ts#L12)
+Defined in: [src/hooks/useJobBoard.ts:15](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useJobBoard.ts#L15)
 
 ***
 
@@ -152,7 +140,7 @@ Defined in: [src/hooks/useJobBoard.ts:12](https://github.com/rjmad1/CareerPropel
 
 > **selectJob**: (`id`) => `void`
 
-Defined in: [src/hooks/useJobBoard.ts:19](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useJobBoard.ts#L19)
+Defined in: [src/hooks/useJobBoard.ts:22](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useJobBoard.ts#L22)
 
 #### Parameters
 
@@ -170,7 +158,7 @@ Defined in: [src/hooks/useJobBoard.ts:19](https://github.com/rjmad1/CareerPropel
 
 > **updateJob**: (`id`, `updates`) => `void`
 
-Defined in: [src/hooks/useJobBoard.ts:16](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useJobBoard.ts#L16)
+Defined in: [src/hooks/useJobBoard.ts:19](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useJobBoard.ts#L19)
 
 #### Parameters
 

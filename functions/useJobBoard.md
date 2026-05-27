@@ -8,7 +8,10 @@
 
 > **useJobBoard**(): [`UseJobBoardReturn`](../interfaces/UseJobBoardReturn.md)
 
-Defined in: [src/hooks/useJobBoard.ts:60](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useJobBoard.ts#L60)
+Defined in: [src/hooks/useJobBoard.ts:31](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useJobBoard.ts#L31)
+
+useJobBoard Hook
+Custom hook for managing Kanban board job state.
 
 ## Returns
 

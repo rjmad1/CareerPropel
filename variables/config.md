@@ -8,7 +8,7 @@
 
 > `const` **config**: `object` = `env`
 
-Defined in: [src/lib/config.ts:4](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/config.ts#L4)
+Defined in: [src/lib/config.ts:4](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/config.ts#L4)
 
 ## Type Declaration
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/config.ts:4](https://github.com/rjmad1/CareerPropel/blob/0d
 
 ### LOG\_LEVEL
 
-> **LOG\_LEVEL**: `"info"` \| `"warn"` \| `"error"` \| `"debug"`
+> **LOG\_LEVEL**: `"info"` \| `"error"` \| `"warn"` \| `"debug"`
 
 ### NEXTAUTH\_SECRET
 

@@ -6,10 +6,8 @@
 
 # Variable: log
 
-> `const` **log**: `Logger`\<`never`\>
+> `const` **log**: `Logger`\<`never`\> = `logger`
 
-Defined in: [src/lib/logging/logger.ts:27](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/logging/logger.ts#L27)
+Defined in: [src/lib/logging/logger.ts:33](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/logger.ts#L33)
 
-Root application logger.
-In production, emits newline-delimited JSON.
-In development, pretty-prints with pino-pretty if available; falls back to JSON.
+Alias for default logger — used by workflow modules

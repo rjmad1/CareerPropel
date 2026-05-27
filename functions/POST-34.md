@@ -6,20 +6,26 @@
 
 # Function: POST()
 
-> **POST**(`request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `content`: `string`; `session`: \{ `candidateId`: `string`; `createdAt`: `Date`; `endDate`: `Date`; `id`: `string`; `impactDraft`: `string` \| `null`; `selfReview`: `string` \| `null`; `startDate`: `Date`; `status`: `string`; `title`: `string`; `updatedAt`: `Date`; \}; `success`: `boolean`; \}\>\>
+> **POST**(`_req`, `__namedParameters`): `Promise`\<`NextResponse`\<\{ `data`: [`OpportunityPlanResult`](../interfaces/OpportunityPlanResult.md); \}\> \| `NextResponse`\<\{ `error`: \{ `message`: `any`; \}; \}\>\>
 
-Defined in: [src/app/api/profile/appraisal-compile/route.ts:44](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/profile/appraisal-compile/route.ts#L44)
-
-POST /api/profile/appraisal-compile
-Takes a list of staged accomplishment IDs and compiles them into a comprehensive
-performance appraisal self-evaluation or a promotion business case.
+Defined in: [src/app/api/opportunities/\[jobId\]/plan/route.ts:46](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/opportunities/[jobId]/plan/route.ts#L46)
 
 ## Parameters
 
-### request
+### \_req
 
 `NextRequest`
 
+### \_\_namedParameters
+
+#### params
+
+\{ `jobId`: `string`; \}
+
+#### params.jobId
+
+`string`
+
 ## Returns
 
-`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `content`: `string`; `session`: \{ `candidateId`: `string`; `createdAt`: `Date`; `endDate`: `Date`; `id`: `string`; `impactDraft`: `string` \| `null`; `selfReview`: `string` \| `null`; `startDate`: `Date`; `status`: `string`; `title`: `string`; `updatedAt`: `Date`; \}; `success`: `boolean`; \}\>\>
+`Promise`\<`NextResponse`\<\{ `data`: [`OpportunityPlanResult`](../interfaces/OpportunityPlanResult.md); \}\> \| `NextResponse`\<\{ `error`: \{ `message`: `any`; \}; \}\>\>

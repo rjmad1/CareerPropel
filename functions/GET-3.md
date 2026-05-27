@@ -6,9 +6,9 @@
 
 # Function: GET()
 
-> **GET**(`request`, `context`): `Promise`\<`NextResponse`\<\{ `limit`: `number`; `logs`: `object`[]; `offset`: `number`; `total`: `number`; \}\> \| `NextResponse`\<\{ `error`: `string`; \}\>\>
+> **GET**(`request`, `__namedParameters`): `Promise`\<`NextResponse`\<\{ `hasMore`: `boolean`; `logs`: `object`[]; `offset`: `number`; `page`: `number`; `pageSize`: `number`; `total`: `number`; \}\> \| `NextResponse`\<\{ `error`: `string`; \}\>\>
 
-Defined in: [src/app/api/agent/execution/\[executionId\]/logs/route.ts:11](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/agent/execution/[executionId]/logs/route.ts#L11)
+Defined in: [src/app/api/agent/execution/\[executionId\]/logs/route.ts:11](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/agent/execution/[executionId]/logs/route.ts#L11)
 
 GET /api/agent/execution/[executionId]/logs
 Fetch execution logs
@@ -19,7 +19,7 @@ Fetch execution logs
 
 `NextRequest`
 
-### context
+### \_\_namedParameters
 
 #### params
 
@@ -27,4 +27,4 @@ Fetch execution logs
 
 ## Returns
 
-`Promise`\<`NextResponse`\<\{ `limit`: `number`; `logs`: `object`[]; `offset`: `number`; `total`: `number`; \}\> \| `NextResponse`\<\{ `error`: `string`; \}\>\>
+`Promise`\<`NextResponse`\<\{ `hasMore`: `boolean`; `logs`: `object`[]; `offset`: `number`; `page`: `number`; `pageSize`: `number`; `total`: `number`; \}\> \| `NextResponse`\<\{ `error`: `string`; \}\>\>

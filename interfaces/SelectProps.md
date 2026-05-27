@@ -6,7 +6,7 @@
 
 # Interface: SelectProps
 
-Defined in: [src/components/ui/Select.tsx:13](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Select.tsx#L13)
+Defined in: [src/components/ui/Select.tsx:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Select.tsx#L13)
 
 ## Extends
 
@@ -68,7 +68,7 @@ Indicates whether assistive technologies will present all, or only parts of, the
 
 ### aria-autocomplete?
 
-> `optional` **aria-autocomplete?**: `"none"` \| `"list"` \| `"inline"` \| `"both"`
+> `optional` **aria-autocomplete?**: `"none"` \| `"inline"` \| `"list"` \| `"both"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2617
 
@@ -242,7 +242,7 @@ aria-owns.
 
 ### aria-current?
 
-> `optional` **aria-current?**: `boolean` \| `"true"` \| `"location"` \| `"date"` \| `"time"` \| `"false"` \| `"step"` \| `"page"`
+> `optional` **aria-current?**: `boolean` \| `"time"` \| `"page"` \| `"step"` \| `"true"` \| `"false"` \| `"date"` \| `"location"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2661
 
@@ -329,7 +329,7 @@ Indicates that the element is perceivable but disabled, so it is not editable or
 
 ### ~~aria-dropeffect?~~
 
-> `optional` **aria-dropeffect?**: `"link"` \| `"none"` \| `"copy"` \| `"move"` \| `"execute"` \| `"popup"`
+> `optional` **aria-dropeffect?**: `"link"` \| `"none"` \| `"copy"` \| `"execute"` \| `"move"` \| `"popup"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2686
 
@@ -413,7 +413,7 @@ in ARIA 1.1
 
 ### aria-haspopup?
 
-> `optional` **aria-haspopup?**: `boolean` \| `"true"` \| `"dialog"` \| `"menu"` \| `"false"` \| `"grid"` \| `"listbox"` \| `"tree"`
+> `optional` **aria-haspopup?**: `boolean` \| `"dialog"` \| `"menu"` \| `"grid"` \| `"true"` \| `"false"` \| `"listbox"` \| `"tree"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2705
 
@@ -686,7 +686,7 @@ aria-disabled.
 
 ### aria-relevant?
 
-> `optional` **aria-relevant?**: `"text"` \| `"all"` \| `"additions"` \| `"additions removals"` \| `"additions text"` \| `"removals"` \| `"removals additions"` \| `"removals text"` \| `"text additions"` \| `"text removals"`
+> `optional` **aria-relevant?**: `"all"` \| `"text"` \| `"additions"` \| `"additions removals"` \| `"additions text"` \| `"removals"` \| `"removals additions"` \| `"removals text"` \| `"text additions"` \| `"text removals"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2770
 
@@ -843,7 +843,7 @@ aria-posinset.
 
 ### aria-sort?
 
-> `optional` **aria-sort?**: `"other"` \| `"none"` \| `"ascending"` \| `"descending"`
+> `optional` **aria-sort?**: `"none"` \| `"ascending"` \| `"descending"` \| `"other"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2817
 
@@ -917,7 +917,7 @@ Defines the human readable text alternative of aria-valuenow for a range widget.
 
 ### autoCapitalize?
 
-> `optional` **autoCapitalize?**: `string` & `object` \| `"none"` \| `"on"` \| `"off"` \| `"sentences"` \| `"words"` \| `"characters"`
+> `optional` **autoCapitalize?**: `string` & `object` \| `"none"` \| `"off"` \| `"on"` \| `"sentences"` \| `"words"` \| `"characters"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2913
 
@@ -1025,7 +1025,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2940
 
 ### contentEditable?
 
-> `optional` **contentEditable?**: `Booleanish` \| `"inherit"` \| `"plaintext-only"`
+> `optional` **contentEditable?**: `"inherit"` \| `Booleanish` \| `"plaintext-only"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2916
 
@@ -1137,7 +1137,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2919
 
 ### enterKeyHint?
 
-> `optional` **enterKeyHint?**: `"search"` \| `"done"` \| `"enter"` \| `"go"` \| `"next"` \| `"previous"` \| `"send"`
+> `optional` **enterKeyHint?**: `"search"` \| `"enter"` \| `"done"` \| `"go"` \| `"next"` \| `"previous"` \| `"send"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2920
 
@@ -1151,7 +1151,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2920
 
 > `optional` **error?**: `string`
 
-Defined in: [src/components/ui/Select.tsx:15](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Select.tsx#L15)
+Defined in: [src/components/ui/Select.tsx:15](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Select.tsx#L15)
 
 ***
 
@@ -1199,7 +1199,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2921
 
 > `optional` **hint?**: `string`
 
-Defined in: [src/components/ui/Select.tsx:16](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Select.tsx#L16)
+Defined in: [src/components/ui/Select.tsx:16](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Select.tsx#L16)
 
 ***
 
@@ -1245,7 +1245,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2942
 
 ### inputMode?
 
-> `optional` **inputMode?**: `"search"` \| `"email"` \| `"url"` \| `"none"` \| `"text"` \| `"tel"` \| `"numeric"` \| `"decimal"`
+> `optional` **inputMode?**: `"search"` \| `"none"` \| `"text"` \| `"tel"` \| `"url"` \| `"email"` \| `"numeric"` \| `"decimal"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2969
 
@@ -1343,7 +1343,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2957
 
 > `optional` **label?**: `string`
 
-Defined in: [src/components/ui/Select.tsx:14](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Select.tsx#L14)
+Defined in: [src/components/ui/Select.tsx:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Select.tsx#L14)
 
 ***
 
@@ -3399,7 +3399,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2581
 
 > **options**: [`SelectOption`](SelectOption.md)[]
 
-Defined in: [src/components/ui/Select.tsx:17](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Select.tsx#L17)
+Defined in: [src/components/ui/Select.tsx:17](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Select.tsx#L17)
 
 ***
 
@@ -3423,13 +3423,13 @@ Defined in: node\_modules/@types/react/index.d.ts:2982
 
 > `optional` **placeholder?**: `string`
 
-Defined in: [src/components/ui/Select.tsx:18](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Select.tsx#L18)
+Defined in: [src/components/ui/Select.tsx:18](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Select.tsx#L18)
 
 ***
 
 ### popover?
 
-> `optional` **popover?**: `""` \| `"manual"` \| `"auto"` \| `"hint"`
+> `optional` **popover?**: `""` \| `"auto"` \| `"manual"` \| `"hint"`
 
 Defined in: node\_modules/@types/react/canary.d.ts:127
 
@@ -3585,9 +3585,9 @@ Defined in: node\_modules/@types/react/index.d.ts:2961
 
 ### size?
 
-> `optional` **size?**: `"sm"` \| `"md"` \| `"lg"`
+> `optional` **size?**: `"lg"` \| `"sm"` \| `"md"`
 
-Defined in: [src/components/ui/Select.tsx:19](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Select.tsx#L19)
+Defined in: [src/components/ui/Select.tsx:19](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Select.tsx#L19)
 
 ***
 
@@ -3691,7 +3691,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2930
 
 > `optional` **tw?**: `string`
 
-Defined in: node\_modules/next/dist/compiled/@vercel/og/types.d.ts:70
+Defined in: node\_modules/next/dist/compiled/@vercel/og/types.d.ts:115
 
 Specify styles using Tailwind CSS classes. This feature is currently experimental.
 If `style` prop is also specified, styles generated with `tw` prop will be overridden.
@@ -3721,7 +3721,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2948
 
 ### unselectable?
 
-> `optional` **unselectable?**: `"on"` \| `"off"`
+> `optional` **unselectable?**: `"off"` \| `"on"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2962
 

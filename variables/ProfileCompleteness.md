@@ -8,4 +8,4 @@
 
 > `const` **ProfileCompleteness**: `React.FC`\<`ProfileCompletenessProps`\>
 
-Defined in: [src/components/Profile/ProfileCompleteness.tsx:42](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/Profile/ProfileCompleteness.tsx#L42)
+Defined in: [src/components/Profile/ProfileCompleteness.tsx:42](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Profile/ProfileCompleteness.tsx#L42)

@@ -1,0 +1,29 @@
+[**CareerPropel API Reference**](../README.md)
+
+***
+
+[CareerPropel API Reference](../globals.md) / getStringParam
+
+# Function: getStringParam()
+
+> **getStringParam**(`params`, `key`, `fallback?`): `string`
+
+Defined in: [src/lib/navigation/state.ts:12](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/navigation/state.ts#L12)
+
+## Parameters
+
+### params
+
+`URLSearchParams` \| `ReadonlyURLSearchParams`
+
+### key
+
+`string`
+
+### fallback?
+
+`string` = `''`
+
+## Returns
+
+`string`

@@ -1,0 +1,1352 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── Enums (RASUI-012: state-machine integrity) ───────────────────────────────
+
+/// 14-stage job pipeline. DB-enforced — invalid stages cannot be persisted.
+enum JobStage {
+  sourced
+  interested
+  resume_tailoring
+  applied
+  recruiter_screen
+  hiring_manager
+  technical_interview
+  system_design
+  behavioral
+  final_round
+  offer
+  negotiation
+  rejected
+  archived
+}
+
+/// Agent execution lifecycle states.
+enum AgentExecutionStatus {
+  queued
+  running
+  paused
+  completed
+  failed
+  interrupted
+}
+
+/// Source that triggered an agent execution.
+enum ExecutionSource {
+  cron
+  queue
+  retry
+  fallback
+  manual
+}
+
+/// Reason an in-flight execution was interrupted.
+enum InterruptionReason {
+  deploy_shutdown
+  stall_detected
+  heartbeat_timeout
+}
+
+/// Classification of execution failure type.
+enum FailureClassification {
+  provider_error
+  timeout
+  cost_ceiling
+  validation_error
+}
+
+/// Deployment environment.
+enum DeploymentEnvironment {
+  staging
+  production
+}
+
+/// Interview lifecycle states.
+enum InterviewStatus {
+  scheduled
+  completed
+  cancelled
+  rescheduled
+  no_show
+}
+
+/// Job offer lifecycle states.
+enum OfferStatus {
+  pending
+  received
+  accepted
+  rejected
+  negotiating
+}
+
+/// Skill proficiency levels.
+enum SkillProficiency {
+  beginner
+  intermediate
+  advanced
+  expert
+}
+
+// ─── Identity & Candidate Profile ───────────────────────────────────────────
+
+model Candidate {
+  id                        String    @id @default(cuid())
+  email                     String    @unique
+  name                      String
+  phone                     String?
+  location                  String?
+  summary                   String?
+  avatarUrl                 String?
+  // Credential auth
+  passwordHash              String?
+  emailVerified             Boolean   @default(false)
+  emailVerificationToken    String?
+  emailVerificationTokenExp DateTime?
+  passwordResetToken        String?
+  passwordResetTokenExp     DateTime?
+  // User preferences: { emailNotifications: bool, theme: 'light'|'dark'|'system' }
+  preferences               Json?
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime  @updatedAt
+
+  jobs              Job[]
+  profileData       ProfileData[]
+  skills            Skill[]
+  achievements      Achievement[]
+  documents         Document[]
+  interviewFeedback InterviewFeedback[]
+  offers            Offer[]
+  interviews        Interview[]
+  profileEntities   ProfileEntity[]
+  profileScore      ProfileScore?
+  interviewPreps    InterviewPrep[]
+  starStories       StarStory[]
+  calendarTokens    CalendarToken[]
+  calendarEvents    CalendarEvent[]
+  jobImports        JobImport[]
+  accomplishments       Accomplishment[]
+  appraisalSessions     AppraisalSession[]
+  contacts              Contact[]
+  mockInterviewSessions MockInterviewSession[]
+  workflowExecutions    WorkflowExecution[]
+  approvalRequests      ApprovalRequest[]
+  opportunityPlans      OpportunityPlan[]
+  workflowSchedules     WorkflowSchedule[]
+  // Document orchestration
+  accomplishmentBankItems AccomplishmentBankItem[]
+  resumeVariants          ResumeVariant[]
+  keywordAlignmentAudits  KeywordAlignmentAudit[]
+  parserValidationReports ParserValidationReport[]
+  applicationPackages     ApplicationPackage[]
+}
+
+// ─── Job Pipeline ────────────────────────────────────────────────────────────
+
+model Job {
+  id             String    @id @default(cuid())
+  candidateId    String
+  title          String
+  company        String
+  description    String?
+  url            String?
+  location       String?
+  salary         Int?
+  matchScore     Float?    @default(0)
+  priority       String    @default("medium") // low, medium, high
+  recruiterName  String?
+  recruiterEmail String?
+  recruiterPhone String?
+  notes          String?
+  tags           String[]
+  stage          JobStage  @default(sourced)
+  appliedAt      DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  candidate             Candidate             @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  activities            JobActivity[]
+  interviewFeedback     InterviewFeedback[]
+  offers                Offer[]
+  interviews            Interview[]
+  documents             Document[]
+  interviewPrep         InterviewPrep?
+  mockInterviewSessions MockInterviewSession[]
+  opportunityPlan       OpportunityPlan?
+  resumeVariants        ResumeVariant[]
+
+  @@index([candidateId])
+  @@index([stage])
+}
+
+model JobActivity {
+  id        String   @id @default(cuid())
+  jobId     String
+  action    String // applied, progressed, rejected, etc.
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  job Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([jobId])
+}
+
+model Interview {
+  id              String          @id @default(cuid())
+  candidateId     String
+  jobId           String
+  type            String // phone, video, onsite, panel, technical, behavioral
+  scheduledAt     DateTime
+  duration        Int? // minutes
+  location        String?
+  meetingLink     String?
+  calendarEventId String? // linked CalendarEvent.id after auto-sync
+  notes           String?
+  status          InterviewStatus @default(scheduled)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([jobId])
+}
+
+model InterviewFeedback {
+  id          String   @id @default(cuid())
+  candidateId String
+  jobId       String
+  type        String // behavioral, technical, system_design, other
+  selfRating  Int? // 1-5 scale
+  notes       String?
+  createdAt   DateTime @default(now())
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([jobId])
+}
+
+model Offer {
+  id          String      @id @default(cuid())
+  candidateId String
+  jobId       String
+  salary      Int?
+  equity      String?
+  bonus       Int?
+  benefits    String?
+  startDate   DateTime?
+  status      OfferStatus @default(pending)
+  negotiated  Boolean     @default(false)
+  notes       String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([jobId])
+}
+
+// ─── Profile Intelligence ────────────────────────────────────────────────────
+
+model ProfileData {
+  id          String   @id @default(cuid())
+  candidateId String
+  type        String // resume, cover_letter, linkedin_export, notes, etc.
+  content     Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@unique([candidateId, type])
+  @@index([candidateId])
+}
+
+model Skill {
+  id          String           @id @default(cuid())
+  candidateId String
+  name        String
+  proficiency SkillProficiency @default(beginner)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@unique([candidateId, name])
+  @@index([candidateId])
+}
+
+model Achievement {
+  id          String   @id @default(cuid())
+  candidateId String
+  title       String
+  description String
+  metrics     Json? // quantifiable results
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+}
+
+model Document {
+  id          String   @id @default(cuid())
+  candidateId String
+  jobId       String?
+  name        String
+  type        String // resume, cover_letter, pdf, docx, txt, etc.
+  url         String?
+  content     String?
+  version     String?
+  tags        String[]
+  uploadedAt  DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job?      @relation(fields: [jobId], references: [id], onDelete: SetNull)
+
+  @@index([candidateId])
+  @@index([jobId])
+}
+
+model ProfileEntity {
+  id          String   @id @default(cuid())
+  candidateId String
+  type        String // skill, experience, education, certification, project, etc.
+  data        Json
+  source      String? // which document or profile data it was extracted from
+  confidence  Float? // AI extraction confidence score (0-1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([type])
+}
+
+model ProfileScore {
+  id              String   @id @default(cuid())
+  candidateId     String   @unique
+  overall         Int      @default(0) // 0-100
+  sections        Json? // per-section breakdown
+  recommendations Json? // improvement suggestions
+  calculatedAt    DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+}
+
+// ─── Interview Intelligence ──────────────────────────────────────────────────
+
+model InterviewPrep {
+  id                String    @id @default(cuid())
+  candidateId       String
+  jobId             String    @unique // one prep package per job
+  role              String
+  company           String
+  prepStatus        String    @default("not_started") // not_started, generating, ready, stale
+  confidenceScore   Float     @default(0) // 0–1
+  contentVersion    Int       @default(1)
+  companyResearch   Json? // serialised CompanyResearch
+  roleBreakdown     Json? // serialised RoleBreakdown
+  technicalPrep     Json? // serialised TechnicalPrep
+  systemDesignPrep  Json? // serialised SystemDesignPrep
+  resumeAlignment   Json? // serialised ResumeAlignment
+  compensationGuide Json? // serialised CompensationGuide
+  generatedAt       DateTime?
+  expiresAt         DateTime?
+  userModifications Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  candidate   Candidate   @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job         Job         @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  starStories StarStory[]
+
+  @@index([candidateId])
+}
+
+model StarStory {
+  id                 String   @id @default(cuid())
+  candidateId        String
+  interviewPrepId    String? // optional: linked to a specific prep package
+  competency         String // primary competency (e.g. "leadership")
+  competencies       String[] // additional competencies this story covers
+  title              String
+  summary            String?
+  situation          String
+  task               String
+  action             String
+  result             String
+  metrics            String[] // quantifiable outcomes
+  sourceProject      String? // project from resume this story draws from
+  relevanceScore     Float    @default(0) // 0–1
+  timeToTell         Int? // estimated seconds to deliver
+  confidence         Int? // 0–100 user confidence rating
+  interviewQuestions String[] // interview questions this story can answer
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  candidate     Candidate      @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  interviewPrep InterviewPrep? @relation(fields: [interviewPrepId], references: [id], onDelete: SetNull)
+
+  @@index([candidateId])
+  @@index([interviewPrepId])
+}
+
+// ─── Agent Operations ────────────────────────────────────────────────────────
+
+model AgentExecution {
+  id           String               @id @default(cuid())
+  userId       String // NextAuth user ID or email — not a FK
+  agentType    String // resume-tailor, job-match, interview-prep, research, follow-up, networking
+  jobId        String? // denormalized from input.jobId for precise indexed queries
+  status       AgentExecutionStatus @default(queued)
+  input        String? // JSON-serialised AgentPromptContext
+  output       String? // JSON-serialised result
+  tokenCount   Int?
+  durationMs   Int?
+  errorMessage String?
+  startedAt    DateTime?
+  completedAt  DateTime?
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+
+  // Execution source & worker identity
+  executionSource    ExecutionSource?
+  workerId           String?
+  queuedAt           DateTime?
+  interruptedAt      DateTime?
+  interruptionReason InterruptionReason?
+
+  // Cost governance
+  estimatedCost Float?
+  actualCost    Float?
+  tokenUsage    Json? // { inputTokens: number, outputTokens: number }
+  provider      String?
+  model         String?
+  latencyMs     Int?
+
+  // Retry lineage
+  retryCount           Int                  @default(0)
+  retryLineage         Json? // array of retry attempt objects
+  failureClassification FailureClassification?
+
+  // Deployment provenance
+  deploymentVersion     String?
+  deploymentSha         String?
+  deploymentTimestamp   DateTime?
+  deploymentEnvironment DeploymentEnvironment?
+  railwayServiceId      String?
+  previousDeploymentVersion String?
+
+  // Governance fields (WI3/WI4)
+  queueJobId        String?
+  requestId         String?
+  correlationId     String?
+  progress          Int       @default(0)
+  attempts          Int       @default(0)
+  providerId        String?
+  currentTask       String?
+  promptVersionId   String?
+  promptHash        String?
+  modelId           String?
+  fallbackUsed      Boolean   @default(false)
+  fallbackReason    String?
+  sanitizerVersion  String?
+  inputTokens       Int?
+  outputTokens      Int?
+  costUsd           Float?
+  validationPassed    Boolean?
+  validationErrors    Json?
+  validationVersion   String?
+  schemaValidated     Boolean?
+  semanticValidated   Boolean?
+  policyValidated     Boolean?
+  metadata            Json?
+
+  toolCalls     ToolCall[]
+  eventLogs     EventLog[]
+  promptVersion PromptVersion? @relation(fields: [promptVersionId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@index([executionSource])
+  @@index([queuedAt])
+  @@index([jobId])
+  @@index([queueJobId])
+  @@index([promptVersionId])
+}
+
+model ToolCall {
+  id          String    @id @default(cuid())
+  executionId String
+  tool        String    // tool name/identifier
+  toolName    String?   // alias/display name
+  input       Json?
+  output      Json?
+  error       String?
+  status      String    @default("pending") // pending, running, completed, failed
+  startedAt   DateTime?
+  completedAt DateTime?
+  durationMs  Int?
+  tokens      Int?
+  createdAt   DateTime  @default(now())
+
+  execution AgentExecution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+
+  @@index([executionId])
+}
+
+model EventLog {
+  id          String   @id @default(cuid())
+  executionId String
+  level       String // INFO, WARN, ERROR
+  message     String
+  metadata    Json?
+  timestamp   DateTime @default(now())
+
+  execution AgentExecution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+
+  @@index([executionId])
+  @@index([timestamp])
+}
+
+// ─── Security & Admin ────────────────────────────────────────────────────────
+
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique // "admin", "recruiter", "candidate", etc.
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  permissions RolePermission[]
+  userRoles   UserRole[]
+}
+
+model Permission {
+  id          String   @id @default(cuid())
+  name        String   @unique // "jobs.create", "jobs.read", "jobs.update", "jobs.delete", etc.
+  description String?
+  resource    String // "jobs", "users", "audit", etc.
+  action      String // "create", "read", "update", "delete", "manage"
+  createdAt   DateTime @default(now())
+
+  roles RolePermission[]
+
+  @@unique([resource, action])
+}
+
+model RolePermission {
+  id           String   @id @default(cuid())
+  roleId       String
+  permissionId String
+  createdAt    DateTime @default(now())
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+  @@index([roleId])
+  @@index([permissionId])
+}
+
+model UserRole {
+  id        String    @id @default(cuid())
+  email     String // Links to Candidate email
+  roleId    String
+  grantedBy String? // Email of admin who granted
+  grantedAt DateTime  @default(now())
+  expiresAt DateTime? // Optional role expiration
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([email, roleId])
+  @@index([email])
+  @@index([roleId])
+}
+
+model TwoFactorSecret {
+  id          String    @id @default(cuid())
+  email       String    @unique
+  secret      String // Encrypted TOTP secret
+  backupCodes String[] // Encrypted backup codes
+  enabled     Boolean   @default(false)
+  enabledAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([email])
+}
+
+model ApiKey {
+  id         String    @id @default(cuid())
+  email      String // Links to Candidate email
+  keyHash    String // Hash of the actual key (key itself never stored)
+  name       String // User-defined name
+  prefix     String    @unique // "sk_" prefix for identification
+  createdAt  DateTime  @default(now())
+  expiresAt  DateTime?
+  lastUsedAt DateTime?
+  revokedAt  DateTime?
+  usageCount Int       @default(0)
+
+  @@unique([email, name])
+  @@index([email])
+  @@index([prefix])
+  @@index([expiresAt])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  email      String
+  action     String // LOGIN, JOB_CREATED, JOB_DELETED, API_KEY_CREATED, etc.
+  resource   String
+  resourceId String?
+  details    Json?
+  ipAddress  String?
+  userAgent  String?
+  status     String // "success" or "failure"
+  severity   String   @default("info") // "info", "warning", "error", "critical"
+  createdAt  DateTime @default(now())
+
+  @@index([email])
+  @@index([action])
+  @@index([createdAt])
+  @@index([severity])
+}
+
+model LoginAttempt {
+  id        String   @id @default(cuid())
+  email     String
+  success   Boolean
+  ipAddress String?
+  userAgent String?
+  timestamp DateTime @default(now())
+
+  @@index([email])
+  @@index([timestamp])
+  @@index([success])
+}
+
+model SessionActivity {
+  id        String   @id @default(cuid())
+  email     String
+  sessionId String
+  action    String // "login", "logout", "api_call", "data_access", etc.
+  ipAddress String?
+  userAgent String?
+  riskScore Int      @default(0) // 0-100, higher = more suspicious
+  timestamp DateTime @default(now())
+
+  @@index([email])
+  @@index([sessionId])
+  @@index([timestamp])
+  @@index([riskScore])
+}
+
+// ─── Calendar Integration ─────────────────────────────────────────────────────
+
+model CalendarToken {
+  id           String    @id @default(cuid())
+  candidateId  String
+  provider     String // "google" | "outlook"
+  accessToken  String
+  refreshToken String?
+  expiresAt    DateTime?
+  scope        String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // Encryption versioning for key rotation
+  encryptionVersion Int      @default(1)
+  encryptionKeyId   String   @default("primary")
+  migratedAt        DateTime?
+  isLegacy          Boolean  @default(true)
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@unique([candidateId, provider])
+  @@index([candidateId])
+  @@index([isLegacy])
+}
+
+model CalendarEvent {
+  id          String   @id @default(cuid())
+  candidateId String
+  externalId  String // Google/Outlook event ID
+  provider    String // "google" | "outlook"
+  title       String
+  description String?
+  startAt     DateTime
+  endAt       DateTime
+  location    String?
+  meetingUrl  String?
+  jobId       String?
+  interviewId String?
+  syncedAt    DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@unique([candidateId, externalId, provider])
+  @@index([candidateId])
+  @@index([startAt])
+}
+
+// ─── Job Board Import ─────────────────────────────────────────────────────────
+
+model JobImport {
+  id          String   @id @default(cuid())
+  candidateId String
+  source      String // "greenhouse" | "indeed" | "linkedin" | "manual"
+  externalId  String? // source job ID where available
+  rawData     Json // full scraped/fetched payload
+  imported    Boolean  @default(false)
+  jobId       String? // set after user accepts and a Job record is created
+  createdAt   DateTime @default(now())
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([source])
+}
+
+// ─── AI Platform Evolution Configurations ────────────────────────────────────
+
+model AiProviderConfig {
+  id           String    @id @default(cuid())
+  candidateId  String
+  providerName String    // "openai", "anthropic", "gemini", "ollama", "openrouter", etc.
+  endpointUrl  String?   // Custom endpoint (e.g. http://localhost:11434/api)
+  encryptedKey String?   // AES-GCM encrypted API key
+  isActive     Boolean   @default(true)
+  priority     Int       @default(1)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([candidateId, providerName])
+  @@index([candidateId])
+}
+
+model UserCapabilityPreset {
+  id           String    @id @default(cuid())
+  candidateId  String
+  presetName   String    // "resume_optimization", "technical_interview", etc.
+  providerName String    // Selected fallback provider
+  modelName    String    // Selected fallback model
+  maxCostLimit Float     @default(0.05) // Max spend per invocation
+  privacyMode  String    @default("enterprise") // "local", "zero_retention", "enterprise", "anonymous"
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([candidateId, presetName])
+  @@index([candidateId])
+}
+
+model TokenUsageLog {
+  id           String    @id @default(cuid())
+  candidateId  String
+  executionId  String?
+  presetName   String
+  providerName String
+  modelName    String
+  inputTokens  Int
+  outputTokens Int
+  costUsd      Float
+  createdAt    DateTime  @default(now())
+
+  @@index([candidateId])
+  @@index([createdAt])
+}
+
+model PromptVersion {
+  id                    String    @id @default(cuid())
+  capability            String    // E.g., "ATS_OPTIMIZATION"
+  agentType             String?   // agent type tag (e.g. "resume-tailor")
+  version               String    @default("1.0.0") // semver string
+  template              String    // User prompt template text
+  systemPrompt          String?   // system prompt override
+  systemHash            String?   // SHA-256 of systemPrompt
+  userPromptTemplate    String?   // user prompt template (alias for template)
+  userPromptHash        String?   // SHA-256 of user prompt template
+  preprocessingVersion  String?
+  sanitizerVersion      String?
+  outputSchemaVersion   String?
+  changelog             String?
+  createdBy             String?
+  isActive              Boolean   @default(true)
+  canaryPercent         Float?    // % of traffic for canary rollout
+  deprecatedAt          DateTime?
+  createdAt             DateTime  @default(now())
+
+  executions  AgentExecution[]
+
+  @@unique([capability, version])
+  @@unique([agentType, version])
+  @@index([capability])
+  @@index([agentType])
+  @@index([isActive])
+}
+
+model ModelHealthLog {
+  id           String   @id @default(cuid())
+  providerName String
+  modelName    String
+  latencyMs    Int
+  isSuccess    Boolean
+  statusCode   Int?
+  errorMessage String?
+  timestamp    DateTime @default(now())
+
+  @@index([providerName, modelName])
+  @@index([timestamp])
+}
+
+model Accomplishment {
+  id          String    @id @default(cuid())
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  title       String
+  date        DateTime  @default(now())
+  category    String    // e.g. "Project", "Leadership", "Process Improvement", "Mentorship"
+  description String    // Markdown text of context/actions
+  metrics     String?   // JSON or text representing quantified results (e.g. "+15% speedup")
+  starContext String?   // Structured Situation-Task-Action-Result format
+  visibility  String    @default("private") // "private", "staged_for_appraisal", "public"
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([candidateId])
+}
+
+model AppraisalSession {
+  id          String    @id @default(cuid())
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  title       String    // e.g. "H1 2026 Performance Review"
+  startDate   DateTime
+  endDate     DateTime
+  status      String    @default("draft") // "draft", "compiled", "archived"
+  selfReview  String?   // Generated self-appraisal draft text
+  impactDraft String?   // Generated promotion business case text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([candidateId])
+}
+
+// ─── Mock Interview Sessions ─────────────────────────────────────────────────
+
+model MockInterviewSession {
+  id          String   @id @default(cuid())
+  candidateId String
+  jobId       String?
+  sessionId   String   // client-generated session identifier
+  questions   Json?    // Array<{ id, text, category, difficulty }>
+  responses   Json?    // Array<[questionId, answer]>
+  feedback    String?  // overall assessment text
+  scores      Json?    // { clarity, relevance, completeness, overall }
+  strengths   String[]
+  areasForImprovement String[]
+  suggestions String[]
+  completedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job?      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@unique([candidateId, sessionId])
+  @@index([candidateId])
+  @@index([jobId])
+}
+
+// ─── Networking / Recruiter CRM ──────────────────────────────────────────────
+
+model Contact {
+  id          String   @id @default(cuid())
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  name        String
+  company     String?
+  role        String?
+  email       String?
+  phone       String?
+  linkedInUrl String?
+
+  // "recruiter" | "hiring_manager" | "referral" | "peer" | "other"
+  type        String   @default("recruiter")
+  // "to_contact" | "reached_out" | "responded" | "met" | "introduced" | "closed"
+  status      String   @default("to_contact")
+
+  jobId       String?  // optional link to a pipeline job
+  notes       String?
+  followUpAt  DateTime?
+  lastContactedAt DateTime?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([candidateId])
+  @@index([candidateId, status])
+}
+
+// ─── Workflow Orchestration ───────────────────────────────────────────────────
+
+enum WorkflowStatus {
+  queued
+  running
+  waiting_for_approval
+  blocked
+  failed
+  completed
+  cancelled
+}
+
+enum StepStatus {
+  pending
+  running
+  waiting_for_approval
+  completed
+  failed
+  skipped
+}
+
+enum StepType {
+  agent_call
+  approval
+  condition
+  notification
+  delay
+}
+
+enum ApprovalDecision {
+  approved
+  rejected
+  modified
+}
+
+enum ApprovalActionType {
+  send_outreach
+  send_followup
+  submit_document
+  compensation_comm
+  networking_comm
+}
+
+enum ScheduleTriggerType {
+  recurring
+  one_time
+  inactivity
+  stage_change
+}
+
+model WorkflowDefinition {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  displayName String
+  description String?
+  version     Int      @default(1)
+  isActive    Boolean  @default(true)
+  steps       Json
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  executions WorkflowExecution[]
+  schedules  WorkflowSchedule[]
+
+  @@index([name])
+  @@index([isActive])
+}
+
+model WorkflowExecution {
+  id               String         @id @default(cuid())
+  candidateId      String
+  jobId            String?
+  definitionId     String
+  status           WorkflowStatus @default(queued)
+  currentStepIndex Int            @default(0)
+  context          Json?
+  metadata         Json?
+  triggeredBy      String?
+  startedAt        DateTime?
+  completedAt      DateTime?
+  cancelledAt      DateTime?
+  failedAt         DateTime?
+  errorMessage     String?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  candidate  Candidate              @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  definition WorkflowDefinition     @relation(fields: [definitionId], references: [id])
+  steps      WorkflowStepExecution[]
+  approvals  ApprovalRequest[]
+
+  @@index([candidateId])
+  @@index([jobId])
+  @@index([status])
+  @@index([definitionId])
+}
+
+model WorkflowStepExecution {
+  id               String     @id @default(cuid())
+  workflowId       String
+  stepKey          String
+  stepIndex        Int
+  stepType         StepType
+  status           StepStatus @default(pending)
+  agentExecutionId String?
+  input            Json?
+  output           Json?
+  errorMessage     String?
+  startedAt        DateTime?
+  completedAt      DateTime?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+
+  workflow WorkflowExecution @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  @@index([workflowId])
+  @@index([stepKey])
+  @@index([status])
+}
+
+model ApprovalRequest {
+  id              String             @id @default(cuid())
+  workflowId      String
+  stepKey         String
+  candidateId     String
+  actionType      ApprovalActionType
+  payload         Json
+  modifiedPayload Json?
+  decision        ApprovalDecision?
+  decisionNote    String?
+  decidedAt       DateTime?
+  expiresAt       DateTime?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  workflow  WorkflowExecution @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  candidate Candidate         @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([workflowId])
+  @@index([candidateId])
+  @@index([decision])
+  @@index([createdAt])
+}
+
+model OpportunityPlan {
+  id                String    @id @default(cuid())
+  candidateId       String
+  jobId             String    @unique
+  urgencyScore      Float     @default(0)
+  readinessScore    Float     @default(0)
+  momentumScore     Float     @default(0)
+  actions           Json
+  healthBreakdown   Json?
+  suggestedWorkflow String?
+  generatedAt       DateTime  @default(now())
+  expiresAt         DateTime?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([jobId])
+}
+
+model WorkflowSchedule {
+  id              String              @id @default(cuid())
+  candidateId     String
+  jobId           String?
+  definitionId    String?
+  triggerType     ScheduleTriggerType
+  cronExpression  String?
+  scheduledAt     DateTime?
+  inactivityDays  Int?
+  isActive        Boolean             @default(true)
+  lastTriggeredAt DateTime?
+  nextTriggerAt   DateTime?
+  metadata        Json?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  candidate  Candidate            @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  definition WorkflowDefinition?  @relation(fields: [definitionId], references: [id], onDelete: SetNull)
+
+  @@index([candidateId])
+  @@index([isActive])
+  @@index([nextTriggerAt])
+  @@index([definitionId])
+}
+
+// ─── Document Orchestration System ───────────────────────────────────────────
+
+/// ATS parsing result status
+enum ParserStatus {
+  pending
+  passed
+  failed
+  warning
+}
+
+/// Document export format
+enum ExportFormat {
+  markdown
+  docx
+  pdf
+  html
+}
+
+/// Application package assembly status
+enum PackageStatus {
+  draft
+  audit_pending
+  audit_passed
+  audit_failed
+  finalized
+  submitted
+}
+
+/// Accomplishment bank item — structured, evidence-backed career statement
+model AccomplishmentBankItem {
+  id          String    @id @default(cuid())
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  // Structured STAR+ fields
+  action          String   // strong verb phrase: "Reduced", "Designed", "Led"
+  scope           String   // what/who was affected: "18 regional teams"
+  result          String   // outcome statement: "42% reduction in processing time"
+  metric          String?  // quantified figure: "42%", "$2M ARR"
+  evidence        String?  // proof source: "verified via Q3 eng metrics"
+
+  // Classification
+  category        String   // "leadership" | "technical" | "process" | "business_impact"
+  function        String?  // "engineering" | "product" | "ops" | "sales"
+  industry        String?  // "fintech" | "healthcare" | "saas"
+  domain          String?  // "cloud" | "frontend" | "data"
+  competency      String?  // "communication" | "execution" | "strategy"
+  operationalScale String? // "startup" | "growth" | "enterprise"
+
+  // Associations
+  associatedSkills String[]
+  associatedRoles  String[]
+  associatedTools  String[]
+
+  // Governance
+  isVerified   Boolean  @default(false)
+  sourceAccomplishmentId String? // links back to raw Accomplishment if derived
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([candidateId])
+  @@index([category])
+  @@index([function])
+}
+
+/// Role-specific ATS-optimized resume variant
+model ResumeVariant {
+  id          String    @id @default(cuid())
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  jobId       String?   // optional link to a pipeline Job
+  job         Job?      @relation(fields: [jobId], references: [id], onDelete: SetNull)
+
+  // Targeting
+  targetRole     String
+  targetIndustry String?
+  targetCompany  String?
+  variantName    String   // human label: "Senior PM — Fintech Focus"
+
+  // Content (Markdown — ATS-safe)
+  content        String   // full resume markdown
+
+  // Scoring
+  atsScore                 Float?  // 0–100 overall ATS score
+  keywordCoverage          Float?  // 0–1 fraction of JD keywords present
+  recruiterOptimizationScore Float? // 0–100 skim-optimization score
+  topThirdScore            Float?  // 0–100 top-third quality score
+  bulletQualityScore       Float?  // 0–100 bullet quantification score
+
+  // Provenance
+  generatedFromProfileVersion String? // hash/version of master profile used
+  promptVersion               String? // prompt template version
+  aiModel                     String? // model that generated this
+  generationCostUsd           Float?
+
+  // Validation
+  parserValidationStatus ParserStatus @default(pending)
+  parserReportId         String?      // FK to ParserValidationReport
+
+  // Versioning
+  version        Int      @default(1)
+  isCurrent      Boolean  @default(true) // only one current per (candidateId, targetRole, targetCompany)
+  parentVariantId String? // previous version
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  keywordAudits      KeywordAlignmentAudit[]
+  applicationPackages ApplicationPackageItem[]
+  parserReport        ParserValidationReport?  @relation(fields: [parserReportId], references: [id])
+
+  @@index([candidateId])
+  @@index([jobId])
+  @@index([targetRole])
+  @@index([isCurrent])
+}
+
+/// Keyword alignment audit record — snapshot of JD vs resume keyword coverage
+model KeywordAlignmentAudit {
+  id             String    @id @default(cuid())
+  candidateId    String
+  candidate      Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  resumeVariantId String?
+  resumeVariant   ResumeVariant? @relation(fields: [resumeVariantId], references: [id], onDelete: SetNull)
+  jobId          String?
+
+  // Input snapshot
+  jobTitle            String?
+  jobDescriptionHash  String?  // SHA-256 of JD text for dedup
+  jobDescriptionText  String?
+
+  // Extracted keywords
+  requiredKeywords    String[] // exact phrases from JD required section
+  preferredKeywords   String[] // from preferred/nice-to-have
+  titleKeywords       String[] // from job title
+  toolKeywords        String[] // tools, tech, platforms
+  domainKeywords      String[] // industry/domain terms
+  actionVerbKeywords  String[] // action verbs the JD uses
+
+  // Coverage
+  matchedKeywords     String[] // keywords present in resume (exact)
+  missingKeywords     String[] // keywords absent from resume
+  overusedKeywords    String[] // keywords appearing too frequently
+  synonymizedKeywords Json?    // { original: string, used: string }[] — flagged synonymizations
+
+  // Scores
+  coverageScore       Float?   // 0–1
+  exactMatchRate      Float?   // 0–1
+  synonymPenalty      Float?   // reduction for synonymized high-value terms
+
+  auditedAt  DateTime @default(now())
+  createdAt  DateTime @default(now())
+
+  @@index([candidateId])
+  @@index([resumeVariantId])
+  @@index([jobId])
+}
+
+/// ATS parser simulation validation report
+model ParserValidationReport {
+  id          String    @id @default(cuid())
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  // Validation checks
+  headingRecognition    ParserStatus @default(pending) // required headings detected
+  chronologyExtraction  ParserStatus @default(pending) // dates parsed correctly
+  keywordExtraction     ParserStatus @default(pending) // keywords extractable
+  sectionDetection      ParserStatus @default(pending) // sections identified
+  dateParsing           ParserStatus @default(pending) // consistent date formats
+  contactParsing        ParserStatus @default(pending) // name/email/phone extractable
+  overallStatus         ParserStatus @default(pending)
+
+  // Findings
+  warnings      String[] // non-fatal issues
+  errors        String[] // critical failures
+  recommendations String[] // suggestions for improvement
+
+  // Metadata
+  testedContent String?  // content that was tested (first 500 chars for dedup)
+  testedAt      DateTime @default(now())
+  createdAt     DateTime @default(now())
+
+  resumeVariants ResumeVariant[]
+
+  @@index([candidateId])
+  @@index([overallStatus])
+}
+
+/// Bundled application package — resume + cover letter + supporting docs
+model ApplicationPackage {
+  id          String    @id @default(cuid())
+  candidateId String
+  candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  jobId       String?
+
+  packageName    String
+  targetRole     String
+  targetCompany  String?
+
+  // Status
+  status         PackageStatus @default(draft)
+
+  // Audit results (JSON snapshots)
+  atsAuditResult        Json?  // ATSAuditReport
+  consistencyAuditResult Json? // ConsistencyAuditReport
+  recruiterAuditResult  Json?  // RecruiterAuditReport
+  governanceAuditResult Json?  // GovernanceAuditReport
+
+  // Governance
+  finalizedAt    DateTime?
+  exportFormat   ExportFormat @default(markdown)
+  exportUrl      String?
+
+  // Provenance
+  profileVersionHash String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items ApplicationPackageItem[]
+
+  @@index([candidateId])
+  @@index([jobId])
+  @@index([status])
+}
+
+/// Individual item within an application package
+model ApplicationPackageItem {
+  id        String @id @default(cuid())
+  packageId String
+  package   ApplicationPackage @relation(fields: [packageId], references: [id], onDelete: Cascade)
+
+  itemType       String  // "resume" | "cover_letter" | "recruiter_note" | "linkedin_summary" | "follow_up_template"
+  resumeVariantId String?
+  resumeVariant   ResumeVariant? @relation(fields: [resumeVariantId], references: [id], onDelete: SetNull)
+  documentId     String? // link to existing Document
+  content        String? // inline content for smaller artifacts
+
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+
+  @@index([packageId])
+  @@index([resumeVariantId])
+}
+

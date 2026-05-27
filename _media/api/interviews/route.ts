@@ -1,0 +1,86 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { ValidationError } from '@/app/api/middleware/auth';
+import { validateRequest, successResponse, validationErrorResponse, errorResponse } from '@/app/api/middleware/validation';
+import { scheduleInterviewSchema, listInterviewsQuerySchema } from '@/lib/validation/schemas';
+import { getInterviews, scheduleInterview } from '@/lib/db/interviews';
+import { getAuthContext } from '@/lib/middleware/auth';
+import { prisma } from '@/lib/db';
+
+// Mark as dynamic to prevent build-time static generation
+export const dynamic = 'force-dynamic'
+
+/**
+ * GET /api/interviews
+ * List interviews for authenticated user
+ */
+export async function GET(req: NextRequest) {
+  try {
+    const { userEmail } = await getAuthContext();
+    const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
+    if (!candidate) {
+      return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Profile not found' } }, { status: 404 });
+    }
+
+    // Parse query parameters
+    const searchParams = req.nextUrl.searchParams;
+    const queryData = {
+      limit: searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : 50,
+      offset: searchParams.get('offset') ? parseInt(searchParams.get('offset')!) : 0,
+      jobId: searchParams.get('jobId') || undefined,
+      type: searchParams.get('type') || undefined,
+      status: searchParams.get('status') || undefined,
+      sortBy: (searchParams.get('sortBy') || 'scheduledAt') as any,
+      sortOrder: (searchParams.get('sortOrder') || 'asc') as any,
+    };
+
+    // Validate query
+    const validation = listInterviewsQuerySchema.safeParse(queryData);
+    if (!validation.success) {
+      const details: Record<string, string[]> = {};
+      validation.error.errors.forEach((error) => {
+        const path = error.path.join('.');
+        if (!details[path]) {
+          details[path] = [];
+        }
+        details[path].push(error.message);
+      });
+      return validationErrorResponse(new ValidationError('Invalid query parameters', details));
+    }
+
+    const result = await getInterviews(candidate.id, validation.data);
+    return successResponse(result);
+  } catch (error) {
+    console.error('GET /api/interviews error:', error);
+    return errorResponse(error);
+  }
+}
+
+/**
+ * POST /api/interviews
+ * Schedule a new interview
+ */
+export async function POST(req: NextRequest) {
+  try {
+    const { userEmail } = await getAuthContext();
+    const candidate = await prisma.candidate.findUnique({ where: { email: userEmail } });
+    if (!candidate) {
+      return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Profile not found' } }, { status: 404 });
+    }
+
+    // Validate request body
+    const validation = await validateRequest(req, scheduleInterviewSchema);
+    if (!validation.valid) {
+      return validationErrorResponse(validation.error);
+    }
+
+    const interview = await scheduleInterview(candidate.id, validation.data);
+    if (!interview) {
+      return NextResponse.json({ error: { code: 'NOT_FOUND', message: 'Job not found' } }, { status: 404 });
+    }
+
+    return successResponse(interview, 201);
+  } catch (error) {
+    console.error('POST /api/interviews error:', error);
+    return errorResponse(error);
+  }
+}

@@ -6,20 +6,22 @@
 
 # Function: GET()
 
-> **GET**(`_request`, `__namedParameters`): `Promise`\<`Response`\>
+> **GET**(`_req`, `context`): `Promise`\<`NextResponse`\<\{ `data`: \{ `candidateId`: `string`; `company`: `string` \| `null`; `createdAt`: `Date`; `email`: `string` \| `null`; `followUpAt`: `Date` \| `null`; `id`: `string`; `jobId`: `string` \| `null`; `lastContactedAt`: `Date` \| `null`; `linkedInUrl`: `string` \| `null`; `name`: `string`; `notes`: `string` \| `null`; `phone`: `string` \| `null`; `role`: `string` \| `null`; `status`: `string`; `type`: `string`; `updatedAt`: `Date`; \}; \}\> \| `NextResponse`\<\{ `error`: \{ `message`: `any`; \}; \}\>\>
 
-Defined in: [src/app/api/interview-prep/\[jobId\]/events/route.ts:106](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/interview-prep/[jobId]/events/route.ts#L106)
+Defined in: [src/app/api/contacts/\[id\]/route.ts:21](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/contacts/[id]/route.ts#L21)
 
 ## Parameters
 
-### \_request
+### \_req
 
 `NextRequest`
 
-### \_\_namedParameters
+### context
 
-`RouteParams`
+#### params
+
+`Promise`\<\{ `id`: `string`; \}\>
 
 ## Returns
 
-`Promise`\<`Response`\>
+`Promise`\<`NextResponse`\<\{ `data`: \{ `candidateId`: `string`; `company`: `string` \| `null`; `createdAt`: `Date`; `email`: `string` \| `null`; `followUpAt`: `Date` \| `null`; `id`: `string`; `jobId`: `string` \| `null`; `lastContactedAt`: `Date` \| `null`; `linkedInUrl`: `string` \| `null`; `name`: `string`; `notes`: `string` \| `null`; `phone`: `string` \| `null`; `role`: `string` \| `null`; `status`: `string`; `type`: `string`; `updatedAt`: `Date`; \}; \}\> \| `NextResponse`\<\{ `error`: \{ `message`: `any`; \}; \}\>\>

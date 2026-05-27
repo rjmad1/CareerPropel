@@ -6,11 +6,11 @@
 
 # Class: AnthropicProvider
 
-Defined in: [src/lib/llm/anthropic.ts:15](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/anthropic.ts#L15)
+Defined in: [src/lib/llm/anthropic.ts:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/anthropic.ts#L13)
 
 ## Implements
 
-- `ILLMProvider`
+- [`LLMProviderClient`](../interfaces/LLMProviderClient.md)
 
 ## Constructors
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/llm/anthropic.ts:15](https://github.com/rjmad1/CareerPropel
 
 > **new AnthropicProvider**(): `AnthropicProvider`
 
-Defined in: [src/lib/llm/anthropic.ts:20](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/anthropic.ts#L20)
+Defined in: [src/lib/llm/anthropic.ts:18](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/anthropic.ts#L18)
 
 #### Returns
 
@@ -30,11 +30,11 @@ Defined in: [src/lib/llm/anthropic.ts:20](https://github.com/rjmad1/CareerPropel
 
 > **name**: `"anthropic"`
 
-Defined in: [src/lib/llm/anthropic.ts:16](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/anthropic.ts#L16)
+Defined in: [src/lib/llm/anthropic.ts:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/anthropic.ts#L14)
 
 #### Implementation of
 
-`ILLMProvider.name`
+[`LLMProviderClient`](../interfaces/LLMProviderClient.md).[`name`](../interfaces/LLMProviderClient.md#name)
 
 ## Methods
 
@@ -42,7 +42,7 @@ Defined in: [src/lib/llm/anthropic.ts:16](https://github.com/rjmad1/CareerPropel
 
 > **callLLM**(`messages`, `options?`): `Promise`\<[`LLMCallResult`](../interfaces/LLMCallResult-1.md)\>
 
-Defined in: [src/lib/llm/anthropic.ts:34](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/anthropic.ts#L34)
+Defined in: [src/lib/llm/anthropic.ts:32](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/anthropic.ts#L32)
 
 #### Parameters
 
@@ -60,7 +60,7 @@ Defined in: [src/lib/llm/anthropic.ts:34](https://github.com/rjmad1/CareerPropel
 
 #### Implementation of
 
-`ILLMProvider.callLLM`
+[`LLMProviderClient`](../interfaces/LLMProviderClient.md).[`callLLM`](../interfaces/LLMProviderClient.md#callllm)
 
 ***
 
@@ -68,7 +68,7 @@ Defined in: [src/lib/llm/anthropic.ts:34](https://github.com/rjmad1/CareerPropel
 
 > **getDefaultModel**(): `string`
 
-Defined in: [src/lib/llm/anthropic.ts:30](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/anthropic.ts#L30)
+Defined in: [src/lib/llm/anthropic.ts:28](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/anthropic.ts#L28)
 
 #### Returns
 
@@ -76,7 +76,7 @@ Defined in: [src/lib/llm/anthropic.ts:30](https://github.com/rjmad1/CareerPropel
 
 #### Implementation of
 
-`ILLMProvider.getDefaultModel`
+[`LLMProviderClient`](../interfaces/LLMProviderClient.md).[`getDefaultModel`](../interfaces/LLMProviderClient.md#getdefaultmodel)
 
 ***
 
@@ -84,7 +84,7 @@ Defined in: [src/lib/llm/anthropic.ts:30](https://github.com/rjmad1/CareerPropel
 
 > **streamLLM**(`messages`, `options?`): `AsyncIterable`\<`string`\>
 
-Defined in: [src/lib/llm/anthropic.ts:80](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/anthropic.ts#L80)
+Defined in: [src/lib/llm/anthropic.ts:78](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/anthropic.ts#L78)
 
 #### Parameters
 
@@ -102,4 +102,4 @@ Defined in: [src/lib/llm/anthropic.ts:80](https://github.com/rjmad1/CareerPropel
 
 #### Implementation of
 
-`ILLMProvider.streamLLM`
+[`LLMProviderClient`](../interfaces/LLMProviderClient.md).[`streamLLM`](../interfaces/LLMProviderClient.md#streamllm)

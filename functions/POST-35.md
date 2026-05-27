@@ -6,19 +6,16 @@
 
 # Function: POST()
 
-> **POST**(`request`): `Promise`\<`NextResponse`\<`any`\>\>
+> **POST**(`req`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `forced`: `boolean`; `originalExecutionId`: `string`; `replayExecutionId`: `string`; `status`: `string`; \}\>\>
 
-Defined in: [src/app/api/profile/ats-check/route.ts:12](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/profile/ats-check/route.ts#L12)
-
-POST /api/profile/ats-check
-Analyze resume for ATS optimization using Claude
+Defined in: [src/app/api/ops/dlq/replay/route.ts:24](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/ops/dlq/replay/route.ts#L24)
 
 ## Parameters
 
-### request
+### req
 
 `NextRequest`
 
 ## Returns
 
-`Promise`\<`NextResponse`\<`any`\>\>
+`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `forced`: `boolean`; `originalExecutionId`: `string`; `replayExecutionId`: `string`; `status`: `string`; \}\>\>

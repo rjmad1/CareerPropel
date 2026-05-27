@@ -8,7 +8,7 @@
 
 > **useAgentStatus**(`autoConnect?`): `object`
 
-Defined in: [src/hooks/useAgentStatus.ts:22](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useAgentStatus.ts#L22)
+Defined in: [src/hooks/useAgentStatus.ts:22](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentStatus.ts#L22)
 
 ## Parameters
 
@@ -18,6 +18,8 @@ Defined in: [src/hooks/useAgentStatus.ts:22](https://github.com/rjmad1/CareerPro
 
 ## Returns
 
+`object`
+
 ### agents
 
 > **agents**: `AgentStateMap`
@@ -26,8 +28,6 @@ Defined in: [src/hooks/useAgentStatus.ts:22](https://github.com/rjmad1/CareerPro
 
 > **connect**: () => `void`
 
-Connect to WebSocket server
-
 #### Returns
 
 `void`
@@ -35,8 +35,6 @@ Connect to WebSocket server
 ### disconnect
 
 > **disconnect**: () => `void`
-
-Disconnect from WebSocket
 
 #### Returns
 
@@ -50,13 +48,11 @@ Disconnect from WebSocket
 
 > **getAgentStatus**: (`agentType`) => [`AgentStatusEvent`](../interfaces/AgentStatusEvent.md)
 
-Get specific agent status
-
 #### Parameters
 
 ##### agentType
 
-[`AgentType`](../type-aliases/AgentType-2.md)
+[`AgentType`](../type-aliases/AgentType-1.md)
 
 #### Returns
 
@@ -65,8 +61,6 @@ Get specific agent status
 ### getAllAgents
 
 > **getAllAgents**: () => `AgentStateMap`
-
-Get all agents
 
 #### Returns
 

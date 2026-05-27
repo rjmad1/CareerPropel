@@ -8,7 +8,7 @@
 
 > **createOrUpdateProfileField**(`userId`, `fieldType`, `content`): `Promise`\<\{ `candidateId`: `string`; `content`: `JsonValue`; `createdAt`: `Date`; `id`: `string`; `type`: `string`; `updatedAt`: `Date`; \}\>
 
-Defined in: [src/lib/db/profile.ts:39](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/db/profile.ts#L39)
+Defined in: [src/lib/db/profile.ts:37](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/db/profile.ts#L37)
 
 Create or update profile field
 
@@ -24,7 +24,7 @@ Create or update profile field
 
 ### content
 
-`Record`\<`string`, `unknown`\>
+`Record`\<`string`, `any`\>
 
 ## Returns
 

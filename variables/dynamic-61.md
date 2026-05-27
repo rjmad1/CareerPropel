@@ -8,4 +8,4 @@
 
 > `const` **dynamic**: `"force-dynamic"` = `'force-dynamic'`
 
-Defined in: [src/app/api/jobs/\[id\]/activities/route.ts:9](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/jobs/[id]/activities/route.ts#L9)
+Defined in: [src/app/api/interview-prep/mock/feedback/route.ts:11](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/interview-prep/mock/feedback/route.ts#L11)

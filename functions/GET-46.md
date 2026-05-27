@@ -6,13 +6,12 @@
 
 # Function: GET()
 
-> **GET**(`_request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `candidateId`: `string`; `completenessScore`: \{ `calculatedAt`: `Date`; `candidateId`: `string`; `id`: `string`; `overall`: `number`; `recommendations`: `JsonValue`; `sections`: `JsonValue`; `updatedAt`: `Date`; \} \| `null`; `email`: `string`; `extractionQuality`: \{ `averageConfidence`: `number`; `documentCount`: `number`; `lastExtraction`: `Date`; `totalEntities`: `number`; \}; `name`: `string`; `recentAchievements`: `object`[]; `topSkills`: `object`[]; \}\>\>
+> **GET**(`_request`, `context`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `history`: `JsonArray`; `offerId`: `string`; \}\>\>\>
 
-Defined in: [src/app/api/profile/route.ts:12](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/profile/route.ts#L12)
+Defined in: [src/app/api/offers/\[id\]/negotiate/route.ts:104](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/offers/[id]/negotiate/route.ts#L104)
 
-GET /api/profile
-Fetch the authenticated user's profile summary.
-candidateId is resolved from the session — callers cannot enumerate other users.
+GET /api/offers/[id]/negotiate
+Return full negotiation history for an offer.
 
 ## Parameters
 
@@ -20,6 +19,12 @@ candidateId is resolved from the session — callers cannot enumerate other user
 
 `NextRequest`
 
+### context
+
+#### params
+
+`Promise`\<\{ `id`: `string`; \}\>
+
 ## Returns
 
-`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `candidateId`: `string`; `completenessScore`: \{ `calculatedAt`: `Date`; `candidateId`: `string`; `id`: `string`; `overall`: `number`; `recommendations`: `JsonValue`; `sections`: `JsonValue`; `updatedAt`: `Date`; \} \| `null`; `email`: `string`; `extractionQuality`: \{ `averageConfidence`: `number`; `documentCount`: `number`; `lastExtraction`: `Date`; `totalEntities`: `number`; \}; `name`: `string`; `recentAchievements`: `object`[]; `topSkills`: `object`[]; \}\>\>
+`Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `history`: `JsonArray`; `offerId`: `string`; \}\>\>\>

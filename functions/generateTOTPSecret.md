@@ -6,9 +6,9 @@
 
 # Function: generateTOTPSecret()
 
-> **generateTOTPSecret**(`email`): `Promise`\<\{ `backupCodes`: `string`[]; `qrCode`: `string`; `secret`: `string`; \}\>
+> **generateTOTPSecret**(`email`): `Promise`\<\{ `backupCodes`: `string`[]; `qrCode`: `string`; `secret`: `any`; \}\>
 
-Defined in: [src/lib/security/twoFactor.ts:19](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/security/twoFactor.ts#L19)
+Defined in: [src/lib/security/twoFactor.ts:11](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/security/twoFactor.ts#L11)
 
 ## Parameters
 
@@ -18,4 +18,4 @@ Defined in: [src/lib/security/twoFactor.ts:19](https://github.com/rjmad1/CareerP
 
 ## Returns
 
-`Promise`\<\{ `backupCodes`: `string`[]; `qrCode`: `string`; `secret`: `string`; \}\>
+`Promise`\<\{ `backupCodes`: `string`[]; `qrCode`: `string`; `secret`: `any`; \}\>

@@ -8,7 +8,7 @@
 
 > **useNotifications**(): `object`
 
-Defined in: [src/hooks/useRealTime.ts:124](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useRealTime.ts#L124)
+Defined in: [src/hooks/useRealTime.ts:51](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useRealTime.ts#L51)
 
 ## Returns
 
@@ -16,12 +16,12 @@ Defined in: [src/hooks/useRealTime.ts:124](https://github.com/rjmad1/CareerPrope
 
 ### connected
 
-> **connected**: `boolean`
+> **connected**: `boolean` = `false`
 
 ### notification
 
-> **notification**: [`Notification`](../interfaces/Notification-1.md) \| `null`
+> **notification**: `null` = `null`
 
 ### notifications
 
-> **notifications**: [`Notification`](../interfaces/Notification-1.md)[]
+> **notifications**: `never`[] = `[]`

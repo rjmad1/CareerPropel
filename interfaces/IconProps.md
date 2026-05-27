@@ -6,7 +6,7 @@
 
 # Interface: IconProps
 
-Defined in: [src/components/ui/Icon.tsx:4](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Icon.tsx#L4)
+Defined in: [src/components/ui/Icon.tsx:4](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Icon.tsx#L4)
 
 ## Extends
 
@@ -52,7 +52,7 @@ Defined in: node\_modules/@types/react/index.d.ts:3701
 
 ### alignmentBaseline?
 
-> `optional` **alignmentBaseline?**: `"inherit"` \| `"auto"` \| `"alphabetic"` \| `"hanging"` \| `"ideographic"` \| `"mathematical"` \| `"baseline"` \| `"before-edge"` \| `"text-before-edge"` \| `"middle"` \| `"central"` \| `"after-edge"` \| `"text-after-edge"`
+> `optional` **alignmentBaseline?**: `"inherit"` \| `"auto"` \| `"baseline"` \| `"alphabetic"` \| `"hanging"` \| `"ideographic"` \| `"mathematical"` \| `"before-edge"` \| `"text-before-edge"` \| `"middle"` \| `"central"` \| `"after-edge"` \| `"text-after-edge"`
 
 Defined in: node\_modules/@types/react/index.d.ts:3702
 
@@ -140,7 +140,7 @@ Indicates whether assistive technologies will present all, or only parts of, the
 
 ### aria-autocomplete?
 
-> `optional` **aria-autocomplete?**: `"none"` \| `"list"` \| `"inline"` \| `"both"`
+> `optional` **aria-autocomplete?**: `"none"` \| `"inline"` \| `"list"` \| `"both"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2617
 
@@ -314,7 +314,7 @@ aria-owns.
 
 ### aria-current?
 
-> `optional` **aria-current?**: `boolean` \| `"true"` \| `"location"` \| `"date"` \| `"time"` \| `"false"` \| `"step"` \| `"page"`
+> `optional` **aria-current?**: `boolean` \| `"time"` \| `"page"` \| `"step"` \| `"true"` \| `"false"` \| `"date"` \| `"location"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2661
 
@@ -401,7 +401,7 @@ Indicates that the element is perceivable but disabled, so it is not editable or
 
 ### ~~aria-dropeffect?~~
 
-> `optional` **aria-dropeffect?**: `"link"` \| `"none"` \| `"copy"` \| `"move"` \| `"execute"` \| `"popup"`
+> `optional` **aria-dropeffect?**: `"link"` \| `"none"` \| `"copy"` \| `"execute"` \| `"move"` \| `"popup"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2686
 
@@ -485,7 +485,7 @@ in ARIA 1.1
 
 ### aria-haspopup?
 
-> `optional` **aria-haspopup?**: `boolean` \| `"true"` \| `"dialog"` \| `"menu"` \| `"false"` \| `"grid"` \| `"listbox"` \| `"tree"`
+> `optional` **aria-haspopup?**: `boolean` \| `"dialog"` \| `"menu"` \| `"grid"` \| `"true"` \| `"false"` \| `"listbox"` \| `"tree"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2705
 
@@ -758,7 +758,7 @@ aria-disabled.
 
 ### aria-relevant?
 
-> `optional` **aria-relevant?**: `"text"` \| `"all"` \| `"additions"` \| `"additions removals"` \| `"additions text"` \| `"removals"` \| `"removals additions"` \| `"removals text"` \| `"text additions"` \| `"text removals"`
+> `optional` **aria-relevant?**: `"all"` \| `"text"` \| `"additions"` \| `"additions removals"` \| `"additions text"` \| `"removals"` \| `"removals additions"` \| `"removals text"` \| `"text additions"` \| `"text removals"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2770
 
@@ -915,7 +915,7 @@ aria-posinset.
 
 ### aria-sort?
 
-> `optional` **aria-sort?**: `"other"` \| `"none"` \| `"ascending"` \| `"descending"`
+> `optional` **aria-sort?**: `"none"` \| `"ascending"` \| `"descending"` \| `"other"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2817
 
@@ -1677,7 +1677,7 @@ Defined in: node\_modules/@types/react/index.d.ts:3786
 
 ### focusable?
 
-> `optional` **focusable?**: `Booleanish` \| `"auto"`
+> `optional` **focusable?**: `"auto"` \| `Booleanish`
 
 Defined in: node\_modules/@types/react/index.d.ts:3787
 
@@ -2447,7 +2447,7 @@ Defined in: node\_modules/@types/react/index.d.ts:3843
 
 > **name**: `string`
 
-Defined in: [src/components/ui/Icon.tsx:5](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Icon.tsx#L5)
+Defined in: [src/components/ui/Icon.tsx:5](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Icon.tsx#L5)
 
 #### Overrides
 
@@ -4961,9 +4961,9 @@ Defined in: node\_modules/@types/react/index.d.ts:3886
 
 ### size?
 
-> `optional` **size?**: `"xs"` \| `"sm"` \| `"md"` \| `"lg"` \| `"xl"`
+> `optional` **size?**: `"lg"` \| `"xs"` \| `"sm"` \| `"md"` \| `"xl"`
 
-Defined in: [src/components/ui/Icon.tsx:6](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Icon.tsx#L6)
+Defined in: [src/components/ui/Icon.tsx:6](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Icon.tsx#L6)
 
 ***
 
@@ -5197,7 +5197,7 @@ Defined in: node\_modules/@types/react/index.d.ts:3905
 
 ### strokeLinecap?
 
-> `optional` **strokeLinecap?**: `"inherit"` \| `"round"` \| `"butt"` \| `"square"`
+> `optional` **strokeLinecap?**: `"inherit"` \| `"round"` \| `"square"` \| `"butt"`
 
 Defined in: node\_modules/@types/react/index.d.ts:3906
 
@@ -5365,7 +5365,7 @@ Defined in: node\_modules/@types/react/index.d.ts:3915
 
 ### textAnchor?
 
-> `optional` **textAnchor?**: `"end"` \| `"inherit"` \| `"middle"` \| `"start"`
+> `optional` **textAnchor?**: `"inherit"` \| `"end"` \| `"start"` \| `"middle"`
 
 Defined in: node\_modules/@types/react/index.d.ts:3916
 

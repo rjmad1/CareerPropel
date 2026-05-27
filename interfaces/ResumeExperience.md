@@ -6,7 +6,7 @@
 
 # Interface: ResumeExperience
 
-Defined in: [src/lib/document/compile.ts:3](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/document/compile.ts#L3)
+Defined in: [src/lib/document/compile.ts:3](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/document/compile.ts#L3)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/document/compile.ts:3](https://github.com/rjmad1/CareerProp
 
 > **company**: `string`
 
-Defined in: [src/lib/document/compile.ts:5](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/document/compile.ts#L5)
+Defined in: [src/lib/document/compile.ts:5](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/document/compile.ts#L5)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/document/compile.ts:5](https://github.com/rjmad1/CareerProp
 
 > **description**: `string`
 
-Defined in: [src/lib/document/compile.ts:8](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/document/compile.ts#L8)
+Defined in: [src/lib/document/compile.ts:8](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/document/compile.ts#L8)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/document/compile.ts:8](https://github.com/rjmad1/CareerProp
 
 > **duration**: `string`
 
-Defined in: [src/lib/document/compile.ts:7](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/document/compile.ts#L7)
+Defined in: [src/lib/document/compile.ts:7](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/document/compile.ts#L7)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/document/compile.ts:7](https://github.com/rjmad1/CareerProp
 
 > `optional` **location?**: `string`
 
-Defined in: [src/lib/document/compile.ts:6](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/document/compile.ts#L6)
+Defined in: [src/lib/document/compile.ts:6](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/document/compile.ts#L6)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/lib/document/compile.ts:6](https://github.com/rjmad1/CareerProp
 
 > **role**: `string`
 
-Defined in: [src/lib/document/compile.ts:4](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/document/compile.ts#L4)
+Defined in: [src/lib/document/compile.ts:4](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/document/compile.ts#L4)

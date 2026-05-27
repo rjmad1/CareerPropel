@@ -8,18 +8,10 @@
 
 > **processPendingExecutions**(): `Promise`\<`number`\>
 
-Defined in: [src/lib/agents/executor.ts:288](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/agents/executor.ts#L288)
+Defined in: [src/lib/agents/executor.ts:381](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/agents/executor.ts#L381)
 
-Find and execute ONE pending agent execution (called by background polling cron).
-
-Design decisions:
-- Processes exactly ONE execution per HTTP invocation to stay within serverless
-  function time limits. The cron frequency (vercel.json) controls throughput.
-- Uses claimExecution() for optimistic concurrency — concurrent invocations
-  cannot double-process the same execution record.
-- Calls recoverStuckExecutions() on every invocation for self-healing.
-
-Returns: number of executions processed (0 or 1).
+Find and execute pending agent executions (called by background polling)
+Returns number of executions processed
 
 ## Returns
 

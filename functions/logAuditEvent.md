@@ -8,7 +8,7 @@
 
 > **logAuditEvent**(`entry`): `Promise`\<`void`\>
 
-Defined in: [src/lib/logging/auditLog.ts:56](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/logging/auditLog.ts#L56)
+Defined in: [src/lib/logging/auditLog.ts:55](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L55)
 
 ## Parameters
 

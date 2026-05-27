@@ -6,7 +6,7 @@
 
 # Interface: UpdateJobNotesInput
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:223](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/domains/jobs/hooks/useMutations.ts#L223)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:134](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useMutations.ts#L134)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/domains/jobs/hooks/useMutations.ts:223](https://github.com/rjma
 
 > **jobId**: `string`
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:224](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/domains/jobs/hooks/useMutations.ts#L224)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:135](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useMutations.ts#L135)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [src/domains/jobs/hooks/useMutations.ts:224](https://github.com/rjma
 
 > **notes**: `string`
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:225](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/domains/jobs/hooks/useMutations.ts#L225)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:136](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useMutations.ts#L136)

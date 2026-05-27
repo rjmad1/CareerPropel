@@ -6,7 +6,7 @@
 
 # Interface: BehavioralStoryProgress
 
-Defined in: [src/types/preparation.ts:109](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L109)
+Defined in: [src/types/preparation.ts:109](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L109)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/preparation.ts:109](https://github.com/rjmad1/CareerPrope
 
 > **action**: `string`
 
-Defined in: [src/types/preparation.ts:114](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L114)
+Defined in: [src/types/preparation.ts:114](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L114)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/preparation.ts:114](https://github.com/rjmad1/CareerPrope
 
 > `optional` **audioRecordings?**: [`AudioRecording`](AudioRecording.md)[]
 
-Defined in: [src/types/preparation.ts:121](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L121)
+Defined in: [src/types/preparation.ts:121](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L121)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/preparation.ts:121](https://github.com/rjmad1/CareerPrope
 
 > **averageDeliveryTime**: `number`
 
-Defined in: [src/types/preparation.ts:119](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L119)
+Defined in: [src/types/preparation.ts:119](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L119)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/preparation.ts:119](https://github.com/rjmad1/CareerPrope
 
 > **competency**: `string`
 
-Defined in: [src/types/preparation.ts:111](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L111)
+Defined in: [src/types/preparation.ts:111](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L111)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/preparation.ts:111](https://github.com/rjmad1/CareerPrope
 
 > `optional` **feedback?**: [`StoryFeedback`](StoryFeedback.md)
 
-Defined in: [src/types/preparation.ts:122](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L122)
+Defined in: [src/types/preparation.ts:122](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L122)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/types/preparation.ts:122](https://github.com/rjmad1/CareerPrope
 
 > `optional` **lastPracticedAt?**: `Date`
 
-Defined in: [src/types/preparation.ts:118](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L118)
+Defined in: [src/types/preparation.ts:118](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L118)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/types/preparation.ts:118](https://github.com/rjmad1/CareerPrope
 
 > **metrics**: `string`[]
 
-Defined in: [src/types/preparation.ts:116](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L116)
+Defined in: [src/types/preparation.ts:116](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L116)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/types/preparation.ts:116](https://github.com/rjmad1/CareerPrope
 
 > **result**: `string`
 
-Defined in: [src/types/preparation.ts:115](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L115)
+Defined in: [src/types/preparation.ts:115](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L115)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/types/preparation.ts:115](https://github.com/rjmad1/CareerPrope
 
 > **situation**: `string`
 
-Defined in: [src/types/preparation.ts:112](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L112)
+Defined in: [src/types/preparation.ts:112](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L112)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [src/types/preparation.ts:112](https://github.com/rjmad1/CareerPrope
 
 > **storyId**: `string`
 
-Defined in: [src/types/preparation.ts:110](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L110)
+Defined in: [src/types/preparation.ts:110](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L110)
 
 ***
 
@@ -94,7 +94,7 @@ Defined in: [src/types/preparation.ts:110](https://github.com/rjmad1/CareerPrope
 
 > **targetDeliveryTime**: `number`
 
-Defined in: [src/types/preparation.ts:120](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L120)
+Defined in: [src/types/preparation.ts:120](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L120)
 
 ***
 
@@ -102,7 +102,7 @@ Defined in: [src/types/preparation.ts:120](https://github.com/rjmad1/CareerPrope
 
 > **task**: `string`
 
-Defined in: [src/types/preparation.ts:113](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L113)
+Defined in: [src/types/preparation.ts:113](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L113)
 
 ***
 
@@ -110,4 +110,4 @@ Defined in: [src/types/preparation.ts:113](https://github.com/rjmad1/CareerPrope
 
 > **timesToPracticed**: `number`
 
-Defined in: [src/types/preparation.ts:117](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L117)
+Defined in: [src/types/preparation.ts:117](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L117)

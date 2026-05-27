@@ -8,15 +8,13 @@
 
 > **useAgentStatusListener**(`agentType`): `object`
 
-Defined in: [src/hooks/useAgentStatus.ts:219](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useAgentStatus.ts#L219)
-
-Hook for listening to a specific agent's status
+Defined in: [src/hooks/useAgentStatus.ts:53](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useAgentStatus.ts#L53)
 
 ## Parameters
 
 ### agentType
 
-[`AgentType`](../type-aliases/AgentType-2.md)
+[`AgentType`](../type-aliases/AgentType-1.md)
 
 ## Returns
 

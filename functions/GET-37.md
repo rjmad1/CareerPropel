@@ -6,20 +6,16 @@
 
 # Function: GET()
 
-> **GET**(`_request`, `__namedParameters`): `Promise`\<`Response`\>
+> **GET**(`request`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<`object` & `object`\>\>\>
 
-Defined in: [src/app/api/jobs/search/\[jobId\]/events/route.ts:21](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/jobs/search/[jobId]/events/route.ts#L21)
+Defined in: [src/app/api/interview-prep/route.ts:17](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/interview-prep/route.ts#L17)
 
 ## Parameters
 
-### \_request
+### request
 
 `NextRequest`
 
-### \_\_namedParameters
-
-`RouteParams`
-
 ## Returns
 
-`Promise`\<`Response`\>
+`Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<`object` & `object`\>\>\>

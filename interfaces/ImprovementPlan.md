@@ -6,7 +6,7 @@
 
 # Interface: ImprovementPlan
 
-Defined in: [src/types/preparation.ts:359](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L359)
+Defined in: [src/types/preparation.ts:366](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L366)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/preparation.ts:359](https://github.com/rjmad1/CareerPrope
 
 > **endDate**: `Date`
 
-Defined in: [src/types/preparation.ts:361](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L361)
+Defined in: [src/types/preparation.ts:368](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L368)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/preparation.ts:361](https://github.com/rjmad1/CareerPrope
 
 > **estimatedTimePerWeek**: `number`
 
-Defined in: [src/types/preparation.ts:363](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L363)
+Defined in: [src/types/preparation.ts:370](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L370)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/preparation.ts:363](https://github.com/rjmad1/CareerPrope
 
 > **startDate**: `Date`
 
-Defined in: [src/types/preparation.ts:360](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L360)
+Defined in: [src/types/preparation.ts:367](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L367)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/types/preparation.ts:360](https://github.com/rjmad1/CareerPrope
 
 > **weeklyGoals**: [`WeeklyGoal`](WeeklyGoal.md)[]
 
-Defined in: [src/types/preparation.ts:362](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/preparation.ts#L362)
+Defined in: [src/types/preparation.ts:369](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/preparation.ts#L369)

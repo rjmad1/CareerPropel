@@ -8,7 +8,7 @@
 
 > **executeSafely**\<`T`\>(`operation`, `fallbackValue`, `operationName?`): `Promise`\<`T`\>
 
-Defined in: [src/infrastructure/redis/health.ts:67](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/infrastructure/redis/health.ts#L67)
+Defined in: [src/infrastructure/redis/health.ts:67](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/infrastructure/redis/health.ts#L67)
 
 Wraps an operational execution and returns a fallback value upon failures
 to prevent hard crashes and enable graceful degradation (7. OPERATIONAL SAFETY)

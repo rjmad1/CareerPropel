@@ -8,7 +8,7 @@
 
 > **importLinkedInProfile**(`profileUrl`): `Promise`\<[`LinkedInProfile`](../interfaces/LinkedInProfile.md)\>
 
-Defined in: [src/lib/scraping/linkedin.ts:174](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/scraping/linkedin.ts#L174)
+Defined in: [src/lib/scraping/linkedin.ts:174](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/scraping/linkedin.ts#L174)
 
 Import a LinkedIn public profile by URL.
 

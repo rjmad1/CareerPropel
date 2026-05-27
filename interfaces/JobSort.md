@@ -6,20 +6,20 @@
 
 # Interface: JobSort
 
-Defined in: [src/types/job.ts:87](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/job.ts#L87)
+Defined in: [src/types/job.ts:93](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/job.ts#L93)
 
 ## Properties
 
 ### direction
 
-> **direction**: `"asc"` \| `"desc"`
+> **direction**: `"desc"` \| `"asc"`
 
-Defined in: [src/types/job.ts:89](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/job.ts#L89)
+Defined in: [src/types/job.ts:95](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/job.ts#L95)
 
 ***
 
 ### field
 
-> **field**: `"title"` \| `"company"` \| `"matchScore"` \| `"appliedAt"` \| `"salary"`
+> **field**: `"title"` \| `"company"` \| `"salary"` \| `"matchScore"` \| `"appliedAt"`
 
-Defined in: [src/types/job.ts:88](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/job.ts#L88)
+Defined in: [src/types/job.ts:94](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/job.ts#L94)

@@ -6,7 +6,7 @@
 
 # Interface: AuditLogEntry
 
-Defined in: [src/lib/logging/auditLog.ts:44](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/logging/auditLog.ts#L44)
+Defined in: [src/lib/logging/auditLog.ts:43](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L43)
 
 ## Properties
 
@@ -14,15 +14,15 @@ Defined in: [src/lib/logging/auditLog.ts:44](https://github.com/rjmad1/CareerPro
 
 > **action**: [`AuditAction`](../enumerations/AuditAction.md)
 
-Defined in: [src/lib/logging/auditLog.ts:45](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/logging/auditLog.ts#L45)
+Defined in: [src/lib/logging/auditLog.ts:44](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L44)
 
 ***
 
-### details?
+### changes?
 
-> `optional` **details?**: `Record`\<`string`, `any`\>
+> `optional` **changes?**: `Record`\<`string`, `any`\>
 
-Defined in: [src/lib/logging/auditLog.ts:49](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/logging/auditLog.ts#L49)
+Defined in: [src/lib/logging/auditLog.ts:48](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L48)
 
 ***
 
@@ -30,7 +30,15 @@ Defined in: [src/lib/logging/auditLog.ts:49](https://github.com/rjmad1/CareerPro
 
 > **email**: `string`
 
-Defined in: [src/lib/logging/auditLog.ts:46](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/logging/auditLog.ts#L46)
+Defined in: [src/lib/logging/auditLog.ts:45](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L45)
+
+***
+
+### errorMessage?
+
+> `optional` **errorMessage?**: `string`
+
+Defined in: [src/lib/logging/auditLog.ts:52](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L52)
 
 ***
 
@@ -38,15 +46,7 @@ Defined in: [src/lib/logging/auditLog.ts:46](https://github.com/rjmad1/CareerPro
 
 > `optional` **ipAddress?**: `string`
 
-Defined in: [src/lib/logging/auditLog.ts:50](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/logging/auditLog.ts#L50)
-
-***
-
-### resource?
-
-> `optional` **resource?**: `string`
-
-Defined in: [src/lib/logging/auditLog.ts:47](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/logging/auditLog.ts#L47)
+Defined in: [src/lib/logging/auditLog.ts:49](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L49)
 
 ***
 
@@ -54,23 +54,23 @@ Defined in: [src/lib/logging/auditLog.ts:47](https://github.com/rjmad1/CareerPro
 
 > `optional` **resourceId?**: `string`
 
-Defined in: [src/lib/logging/auditLog.ts:48](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/logging/auditLog.ts#L48)
+Defined in: [src/lib/logging/auditLog.ts:47](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L47)
 
 ***
 
-### severity?
+### resourceType?
 
-> `optional` **severity?**: `"info"` \| `"error"` \| `"warning"` \| `"critical"`
+> `optional` **resourceType?**: `string`
 
-Defined in: [src/lib/logging/auditLog.ts:53](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/logging/auditLog.ts#L53)
+Defined in: [src/lib/logging/auditLog.ts:46](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L46)
 
 ***
 
 ### status
 
-> **status**: `"success"` \| `"failure"`
+> **status**: `"SUCCESS"` \| `"FAILURE"`
 
-Defined in: [src/lib/logging/auditLog.ts:52](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/logging/auditLog.ts#L52)
+Defined in: [src/lib/logging/auditLog.ts:51](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L51)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [src/lib/logging/auditLog.ts:52](https://github.com/rjmad1/CareerPro
 
 > `optional` **userAgent?**: `string`
 
-Defined in: [src/lib/logging/auditLog.ts:51](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/logging/auditLog.ts#L51)
+Defined in: [src/lib/logging/auditLog.ts:50](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/logging/auditLog.ts#L50)

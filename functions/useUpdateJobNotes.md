@@ -6,10 +6,10 @@
 
 # Function: useUpdateJobNotes()
 
-> **useUpdateJobNotes**(): `UseMutationResult`\<`unknown`, `Error`, [`UpdateJobNotesInput`](../interfaces/UpdateJobNotesInput.md), `unknown`\>
+> **useUpdateJobNotes**(): `UseMutationResult`\<\{ `jobId`: `string`; `notes`: `string`; \}, `Error`, [`UpdateJobNotesInput`](../interfaces/UpdateJobNotesInput.md), `unknown`\>
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:228](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/domains/jobs/hooks/useMutations.ts#L228)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:139](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useMutations.ts#L139)
 
 ## Returns
 
-`UseMutationResult`\<`unknown`, `Error`, [`UpdateJobNotesInput`](../interfaces/UpdateJobNotesInput.md), `unknown`\>
+`UseMutationResult`\<\{ `jobId`: `string`; `notes`: `string`; \}, `Error`, [`UpdateJobNotesInput`](../interfaces/UpdateJobNotesInput.md), `unknown`\>

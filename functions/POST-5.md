@@ -6,9 +6,9 @@
 
 # Function: POST()
 
-> **POST**(`request`): `Promise`\<`NextResponse`\<\{ `executionId`: `string`; `message`: `string`; `status`: `string`; \}\> \| `NextResponse`\<\{ `error`: `any`; \}\>\>
+> **POST**(`request`): `Promise`\<`NextResponse`\<`unknown`\> \| `null`\>
 
-Defined in: [src/app/api/agents/execute/route.ts:37](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/agents/execute/route.ts#L37)
+Defined in: [src/app/api/agents/execute/route.ts:42](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/agents/execute/route.ts#L42)
 
 ## Parameters
 
@@ -18,4 +18,4 @@ Defined in: [src/app/api/agents/execute/route.ts:37](https://github.com/rjmad1/C
 
 ## Returns
 
-`Promise`\<`NextResponse`\<\{ `executionId`: `string`; `message`: `string`; `status`: `string`; \}\> \| `NextResponse`\<\{ `error`: `any`; \}\>\>
+`Promise`\<`NextResponse`\<`unknown`\> \| `null`\>

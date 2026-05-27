@@ -8,11 +8,10 @@
 
 > **useInterviewPrepProgress**(`jobId`): `object`
 
-Defined in: [src/hooks/useInterviewPrep.ts:204](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useInterviewPrep.ts#L204)
+Defined in: [src/hooks/useInterviewPrep.ts:200](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useInterviewPrep.ts#L200)
 
-Hook for tracking interview prep generation progress.
-Polls the prep status endpoint while generation is in progress
-and animates a progress bar to give feedback.
+Hook for listening to interview prep generation progress
+(for real-time updates via WebSocket)
 
 ## Parameters
 
@@ -32,14 +31,6 @@ and animates a progress bar to give feedback.
 
 > **progress**: `number`
 
-### startTracking
-
-> **startTracking**: () => `void`
-
-#### Returns
-
-`void`
-
 ### status
 
-> **status**: `"error"` \| `"idle"` \| `"generating"` \| `"complete"`
+> **status**: `"error"` \| `"idle"` \| `"complete"` \| `"generating"`

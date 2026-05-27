@@ -6,7 +6,7 @@
 
 # Interface: ProfileKnowledgeGraph
 
-Defined in: [src/types/knowledge-graph.ts:35](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L35)
+Defined in: [src/types/knowledge-graph.ts:35](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/knowledge-graph.ts#L35)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/knowledge-graph.ts:35](https://github.com/rjmad1/CareerPr
 
 > **edges**: [`GraphEdge`](GraphEdge.md)[]
 
-Defined in: [src/types/knowledge-graph.ts:37](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L37)
+Defined in: [src/types/knowledge-graph.ts:37](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/knowledge-graph.ts#L37)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [src/types/knowledge-graph.ts:37](https://github.com/rjmad1/CareerPr
 
 > **nodes**: [`GraphNode`](GraphNode.md)[]
 
-Defined in: [src/types/knowledge-graph.ts:36](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/knowledge-graph.ts#L36)
+Defined in: [src/types/knowledge-graph.ts:36](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/knowledge-graph.ts#L36)

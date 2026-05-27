@@ -6,13 +6,13 @@
 
 # Function: useJobUpdates()
 
-> **useJobUpdates**(`jobId?`): `object`
+> **useJobUpdates**(`_jobId?`): `object`
 
-Defined in: [src/hooks/useRealTime.ts:107](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useRealTime.ts#L107)
+Defined in: [src/hooks/useRealTime.ts:47](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useRealTime.ts#L47)
 
 ## Parameters
 
-### jobId?
+### \_jobId?
 
 `string`
 
@@ -22,8 +22,8 @@ Defined in: [src/hooks/useRealTime.ts:107](https://github.com/rjmad1/CareerPrope
 
 ### connected
 
-> **connected**: `boolean`
+> **connected**: `boolean` = `false`
 
 ### update
 
-> **update**: [`RealtimeJobUpdate`](../interfaces/RealtimeJobUpdate.md) \| `null`
+> **update**: `null` = `null`

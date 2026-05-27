@@ -6,16 +6,16 @@
 
 # Function: GET()
 
-> **GET**(`request`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<`object` & `object`\>\>\>
+> **GET**(`_request`): `Promise`\<`Response`\>
 
-Defined in: [src/app/api/interview-prep/route.ts:17](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/interview-prep/route.ts#L17)
+Defined in: [src/app/api/debug/auth-config/route.ts:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/debug/auth-config/route.ts#L13)
 
 ## Parameters
 
-### request
+### \_request
 
-`NextRequest`
+`Request`
 
 ## Returns
 
-`Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<`object` & `object`\>\>\>
+`Promise`\<`Response`\>

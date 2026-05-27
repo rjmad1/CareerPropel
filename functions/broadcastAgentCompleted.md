@@ -8,7 +8,7 @@
 
 > **broadcastAgentCompleted**(`userId`, `agentType`, `executionId`, `jobId`, `status`, `output`, `error`, `tokensUsed`, `duration`): `Promise`\<`void`\>
 
-Defined in: [src/lib/realtime/agentStatusBroadcaster.ts:52](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/realtime/agentStatusBroadcaster.ts#L52)
+Defined in: [src/lib/realtime/agentStatusBroadcaster.ts:51](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/realtime/agentStatusBroadcaster.ts#L51)
 
 Broadcast that an agent has completed
 
@@ -20,7 +20,7 @@ Broadcast that an agent has completed
 
 ### agentType
 
-[`AgentType`](../type-aliases/AgentType-2.md)
+[`AgentType`](../type-aliases/AgentType-1.md)
 
 ### executionId
 

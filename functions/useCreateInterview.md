@@ -6,10 +6,10 @@
 
 # Function: useCreateInterview()
 
-> **useCreateInterview**(): `UseMutationResult`\<`unknown`, `Error`, [`CreateInterviewInput`](../interfaces/CreateInterviewInput.md), `unknown`\>
+> **useCreateInterview**(): `UseMutationResult`\<[`CreateInterviewInput`](../interfaces/CreateInterviewInput.md), `Error`, [`CreateInterviewInput`](../interfaces/CreateInterviewInput.md), `unknown`\>
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:23](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/domains/jobs/hooks/useMutations.ts#L23)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:24](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useMutations.ts#L24)
 
 ## Returns
 
-`UseMutationResult`\<`unknown`, `Error`, [`CreateInterviewInput`](../interfaces/CreateInterviewInput.md), `unknown`\>
+`UseMutationResult`\<[`CreateInterviewInput`](../interfaces/CreateInterviewInput.md), `Error`, [`CreateInterviewInput`](../interfaces/CreateInterviewInput.md), `unknown`\>

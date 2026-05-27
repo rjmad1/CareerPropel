@@ -6,7 +6,7 @@
 
 # Interface: SwimlaneProps
 
-Defined in: [src/components/Kanban/Swimlane.tsx:16](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/Kanban/Swimlane.tsx#L16)
+Defined in: [src/components/Kanban/Swimlane.tsx:7](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/Swimlane.tsx#L7)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:16](https://github.com/rjmad1/Ca
 
 > **config**: [`SwimlaneConfig`](SwimlaneConfig.md)
 
-Defined in: [src/components/Kanban/Swimlane.tsx:18](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/Kanban/Swimlane.tsx#L18)
+Defined in: [src/components/Kanban/Swimlane.tsx:9](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/Swimlane.tsx#L9)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:18](https://github.com/rjmad1/Ca
 
 > `optional` **isLoading?**: `boolean`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:20](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/Kanban/Swimlane.tsx#L20)
+Defined in: [src/components/Kanban/Swimlane.tsx:11](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/Swimlane.tsx#L11)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:20](https://github.com/rjmad1/Ca
 
 > **jobs**: [`Job`](Job-1.md)[]
 
-Defined in: [src/components/Kanban/Swimlane.tsx:19](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/Kanban/Swimlane.tsx#L19)
+Defined in: [src/components/Kanban/Swimlane.tsx:10](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/Swimlane.tsx#L10)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:19](https://github.com/rjmad1/Ca
 
 > `optional` **onJobClick?**: (`job`) => `void`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:22](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/Kanban/Swimlane.tsx#L22)
+Defined in: [src/components/Kanban/Swimlane.tsx:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/Swimlane.tsx#L13)
 
 #### Parameters
 
@@ -56,7 +56,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:22](https://github.com/rjmad1/Ca
 
 > `optional` **onJobDrop?**: (`jobId`, `targetStage`) => `void`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:21](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/Kanban/Swimlane.tsx#L21)
+Defined in: [src/components/Kanban/Swimlane.tsx:12](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/Swimlane.tsx#L12)
 
 #### Parameters
 
@@ -71,76 +71,6 @@ Defined in: [src/components/Kanban/Swimlane.tsx:21](https://github.com/rjmad1/Ca
 #### Returns
 
 `void`
-
-***
-
-### onJobMoveStage?
-
-> `optional` **onJobMoveStage?**: (`jobId`, `targetStage`) => `void`
-
-Defined in: [src/components/Kanban/Swimlane.tsx:23](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/Kanban/Swimlane.tsx#L23)
-
-#### Parameters
-
-##### jobId
-
-`string`
-
-##### targetStage
-
-[`JobStage`](../type-aliases/JobStage-1.md)
-
-#### Returns
-
-`void`
-
-***
-
-### renderJobCard?
-
-> `optional` **renderJobCard?**: (`job`, `handlers`) => `ReactNode`
-
-Defined in: [src/components/Kanban/Swimlane.tsx:27](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/Kanban/Swimlane.tsx#L27)
-
-Optional custom renderer — replaces the default JobCard when provided.
- Receives the job plus all handlers so consumers can wrap/enhance JobCard
- without reimplementing drag-and-drop or click logic.
-
-#### Parameters
-
-##### job
-
-[`Job`](Job-1.md)
-
-##### handlers
-
-###### draggableProps?
-
-`Record`\<`string`, `unknown`\>
-
-###### isDragging?
-
-`boolean`
-
-###### onClick
-
-(`job`) => `void`
-
-###### onDragEnd
-
-(`e`) => `void`
-
-###### onDragOver?
-
-(`e`) => `void`
-
-###### onDragStart
-
-(`e`) => `void`
-
-#### Returns
-
-`ReactNode`
 
 ***
 
@@ -148,4 +78,4 @@ Optional custom renderer — replaces the default JobCard when provided.
 
 > **stage**: [`JobStage`](../type-aliases/JobStage-1.md)
 
-Defined in: [src/components/Kanban/Swimlane.tsx:17](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/Kanban/Swimlane.tsx#L17)
+Defined in: [src/components/Kanban/Swimlane.tsx:8](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/Kanban/Swimlane.tsx#L8)

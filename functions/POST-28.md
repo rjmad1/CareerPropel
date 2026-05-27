@@ -6,9 +6,16 @@
 
 # Function: POST()
 
-> **POST**(`request`, `context`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<`DecisionResult`\>\>\>
+> **POST**(`request`): `Promise`\<`NextResponse`\<`unknown`\>\>
 
-Defined in: [src/app/api/offers/\[id\]/decision/route.ts:84](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/offers/[id]/decision/route.ts#L84)
+Defined in: [src/app/api/jobs/route.ts:104](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/jobs/route.ts#L104)
+
+POST /api/jobs
+Create a new job
+Protected: Requires authentication
+Rate Limited: 20 requests per minute per IP
+CSRF Protected: Requires valid CSRF token (optional in dev)
+Job will be created for the authenticated user
 
 ## Parameters
 
@@ -16,12 +23,6 @@ Defined in: [src/app/api/offers/\[id\]/decision/route.ts:84](https://github.com/
 
 `NextRequest`
 
-### context
-
-#### params
-
-`Promise`\<\{ `id`: `string`; \}\>
-
 ## Returns
 
-`Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<`DecisionResult`\>\>\>
+`Promise`\<`NextResponse`\<`unknown`\>\>

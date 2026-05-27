@@ -6,7 +6,7 @@
 
 # Interface: Layoff
 
-Defined in: [src/types/company.ts:184](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L184)
+Defined in: [src/types/company.ts:184](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L184)
 
 Layoff information
 
@@ -16,7 +16,7 @@ Layoff information
 
 > **count**: `number`
 
-Defined in: [src/types/company.ts:186](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L186)
+Defined in: [src/types/company.ts:186](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L186)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/company.ts:186](https://github.com/rjmad1/CareerPropel/bl
 
 > **date**: `Date`
 
-Defined in: [src/types/company.ts:185](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L185)
+Defined in: [src/types/company.ts:185](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L185)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/company.ts:185](https://github.com/rjmad1/CareerPropel/bl
 
 > **departments**: `string`[]
 
-Defined in: [src/types/company.ts:188](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L188)
+Defined in: [src/types/company.ts:188](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L188)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/company.ts:188](https://github.com/rjmad1/CareerPropel/bl
 
 > **percentage**: `number`
 
-Defined in: [src/types/company.ts:187](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L187)
+Defined in: [src/types/company.ts:187](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L187)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/company.ts:187](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **reason?**: `string`
 
-Defined in: [src/types/company.ts:189](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L189)
+Defined in: [src/types/company.ts:189](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L189)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/types/company.ts:189](https://github.com/rjmad1/CareerPropel/bl
 
 > **source**: `string`
 
-Defined in: [src/types/company.ts:190](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L190)
+Defined in: [src/types/company.ts:190](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L190)
 
 ***
 
@@ -64,4 +64,4 @@ Defined in: [src/types/company.ts:190](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **url?**: `string`
 
-Defined in: [src/types/company.ts:191](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L191)
+Defined in: [src/types/company.ts:191](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L191)

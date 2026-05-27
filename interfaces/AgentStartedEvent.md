@@ -6,7 +6,7 @@
 
 # Interface: AgentStartedEvent
 
-Defined in: [src/lib/realtime/events.ts:52](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/realtime/events.ts#L52)
+Defined in: [src/lib/realtime/events.ts:52](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/realtime/events.ts#L52)
 
 Agent execution started event
 Published when agent begins work
@@ -15,9 +15,9 @@ Published when agent begins work
 
 ### agentType
 
-> **agentType**: [`AgentType`](../type-aliases/AgentType-2.md)
+> **agentType**: [`AgentType`](../type-aliases/AgentType-1.md)
 
-Defined in: [src/lib/realtime/events.ts:55](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/realtime/events.ts#L55)
+Defined in: [src/lib/realtime/events.ts:55](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/realtime/events.ts#L55)
 
 ***
 
@@ -25,7 +25,7 @@ Defined in: [src/lib/realtime/events.ts:55](https://github.com/rjmad1/CareerProp
 
 > **executionId**: `string`
 
-Defined in: [src/lib/realtime/events.ts:56](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/realtime/events.ts#L56)
+Defined in: [src/lib/realtime/events.ts:56](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/realtime/events.ts#L56)
 
 ***
 
@@ -33,7 +33,7 @@ Defined in: [src/lib/realtime/events.ts:56](https://github.com/rjmad1/CareerProp
 
 > **input**: `Record`\<`string`, `unknown`\>
 
-Defined in: [src/lib/realtime/events.ts:58](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/realtime/events.ts#L58)
+Defined in: [src/lib/realtime/events.ts:58](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/realtime/events.ts#L58)
 
 ***
 
@@ -41,7 +41,7 @@ Defined in: [src/lib/realtime/events.ts:58](https://github.com/rjmad1/CareerProp
 
 > `optional` **jobId?**: `string`
 
-Defined in: [src/lib/realtime/events.ts:57](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/realtime/events.ts#L57)
+Defined in: [src/lib/realtime/events.ts:57](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/realtime/events.ts#L57)
 
 ***
 
@@ -49,7 +49,7 @@ Defined in: [src/lib/realtime/events.ts:57](https://github.com/rjmad1/CareerProp
 
 > **timestamp**: `Date`
 
-Defined in: [src/lib/realtime/events.ts:59](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/realtime/events.ts#L59)
+Defined in: [src/lib/realtime/events.ts:59](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/realtime/events.ts#L59)
 
 ***
 
@@ -57,7 +57,7 @@ Defined in: [src/lib/realtime/events.ts:59](https://github.com/rjmad1/CareerProp
 
 > **type**: `"agent:started"`
 
-Defined in: [src/lib/realtime/events.ts:53](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/realtime/events.ts#L53)
+Defined in: [src/lib/realtime/events.ts:53](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/realtime/events.ts#L53)
 
 ***
 
@@ -65,4 +65,4 @@ Defined in: [src/lib/realtime/events.ts:53](https://github.com/rjmad1/CareerProp
 
 > **userId**: `string`
 
-Defined in: [src/lib/realtime/events.ts:54](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/realtime/events.ts#L54)
+Defined in: [src/lib/realtime/events.ts:54](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/realtime/events.ts#L54)

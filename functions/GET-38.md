@@ -6,16 +6,16 @@
 
 # Function: GET()
 
-> **GET**(`_request`, `context`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `history`: `JsonArray`; `offerId`: `string`; \}\>\>\>
+> **GET**(`_req`, `context`): `Promise`\<`NextResponse`\<`any`\>\>
 
-Defined in: [src/app/api/offers/\[id\]/negotiate/route.ts:104](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/offers/[id]/negotiate/route.ts#L104)
+Defined in: [src/app/api/interviews/\[id\]/route.ts:15](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/interviews/[id]/route.ts#L15)
 
-GET /api/offers/[id]/negotiate
-Return full negotiation history for an offer.
+GET /api/interviews/[id]
+Get a single interview
 
 ## Parameters
 
-### \_request
+### \_req
 
 `NextRequest`
 
@@ -27,4 +27,4 @@ Return full negotiation history for an offer.
 
 ## Returns
 
-`Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `history`: `JsonArray`; `offerId`: `string`; \}\>\>\>
+`Promise`\<`NextResponse`\<`any`\>\>

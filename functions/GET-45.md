@@ -6,19 +6,20 @@
 
 # Function: GET()
 
-> **GET**(`request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `recommendations`: `string` \| `number` \| `true` \| `JsonObject` \| `JsonArray`; \}\>\>
+> **GET**(`_request`, `__namedParameters`): `Promise`\<`Response`\>
 
-Defined in: [src/app/api/profile/recommendations/route.ts:11](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/profile/recommendations/route.ts#L11)
-
-GET /api/profile/recommendations?candidateId={id}
-Fetch profile improvement recommendations
+Defined in: [src/app/api/jobs/search/\[jobId\]/events/route.ts:21](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/jobs/search/[jobId]/events/route.ts#L21)
 
 ## Parameters
 
-### request
+### \_request
 
 `NextRequest`
 
+### \_\_namedParameters
+
+`RouteParams`
+
 ## Returns
 
-`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `recommendations`: `string` \| `number` \| `true` \| `JsonObject` \| `JsonArray`; \}\>\>
+`Promise`\<`Response`\>

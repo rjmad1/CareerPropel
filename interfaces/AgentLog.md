@@ -6,7 +6,9 @@
 
 # Interface: AgentLog
 
-Defined in: [src/lib/websocket/types.ts:23](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L23)
+Defined in: [src/types/agent.ts:178](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/agent.ts#L178)
+
+Per-execution log line emitted by an agent worker.
 
 ## Properties
 
@@ -14,7 +16,7 @@ Defined in: [src/lib/websocket/types.ts:23](https://github.com/rjmad1/CareerProp
 
 > **agentId**: `string`
 
-Defined in: [src/lib/websocket/types.ts:25](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L25)
+Defined in: [src/types/agent.ts:180](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/agent.ts#L180)
 
 ***
 
@@ -22,15 +24,15 @@ Defined in: [src/lib/websocket/types.ts:25](https://github.com/rjmad1/CareerProp
 
 > **id**: `string`
 
-Defined in: [src/lib/websocket/types.ts:24](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L24)
+Defined in: [src/types/agent.ts:179](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/agent.ts#L179)
 
 ***
 
 ### level
 
-> **level**: `"info"` \| `"error"` \| `"debug"` \| `"warning"`
+> **level**: `"info"` \| `"warning"` \| `"error"` \| `"debug"`
 
-Defined in: [src/lib/websocket/types.ts:27](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L27)
+Defined in: [src/types/agent.ts:182](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/agent.ts#L182)
 
 ***
 
@@ -38,7 +40,7 @@ Defined in: [src/lib/websocket/types.ts:27](https://github.com/rjmad1/CareerProp
 
 > **message**: `string`
 
-Defined in: [src/lib/websocket/types.ts:28](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L28)
+Defined in: [src/types/agent.ts:183](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/agent.ts#L183)
 
 ***
 
@@ -46,7 +48,7 @@ Defined in: [src/lib/websocket/types.ts:28](https://github.com/rjmad1/CareerProp
 
 > `optional` **metadata?**: `Record`\<`string`, `any`\>
 
-Defined in: [src/lib/websocket/types.ts:29](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L29)
+Defined in: [src/types/agent.ts:184](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/agent.ts#L184)
 
 ***
 
@@ -54,4 +56,4 @@ Defined in: [src/lib/websocket/types.ts:29](https://github.com/rjmad1/CareerProp
 
 > **timestamp**: `Date`
 
-Defined in: [src/lib/websocket/types.ts:26](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/websocket/types.ts#L26)
+Defined in: [src/types/agent.ts:181](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/agent.ts#L181)

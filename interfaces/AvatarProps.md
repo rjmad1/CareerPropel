@@ -6,7 +6,7 @@
 
 # Interface: AvatarProps
 
-Defined in: [src/components/ui/Avatar.tsx:4](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Avatar.tsx#L4)
+Defined in: [src/components/ui/Avatar.tsx:4](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Avatar.tsx#L4)
 
 ## Extends
 
@@ -22,7 +22,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2939
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.about`
+[`SidebarItemProps`](SidebarItemProps.md).[`about`](SidebarItemProps.md#about)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2912
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.accessKey`
+[`SidebarItemProps`](SidebarItemProps.md).[`accessKey`](SidebarItemProps.md#accesskey)
 
 ***
 
@@ -80,7 +80,7 @@ Indicates whether assistive technologies will present all, or only parts of, the
 
 ### aria-autocomplete?
 
-> `optional` **aria-autocomplete?**: `"none"` \| `"list"` \| `"inline"` \| `"both"`
+> `optional` **aria-autocomplete?**: `"none"` \| `"inline"` \| `"list"` \| `"both"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2617
 
@@ -254,7 +254,7 @@ aria-owns.
 
 ### aria-current?
 
-> `optional` **aria-current?**: `boolean` \| `"true"` \| `"location"` \| `"date"` \| `"time"` \| `"false"` \| `"step"` \| `"page"`
+> `optional` **aria-current?**: `boolean` \| `"time"` \| `"page"` \| `"step"` \| `"true"` \| `"false"` \| `"date"` \| `"location"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2661
 
@@ -341,7 +341,7 @@ Indicates that the element is perceivable but disabled, so it is not editable or
 
 ### ~~aria-dropeffect?~~
 
-> `optional` **aria-dropeffect?**: `"link"` \| `"none"` \| `"copy"` \| `"move"` \| `"execute"` \| `"popup"`
+> `optional` **aria-dropeffect?**: `"link"` \| `"none"` \| `"copy"` \| `"execute"` \| `"move"` \| `"popup"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2686
 
@@ -425,7 +425,7 @@ in ARIA 1.1
 
 ### aria-haspopup?
 
-> `optional` **aria-haspopup?**: `boolean` \| `"true"` \| `"dialog"` \| `"menu"` \| `"false"` \| `"grid"` \| `"listbox"` \| `"tree"`
+> `optional` **aria-haspopup?**: `boolean` \| `"dialog"` \| `"menu"` \| `"grid"` \| `"true"` \| `"false"` \| `"listbox"` \| `"tree"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2705
 
@@ -698,7 +698,7 @@ aria-disabled.
 
 ### aria-relevant?
 
-> `optional` **aria-relevant?**: `"text"` \| `"all"` \| `"additions"` \| `"additions removals"` \| `"additions text"` \| `"removals"` \| `"removals additions"` \| `"removals text"` \| `"text additions"` \| `"text removals"`
+> `optional` **aria-relevant?**: `"all"` \| `"text"` \| `"additions"` \| `"additions removals"` \| `"additions text"` \| `"removals"` \| `"removals additions"` \| `"removals text"` \| `"text additions"` \| `"text removals"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2770
 
@@ -855,7 +855,7 @@ aria-posinset.
 
 ### aria-sort?
 
-> `optional` **aria-sort?**: `"other"` \| `"none"` \| `"ascending"` \| `"descending"`
+> `optional` **aria-sort?**: `"none"` \| `"ascending"` \| `"descending"` \| `"other"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2817
 
@@ -929,13 +929,13 @@ Defines the human readable text alternative of aria-valuenow for a range widget.
 
 ### autoCapitalize?
 
-> `optional` **autoCapitalize?**: `string` & `object` \| `"none"` \| `"on"` \| `"off"` \| `"sentences"` \| `"words"` \| `"characters"`
+> `optional` **autoCapitalize?**: `string` & `object` \| `"none"` \| `"off"` \| `"on"` \| `"sentences"` \| `"words"` \| `"characters"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2913
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.autoCapitalize`
+[`SidebarItemProps`](SidebarItemProps.md).[`autoCapitalize`](SidebarItemProps.md#autocapitalize)
 
 ***
 
@@ -947,7 +947,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2952
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.autoCorrect`
+[`SidebarItemProps`](SidebarItemProps.md).[`autoCorrect`](SidebarItemProps.md#autocorrect)
 
 ***
 
@@ -959,7 +959,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2914
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.autoFocus`
+[`SidebarItemProps`](SidebarItemProps.md).[`autoFocus`](SidebarItemProps.md#autofocus)
 
 ***
 
@@ -971,7 +971,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2953
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.autoSave`
+[`SidebarItemProps`](SidebarItemProps.md).[`autoSave`](SidebarItemProps.md#autosave)
 
 ***
 
@@ -1007,7 +1007,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2954
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.color`
+[`SidebarItemProps`](SidebarItemProps.md).[`color`](SidebarItemProps.md#color)
 
 ***
 
@@ -1019,19 +1019,19 @@ Defined in: node\_modules/@types/react/index.d.ts:2940
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.content`
+[`SidebarItemProps`](SidebarItemProps.md).[`content`](SidebarItemProps.md#content)
 
 ***
 
 ### contentEditable?
 
-> `optional` **contentEditable?**: `Booleanish` \| `"inherit"` \| `"plaintext-only"`
+> `optional` **contentEditable?**: `"inherit"` \| `Booleanish` \| `"plaintext-only"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2916
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.contentEditable`
+[`SidebarItemProps`](SidebarItemProps.md).[`contentEditable`](SidebarItemProps.md#contenteditable)
 
 ***
 
@@ -1043,7 +1043,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2917
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.contextMenu`
+[`SidebarItemProps`](SidebarItemProps.md).[`contextMenu`](SidebarItemProps.md#contextmenu)
 
 ***
 
@@ -1083,13 +1083,13 @@ Defined in: node\_modules/@types/react/index.d.ts:2941
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.datatype`
+[`SidebarItemProps`](SidebarItemProps.md).[`datatype`](SidebarItemProps.md#datatype)
 
 ***
 
 ### decoding?
 
-> `optional` **decoding?**: `"sync"` \| `"auto"` \| `"async"`
+> `optional` **decoding?**: `"auto"` \| `"async"` \| `"sync"`
 
 Defined in: node\_modules/@types/react/index.d.ts:3273
 
@@ -1107,7 +1107,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2906
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.defaultChecked`
+[`SidebarItemProps`](SidebarItemProps.md).[`defaultChecked`](SidebarItemProps.md#defaultchecked)
 
 ***
 
@@ -1119,7 +1119,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2907
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.defaultValue`
+[`SidebarItemProps`](SidebarItemProps.md).[`defaultValue`](SidebarItemProps.md#defaultvalue)
 
 ***
 
@@ -1131,7 +1131,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2918
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.dir`
+[`SidebarItemProps`](SidebarItemProps.md).[`dir`](SidebarItemProps.md#dir)
 
 ***
 
@@ -1143,19 +1143,19 @@ Defined in: node\_modules/@types/react/index.d.ts:2919
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.draggable`
+[`SidebarItemProps`](SidebarItemProps.md).[`draggable`](SidebarItemProps.md#draggable)
 
 ***
 
 ### enterKeyHint?
 
-> `optional` **enterKeyHint?**: `"search"` \| `"done"` \| `"enter"` \| `"go"` \| `"next"` \| `"previous"` \| `"send"`
+> `optional` **enterKeyHint?**: `"search"` \| `"enter"` \| `"done"` \| `"go"` \| `"next"` \| `"previous"` \| `"send"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2920
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.enterKeyHint`
+[`SidebarItemProps`](SidebarItemProps.md).[`enterKeyHint`](SidebarItemProps.md#enterkeyhint)
 
 ***
 
@@ -1171,7 +1171,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2978
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.exportparts`
+[`SidebarItemProps`](SidebarItemProps.md).[`exportparts`](SidebarItemProps.md#exportparts)
 
 ***
 
@@ -1179,13 +1179,13 @@ Defined in: node\_modules/@types/react/index.d.ts:2978
 
 > `optional` **fallbackColor?**: `string`
 
-Defined in: [src/components/ui/Avatar.tsx:7](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Avatar.tsx#L7)
+Defined in: [src/components/ui/Avatar.tsx:7](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Avatar.tsx#L7)
 
 ***
 
 ### fetchPriority?
 
-> `optional` **fetchPriority?**: `"low"` \| `"high"` \| `"auto"`
+> `optional` **fetchPriority?**: `"auto"` \| `"high"` \| `"low"`
 
 Defined in: node\_modules/@types/react/index.d.ts:3274
 
@@ -1215,7 +1215,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2921
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.hidden`
+[`SidebarItemProps`](SidebarItemProps.md).[`hidden`](SidebarItemProps.md#hidden)
 
 ***
 
@@ -1243,7 +1243,7 @@ Defined in: node\_modules/@types/react/experimental.d.ts:130
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.inert`
+[`SidebarItemProps`](SidebarItemProps.md).[`inert`](SidebarItemProps.md#inert)
 
 ***
 
@@ -1251,7 +1251,7 @@ Defined in: node\_modules/@types/react/experimental.d.ts:130
 
 > `optional` **initials?**: `string`
 
-Defined in: [src/components/ui/Avatar.tsx:5](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Avatar.tsx#L5)
+Defined in: [src/components/ui/Avatar.tsx:5](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Avatar.tsx#L5)
 
 ***
 
@@ -1263,13 +1263,13 @@ Defined in: node\_modules/@types/react/index.d.ts:2942
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.inlist`
+[`SidebarItemProps`](SidebarItemProps.md).[`inlist`](SidebarItemProps.md#inlist)
 
 ***
 
 ### inputMode?
 
-> `optional` **inputMode?**: `"search"` \| `"email"` \| `"url"` \| `"none"` \| `"text"` \| `"tel"` \| `"numeric"` \| `"decimal"`
+> `optional` **inputMode?**: `"search"` \| `"none"` \| `"text"` \| `"tel"` \| `"url"` \| `"email"` \| `"numeric"` \| `"decimal"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2969
 
@@ -1281,7 +1281,7 @@ Hints at the type of data that might be entered by the user while editing the el
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.inputMode`
+[`SidebarItemProps`](SidebarItemProps.md).[`inputMode`](SidebarItemProps.md#inputmode)
 
 ***
 
@@ -1299,7 +1299,7 @@ Specify that a standard HTML element should behave like a defined custom built-i
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.is`
+[`SidebarItemProps`](SidebarItemProps.md).[`is`](SidebarItemProps.md#is)
 
 ***
 
@@ -1311,7 +1311,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2958
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.itemID`
+[`SidebarItemProps`](SidebarItemProps.md).[`itemID`](SidebarItemProps.md#itemid)
 
 ***
 
@@ -1323,7 +1323,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2955
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.itemProp`
+[`SidebarItemProps`](SidebarItemProps.md).[`itemProp`](SidebarItemProps.md#itemprop)
 
 ***
 
@@ -1335,7 +1335,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2959
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.itemRef`
+[`SidebarItemProps`](SidebarItemProps.md).[`itemRef`](SidebarItemProps.md#itemref)
 
 ***
 
@@ -1347,7 +1347,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2956
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.itemScope`
+[`SidebarItemProps`](SidebarItemProps.md).[`itemScope`](SidebarItemProps.md#itemscope)
 
 ***
 
@@ -1359,7 +1359,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2957
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.itemType`
+[`SidebarItemProps`](SidebarItemProps.md).[`itemType`](SidebarItemProps.md#itemtype)
 
 ***
 
@@ -1395,7 +1395,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2924
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.nonce`
+[`SidebarItemProps`](SidebarItemProps.md).[`nonce`](SidebarItemProps.md#nonce)
 
 ***
 
@@ -3411,19 +3411,19 @@ Defined in: node\_modules/@types/react/index.d.ts:2982
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.part`
+[`SidebarItemProps`](SidebarItemProps.md).[`part`](SidebarItemProps.md#part)
 
 ***
 
 ### popover?
 
-> `optional` **popover?**: `""` \| `"manual"` \| `"auto"` \| `"hint"`
+> `optional` **popover?**: `""` \| `"auto"` \| `"manual"` \| `"hint"`
 
 Defined in: node\_modules/@types/react/canary.d.ts:127
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.popover`
+[`SidebarItemProps`](SidebarItemProps.md).[`popover`](SidebarItemProps.md#popover)
 
 ***
 
@@ -3435,7 +3435,7 @@ Defined in: node\_modules/@types/react/canary.d.ts:129
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.popoverTarget`
+[`SidebarItemProps`](SidebarItemProps.md).[`popoverTarget`](SidebarItemProps.md#popovertarget)
 
 ***
 
@@ -3447,7 +3447,7 @@ Defined in: node\_modules/@types/react/canary.d.ts:128
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.popoverTargetAction`
+[`SidebarItemProps`](SidebarItemProps.md).[`popoverTargetAction`](SidebarItemProps.md#popovertargetaction)
 
 ***
 
@@ -3459,7 +3459,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2943
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.prefix`
+[`SidebarItemProps`](SidebarItemProps.md).[`prefix`](SidebarItemProps.md#prefix)
 
 ***
 
@@ -3471,7 +3471,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2944
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.property`
+[`SidebarItemProps`](SidebarItemProps.md).[`property`](SidebarItemProps.md#property)
 
 ***
 
@@ -3483,7 +3483,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2933
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.radioGroup`
+[`SidebarItemProps`](SidebarItemProps.md).[`radioGroup`](SidebarItemProps.md#radiogroup)
 
 ***
 
@@ -3507,7 +3507,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2945
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.rel`
+[`SidebarItemProps`](SidebarItemProps.md).[`rel`](SidebarItemProps.md#rel)
 
 ***
 
@@ -3519,7 +3519,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2946
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.resource`
+[`SidebarItemProps`](SidebarItemProps.md).[`resource`](SidebarItemProps.md#resource)
 
 ***
 
@@ -3531,7 +3531,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2960
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.results`
+[`SidebarItemProps`](SidebarItemProps.md).[`results`](SidebarItemProps.md#results)
 
 ***
 
@@ -3543,7 +3543,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2947
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.rev`
+[`SidebarItemProps`](SidebarItemProps.md).[`rev`](SidebarItemProps.md#rev)
 
 ***
 
@@ -3555,7 +3555,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2936
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.role`
+[`SidebarItemProps`](SidebarItemProps.md).[`role`](SidebarItemProps.md#role)
 
 ***
 
@@ -3567,15 +3567,15 @@ Defined in: node\_modules/@types/react/index.d.ts:2961
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.security`
+[`SidebarItemProps`](SidebarItemProps.md).[`security`](SidebarItemProps.md#security)
 
 ***
 
 ### size?
 
-> `optional` **size?**: `"sm"` \| `"md"` \| `"lg"`
+> `optional` **size?**: `"lg"` \| `"sm"` \| `"md"`
 
-Defined in: [src/components/ui/Avatar.tsx:6](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ui/Avatar.tsx#L6)
+Defined in: [src/components/ui/Avatar.tsx:6](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ui/Avatar.tsx#L6)
 
 ***
 
@@ -3599,7 +3599,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2925
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.slot`
+[`SidebarItemProps`](SidebarItemProps.md).[`slot`](SidebarItemProps.md#slot)
 
 ***
 
@@ -3611,7 +3611,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2926
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.spellCheck`
+[`SidebarItemProps`](SidebarItemProps.md).[`spellCheck`](SidebarItemProps.md#spellcheck)
 
 ***
 
@@ -3659,7 +3659,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2908
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.suppressContentEditableWarning`
+[`SidebarItemProps`](SidebarItemProps.md).[`suppressContentEditableWarning`](SidebarItemProps.md#suppresscontenteditablewarning)
 
 ***
 
@@ -3671,7 +3671,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2909
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.suppressHydrationWarning`
+[`SidebarItemProps`](SidebarItemProps.md).[`suppressHydrationWarning`](SidebarItemProps.md#suppresshydrationwarning)
 
 ***
 
@@ -3683,7 +3683,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2928
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.tabIndex`
+[`SidebarItemProps`](SidebarItemProps.md).[`tabIndex`](SidebarItemProps.md#tabindex)
 
 ***
 
@@ -3695,7 +3695,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2929
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.title`
+[`SidebarItemProps`](SidebarItemProps.md).[`title`](SidebarItemProps.md#title)
 
 ***
 
@@ -3707,7 +3707,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2930
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.translate`
+[`SidebarItemProps`](SidebarItemProps.md).[`translate`](SidebarItemProps.md#translate)
 
 ***
 
@@ -3715,7 +3715,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2930
 
 > `optional` **tw?**: `string`
 
-Defined in: node\_modules/next/dist/compiled/@vercel/og/types.d.ts:70
+Defined in: node\_modules/next/dist/compiled/@vercel/og/types.d.ts:115
 
 Specify styles using Tailwind CSS classes. This feature is currently experimental.
 If `style` prop is also specified, styles generated with `tw` prop will be overridden.
@@ -3727,7 +3727,7 @@ Example:
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.tw`
+[`SidebarItemProps`](SidebarItemProps.md).[`tw`](SidebarItemProps.md#tw)
 
 ***
 
@@ -3739,19 +3739,19 @@ Defined in: node\_modules/@types/react/index.d.ts:2948
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.typeof`
+[`SidebarItemProps`](SidebarItemProps.md).[`typeof`](SidebarItemProps.md#typeof)
 
 ***
 
 ### unselectable?
 
-> `optional` **unselectable?**: `"on"` \| `"off"`
+> `optional` **unselectable?**: `"off"` \| `"on"`
 
 Defined in: node\_modules/@types/react/index.d.ts:2962
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.unselectable`
+[`SidebarItemProps`](SidebarItemProps.md).[`unselectable`](SidebarItemProps.md#unselectable)
 
 ***
 
@@ -3775,7 +3775,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2949
 
 #### Inherited from
 
-`React.ImgHTMLAttributes.vocab`
+[`SidebarItemProps`](SidebarItemProps.md).[`vocab`](SidebarItemProps.md#vocab)
 
 ***
 

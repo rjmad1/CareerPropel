@@ -6,7 +6,7 @@
 
 # Interface: AgentStatus
 
-Defined in: [src/types/index.ts:39](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/index.ts#L39)
+Defined in: [src/types/index.ts:39](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/index.ts#L39)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/index.ts:39](https://github.com/rjmad1/CareerPropel/blob/
 
 > **agentId**: `string`
 
-Defined in: [src/types/index.ts:40](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/index.ts#L40)
+Defined in: [src/types/index.ts:40](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/index.ts#L40)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/index.ts:40](https://github.com/rjmad1/CareerPropel/blob/
 
 > **confidence**: `number`
 
-Defined in: [src/types/index.ts:45](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/index.ts#L45)
+Defined in: [src/types/index.ts:45](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/index.ts#L45)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/index.ts:45](https://github.com/rjmad1/CareerPropel/blob/
 
 > **lastActivity**: `Date`
 
-Defined in: [src/types/index.ts:44](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/index.ts#L44)
+Defined in: [src/types/index.ts:44](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/index.ts#L44)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/index.ts:44](https://github.com/rjmad1/CareerPropel/blob/
 
 > **name**: `string`
 
-Defined in: [src/types/index.ts:41](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/index.ts#L41)
+Defined in: [src/types/index.ts:41](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/index.ts#L41)
 
 ***
 
@@ -46,12 +46,12 @@ Defined in: [src/types/index.ts:41](https://github.com/rjmad1/CareerPropel/blob/
 
 > **queueDepth**: `number`
 
-Defined in: [src/types/index.ts:43](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/index.ts#L43)
+Defined in: [src/types/index.ts:43](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/index.ts#L43)
 
 ***
 
 ### state
 
-> **state**: `"error"` \| `"idle"` \| `"running"` \| `"waiting"`
+> **state**: `"error"` \| `"waiting"` \| `"running"` \| `"idle"`
 
-Defined in: [src/types/index.ts:42](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/index.ts#L42)
+Defined in: [src/types/index.ts:42](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/index.ts#L42)

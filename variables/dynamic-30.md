@@ -8,4 +8,4 @@
 
 > `const` **dynamic**: `"force-dynamic"` = `'force-dynamic'`
 
-Defined in: [src/app/api/auth/2fa/setup/route.ts:7](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/auth/2fa/setup/route.ts#L7)
+Defined in: [src/app/api/analytics/roi/route.ts:19](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/analytics/roi/route.ts#L19)

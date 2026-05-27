@@ -8,7 +8,7 @@
 
 > **useInterviews**(`jobId`): `UseQueryResult`\<[`Interview`](../interfaces/Interview.md)[], `Error`\>
 
-Defined in: [src/domains/interviews/hooks/useInterviews.ts:20](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/domains/interviews/hooks/useInterviews.ts#L20)
+Defined in: [src/domains/interviews/hooks/useInterviews.ts:20](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/interviews/hooks/useInterviews.ts#L20)
 
 ## Parameters
 

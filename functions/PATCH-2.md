@@ -6,9 +6,15 @@
 
 # Function: PATCH()
 
-> **PATCH**(`request`, `context`): `Promise`\<`NextResponse`\<`unknown`\>\>
+> **PATCH**(`request`, `__namedParameters`): `Promise`\<`NextResponse`\<`unknown`\>\>
 
-Defined in: [src/app/api/jobs/\[id\]/route.ts:61](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/jobs/[id]/route.ts#L61)
+Defined in: [src/app/api/jobs/\[id\]/route.ts:81](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/jobs/[id]/route.ts#L81)
+
+PATCH /api/jobs/[id]
+Update a specific job
+Protected: Requires authentication
+Authorization: User must own the job
+Rate Limited: 30 requests per minute
 
 ## Parameters
 
@@ -16,11 +22,15 @@ Defined in: [src/app/api/jobs/\[id\]/route.ts:61](https://github.com/rjmad1/Care
 
 `NextRequest`
 
-### context
+### \_\_namedParameters
 
 #### params
 
-`Promise`\<\{ `id`: `string`; \}\>
+\{ `id`: `string`; \}
+
+#### params.id
+
+`string`
 
 ## Returns
 

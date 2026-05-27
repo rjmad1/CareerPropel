@@ -8,7 +8,7 @@
 
 > **setAgentError**(`userId`, `agentType`, `queueDepth?`): `Promise`\<`void`\>
 
-Defined in: [src/lib/realtime/agentStatusBroadcaster.ts:186](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/realtime/agentStatusBroadcaster.ts#L186)
+Defined in: [src/lib/realtime/agentStatusBroadcaster.ts:185](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/realtime/agentStatusBroadcaster.ts#L185)
 
 Set agent to error state
 
@@ -20,7 +20,7 @@ Set agent to error state
 
 ### agentType
 
-[`AgentType`](../type-aliases/AgentType-2.md)
+[`AgentType`](../type-aliases/AgentType-1.md)
 
 ### queueDepth?
 

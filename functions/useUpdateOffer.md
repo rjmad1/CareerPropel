@@ -6,10 +6,10 @@
 
 # Function: useUpdateOffer()
 
-> **useUpdateOffer**(): `UseMutationResult`\<`unknown`, `Error`, [`UpdateOfferInput`](../interfaces/UpdateOfferInput.md), `unknown`\>
+> **useUpdateOffer**(): `UseMutationResult`\<\{ `baseSalary?`: `number`; `bonusPercent?`: `number`; `equity?`: `string`; `id`: `string`; `jobId?`: `string`; `notes?`: `string`; `startDate?`: `string`; \}, `Error`, [`UpdateOfferInput`](../interfaces/UpdateOfferInput.md), `unknown`\>
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:191](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/domains/jobs/hooks/useMutations.ts#L191)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:117](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/domains/jobs/hooks/useMutations.ts#L117)
 
 ## Returns
 
-`UseMutationResult`\<`unknown`, `Error`, [`UpdateOfferInput`](../interfaces/UpdateOfferInput.md), `unknown`\>
+`UseMutationResult`\<\{ `baseSalary?`: `number`; `bonusPercent?`: `number`; `equity?`: `string`; `id`: `string`; `jobId?`: `string`; `notes?`: `string`; `startDate?`: `string`; \}, `Error`, [`UpdateOfferInput`](../interfaces/UpdateOfferInput.md), `unknown`\>

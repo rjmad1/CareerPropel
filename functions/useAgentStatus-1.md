@@ -6,13 +6,13 @@
 
 # Function: useAgentStatus()
 
-> **useAgentStatus**(`agentType?`): `object`
+> **useAgentStatus**(`_agentId?`): `object`
 
-Defined in: [src/hooks/useRealTime.ts:90](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useRealTime.ts#L90)
+Defined in: [src/hooks/useRealTime.ts:43](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useRealTime.ts#L43)
 
 ## Parameters
 
-### agentType?
+### \_agentId?
 
 `string`
 
@@ -22,8 +22,8 @@ Defined in: [src/hooks/useRealTime.ts:90](https://github.com/rjmad1/CareerPropel
 
 ### agent
 
-> **agent**: [`Agent`](../interfaces/Agent.md) \| `null`
+> **agent**: `null` = `null`
 
 ### connected
 
-> **connected**: `boolean`
+> **connected**: `boolean` = `false`

@@ -6,12 +6,12 @@
 
 # Function: POST()
 
-> **POST**(`request`): `Promise`\<`NextResponse`\<\{ `candidateId`: `string`; `confidence`: `number` \| `null`; `createdAt`: `Date`; `data`: `JsonValue`; `id`: `string`; `source`: `string` \| `null`; `type`: `string`; `updatedAt`: `Date`; \}\> \| `NextResponse`\<\{ `error`: `string`; \}\>\>
+> **POST**(`request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `accomplishment`: \{ `candidateId`: `string`; `category`: `string`; `createdAt`: `Date`; `date`: `Date`; `description`: `string`; `id`: `string`; `metrics`: `string` \| `null`; `starContext`: `string` \| `null`; `title`: `string`; `updatedAt`: `Date`; `visibility`: `string`; \}; \}\>\>
 
-Defined in: [src/app/api/profile/entities/route.ts:47](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/profile/entities/route.ts#L47)
+Defined in: [src/app/api/profile/accomplishments/route.ts:46](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/profile/accomplishments/route.ts#L46)
 
-POST /api/profile/entities
-Create a new profile entity
+POST /api/profile/accomplishments
+Create a new accomplishment log.
 
 ## Parameters
 
@@ -21,4 +21,4 @@ Create a new profile entity
 
 ## Returns
 
-`Promise`\<`NextResponse`\<\{ `candidateId`: `string`; `confidence`: `number` \| `null`; `createdAt`: `Date`; `data`: `JsonValue`; `id`: `string`; `source`: `string` \| `null`; `type`: `string`; `updatedAt`: `Date`; \}\> \| `NextResponse`\<\{ `error`: `string`; \}\>\>
+`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `accomplishment`: \{ `candidateId`: `string`; `category`: `string`; `createdAt`: `Date`; `date`: `Date`; `description`: `string`; `id`: `string`; `metrics`: `string` \| `null`; `starContext`: `string` \| `null`; `title`: `string`; `updatedAt`: `Date`; `visibility`: `string`; \}; \}\>\>

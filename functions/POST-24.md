@@ -8,7 +8,7 @@
 
 > **POST**(`req`): `Promise`\<`NextResponse`\<`any`\>\>
 
-Defined in: [src/app/api/interviews/route.ts:62](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/interviews/route.ts#L62)
+Defined in: [src/app/api/interviews/route.ts:62](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/interviews/route.ts#L62)
 
 POST /api/interviews
 Schedule a new interview

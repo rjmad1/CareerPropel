@@ -6,6 +6,8 @@
 
 # Type Alias: AgentType
 
-> **AgentType** = `"resume_tailor"` \| `"job_matching"` \| `"application"` \| `"research"` \| `"interview_prep"` \| `"networking"` \| `"follow_up"` \| `"analytics"`
+> **AgentType** = `"resume-tailor"` \| `"job-match"` \| `"application"` \| `"research"` \| `"interview-prep"` \| `"networking"` \| `"follow-up"` \| `"analytics"`
 
-Defined in: [src/lib/realtime/events.ts:7](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/realtime/events.ts#L7)
+Defined in: [src/types/agent.ts:34](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/agent.ts#L34)
+
+Agent types in the system

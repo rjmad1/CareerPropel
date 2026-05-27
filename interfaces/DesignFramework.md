@@ -6,7 +6,7 @@
 
 # Interface: DesignFramework
 
-Defined in: [src/types/interview.ts:258](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L258)
+Defined in: [src/types/interview.ts:258](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/interview.ts#L258)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/interview.ts:258](https://github.com/rjmad1/CareerPropel/
 
 > **clarifyingQuestions**: `string`[]
 
-Defined in: [src/types/interview.ts:260](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L260)
+Defined in: [src/types/interview.ts:260](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/interview.ts#L260)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/interview.ts:260](https://github.com/rjmad1/CareerPropel/
 
 > **constraints**: `string`[]
 
-Defined in: [src/types/interview.ts:261](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L261)
+Defined in: [src/types/interview.ts:261](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/interview.ts#L261)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/interview.ts:261](https://github.com/rjmad1/CareerPropel/
 
 > **steps**: `string`[]
 
-Defined in: [src/types/interview.ts:259](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L259)
+Defined in: [src/types/interview.ts:259](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/interview.ts#L259)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/types/interview.ts:259](https://github.com/rjmad1/CareerPropel/
 
 > **suggestedApproach**: `string`
 
-Defined in: [src/types/interview.ts:262](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/interview.ts#L262)
+Defined in: [src/types/interview.ts:262](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/interview.ts#L262)

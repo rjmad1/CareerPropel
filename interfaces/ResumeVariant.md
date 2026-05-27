@@ -6,7 +6,7 @@
 
 # Interface: ResumeVariant
 
-Defined in: [src/components/ResumeLab/VariantManager.tsx:6](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ResumeLab/VariantManager.tsx#L6)
+Defined in: [src/components/ResumeLab/VariantManager.tsx:6](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ResumeLab/VariantManager.tsx#L6)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/ResumeLab/VariantManager.tsx:6](https://github.com/r
 
 > **content**: `string`
 
-Defined in: [src/components/ResumeLab/VariantManager.tsx:14](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ResumeLab/VariantManager.tsx#L14)
+Defined in: [src/components/ResumeLab/VariantManager.tsx:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ResumeLab/VariantManager.tsx#L14)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/components/ResumeLab/VariantManager.tsx:14](https://github.com/
 
 > **description**: `string`
 
-Defined in: [src/components/ResumeLab/VariantManager.tsx:9](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ResumeLab/VariantManager.tsx#L9)
+Defined in: [src/components/ResumeLab/VariantManager.tsx:9](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ResumeLab/VariantManager.tsx#L9)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/components/ResumeLab/VariantManager.tsx:9](https://github.com/r
 
 > **id**: `string`
 
-Defined in: [src/components/ResumeLab/VariantManager.tsx:7](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ResumeLab/VariantManager.tsx#L7)
+Defined in: [src/components/ResumeLab/VariantManager.tsx:7](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ResumeLab/VariantManager.tsx#L7)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/components/ResumeLab/VariantManager.tsx:7](https://github.com/r
 
 > **lastUpdated**: `string`
 
-Defined in: [src/components/ResumeLab/VariantManager.tsx:13](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ResumeLab/VariantManager.tsx#L13)
+Defined in: [src/components/ResumeLab/VariantManager.tsx:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ResumeLab/VariantManager.tsx#L13)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/components/ResumeLab/VariantManager.tsx:13](https://github.com/
 
 > **matchScore**: `number`
 
-Defined in: [src/components/ResumeLab/VariantManager.tsx:11](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ResumeLab/VariantManager.tsx#L11)
+Defined in: [src/components/ResumeLab/VariantManager.tsx:11](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ResumeLab/VariantManager.tsx#L11)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/components/ResumeLab/VariantManager.tsx:11](https://github.com/
 
 > **name**: `string`
 
-Defined in: [src/components/ResumeLab/VariantManager.tsx:8](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ResumeLab/VariantManager.tsx#L8)
+Defined in: [src/components/ResumeLab/VariantManager.tsx:8](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ResumeLab/VariantManager.tsx#L8)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/components/ResumeLab/VariantManager.tsx:8](https://github.com/r
 
 > **targetRole**: `string`
 
-Defined in: [src/components/ResumeLab/VariantManager.tsx:10](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ResumeLab/VariantManager.tsx#L10)
+Defined in: [src/components/ResumeLab/VariantManager.tsx:10](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ResumeLab/VariantManager.tsx#L10)
 
 ***
 
@@ -70,4 +70,4 @@ Defined in: [src/components/ResumeLab/VariantManager.tsx:10](https://github.com/
 
 > **wordCount**: `number`
 
-Defined in: [src/components/ResumeLab/VariantManager.tsx:12](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/ResumeLab/VariantManager.tsx#L12)
+Defined in: [src/components/ResumeLab/VariantManager.tsx:12](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/ResumeLab/VariantManager.tsx#L12)

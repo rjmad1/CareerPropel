@@ -6,12 +6,12 @@
 
 # Function: POST()
 
-> **POST**(`request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `data`: `any`; `success`: `boolean`; \}\>\>
+> **POST**(`request`): `Promise`\<`NextResponse`\<`any`\>\>
 
-Defined in: [src/app/api/profile/quantify/route.ts:11](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/profile/quantify/route.ts#L11)
+Defined in: [src/app/api/profile/ats-check/route.ts:12](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/profile/ats-check/route.ts#L12)
 
-POST /api/profile/quantify
-Receives a raw accomplishment draft and refines it into a STAR-formatted, quantified achievement.
+POST /api/profile/ats-check
+Analyze resume for ATS optimization using Claude
 
 ## Parameters
 
@@ -21,4 +21,4 @@ Receives a raw accomplishment draft and refines it into a STAR-formatted, quanti
 
 ## Returns
 
-`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `data`: `any`; `success`: `boolean`; \}\>\>
+`Promise`\<`NextResponse`\<`any`\>\>

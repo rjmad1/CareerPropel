@@ -8,7 +8,7 @@
 
 > `const` **ResumeAlignment**: `React.FC`\<`ResumeAlignmentProps`\>
 
-Defined in: [src/components/InterviewPrep/ResumeAlignment.tsx:31](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/components/InterviewPrep/ResumeAlignment.tsx#L31)
+Defined in: [src/components/InterviewPrep/ResumeAlignment.tsx:31](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/components/InterviewPrep/ResumeAlignment.tsx#L31)
 
 ResumeAlignment Workspace
 Represents a high-end, premium comparative document editor and ATS alignment workspace.

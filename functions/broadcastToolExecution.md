@@ -8,7 +8,7 @@
 
 > **broadcastToolExecution**(`userId`, `agentType`, `executionId`, `toolName`, `status`, `duration`): `Promise`\<`void`\>
 
-Defined in: [src/lib/realtime/agentStatusBroadcaster.ts:92](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/realtime/agentStatusBroadcaster.ts#L92)
+Defined in: [src/lib/realtime/agentStatusBroadcaster.ts:91](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/realtime/agentStatusBroadcaster.ts#L91)
 
 Broadcast a tool execution event
 
@@ -20,7 +20,7 @@ Broadcast a tool execution event
 
 ### agentType
 
-[`AgentType`](../type-aliases/AgentType-2.md)
+[`AgentType`](../type-aliases/AgentType-1.md)
 
 ### executionId
 
@@ -32,7 +32,7 @@ Broadcast a tool execution event
 
 ### status
 
-`"pending"` \| `"success"` \| `"failed"`
+`"success"` \| `"failed"` \| `"pending"`
 
 ### duration
 

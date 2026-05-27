@@ -6,21 +6,29 @@
 
 # Function: broadcastToUser()
 
-> **broadcastToUser**(`userId`, `event`): `void`
+> **broadcastToUser**(`io`, `userEmail`, `event`, `data`): `void`
 
-Defined in: [src/lib/realtime/wsServer.ts:123](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/realtime/wsServer.ts#L123)
+Defined in: [src/lib/socket/server.ts:203](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/socket/server.ts#L203)
 
-Broadcast event to all connected clients for a specific user.
+Broadcast helper functions for use in API routes
 
 ## Parameters
 
-### userId
+### io
+
+`Server`
+
+### userEmail
 
 `string`
 
 ### event
 
-[`RealtimeEvent`](../type-aliases/RealtimeEvent.md)
+`string`
+
+### data
+
+`any`
 
 ## Returns
 

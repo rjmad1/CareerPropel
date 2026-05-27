@@ -8,7 +8,7 @@
 
 > **verifyBackupCode**(`email`, `code`): `Promise`\<`boolean`\>
 
-Defined in: [src/lib/security/twoFactor.ts:64](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/security/twoFactor.ts#L64)
+Defined in: [src/lib/security/twoFactor.ts:59](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/security/twoFactor.ts#L59)
 
 ## Parameters
 

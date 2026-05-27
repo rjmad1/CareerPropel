@@ -6,7 +6,7 @@
 
 # Interface: UseProfileResult
 
-Defined in: [src/hooks/useProfile.ts:11](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L11)
+Defined in: [src/hooks/useProfile.ts:11](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfile.ts#L11)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/hooks/useProfile.ts:11](https://github.com/rjmad1/CareerPropel/
 
 > **addEntity**: (`entity`) => `void`
 
-Defined in: [src/hooks/useProfile.ts:22](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L22)
+Defined in: [src/hooks/useProfile.ts:22](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfile.ts#L22)
 
 #### Parameters
 
@@ -32,7 +32,7 @@ Defined in: [src/hooks/useProfile.ts:22](https://github.com/rjmad1/CareerPropel/
 
 > **discardChanges**: () => `void`
 
-Defined in: [src/hooks/useProfile.ts:25](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L25)
+Defined in: [src/hooks/useProfile.ts:25](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfile.ts#L25)
 
 #### Returns
 
@@ -44,7 +44,7 @@ Defined in: [src/hooks/useProfile.ts:25](https://github.com/rjmad1/CareerPropel/
 
 > **entities**: [`ProfileEntity`](ProfileEntity.md)[]
 
-Defined in: [src/hooks/useProfile.ts:14](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L14)
+Defined in: [src/hooks/useProfile.ts:14](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfile.ts#L14)
 
 ***
 
@@ -52,7 +52,7 @@ Defined in: [src/hooks/useProfile.ts:14](https://github.com/rjmad1/CareerPropel/
 
 > **error**: `Error` \| `null`
 
-Defined in: [src/hooks/useProfile.ts:17](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L17)
+Defined in: [src/hooks/useProfile.ts:17](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfile.ts#L17)
 
 ***
 
@@ -60,7 +60,7 @@ Defined in: [src/hooks/useProfile.ts:17](https://github.com/rjmad1/CareerPropel/
 
 > **isStale**: `boolean`
 
-Defined in: [src/hooks/useProfile.ts:28](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L28)
+Defined in: [src/hooks/useProfile.ts:28](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfile.ts#L28)
 
 ***
 
@@ -68,7 +68,7 @@ Defined in: [src/hooks/useProfile.ts:28](https://github.com/rjmad1/CareerPropel/
 
 > **lastFetch**: `Date` \| `null`
 
-Defined in: [src/hooks/useProfile.ts:29](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L29)
+Defined in: [src/hooks/useProfile.ts:29](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfile.ts#L29)
 
 ***
 
@@ -76,7 +76,7 @@ Defined in: [src/hooks/useProfile.ts:29](https://github.com/rjmad1/CareerPropel/
 
 > **loading**: `boolean`
 
-Defined in: [src/hooks/useProfile.ts:16](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L16)
+Defined in: [src/hooks/useProfile.ts:16](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfile.ts#L16)
 
 ***
 
@@ -84,7 +84,7 @@ Defined in: [src/hooks/useProfile.ts:16](https://github.com/rjmad1/CareerPropel/
 
 > **profile**: [`ProfileSummary`](ProfileSummary.md) \| `null`
 
-Defined in: [src/hooks/useProfile.ts:12](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L12)
+Defined in: [src/hooks/useProfile.ts:12](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfile.ts#L12)
 
 ***
 
@@ -92,7 +92,7 @@ Defined in: [src/hooks/useProfile.ts:12](https://github.com/rjmad1/CareerPropel/
 
 > **recommendations**: [`ProfileRecommendation`](ProfileRecommendation.md)[]
 
-Defined in: [src/hooks/useProfile.ts:15](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L15)
+Defined in: [src/hooks/useProfile.ts:15](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfile.ts#L15)
 
 ***
 
@@ -100,7 +100,7 @@ Defined in: [src/hooks/useProfile.ts:15](https://github.com/rjmad1/CareerPropel/
 
 > **refresh**: () => `Promise`\<`void`\>
 
-Defined in: [src/hooks/useProfile.ts:24](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L24)
+Defined in: [src/hooks/useProfile.ts:24](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfile.ts#L24)
 
 #### Returns
 
@@ -112,7 +112,7 @@ Defined in: [src/hooks/useProfile.ts:24](https://github.com/rjmad1/CareerPropel/
 
 > **removeEntity**: (`id`) => `void`
 
-Defined in: [src/hooks/useProfile.ts:23](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L23)
+Defined in: [src/hooks/useProfile.ts:23](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfile.ts#L23)
 
 #### Parameters
 
@@ -130,7 +130,7 @@ Defined in: [src/hooks/useProfile.ts:23](https://github.com/rjmad1/CareerPropel/
 
 > **score**: [`ProfileScore`](ProfileScore.md) \| `null`
 
-Defined in: [src/hooks/useProfile.ts:13](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L13)
+Defined in: [src/hooks/useProfile.ts:13](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfile.ts#L13)
 
 ***
 
@@ -138,7 +138,7 @@ Defined in: [src/hooks/useProfile.ts:13](https://github.com/rjmad1/CareerPropel/
 
 > **unsavedChanges**: `boolean`
 
-Defined in: [src/hooks/useProfile.ts:18](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L18)
+Defined in: [src/hooks/useProfile.ts:18](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfile.ts#L18)
 
 ***
 
@@ -146,7 +146,7 @@ Defined in: [src/hooks/useProfile.ts:18](https://github.com/rjmad1/CareerPropel/
 
 > **updateProfile**: (`data`) => `Promise`\<`void`\>
 
-Defined in: [src/hooks/useProfile.ts:21](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/hooks/useProfile.ts#L21)
+Defined in: [src/hooks/useProfile.ts:21](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/hooks/useProfile.ts#L21)
 
 #### Parameters
 

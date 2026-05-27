@@ -6,25 +6,18 @@
 
 # Function: GET()
 
-> **GET**(`_req`, `context`): `Promise`\<`NextResponse`\<`any`\>\>
+> **GET**(`request`): `Promise`\<`NextResponse`\<`unknown`\>\>
 
-Defined in: [src/app/api/documents/\[id\]/route.ts:14](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/documents/[id]/route.ts#L14)
+Defined in: [src/app/api/calendar/callback/outlook/route.ts:9](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/calendar/callback/outlook/route.ts#L9)
 
-GET /api/documents/[id]
-Get a single document
+GET /api/calendar/callback/outlook — Microsoft redirects here after consent.
 
 ## Parameters
 
-### \_req
+### request
 
 `NextRequest`
 
-### context
-
-#### params
-
-`Promise`\<\{ `id`: `string`; \}\>
-
 ## Returns
 
-`Promise`\<`NextResponse`\<`any`\>\>
+`Promise`\<`NextResponse`\<`unknown`\>\>

@@ -6,7 +6,7 @@
 
 # Interface: LLMCallResult
 
-Defined in: [src/lib/llm/provider.ts:31](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/provider.ts#L31)
+Defined in: [src/lib/llm/provider.ts:26](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/provider.ts#L26)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/llm/provider.ts:31](https://github.com/rjmad1/CareerPropel/
 
 > **content**: `string`
 
-Defined in: [src/lib/llm/provider.ts:32](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/provider.ts#L32)
+Defined in: [src/lib/llm/provider.ts:27](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/provider.ts#L27)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/llm/provider.ts:32](https://github.com/rjmad1/CareerPropel/
 
 > **inputTokens**: `number`
 
-Defined in: [src/lib/llm/provider.ts:34](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/provider.ts#L34)
+Defined in: [src/lib/llm/provider.ts:29](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/provider.ts#L29)
 
 ***
 
@@ -30,15 +30,15 @@ Defined in: [src/lib/llm/provider.ts:34](https://github.com/rjmad1/CareerPropel/
 
 > **outputTokens**: `number`
 
-Defined in: [src/lib/llm/provider.ts:35](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/provider.ts#L35)
+Defined in: [src/lib/llm/provider.ts:30](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/provider.ts#L30)
 
 ***
 
 ### stopReason
 
-> **stopReason**: `"end_turn"` \| `"max_tokens"` \| `"stop_sequence"`
+> **stopReason**: `"stop_sequence"` \| `"end_turn"` \| `"max_tokens"`
 
-Defined in: [src/lib/llm/provider.ts:33](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/provider.ts#L33)
+Defined in: [src/lib/llm/provider.ts:28](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/provider.ts#L28)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/lib/llm/provider.ts:33](https://github.com/rjmad1/CareerPropel/
 
 > **totalTokens**: `number`
 
-Defined in: [src/lib/llm/provider.ts:36](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/llm/provider.ts#L36)
+Defined in: [src/lib/llm/provider.ts:31](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/llm/provider.ts#L31)

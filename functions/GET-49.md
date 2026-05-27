@@ -6,19 +6,26 @@
 
 # Function: GET()
 
-> **GET**(`request`): `Promise`\<`Response`\>
+> **GET**(`_req`, `__namedParameters`): `Promise`\<`NextResponse`\<\{ `data`: \{ `breakdown`: [`HealthScoreBreakdown`](../interfaces/HealthScoreBreakdown.md); `daysSinceLastActivity`: `number`; `label`: `"active"` \| `"stale"` \| `"at_risk"` \| `"momentum"` \| `"hot"`; \}; \}\> \| `NextResponse`\<\{ `error`: \{ `message`: `any`; \}; \}\>\>
 
-Defined in: [src/app/api/ws/route.ts:20](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/ws/route.ts#L20)
-
-WebSocket upgrade handler
-Expects Authorization header or ?token= query param
+Defined in: [src/app/api/opportunities/\[jobId\]/health/route.ts:9](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/opportunities/[jobId]/health/route.ts#L9)
 
 ## Parameters
 
-### request
+### \_req
 
 `NextRequest`
 
+### \_\_namedParameters
+
+#### params
+
+\{ `jobId`: `string`; \}
+
+#### params.jobId
+
+`string`
+
 ## Returns
 
-`Promise`\<`Response`\>
+`Promise`\<`NextResponse`\<\{ `data`: \{ `breakdown`: [`HealthScoreBreakdown`](../interfaces/HealthScoreBreakdown.md); `daysSinceLastActivity`: `number`; `label`: `"active"` \| `"stale"` \| `"at_risk"` \| `"momentum"` \| `"hot"`; \}; \}\> \| `NextResponse`\<\{ `error`: \{ `message`: `any`; \}; \}\>\>

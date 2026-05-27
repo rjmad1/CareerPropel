@@ -8,7 +8,7 @@
 
 > **NetworkingPage**(): `Element`
 
-Defined in: [src/app/networking/page.tsx:290](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/networking/page.tsx#L290)
+Defined in: [src/app/networking/page.tsx:290](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/networking/page.tsx#L290)
 
 ## Returns
 

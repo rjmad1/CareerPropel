@@ -6,7 +6,7 @@
 
 # Interface: LayoffHistory
 
-Defined in: [src/types/company.ts:194](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L194)
+Defined in: [src/types/company.ts:194](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L194)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/company.ts:194](https://github.com/rjmad1/CareerPropel/bl
 
 > **hasHadLayoffs**: `boolean`
 
-Defined in: [src/types/company.ts:195](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L195)
+Defined in: [src/types/company.ts:195](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L195)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/company.ts:195](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **pattern?**: `string`
 
-Defined in: [src/types/company.ts:197](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L197)
+Defined in: [src/types/company.ts:197](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L197)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/types/company.ts:197](https://github.com/rjmad1/CareerPropel/bl
 
 > **recentLayoffs**: [`Layoff`](Layoff.md)[]
 
-Defined in: [src/types/company.ts:196](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/types/company.ts#L196)
+Defined in: [src/types/company.ts:196](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/types/company.ts#L196)

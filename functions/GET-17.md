@@ -6,14 +6,16 @@
 
 # Function: GET()
 
-> **GET**(): `Promise`\<`NextResponse`\<`unknown`\>\>
+> **GET**(`_req`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<[`RecommendationsResult`](../interfaces/RecommendationsResult.md)\>\>
 
-Defined in: [src/app/api/calendar/authorize/route.ts:14](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/app/api/calendar/authorize/route.ts#L14)
+Defined in: [src/app/api/analytics/recommendations/route.ts:29](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/app/api/analytics/recommendations/route.ts#L29)
 
-GET /api/calendar/authorize
-Redirects the authenticated user to Google's OAuth2 consent screen.
-The `state` param is HMAC-signed to prevent CSRF / account-linking attacks.
+## Parameters
+
+### \_req
+
+`NextRequest`
 
 ## Returns
 
-`Promise`\<`NextResponse`\<`unknown`\>\>
+`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<[`RecommendationsResult`](../interfaces/RecommendationsResult.md)\>\>

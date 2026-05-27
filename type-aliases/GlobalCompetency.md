@@ -8,7 +8,7 @@
 
 > **GlobalCompetency** = `"Leadership & Initiative"` \| `"Problem-Solving"` \| `"Teamwork & Collaboration"` \| `"Adaptability"` \| `"Impact & Results"` \| `"Communication"`
 
-Defined in: [src/lib/profile/tagger.ts:8](https://github.com/rjmad1/CareerPropel/blob/0d4fad15b81e49f3b873e8b104cec88970a01026/src/lib/profile/tagger.ts#L8)
+Defined in: [src/lib/profile/tagger.ts:8](https://github.com/rjmad1/CareerPropel/blob/1a201d07e0e7032a443e43e3eff7cdd09c8f364d/src/lib/profile/tagger.ts#L8)
 
 Competency Mapping & Semantic Tagging Engine
 
