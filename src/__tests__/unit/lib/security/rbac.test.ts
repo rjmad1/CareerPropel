@@ -13,6 +13,7 @@ import {
   getRoleDetails,
   assignRoleToUser,
   removeRoleFromUser,
+  initializeDefaultRoles,
 } from '@/lib/security/rbac'
 
 describe('RBAC constants', () => {
@@ -254,5 +255,116 @@ describe('removeRoleFromUser', () => {
   it('throws when role not found', async () => {
     prismaMock.role.findUnique.mockResolvedValue(null)
     await expect(removeRoleFromUser('user@example.com', 'ghost')).rejects.toThrow('not found')
+  })
+})
+
+describe('initializeDefaultRoles', () => {
+  it('upserts permissions and roles and links rolePermissions', async () => {
+    prismaMock.permission.upsert.mockResolvedValue({} as any)
+    prismaMock.role.upsert.mockResolvedValue({ id: 'role-id-123' } as any)
+    prismaMock.permission.findMany.mockResolvedValue([
+      { id: 'perm-id-1', name: 'jobs.create' },
+      { id: 'perm-id-2', name: 'jobs.read' }
+    ] as any)
+    prismaMock.rolePermission.upsert.mockResolvedValue({} as any)
+
+    const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {})
+
+    await initializeDefaultRoles()
+
+    expect(prismaMock.permission.upsert).toHaveBeenCalled()
+    expect(prismaMock.role.upsert).toHaveBeenCalled()
+    expect(prismaMock.rolePermission.upsert).toHaveBeenCalled()
+    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Default roles and permissions initialized'))
+
+    logSpy.mockRestore()
+  })
+
+  it('throws and logs when prisma fails during initialization', async () => {
+    prismaMock.permission.upsert.mockRejectedValue(new Error('Prisma fail'))
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+    await expect(initializeDefaultRoles()).rejects.toThrow('Prisma fail')
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('Error initializing default roles:'), expect.any(Error))
+
+    errorSpy.mockRestore()
+  })
+})
+
+describe('RBAC extra catch blocks', () => {
+  it('hasPermission returns false on db error or internal error', async () => {
+    const includesSpy = jest.spyOn(Array.prototype, 'includes').mockImplementation(() => {
+      throw new Error('Includes fail')
+    })
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+    prismaMock.userRole.findMany.mockResolvedValue([
+      { role: { permissions: [{ permission: { name: 'jobs.read' } }] } }
+    ] as any)
+
+    const result = await hasPermission('user@example.com', 'jobs.read')
+    expect(result).toBe(false)
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('Error checking permission:'), expect.any(Error))
+
+    includesSpy.mockRestore()
+    errorSpy.mockRestore()
+  })
+
+  it('hasAnyPermission returns false on db error or internal error', async () => {
+    const someSpy = jest.spyOn(Array.prototype, 'some').mockImplementation(() => {
+      throw new Error('Some fail')
+    })
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+    prismaMock.userRole.findMany.mockResolvedValue([
+      { role: { permissions: [{ permission: { name: 'jobs.read' } }] } }
+    ] as any)
+
+    const result = await hasAnyPermission('user@example.com', ['jobs.read'])
+    expect(result).toBe(false)
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('Error checking permissions:'), expect.any(Error))
+
+    someSpy.mockRestore()
+    errorSpy.mockRestore()
+  })
+
+  it('hasAllPermissions returns false on db error or internal error', async () => {
+    const everySpy = jest.spyOn(Array.prototype, 'every').mockImplementation(() => {
+      throw new Error('Every fail')
+    })
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+    prismaMock.userRole.findMany.mockResolvedValue([
+      { role: { permissions: [{ permission: { name: 'jobs.read' } }] } }
+    ] as any)
+
+    const result = await hasAllPermissions('user@example.com', ['jobs.read'])
+    expect(result).toBe(false)
+    expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining('Error checking permissions:'), expect.any(Error))
+
+    everySpy.mockRestore()
+    errorSpy.mockRestore()
+  })
+
+  it('getUsersWithRole returns empty array on db error', async () => {
+    prismaMock.role.findUnique.mockRejectedValue(new Error('getUsersWithRole error'))
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+    const result = await getUsersWithRole('admin')
+    expect(result).toEqual([])
+    expect(errorSpy).toHaveBeenCalled()
+
+    errorSpy.mockRestore()
+  })
+
+  it('getRoleDetails returns null on db error', async () => {
+    prismaMock.role.findUnique.mockRejectedValue(new Error('getRoleDetails error'))
+    const errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+    const result = await getRoleDetails('admin')
+    expect(result).toBeNull()
+    expect(errorSpy).toHaveBeenCalled()
+
+    errorSpy.mockRestore()
   })
 })

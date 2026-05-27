@@ -1,6 +1,17 @@
 import '../../../__mocks__/prisma'
 import { prismaMock } from '../../../__mocks__/prisma'
-import { generateAPIKey, hashAPIKey, createAPIKey, verifyAPIKey, revokeAPIKey, listAPIKeys } from '@/lib/security/apiKey'
+import {
+  generateAPIKey,
+  hashAPIKey,
+  createAPIKey,
+  verifyAPIKey,
+  revokeAPIKey,
+  listAPIKeys,
+  getAPIKey,
+  revokeAllAPIKeys,
+  rotateAPIKey,
+  cleanupExpiredKeys,
+} from '@/lib/security/apiKey'
 
 jest.mock('@/lib/logging/auditLog', () => ({
   logSecurityEvent: jest.fn().mockResolvedValue(undefined),
@@ -199,5 +210,112 @@ describe('revokeAPIKey', () => {
   it('throws when key not found', async () => {
     prismaMock.apiKey.findFirst.mockResolvedValue(null)
     await expect(revokeAPIKey('user@example.com', 'ghost-key')).rejects.toThrow('API key not found')
+  })
+})
+
+describe('getAPIKey', () => {
+  it('returns API key details when found', async () => {
+    const mockKey = {
+      id: 'key-1',
+      name: 'Test Key',
+      createdAt: new Date(),
+      expiresAt: null,
+      lastUsedAt: null,
+    }
+    prismaMock.apiKey.findFirst.mockResolvedValue(mockKey as any)
+
+    const result = await getAPIKey('user@example.com', 'key-1')
+    expect(result).toEqual(mockKey)
+    expect(prismaMock.apiKey.findFirst).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: 'key-1', email: 'user@example.com' },
+      })
+    )
+  })
+})
+
+describe('revokeAllAPIKeys', () => {
+  it('revokes all keys and returns the count', async () => {
+    prismaMock.apiKey.updateMany.mockResolvedValue({ count: 3 } as any)
+
+    const result = await revokeAllAPIKeys('user@example.com')
+    expect(result).toBe(3)
+    expect(prismaMock.apiKey.updateMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { email: 'user@example.com', revokedAt: null },
+        data: { revokedAt: expect.any(Date) },
+      })
+    )
+  })
+})
+
+describe('rotateAPIKey', () => {
+  it('creates a new key and revokes the old one', async () => {
+    const oldKeyDate = new Date(Date.now() + 3600000) // 1 hr in future
+    const mockOldKey = {
+      id: 'key-1',
+      name: 'Old Key',
+      createdAt: new Date(),
+      expiresAt: oldKeyDate,
+      lastUsedAt: null,
+    }
+    prismaMock.apiKey.findFirst.mockResolvedValue(mockOldKey as any)
+    prismaMock.apiKey.create.mockResolvedValue({ id: 'key-2' } as any)
+    prismaMock.apiKey.update.mockResolvedValue({} as any)
+
+    const result = await rotateAPIKey('user@example.com', 'key-1')
+    expect(result.newId).toBe('key-2')
+    expect(result.newKey).toMatch(/^sk_/)
+
+    expect(prismaMock.apiKey.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          name: 'Old Key (rotated)',
+          email: 'user@example.com',
+        }),
+      })
+    )
+    expect(prismaMock.apiKey.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { id: 'key-1' },
+        data: { revokedAt: expect.any(Date) },
+      })
+    )
+  })
+
+  it('creates a new key with no expiry if the old key had no expiry', async () => {
+    const mockOldKey = {
+      id: 'key-1',
+      name: 'Old Key',
+      createdAt: new Date(),
+      expiresAt: null,
+      lastUsedAt: null,
+    }
+    prismaMock.apiKey.findFirst.mockResolvedValue(mockOldKey as any)
+    prismaMock.apiKey.create.mockResolvedValue({ id: 'key-2' } as any)
+    prismaMock.apiKey.update.mockResolvedValue({} as any)
+
+    const result = await rotateAPIKey('user@example.com', 'key-1')
+    expect(result.newId).toBe('key-2')
+    expect(result.newKey).toMatch(/^sk_/)
+  })
+
+  it('throws when old key is not found', async () => {
+    prismaMock.apiKey.findFirst.mockResolvedValue(null)
+    await expect(rotateAPIKey('user@example.com', 'nonexistent')).rejects.toThrow('API key not found')
+  })
+})
+
+describe('cleanupExpiredKeys', () => {
+  it('deletes expired keys and returns the count', async () => {
+    prismaMock.apiKey.deleteMany.mockResolvedValue({ count: 5 } as any)
+
+    const result = await cleanupExpiredKeys()
+    expect(result).toBe(5)
+    expect(prismaMock.apiKey.deleteMany).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { expiresAt: { lt: expect.any(Date) } },
+      })
+    )
   })
 })

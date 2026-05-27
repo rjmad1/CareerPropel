@@ -62,6 +62,19 @@ describe('errorResponse', () => {
     expect(body.error.code).toBe('VALIDATION_ERROR')
   })
 
+  it('handles ZodError with empty errors array using fallback message', async () => {
+    const zodErr = new ZodError([])
+    jest.spyOn(zodErr, 'flatten').mockReturnValue({
+      formErrors: [],
+      fieldErrors: { name: [] }
+    } as any)
+    const res = errorResponse(zodErr)
+    expect(res.status).toBe(400)
+    const body = await res.json()
+    expect(body.error.code).toBe('VALIDATION_ERROR')
+    expect(body.error.message).toContain('name: Invalid')
+  })
+
   it('handles generic Error as 500 INTERNAL_ERROR', async () => {
     const err = new Error('Something broke')
     const res = errorResponse(err)

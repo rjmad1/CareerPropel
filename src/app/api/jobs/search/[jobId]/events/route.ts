@@ -6,7 +6,7 @@
 
 import { NextRequest } from 'next/server';
 import { prisma } from '@/lib/db';
-import { getAuthContext } from '@/lib/middleware/auth';
+import { withAuth } from '@/lib/middleware/withAuth';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,32 +14,24 @@ const POLL_MS = 2_000;
 const HEARTBEAT_MS = 20_000;
 const MAX_WAIT_MS = 5 * 60 * 1_000;
 
-interface RouteParams {
-  params: Promise<{ jobId: string }>;
-}
+export const GET = withAuth(
+  async (_request: NextRequest, auth, params) => {
+    const jobId = params?.jobId as string;
+    const { userEmail } = auth;
 
-export async function GET(_request: NextRequest, { params }: RouteParams) {
-  const { jobId } = await params;
-
-  let userEmail: string;
-  try {
-    ({ userEmail } = await getAuthContext());
-  } catch {
-    return new Response('Unauthorized', { status: 401 });
-  }
-
-  // Verify ownership before opening the stream
-  try {
-    const execution = await prisma.agentExecution.findUnique({ where: { id: jobId } });
-    if (!execution) {
-      return new Response('Not Found', { status: 404 });
+    // Verify ownership before opening the stream
+    try {
+      const execution = await prisma.agentExecution.findUnique({ where: { id: jobId } });
+      if (!execution) {
+        return new Response('Not Found', { status: 404 });
+      }
+      if (execution.userId !== userEmail) {
+        return new Response('Forbidden', { status: 403 });
+      }
+    } catch {
+      return new Response('Service Unavailable', { status: 503 });
     }
-    if (execution.userId !== userEmail) {
-      return new Response('Forbidden', { status: 403 });
-    }
-  } catch {
-    return new Response('Service Unavailable', { status: 503 });
-  }
+
 
   const encoder = new TextEncoder();
 
@@ -129,12 +121,19 @@ export async function GET(_request: NextRequest, { params }: RouteParams) {
     },
   });
 
-  return new Response(stream, {
-    headers: {
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache, no-transform',
-      Connection: 'keep-alive',
-      'X-Accel-Buffering': 'no',
-    },
-  });
-}
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache, no-transform',
+        Connection: 'keep-alive',
+        'X-Accel-Buffering': 'no',
+      },
+    });
+  },
+  {
+    classification: 'authenticated',
+    rateLimitClass: 'standard',
+    auditSensitivity: 'low',
+  }
+);
+

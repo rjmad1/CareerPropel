@@ -10,7 +10,7 @@ type AuthenticatedHandler = (
   request: NextRequest,
   auth: AuthContext,
   params?: Record<string, string | string[]>
-) => Promise<NextResponse> | NextResponse;
+) => Promise<Response> | Response;
 
 /**
  * Wraps a Next.js App Router route handler with centralized route governance enforcement.
@@ -24,8 +24,9 @@ export function withAuth(handler: AuthenticatedHandler, policy: RoutePolicy) {
   return async function authenticatedRoute(
     request: NextRequest,
     context: { params: Promise<Record<string, string>> }
-  ): Promise<NextResponse> {
+  ): Promise<Response> {
     const correlationId = request.headers.get('x-correlation-id') || request.headers.get('x-request-id') || undefined;
+
 
     return runWithTrace(correlationId, async () => {
       let auth: AuthContext = { userId: '', userEmail: '', session: null as any };

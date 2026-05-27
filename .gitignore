@@ -50,3 +50,7 @@ Thumbs.db
 
 # Graphify generated output
 graphify-out/
+
+# Local security credentials
+/credentials.md
+
