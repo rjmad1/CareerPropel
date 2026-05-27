@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/db'
 import { createHash, randomBytes } from 'crypto'
 import { logSecurityEvent, AuditAction } from '@/lib/logging/auditLog'
-
-const prisma = new PrismaClient()
 
 export function generateAPIKey(): string {
   return 'sk_' + randomBytes(32).toString('hex')
@@ -77,10 +75,11 @@ export async function verifyAPIKey(key: string): Promise<string | null> {
       keyHash,
       revokedAt: null,
     },
-    select: { id: true, email: true, expiresAt: true }
+    select: { id: true, email: true, expiresAt: true, revokedAt: true }
   })
 
   if (!apiKey) return null
+  if ((apiKey as any).revokedAt) return null  // belt-and-suspenders: mock may return revoked keys
   if (apiKey.expiresAt && new Date() > apiKey.expiresAt) return null
 
   await prisma.apiKey.update({

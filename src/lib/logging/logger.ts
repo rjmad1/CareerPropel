@@ -17,7 +17,7 @@ export const logger = pino({
       '*.secret',
       '*.token',
       '*.cookies',
-      '*.set-cookie',
+      '*["set-cookie"]',
       'payload',
       'response.body',
     ],

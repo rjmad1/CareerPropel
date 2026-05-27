@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/db'
 import { CreateJobInputSchema, JobFilterSchema } from '@/lib/validations/job'
 import { ApiErrors } from '@/lib/errors/ApiError'
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
@@ -8,7 +8,7 @@ import { getAuthContext } from '@/lib/middleware/auth'
 import { createRateLimiter } from '@/lib/middleware/rateLimiter'
 import { handleCorsPreFlight, applyCorsHeaders } from '@/lib/middleware/cors'
 
-const prisma = new PrismaClient()
+
 
 // Rate limiters for different operations
 const getJobsLimiter = createRateLimiter(100, 60000) // 100 per minute

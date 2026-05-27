@@ -1,10 +1,8 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/db'
 import { randomBytes, createHmac } from 'crypto'
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const speakeasy = require('speakeasy') as any
 import QRCode from 'qrcode'
-
-const prisma = new PrismaClient()
 
 // ============================================================================
 // TOTP Setup

@@ -26,5 +26,5 @@ export const STAGE_TRIGGER_MAP: Record<JobStage, AgentType | null> = {
 };
 
 export function getAgentForStage(stage: JobStage): AgentType | null {
-  return STAGE_TRIGGER_MAP[stage];
+  return STAGE_TRIGGER_MAP[stage] ?? null;
 }
