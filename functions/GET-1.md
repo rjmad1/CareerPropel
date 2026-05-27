@@ -8,7 +8,7 @@
 
 > **GET**(`request`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `alerts`: [`ThreatAlert`](../interfaces/ThreatAlert.md)[]; `email`: `string`; `riskScore`: `number`; \}\>\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `summary`: \{ `criticalCount`: `number`; `highRiskCount`: `number`; `totalUsersScanned`: `number`; `usersWithAlerts`: `number`; \}; `users`: `object`[]; \}\>\>\>
 
-Defined in: [src/app/api/admin/threats/route.ts:21](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/app/api/admin/threats/route.ts#L21)
+Defined in: [src/app/api/admin/threats/route.ts:21](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/app/api/admin/threats/route.ts#L21)
 
 GET /api/admin/threats
 Get threat alerts and suspicious activity for users

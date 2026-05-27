@@ -8,7 +8,7 @@
 
 > `const` **InterviewPrepWorkspace**: `React.FC`\<`InterviewPrepWorkspaceProps`\>
 
-Defined in: [src/components/InterviewPrep/InterviewPrepWorkspace.tsx:45](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/InterviewPrep/InterviewPrepWorkspace.tsx#L45)
+Defined in: [src/components/InterviewPrep/InterviewPrepWorkspace.tsx:45](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/InterviewPrep/InterviewPrepWorkspace.tsx#L45)
 
 InterviewPrepWorkspace
 Main container for the interview preparation experience.

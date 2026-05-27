@@ -8,7 +8,7 @@
 
 > **estimateCareerLevel**(`yearsExp`, `titles`): `"mid"` \| `"senior"` \| `"staff"` \| `"principal"` \| `"entry"` \| `"executive"`
 
-Defined in: [src/lib/profile/master-profile/normalizer.ts:156](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/profile/master-profile/normalizer.ts#L156)
+Defined in: [src/lib/profile/master-profile/normalizer.ts:156](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/profile/master-profile/normalizer.ts#L156)
 
 ## Parameters
 

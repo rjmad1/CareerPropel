@@ -6,7 +6,7 @@
 
 # Interface: StrategicRecommendation
 
-Defined in: [src/lib/analytics/types.ts:176](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L176)
+Defined in: [src/lib/analytics/types.ts:176](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L176)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/types.ts:176](https://github.com/rjmad1/CareerPro
 
 > **action**: `string`
 
-Defined in: [src/lib/analytics/types.ts:183](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L183)
+Defined in: [src/lib/analytics/types.ts:183](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L183)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/types.ts:183](https://github.com/rjmad1/CareerPro
 
 > **category**: [`RecommendationCategory`](../type-aliases/RecommendationCategory.md)
 
-Defined in: [src/lib/analytics/types.ts:178](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L178)
+Defined in: [src/lib/analytics/types.ts:178](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L178)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/analytics/types.ts:178](https://github.com/rjmad1/CareerPro
 
 > **confidence**: [`ConfidenceLevel`](../type-aliases/ConfidenceLevel.md)
 
-Defined in: [src/lib/analytics/types.ts:184](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L184)
+Defined in: [src/lib/analytics/types.ts:184](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L184)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/analytics/types.ts:184](https://github.com/rjmad1/CareerPro
 
 > **evidence**: `string`[]
 
-Defined in: [src/lib/analytics/types.ts:182](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L182)
+Defined in: [src/lib/analytics/types.ts:182](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L182)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/analytics/types.ts:182](https://github.com/rjmad1/CareerPro
 
 > **expectedImpact**: `string`
 
-Defined in: [src/lib/analytics/types.ts:185](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L185)
+Defined in: [src/lib/analytics/types.ts:185](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L185)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/analytics/types.ts:185](https://github.com/rjmad1/CareerPro
 
 > **id**: `string`
 
-Defined in: [src/lib/analytics/types.ts:177](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L177)
+Defined in: [src/lib/analytics/types.ts:177](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L177)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/analytics/types.ts:177](https://github.com/rjmad1/CareerPro
 
 > **priority**: `"high"` \| `"low"` \| `"medium"` \| `"critical"`
 
-Defined in: [src/lib/analytics/types.ts:179](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L179)
+Defined in: [src/lib/analytics/types.ts:179](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L179)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/analytics/types.ts:179](https://github.com/rjmad1/CareerPro
 
 > **summary**: `string`
 
-Defined in: [src/lib/analytics/types.ts:181](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L181)
+Defined in: [src/lib/analytics/types.ts:181](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L181)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [src/lib/analytics/types.ts:181](https://github.com/rjmad1/CareerPro
 
 > **title**: `string`
 
-Defined in: [src/lib/analytics/types.ts:180](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L180)
+Defined in: [src/lib/analytics/types.ts:180](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L180)

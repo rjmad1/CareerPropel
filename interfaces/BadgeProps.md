@@ -6,7 +6,7 @@
 
 # Interface: BadgeProps
 
-Defined in: [src/components/ui/Badge.tsx:4](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/ui/Badge.tsx#L4)
+Defined in: [src/components/ui/Badge.tsx:4](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/ui/Badge.tsx#L4)
 
 ## Extends
 
@@ -967,7 +967,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2953
 
 > **children**: `ReactNode`
 
-Defined in: [src/components/ui/Badge.tsx:7](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/ui/Badge.tsx#L7)
+Defined in: [src/components/ui/Badge.tsx:7](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/ui/Badge.tsx#L7)
 
 #### Overrides
 
@@ -3475,7 +3475,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2961
 
 > `optional` **size?**: `"sm"` \| `"md"`
 
-Defined in: [src/components/ui/Badge.tsx:6](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/ui/Badge.tsx#L6)
+Defined in: [src/components/ui/Badge.tsx:6](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/ui/Badge.tsx#L6)
 
 ***
 
@@ -3623,7 +3623,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2962
 
 > `optional` **variant?**: `"success"` \| `"warning"` \| `"error"` \| `"gray"` \| `"primary"`
 
-Defined in: [src/components/ui/Badge.tsx:5](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/ui/Badge.tsx#L5)
+Defined in: [src/components/ui/Badge.tsx:5](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/ui/Badge.tsx#L5)
 
 ***
 

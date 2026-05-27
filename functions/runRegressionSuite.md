@@ -8,7 +8,7 @@
 
 > **runRegressionSuite**(`executor`, `filterAgentType?`): `Promise`\<\{ `overallScore`: `number`; `passRate`: `number`; `results`: [`RegressionRunResult`](../interfaces/RegressionRunResult.md)[]; \}\>
 
-Defined in: [src/lib/governance/regressionHarness.ts:241](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/regressionHarness.ts#L241)
+Defined in: [src/lib/governance/regressionHarness.ts:241](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L241)
 
 Run all golden cases against a provided executor function.
 

@@ -8,4 +8,4 @@
 
 > **UpdateOfferInput** = `z.infer`\<*typeof* [`updateOfferSchema`](../variables/updateOfferSchema.md)\>
 
-Defined in: [src/lib/validation/schemas.ts:289](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/validation/schemas.ts#L289)
+Defined in: [src/lib/validation/schemas.ts:289](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/validation/schemas.ts#L289)

@@ -6,7 +6,7 @@
 
 # Interface: NavigateOptions
 
-Defined in: [src/lib/navigation/navigation.ts:39](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/navigation/navigation.ts#L39)
+Defined in: [src/lib/navigation/navigation.ts:39](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/navigation/navigation.ts#L39)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/navigation/navigation.ts:39](https://github.com/rjmad1/Care
 
 > `optional` **force?**: `boolean`
 
-Defined in: [src/lib/navigation/navigation.ts:43](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/navigation/navigation.ts#L43)
+Defined in: [src/lib/navigation/navigation.ts:43](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/navigation/navigation.ts#L43)
 
 If true, bypass dirty-state guards (use with caution).
 
@@ -24,7 +24,7 @@ If true, bypass dirty-state guards (use with caution).
 
 > `optional` **label?**: `string`
 
-Defined in: [src/lib/navigation/navigation.ts:45](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/navigation/navigation.ts#L45)
+Defined in: [src/lib/navigation/navigation.ts:45](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/navigation/navigation.ts#L45)
 
 Human-readable label for this entry in the in-process history.
 
@@ -34,7 +34,7 @@ Human-readable label for this entry in the in-process history.
 
 > `optional` **params?**: [`ParamRecord`](../type-aliases/ParamRecord.md)
 
-Defined in: [src/lib/navigation/navigation.ts:47](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/navigation/navigation.ts#L47)
+Defined in: [src/lib/navigation/navigation.ts:47](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/navigation/navigation.ts#L47)
 
 Additional URL params to merge.
 
@@ -44,6 +44,6 @@ Additional URL params to merge.
 
 > `optional` **replace?**: `boolean`
 
-Defined in: [src/lib/navigation/navigation.ts:41](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/navigation/navigation.ts#L41)
+Defined in: [src/lib/navigation/navigation.ts:41](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/navigation/navigation.ts#L41)
 
 If true, replace the current history entry (no new entry).

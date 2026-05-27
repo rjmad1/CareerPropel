@@ -6,7 +6,7 @@
 
 # Interface: CostSnapshot
 
-Defined in: [src/lib/observability/cost-analytics.ts:49](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/cost-analytics.ts#L49)
+Defined in: [src/lib/observability/cost-analytics.ts:49](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/cost-analytics.ts#L49)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/observability/cost-analytics.ts:49](https://github.com/rjma
 
 > **anomalies**: [`CostAnomaly`](CostAnomaly.md)[]
 
-Defined in: [src/lib/observability/cost-analytics.ts:56](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/cost-analytics.ts#L56)
+Defined in: [src/lib/observability/cost-analytics.ts:56](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/cost-analytics.ts#L56)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/observability/cost-analytics.ts:56](https://github.com/rjma
 
 > **byAgent**: [`AgentCostRow`](AgentCostRow.md)[]
 
-Defined in: [src/lib/observability/cost-analytics.ts:53](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/cost-analytics.ts#L53)
+Defined in: [src/lib/observability/cost-analytics.ts:53](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/cost-analytics.ts#L53)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/observability/cost-analytics.ts:53](https://github.com/rjma
 
 > **byUser**: [`UserCostRow`](UserCostRow.md)[]
 
-Defined in: [src/lib/observability/cost-analytics.ts:54](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/cost-analytics.ts#L54)
+Defined in: [src/lib/observability/cost-analytics.ts:54](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/cost-analytics.ts#L54)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/observability/cost-analytics.ts:54](https://github.com/rjma
 
 > **estimatedUSD**: `number`
 
-Defined in: [src/lib/observability/cost-analytics.ts:52](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/cost-analytics.ts#L52)
+Defined in: [src/lib/observability/cost-analytics.ts:52](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/cost-analytics.ts#L52)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/observability/cost-analytics.ts:52](https://github.com/rjma
 
 > **snapshotAt**: `string`
 
-Defined in: [src/lib/observability/cost-analytics.ts:57](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/cost-analytics.ts#L57)
+Defined in: [src/lib/observability/cost-analytics.ts:57](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/cost-analytics.ts#L57)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/observability/cost-analytics.ts:57](https://github.com/rjma
 
 > **topSpenders**: [`UserCostRow`](UserCostRow.md)[]
 
-Defined in: [src/lib/observability/cost-analytics.ts:55](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/cost-analytics.ts#L55)
+Defined in: [src/lib/observability/cost-analytics.ts:55](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/cost-analytics.ts#L55)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/observability/cost-analytics.ts:55](https://github.com/rjma
 
 > **totalTokens**: `number`
 
-Defined in: [src/lib/observability/cost-analytics.ts:51](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/cost-analytics.ts#L51)
+Defined in: [src/lib/observability/cost-analytics.ts:51](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/cost-analytics.ts#L51)
 
 ***
 
@@ -70,4 +70,4 @@ Defined in: [src/lib/observability/cost-analytics.ts:51](https://github.com/rjma
 
 > **windowDays**: `number`
 
-Defined in: [src/lib/observability/cost-analytics.ts:50](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/cost-analytics.ts#L50)
+Defined in: [src/lib/observability/cost-analytics.ts:50](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/cost-analytics.ts#L50)

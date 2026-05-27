@@ -6,7 +6,7 @@
 
 # Interface: ConsistencyIssue
 
-Defined in: [src/lib/profile/consistency/types.ts:15](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/profile/consistency/types.ts#L15)
+Defined in: [src/lib/profile/consistency/types.ts:15](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/profile/consistency/types.ts#L15)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/profile/consistency/types.ts:15](https://github.com/rjmad1/
 
 > **fix**: `string`
 
-Defined in: [src/lib/profile/consistency/types.ts:22](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/profile/consistency/types.ts#L22)
+Defined in: [src/lib/profile/consistency/types.ts:22](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/profile/consistency/types.ts#L22)
 
 Human-readable suggestion for resolution
 
@@ -24,7 +24,7 @@ Human-readable suggestion for resolution
 
 > **level**: [`ConsistencyIssueLevel`](../type-aliases/ConsistencyIssueLevel.md)
 
-Defined in: [src/lib/profile/consistency/types.ts:17](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/profile/consistency/types.ts#L17)
+Defined in: [src/lib/profile/consistency/types.ts:17](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/profile/consistency/types.ts#L17)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/lib/profile/consistency/types.ts:17](https://github.com/rjmad1/
 
 > **message**: `string`
 
-Defined in: [src/lib/profile/consistency/types.ts:18](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/profile/consistency/types.ts#L18)
+Defined in: [src/lib/profile/consistency/types.ts:18](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/profile/consistency/types.ts#L18)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/lib/profile/consistency/types.ts:18](https://github.com/rjmad1/
 
 > **source**: `"linkedin"` \| `"resume"` \| `"cover_letter"` \| `"cross_document"`
 
-Defined in: [src/lib/profile/consistency/types.ts:20](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/profile/consistency/types.ts#L20)
+Defined in: [src/lib/profile/consistency/types.ts:20](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/profile/consistency/types.ts#L20)
 
 Which document surface the issue was detected on
 
@@ -50,4 +50,4 @@ Which document surface the issue was detected on
 
 > **type**: [`ConsistencyIssueType`](../type-aliases/ConsistencyIssueType.md)
 
-Defined in: [src/lib/profile/consistency/types.ts:16](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/profile/consistency/types.ts#L16)
+Defined in: [src/lib/profile/consistency/types.ts:16](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/profile/consistency/types.ts#L16)

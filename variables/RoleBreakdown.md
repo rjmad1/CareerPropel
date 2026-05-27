@@ -8,7 +8,7 @@
 
 > `const` **RoleBreakdown**: `React.FC`\<`RoleBreakdownProps`\>
 
-Defined in: [src/components/InterviewPrep/RoleBreakdown.tsx:28](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/InterviewPrep/RoleBreakdown.tsx#L28)
+Defined in: [src/components/InterviewPrep/RoleBreakdown.tsx:28](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/InterviewPrep/RoleBreakdown.tsx#L28)
 
 RoleBreakdown Tab
 Displays comprehensive role analysis including:

@@ -8,7 +8,7 @@
 
 > **useInterviewPrep**(`jobId`, `userId`, `options?`): `UseInterviewPrepResult`
 
-Defined in: [src/hooks/useInterviewPrep.ts:33](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useInterviewPrep.ts#L33)
+Defined in: [src/hooks/useInterviewPrep.ts:33](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/hooks/useInterviewPrep.ts#L33)
 
 Hook for managing interview preparation data
 

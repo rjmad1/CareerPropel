@@ -8,7 +8,7 @@
 
 > **useJobSocket**(`jobId`): `object`
 
-Defined in: [src/hooks/useSocket.ts:94](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useSocket.ts#L94)
+Defined in: [src/hooks/useSocket.ts:94](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/hooks/useSocket.ts#L94)
 
 Hook to subscribe to a specific job's real-time updates
 

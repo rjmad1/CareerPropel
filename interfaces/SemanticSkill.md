@@ -6,7 +6,7 @@
 
 # Interface: SemanticSkill
 
-Defined in: [src/types/profile.ts:76](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/profile.ts#L76)
+Defined in: [src/types/profile.ts:76](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L76)
 
 Semantic skill representation
 
@@ -16,7 +16,7 @@ Semantic skill representation
 
 > **category**: `"domain"` \| `"technical"` \| `"language"` \| `"soft"`
 
-Defined in: [src/types/profile.ts:78](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/profile.ts#L78)
+Defined in: [src/types/profile.ts:78](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L78)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/profile.ts:78](https://github.com/rjmad1/CareerPropel/blo
 
 > `optional` **endorsements?**: `number`
 
-Defined in: [src/types/profile.ts:81](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/profile.ts#L81)
+Defined in: [src/types/profile.ts:81](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L81)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/profile.ts:81](https://github.com/rjmad1/CareerPropel/blo
 
 > `optional` **lastUsed?**: `Date`
 
-Defined in: [src/types/profile.ts:83](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/profile.ts#L83)
+Defined in: [src/types/profile.ts:83](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L83)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/profile.ts:83](https://github.com/rjmad1/CareerPropel/blo
 
 > `optional` **marketDemand?**: `"high"` \| `"low"` \| `"medium"`
 
-Defined in: [src/types/profile.ts:84](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/profile.ts#L84)
+Defined in: [src/types/profile.ts:84](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L84)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/profile.ts:84](https://github.com/rjmad1/CareerPropel/blo
 
 > **name**: `string`
 
-Defined in: [src/types/profile.ts:77](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/profile.ts#L77)
+Defined in: [src/types/profile.ts:77](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L77)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/types/profile.ts:77](https://github.com/rjmad1/CareerPropel/blo
 
 > **proficiency**: `"beginner"` \| `"intermediate"` \| `"expert"` \| `"proficient"`
 
-Defined in: [src/types/profile.ts:79](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/profile.ts#L79)
+Defined in: [src/types/profile.ts:79](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L79)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [src/types/profile.ts:79](https://github.com/rjmad1/CareerPropel/blo
 
 > `optional` **projects?**: `string`[]
 
-Defined in: [src/types/profile.ts:82](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/profile.ts#L82)
+Defined in: [src/types/profile.ts:82](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L82)
 
 ***
 
@@ -72,4 +72,4 @@ Defined in: [src/types/profile.ts:82](https://github.com/rjmad1/CareerPropel/blo
 
 > `optional` **yearsOfExperience?**: `number`
 
-Defined in: [src/types/profile.ts:80](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/profile.ts#L80)
+Defined in: [src/types/profile.ts:80](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L80)

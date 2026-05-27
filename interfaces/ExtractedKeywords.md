@@ -6,7 +6,7 @@
 
 # Interface: ExtractedKeywords
 
-Defined in: [src/lib/ats/keywordExtractor.ts:110](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordExtractor.ts#L110)
+Defined in: [src/lib/ats/keywordExtractor.ts:110](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/ats/keywordExtractor.ts#L110)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/ats/keywordExtractor.ts:110](https://github.com/rjmad1/Care
 
 > **actionVerbs**: `string`[]
 
-Defined in: [src/lib/ats/keywordExtractor.ts:116](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordExtractor.ts#L116)
+Defined in: [src/lib/ats/keywordExtractor.ts:116](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/ats/keywordExtractor.ts#L116)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/ats/keywordExtractor.ts:116](https://github.com/rjmad1/Care
 
 > **all**: `string`[]
 
-Defined in: [src/lib/ats/keywordExtractor.ts:117](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordExtractor.ts#L117)
+Defined in: [src/lib/ats/keywordExtractor.ts:117](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/ats/keywordExtractor.ts#L117)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/ats/keywordExtractor.ts:117](https://github.com/rjmad1/Care
 
 > **domain**: `string`[]
 
-Defined in: [src/lib/ats/keywordExtractor.ts:115](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordExtractor.ts#L115)
+Defined in: [src/lib/ats/keywordExtractor.ts:115](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/ats/keywordExtractor.ts#L115)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/ats/keywordExtractor.ts:115](https://github.com/rjmad1/Care
 
 > **preferred**: `string`[]
 
-Defined in: [src/lib/ats/keywordExtractor.ts:112](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordExtractor.ts#L112)
+Defined in: [src/lib/ats/keywordExtractor.ts:112](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/ats/keywordExtractor.ts#L112)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/ats/keywordExtractor.ts:112](https://github.com/rjmad1/Care
 
 > **required**: `string`[]
 
-Defined in: [src/lib/ats/keywordExtractor.ts:111](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordExtractor.ts#L111)
+Defined in: [src/lib/ats/keywordExtractor.ts:111](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/ats/keywordExtractor.ts#L111)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/ats/keywordExtractor.ts:111](https://github.com/rjmad1/Care
 
 > **title**: `string`[]
 
-Defined in: [src/lib/ats/keywordExtractor.ts:113](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordExtractor.ts#L113)
+Defined in: [src/lib/ats/keywordExtractor.ts:113](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/ats/keywordExtractor.ts#L113)
 
 ***
 
@@ -62,4 +62,4 @@ Defined in: [src/lib/ats/keywordExtractor.ts:113](https://github.com/rjmad1/Care
 
 > **tools**: `string`[]
 
-Defined in: [src/lib/ats/keywordExtractor.ts:114](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/ats/keywordExtractor.ts#L114)
+Defined in: [src/lib/ats/keywordExtractor.ts:114](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/ats/keywordExtractor.ts#L114)

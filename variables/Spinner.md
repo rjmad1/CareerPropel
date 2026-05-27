@@ -8,7 +8,7 @@
 
 > `const` **Spinner**: `ForwardRefExoticComponent`\<[`SpinnerProps`](../interfaces/SpinnerProps.md) & `RefAttributes`\<`HTMLDivElement`\>\>
 
-Defined in: [src/components/ui/Spinner.tsx:12](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/ui/Spinner.tsx#L12)
+Defined in: [src/components/ui/Spinner.tsx:12](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/ui/Spinner.tsx#L12)
 
 Spinner Component
 Loading indicator component.

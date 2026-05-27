@@ -6,7 +6,7 @@
 
 # Interface: ExecutionTimelineEvent
 
-Defined in: [src/types/agent.ts:131](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/agent.ts#L131)
+Defined in: [src/types/agent.ts:131](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/agent.ts#L131)
 
 Agent execution timeline event
 
@@ -16,7 +16,7 @@ Agent execution timeline event
 
 > **agent**: [`AgentType`](../type-aliases/AgentType-2.md)
 
-Defined in: [src/types/agent.ts:134](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/agent.ts#L134)
+Defined in: [src/types/agent.ts:134](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/agent.ts#L134)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/agent.ts:134](https://github.com/rjmad1/CareerPropel/blob
 
 > **data**: `Record`\<`string`, `any`\>
 
-Defined in: [src/types/agent.ts:136](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/agent.ts#L136)
+Defined in: [src/types/agent.ts:136](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/agent.ts#L136)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/agent.ts:136](https://github.com/rjmad1/CareerPropel/blob
 
 > `optional` **jobId?**: `string`
 
-Defined in: [src/types/agent.ts:135](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/agent.ts#L135)
+Defined in: [src/types/agent.ts:135](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/agent.ts#L135)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/agent.ts:135](https://github.com/rjmad1/CareerPropel/blob
 
 > **timestamp**: `Date`
 
-Defined in: [src/types/agent.ts:133](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/agent.ts#L133)
+Defined in: [src/types/agent.ts:133](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/agent.ts#L133)
 
 ***
 
@@ -48,4 +48,4 @@ Defined in: [src/types/agent.ts:133](https://github.com/rjmad1/CareerPropel/blob
 
 > **type**: `"completed"` \| `"failed"` \| `"paused"` \| `"resumed"` \| `"started"` \| `"tool_executed"` \| `"progress_update"`
 
-Defined in: [src/types/agent.ts:132](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/agent.ts#L132)
+Defined in: [src/types/agent.ts:132](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/agent.ts#L132)

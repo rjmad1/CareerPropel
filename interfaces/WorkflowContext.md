@@ -6,7 +6,7 @@
 
 # Interface: WorkflowContext
 
-Defined in: [src/lib/workflow/types.ts:63](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L63)
+Defined in: [src/lib/workflow/types.ts:63](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/workflow/types.ts#L63)
 
 ## Indexable
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/workflow/types.ts:63](https://github.com/rjmad1/CareerPrope
 
 > **candidateId**: `string`
 
-Defined in: [src/lib/workflow/types.ts:65](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L65)
+Defined in: [src/lib/workflow/types.ts:65](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/workflow/types.ts#L65)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [src/lib/workflow/types.ts:65](https://github.com/rjmad1/CareerPrope
 
 > `optional` **companyName?**: `string`
 
-Defined in: [src/lib/workflow/types.ts:67](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L67)
+Defined in: [src/lib/workflow/types.ts:67](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/workflow/types.ts#L67)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [src/lib/workflow/types.ts:67](https://github.com/rjmad1/CareerPrope
 
 > `optional` **jobId?**: `string`
 
-Defined in: [src/lib/workflow/types.ts:66](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L66)
+Defined in: [src/lib/workflow/types.ts:66](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/workflow/types.ts#L66)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [src/lib/workflow/types.ts:66](https://github.com/rjmad1/CareerPrope
 
 > `optional` **jobStage?**: `string`
 
-Defined in: [src/lib/workflow/types.ts:69](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L69)
+Defined in: [src/lib/workflow/types.ts:69](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/workflow/types.ts#L69)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [src/lib/workflow/types.ts:69](https://github.com/rjmad1/CareerPrope
 
 > `optional` **jobTitle?**: `string`
 
-Defined in: [src/lib/workflow/types.ts:68](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L68)
+Defined in: [src/lib/workflow/types.ts:68](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/workflow/types.ts#L68)
 
 ***
 
@@ -58,4 +58,4 @@ Defined in: [src/lib/workflow/types.ts:68](https://github.com/rjmad1/CareerPrope
 
 > **userId**: `string`
 
-Defined in: [src/lib/workflow/types.ts:64](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/workflow/types.ts#L64)
+Defined in: [src/lib/workflow/types.ts:64](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/workflow/types.ts#L64)

@@ -8,7 +8,7 @@
 
 > **GET**(`_request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `candidateId`: `string`; `email`: `string`; `extractionQuality`: \{ `documentCount`: `number`; `lastExtraction`: `Date`; \}; `name`: `string`; `recentAchievements`: `object`[]; `topSkills`: `object`[]; \}\>\>
 
-Defined in: [src/app/api/profile/route.ts:12](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/app/api/profile/route.ts#L12)
+Defined in: [src/app/api/profile/route.ts:12](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/app/api/profile/route.ts#L12)
 
 GET /api/profile
 Fetch the authenticated user's profile summary.

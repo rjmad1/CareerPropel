@@ -6,7 +6,7 @@
 
 # Interface: SwimlaneProps
 
-Defined in: [src/components/Kanban/Swimlane.tsx:7](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/Swimlane.tsx#L7)
+Defined in: [src/components/Kanban/Swimlane.tsx:7](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/Kanban/Swimlane.tsx#L7)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:7](https://github.com/rjmad1/Car
 
 > **config**: [`SwimlaneConfig`](SwimlaneConfig.md)
 
-Defined in: [src/components/Kanban/Swimlane.tsx:9](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/Swimlane.tsx#L9)
+Defined in: [src/components/Kanban/Swimlane.tsx:9](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/Kanban/Swimlane.tsx#L9)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:9](https://github.com/rjmad1/Car
 
 > `optional` **isLoading?**: `boolean`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:11](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/Swimlane.tsx#L11)
+Defined in: [src/components/Kanban/Swimlane.tsx:11](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/Kanban/Swimlane.tsx#L11)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:11](https://github.com/rjmad1/Ca
 
 > **jobs**: [`Job`](Job-1.md)[]
 
-Defined in: [src/components/Kanban/Swimlane.tsx:10](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/Swimlane.tsx#L10)
+Defined in: [src/components/Kanban/Swimlane.tsx:10](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/Kanban/Swimlane.tsx#L10)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:10](https://github.com/rjmad1/Ca
 
 > `optional` **onJobClick?**: (`job`) => `void`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:13](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/Swimlane.tsx#L13)
+Defined in: [src/components/Kanban/Swimlane.tsx:13](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/Kanban/Swimlane.tsx#L13)
 
 #### Parameters
 
@@ -56,7 +56,7 @@ Defined in: [src/components/Kanban/Swimlane.tsx:13](https://github.com/rjmad1/Ca
 
 > `optional` **onJobDrop?**: (`jobId`, `targetStage`) => `void`
 
-Defined in: [src/components/Kanban/Swimlane.tsx:12](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/Swimlane.tsx#L12)
+Defined in: [src/components/Kanban/Swimlane.tsx:12](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/Kanban/Swimlane.tsx#L12)
 
 #### Parameters
 
@@ -78,4 +78,4 @@ Defined in: [src/components/Kanban/Swimlane.tsx:12](https://github.com/rjmad1/Ca
 
 > **stage**: [`JobStage`](../type-aliases/JobStage-1.md)
 
-Defined in: [src/components/Kanban/Swimlane.tsx:8](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Kanban/Swimlane.tsx#L8)
+Defined in: [src/components/Kanban/Swimlane.tsx:8](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/Kanban/Swimlane.tsx#L8)

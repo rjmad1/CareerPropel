@@ -8,7 +8,7 @@
 
 > **useTypingIndicator**(`jobId`): `object`
 
-Defined in: [src/hooks/useSocket.ts:194](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useSocket.ts#L194)
+Defined in: [src/hooks/useSocket.ts:194](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/hooks/useSocket.ts#L194)
 
 Hook for real-time typing indicators
 

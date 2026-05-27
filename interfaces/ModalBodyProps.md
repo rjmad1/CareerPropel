@@ -6,7 +6,7 @@
 
 # Interface: ModalBodyProps
 
-Defined in: [src/components/ui/Modal.tsx:107](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/ui/Modal.tsx#L107)
+Defined in: [src/components/ui/Modal.tsx:107](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/ui/Modal.tsx#L107)
 
 ## Extends
 
@@ -967,7 +967,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2953
 
 > **children**: `ReactNode`
 
-Defined in: [src/components/ui/Modal.tsx:108](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/ui/Modal.tsx#L108)
+Defined in: [src/components/ui/Modal.tsx:108](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/ui/Modal.tsx#L108)
 
 #### Overrides
 

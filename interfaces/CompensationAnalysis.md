@@ -6,7 +6,7 @@
 
 # Interface: CompensationAnalysis
 
-Defined in: [src/lib/analytics/types.ts:71](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L71)
+Defined in: [src/lib/analytics/types.ts:71](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L71)
 
 ## Extended by
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/analytics/types.ts:71](https://github.com/rjmad1/CareerProp
 
 > **benchmarkNote**: `string`
 
-Defined in: [src/lib/analytics/types.ts:77](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L77)
+Defined in: [src/lib/analytics/types.ts:77](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L77)
 
 Always present — reminds users that benchmarks are estimates.
 
@@ -28,7 +28,7 @@ Always present — reminds users that benchmarks are estimates.
 
 > **negotiationOutcomes**: [`NegotiationOutcome`](NegotiationOutcome.md)[]
 
-Defined in: [src/lib/analytics/types.ts:75](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L75)
+Defined in: [src/lib/analytics/types.ts:75](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L75)
 
 ***
 
@@ -36,7 +36,7 @@ Defined in: [src/lib/analytics/types.ts:75](https://github.com/rjmad1/CareerProp
 
 > **offers**: [`OfferSummary`](OfferSummary.md)[]
 
-Defined in: [src/lib/analytics/types.ts:72](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L72)
+Defined in: [src/lib/analytics/types.ts:72](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L72)
 
 ***
 
@@ -44,7 +44,7 @@ Defined in: [src/lib/analytics/types.ts:72](https://github.com/rjmad1/CareerProp
 
 > **percentileEstimate**: [`ScoredMetric`](ScoredMetric.md)\<`number` \| `null`\>
 
-Defined in: [src/lib/analytics/types.ts:74](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L74)
+Defined in: [src/lib/analytics/types.ts:74](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L74)
 
 ***
 
@@ -52,4 +52,4 @@ Defined in: [src/lib/analytics/types.ts:74](https://github.com/rjmad1/CareerProp
 
 > **trajectory**: [`ScoredMetric`](ScoredMetric.md)\<[`CompensationPoint`](CompensationPoint.md)[]\>
 
-Defined in: [src/lib/analytics/types.ts:73](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L73)
+Defined in: [src/lib/analytics/types.ts:73](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L73)

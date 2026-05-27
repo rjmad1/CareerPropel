@@ -6,7 +6,7 @@
 
 # Interface: WeaknessAssessment
 
-Defined in: [src/types/preparation.ts:336](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L336)
+Defined in: [src/types/preparation.ts:336](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/preparation.ts#L336)
 
 Weakness detection and remediation
 
@@ -16,7 +16,7 @@ Weakness detection and remediation
 
 > **detectedAt**: `Date`
 
-Defined in: [src/types/preparation.ts:338](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L338)
+Defined in: [src/types/preparation.ts:338](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/preparation.ts#L338)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/preparation.ts:338](https://github.com/rjmad1/CareerPrope
 
 > `optional` **improvementPlan?**: [`ImprovementPlan`](ImprovementPlan.md)
 
-Defined in: [src/types/preparation.ts:342](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L342)
+Defined in: [src/types/preparation.ts:342](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/preparation.ts#L342)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/preparation.ts:342](https://github.com/rjmad1/CareerPrope
 
 > **jobId**: `string`
 
-Defined in: [src/types/preparation.ts:337](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L337)
+Defined in: [src/types/preparation.ts:337](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/preparation.ts#L337)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/preparation.ts:337](https://github.com/rjmad1/CareerPrope
 
 > **overallWeaknessSeverity**: `number`
 
-Defined in: [src/types/preparation.ts:340](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L340)
+Defined in: [src/types/preparation.ts:340](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/preparation.ts#L340)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/preparation.ts:340](https://github.com/rjmad1/CareerPrope
 
 > **recommendedFocusAreas**: `string`[]
 
-Defined in: [src/types/preparation.ts:341](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L341)
+Defined in: [src/types/preparation.ts:341](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/preparation.ts#L341)
 
 ***
 
@@ -56,4 +56,4 @@ Defined in: [src/types/preparation.ts:341](https://github.com/rjmad1/CareerPrope
 
 > **weaknesses**: [`Weakness`](Weakness.md)[]
 
-Defined in: [src/types/preparation.ts:339](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/preparation.ts#L339)
+Defined in: [src/types/preparation.ts:339](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/preparation.ts#L339)

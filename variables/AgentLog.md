@@ -8,4 +8,4 @@
 
 > `const` **AgentLog**: `React.FC`\<`AgentLogComponentProps`\>
 
-Defined in: [src/components/Agent/AgentLog.tsx:25](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/Agent/AgentLog.tsx#L25)
+Defined in: [src/components/Agent/AgentLog.tsx:25](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/Agent/AgentLog.tsx#L25)

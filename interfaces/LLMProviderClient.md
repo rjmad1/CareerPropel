@@ -6,7 +6,7 @@
 
 # Interface: LLMProviderClient
 
-Defined in: [src/lib/llm/provider.ts:34](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/provider.ts#L34)
+Defined in: [src/lib/llm/provider.ts:34](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/llm/provider.ts#L34)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/llm/provider.ts:34](https://github.com/rjmad1/CareerPropel/
 
 > **name**: [`LLMProviderName`](../type-aliases/LLMProviderName.md)
 
-Defined in: [src/lib/llm/provider.ts:35](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/provider.ts#L35)
+Defined in: [src/lib/llm/provider.ts:35](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/llm/provider.ts#L35)
 
 ## Methods
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/llm/provider.ts:35](https://github.com/rjmad1/CareerPropel/
 
 > **callLLM**(`messages`, `options?`): `Promise`\<[`LLMCallResult`](LLMCallResult-1.md)\>
 
-Defined in: [src/lib/llm/provider.ts:36](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/provider.ts#L36)
+Defined in: [src/lib/llm/provider.ts:36](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/llm/provider.ts#L36)
 
 #### Parameters
 
@@ -44,7 +44,7 @@ Defined in: [src/lib/llm/provider.ts:36](https://github.com/rjmad1/CareerPropel/
 
 > **getDefaultModel**(): `string`
 
-Defined in: [src/lib/llm/provider.ts:41](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/provider.ts#L41)
+Defined in: [src/lib/llm/provider.ts:41](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/llm/provider.ts#L41)
 
 #### Returns
 
@@ -56,7 +56,7 @@ Defined in: [src/lib/llm/provider.ts:41](https://github.com/rjmad1/CareerPropel/
 
 > **streamLLM**(`messages`, `options?`): `AsyncIterable`\<`string`\>
 
-Defined in: [src/lib/llm/provider.ts:37](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/provider.ts#L37)
+Defined in: [src/lib/llm/provider.ts:37](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/llm/provider.ts#L37)
 
 #### Parameters
 

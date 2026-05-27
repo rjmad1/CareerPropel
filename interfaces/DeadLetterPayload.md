@@ -6,7 +6,7 @@
 
 # Interface: DeadLetterPayload
 
-Defined in: [src/lib/queue/dead-letter.ts:4](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/dead-letter.ts#L4)
+Defined in: [src/lib/queue/dead-letter.ts:4](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/queue/dead-letter.ts#L4)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/queue/dead-letter.ts:4](https://github.com/rjmad1/CareerPro
 
 > **agentType**: `string`
 
-Defined in: [src/lib/queue/dead-letter.ts:8](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/dead-letter.ts#L8)
+Defined in: [src/lib/queue/dead-letter.ts:8](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/queue/dead-letter.ts#L8)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/queue/dead-letter.ts:8](https://github.com/rjmad1/CareerPro
 
 > **attemptsMade**: `number`
 
-Defined in: [src/lib/queue/dead-letter.ts:11](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/dead-letter.ts#L11)
+Defined in: [src/lib/queue/dead-letter.ts:11](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/queue/dead-letter.ts#L11)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/queue/dead-letter.ts:11](https://github.com/rjmad1/CareerPr
 
 > `optional` **correlationId?**: `string`
 
-Defined in: [src/lib/queue/dead-letter.ts:12](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/dead-letter.ts#L12)
+Defined in: [src/lib/queue/dead-letter.ts:12](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/queue/dead-letter.ts#L12)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/queue/dead-letter.ts:12](https://github.com/rjmad1/CareerPr
 
 > **executionId**: `string`
 
-Defined in: [src/lib/queue/dead-letter.ts:5](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/dead-letter.ts#L5)
+Defined in: [src/lib/queue/dead-letter.ts:5](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/queue/dead-letter.ts#L5)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/queue/dead-letter.ts:5](https://github.com/rjmad1/CareerPro
 
 > **failedAt**: `string`
 
-Defined in: [src/lib/queue/dead-letter.ts:9](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/dead-letter.ts#L9)
+Defined in: [src/lib/queue/dead-letter.ts:9](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/queue/dead-letter.ts#L9)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/queue/dead-letter.ts:9](https://github.com/rjmad1/CareerPro
 
 > **queueJobId**: `string`
 
-Defined in: [src/lib/queue/dead-letter.ts:6](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/dead-letter.ts#L6)
+Defined in: [src/lib/queue/dead-letter.ts:6](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/queue/dead-letter.ts#L6)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/queue/dead-letter.ts:6](https://github.com/rjmad1/CareerPro
 
 > **reason**: `string`
 
-Defined in: [src/lib/queue/dead-letter.ts:10](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/dead-letter.ts#L10)
+Defined in: [src/lib/queue/dead-letter.ts:10](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/queue/dead-letter.ts#L10)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/queue/dead-letter.ts:10](https://github.com/rjmad1/CareerPr
 
 > `optional` **requestId?**: `string`
 
-Defined in: [src/lib/queue/dead-letter.ts:13](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/dead-letter.ts#L13)
+Defined in: [src/lib/queue/dead-letter.ts:13](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/queue/dead-letter.ts#L13)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [src/lib/queue/dead-letter.ts:13](https://github.com/rjmad1/CareerPr
 
 > **userId**: `string`
 
-Defined in: [src/lib/queue/dead-letter.ts:7](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/queue/dead-letter.ts#L7)
+Defined in: [src/lib/queue/dead-letter.ts:7](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/queue/dead-letter.ts#L7)

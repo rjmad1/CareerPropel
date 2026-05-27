@@ -6,7 +6,7 @@
 
 # Interface: Alert
 
-Defined in: [src/lib/observability/alerts.ts:20](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/alerts.ts#L20)
+Defined in: [src/lib/observability/alerts.ts:20](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/alerts.ts#L20)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/observability/alerts.ts:20](https://github.com/rjmad1/Caree
 
 > **detail**: `string`
 
-Defined in: [src/lib/observability/alerts.ts:25](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/alerts.ts#L25)
+Defined in: [src/lib/observability/alerts.ts:25](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/alerts.ts#L25)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/observability/alerts.ts:25](https://github.com/rjmad1/Caree
 
 > **detectedAt**: `string`
 
-Defined in: [src/lib/observability/alerts.ts:28](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/alerts.ts#L28)
+Defined in: [src/lib/observability/alerts.ts:28](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/alerts.ts#L28)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/observability/alerts.ts:28](https://github.com/rjmad1/Caree
 
 > **domain**: `"provider"` \| `"queue"` \| `"worker"` \| `"runtime"` \| `"cost"`
 
-Defined in: [src/lib/observability/alerts.ts:23](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/alerts.ts#L23)
+Defined in: [src/lib/observability/alerts.ts:23](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/alerts.ts#L23)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/observability/alerts.ts:23](https://github.com/rjmad1/Caree
 
 > **id**: `string`
 
-Defined in: [src/lib/observability/alerts.ts:21](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/alerts.ts#L21)
+Defined in: [src/lib/observability/alerts.ts:21](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/alerts.ts#L21)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/observability/alerts.ts:21](https://github.com/rjmad1/Caree
 
 > **severity**: [`AlertSeverity`](../type-aliases/AlertSeverity.md)
 
-Defined in: [src/lib/observability/alerts.ts:22](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/alerts.ts#L22)
+Defined in: [src/lib/observability/alerts.ts:22](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/alerts.ts#L22)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/observability/alerts.ts:22](https://github.com/rjmad1/Caree
 
 > `optional` **threshold?**: `number`
 
-Defined in: [src/lib/observability/alerts.ts:27](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/alerts.ts#L27)
+Defined in: [src/lib/observability/alerts.ts:27](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/alerts.ts#L27)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/observability/alerts.ts:27](https://github.com/rjmad1/Caree
 
 > **title**: `string`
 
-Defined in: [src/lib/observability/alerts.ts:24](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/alerts.ts#L24)
+Defined in: [src/lib/observability/alerts.ts:24](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/alerts.ts#L24)
 
 ***
 
@@ -70,4 +70,4 @@ Defined in: [src/lib/observability/alerts.ts:24](https://github.com/rjmad1/Caree
 
 > `optional` **value?**: `number`
 
-Defined in: [src/lib/observability/alerts.ts:26](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/alerts.ts#L26)
+Defined in: [src/lib/observability/alerts.ts:26](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/alerts.ts#L26)

@@ -6,7 +6,7 @@
 
 # Interface: ProviderHealthReport
 
-Defined in: [src/lib/observability/provider-health.ts:85](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/provider-health.ts#L85)
+Defined in: [src/lib/observability/provider-health.ts:85](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/provider-health.ts#L85)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/observability/provider-health.ts:85](https://github.com/rjm
 
 > **assessedAt**: `string`
 
-Defined in: [src/lib/observability/provider-health.ts:95](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/provider-health.ts#L95)
+Defined in: [src/lib/observability/provider-health.ts:95](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/provider-health.ts#L95)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/observability/provider-health.ts:95](https://github.com/rjm
 
 > **degradationScore**: `number`
 
-Defined in: [src/lib/observability/provider-health.ts:88](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/provider-health.ts#L88)
+Defined in: [src/lib/observability/provider-health.ts:88](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/provider-health.ts#L88)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/observability/provider-health.ts:88](https://github.com/rjm
 
 > **failureRate**: `number`
 
-Defined in: [src/lib/observability/provider-health.ts:90](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/provider-health.ts#L90)
+Defined in: [src/lib/observability/provider-health.ts:90](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/provider-health.ts#L90)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/observability/provider-health.ts:90](https://github.com/rjm
 
 > **fallbackRate**: `number`
 
-Defined in: [src/lib/observability/provider-health.ts:92](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/provider-health.ts#L92)
+Defined in: [src/lib/observability/provider-health.ts:92](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/provider-health.ts#L92)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/observability/provider-health.ts:92](https://github.com/rjm
 
 > `optional` **lastFailureAt?**: `string`
 
-Defined in: [src/lib/observability/provider-health.ts:94](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/provider-health.ts#L94)
+Defined in: [src/lib/observability/provider-health.ts:94](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/provider-health.ts#L94)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/observability/provider-health.ts:94](https://github.com/rjm
 
 > **p95LatencyMs**: `number`
 
-Defined in: [src/lib/observability/provider-health.ts:93](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/provider-health.ts#L93)
+Defined in: [src/lib/observability/provider-health.ts:93](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/provider-health.ts#L93)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/observability/provider-health.ts:93](https://github.com/rjm
 
 > **providerId**: `string`
 
-Defined in: [src/lib/observability/provider-health.ts:86](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/provider-health.ts#L86)
+Defined in: [src/lib/observability/provider-health.ts:86](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/provider-health.ts#L86)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/observability/provider-health.ts:86](https://github.com/rjm
 
 > **recentObservations**: `number`
 
-Defined in: [src/lib/observability/provider-health.ts:89](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/provider-health.ts#L89)
+Defined in: [src/lib/observability/provider-health.ts:89](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/provider-health.ts#L89)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/lib/observability/provider-health.ts:89](https://github.com/rjm
 
 > **status**: [`ProviderHealthStatus`](../type-aliases/ProviderHealthStatus.md)
 
-Defined in: [src/lib/observability/provider-health.ts:87](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/provider-health.ts#L87)
+Defined in: [src/lib/observability/provider-health.ts:87](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/provider-health.ts#L87)
 
 ***
 
@@ -86,4 +86,4 @@ Defined in: [src/lib/observability/provider-health.ts:87](https://github.com/rjm
 
 > **timeoutRate**: `number`
 
-Defined in: [src/lib/observability/provider-health.ts:91](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/provider-health.ts#L91)
+Defined in: [src/lib/observability/provider-health.ts:91](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/provider-health.ts#L91)

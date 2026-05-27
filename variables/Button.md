@@ -8,7 +8,7 @@
 
 > `const` **Button**: `ForwardRefExoticComponent`\<[`ButtonProps`](../interfaces/ButtonProps.md) & `RefAttributes`\<`HTMLButtonElement`\>\>
 
-Defined in: [src/components/ui/Button.tsx:19](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/components/ui/Button.tsx#L19)
+Defined in: [src/components/ui/Button.tsx:19](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/ui/Button.tsx#L19)
 
 Button Component
 Primary action button with multiple variants and sizes.

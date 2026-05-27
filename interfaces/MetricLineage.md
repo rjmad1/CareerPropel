@@ -6,7 +6,7 @@
 
 # Interface: MetricLineage
 
-Defined in: [src/lib/analytics/governance.ts:107](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/governance.ts#L107)
+Defined in: [src/lib/analytics/governance.ts:107](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/governance.ts#L107)
 
 Records what data fed a computed metric — for transparency and auditability.
 
@@ -16,7 +16,7 @@ Records what data fed a computed metric — for transparency and auditability.
 
 > **computedAt**: `string`
 
-Defined in: [src/lib/analytics/governance.ts:110](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/governance.ts#L110)
+Defined in: [src/lib/analytics/governance.ts:110](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/governance.ts#L110)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/lib/analytics/governance.ts:110](https://github.com/rjmad1/Care
 
 > **limitations**: `string`[]
 
-Defined in: [src/lib/analytics/governance.ts:112](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/governance.ts#L112)
+Defined in: [src/lib/analytics/governance.ts:112](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/governance.ts#L112)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/lib/analytics/governance.ts:112](https://github.com/rjmad1/Care
 
 > **metric**: `string`
 
-Defined in: [src/lib/analytics/governance.ts:108](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/governance.ts#L108)
+Defined in: [src/lib/analytics/governance.ts:108](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/governance.ts#L108)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/lib/analytics/governance.ts:108](https://github.com/rjmad1/Care
 
 > **sampleSize**: `number`
 
-Defined in: [src/lib/analytics/governance.ts:111](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/governance.ts#L111)
+Defined in: [src/lib/analytics/governance.ts:111](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/governance.ts#L111)
 
 ***
 
@@ -48,4 +48,4 @@ Defined in: [src/lib/analytics/governance.ts:111](https://github.com/rjmad1/Care
 
 > **sources**: `string`[]
 
-Defined in: [src/lib/analytics/governance.ts:109](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/governance.ts#L109)
+Defined in: [src/lib/analytics/governance.ts:109](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/governance.ts#L109)

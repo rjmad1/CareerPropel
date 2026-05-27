@@ -8,7 +8,7 @@
 
 > **saveRestoration**(`routeKey`, `entry`): `void`
 
-Defined in: [src/lib/navigation/restoration.ts:36](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/navigation/restoration.ts#L36)
+Defined in: [src/lib/navigation/restoration.ts:36](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/navigation/restoration.ts#L36)
 
 Persist scroll position and optional payload for a route.
 

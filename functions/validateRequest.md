@@ -8,7 +8,7 @@
 
 > **validateRequest**\<`T`\>(`req`, `schema`): `Promise`\<\{ `data`: `ReturnType`\<`T`\[`"_output"`\]\>; `valid`: `true`; \} \| \{ `error`: [`ValidationError`](../classes/ValidationError.md); `valid`: `false`; \}\>
 
-Defined in: [src/app/api/middleware/validation.ts:10](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/app/api/middleware/validation.ts#L10)
+Defined in: [src/app/api/middleware/validation.ts:10](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/app/api/middleware/validation.ts#L10)
 
 Validate request body against Zod schema
 Returns properly typed data based on schema

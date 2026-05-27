@@ -6,7 +6,7 @@
 
 # Interface: CreateOfferInput
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:76](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useMutations.ts#L76)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:76](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/domains/jobs/hooks/useMutations.ts#L76)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/domains/jobs/hooks/useMutations.ts:76](https://github.com/rjmad
 
 > **baseSalary**: `number`
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:78](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useMutations.ts#L78)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:78](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/domains/jobs/hooks/useMutations.ts#L78)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/domains/jobs/hooks/useMutations.ts:78](https://github.com/rjmad
 
 > **bonusPercent**: `number`
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:79](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useMutations.ts#L79)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:79](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/domains/jobs/hooks/useMutations.ts#L79)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/domains/jobs/hooks/useMutations.ts:79](https://github.com/rjmad
 
 > **equity**: `string`
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:80](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useMutations.ts#L80)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:80](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/domains/jobs/hooks/useMutations.ts#L80)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/domains/jobs/hooks/useMutations.ts:80](https://github.com/rjmad
 
 > **jobId**: `string`
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:77](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useMutations.ts#L77)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:77](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/domains/jobs/hooks/useMutations.ts#L77)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/domains/jobs/hooks/useMutations.ts:77](https://github.com/rjmad
 
 > `optional` **notes?**: `string`
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:82](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useMutations.ts#L82)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:82](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/domains/jobs/hooks/useMutations.ts#L82)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/domains/jobs/hooks/useMutations.ts:82](https://github.com/rjmad
 
 > **startDate**: `string`
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:81](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/domains/jobs/hooks/useMutations.ts#L81)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:81](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/domains/jobs/hooks/useMutations.ts#L81)

@@ -6,7 +6,7 @@
 
 # Class: APIClient
 
-Defined in: [src/lib/api/client.ts:29](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L29)
+Defined in: [src/lib/api/client.ts:29](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L29)
 
 ## Constructors
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/api/client.ts:29](https://github.com/rjmad1/CareerPropel/bl
 
 > **new APIClient**(`baseURL?`): `APIClient`
 
-Defined in: [src/lib/api/client.ts:32](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L32)
+Defined in: [src/lib/api/client.ts:32](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L32)
 
 #### Parameters
 
@@ -32,7 +32,7 @@ Defined in: [src/lib/api/client.ts:32](https://github.com/rjmad1/CareerPropel/bl
 
 > **createJob**(`job`): `Promise`\<`any`\>
 
-Defined in: [src/lib/api/client.ts:134](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L134)
+Defined in: [src/lib/api/client.ts:134](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L134)
 
 #### Parameters
 
@@ -50,7 +50,7 @@ Defined in: [src/lib/api/client.ts:134](https://github.com/rjmad1/CareerPropel/b
 
 > **deleteJob**(`id`): `Promise`\<`void`\>
 
-Defined in: [src/lib/api/client.ts:142](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L142)
+Defined in: [src/lib/api/client.ts:142](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L142)
 
 #### Parameters
 
@@ -68,7 +68,7 @@ Defined in: [src/lib/api/client.ts:142](https://github.com/rjmad1/CareerPropel/b
 
 > **getAgentLogs**(`agentId`): `Promise`\<`string`[]\>
 
-Defined in: [src/lib/api/client.ts:155](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L155)
+Defined in: [src/lib/api/client.ts:155](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L155)
 
 #### Parameters
 
@@ -86,7 +86,7 @@ Defined in: [src/lib/api/client.ts:155](https://github.com/rjmad1/CareerPropel/b
 
 > **getAgents**(): `Promise`\<`any`[]\>
 
-Defined in: [src/lib/api/client.ts:151](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L151)
+Defined in: [src/lib/api/client.ts:151](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L151)
 
 #### Returns
 
@@ -98,7 +98,7 @@ Defined in: [src/lib/api/client.ts:151](https://github.com/rjmad1/CareerPropel/b
 
 > **getDocuments**(): `Promise`\<`any`[]\>
 
-Defined in: [src/lib/api/client.ts:180](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L180)
+Defined in: [src/lib/api/client.ts:180](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L180)
 
 #### Returns
 
@@ -110,7 +110,7 @@ Defined in: [src/lib/api/client.ts:180](https://github.com/rjmad1/CareerPropel/b
 
 > **getJobById**(`id`): `Promise`\<`any`\>
 
-Defined in: [src/lib/api/client.ts:130](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L130)
+Defined in: [src/lib/api/client.ts:130](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L130)
 
 #### Parameters
 
@@ -128,7 +128,7 @@ Defined in: [src/lib/api/client.ts:130](https://github.com/rjmad1/CareerPropel/b
 
 > **getJobs**(`filters?`): `Promise`\<`any`[]\>
 
-Defined in: [src/lib/api/client.ts:126](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L126)
+Defined in: [src/lib/api/client.ts:126](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L126)
 
 #### Parameters
 
@@ -146,7 +146,7 @@ Defined in: [src/lib/api/client.ts:126](https://github.com/rjmad1/CareerPropel/b
 
 > **getUserProfile**(): `Promise`\<`any`\>
 
-Defined in: [src/lib/api/client.ts:164](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L164)
+Defined in: [src/lib/api/client.ts:164](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L164)
 
 #### Returns
 
@@ -158,7 +158,7 @@ Defined in: [src/lib/api/client.ts:164](https://github.com/rjmad1/CareerPropel/b
 
 > **moveJob**(`id`, `stage`): `Promise`\<`any`\>
 
-Defined in: [src/lib/api/client.ts:146](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L146)
+Defined in: [src/lib/api/client.ts:146](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L146)
 
 #### Parameters
 
@@ -180,7 +180,7 @@ Defined in: [src/lib/api/client.ts:146](https://github.com/rjmad1/CareerPropel/b
 
 > **pauseAgent**(`agentId`): `Promise`\<`any`\>
 
-Defined in: [src/lib/api/client.ts:159](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L159)
+Defined in: [src/lib/api/client.ts:159](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L159)
 
 #### Parameters
 
@@ -198,7 +198,7 @@ Defined in: [src/lib/api/client.ts:159](https://github.com/rjmad1/CareerPropel/b
 
 > **request**\<`T`\>(`method`, `path`, `options?`): `Promise`\<`T`\>
 
-Defined in: [src/lib/api/client.ts:60](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L60)
+Defined in: [src/lib/api/client.ts:60](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L60)
 
 #### Type Parameters
 
@@ -230,7 +230,7 @@ Defined in: [src/lib/api/client.ts:60](https://github.com/rjmad1/CareerPropel/bl
 
 > **updateJob**(`id`, `updates`): `Promise`\<`any`\>
 
-Defined in: [src/lib/api/client.ts:138](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L138)
+Defined in: [src/lib/api/client.ts:138](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L138)
 
 #### Parameters
 
@@ -252,7 +252,7 @@ Defined in: [src/lib/api/client.ts:138](https://github.com/rjmad1/CareerPropel/b
 
 > **updateProfile**(`updates`): `Promise`\<`any`\>
 
-Defined in: [src/lib/api/client.ts:168](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L168)
+Defined in: [src/lib/api/client.ts:168](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L168)
 
 #### Parameters
 
@@ -270,7 +270,7 @@ Defined in: [src/lib/api/client.ts:168](https://github.com/rjmad1/CareerPropel/b
 
 > **uploadDocument**(`file`, `jobId?`): `Promise`\<`any`\>
 
-Defined in: [src/lib/api/client.ts:173](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/api/client.ts#L173)
+Defined in: [src/lib/api/client.ts:173](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L173)
 
 #### Parameters
 

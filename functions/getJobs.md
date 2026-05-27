@@ -8,7 +8,7 @@
 
 > **getJobs**(`userId`, `query`): `Promise`\<\{ `data`: `object` & `object`[]; `pagination`: \{ `hasMore`: `boolean`; `limit`: `number`; `offset`: `number`; `total`: `number`; \}; \}\>
 
-Defined in: [src/lib/db/jobs.ts:10](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/db/jobs.ts#L10)
+Defined in: [src/lib/db/jobs.ts:10](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/db/jobs.ts#L10)
 
 Get all jobs for a user with filtering, sorting, and pagination
 

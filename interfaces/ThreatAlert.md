@@ -6,7 +6,7 @@
 
 # Interface: ThreatAlert
 
-Defined in: [src/lib/security/threatDetection.ts:3](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/security/threatDetection.ts#L3)
+Defined in: [src/lib/security/threatDetection.ts:3](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/security/threatDetection.ts#L3)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/security/threatDetection.ts:3](https://github.com/rjmad1/Ca
 
 > **details**: `any`
 
-Defined in: [src/lib/security/threatDetection.ts:7](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/security/threatDetection.ts#L7)
+Defined in: [src/lib/security/threatDetection.ts:7](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/security/threatDetection.ts#L7)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/security/threatDetection.ts:7](https://github.com/rjmad1/Ca
 
 > **message**: `string`
 
-Defined in: [src/lib/security/threatDetection.ts:6](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/security/threatDetection.ts#L6)
+Defined in: [src/lib/security/threatDetection.ts:6](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/security/threatDetection.ts#L6)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/security/threatDetection.ts:6](https://github.com/rjmad1/Ca
 
 > **severity**: `"LOW"` \| `"MEDIUM"` \| `"HIGH"` \| `"CRITICAL"`
 
-Defined in: [src/lib/security/threatDetection.ts:5](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/security/threatDetection.ts#L5)
+Defined in: [src/lib/security/threatDetection.ts:5](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/security/threatDetection.ts#L5)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/lib/security/threatDetection.ts:5](https://github.com/rjmad1/Ca
 
 > **type**: `string`
 
-Defined in: [src/lib/security/threatDetection.ts:4](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/security/threatDetection.ts#L4)
+Defined in: [src/lib/security/threatDetection.ts:4](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/security/threatDetection.ts#L4)

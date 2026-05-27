@@ -8,7 +8,7 @@
 
 > **isScrapingDisabled**(): `boolean`
 
-Defined in: [src/lib/scraping/provider.ts:50](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/scraping/provider.ts#L50)
+Defined in: [src/lib/scraping/provider.ts:50](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/scraping/provider.ts#L50)
 
 Helper to check if a global kill switch is enabled for the scraping subsystem.
 

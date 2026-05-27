@@ -8,7 +8,7 @@
 
 > **FailureType** = `"provider_timeout"` \| `"provider_rate_limit"` \| `"provider_circuit_open"` \| `"provider_api_error"` \| `"malformed_output"` \| `"validation_failure"` \| `"persistence_failure"` \| `"redis_disconnect"` \| `"auth_failure"` \| `"concurrency_limit"` \| `"execution_timeout"` \| `"execution_bug"` \| `"unknown"`
 
-Defined in: [src/lib/observability/failure-classification.ts:10](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/failure-classification.ts#L10)
+Defined in: [src/lib/observability/failure-classification.ts:10](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/failure-classification.ts#L10)
 
 Deterministic failure taxonomy for CareerPropel.
 

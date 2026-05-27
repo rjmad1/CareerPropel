@@ -6,7 +6,7 @@
 
 # Interface: OpportunityQualityScore
 
-Defined in: [src/lib/analytics/types.ts:41](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L41)
+Defined in: [src/lib/analytics/types.ts:41](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L41)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/types.ts:41](https://github.com/rjmad1/CareerProp
 
 > **alerts**: [`OpportunityAlert`](OpportunityAlert.md)[]
 
-Defined in: [src/lib/analytics/types.ts:48](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L48)
+Defined in: [src/lib/analytics/types.ts:48](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L48)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/types.ts:48](https://github.com/rjmad1/CareerProp
 
 > **company**: `string`
 
-Defined in: [src/lib/analytics/types.ts:44](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L44)
+Defined in: [src/lib/analytics/types.ts:44](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L44)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/analytics/types.ts:44](https://github.com/rjmad1/CareerProp
 
 > **jobId**: `string`
 
-Defined in: [src/lib/analytics/types.ts:42](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L42)
+Defined in: [src/lib/analytics/types.ts:42](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L42)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/analytics/types.ts:42](https://github.com/rjmad1/CareerProp
 
 > **qualityScore**: `number`
 
-Defined in: [src/lib/analytics/types.ts:45](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L45)
+Defined in: [src/lib/analytics/types.ts:45](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L45)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/analytics/types.ts:45](https://github.com/rjmad1/CareerProp
 
 > **recommendation**: `"prioritize"` \| `"maintain"` \| `"deprioritize"` \| `"reconsider"`
 
-Defined in: [src/lib/analytics/types.ts:49](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L49)
+Defined in: [src/lib/analytics/types.ts:49](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L49)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/analytics/types.ts:49](https://github.com/rjmad1/CareerProp
 
 > **signals**: [`OpportunitySignal`](OpportunitySignal.md)[]
 
-Defined in: [src/lib/analytics/types.ts:47](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L47)
+Defined in: [src/lib/analytics/types.ts:47](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L47)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/analytics/types.ts:47](https://github.com/rjmad1/CareerProp
 
 > **successProbability**: [`ScoredMetric`](ScoredMetric.md)\<`number`\>
 
-Defined in: [src/lib/analytics/types.ts:46](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L46)
+Defined in: [src/lib/analytics/types.ts:46](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L46)
 
 ***
 
@@ -70,4 +70,4 @@ Defined in: [src/lib/analytics/types.ts:46](https://github.com/rjmad1/CareerProp
 
 > **title**: `string`
 
-Defined in: [src/lib/analytics/types.ts:43](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/analytics/types.ts#L43)
+Defined in: [src/lib/analytics/types.ts:43](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L43)

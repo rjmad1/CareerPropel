@@ -8,7 +8,7 @@
 
 > **generateResumeHtml**(`data`): `string`
 
-Defined in: [src/lib/document/compile.ts:67](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/document/compile.ts#L67)
+Defined in: [src/lib/document/compile.ts:67](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/compile.ts#L67)
 
 Builds a state-of-the-art styled A4 HTML template for printing the resume.
 

@@ -6,7 +6,7 @@
 
 # Interface: DocumentUploadInput
 
-Defined in: [src/hooks/useDocuments.ts:35](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useDocuments.ts#L35)
+Defined in: [src/hooks/useDocuments.ts:35](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/hooks/useDocuments.ts#L35)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/hooks/useDocuments.ts:35](https://github.com/rjmad1/CareerPrope
 
 > `optional` **content?**: `string`
 
-Defined in: [src/hooks/useDocuments.ts:38](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useDocuments.ts#L38)
+Defined in: [src/hooks/useDocuments.ts:38](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/hooks/useDocuments.ts#L38)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/hooks/useDocuments.ts:38](https://github.com/rjmad1/CareerPrope
 
 > `optional` **fileUrl?**: `string`
 
-Defined in: [src/hooks/useDocuments.ts:39](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useDocuments.ts#L39)
+Defined in: [src/hooks/useDocuments.ts:39](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/hooks/useDocuments.ts#L39)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/hooks/useDocuments.ts:39](https://github.com/rjmad1/CareerPrope
 
 > `optional` **jobId?**: `string`
 
-Defined in: [src/hooks/useDocuments.ts:40](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useDocuments.ts#L40)
+Defined in: [src/hooks/useDocuments.ts:40](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/hooks/useDocuments.ts#L40)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/hooks/useDocuments.ts:40](https://github.com/rjmad1/CareerPrope
 
 > **title**: `string`
 
-Defined in: [src/hooks/useDocuments.ts:37](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useDocuments.ts#L37)
+Defined in: [src/hooks/useDocuments.ts:37](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/hooks/useDocuments.ts#L37)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/hooks/useDocuments.ts:37](https://github.com/rjmad1/CareerPrope
 
 > **type**: `"other"` \| `"resume"` \| `"cover_letter"` \| `"portfolio"` \| `"transcript"`
 
-Defined in: [src/hooks/useDocuments.ts:36](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useDocuments.ts#L36)
+Defined in: [src/hooks/useDocuments.ts:36](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/hooks/useDocuments.ts#L36)

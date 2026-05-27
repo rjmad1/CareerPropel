@@ -6,7 +6,7 @@
 
 # Class: UnauthorizedError
 
-Defined in: [src/app/api/middleware/auth.ts:76](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/app/api/middleware/auth.ts#L76)
+Defined in: [src/app/api/middleware/auth.ts:76](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/app/api/middleware/auth.ts#L76)
 
 Custom error classes
 
@@ -20,7 +20,7 @@ Custom error classes
 
 > **new UnauthorizedError**(`message?`): `UnauthorizedError`
 
-Defined in: [src/app/api/middleware/auth.ts:77](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/app/api/middleware/auth.ts#L77)
+Defined in: [src/app/api/middleware/auth.ts:77](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/app/api/middleware/auth.ts#L77)
 
 #### Parameters
 

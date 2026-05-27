@@ -8,7 +8,7 @@
 
 > **NodeType** = `"skill"` \| `"achievement"` \| `"project"` \| `"company"`
 
-Defined in: [src/types/knowledge-graph.ts:8](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/types/knowledge-graph.ts#L8)
+Defined in: [src/types/knowledge-graph.ts:8](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/knowledge-graph.ts#L8)
 
 Knowledge Graph and Document Parsing Type Definitions
 

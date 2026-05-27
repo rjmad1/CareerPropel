@@ -8,7 +8,7 @@
 
 > **GET**(`_request`, `__namedParameters`): `Promise`\<`Response`\>
 
-Defined in: [src/app/api/interview-prep/\[jobId\]/events/route.ts:106](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/app/api/interview-prep/[jobId]/events/route.ts#L106)
+Defined in: [src/app/api/interview-prep/\[jobId\]/events/route.ts:106](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/app/api/interview-prep/[jobId]/events/route.ts#L106)
 
 ## Parameters
 

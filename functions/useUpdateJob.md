@@ -8,7 +8,7 @@
 
 > **useUpdateJob**(`jobId`): `UseMutationResult`\<[`Job`](../interfaces/Job-1.md), `Error`, [`UpdateJobInput`](../interfaces/UpdateJobInput.md), `unknown`\>
 
-Defined in: [src/hooks/useJobs.ts:91](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/hooks/useJobs.ts#L91)
+Defined in: [src/hooks/useJobs.ts:91](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/hooks/useJobs.ts#L91)
 
 ## Parameters
 

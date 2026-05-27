@@ -8,7 +8,7 @@
 
 > **disconnectOutlook**(`candidateId`): `Promise`\<`void`\>
 
-Defined in: [src/lib/calendar/outlookCalendar.ts:201](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/calendar/outlookCalendar.ts#L201)
+Defined in: [src/lib/calendar/outlookCalendar.ts:201](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/calendar/outlookCalendar.ts#L201)
 
 ## Parameters
 

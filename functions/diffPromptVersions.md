@@ -8,7 +8,7 @@
 
 > **diffPromptVersions**(`a`, `b`): `object`
 
-Defined in: [src/lib/governance/promptRegistry.ts:148](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/promptRegistry.ts#L148)
+Defined in: [src/lib/governance/promptRegistry.ts:148](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/promptRegistry.ts#L148)
 
 Diff two prompt versions for debugging/audit.
 

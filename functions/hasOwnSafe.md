@@ -8,7 +8,7 @@
 
 > **hasOwnSafe**\<`T`, `K`\>(`obj`, `key`): `key is K & keyof T`
 
-Defined in: [src/lib/security/objectGuards.ts:7](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/security/objectGuards.ts#L7)
+Defined in: [src/lib/security/objectGuards.ts:7](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/security/objectGuards.ts#L7)
 
 ## Type Parameters
 

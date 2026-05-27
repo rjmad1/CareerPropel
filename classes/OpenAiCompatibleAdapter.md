@@ -6,7 +6,7 @@
 
 # Class: OpenAiCompatibleAdapter
 
-Defined in: [src/lib/llm/orchestrator.ts:135](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/orchestrator.ts#L135)
+Defined in: [src/lib/llm/orchestrator.ts:135](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/llm/orchestrator.ts#L135)
 
 ## Implements
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/llm/orchestrator.ts:135](https://github.com/rjmad1/CareerPr
 
 > **new OpenAiCompatibleAdapter**(`name`, `defaultBaseUrl`, `apiKeyEnvName`): `OpenAiCompatibleAdapter`
 
-Defined in: [src/lib/llm/orchestrator.ts:136](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/orchestrator.ts#L136)
+Defined in: [src/lib/llm/orchestrator.ts:136](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/llm/orchestrator.ts#L136)
 
 #### Parameters
 
@@ -44,7 +44,7 @@ Defined in: [src/lib/llm/orchestrator.ts:136](https://github.com/rjmad1/CareerPr
 
 > **name**: `string`
 
-Defined in: [src/lib/llm/orchestrator.ts:137](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/orchestrator.ts#L137)
+Defined in: [src/lib/llm/orchestrator.ts:137](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/llm/orchestrator.ts#L137)
 
 #### Implementation of
 
@@ -56,7 +56,7 @@ Defined in: [src/lib/llm/orchestrator.ts:137](https://github.com/rjmad1/CareerPr
 
 > **call**(`messages`, `options`): `Promise`\<[`LLMCallResult`](../interfaces/LLMCallResult.md)\>
 
-Defined in: [src/lib/llm/orchestrator.ts:148](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/orchestrator.ts#L148)
+Defined in: [src/lib/llm/orchestrator.ts:148](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/llm/orchestrator.ts#L148)
 
 #### Parameters
 
@@ -82,7 +82,7 @@ Defined in: [src/lib/llm/orchestrator.ts:148](https://github.com/rjmad1/CareerPr
 
 > **stream**(`messages`, `options`): `AsyncIterable`\<`string`\>
 
-Defined in: [src/lib/llm/orchestrator.ts:192](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/llm/orchestrator.ts#L192)
+Defined in: [src/lib/llm/orchestrator.ts:192](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/llm/orchestrator.ts#L192)
 
 #### Parameters
 

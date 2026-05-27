@@ -8,7 +8,7 @@
 
 > **GET**(`_req`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `forecasts`: `object`[]; `generatedAt`: `string`; `usedPersonalData`: `boolean`; \}\>\>
 
-Defined in: [src/app/api/analytics/forecast/route.ts:43](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/app/api/analytics/forecast/route.ts#L43)
+Defined in: [src/app/api/analytics/forecast/route.ts:43](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/app/api/analytics/forecast/route.ts#L43)
 
 ## Parameters
 

@@ -6,7 +6,7 @@
 
 # Interface: ResumeLabUrlState
 
-Defined in: [src/lib/navigation/state.ts:161](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/navigation/state.ts#L161)
+Defined in: [src/lib/navigation/state.ts:161](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/navigation/state.ts#L161)
 
 Resume Lab URL state
 
@@ -16,7 +16,7 @@ Resume Lab URL state
 
 > **compare**: `boolean`
 
-Defined in: [src/lib/navigation/state.ts:164](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/navigation/state.ts#L164)
+Defined in: [src/lib/navigation/state.ts:164](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/navigation/state.ts#L164)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/lib/navigation/state.ts:164](https://github.com/rjmad1/CareerPr
 
 > **doc**: `string`
 
-Defined in: [src/lib/navigation/state.ts:163](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/navigation/state.ts#L163)
+Defined in: [src/lib/navigation/state.ts:163](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/navigation/state.ts#L163)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [src/lib/navigation/state.ts:163](https://github.com/rjmad1/CareerPr
 
 > **variant**: `string`
 
-Defined in: [src/lib/navigation/state.ts:162](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/navigation/state.ts#L162)
+Defined in: [src/lib/navigation/state.ts:162](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/navigation/state.ts#L162)

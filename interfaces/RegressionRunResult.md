@@ -6,7 +6,7 @@
 
 # Interface: RegressionRunResult
 
-Defined in: [src/lib/governance/regressionHarness.ts:31](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/regressionHarness.ts#L31)
+Defined in: [src/lib/governance/regressionHarness.ts:31](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L31)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:31](https://github.com/rjma
 
 > **agentType**: [`AgentType`](../type-aliases/AgentType.md)
 
-Defined in: [src/lib/governance/regressionHarness.ts:33](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/regressionHarness.ts#L33)
+Defined in: [src/lib/governance/regressionHarness.ts:33](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L33)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:33](https://github.com/rjma
 
 > **caseId**: `string`
 
-Defined in: [src/lib/governance/regressionHarness.ts:32](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/regressionHarness.ts#L32)
+Defined in: [src/lib/governance/regressionHarness.ts:32](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L32)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:32](https://github.com/rjma
 
 > **costScore**: `number`
 
-Defined in: [src/lib/governance/regressionHarness.ts:38](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/regressionHarness.ts#L38)
+Defined in: [src/lib/governance/regressionHarness.ts:38](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L38)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:38](https://github.com/rjma
 
 > **failures**: `string`[]
 
-Defined in: [src/lib/governance/regressionHarness.ts:41](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/regressionHarness.ts#L41)
+Defined in: [src/lib/governance/regressionHarness.ts:41](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L41)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:41](https://github.com/rjma
 
 > **hallucinationScore**: `number`
 
-Defined in: [src/lib/governance/regressionHarness.ts:37](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/regressionHarness.ts#L37)
+Defined in: [src/lib/governance/regressionHarness.ts:37](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L37)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:37](https://github.com/rjma
 
 > `optional` **latencyMs?**: `number`
 
-Defined in: [src/lib/governance/regressionHarness.ts:42](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/regressionHarness.ts#L42)
+Defined in: [src/lib/governance/regressionHarness.ts:42](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L42)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:42](https://github.com/rjma
 
 > **latencyScore**: `number`
 
-Defined in: [src/lib/governance/regressionHarness.ts:39](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/regressionHarness.ts#L39)
+Defined in: [src/lib/governance/regressionHarness.ts:39](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L39)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:39](https://github.com/rjma
 
 > **overallScore**: `number`
 
-Defined in: [src/lib/governance/regressionHarness.ts:40](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/regressionHarness.ts#L40)
+Defined in: [src/lib/governance/regressionHarness.ts:40](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L40)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:40](https://github.com/rjma
 
 > **passed**: `boolean`
 
-Defined in: [src/lib/governance/regressionHarness.ts:34](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/regressionHarness.ts#L34)
+Defined in: [src/lib/governance/regressionHarness.ts:34](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L34)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:34](https://github.com/rjma
 
 > **schemaScore**: `number`
 
-Defined in: [src/lib/governance/regressionHarness.ts:35](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/regressionHarness.ts#L35)
+Defined in: [src/lib/governance/regressionHarness.ts:35](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L35)
 
 ***
 
@@ -94,7 +94,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:35](https://github.com/rjma
 
 > **structuralScore**: `number`
 
-Defined in: [src/lib/governance/regressionHarness.ts:36](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/regressionHarness.ts#L36)
+Defined in: [src/lib/governance/regressionHarness.ts:36](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L36)
 
 ***
 
@@ -102,4 +102,4 @@ Defined in: [src/lib/governance/regressionHarness.ts:36](https://github.com/rjma
 
 > `optional` **tokenCount?**: `number`
 
-Defined in: [src/lib/governance/regressionHarness.ts:43](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/governance/regressionHarness.ts#L43)
+Defined in: [src/lib/governance/regressionHarness.ts:43](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L43)

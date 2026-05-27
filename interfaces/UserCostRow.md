@@ -6,7 +6,7 @@
 
 # Interface: UserCostRow
 
-Defined in: [src/lib/observability/cost-analytics.ts:42](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/cost-analytics.ts#L42)
+Defined in: [src/lib/observability/cost-analytics.ts:42](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/cost-analytics.ts#L42)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/observability/cost-analytics.ts:42](https://github.com/rjma
 
 > **estimatedUSD**: `number`
 
-Defined in: [src/lib/observability/cost-analytics.ts:46](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/cost-analytics.ts#L46)
+Defined in: [src/lib/observability/cost-analytics.ts:46](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/cost-analytics.ts#L46)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/observability/cost-analytics.ts:46](https://github.com/rjma
 
 > **executions**: `number`
 
-Defined in: [src/lib/observability/cost-analytics.ts:44](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/cost-analytics.ts#L44)
+Defined in: [src/lib/observability/cost-analytics.ts:44](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/cost-analytics.ts#L44)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/observability/cost-analytics.ts:44](https://github.com/rjma
 
 > **totalTokens**: `number`
 
-Defined in: [src/lib/observability/cost-analytics.ts:45](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/cost-analytics.ts#L45)
+Defined in: [src/lib/observability/cost-analytics.ts:45](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/cost-analytics.ts#L45)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/lib/observability/cost-analytics.ts:45](https://github.com/rjma
 
 > **userId**: `string`
 
-Defined in: [src/lib/observability/cost-analytics.ts:43](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/observability/cost-analytics.ts#L43)
+Defined in: [src/lib/observability/cost-analytics.ts:43](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/cost-analytics.ts#L43)

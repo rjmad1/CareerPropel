@@ -6,7 +6,7 @@
 
 # Interface: Breadcrumb
 
-Defined in: [src/lib/navigation/breadcrumbs.ts:13](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/navigation/breadcrumbs.ts#L13)
+Defined in: [src/lib/navigation/breadcrumbs.ts:13](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/navigation/breadcrumbs.ts#L13)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/navigation/breadcrumbs.ts:13](https://github.com/rjmad1/Car
 
 > **current**: `boolean`
 
-Defined in: [src/lib/navigation/breadcrumbs.ts:17](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/navigation/breadcrumbs.ts#L17)
+Defined in: [src/lib/navigation/breadcrumbs.ts:17](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/navigation/breadcrumbs.ts#L17)
 
 If true, this is the current (final) segment — not a link
 
@@ -24,7 +24,7 @@ If true, this is the current (final) segment — not a link
 
 > **href**: `string`
 
-Defined in: [src/lib/navigation/breadcrumbs.ts:15](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/navigation/breadcrumbs.ts#L15)
+Defined in: [src/lib/navigation/breadcrumbs.ts:15](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/navigation/breadcrumbs.ts#L15)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [src/lib/navigation/breadcrumbs.ts:15](https://github.com/rjmad1/Car
 
 > **label**: `string`
 
-Defined in: [src/lib/navigation/breadcrumbs.ts:14](https://github.com/rjmad1/CareerPropel/blob/6f11037d2e27aea9aee8d6e618e36db87eafc873/src/lib/navigation/breadcrumbs.ts#L14)
+Defined in: [src/lib/navigation/breadcrumbs.ts:14](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/navigation/breadcrumbs.ts#L14)
