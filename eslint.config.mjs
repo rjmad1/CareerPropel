@@ -1,20 +1,31 @@
-import nextConfig from 'eslint-config-next/core-web-vitals';
+import { FlatCompat } from '@eslint/eslintrc';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+import tsPlugin from '@typescript-eslint/eslint-plugin';
+import tsParser from '@typescript-eslint/parser';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const compat = new FlatCompat({ baseDirectory: __dirname });
 
 export default [
-  ...nextConfig,
+  ...compat.extends('next/core-web-vitals'),
   {
     files: ['src/**/*.{ts,tsx}'],
+    plugins: {
+      '@typescript-eslint': tsPlugin,
+    },
+    languageOptions: {
+      parser: tsParser,
+    },
     rules: {
       'prefer-const': 'warn',
       'no-var': 'warn',
       'react/no-unescaped-entities': 'warn',
       'react/jsx-no-target-blank': 'error',
-      // Downgraded from error: these async-setState-in-effect and ref patterns are
-      // widespread pre-existing patterns throughout the codebase and work correctly.
-      'react-hooks/set-state-in-effect': 'warn',
-      'react-hooks/immutability': 'warn',
-      'react-hooks/purity': 'warn',
-      'react-hooks/refs': 'warn',
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-require-imports': 'warn',
     },
   },
 ];
