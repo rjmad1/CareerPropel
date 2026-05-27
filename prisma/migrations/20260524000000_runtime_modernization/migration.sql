@@ -1,51 +1,26 @@
--- CreateTable
-CREATE TABLE "AgentExecution" (
-    "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "jobId" TEXT,
-    "agentType" TEXT NOT NULL,
-    "status" TEXT NOT NULL DEFAULT 'queued',
-    "input" TEXT,
-    "output" TEXT,
-    "errorMessage" TEXT,
-    "tokenCount" INTEGER,
-    "durationMs" INTEGER,
-    "queueJobId" TEXT,
-    "currentTask" TEXT,
-    "progress" INTEGER NOT NULL DEFAULT 0,
-    "attempts" INTEGER NOT NULL DEFAULT 0,
-    "providerId" TEXT,
-    "requestId" TEXT,
-    "correlationId" TEXT,
-    "metadata" JSONB,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "startedAt" TIMESTAMP(3),
-    "completedAt" TIMESTAMP(3),
-    "updatedAt" TIMESTAMP(3) NOT NULL,
+-- Runtime Modernization: extend AgentExecution, ToolCall, EventLog
+-- AgentExecution table already exists from reconcile_domain_model; use ADD COLUMN IF NOT EXISTS
 
-    CONSTRAINT "AgentExecution_pkey" PRIMARY KEY ("id")
-);
+-- Extend AgentExecution with queue/runtime fields
+ALTER TABLE "AgentExecution"
+    ADD COLUMN IF NOT EXISTS "jobId" TEXT,
+    ADD COLUMN IF NOT EXISTS "queueJobId" TEXT,
+    ADD COLUMN IF NOT EXISTS "currentTask" TEXT,
+    ADD COLUMN IF NOT EXISTS "progress" INTEGER NOT NULL DEFAULT 0,
+    ADD COLUMN IF NOT EXISTS "attempts" INTEGER NOT NULL DEFAULT 0,
+    ADD COLUMN IF NOT EXISTS "providerId" TEXT,
+    ADD COLUMN IF NOT EXISTS "requestId" TEXT,
+    ADD COLUMN IF NOT EXISTS "correlationId" TEXT,
+    ADD COLUMN IF NOT EXISTS "metadata" JSONB;
 
--- CreateTable
-CREATE TABLE "ToolCall" (
-    "id" TEXT NOT NULL,
-    "executionId" TEXT NOT NULL,
-    "toolName" TEXT NOT NULL,
-    "status" TEXT NOT NULL DEFAULT 'pending',
-    "input" JSONB,
-    "output" JSONB,
-    "error" TEXT,
-    "startedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "completedAt" TIMESTAMP(3),
-    "durationMs" INTEGER,
-    "tokens" INTEGER,
-    "metadata" JSONB,
+-- Extend ToolCall with additional tracking fields
+ALTER TABLE "ToolCall"
+    ADD COLUMN IF NOT EXISTS "toolName" TEXT,
+    ADD COLUMN IF NOT EXISTS "durationMs" INTEGER,
+    ADD COLUMN IF NOT EXISTS "tokens" INTEGER;
 
-    CONSTRAINT "ToolCall_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "EventLog" (
+-- Extend EventLog if table already exists; otherwise create it fresh
+CREATE TABLE IF NOT EXISTS "EventLog" (
     "id" TEXT NOT NULL,
     "executionId" TEXT NOT NULL,
     "level" TEXT NOT NULL,
@@ -56,24 +31,35 @@ CREATE TABLE "EventLog" (
     CONSTRAINT "EventLog_pkey" PRIMARY KEY ("id")
 );
 
--- CreateIndex
-CREATE INDEX "AgentExecution_userId_status_idx" ON "AgentExecution"("userId", "status");
-CREATE INDEX "AgentExecution_jobId_idx" ON "AgentExecution"("jobId");
-CREATE INDEX "AgentExecution_queueJobId_idx" ON "AgentExecution"("queueJobId");
-CREATE INDEX "AgentExecution_agentType_createdAt_idx" ON "AgentExecution"("agentType", "createdAt");
-CREATE INDEX "ToolCall_executionId_status_idx" ON "ToolCall"("executionId", "status");
-CREATE INDEX "ToolCall_toolName_idx" ON "ToolCall"("toolName");
-CREATE INDEX "EventLog_executionId_timestamp_idx" ON "EventLog"("executionId", "timestamp");
-CREATE INDEX "EventLog_level_timestamp_idx" ON "EventLog"("level", "timestamp");
+-- Add foreign key for Job → AgentExecution if missing
+DO $$ BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.table_constraints
+    WHERE constraint_name = 'AgentExecution_jobId_fkey'
+  ) THEN
+    ALTER TABLE "AgentExecution"
+    ADD CONSTRAINT "AgentExecution_jobId_fkey"
+    FOREIGN KEY ("jobId") REFERENCES "Job"("id")
+    ON DELETE SET NULL ON UPDATE CASCADE;
+  END IF;
+END $$;
 
--- AddForeignKey
-ALTER TABLE "ToolCall"
-ADD CONSTRAINT "ToolCall_executionId_fkey"
-FOREIGN KEY ("executionId") REFERENCES "AgentExecution"("id")
-ON DELETE CASCADE ON UPDATE CASCADE;
+-- CreateIndex (idempotent)
+CREATE INDEX IF NOT EXISTS "AgentExecution_queueJobId_idx" ON "AgentExecution"("queueJobId");
+CREATE INDEX IF NOT EXISTS "AgentExecution_agentType_createdAt_idx" ON "AgentExecution"("agentType", "createdAt");
+CREATE INDEX IF NOT EXISTS "ToolCall_toolName_idx" ON "ToolCall"("toolName");
+CREATE INDEX IF NOT EXISTS "EventLog_executionId_timestamp_idx" ON "EventLog"("executionId", "timestamp");
+CREATE INDEX IF NOT EXISTS "EventLog_level_timestamp_idx" ON "EventLog"("level", "timestamp");
 
--- AddForeignKey
-ALTER TABLE "EventLog"
-ADD CONSTRAINT "EventLog_executionId_fkey"
-FOREIGN KEY ("executionId") REFERENCES "AgentExecution"("id")
-ON DELETE CASCADE ON UPDATE CASCADE;
+-- EventLog FK (idempotent)
+DO $$ BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.table_constraints
+    WHERE constraint_name = 'EventLog_executionId_fkey'
+  ) THEN
+    ALTER TABLE "EventLog"
+    ADD CONSTRAINT "EventLog_executionId_fkey"
+    FOREIGN KEY ("executionId") REFERENCES "AgentExecution"("id")
+    ON DELETE CASCADE ON UPDATE CASCADE;
+  END IF;
+END $$;
