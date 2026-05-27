@@ -1,314 +1,270 @@
 'use client';
 
-import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { Job, JobStage, PIPELINE_STAGES, STAGE_LABELS, STAGE_COLORS } from '@/types/job';
-import { Swimlane, SwimlaneConfig } from './Swimlane';
-import { JobCard } from './JobCard';
+import React, { useState, useCallback, useEffect } from 'react';
+import { Job, JobStage, getAllSwimlaneStages, isValidTransition } from '@/types/job';
+import { Swimlane } from './Swimlane';
 import { JobDetailPanel } from '@/domains/jobs';
-import { useRealTime } from '@/hooks/useRealTime';
-import { AnyWebSocketMessage } from '@/lib/websocket/types';
 import { MoveResult } from '@/hooks/useJobBoard';
-
-const STAGE_CONFIG: Record<JobStage, SwimlaneConfig> = {
-  sourced:             { label: STAGE_LABELS.sourced,             icon: '🔍', description: 'Discovered and saved',     borderColor: STAGE_COLORS.sourced.border,             color: STAGE_COLORS.sourced.bg },
-  interested:          { label: STAGE_LABELS.interested,          icon: '⭐', description: 'Planning to apply',        borderColor: STAGE_COLORS.interested.border,          color: STAGE_COLORS.interested.bg },
-  resume_tailoring:    { label: STAGE_LABELS.resume_tailoring,    icon: '✍️', description: 'Customising resume',       borderColor: STAGE_COLORS.resume_tailoring.border,    color: STAGE_COLORS.resume_tailoring.bg },
-  applied:             { label: STAGE_LABELS.applied,             icon: '📤', description: 'Application submitted',    borderColor: STAGE_COLORS.applied.border,             color: STAGE_COLORS.applied.bg },
-  recruiter_screen:    { label: STAGE_LABELS.recruiter_screen,    icon: '📞', description: 'Recruiter call booked',    borderColor: STAGE_COLORS.recruiter_screen.border,    color: STAGE_COLORS.recruiter_screen.bg },
-  hiring_manager:      { label: STAGE_LABELS.hiring_manager,      icon: '👔', description: 'Hiring manager screen',    borderColor: STAGE_COLORS.hiring_manager.border,      color: STAGE_COLORS.hiring_manager.bg },
-  technical_interview: { label: STAGE_LABELS.technical_interview, icon: '💻', description: 'Technical round',          borderColor: STAGE_COLORS.technical_interview.border, color: STAGE_COLORS.technical_interview.bg },
-  system_design:       { label: STAGE_LABELS.system_design,       icon: '🏗️', description: 'System design interview',  borderColor: STAGE_COLORS.system_design.border,       color: STAGE_COLORS.system_design.bg },
-  behavioral:          { label: STAGE_LABELS.behavioral,          icon: '🗣️', description: 'Behavioural round',         borderColor: STAGE_COLORS.behavioral.border,          color: STAGE_COLORS.behavioral.bg },
-  final_round:         { label: STAGE_LABELS.final_round,         icon: '🏆', description: 'Final interview',           borderColor: STAGE_COLORS.final_round.border,         color: STAGE_COLORS.final_round.bg },
-  offer:               { label: STAGE_LABELS.offer,               icon: '🎉', description: 'Offer received',            borderColor: STAGE_COLORS.offer.border,               color: STAGE_COLORS.offer.bg },
-  negotiation:         { label: STAGE_LABELS.negotiation,         icon: '🤝', description: 'Negotiating terms',         borderColor: STAGE_COLORS.negotiation.border,         color: STAGE_COLORS.negotiation.bg },
-  rejected:            { label: STAGE_LABELS.rejected,            icon: '❌', description: 'Application closed',        borderColor: STAGE_COLORS.rejected.border,            color: STAGE_COLORS.rejected.bg },
-  archived:            { label: STAGE_LABELS.archived,            icon: '📁', description: 'Archived for reference',    borderColor: STAGE_COLORS.archived.border,            color: STAGE_COLORS.archived.bg },
-};
-
-// Labels for agent type badges shown on cards
-const AGENT_BADGE_LABEL: Record<string, string> = {
-  'job-match':      'Job Match',
-  'resume-tailor':  'Tailoring',
-  'research':       'Research',
-  'interview-prep': 'Prep',
-  'follow-up':      'Follow-up',
-  'networking':     'Networking',
-};
-
-interface AgentBadge {
-  agentType: string;
-  executionId: string;
-  /** 'running' while we don't know outcome; 'done' after a fixed timeout */
-  status: 'running' | 'done';
-}
+import { useRealTime } from '@/hooks/useRealTime';
 
 export interface KanbanBoardProps {
   initialJobs?: Job[];
-  /** Called for non-stage updates (notes, priority, etc.) */
   onJobUpdate?: (jobId: string, updates: Partial<Job>) => Promise<void>;
-  /** Called for stage changes; returns MoveResult with optional executionId */
-  onJobMove?: (jobId: string, newStage: JobStage) => Promise<MoveResult>;
+  onJobMove?: (jobId: string, newStage: string) => void | Promise<MoveResult>;
   onJobClick?: (job: Job) => void;
-  /**
-   * Externally controlled selected job id.
-   * When provided, the board mirrors this selection rather than managing its own.
-   */
   selectedJobId?: string | null;
-  /** Called when the user selects or deselects a job from the board. */
-  onJobSelect?: (jobId: string | null) => void;
+  onJobSelect?: (id: string | null) => void;
 }
 
+/**
+ * KanbanBoard - Main Kanban/swimlane view of job applications
+ * 
+ * Features:
+ * - Real-time job updates via WebSocket
+ * - Drag-and-drop between swimlanes
+ * - Optimistic updates for smooth UX
+ * - Animated transitions
+ * - Stage-based organization
+ * - Swimlane statistics
+ * 
+ * Layout:
+ * - Horizontal scroll container with swimlanes
+ * - Each swimlane represents a job application stage
+ * - Jobs flow left-to-right through pipeline
+ * 
+ * WebSocket subscriptions:
+ * - 'job:update' - Real-time job changes
+ * - 'job:created' - New jobs added
+ * - 'job:deleted' - Jobs removed
+ * 
+ * Props:
+ * - initialJobs?: Initial job data
+ * - onJobUpdate?: Callback to persist job changes
+ * - onJobClick?: Callback when job card clicked
+ */
 export const KanbanBoard: React.FC<KanbanBoardProps> = ({
   initialJobs = [],
   onJobUpdate,
-  onJobMove,
   onJobClick,
-  selectedJobId: selectedJobIdProp,
-  onJobSelect,
 }) => {
+  // State
   const [jobs, setJobs] = useState<Job[]>(initialJobs);
   const [error, setError] = useState<string | null>(null);
-  // Internal selection — used when no external control is provided
-  const [internalSelectedJobId, setInternalSelectedJobId] = useState<string | null>(null);
-  // Use external control if provided, otherwise internal
-  const selectedJobId = selectedJobIdProp !== undefined ? selectedJobIdProp : internalSelectedJobId;
-  const setSelectedJobId = (id: string | null) => {
-    setInternalSelectedJobId(id);
-    onJobSelect?.(id);
-  };
-  const [mobileStage, setMobileStage] = useState<JobStage>(PIPELINE_STAGES[0]);
-  const [dragOverStage, setDragOverStage] = useState<JobStage | null>(null);
-  // Agent badges: jobId → badge info
-  const [agentBadges, setAgentBadges] = useState<Record<string, AgentBadge>>({});
-  const badgeTimeouts = useRef<Map<string, ReturnType<typeof setTimeout>>>(new Map());
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const isLoading = false;
 
-  // Clear all badge timers on unmount to prevent state updates after unmount
-  useEffect(() => {
-    return () => {
-      badgeTimeouts.current.forEach(clearTimeout);
-      badgeTimeouts.current.clear();
-    };
-  }, []);
-
+  // WebSocket connection
   const { connected, subscribe } = useRealTime({
     autoConnect: true,
     channels: ['job:update', 'job:created', 'job:deleted'],
   });
 
+  // Subscribe to job updates
   useEffect(() => {
-    const unsub = subscribe('job:update', (message: AnyWebSocketMessage) => {
+    const unsubscribe = subscribe('job:update', (message: any) => {
       if (message.type === 'job:update') {
         const { jobId, changes } = message.data;
         setJobs((prev) =>
-          prev.map((job) => (job.id === jobId ? { ...job, ...(changes as Partial<Job>) } : job))
+          prev.map((job) =>
+            job.id === jobId ? { ...job, ...changes } : job
+          )
         );
       }
     });
-    return unsub;
+
+    return unsubscribe;
   }, [subscribe]);
 
+  // Subscribe to new jobs
   useEffect(() => {
-    const unsub = subscribe('job:created', (message: AnyWebSocketMessage) => {
+    const unsubscribe = subscribe('job:created', (message: any) => {
       if (message.type === 'job:created') {
-        setJobs((prev) => [...prev, message.data.job as unknown as Job]);
+        setJobs((prev) => [...prev, message.data.job]);
       }
     });
-    return unsub;
+
+    return unsubscribe;
   }, [subscribe]);
 
+  // Subscribe to job deletions
   useEffect(() => {
-    const unsub = subscribe('job:deleted', (message: AnyWebSocketMessage) => {
+    const unsubscribe = subscribe('job:deleted', (message: any) => {
       if (message.type === 'job:deleted') {
         setJobs((prev) => prev.filter((j) => j.id !== message.data.jobId));
       }
     });
-    return unsub;
+
+    return unsubscribe;
   }, [subscribe]);
 
-  // Sync when parent refreshes job list (including clearing to empty)
-  useEffect(() => {
-    setJobs(initialJobs);
-  }, [initialJobs]);
-
+  /**
+   * Handle job drop on swimlane - move job to new stage
+   */
   const handleJobDrop = useCallback(
     async (jobId: string, targetStage: JobStage) => {
       const job = jobs.find((j) => j.id === jobId);
-      if (!job || job.stage === targetStage) return;
+      if (!job) return;
 
-      // Optimistic update
-      setJobs((prev) => prev.map((j) => (j.id === jobId ? { ...j, stage: targetStage } : j)));
+      // Validate transition
+      if (!isValidTransition(job.stage, targetStage)) {
+        setError(`Cannot move from ${job.stage} to ${targetStage}`);
+        setTimeout(() => setError(null), 3000);
+        return;
+      }
 
       try {
-        if (onJobMove) {
-          const result = await onJobMove(jobId, targetStage);
-          if (result.agentType && result.executionId) {
-            // Show badge on this card
-            setAgentBadges((prev) => ({
-              ...prev,
-              [jobId]: { agentType: result.agentType!, executionId: result.executionId!, status: 'running' },
-            }));
-            // Clear any previous timer for this job before scheduling a new one
-            clearTimeout(badgeTimeouts.current.get(jobId));
-            const tid = setTimeout(() => {
-              badgeTimeouts.current.delete(jobId);
-              setAgentBadges((prev) => {
-                const b = prev[jobId];
-                if (!b) return prev;
-                return { ...prev, [jobId]: { ...b, status: 'done' } };
-              });
-            }, 30_000);
-            badgeTimeouts.current.set(jobId, tid);
-          }
-        } else if (onJobUpdate) {
-          await onJobUpdate(jobId, { stage: targetStage });
+        // Optimistic update
+        const updates = { stage: targetStage };
+        setJobs((prev) =>
+          prev.map((j) => (j.id === jobId ? { ...j, ...updates } : j))
+        );
+
+        // Persist to backend
+        if (onJobUpdate) {
+          await onJobUpdate(jobId, updates);
         }
-      } catch {
-        // Revert on failure
-        setJobs((prev) => prev.map((j) => (j.id === jobId ? { ...j, stage: job.stage } : j)));
-        setError('Failed to move job');
+      } catch (err) {
+        // Revert optimistic update on error
+        setJobs((prev) =>
+          prev.map((j) =>
+            j.id === jobId ? { ...j, stage: job.stage } : j
+          )
+        );
+        setError('Failed to update job');
       }
     },
-    [jobs, onJobMove, onJobUpdate]
+    [jobs, onJobUpdate]
   );
 
+  /**
+   * Group jobs by stage
+   */
   const jobsByStage = useCallback((): Record<JobStage, Job[]> => {
-    const grouped = PIPELINE_STAGES.reduce<Record<JobStage, Job[]>>(
-      (acc, stage) => ({ ...acc, [stage]: [] }),
-      {} as Record<JobStage, Job[]>
-    );
+    const grouped: Record<JobStage, Job[]> = {
+      sourced: [],
+      interested: [],
+      resume_tailoring: [],
+      applied: [],
+      recruiter_screen: [],
+      hiring_manager: [],
+      technical_interview: [],
+      system_design: [],
+      behavioral: [],
+      final_round: [],
+      offer: [],
+      negotiation: [],
+      rejected: [],
+      archived: [],
+    };
+
     jobs.forEach((job) => {
-      grouped[job.stage]?.push(job);
+      grouped[job.stage].push(job);
     });
+
     return grouped;
   }, [jobs]);
 
-  const groupedJobs = jobsByStage();
-
-  const renderJobCard = (job: Job) => {
-    const badge = agentBadges[job.id];
-    return (
-      <div key={job.id} className="relative">
-        <JobCard
-          job={job}
-          onClick={() => {
-            setSelectedJobId(job.id);
-            onJobClick?.(job);
-          }}
-          onDragStart={(e: React.DragEvent<HTMLDivElement>) => {
-            e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('jobId', job.id);
-          }}
-          onMoveStage={handleJobDrop}
-        />
-        {badge && (() => {
-          const isRunning = badge.status === 'running';
-          const badgeCls = isRunning
-            ? 'bg-blue-600 text-white animate-pulse'
-            : 'bg-emerald-100 text-emerald-700 border border-emerald-200';
-          return (
-            <div className={`absolute top-2 right-2 flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${badgeCls}`}>
-              <span>{isRunning ? '⚡' : '✓'}</span>
-              <span>{AGENT_BADGE_LABEL[badge.agentType] ?? badge.agentType}</span>
-            </div>
-          );
-        })()}
-      </div>
-    );
+  /**
+   * Calculate board statistics
+   */
+  const getStats = () => {
+    return {
+      totalJobs: jobs.length,
+      activeJobs: jobs.filter(
+        (j) =>
+          j.stage !== 'rejected' &&
+          j.stage !== 'archived' &&
+          j.stage !== 'offer'
+      ).length,
+      offers: jobs.filter((j) => j.stage === 'offer').length,
+      rejected: jobs.filter((j) => j.stage === 'rejected').length,
+      averageConfidence:
+        jobs.length > 0
+          ? Math.round(
+              (jobs.reduce((sum, j) => sum + (j.aiConfidence ?? 0), 0) / jobs.length) *
+                100
+            )
+          : 0,
+    };
   };
 
+  const stats = getStats();
+  const groupedJobs = jobsByStage();
+
   return (
-    <div className="flex flex-col h-full bg-slate-50" data-cy="kanban-board">
-      {!connected && (
-        <div className="px-6 py-3 bg-amber-50 border-b border-amber-200 text-xs font-medium text-amber-800 flex-shrink-0 flex items-center gap-2">
-          <span>⚠️</span>
-          <span>Disconnected from real-time updates. Changes will sync on reconnect.</span>
-        </div>
-      )}
-
-      {error && (
-        <div className="px-6 py-3 bg-red-50 border-b border-red-200 text-xs font-medium text-red-800 flex-shrink-0 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span>❌</span>
-            <span>{error}</span>
+    <div
+      className="flex flex-col h-full bg-gray-50"
+      data-cy="kanban-board"
+    >
+      {/* Header */}
+      <div className="px-6 py-4 bg-white border-b border-gray-200 flex-shrink-0">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Job Pipeline</h1>
+            <p className="text-sm text-gray-600 mt-1">
+              Drag jobs between stages to move them forward
+            </p>
           </div>
-          <button className="underline hover:text-red-900" onClick={() => setError(null)}>Dismiss</button>
-        </div>
-      )}
-
-      {/* Mobile: stage pill selector + vertical list */}
-      <div className="lg:hidden flex flex-col flex-1 min-h-0 overflow-hidden">
-        <div className="flex gap-1.5 overflow-x-auto px-3 py-2.5 border-b border-slate-200 bg-white scrollbar-none shrink-0">
-          {PIPELINE_STAGES.map((stage) => {
-            const count = groupedJobs[stage].length;
-            const cfg = STAGE_CONFIG[stage];
-            const isActive = mobileStage === stage;
-            const isDragTarget = dragOverStage === stage;
-
-            let pillStyle: string;
-            if (isActive) {
-              pillStyle = 'bg-blue-600 text-white border-blue-600 shadow-sm';
-            } else if (isDragTarget) {
-              pillStyle = 'bg-blue-100 border-blue-400 text-blue-700';
-            } else {
-              pillStyle = 'bg-white text-slate-600 border-slate-200 hover:border-slate-300';
-            }
-
-            const countBadgeStyle = isActive
-              ? 'bg-white/20 text-white'
-              : 'bg-slate-100 text-slate-600';
-
-            const handlePillDragOver = (e: React.DragEvent) => { e.preventDefault(); setDragOverStage(stage); };
-            const handlePillDrop = (e: React.DragEvent) => {
-              e.preventDefault();
-              setDragOverStage(null);
-              const jobId = e.dataTransfer.getData('jobId');
-              if (jobId) handleJobDrop(jobId, stage);
-            };
-
-            return (
-              <button
-                key={stage}
-                onClick={() => setMobileStage(stage)}
-                onDragOver={handlePillDragOver}
-                onDragEnter={handlePillDragOver}
-                onDragLeave={() => setDragOverStage(null)}
-                onDrop={handlePillDrop}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap shrink-0 transition-all border ${pillStyle}`}
-              >
-                <span>{cfg.icon}</span>
-                <span>{cfg.label}</span>
-                {count > 0 && (
-                  <span className={`ml-0.5 px-1.5 py-0.5 rounded-full text-[10px] font-bold ${countBadgeStyle}`}>
-                    {count}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </div>
-
-        <div className="flex-1 overflow-y-auto p-3 space-y-3">
-          {groupedJobs[mobileStage].length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 text-slate-400">
-              <div className="text-3xl mb-2">{STAGE_CONFIG[mobileStage].icon}</div>
-              <p className="text-sm font-medium">No jobs in {STAGE_CONFIG[mobileStage].label}</p>
+          <div className="flex gap-4">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-gray-900">
+                {stats.totalJobs}
+              </div>
+              <div className="text-xs text-gray-600">Total Jobs</div>
             </div>
-          ) : (
-            groupedJobs[mobileStage].map(renderJobCard)
-          )}
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600">
+                {stats.activeJobs}
+              </div>
+              <div className="text-xs text-gray-600">Active</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-600">
+                {stats.offers}
+              </div>
+              <div className="text-xs text-gray-600">Offers</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-red-600">
+                {stats.rejected}
+              </div>
+              <div className="text-xs text-gray-600">Rejected</div>
+            </div>
+            <div className="text-center">
+              <div className="text-2xl font-bold text-purple-600">
+                {stats.averageConfidence}%
+              </div>
+              <div className="text-xs text-gray-600">Avg Confidence</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Desktop: horizontal Kanban swimlanes */}
-      <div className="hidden lg:flex flex-1 overflow-x-auto overflow-y-hidden min-h-0" data-cy="swimlanes-container">
+      {/* Connection Status */}
+      {!connected && (
+        <div className="px-6 py-2 bg-yellow-50 border-b border-yellow-200 text-sm text-yellow-700 flex-shrink-0">
+          ⚠️ Disconnected from real-time updates. Changes will be synced when reconnected.
+        </div>
+      )}
+
+      {/* Error Message */}
+      {error && (
+        <div className="px-6 py-2 bg-red-50 border-b border-red-200 text-sm text-red-700 flex-shrink-0">
+          ❌ {error}
+        </div>
+      )}
+
+      {/* Swimlanes Container */}
+      <div
+        className="flex-1 overflow-x-auto overflow-y-hidden min-h-0"
+        data-cy="swimlanes-container"
+      >
         <div className="inline-flex gap-0 h-full min-w-min">
-          {PIPELINE_STAGES.map((stage) => (
+          {getAllSwimlaneStages().map(([stage, config]) => (
             <Swimlane
               key={stage}
               stage={stage}
-              config={STAGE_CONFIG[stage]}
+              config={config}
               jobs={groupedJobs[stage]}
               isLoading={isLoading}
               onJobDrop={handleJobDrop}
@@ -316,15 +272,26 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
                 setSelectedJobId(job.id);
                 onJobClick?.(job);
               }}
-              onJobMoveStage={handleJobDrop}
-              renderJobCard={renderJobCard}
             />
           ))}
         </div>
       </div>
 
+      {/* Loading Indicator */}
+      {isLoading && (
+        <div className="absolute bottom-4 right-4">
+          <div className="animate-spin">
+            <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full" />
+          </div>
+        </div>
+      )}
+
+      {/* Job Detail Panel */}
       {selectedJobId && (
-        <JobDetailPanel jobId={selectedJobId} onClose={() => setSelectedJobId(null)} />
+        <JobDetailPanel
+          jobId={selectedJobId}
+          onClose={() => setSelectedJobId(null)}
+        />
       )}
     </div>
   );

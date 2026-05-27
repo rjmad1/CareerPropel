@@ -6,36 +6,30 @@ export const dynamic = 'force-dynamic'
 
 /**
  * GET /api/profile/recommendations?candidateId={id}
- * Fetch profile improvement recommendations
+ * Return profile improvement recommendations based on completeness gaps.
  */
 export async function GET(request: NextRequest) {
   try {
     const candidateId = request.nextUrl.searchParams.get('candidateId');
 
     if (!candidateId) {
-      return NextResponse.json(
-        { error: 'candidateId is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'candidateId is required' }, { status: 400 });
     }
 
-    const score = await prisma.profileScore.findUnique({
-      where: { candidateId },
-    });
+    const [skillCount, achievementCount, profileDataCount] = await Promise.all([
+      prisma.skill.count({ where: { candidateId } }),
+      prisma.achievement.count({ where: { candidateId } }),
+      prisma.profileData.count({ where: { candidateId } }),
+    ]);
 
-    if (!score || !score.recommendations) {
-      return NextResponse.json({ recommendations: [] }, { status: 200 });
-    }
+    const recommendations: string[] = [];
+    if (skillCount === 0) recommendations.push('Add your skills to improve match accuracy');
+    if (achievementCount === 0) recommendations.push('Add achievements with quantifiable results');
+    if (profileDataCount === 0) recommendations.push('Upload your resume to enable AI-powered tailoring');
 
-    return NextResponse.json(
-      { recommendations: score.recommendations },
-      { status: 200 }
-    );
+    return NextResponse.json({ recommendations }, { status: 200 });
   } catch (error) {
     console.error('Error fetching recommendations:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch recommendations' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to fetch recommendations' }, { status: 500 });
   }
 }

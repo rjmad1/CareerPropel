@@ -1,7 +1,7 @@
-import { prisma } from "@/lib/db";
-import { Prisma, SkillProficiency } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import type { UpdateProfileInput } from '@/lib/validation/schemas';
 
+const prisma = new PrismaClient();
 
 /**
  * Get user profile
@@ -16,7 +16,7 @@ export async function getProfile(userId: string) {
  * Update user profile
  */
 export async function updateProfile(userId: string, data: UpdateProfileInput) {
-  const updateData: Record<string, unknown> = {};
+  const updateData: any = {};
 
   if (data.name !== undefined) updateData.name = data.name;
   if (data.email !== undefined) updateData.email = data.email;
@@ -39,7 +39,7 @@ export async function updateProfile(userId: string, data: UpdateProfileInput) {
 export async function createOrUpdateProfileField(
   userId: string,
   fieldType: string,
-  content: Record<string, unknown>
+  content: Record<string, any>
 ) {
   return prisma.profileData.upsert({
     where: {
@@ -48,11 +48,11 @@ export async function createOrUpdateProfileField(
         type: fieldType,
       },
     },
-    update: { content: content as unknown as Prisma.InputJsonValue },
+    update: { content },
     create: {
       candidateId: userId,
       type: fieldType,
-      content: content as unknown as Prisma.InputJsonValue,
+      content,
     },
   });
 }
@@ -61,7 +61,7 @@ export async function createOrUpdateProfileField(
  * Get profile fields
  */
 export async function getProfileFields(userId: string, type?: string) {
-  const where: Record<string, unknown> = { candidateId: userId };
+  const where: any = { candidateId: userId };
 
   if (type) {
     where.type = type;
@@ -75,12 +75,22 @@ export async function getProfileFields(userId: string, type?: string) {
 /**
  * Add skill to profile
  */
-export async function addSkill(userId: string, name: string, proficiency: SkillProficiency = 'intermediate') {
+import { SkillProficiency } from '@prisma/client';
+
+const PROFICIENCY_MAP: Record<string, SkillProficiency> = {
+  beginner: SkillProficiency.beginner,
+  intermediate: SkillProficiency.intermediate,
+  advanced: SkillProficiency.advanced,
+  expert: SkillProficiency.expert,
+  master: SkillProficiency.expert, // no master level; cap at expert
+};
+
+export async function addSkill(userId: string, name: string, proficiency: string = 'intermediate') {
   return prisma.skill.create({
     data: {
       candidateId: userId,
       name,
-      proficiency,
+      proficiency: PROFICIENCY_MAP[proficiency] ?? SkillProficiency.intermediate,
     },
   });
 }
@@ -102,14 +112,14 @@ export async function addAchievement(
   userId: string,
   title: string,
   description: string,
-  metrics?: Record<string, unknown>
+  metrics?: Record<string, any>
 ) {
   return prisma.achievement.create({
     data: {
       candidateId: userId,
       title,
       description,
-      metrics: metrics as unknown as Prisma.InputJsonValue | undefined,
+      metrics,
     },
   });
 }

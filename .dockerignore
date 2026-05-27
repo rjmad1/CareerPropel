@@ -1,0 +1,11 @@
+.git
+.next
+node_modules
+coverage
+cypress
+test-results.log
+tsconfig.tsbuildinfo
+dev.log
+reviews
+docs
+*.md

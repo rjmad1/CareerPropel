@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Agent } from '@/lib/websocket/types';
+import { Agent } from '@/types/agent';
 import { cn } from '@/lib/utils';
 
 interface AgentCardProps {

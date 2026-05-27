@@ -13,6 +13,7 @@ import {
   AgentStatus,
 } from '@/lib/realtime/events';
 import { AgentType as Phase2AgentType } from './prompts';
+import { publishAgentStatusSnapshot, publishRealtimeEvent } from '@/lib/queue/events';
 
 export type ExtendedAgentType = Phase2AgentType | 'linkedin-profile' | 'linkedin-search' | 'indeed-search';
 
@@ -76,6 +77,16 @@ export async function publishAgentStarted(
   };
 
   try {
+    await publishRealtimeEvent(userId, {
+      type: 'execution:started',
+      executionId,
+      userId,
+      agentType,
+      status: 'running',
+      currentTask: `Starting ${agentType}`,
+      timestamp: new Date().toISOString(),
+    });
+
     await redis.publish(
       REDIS_CHANNELS.AGENT_EXECUTIONS(userId),
       JSON.stringify(event)
@@ -112,6 +123,16 @@ export async function publishAgentCompleted(
   };
 
   try {
+    await publishRealtimeEvent(userId, {
+      type: status === 'success' ? 'execution:completed' : 'execution:failed',
+      executionId,
+      userId,
+      agentType,
+      status: status === 'success' ? 'completed' : 'failed',
+      currentTask: status === 'success' ? 'Completed' : error,
+      timestamp: new Date().toISOString(),
+    });
+
     await redis.publish(
       REDIS_CHANNELS.AGENT_EXECUTIONS(userId),
       JSON.stringify(event)
@@ -147,6 +168,29 @@ export async function publishAgentStatus(
   };
 
   try {
+    await publishRealtimeEvent(userId, {
+      type: 'execution:status',
+      executionId: _executionId,
+      userId,
+      agentType,
+      status: executionStatus,
+      progress: executionStatus === 'completed' ? 100 : executionStatus === 'running' ? 50 : 0,
+      currentTask,
+      queueDepth,
+      tokensUsed,
+      confidence,
+      timestamp: new Date().toISOString(),
+    });
+
+    await publishAgentStatusSnapshot(userId, mapAgentType(agentType), {
+      status: mapExecutionStatus(executionStatus),
+      queueDepth,
+      currentTask,
+      lastActivity: new Date(),
+      tokensUsed,
+      confidence,
+    });
+
     await redis.publish(
       REDIS_CHANNELS.AGENT_STATUS(userId),
       JSON.stringify(event)

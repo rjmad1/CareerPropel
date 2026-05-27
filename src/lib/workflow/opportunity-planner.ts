@@ -171,6 +171,7 @@ export async function generateOpportunityPlan(
   const job = await prisma.job.findFirst({
     where: { id: jobId, candidateId },
     select: {
+      stage: true,
       documents: { where: { type: 'resume' }, select: { id: true } },
       interviewPrep: { select: { id: true, prepStatus: true } },
     },

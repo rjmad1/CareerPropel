@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { getExecutionEnvelope } from '@/lib/agents/store';
 
 // Mark as dynamic to prevent build-time static generation
 export const dynamic = 'force-dynamic'
@@ -17,13 +18,7 @@ export async function GET(
     const includeToolCalls = request.nextUrl.searchParams.get('excludeTools') !== 'true';
     const includeEvents = request.nextUrl.searchParams.get('excludeEvents') !== 'true';
 
-    const execution = await prisma.agentExecution.findUnique({
-      where: { id: executionId },
-      include: {
-        toolCalls: includeToolCalls,
-        eventLogs: includeEvents,
-      },
-    });
+    const execution = await getExecutionEnvelope(executionId);
 
     if (!execution) {
       return NextResponse.json(
@@ -35,8 +30,8 @@ export async function GET(
     return NextResponse.json(
       {
         execution,
-        toolCalls: execution.toolCalls || [],
-        logs: execution.eventLogs || [],
+        toolCalls: includeToolCalls ? execution.toolCalls || [] : [],
+        logs: includeEvents ? execution.eventLogs || [] : [],
       },
       { status: 200 }
     );

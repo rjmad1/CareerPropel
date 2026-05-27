@@ -7,7 +7,6 @@ import { useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { JobStage } from '@/types/job';
 import { useJobStore } from './useJobStore';
-import { useUpdateJob } from './useJobs';
 import axios from 'axios';
 
 interface MoveJobOptions {
@@ -17,7 +16,6 @@ interface MoveJobOptions {
 
 export const useMoveJob = (options?: MoveJobOptions) => {
   const updateJobStore = useJobStore((state) => state.updateJob);
-  useUpdateJob('');
 
   return useCallback(
     async (jobId: string, newStage: JobStage) => {

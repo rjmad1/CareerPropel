@@ -166,7 +166,7 @@ export function subscribeToAgentExecution(
       }
     });
 
-    eventSource.onerror = (_error) => {
+    eventSource.onerror = () => {
       eventSource.close();
       if (onError) onError(new Error('EventSource connection error'));
     };

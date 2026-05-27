@@ -18,6 +18,11 @@ export async function getAuthSession() {
   }
 }
 
+/**
+ * Middleware wrapper for protected endpoints
+ * Usage:
+ *   const session = await requireAuth(request)
+ */
 export async function requireAuth(_request: NextRequest) {
   return await getAuthSession()
 }

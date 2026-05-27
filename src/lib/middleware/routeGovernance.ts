@@ -1,9 +1,9 @@
 /**
  * Centralized Route Governance Layer
- * 
+ *
  * Enforces security, authorization policies, rate limiting, and audit logging
  * globally across the platform.
- * 
+ *
  * Implements Phase 4: Authorization Governance Hardening.
  */
 
@@ -42,7 +42,7 @@ export async function enforceRoutePolicy(
   request: NextRequest,
   policy: RoutePolicy,
   userId?: string,
-  userEmail?: string
+  userEmail?: string,
 ): Promise<NextResponse | null> {
   const { classification, roles, rateLimitClass, auditSensitivity } = policy;
 
@@ -53,48 +53,37 @@ export async function enforceRoutePolicy(
     if (rateLimitResult) {
       log.warn(
         { ip: request.headers.get('x-forwarded-for') || 'unknown', rateLimitClass },
-        '[Governance] Rate limit exceeded'
+        '[Governance] Rate limit exceeded',
       );
       if (userEmail) {
         await logSecurityEvent(AuditAction.RATE_LIMIT_EXCEEDED, userEmail, {
-          resource: request.nextUrl.pathname,
-          severity: 'warning',
-          status: 'failure',
-          details: { rateLimitClass },
-        });
-      }
-      return rateLimitResult;
-    }
-  }
-
-  // 2. Enforce Classification Bounds
-  if (classification === 'internal') {
-    // Check for internal system secret or admin role
-    const internalSecret = request.headers.get('x-internal-secret');
-    const isAuthorizedInternal = internalSecret && internalSecret === process.env.INTERNAL_SYTEM_SECRET;
-    
-    if (!isAuthorizedInternal) {
-      log.error({ pathname: request.nextUrl.pathname }, '[Governance] Blocked unauthorized internal access attempt');
-      if (userEmail) {
-        await logSecurityEvent(AuditAction.UNAUTHORIZED_ACCESS, userEmail, {
-          resource: request.nextUrl.pathname,
-          severity: 'critical',
-          status: 'failure',
-          details: { reason: 'Unauthorized access to internal endpoint' },
+          resourceId: request.nextUrl.pathname,
+          status: 'FAILURE',
         });
       }
       return NextResponse.json(
-        { error: { code: 'FORBIDDEN', message: 'Access denied. Internal route.' } },
-        { status: 403 }
+        { error: { code: 'RATE_LIMIT_EXCEEDED', message: 'Too many requests. Please try again later.' } },
+        { status: 429 },
       );
     }
   }
 
+  // 2. Public routes: no further enforcement
+  if (classification === 'public') {
+    return null;
+  }
+
   // 3. Authenticated check
-  if (classification !== 'public' && !userId) {
+  if (!userId) {
+    if (userEmail) {
+      await logSecurityEvent(AuditAction.UNAUTHORIZED_ACCESS, userEmail, {
+        resourceId: request.nextUrl.pathname,
+        status: 'FAILURE',
+      });
+    }
     return NextResponse.json(
       { error: { code: 'UNAUTHORIZED', message: 'Authentication required. Please sign in.' } },
-      { status: 401 }
+      { status: 401 },
     );
   }
 
@@ -106,31 +95,25 @@ export async function enforceRoutePolicy(
     if (!hasRequiredRole) {
       log.warn(
         { email: userEmail, requiredRoles: roles, actualRoles: userRoles, pathname: request.nextUrl.pathname },
-        '[Governance] Role authorization check failed'
+        '[Governance] Role authorization check failed',
       );
       await logSecurityEvent(AuditAction.UNAUTHORIZED_ACCESS, userEmail, {
-        resource: request.nextUrl.pathname,
-        severity: 'error',
-        status: 'failure',
-        details: { reason: 'Missing required role', requiredRoles: roles, actualRoles: userRoles },
+        resourceId: request.nextUrl.pathname,
+        status: 'FAILURE',
       });
       return NextResponse.json(
-        { error: { code: 'FORBIDDEN', message: 'Forbidden. Insufficient permissions.' } },
-        { status: 403 }
+        { error: { code: 'FORBIDDEN', message: 'You do not have permission to access this resource.' } },
+        { status: 403 },
       );
     }
   }
 
   // 5. Audit Sensitive Actions
-  if (auditSensitivity === 'high' || auditSensitivity === 'critical') {
-    if (userEmail) {
-      await logSecurityEvent(AuditAction.SETTINGS_UPDATED, userEmail, {
-        resource: request.nextUrl.pathname,
-        severity: auditSensitivity === 'critical' ? 'critical' : 'warning',
-        status: 'success',
-        details: { policyClassification: classification },
-      });
-    }
+  if ((auditSensitivity === 'high' || auditSensitivity === 'critical') && userEmail) {
+    await logSecurityEvent(AuditAction.SETTINGS_UPDATED, userEmail, {
+      resourceId: request.nextUrl.pathname,
+      status: 'SUCCESS',
+    });
   }
 
   return null;

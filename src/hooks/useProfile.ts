@@ -111,7 +111,6 @@ export function useProfile(
           setError(err instanceof Error ? err : new Error('Save failed'));
         }
       }, 2000);
-
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Update failed'));
     }

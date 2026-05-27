@@ -1,18 +1,14 @@
 /**
  * Core Agent Execution Engine
- *
- * Handles: Claude API calls, streaming with timeout, DB persistence, state
- * management, stuck-execution recovery, and idempotent status transitions.
- *
- * Remediations applied:
- *   RASUI-001: Agent execution is now properly wired; one execution per invocation
- *   RASUI-005: AbortSignal enforces 55s hard timeout on LLM streaming calls
- *   RASUI-005: Stuck-execution recovery resets orphaned 'running' records to 'queued'
- *   RASUI-011: DB executor is now the single canonical execution path
+ * Handles: Claude API calls, streaming, persistence, state management,
+ * prompt governance, output validation, and provenance recording.
  */
 
+import crypto from 'crypto';
 import { prisma } from '@/lib/db';
-import { streamLLM } from '@/lib/llm/provider';
+import { callLLM } from '@/lib/llm/provider';
+import { createLogger } from '@/lib/logging/logger';
+import { classifyError } from '@/lib/observability/failure-classification';
 import {
   AgentType,
   AgentPromptContext,
@@ -24,49 +20,40 @@ import {
   publishAgentCompleted,
   publishAgentStatus,
 } from './redis-integration';
-import { log } from '@/lib/logging/logger';
+import { appendExecutionLog } from './store';
+import { getActivePromptVersion } from '@/lib/governance/promptRegistry';
+import { validateAgentOutput, VALIDATION_VERSION } from '@/lib/governance/outputValidator';
+import { assertQualified } from '@/lib/governance/providerQualification';
+import type { LLMProviderName } from '@/lib/llm/provider';
+import { inspectForHallucinations, inspectInputForInjection } from '@/lib/governance/hallucinationControls';
+import { checkExecutionPolicy, estimateCostUsd, getPolicy } from '@/lib/governance/policyEngine';
 
-// Hard timeout for a single LLM streaming call.
-// Must be less than Vercel Hobby (60s) and Vercel Pro (300s) function limits.
-const LLM_STREAM_TIMEOUT_MS = 55_000;
-
-// An execution stuck in 'running' for longer than this is assumed orphaned
-// (e.g. serverless function timed out mid-stream). It will be reset to 'queued'.
-const STUCK_EXECUTION_THRESHOLD_MS = 10 * 60 * 1000; // 10 minutes
+const executionLogger = createLogger({ component: 'agent-executor' });
 
 export interface ExecutionContext {
   executionId: string;
   agentType: AgentType;
   promptContext: AgentPromptContext;
   userId: string;
-}
-
-/**
- * Atomically transition a single execution from 'queued' → 'running'.
- * Uses `updateMany` with a status filter to prevent race conditions when
- * multiple concurrent polling invocations attempt to claim the same execution.
- *
- * Returns true only if this invocation successfully claimed the execution.
- */
-async function claimExecution(executionId: string): Promise<boolean> {
-  const result = await prisma.agentExecution.updateMany({
-    where: {
-      id: executionId,
-      status: 'queued', // optimistic lock: only claim if still queued
-    },
-    data: {
-      status: 'running',
-      startedAt: new Date(),
-    },
-  });
-  return result.count === 1;
+  correlationId?: string;
+  requestId?: string;
 }
 
 export async function executeAgent(context: ExecutionContext): Promise<void> {
-  const { executionId, agentType, promptContext, userId } = context;
-  const execLog = log.child({ executionId, agentType, userId });
+  const { executionId, agentType, promptContext, userId, correlationId, requestId } = context;
+  const executionStartedAt = Date.now();
+  const logContext = { executionId, agentType, userId, correlationId, requestId };
 
   try {
+    // Transition to running state
+    await prisma.agentExecution.update({
+      where: { id: executionId },
+      data: {
+        status: 'running',
+        startedAt: new Date(),
+      },
+    });
+
     // Publish Redis events
     const inputContext =
       typeof context.promptContext === 'string'
@@ -83,65 +70,99 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       `Starting ${agentType} agent...`
     );
 
-    // Get specialized prompts
+    // ── Policy Check: concurrency + input size pre-flight ────────────────────
+    {
+      const allInputChars = Object.values(promptContext).join('').length;
+      const concurrentCount = await prisma.agentExecution.count({
+        where: { userId, status: 'running' },
+      });
+      const policyCheck = checkExecutionPolicy(agentType, {
+        inputChars: allInputChars,
+        concurrentCount,
+      });
+      if (!policyCheck.allowed) {
+        throw new Error(`Policy violation: ${policyCheck.violations.map((v) => v.message).join('; ')}`);
+      }
+    }
+
+    // ── Input injection check ─────────────────────────────────────────────────
+    {
+      const allInputText = Object.values(promptContext).filter(Boolean).join('\n');
+      const injectionResult = inspectInputForInjection(allInputText);
+      if (!injectionResult.clean) {
+        throw new Error(`Prompt injection detected in input: ${injectionResult.patterns.join(', ')}`);
+      }
+    }
+
+    // ── Provider Qualification: fail-fast before LLM dispatch ────────────────
+    {
+      const { getLLMProvider } = await import('@/lib/llm/provider');
+      const providerClient = getLLMProvider();
+      assertQualified(agentType, providerClient.name, process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6');
+    }
+
+    // ── Prompt Governance: resolve active versioned prompt ────────────────────
+    const promptVersion = await getActivePromptVersion(agentType);
     const systemPrompt = getAgentSystemPrompt(agentType);
     const userPrompt = buildAgentUserPrompt(agentType, promptContext);
+    const promptHash = crypto.createHash('sha256').update(userPrompt, 'utf8').digest('hex');
 
-    // Stream from LLM with hard AbortSignal timeout
+    // Record prompt version on execution record
+    await prisma.agentExecution.update({
+      where: { id: executionId },
+      data: {
+        promptVersionId: promptVersion.id,
+        promptHash,
+        sanitizerVersion: promptVersion.sanitizerVersion,
+      },
+    });
+
+    executionLogger.info({ ...logContext, promptVersionId: promptVersion.id, promptVersion: promptVersion.version }, 'Agent execution started');
+
+    // Stream from LLM provider
     let fullResponse = '';
     let tokenCount = 0;
+    let inputTokens = 0;
+    let outputTokens = 0;
     const startTime = Date.now();
 
-    // Create an AbortController and auto-abort after LLM_STREAM_TIMEOUT_MS.
-    const abortController = new AbortController();
-    const timeoutHandle = setTimeout(() => {
-      abortController.abort(
-        new Error(`LLM stream timed out after ${LLM_STREAM_TIMEOUT_MS}ms`)
-      );
-    }, LLM_STREAM_TIMEOUT_MS);
+    let usedProvider: LLMProviderName | undefined;
+    let usedModel: string | undefined;
 
     try {
-      for await (const token of streamLLM(
+      // Use callLLM for first pass (gets token counts); falls back to stream if needed
+      const result = await callLLM(
         [{ role: 'user', content: userPrompt }],
         {
           systemPrompt,
           temperature: 0.7,
           maxTokens: 4096,
-          // Propagate AbortSignal to the provider if it supports it.
-          // Providers must check options.signal and abort the underlying HTTP request.
-          signal: abortController.signal,
-        } as Parameters<typeof streamLLM>[1] & { signal?: AbortSignal }
-      )) {
-        if (abortController.signal.aborted) {
-          throw abortController.signal.reason;
         }
+      );
+      fullResponse = result.content;
+      inputTokens = result.inputTokens;
+      outputTokens = result.outputTokens;
+      tokenCount = result.totalTokens;
 
-        fullResponse += token;
-        tokenCount++;
+      // Capture provider/model from provider instance
+      const { getLLMProvider } = await import('@/lib/llm/provider');
+      const providerClient = getLLMProvider();
+      usedProvider = providerClient.name as LLMProviderName;
+      usedModel = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6';
 
-        // Persist progress every 50 tokens for observability
-        if (tokenCount % 50 === 0) {
-          await prisma.eventLog.create({
-            data: {
-              executionId,
-              level: 'INFO',
-              message: `Streaming... (${tokenCount} tokens)`,
-            },
-          });
-        }
-      }
+      // Assert provider qualification before accepting the result
+      assertQualified(agentType, usedProvider, usedModel);
     } catch (streamError) {
       throw new Error(
-        `Streaming failed: ${streamError instanceof Error ? streamError.message : String(streamError)}`
+        `LLM call failed: ${streamError instanceof Error ? streamError.message : String(streamError)}`
       );
-    } finally {
-      clearTimeout(timeoutHandle);
     }
 
     const elapsedMs = Date.now() - startTime;
 
     // Parse JSON from response
-    let parsedOutput: Record<string, any> = {};
+    let parsedOutput: Record<string, unknown> = {};
+    let parseError: Error | null = null;
     try {
       const jsonMatch = fullResponse.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
@@ -149,47 +170,138 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       } else {
         throw new Error('No JSON found in response');
       }
-    } catch (parseError) {
-      execLog.warn({ parseError }, 'Failed to parse agent response as JSON; storing raw response');
-      await prisma.eventLog.create({
-        data: {
-          executionId,
-          level: 'WARN',
-          message: `Failed to parse response as JSON. Raw response stored.`,
-          metadata: { rawResponseLength: fullResponse.length },
-        },
-      });
+    } catch (err) {
+      parseError = err instanceof Error ? err : new Error(String(err));
+      executionLogger.warn({ executionId, err: parseError }, 'Failed to parse model response as JSON');
+      await appendExecutionLog(
+        executionId,
+        userId,
+        agentType,
+        'WARN',
+        'Failed to parse response as JSON. Raw response stored.',
+        { rawResponseLength: fullResponse.length }
+      );
       parsedOutput = { rawResponse: fullResponse };
     }
 
-    // Persist execution result
+    // ── Output Validation Pipeline ────────────────────────────────────────────
+    let validationResult = {
+      passed: false,
+      schemaValid: false,
+      semanticValid: false,
+      policyValid: false,
+      errors: [] as Array<{ layer: string; field?: string; message: string }>,
+      normalized: parsedOutput,
+    };
+
+    if (!parseError) {
+      validationResult = validateAgentOutput(agentType, parsedOutput);
+
+      if (!validationResult.passed) {
+        await appendExecutionLog(
+          executionId,
+          userId,
+          agentType,
+          'WARN',
+          `Output validation failed (${validationResult.errors.length} issue(s))`,
+          { errors: validationResult.errors }
+        );
+      }
+    }
+
+    // ── Hallucination Controls ────────────────────────────────────────────────
+    if (!parseError) {
+      const hallucinationResult = inspectForHallucinations(
+        agentType,
+        validationResult.passed ? validationResult.normalized : parsedOutput,
+        promptContext as Record<string, string>
+      );
+
+      if (!hallucinationResult.safe) {
+        await appendExecutionLog(
+          executionId,
+          userId,
+          agentType,
+          'ERROR',
+          `Hallucination risk detected (${hallucinationResult.suspicions.length} issue(s))`,
+          { suspicions: hallucinationResult.suspicions }
+        );
+
+        const policy = getPolicy(agentType);
+        if (policy.blockOnHallucinationRisk) {
+          throw new Error(
+            `Execution blocked: hallucination risk detected. Issues: ${
+              hallucinationResult.suspicions.map((s) => s.evidence).join('; ')
+            }`
+          );
+        }
+      } else if (hallucinationResult.suspicions.length > 0) {
+        await appendExecutionLog(
+          executionId,
+          userId,
+          agentType,
+          'WARN',
+          `Low-severity hallucination signals detected (${hallucinationResult.suspicions.length})`,
+          { suspicions: hallucinationResult.suspicions }
+        );
+      }
+    }
+
+    // ── Cost estimation ───────────────────────────────────────────────────────
+    const costUsd = usedProvider && usedModel
+      ? estimateCostUsd(usedProvider, usedModel, inputTokens, outputTokens)
+      : undefined;
+
+    // Use normalized output if validation passed, otherwise keep raw parsed
+    const finalOutput = validationResult.passed ? validationResult.normalized : parsedOutput;
+
+    // ── Persist execution result with provenance ──────────────────────────────
     await prisma.agentExecution.update({
       where: { id: executionId },
       data: {
         status: 'completed',
         completedAt: new Date(),
-        output: JSON.stringify(parsedOutput),
+        output: JSON.stringify(finalOutput),
         tokenCount,
+        inputTokens,
+        outputTokens,
         durationMs: elapsedMs,
         errorMessage: null,
+        provider: usedProvider,
+        modelId: usedModel,
+        costUsd: costUsd ?? null,
+        // Validation provenance
+        validationPassed: validationResult.passed,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        validationErrors: validationResult.errors.length > 0 ? (validationResult.errors as any) : null,
+        validationVersion: VALIDATION_VERSION,
+        schemaValidated: validationResult.schemaValid,
+        semanticValidated: validationResult.semanticValid,
+        policyValidated: validationResult.policyValid,
       },
     });
 
-    await prisma.eventLog.create({
-      data: {
-        executionId,
-        level: 'INFO',
-        message: `Agent execution completed successfully`,
-        metadata: { tokenCount, durationMs: elapsedMs },
-      },
-    });
+    await appendExecutionLog(
+      executionId,
+      userId,
+      agentType,
+      'INFO',
+      'Agent execution completed successfully',
+      {
+        tokenCount,
+        durationMs: elapsedMs,
+        validationPassed: validationResult.passed,
+        provider: usedProvider,
+        model: usedModel,
+      }
+    );
 
     await publishAgentCompleted(
       userId,
       executionId,
       agentType,
       'success',
-      parsedOutput,
+      finalOutput,
       undefined,
       tokenCount,
       elapsedMs
@@ -203,13 +315,19 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       'Complete',
       tokenCount
     );
-
-    execLog.info({ tokenCount, durationMs: elapsedMs }, 'Agent execution completed');
+    executionLogger.info(
+      { ...logContext, tokenCount, durationMs: elapsedMs, validationPassed: validationResult.passed },
+      'Agent execution completed'
+    );
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : String(error);
+    const failure = classifyError(error, { executionId, agentType, userId, correlationId });
 
-    log.error({ err: error, executionId, agentType }, 'Agent execution failed');
+    executionLogger.error(
+      { ...logContext, err: error, failureType: failure.failureType, retryable: failure.retryable },
+      'Agent execution failed'
+    );
 
     await prisma.agentExecution.update({
       where: { id: executionId },
@@ -220,13 +338,20 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       },
     });
 
-    await prisma.eventLog.create({
-      data: {
-        executionId,
-        level: 'ERROR',
-        message: `Agent execution failed: ${errorMessage}`,
-      },
-    });
+    await appendExecutionLog(
+      executionId,
+      userId,
+      agentType,
+      'ERROR',
+      `Agent execution failed: ${errorMessage}`,
+      {
+        failureType: failure.failureType,
+        retryable: failure.retryable,
+        errorClass: failure.errorClass,
+        correlationId,
+        requestId,
+      }
+    );
 
     await publishAgentCompleted(
       userId,
@@ -236,102 +361,75 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       undefined,
       errorMessage,
       0,
-      0
+      Date.now() - executionStartedAt
     );
-    await publishAgentStatus(userId, executionId, agentType, 'failed', 0, 'Failed');
+    await publishAgentStatus(
+      userId,
+      executionId,
+      agentType,
+      'failed',
+      0,
+      'Failed'
+    );
   }
 }
 
 /**
- * Reset stuck executions: any execution in 'running' status for more than
- * STUCK_EXECUTION_THRESHOLD_MS is assumed orphaned (e.g. serverless timeout).
- * Resets them to 'queued' so they will be retried on the next polling cycle.
- *
- * Called at the top of processPendingExecutions() for self-healing behavior.
- */
-async function recoverStuckExecutions(): Promise<number> {
-  const stuckBefore = new Date(Date.now() - STUCK_EXECUTION_THRESHOLD_MS);
-  const result = await prisma.agentExecution.updateMany({
-    where: {
-      status: 'running',
-      startedAt: { lt: stuckBefore },
-    },
-    data: {
-      status: 'queued',
-      startedAt: null,
-      errorMessage: 'Automatically reset from stuck running state',
-    },
-  });
-
-  if (result.count > 0) {
-    log.warn(
-      { recoveredCount: result.count },
-      'Recovered stuck agent executions back to queued state'
-    );
-  }
-
-  return result.count;
-}
-
-/**
- * Find and execute ONE pending agent execution (called by background polling cron).
- *
- * Design decisions:
- * - Processes exactly ONE execution per HTTP invocation to stay within serverless
- *   function time limits. The cron frequency (vercel.json) controls throughput.
- * - Uses claimExecution() for optimistic concurrency — concurrent invocations
- *   cannot double-process the same execution record.
- * - Calls recoverStuckExecutions() on every invocation for self-healing.
- *
- * Returns: number of executions processed (0 or 1).
+ * Find and execute pending agent executions (called by background polling)
+ * Returns number of executions processed
  */
 export async function processPendingExecutions(): Promise<number> {
-  // Self-healing: recover stuck executions before processing new ones
-  await recoverStuckExecutions();
-
-  const pending = await prisma.agentExecution.findFirst({
+  const pending = await prisma.agentExecution.findMany({
     where: { status: 'queued' },
     orderBy: { createdAt: 'asc' },
+    take: 5,
   });
 
-  if (!pending) {
-    return 0;
+  let processed = 0;
+
+  for (const execution of pending) {
+    try {
+      const running = await prisma.agentExecution.count({
+        where: {
+          userId: execution.userId,
+          status: 'running',
+        },
+      });
+
+      if (running >= 5) {
+        executionLogger.warn(
+          { executionId: execution.id, userId: execution.userId },
+          'Execution deferred due to legacy concurrency gate'
+        );
+        continue;
+      }
+
+      const promptContext = execution.input
+        ? (JSON.parse(execution.input) as AgentPromptContext)
+        : {};
+
+      await executeAgent({
+        executionId: execution.id,
+        agentType: execution.agentType as AgentType,
+        promptContext,
+        userId: execution.userId,
+      });
+
+      processed++;
+    } catch (error) {
+      executionLogger.error({ executionId: execution.id, err: error }, 'Failed to process pending execution');
+      await prisma.agentExecution.update({
+        where: { id: execution.id },
+        data: {
+          status: 'failed',
+          errorMessage:
+            error instanceof Error
+              ? error.message
+              : 'Unknown error occurred',
+        },
+      });
+    }
   }
 
-  // Check per-user concurrency limit
-  const running = await prisma.agentExecution.count({
-    where: {
-      userId: pending.userId,
-      status: 'running',
-    },
-  });
-
-  if (running >= 5) {
-    log.info(
-      { userId: pending.userId, executionId: pending.id },
-      'User at concurrency limit (5 running), deferring execution'
-    );
-    return 0;
-  }
-
-  // Atomically claim the execution — prevents double-processing under concurrent polling
-  const claimed = await claimExecution(pending.id);
-  if (!claimed) {
-    // Another invocation already claimed it — this is normal, not an error
-    log.debug({ executionId: pending.id }, 'Execution already claimed by concurrent invocation');
-    return 0;
-  }
-
-  const promptContext = pending.input
-    ? (JSON.parse(pending.input) as AgentPromptContext)
-    : {};
-
-  await executeAgent({
-    executionId: pending.id,
-    agentType: pending.agentType as AgentType,
-    promptContext,
-    userId: pending.userId,
-  });
-
-  return 1;
+  return processed;
 }

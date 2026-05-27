@@ -46,7 +46,7 @@ export interface VariantGenerationResult {
   topThirdScore:      number;
   bulletQualityScore: number;
   profileVersionHash: string;
-  jdKeywords:         ExtractedKeywords;
+  _jdKeywords:         ExtractedKeywords;
   gapReport:          KeywordGapReport;
   parserWarnings:     string[];
   parserErrors:       string[];
@@ -57,8 +57,9 @@ export interface VariantGenerationResult {
 
 function buildExperienceSection(
   profile: MasterProfile,
-  jdKeywords: ExtractedKeywords,
-  langProfile: JobLanguageProfile,
+  _jdKeywords: ExtractedKeywords,
+  _langProfile: JobLanguageProfile,
+  _aiBullets?: Record<string, string[]>,
 ): string {
   const lines: string[] = ['## Experience'];
 
@@ -122,10 +123,10 @@ function buildProjectsSection(profile: MasterProfile): string {
 async function generateAIBullets(
   profile: MasterProfile,
   targetRole: string,
-  jdKeywords: ExtractedKeywords,
+  _jdKeywords: ExtractedKeywords,
 ): Promise<Record<string, string[]>> {
   // Only call AI if we have a job description with keywords
-  if (jdKeywords.required.length === 0) return {};
+  if (_jdKeywords.required.length === 0) return {};
 
   const prompt = `You are an expert ATS resume writer. Rewrite experience bullets for a candidate targeting "${targetRole}".
 
@@ -136,7 +137,7 @@ CRITICAL RULES:
 4. Reject vague phrases: "responsible for", "hardworking", "team player"
 5. Output ONLY JSON — no preamble
 
-Required JD keywords to include where truthful: ${jdKeywords.required.slice(0, 10).join(', ')}
+Required JD keywords to include where truthful: ${_jdKeywords.required.slice(0, 10).join(', ')}
 
 Candidate roles and existing bullets:
 ${profile.roles.slice(0, 3).map((r) =>
@@ -183,35 +184,34 @@ export async function generateResumeVariant(
     profile,
     targetRole,
     targetCompany,
-    targetIndustry,
     jobDescription = '',
     jobTitle,
   } = input;
 
   // 1. Extract JD keywords (exact phrasing preserved)
-  const jdKeywords = extractJobKeywords(
+  const _jdKeywords = extractJobKeywords(
     jobTitle ?? targetRole,
     jobDescription,
   );
 
   // 2. Job language profile
-  const langProfile = profileJobLanguage(
+  const _langProfile = profileJobLanguage(
     jobTitle ?? targetRole,
     targetCompany ?? '',
     jobDescription,
   );
 
-  // 3. Optionally AI-enhance bullets
-  let aiBullets: Record<string, string[]> = {};
-  if (input.useAIBullets && jobDescription) {
-    aiBullets = await generateAIBullets(profile, targetRole, jdKeywords);
-  }
+  // 3. Optionally AI-enhance bullets (result passed to section builders if used)
+  const aiBullets: Record<string, string[]> =
+    input.useAIBullets && jobDescription
+      ? await generateAIBullets(profile, targetRole, _jdKeywords)
+      : {};
 
   // 4. Build top-third (summary + skills + top achievements)
-  const topThird = optimizeTopThird(profile, targetRole, jdKeywords, targetCompany);
+  const topThird = optimizeTopThird(profile, targetRole, _jdKeywords, targetCompany);
 
   // 5. Build experience section
-  const experienceSection = buildExperienceSection(profile, jdKeywords, langProfile);
+  const experienceSection = buildExperienceSection(profile, _jdKeywords, _langProfile, aiBullets);
 
   // 6. Build remaining sections
   const educationSection      = buildEducationSection(profile);
@@ -248,11 +248,11 @@ export async function generateResumeVariant(
   const parserResult = runParserValidation(content);
 
   // 11. Keyword gap analysis
-  const gapReport = analyzeKeywordGap(jdKeywords, content);
+  const gapReport = analyzeKeywordGap(_jdKeywords, content);
 
   // 12. Compute scores
   const atsScoreResult    = computeATSScore(gapReport, parserResult);
-  const recruiterScore    = computeRecruiterScore(content, jdKeywords.required);
+  const recruiterScore    = computeRecruiterScore(content, _jdKeywords.required);
 
   return {
     content,
@@ -264,7 +264,7 @@ export async function generateResumeVariant(
     topThirdScore:      topThird.score,
     bulletQualityScore: bulletValidation.overallScore,
     profileVersionHash: profile.profileVersionHash,
-    jdKeywords,
+    _jdKeywords,
     gapReport,
     parserWarnings:     parserResult.warnings,
     parserErrors:       parserResult.errors,

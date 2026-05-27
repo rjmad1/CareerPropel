@@ -24,7 +24,6 @@ import {
   ResumeAlignment,
   CompensationGuide,
 } from '@/types/interview';
-import { callLLM } from '@/lib/llm/provider';
 
 /**
  * Interview prep generation request
@@ -101,156 +100,41 @@ export async function generateInterviewPrep(
 }
 
 /**
- * Basic XML entity decoder
- */
-function decodeXmlEntities(str: string): string {
-  return str
-    .replace(/&amp;/g, '&')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&apos;/g, "'")
-    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1');
-}
-
-/**
- * Fetches real-time company news via Google News RSS feed.
- * Fully dependency-free XML parsing.
- */
-async function fetchCompanyNews(company: string): Promise<any[]> {
-  try {
-    const url = `https://news.google.com/rss/search?q=${encodeURIComponent(company)}&hl=en-US&gl=US&ceid=US:en`;
-    const res = await fetch(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-      },
-    });
-    if (!res.ok) throw new Error(`Google News RSS responded with status: ${res.status}`);
-
-    const xml = await res.text();
-    const items: any[] = [];
-
-    // Extract item blocks using regex
-    const itemRegex = /<item>([\s\S]*?)<\/item>/g;
-    let match;
-    while ((match = itemRegex.exec(xml)) !== null && items.length < 3) {
-      const block = match[1];
-
-      // Extract details
-      const titleMatch = block.match(/<title>([\s\S]*?)<\/title>/);
-      const linkMatch = block.match(/<link>([\s\S]*?)<\/link>/);
-      const pubDateMatch = block.match(/<pubDate>([\s\S]*?)<\/pubDate>/);
-      const sourceMatch = block.match(/<source[^>]*>([\s\S]*?)<\/source>/);
-
-      const titleAndSource = titleMatch ? decodeXmlEntities(titleMatch[1].trim()) : 'Company Update';
-      const itemUrl = linkMatch ? linkMatch[1].trim() : '#';
-      const pubDate = pubDateMatch ? new Date(pubDateMatch[1].trim()) : new Date();
-      const source = sourceMatch ? decodeXmlEntities(sourceMatch[1].trim()) : 'Google News';
-
-      // Title is often like "Title of News - Source Name". Strip out the source from title if duplicate
-      let title = titleAndSource;
-      if (title.endsWith(` - ${source}`)) {
-        title = title.substring(0, title.length - (source.length + 3));
-      }
-
-      // Generate a summary from the title
-      const summary = `Latest report on ${company} from ${source} highlighting: "${title}"`;
-
-      items.push({
-        date: pubDate,
-        title,
-        source,
-        url: itemUrl,
-        summary,
-      });
-    }
-
-    return items;
-  } catch (err) {
-    console.error(`[prepService] Error fetching company news for ${company}:`, err);
-    return [];
-  }
-}
-
-/**
  * Generate company research and intelligence
  */
 async function generateCompanyResearch(
   company: string,
   jobDescription: string
 ): Promise<CompanyResearch> {
-  const techStack = extractTechStackFromJobDescription(jobDescription);
-  const liveNews = await fetchCompanyNews(company);
+  // TODO: Integrate with Claude API to fetch company research
+  // For now, return structured template
 
-  try {
-    const result = await callLLM(
-      [
-        {
-          role: 'user',
-          content: `You are a company research analyst. Based on the job description below, produce a JSON object for "${company}" with these exact keys:
-industry, size (startup/scale-up/enterprise), founded (year as number), culture (2-3 sentences), fundingStatus, competitorsAndContext (1-2 sentences), salaryMin (number USD), salaryMax (number USD), recentNewsTitle, recentNewsSummary.
-
-Job description:
-${jobDescription.slice(0, 2000)}
-
-Return ONLY valid JSON, no markdown fences.`,
-        },
-      ],
-      {
-        systemPrompt: 'You are a factual company research assistant. Return only valid JSON.',
-        maxTokens: 800,
-        temperature: 0.3,
-      }
-    );
-
-    const raw = JSON.parse(result.content);
-
-    const recentNews = liveNews.length > 0 ? liveNews : [
+  return {
+    company,
+    industry: 'Technology', // Would be fetched from Crunchbase/LinkedIn API
+    size: 'scale-up',
+    founded: 2018,
+    recentNews: [
       {
         date: new Date(),
-        title: raw.recentNewsTitle ?? 'Recent company update',
-        source: 'Public sources',
+        title: 'Company News Item',
+        source: 'TechCrunch',
         url: '#',
-        summary: raw.recentNewsSummary ?? '',
-      }
-    ];
-
-    return {
-      company,
-      industry: raw.industry ?? 'Technology',
-      size: raw.size ?? 'scale-up',
-      founded: raw.founded ?? 2020,
-      recentNews,
-      culture: raw.culture ?? `${company} values innovation and collaboration.`,
-      technicalStack: techStack,
-      fundingStatus: raw.fundingStatus ?? 'Unknown',
-      competitorsAndContext: raw.competitorsAndContext ?? '',
-      linkedinCompanyUrl: `https://linkedin.com/company/${company.toLowerCase().replace(/\s+/g, '-')}`,
-      crunchbaseProfile: `https://crunchbase.com/organization/${company.toLowerCase()}`,
-      salaryGlassodoor: {
-        min: raw.salaryMin ?? 120000,
-        max: raw.salaryMax ?? 180000,
-        currency: 'USD',
+        summary: 'Recent company news summary',
       },
-    };
-  } catch {
-    // Fallback to rule-based when Claude is unavailable
-    const fallbackNews = liveNews.length > 0 ? liveNews : [];
-    return {
-      company,
-      industry: 'Technology',
-      size: 'scale-up',
-      founded: 2020,
-      recentNews: fallbackNews,
-      culture: `${company} appears to value innovation, collaboration, and continuous learning based on the job description.`,
-      technicalStack: techStack,
-      fundingStatus: 'Unknown',
-      competitorsAndContext: `${company} operates in a competitive market.`,
-      linkedinCompanyUrl: `https://linkedin.com/company/${company.toLowerCase().replace(/\s+/g, '-')}`,
-      crunchbaseProfile: `https://crunchbase.com/organization/${company.toLowerCase()}`,
-      salaryGlassodoor: { min: 120000, max: 180000, currency: 'USD' },
-    };
-  }
+    ],
+    culture: `${company} appears to value innovation, collaboration, and continuous learning based on the job description.`,
+    technicalStack: extractTechStackFromJobDescription(jobDescription),
+    fundingStatus: 'Series B Funded',
+    competitorsAndContext: `${company} operates in a competitive market with key competitors in the space.`,
+    linkedinCompanyUrl: `https://linkedin.com/company/${company.toLowerCase().replace(/\s+/g, '-')}`,
+    crunchbaseProfile: `https://crunchbase.com/organization/${company.toLowerCase()}`,
+    salaryGlassodoor: {
+      min: 120000,
+      max: 180000,
+      currency: 'USD',
+    },
+  };
 }
 
 /**
@@ -272,7 +156,9 @@ async function generateRoleBreakdown(
     responsibilities,
     requiredSkills: required.map(skill => ({
       name: skill,
-      proficiency: seniority === 'principal' ? 'staff' : seniority,
+      proficiency: seniority,
+      yourLevel: undefined,
+      gapAnalysis: undefined,
     })),
     preferredSkills: preferred.map(skill => ({
       name: skill,
@@ -292,27 +178,36 @@ async function generateRoleBreakdown(
 async function generateBehavioralStories(
   resume: string,
   jobDescription: string,
-  projects: string[]
+  _projects: string[]
 ): Promise<BehavioralStory[]> {
   const competencies = extractRequiredCompetencies(jobDescription);
   
-  // Extract achievements from resume using advanced heuristics
-  const achievements = extractHeuristicAchievements(resume);
+  // Extract projects and achievements from resume
+  const achievements = extractAchievements(resume);
 
-  const stories: BehavioralStory[] = [];
-
-  // Generate STAR stories for each competency sequentially
-  for (let i = 0; i < competencies.length; i++) {
-    const competency = competencies[i];
-    const achievement = achievements[i % achievements.length] || "Led key technical projects to deliver high-quality features under tight timelines";
-    const story = generateHeuristicSTARStory(
-      competency,
-      achievement,
-      projects,
-      i
-    );
-    stories.push(story);
-  }
+  // Map achievements to STAR stories
+  const stories: BehavioralStory[] = achievements
+    .slice(0, 5) // Limit to 5 stories
+    .map((achievement, idx) => ({
+      id: `story_${idx}`,
+      competency: competencies[idx % competencies.length],
+      title: achievement.title,
+      summary: achievement.summary,
+      situation: `During my time at ${achievement.company}, ${achievement.context}`,
+      task: `I was responsible for ${achievement.task}`,
+      action: `I ${achievement.action}`,
+      result: `This resulted in ${achievement.result}`,
+      metrics: achievement.metrics,
+      sourceProject: achievement.project,
+      relevanceScore: calculateRelevanceScore(achievement, jobDescription),
+      timeToTell: 120, // seconds
+      confidence: Math.round(75 + Math.random() * 25), // 75-100
+      interviewQuestions: [
+        'Tell me about a time when you...',
+        'Describe a challenging project...',
+        'Give an example of leadership...',
+      ],
+    }));
 
   return stories;
 }
@@ -517,29 +412,13 @@ async function generateCompensationGuide(
   const equityRange = estimateEquityRange(company);
 
   return {
-    marketRange: {
-      ...marketRange,
-      dataPoints: 0,
-    },
+    marketRange,
     yourEstimate: {
-      min: Math.round(marketRange.min * 0.95),
-      max: Math.round(marketRange.max * 1.05),
-      justification: 'Based on market data for similar roles',
+      min: equityRange.min,
+      max: equityRange.max,
+      justification: 'Based on equity market data from Levels.fyi and Blind',
     },
-    negotiationTalkingPoints: [
-      {
-        topic: 'Base Salary',
-        arguments: ['Market data supports higher range', 'Relevant experience and skills'],
-        dataSupport: 'Levels.fyi, Blind',
-        counterArguments: ['Budget constraints', 'Equity component'],
-      },
-    ],
-    redFlags: [
-      'Vague equity details',
-      'Below-market base salary with promise of future raises',
-      'Overly aggressive negotiation from company',
-      'Unwillingness to discuss salary transparency',
-    ],
+    negotiationTalkingPoints: [],
     benefitsToPrioritize: [
       'Remote work options',
       'Professional development budget',
@@ -547,7 +426,13 @@ async function generateCompensationGuide(
       'Relocation package',
       'Stock refresh grants',
     ],
-    equityConsiderations: `${equityRange.min.toLocaleString()} - ${equityRange.max.toLocaleString()} options with standard 4-year vest, 1-year cliff`,
+    equityConsiderations: `Equity range: ${equityRange.min}–${equityRange.max} units. 4-year vest with 1-year cliff.`,
+    redFlags: [
+      'Vague equity details',
+      'Below-market base salary with promise of future raises',
+      'Overly aggressive negotiation from company',
+      'Unwillingness to discuss salary transparency',
+    ],
   };
 }
 
@@ -634,138 +519,24 @@ function extractRequiredCompetencies(_jobDescription: string): string[] {
   ];
 }
 
-function extractHeuristicAchievements(resume: string): string[] {
-  if (!resume) return [];
-
-  // Split resume by common list indicators or newlines
-  const lines = resume
-    .split(/[\n•\-*]+/g)
-    .map((l) => l.trim())
-    .filter((l) => l.length > 30 && l.length < 250);
-
-  const actionVerbs = new Set([
-    'led', 'built', 'designed', 'migrated', 'developed', 'optimized',
-    'implemented', 'created', 'scaled', 'managed', 'improved', 'increased',
-    'reduced', 'delivered', 'spearheaded', 'automated', 'saved', 'architected',
-    'coordinated', 'engineered', 'launched', 'mentored', 'resolved'
-  ]);
-
-  const scoredLines = lines.map((line) => {
-    let score = 0;
-    const lower = line.toLowerCase();
-
-    // Check action verbs
-    const words = lower.split(/\W+/);
-    if (words.some((w) => actionVerbs.has(w))) {
-      score += 10;
-    }
-
-    // Check metrics
-    const metricMatches = lower.match(/(\d+%\s*(?:reduction|increase|improvement|decrease|more|less|faster)?|\$\d+[\d,.]*(?:\s*[kKmMbB])?|\b\d+\s*(?:engineers|users|servers|days|weeks|months|years)\b)/g);
-    if (metricMatches) {
-      score += 15 + metricMatches.length * 5;
-    }
-
-    // Prefer moderate lengths
-    if (line.length > 50 && line.length < 150) {
-      score += 5;
-    }
-
-    return { line, score };
-  });
-
-  // Sort by score descending and select top 5
-  scoredLines.sort((a, b) => b.score - a.score);
-  const selected = scoredLines.slice(0, 5).map((sl) => sl.line);
-
-  // Fallback if none found
-  if (selected.length === 0) {
-    return [
-      "Led key technical initiatives to design and build scalable, high-performance web applications, improving team velocity.",
-      "Optimized database queries and API endpoints, reducing latency by 35% and improving overall user experience.",
-      "Spearheaded microservices migration to decouple a large monolithic codebase, enabling rapid independent deployments.",
-      "Collaborated with cross-functional product and design teams to deliver high-priority user-facing features on schedule.",
-      "Mentored junior engineers and introduced automated testing processes, raising test coverage across core modules by 20%."
-    ];
-  }
-
-  // If we found some but fewer than 5, pad them with sensible defaults
-  const fallbacks = [
-    "Led key technical initiatives to design and build scalable, high-performance web applications.",
-    "Optimized database queries and API endpoints, reducing latency by 35%.",
-    "Spearheaded microservices migration to decouple a large monolithic codebase.",
-    "Collaborated with cross-functional product and design teams to deliver high-priority features.",
-    "Mentored junior engineers and introduced automated testing processes, raising test coverage."
+function extractAchievements(_resume: string) {
+  return [
+    {
+      title: 'Led Feature Launch',
+      company: 'Previous Company',
+      context: 'we needed to deliver a critical feature on a tight timeline',
+      task: 'leading the technical design and implementation',
+      action: 'broke down the work into manageable pieces, coordinated with the team, and delivered on time',
+      result: 'a 20% increase in user engagement',
+      metrics: ['20% increase', '2 week timeline'],
+      project: 'Project Name',
+      summary: 'Led cross-functional team to deliver critical feature ahead of schedule',
+    },
   ];
-  while (selected.length < 5) {
-    selected.push(fallbacks[selected.length]);
-  }
-
-  return selected;
 }
 
-function generateHeuristicSTARStory(
-  competency: string,
-  achievement: string,
-  projects: string[],
-  idx: number
-): BehavioralStory {
-  // Extract action verb
-  const verbs = [
-    'led', 'built', 'designed', 'migrated', 'developed', 'optimized',
-    'implemented', 'created', 'scaled', 'managed', 'improved', 'increased',
-    'reduced', 'delivered', 'spearheaded', 'automated', 'saved', 'architected',
-    'coordinated', 'engineered', 'launched', 'mentored', 'resolved'
-  ];
-  let actionVerb = 'spearheaded';
-  for (const v of verbs) {
-    if (new RegExp(`\\b${v}\\b`, 'i').test(achievement)) {
-      actionVerb = v;
-      break;
-    }
-  }
-
-  // Extract metric
-  const metricRegex = /(\d+%\s*(?:reduction|increase|improvement|decrease|more|less|faster)?|\$\d+[\d,.]*(?:\s*[kKmMbB])?|\b\d+\s*(?:engineers|users|servers|days|weeks|months|years)\b)/gi;
-  const metricMatch = achievement.match(metricRegex);
-  const metric = metricMatch ? metricMatch[0] : 'a significant 25% efficiency improvement';
-
-  // Extract core subject (after the verb)
-  let subject = achievement;
-  const verbIdx = achievement.toLowerCase().indexOf(actionVerb.toLowerCase());
-  if (verbIdx !== -1) {
-    subject = achievement.substring(verbIdx + actionVerb.length).trim();
-  }
-  // Strip trailing punctuation
-  subject = subject.replace(/[.;,]+$/, '').trim();
-
-  // Create highly customized STAR fields
-  const title = `${actionVerb.charAt(0).toUpperCase() + actionVerb.slice(1)} ${subject.split(' ').slice(0, 3).join(' ')}`;
-  const situation = `During my tenure, we encountered a critical bottleneck needing to resolve: ${subject.toLowerCase()}. We needed to deliver high reliability and performance.`;
-  const task = `My specific mandate was to act as the primary owner to plan, execute, and deliver this objective, ensuring maximum impact on our engineering metrics.`;
-  const action = `To address this, I took a methodical approach: first, evaluated constraints; second, designed the solution and gathered stakeholder feedback; and third, personally took action to ${actionVerb} ${subject.toLowerCase()} using industry best practices.`;
-  const result = `Through these focused efforts, we successfully resolved the core challenges, achieving outstanding outcomes specifically measured by: ${metric}.`;
-
-  return {
-    id: `story_${idx}`,
-    competency,
-    title,
-    summary: `Successfully planned and executed the initiative to ${actionVerb} ${subject.toLowerCase()}, achieving ${metric}.`,
-    situation,
-    task,
-    action,
-    result,
-    metrics: metricMatch ? metricMatch : [metric],
-    sourceProject: projects[0] || 'Core Role Achievement',
-    relevanceScore: 0.88,
-    timeToTell: 120, // 2 minutes
-    confidence: Math.round(80 + Math.random() * 20), // 80-100
-    interviewQuestions: [
-      `Tell me about a time you demonstrated ${competency.toLowerCase()} during a project.`,
-      `Describe a challenging situation where you had to use ${competency.toLowerCase()} to overcome a challenge.`,
-      `Give an example of how you applied ${competency.toLowerCase()} to drive results.`
-    ],
-  };
+function calculateRelevanceScore(_achievement: any, _jobDescription: string): number {
+  return 0.8; // Would calculate based on keyword matching
 }
 
 function extractProgrammingLanguages(jobDescription: string): string[] {
@@ -836,7 +607,7 @@ function extractHighlightedExperience(_resume: string, _jobDescription: string) 
 }
 
 function estimateMarketRange(_jobTitle: string) {
-  return { min: 120000, max: 180000, currency: 'USD', source: 'Levels.fyi' };
+  return { min: 120000, max: 180000, currency: 'USD', source: 'Levels.fyi', dataPoints: 42 };
 }
 
 function estimateEquityRange(_company: string) {

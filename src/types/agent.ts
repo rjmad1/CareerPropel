@@ -151,3 +151,42 @@ export interface ExecutionSummary {
   errorMessage?: string;
   output?: Record<string, any>;
 }
+
+/**
+ * Agent runtime state — used by AgentRail and real-time status views.
+ * Mirrors the execution-level status surfaced through the queue worker.
+ */
+export type AgentRuntimeStatus = 'running' | 'waiting' | 'error' | 'completed' | 'idle' | 'paused' | 'failed';
+
+export interface Agent {
+  id: string;
+  name: string;
+  type: AgentType;
+  status: AgentRuntimeStatus;
+  currentTask?: string;
+  progress: number; // 0-100
+  queueDepth: number;
+  lastActivity: Date;
+  tokensUsed?: number;
+  confidence?: number;
+  errorMessage?: string;
+}
+
+/**
+ * Per-execution log line emitted by an agent worker.
+ */
+export interface AgentLog {
+  id: string;
+  agentId: string;
+  timestamp: Date;
+  level: 'info' | 'warning' | 'error' | 'debug';
+  message: string;
+  metadata?: Record<string, any>;
+}
+
+/** Generic real-time message shape (SSE/WebSocket agnostic) */
+export interface AnyWebSocketMessage {
+  type: string;
+  data?: unknown;
+  [key: string]: unknown;
+}

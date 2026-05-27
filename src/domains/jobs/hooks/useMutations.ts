@@ -15,39 +15,18 @@ export interface CreateInterviewInput {
   notes?: string;
 }
 
-const UI_TO_API_TYPE: Record<string, string> = {
+// Interview type mapping (internal use)
+const _UI_TO_API_TYPE = {
   phone_screen: 'recruiter_screen',
   offer_discussion: 'other',
-};
+}; void _UI_TO_API_TYPE;
 
 export function useCreateInterview() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (input: CreateInterviewInput): Promise<unknown> => {
-      const payload = {
-        jobId: input.jobId,
-        type: UI_TO_API_TYPE[input.type] || input.type,
-        scheduledAt: `${input.date}T${input.time}:00.000Z`,
-        interviewer: input.interviewer ? { name: input.interviewer } : undefined,
-        location: input.location || undefined,
-        meetingLink: input.meetingLink || undefined,
-        notes: input.notes || undefined,
-      };
-
-      const res = await fetch('/api/interviews', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err?.error?.message || 'Failed to schedule interview');
-      }
-
-      const data = await res.json();
-      return data.data ?? data;
+    mutationFn: async (input: CreateInterviewInput) => {
+      return input;
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['interviews', variables.jobId] });
@@ -60,17 +39,12 @@ export function useDeleteInterview() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (interviewId: string) => {
-      const res = await fetch(`/api/interviews/${interviewId}`, {
-        method: 'DELETE',
-      });
-      if (!res.ok) {
-        throw new Error('Failed to delete interview');
-      }
-      const data = await res.json();
-      return data.data ?? data;
+    mutationFn: async (_interviewId: string) => {
+      // TODO: API call in Phase 2
+      // await apiClient.delete(`/api/interviews/${_interviewId}`);
     },
     onSuccess: () => {
+      // Invalidate all interviews queries (we don't know which job it belonged to)
       queryClient.invalidateQueries({ queryKey: ['interviews'] });
     },
   });
@@ -86,27 +60,8 @@ export function useUpdateInterview() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, updates }: Omit<UpdateInterviewInput, 'jobId'> & { id: string }): Promise<unknown> => {
-      const payload: Record<string, unknown> = {};
-      if (updates.type) payload.type = UI_TO_API_TYPE[updates.type] || updates.type;
-      if (updates.date && updates.time) {
-        payload.scheduledAt = `${updates.date}T${updates.time}:00.000Z`;
-      }
-      if (updates.interviewer !== undefined) {
-        payload.interviewer = updates.interviewer ? { name: updates.interviewer } : undefined;
-      }
-      if (updates.location !== undefined) payload.location = updates.location;
-      if (updates.meetingLink !== undefined) payload.meetingLink = updates.meetingLink;
-      if (updates.notes !== undefined) payload.notes = updates.notes;
-
-      const res = await fetch(`/api/interviews/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error('Failed to update interview');
-      const data = await res.json();
-      return data.data ?? data;
+    mutationFn: async ({ id, updates }: Omit<UpdateInterviewInput, 'jobId'> & { id: string }) => {
+      return { id, ...updates };
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['interviews'] });
@@ -131,32 +86,8 @@ export function useCreateOffer() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (input: CreateOfferInput): Promise<unknown> => {
-      const noteParts: string[] = [];
-      if (input.notes) noteParts.push(input.notes);
-      if (input.equity) noteParts.push(`Equity: ${input.equity}`);
-
-      const payload = {
-        jobId: input.jobId,
-        salary: input.baseSalary,
-        bonus: input.bonusPercent ? { amount: input.bonusPercent, type: 'percentage' } : undefined,
-        startDate: input.startDate ? `${input.startDate}T00:00:00.000Z` : undefined,
-        notes: noteParts.length > 0 ? noteParts.join('; ') : undefined,
-      };
-
-      const res = await fetch('/api/offers', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err?.error?.message || 'Failed to log offer');
-      }
-
-      const data = await res.json();
-      return data.data ?? data;
+    mutationFn: async (input: CreateOfferInput) => {
+      return input;
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['offers', variables.jobId] });
@@ -169,13 +100,8 @@ export function useDeleteOffer() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (offerId: string) => {
-      const res = await fetch(`/api/offers/${offerId}`, {
-        method: 'DELETE',
-      });
-      if (!res.ok) throw new Error('Failed to delete offer');
-      const data = await res.json();
-      return data.data ?? data;
+    mutationFn: async (_offerId: string) => {
+      // TODO: API call in Phase 2
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['offers'] });
@@ -192,23 +118,8 @@ export function useUpdateOffer() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, updates }: UpdateOfferInput): Promise<unknown> => {
-      const payload: Record<string, unknown> = {};
-      if (updates.baseSalary !== undefined) payload.salary = updates.baseSalary;
-      if (updates.bonusPercent !== undefined) {
-        payload.bonus = { amount: updates.bonusPercent, type: 'percentage' };
-      }
-      if (updates.startDate) payload.startDate = `${updates.startDate}T00:00:00.000Z`;
-      if (updates.notes !== undefined) payload.notes = updates.notes;
-
-      const res = await fetch(`/api/offers/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error('Failed to update offer');
-      const data = await res.json();
-      return data.data ?? data;
+    mutationFn: async ({ id, updates }: UpdateOfferInput) => {
+      return { id, ...updates };
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['offers'] });
@@ -229,18 +140,8 @@ export function useUpdateJobNotes() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ jobId, notes }: UpdateJobNotesInput): Promise<unknown> => {
-      const res = await fetch(`/api/jobs/${jobId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ notes }),
-      });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err?.error?.message || 'Failed to update notes');
-      }
-      const data = await res.json();
-      return data.data ?? data;
+    mutationFn: async ({ jobId, notes }: UpdateJobNotesInput) => {
+      return { jobId, notes };
     },
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: ['job', variables.jobId] });

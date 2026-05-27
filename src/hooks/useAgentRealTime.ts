@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Agent } from '@/lib/websocket/types';
+import { Agent } from '@/types/agent';
 import { getCandidateExecutions } from '@/lib/agent/agentService';
 
 export interface UseAgentRealTimeResult {
@@ -85,6 +85,8 @@ export function useAgentRealTime(
     }
   }, [candidateId, agents]);
 
+
+
   /**
    * Subscribe to a channel
    */
@@ -106,9 +108,8 @@ export function useAgentRealTime(
     subscriptionsRef.current.delete(channel);
   }, []);
 
-
   /**
-   * Connect via Server-Sent Events; fall back to polling if SSE fails.
+   * Setup WebSocket connection (mock for now)
    */
   useEffect(() => {
     if (!options?.autoConnect || !candidateId) return;

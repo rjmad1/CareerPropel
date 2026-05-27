@@ -1,109 +1,55 @@
-import { Queue } from 'bullmq';
-import { prisma } from '@/lib/db';
-import { log } from '@/lib/logging/logger';
-import {
-  AGENT_QUEUE_NAME,
-  HEALTH_CHECK_INTERVAL,
-  STALLED_TIMEOUT_MS,
-  JOB_DEFAULTS,
-  createBullMQRedisConnection,
-} from './job-definitions';
+import { createLogger } from '@/lib/logging/logger';
+import { createRedisClient, disconnectRedisClient } from '@/lib/redis/redisClient';
+import { runtimeSettings } from '@/lib/runtime/settings';
+import { getExecutionQueue } from '@/lib/queue/queues';
 
-const heartbeatRedis = createBullMQRedisConnection();
+const schedulerLogger = createLogger({ component: 'scheduler' });
+const schedulerConnection = createRedisClient('career-propel:scheduler');
 
-async function monitorQueueHealth(queue: Queue): Promise<void> {
-  try {
-    const counts = await queue.getJobCounts('waiting', 'active', 'completed', 'failed', 'delayed');
-    const paused = await queue.isPaused();
-    const snapshot = { ...counts, paused, ts: new Date().toISOString() };
-    await heartbeatRedis.setex('queue:health', 60, JSON.stringify(snapshot));
-    log.info(snapshot, 'Queue health snapshot');
-  } catch (err) {
-    log.error({ err }, 'Queue health monitor error');
-  }
-}
+type SchedulerRuntime = {
+  close(): Promise<void>;
+  waitUntilReady(): Promise<void>;
+};
 
-async function detectStalledJobs(queue: Queue): Promise<void> {
-  try {
-    const active = await queue.getJobs(['active']);
-    const now = Date.now();
-    for (const job of active) {
-      const hbRaw = await heartbeatRedis.get(`heartbeat:${job.id}`);
-      const lastSeen = hbRaw
-        ? JSON.parse(hbRaw).ts
-        : (job.processedOn ?? now);
-      const elapsed = now - lastSeen;
-      if (elapsed > STALLED_TIMEOUT_MS) {
-        log.warn({ jobId: job.id, executionId: job.data.executionId, elapsedMs: elapsed },
-          'Stalled job detected — interrupting');
-        await interruptJob(job, 'stall_detected');
-      }
-    }
-  } catch (err) {
-    log.error({ err }, 'Stall detection error');
-  }
-}
+let scheduler: SchedulerRuntime | null = null;
+let cleanupTimer: NodeJS.Timeout | null = null;
 
-async function interruptJob(job: any, reason: 'stall_detected' | 'deploy_shutdown'): Promise<void> {
-  try {
-    await prisma.agentExecution.update({
-      where: { id: job.data.executionId },
-      data: {
-        status: 'interrupted',
-        interruptedAt: new Date(),
-        interruptionReason: reason,
+export async function startQueueScheduler() {
+  if (!scheduler) {
+    scheduler = {
+      async waitUntilReady() {
+        await schedulerConnection.ping();
       },
-    });
-    await job.remove();
-    log.warn({ executionId: job.data.executionId, reason }, 'Job interrupted');
-  } catch (err) {
-    log.error({ err, jobId: job.id }, 'Failed to interrupt job');
+      async close() {},
+    };
   }
-}
 
-async function handleInterruptedJobs(queue: Queue): Promise<void> {
-  try {
-    const since = new Date(Date.now() - 60_000);
-    const interrupted = await prisma.agentExecution.findMany({
-      where: { status: 'interrupted', interruptedAt: { gte: since } },
-    });
-    for (const exec of interrupted) {
-      const context = exec.input ? JSON.parse(exec.input) : {};
-      await queue.add('agent-execution', {
-        executionId: exec.id,
-        agentType: exec.agentType,
-        userId: exec.userId,
-        context,
-        schemaVersion: 1,
-        executionVersion: 1,
-      }, { ...JOB_DEFAULTS, delay: 5000 });
-      await prisma.agentExecution.update({
-        where: { id: exec.id },
-        data: { status: 'queued', retryCount: { increment: 1 } },
-      });
-      log.info({ executionId: exec.id, reason: exec.interruptionReason }, 'Interrupted job requeued');
-    }
-  } catch (err) {
-    log.error({ err }, 'Interrupted job recovery error');
-  }
-}
-
-export function startQueueScheduler(): { stop: () => void } {
-  const queue = new Queue(AGENT_QUEUE_NAME, { connection: createBullMQRedisConnection() });
-
-  const interval = setInterval(async () => {
-    await monitorQueueHealth(queue);
-    await detectStalledJobs(queue);
-    await handleInterruptedJobs(queue);
-  }, HEALTH_CHECK_INTERVAL);
-
-  log.info({ queueName: AGENT_QUEUE_NAME }, 'Queue scheduler started');
-
-  return {
-    stop: async () => {
-      clearInterval(interval);
-      await queue.close();
-      log.info('Queue scheduler stopped');
+  await scheduler.waitUntilReady();
+  schedulerLogger.info(
+    {
+      executionQueueName: runtimeSettings.executionQueueName,
+      workerHeartbeatSeconds: runtimeSettings.workerHeartbeatSeconds,
     },
-  };
+    'Scheduler runtime ready'
+  );
+
+  if (!cleanupTimer) {
+    cleanupTimer = setInterval(async () => {
+      const queue = getExecutionQueue();
+      await queue.clean(24 * 60 * 60 * 1000, 1000, 'completed');
+      await queue.clean(7 * 24 * 60 * 60 * 1000, 1000, 'failed');
+    }, runtimeSettings.schedulerCleanupIntervalMs);
+  }
+
+  return scheduler;
+}
+
+export async function closeQueueScheduler() {
+  if (cleanupTimer) {
+    clearInterval(cleanupTimer);
+    cleanupTimer = null;
+  }
+
+  await Promise.all([scheduler?.close(), disconnectRedisClient(schedulerConnection)]);
+  scheduler = null;
 }

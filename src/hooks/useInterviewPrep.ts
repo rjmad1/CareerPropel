@@ -7,9 +7,8 @@
  * Handles loading states, errors, and manual content generation triggers.
  */
 
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { InterviewPrep } from '@/types/interview';
-import { getNotificationManager } from '@/lib/notifications/manager';
 
 interface UseInterviewPrepOptions {
   autoFetch?: boolean;
@@ -113,11 +112,9 @@ export function useInterviewPrep(
         setPrep(data);
         setLastFetchTime(Date.now());
         setError(null);
-        getNotificationManager().success('Interview Prep Ready', 'Your prep kit has been generated');
       } catch (err) {
         const error = err instanceof Error ? err : new Error(String(err));
         setError(error);
-        getNotificationManager().error('Prep Generation Failed', error.message);
       } finally {
         setLoading(false);
       }
@@ -137,10 +134,10 @@ export function useInterviewPrep(
         setLoading(true);
         setError(null);
 
-        const response = await fetch(`/api/interview-prep/${jobId}`, {
+        const response = await fetch(`/api/interview-prep/${jobId}/${section}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ [section]: content }),
+          body: JSON.stringify({ content }),
         });
 
         if (!response.ok) {
@@ -197,103 +194,32 @@ export function useInterviewPrep(
 }
 
 /**
- * Hook for tracking interview prep generation progress.
- * Polls the prep status endpoint while generation is in progress
- * and animates a progress bar to give feedback.
+ * Hook for listening to interview prep generation progress
+ * (for real-time updates via WebSocket)
  */
 export function useInterviewPrepProgress(jobId: string) {
   const [progress, setProgress] = useState(0);
-  const [status, setStatus] = useState<'idle' | 'generating' | 'complete' | 'error'>('idle');
-  const [message, setMessage] = useState('');
-  const progressRef = useRef(0);
-  const pollTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const startTracking = useCallback(() => {
-    progressRef.current = 5;
-    setProgress(5);
-    setStatus('generating');
-    setMessage('Generating interview prep with AI…');
-  }, []);
+  const [status] = useState<'idle' | 'generating' | 'complete' | 'error'>('idle');
+  const [message] = useState('');
 
   useEffect(() => {
-    if (status !== 'generating' || !jobId) return;
+    if (!jobId) return;
 
-    // Animate progress bar toward 85% while waiting for completion
-    const animTimer = setInterval(() => {
-      progressRef.current = Math.min(progressRef.current + 2, 85);
-      setProgress(progressRef.current);
-    }, 600);
+    // TODO: Connect to WebSocket for real-time progress updates
+    // This would subscribe to interview-prep:generate:{jobId} channel
+    // and update progress, status, and message as they come in
 
-    let es: EventSource | null = null;
+    // Simulated progress (remove when WebSocket is integrated)
+    if (status === 'generating') {
+      const timer = setInterval(() => {
+        setProgress(prev => Math.min(prev + 10, 90));
+      }, 1000);
 
-    const finish = (prepStatus: string) => {
-      clearInterval(animTimer);
-      if (prepStatus === 'ready') {
-        setProgress(100);
-        setStatus('complete');
-        setMessage('Interview prep ready!');
-      } else {
-        setStatus('error');
-        setMessage('Generation failed. Please try again.');
-      }
-    };
-
-    const startPolling = () => {
-      pollTimerRef.current = setInterval(async () => {
-        try {
-          const res = await fetch(`/api/interview-prep/${jobId}`);
-          if (!res.ok) return;
-          const json = await res.json();
-          const prepStatus: string | undefined = json.data?.prepStatus;
-          if (prepStatus === 'ready' || prepStatus === 'error') {
-            clearInterval(pollTimerRef.current ?? undefined);
-            pollTimerRef.current = null;
-            finish(prepStatus);
-          }
-        } catch {
-          // ignore transient errors
-        }
-      }, 2500);
-    };
-
-    // Try SSE first; fall back to polling if the endpoint is unavailable
-    try {
-      es = new EventSource(`/api/interview-prep/${jobId}/events`);
-      let sseTerminalEventReceived = false;
-
-      es.addEventListener('status', (e: MessageEvent) => {
-        try {
-          const data = JSON.parse(e.data);
-          if (typeof data.progress === 'number') {
-            progressRef.current = data.progress;
-            setProgress(data.progress);
-          }
-          if (data.prepStatus === 'ready' || data.prepStatus === 'error') {
-            sseTerminalEventReceived = true;
-            es?.close();
-            finish(data.prepStatus);
-          }
-        } catch { /* ignore parse errors */ }
-      });
-
-      es.onerror = () => {
-        es?.close();
-        es = null;
-        if (!sseTerminalEventReceived) startPolling();
-      };
-    } catch {
-      // EventSource not supported in this environment — fall back to polling
-      startPolling();
+      return () => clearInterval(timer);
     }
-
-    return () => {
-      clearInterval(animTimer);
-      if (pollTimerRef.current) clearInterval(pollTimerRef.current);
-      es?.close();
-    };
   }, [jobId, status]);
 
-  return { progress, status, message, startTracking };
+  return { progress, status, message };
 }
 
 /**

@@ -12,12 +12,10 @@ import {
   LLMMessage,
   LLMCallOptions,
   LLMCallResult,
-  LLMProvider,
+  LLMProviderClient,
 } from './provider';
 
-type ILLMProvider = LLMProvider;
-
-export class NvidiaNimProvider implements ILLMProvider {
+export class NvidiaNimProvider implements LLMProviderClient {
   name = 'nvidia-nim' as const;
   private apiKey: string;
   private baseUrl: string;
@@ -79,7 +77,15 @@ export class NvidiaNimProvider implements ILLMProvider {
       );
     }
 
-    const data = (await response.json()) as any;
+    interface NimChatResponse {
+      choices?: Array<{
+        message?: { content?: string };
+        finish_reason?: string;
+      }>;
+      usage?: { prompt_tokens?: number; completion_tokens?: number };
+    }
+
+    const data = (await response.json()) as NimChatResponse;
     const content = data.choices?.[0]?.message?.content || '';
 
     return {

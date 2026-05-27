@@ -457,26 +457,57 @@ model AgentExecution {
   railwayServiceId      String?
   previousDeploymentVersion String?
 
-  toolCalls ToolCall[]
-  eventLogs EventLog[]
+  // Governance fields (WI3/WI4)
+  queueJobId        String?
+  requestId         String?
+  correlationId     String?
+  progress          Int       @default(0)
+  attempts          Int       @default(0)
+  providerId        String?
+  currentTask       String?
+  promptVersionId   String?
+  promptHash        String?
+  modelId           String?
+  fallbackUsed      Boolean   @default(false)
+  fallbackReason    String?
+  sanitizerVersion  String?
+  inputTokens       Int?
+  outputTokens      Int?
+  costUsd           Float?
+  validationPassed    Boolean?
+  validationErrors    Json?
+  validationVersion   String?
+  schemaValidated     Boolean?
+  semanticValidated   Boolean?
+  policyValidated     Boolean?
+  metadata            Json?
+
+  toolCalls     ToolCall[]
+  eventLogs     EventLog[]
+  promptVersion PromptVersion? @relation(fields: [promptVersionId], references: [id])
 
   @@index([userId])
   @@index([status])
   @@index([executionSource])
   @@index([queuedAt])
   @@index([jobId])
+  @@index([queueJobId])
+  @@index([promptVersionId])
 }
 
 model ToolCall {
   id          String    @id @default(cuid())
   executionId String
-  tool        String // tool name/identifier
+  tool        String    // tool name/identifier
+  toolName    String?   // alias/display name
   input       Json?
   output      Json?
   error       String?
   status      String    @default("pending") // pending, running, completed, failed
   startedAt   DateTime?
   completedAt DateTime?
+  durationMs  Int?
+  tokens      Int?
   createdAt   DateTime  @default(now())
 
   execution AgentExecution @relation(fields: [executionId], references: [id], onDelete: Cascade)
@@ -750,15 +781,32 @@ model TokenUsageLog {
 }
 
 model PromptVersion {
-  id          String   @id @default(cuid())
-  capability  String   // E.g., "ATS_OPTIMIZATION"
-  version     Int      @default(1)
-  template    String   // Prompt template text
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
+  id                    String    @id @default(cuid())
+  capability            String    // E.g., "ATS_OPTIMIZATION"
+  agentType             String?   // agent type tag (e.g. "resume-tailor")
+  version               String    @default("1.0.0") // semver string
+  template              String    // User prompt template text
+  systemPrompt          String?   // system prompt override
+  systemHash            String?   // SHA-256 of systemPrompt
+  userPromptTemplate    String?   // user prompt template (alias for template)
+  userPromptHash        String?   // SHA-256 of user prompt template
+  preprocessingVersion  String?
+  sanitizerVersion      String?
+  outputSchemaVersion   String?
+  changelog             String?
+  createdBy             String?
+  isActive              Boolean   @default(true)
+  canaryPercent         Float?    // % of traffic for canary rollout
+  deprecatedAt          DateTime?
+  createdAt             DateTime  @default(now())
+
+  executions  AgentExecution[]
 
   @@unique([capability, version])
+  @@unique([agentType, version])
   @@index([capability])
+  @@index([agentType])
+  @@index([isActive])
 }
 
 model ModelHealthLog {

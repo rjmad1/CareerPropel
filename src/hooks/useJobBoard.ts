@@ -1,10 +1,13 @@
-import { useState, useCallback, useEffect } from 'react'
-import { Job, JobStage } from '@/types/job'
-import { getNotificationManager } from '@/lib/notifications/manager'
+import { useState, useCallback } from 'react'
+import { Job } from '@/components/Kanban'
+import { StageId } from '@/lib/design-tokens'
 
+/** Result returned from a job stage move operation */
 export interface MoveResult {
-  agentType: string | null
-  executionId: string | null
+  success: boolean;
+  executionId?: string;
+  agentType?: string;
+  error?: string;
 }
 
 export interface UseJobBoardReturn {
@@ -15,70 +18,87 @@ export interface UseJobBoardReturn {
   addJob: (job: Job) => void
   updateJob: (id: string, updates: Partial<Job>) => void
   deleteJob: (id: string) => void
-  moveJob: (id: string, newStage: JobStage) => Promise<MoveResult>
+  moveJob: (id: string, newStage: StageId) => void
   selectJob: (id: string | null) => void
   getJobById: (id: string) => Job | undefined
-  getJobsByStage: (stage: JobStage) => Job[]
-  refetch: () => Promise<void>
+  getJobsByStage: (stage: StageId) => Job[]
 }
 
-const AGENT_LABELS: Record<string, string> = {
-  'job-match': 'Job Match',
-  'resume-tailor': 'Resume Tailor',
-  'research': 'Company Research',
-  'interview-prep': 'Interview Prep',
-  'follow-up': 'Follow-Up',
-  'networking': 'Networking',
-}
-
-async function fetchJobsFromApi(): Promise<Job[]> {
-  const res = await fetch('/api/jobs?limit=200')
-  if (!res.ok) throw new Error(`Failed to fetch jobs: ${res.statusText}`)
-  const json = await res.json()
-  const items: Job[] = Array.isArray(json) ? json : json.data?.items ?? json.data ?? []
-  return items
-}
-
-async function callMoveEndpoint(id: string, stage: JobStage): Promise<MoveResult> {
-  const res = await fetch(`/api/jobs/${id}/move`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ stage }),
-  })
-  if (!res.ok) {
-    let detail = res.statusText
-    try {
-      const body = await res.json()
-      if (body?.error) detail = body.error
-    } catch { /* ignore parse failure */ }
-    throw new Error(`Move failed (${res.status}): ${detail}`)
-  }
-  const json = await res.json()
-  return { agentType: json.agentType ?? null, executionId: json.executionId ?? null }
-}
-
+/**
+ * useJobBoard Hook
+ * Custom hook for managing Kanban board job state.
+ */
 export function useJobBoard(): UseJobBoardReturn {
-  const [jobs, setJobs] = useState<Job[]>([])
+  const [jobs, setJobs] = useState<Job[]>([
+    // Mock data for development
+    {
+      id: '1',
+      title: 'Senior React Engineer',
+      company: 'Google',
+      stage: 'sourced',
+      matchScore: 92,
+      appliedAt: new Date().toISOString(),
+      salary: { min: 150000, max: 200000, currency: 'USD' },
+      location: 'Mountain View, CA',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      userId: 'dev',
+    },
+    {
+      id: '2',
+      title: 'Full Stack Engineer',
+      company: 'Microsoft',
+      stage: 'interested',
+      matchScore: 85,
+      appliedAt: null,
+      salary: { min: 140000, max: 180000, currency: 'USD' },
+      location: 'Seattle, WA',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      userId: 'dev',
+    },
+    {
+      id: '3',
+      title: 'Staff Engineer',
+      company: 'Meta',
+      stage: 'applied',
+      matchScore: 88,
+      appliedAt: new Date(Date.now() - 86400000).toISOString(),
+      location: 'Menlo Park, CA',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      userId: 'dev',
+    },
+    {
+      id: '4',
+      title: 'Principal Engineer',
+      company: 'Apple',
+      stage: 'recruiter_screen',
+      matchScore: 90,
+      appliedAt: null,
+      recruiterEmail: 'recruiter@apple.com',
+      recruiterName: 'Sarah Chen',
+      location: 'Cupertino, CA',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      userId: 'dev',
+    },
+    {
+      id: '5',
+      title: 'Engineering Manager',
+      company: 'Amazon',
+      stage: 'hiring_manager',
+      matchScore: 87,
+      appliedAt: null,
+      location: 'Seattle, WA',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      userId: 'dev',
+    },
+  ])
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
-
-  const refetch = useCallback(async () => {
-    try {
-      setLoading(true)
-      setError(null)
-      const data = await fetchJobsFromApi()
-      setJobs(data)
-    } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to load jobs'))
-    } finally {
-      setLoading(false)
-    }
-  }, [])
-
-  useEffect(() => {
-    refetch()
-  }, [refetch])
+  const [loading] = useState(false)
+  const [error] = useState<Error | null>(null)
 
   const addJob = useCallback((job: Job) => {
     setJobs((prev) => [job, ...prev])
@@ -86,46 +106,22 @@ export function useJobBoard(): UseJobBoardReturn {
 
   const updateJob = useCallback((id: string, updates: Partial<Job>) => {
     setJobs((prev) =>
-      prev.map((job) => (job.id === id ? { ...job, ...updates } : job))
+      prev.map((job) =>
+        job.id === id ? { ...job, ...updates } : job
+      )
     )
   }, [])
 
-  const deleteJob = useCallback(
-    (id: string) => {
-      setJobs((prev) => prev.filter((job) => job.id !== id))
-      if (selectedJobId === id) setSelectedJobId(null)
-    },
-    [selectedJobId]
-  )
+  const deleteJob = useCallback((id: string) => {
+    setJobs((prev) => prev.filter((job) => job.id !== id))
+    if (selectedJobId === id) {
+      setSelectedJobId(null)
+    }
+  }, [selectedJobId])
 
-  const moveJob = useCallback(
-    async (id: string, newStage: JobStage): Promise<MoveResult> => {
-      // Optimistic UI update
-      const previous = jobs.find((j) => j.id === id)
-      updateJob(id, { stage: newStage })
-
-      let result: MoveResult = { agentType: null, executionId: null }
-      try {
-        result = await callMoveEndpoint(id, newStage)
-
-        if (result.agentType) {
-          const label = AGENT_LABELS[result.agentType] ?? result.agentType
-          const stageName = newStage.replaceAll('_', ' ')
-          getNotificationManager().notify(
-            'info',
-            `${label} agent triggered`,
-            `Moving to ${stageName} — ${label} is running in the background.`,
-            { duration: 5000 }
-          )
-        }
-      } catch {
-        // Revert on hard failure
-        if (previous) updateJob(id, { stage: previous.stage })
-      }
-      return result
-    },
-    [jobs, updateJob]
-  )
+  const moveJob = useCallback((id: string, newStage: StageId) => {
+    updateJob(id, { stage: newStage as unknown as Job['stage'] })
+  }, [updateJob])
 
   const selectJob = useCallback((id: string | null) => {
     setSelectedJobId(id)
@@ -137,7 +133,7 @@ export function useJobBoard(): UseJobBoardReturn {
   )
 
   const getJobsByStage = useCallback(
-    (stage: JobStage) => jobs.filter((job) => job.stage === stage),
+    (stage: StageId) => jobs.filter((job) => job.stage === stage),
     [jobs]
   )
 
@@ -153,6 +149,5 @@ export function useJobBoard(): UseJobBoardReturn {
     selectJob,
     getJobById,
     getJobsByStage,
-    refetch,
   }
 }

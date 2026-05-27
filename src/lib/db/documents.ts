@@ -70,7 +70,7 @@ export async function uploadDocument(userId: string, data: UploadDocumentInput) 
       content: data.content,
       jobId: data.jobId,
       version: data.version || '1.0',
-      tags: data.tags,
+      tags: data.tags ?? [],
     },
   });
 }

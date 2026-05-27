@@ -1,217 +1,72 @@
-# Real-Time Agent Status System (WebSocket + Redis Pub/Sub)
+# Real-Time Agent Execution System (SSE + Redis Pub/Sub)
 
 ## Architecture Overview
 
-The real-time agent status system enables live updates of agent execution state to connected clients via WebSocket, backed by Redis pub/sub for scalability.
+Execution updates stream to clients via Server-Sent Events (SSE), backed by a shared Redis pub/sub subscriber per process.
 
 ```
-┌─────────────────┐
-│  Agent (Node)   │
-│  Resume Tailor  │
-└────────┬────────┘
-         │
-         │ publishEvent()
-         │
-    ┌────▼─────┐
-    │   Redis  │
-    │  Pub/Sub │
-    └────┬─────┘
-         │
-    ┌────┴──────────────┬──────────────┬─────────────┐
-    │                   │              │             │
-    │         Agent Status Channel     │             │
-    │         Agent Executions Channel │             │
-    │         Queue Stats Channel      │             │
-    │
-    ▼
-┌─────────────────────┐
-│  WebSocket Server   │
-│  /api/ws (GET)      │
-└────────┬────────────┘
-         │
-         │ broadcastToUser()
-         │
-    ┌────┴────────────────────────┐
-    │                             │
-    ▼                             ▼
-┌──────────────┐          ┌──────────────┐
-│  Client 1    │          │  Client 2    │
-│  Browser A   │          │  Browser B   │
-│ useAgentStatus│         │ useAgentStatus│
-└──────────────┘          └──────────────┘
+Worker Runtime
+  │ publishRealtimeEvent()
+  │
+  ▼
+Redis Pub/Sub
+  │ pattern: agent-events:{userId}
+  │
+  ▼
+Shared Subscriber (one per web process)
+  │ local EventEmitter fanout
+  │
+  ├──► SSE Client 1 (GET /api/agent/execution/{id}/subscribe)
+  └──► SSE Client 2 (GET /api/agent/execution/{id}/subscribe)
 ```
+
+WebSocket transport has been removed. The deprecated `/api/ws` and `/api/agents/ws` routes returned 410 Gone and have been deleted.
 
 ## Components
 
-### 1. Event Types (`events.ts`)
+### `events.ts`
 
-Defines all event types that can flow through the real-time system:
-- `AgentStatusEvent` - Agent status changes (idle, running, error, completed)
-- `ToolExecutionEvent` - Individual tool executions
-- `AgentStartedEvent` - Agent begins work
-- `AgentCompletedEvent` - Agent finishes
-- `QueueStatsEvent` - Queue throughput stats
-- `ErrorEvent` - System errors
-- `HeartbeatEvent` - Keep-alive pings
+Event type definitions for the execution event spine:
+- `AgentStatusEvent` — agent status changes (idle, running, error, completed)
+- `ToolExecutionEvent` — tool invocations
+- `AgentStartedEvent` / `AgentCompletedEvent`
+- `HeartbeatEvent` — keep-alive pings (every 30 s)
 
-Redis channels:
+### `sharedSubscriber.ts`
+
+Singleton Redis subscriber per process. Subscribes once with `psubscribe agent-events:*` and fans events out to local EventEmitter listeners. Prevents per-client Redis subscriptions from multiplying connections.
+
+### `agentStatusBroadcaster.ts`
+
+Server-side publisher API used by the worker runtime to emit execution state changes. Events flow through Redis pub/sub to the shared subscriber and then to SSE streams.
+
+## SSE Endpoint
+
 ```
-agent:status:USER_ID              → AgentStatusEvent
-agent:executions:USER_ID          → ToolExecutionEvent, AgentStartedEvent, AgentCompletedEvent
-queue:stats:USER_ID               → QueueStatsEvent
-system:errors                     → ErrorEvent
-system:heartbeat                  → HeartbeatEvent
+GET /api/agent/execution/[executionId]/subscribe
+Content-Type: text/event-stream
 ```
 
-### 2. WebSocket Server (`wsServer.ts`)
+Events:
+- `event: execution:update` — execution state change
+- `event: log:new` — individual log line
+- `event: heartbeat` — keep-alive ping
 
-Manages in-memory WebSocket connections and Redis subscriptions:
-- `subscribeToAgentUpdates()` - Subscribe client to agent events
-- `unsubscribeClient()` - Clean up connection
-- `broadcastToUser()` - Send event to all connections for a user
-- `getAgentStatus()` - Fetch latest agent status from Redis cache
-- `sendHeartbeats()` - Keep-alive pings
-- `cleanupStaleConnections()` - Remove dead connections
+## Client-Side Usage
 
-### 3. WebSocket Route (`/api/ws`)
-
-HTTP endpoint for WebSocket upgrade:
-- Authenticates user from JWT/cookies
-- Generates unique client ID
-- Calls `subscribeToAgentUpdates()`
-- Sends initial agent state to client
-- Returns WebSocket response with upgrade headers
-
-### 4. Agent Status Broadcaster (`agentStatusBroadcaster.ts`)
-
-Service for agents to publish status updates:
-- `broadcastAgentStarted()` - Publish agent execution started
-- `broadcastAgentCompleted()` - Publish agent execution completed
-- `broadcastToolExecution()` - Publish tool execution
-- `updateAgentStatus()` - Update agent status in Redis
-- `setAgentRunning()` / `setAgentIdle()` / `setAgentError()`
-- `broadcastQueueStats()` - Publish queue statistics
-
-### 5. React Hook (`useAgentStatus.ts`)
-
-Client-side hook for consuming real-time updates:
-- `useAgentStatus()` - Main hook, manages WebSocket connection
-- `useAgentStatusListener()` - Hook for listening to specific agent
-
-## Usage Examples
-
-### Server-side: Publish agent status update
+Use `useAgentExecution` with SSE enabled for per-execution real-time state:
 
 ```typescript
-import { broadcastAgentStarted, broadcastAgentCompleted, setAgentRunning } from '@/lib/realtime/agentStatusBroadcaster';
+import { useAgentExecution } from '@/hooks/useAgentExecution';
 
-// Agent starts work
-await broadcastAgentStarted(
-  userId,
-  'resume_tailor',
-  executionId,
-  jobId,
-  { resume: resumeId, jobDescription: jobDesc }
-);
+function ExecutionView({ executionId }: { executionId: string }) {
+  const { execution, logs, isRunning } = useAgentExecution(executionId, {
+    autoSubscribe: true,
+    useSse: true,
+  });
 
-// Agent is running
-await setAgentRunning(userId, 'resume_tailor', 3, 'Tailoring resume section 2/5');
-
-// Agent completes
-await broadcastAgentCompleted(
-  userId,
-  'resume_tailor',
-  executionId,
-  jobId,
-  'success',
-  { tailoredResume: newResumeId, changes: [...] },
-  undefined,
-  1250, // tokensUsed
-  45000  // duration in ms
-);
-```
-
-### Client-side: Subscribe to agent updates
-
-```typescript
-'use client';
-
-import { useAgentStatus, useAgentStatusListener } from '@/hooks/useAgentStatus';
-
-function AgentDashboard() {
-  const { agents, isConnected, error } = useAgentStatus();
-
-  return (
-    <div>
-      {isConnected ? '✓ Connected' : '✗ Disconnected'}
-      {error && <div className="error">{error}</div>}
-      
-      {Object.entries(agents).map(([type, status]) => (
-        <div key={type}>
-          <strong>{type}</strong>: {status.status}
-          <progress value={status.queueDepth} />
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function ResumeTailorStatus() {
-  const { status, isRunning, queueDepth } = useAgentStatusListener('resume_tailor');
-
-  if (!status) return <div>No resume tailor status</div>;
-
-  return (
-    <div>
-      Status: {status.status}
-      Queue: {queueDepth} jobs
-      Current: {status.currentTask || 'idle'}
-    </div>
-  );
+  return <div>{execution?.status}</div>;
 }
 ```
 
-## Data Flow Example: Resume Tailoring
-
-1. **User triggers resume tailoring** → API calls `broadcastAgentStarted()`
-2. **Resume Tailor agent executes**:
-   - Calls `setAgentRunning()` as it begins work
-   - Calls `broadcastToolExecution()` for each tool call
-   - Calls `broadcastAgentCompleted()` when done
-3. **Redis pub/sub publishes events** to `agent:executions:USER_ID`
-4. **WebSocket server receives** from Redis and calls `broadcastToUser()`
-5. **Client WebSocket receives** via `onmessage` and updates state
-6. **React component re-renders** with latest status
-
-## Performance Considerations
-
-- **Redis**: O(1) pub/sub operations, scales to thousands of subscribers
-- **WebSocket**: Persistent connections, minimal overhead after handshake
-- **Heartbeats**: Sent every 30 seconds to detect dead connections
-- **Stale cleanup**: Runs every 5 minutes to remove idle connections
-- **Caching**: Latest agent status cached in Redis for new clients
-
-## Error Handling
-
-- **Connection lost**: Client auto-reconnects with exponential backoff
-- **Message parse error**: Logged but doesn't crash connection
-- **Stale client**: Removed after 15 minutes of no heartbeat
-- **Redis error**: Logged, connection continues (events may be lost)
-- **Authentication failure**: WebSocket upgrade denied
-
-## Testing
-
-TODO: Add Cypress tests for WebSocket behavior
-- Connect/disconnect
-- Receive status updates
-- Auto-reconnect on disconnect
-- Error recovery
-
-## Future Enhancements
-
-- [ ] Message queuing if client temporarily disconnects
-- [ ] Batching of multiple events into single message
-- [ ] Event filtering (client subscribes to specific agents only)
-- [ ] Compression of message payloads
-- [ ] Metrics collection (connection count, message throughput)
-- [ ] Dead-letter queue for failed broadcasts
+For aggregate agent status (e.g. AgentRail), use `useAgentRealTime` which polls via REST.

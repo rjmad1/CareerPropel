@@ -153,6 +153,13 @@ export interface LanguageProficiency {
 /**
  * Technical prep tracker
  */
+export interface LanguageProficiency {
+  language: string;
+  level: 'beginner' | 'intermediate' | 'advanced' | 'expert';
+  primaryLanguage: boolean;
+  yearsPractice: number;
+}
+
 export interface TechnicalPrepTracker {
   jobId: string;
   requiredTopics: TechnicalTopic[];

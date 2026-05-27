@@ -6,7 +6,7 @@
 
 import { NextRequest } from 'next/server';
 import { getAuthContext } from '@/lib/middleware/auth';
-import { getAllAgentStatus } from '@/lib/realtime/wsServer';
+// Real-time agent status updates are pushed via Redis pub/sub — no wsServer needed
 import { REDIS_CHANNELS, parseEvent } from '@/lib/realtime/events';
 import Redis from 'ioredis';
 
@@ -31,13 +31,8 @@ export async function GET(_request: NextRequest) {
         }
       };
 
-      // Send initial snapshot
-      try {
-        const snapshot = await getAllAgentStatus(userEmail);
-        send('snapshot', snapshot);
-      } catch {
-        send('snapshot', {});
-      }
+      // Send initial empty snapshot (realtime updates arrive via Redis pub/sub)
+      send('snapshot', {});
 
       // Dedicated subscriber connection (ioredis subscriber mode)
       const sub = new Redis({

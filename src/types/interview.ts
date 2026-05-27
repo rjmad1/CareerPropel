@@ -93,7 +93,7 @@ export interface Responsibility {
 
 export interface Skill {
   name: string;
-  proficiency: 'junior' | 'mid' | 'senior' | 'staff';
+  proficiency: 'junior' | 'mid' | 'senior' | 'staff' | 'principal';
   yourLevel?: 'expert' | 'proficient' | 'intermediate' | 'beginner' | 'none';
   gapAnalysis?: {
     gapSeverity: 'critical' | 'important' | 'minor' | 'none';

@@ -46,7 +46,7 @@ export const IntegratedDashboard: React.FC<{ candidateId: string }> = ({
           <div className="flex-1 overflow-hidden">
             <KanbanBoard
               initialJobs={jobs}
-              onJobMove={moveJob}
+              onJobMove={(id, stage) => moveJob(id, stage as Parameters<typeof moveJob>[1])}
             />
           </div>
         )}

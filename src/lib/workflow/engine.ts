@@ -462,7 +462,7 @@ export async function resumeWorkflow(workflowId: string, candidateId: string): P
     where: { workflowId, stepIndex: execution.currentStepIndex },
     select: { status: true },
   });
-  if (currentStep?.status === 'running' || currentStep?.status === 'queued') {
+  if (currentStep?.status === 'running' || currentStep?.status === 'pending') {
     throw Object.assign(new Error('Cannot resume: current step is already running or queued'), { status: 409 });
   }
 

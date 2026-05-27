@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Agent, AgentLog as AgentLogType } from '@/lib/websocket/types';
+import { Agent, AgentLog as AgentLogType } from '@/types/agent';
 import { AGENT_CONFIGS } from '@/types/agent-configs';
 import { useRealTime } from '@/hooks/useRealTime';
 import { AgentCard } from './AgentCard';

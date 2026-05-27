@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { AgentLog as AgentLogType } from '@/lib/websocket/types';
+import { AgentLog as AgentLogType } from '@/types/agent';
 import { cn } from '@/lib/utils';
 
 interface AgentLogComponentProps {

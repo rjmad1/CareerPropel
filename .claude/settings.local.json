@@ -1,0 +1,46 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(ls:*)",
+      "Bash(echo:*)",
+      "Bash(du:*)",
+      "Bash(pwd && ls /mnt/c/Users/rajaj/CareerPropel/ 2>/dev/null || echo \"NOT FOUND\")",
+      "Read(//mnt/c/Users/rajaj/**)",
+      "Bash(npm run *)",
+      "Bash(npm test *)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'feat: production hardening — governance, observability, SSE runtime, docs *)",
+      "Bash(git push *)",
+      "Bash(git fetch *)",
+      "Bash(git pull *)",
+      "Bash(git merge *)",
+      "Bash(git show *)",
+      "Bash(cp /tmp/jobs_route.ts src/app/api/jobs/route.ts)",
+      "Bash(cp /tmp/dashboard.tsx src/app/dashboard/page.tsx)",
+      "Bash(cp /tmp/page.tsx src/app/page.tsx)",
+      "Bash(cp /tmp/jobdetailpanel.tsx src/domains/jobs/components/JobDetailPanel.tsx)",
+      "Bash(grep \"^model \" prisma/schema.prisma | sort > /tmp/local_models.txt && git show origin/main:prisma/schema.prisma | grep \"^model \" | sort > /tmp/remote_models.txt && diff /tmp/local_models.txt /tmp/remote_models.txt)",
+      "Bash(awk -F'\\(' '{print $1}')",
+      "Bash(cat C:\\\\Users\\\\rajaj\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-rajaj-CareerPropel\\\\0aa9e038-cecf-4dc7-8cd6-bc1ff010f144\\\\tasks\\\\bhzkz6kmk.output 2>/dev/null | tail -10 || cat \"/c/Users/rajaj/AppData/Local/Temp/claude/c--Users-rajaj-CareerPropel/0aa9e038-cecf-4dc7-8cd6-bc1ff010f144/tasks/bhzkz6kmk.output\" | tail -10)",
+      "Read(//c/Users/rajaj/AppData/Local/Temp/claude/c--Users-rajaj-CareerPropel/0aa9e038-cecf-4dc7-8cd6-bc1ff010f144/tasks/**)",
+      "Bash(sed -i \"s/^import React.*$/\\\\/\\\\/ React import removed \\(unused\\)/\" src/domains/jobs/components/JobDetailPanel.tsx)",
+      "Bash(sed -i \"/UI_TO_API_TYPE/d\" src/domains/jobs/hooks/useMutations.ts)",
+      "Bash(sed -i \"s/import { SkillProficiency,/import {/\" src/lib/db/profile.ts)",
+      "Bash(sed -i \"s/, SkillProficiency//\" src/lib/db/profile.ts)",
+      "Bash(sed -i \"s/QueueStatsEvent, //\" src/lib/realtime/agentStatusBroadcaster.ts)",
+      "Bash(sed -i \"s/const rateLimitResponse = getJobsLimiter\\(request\\)/const rateLimitResponse = await getJobsLimiter\\(request\\)/g; s/const rateLimitResponse = createJobLimiter\\(request\\)/const rateLimitResponse = await createJobLimiter\\(request\\)/g\" src/app/api/jobs/route.ts src/app/api/jobs/[id]/route.ts && echo \"Fixed await for rate limiters\")",
+      "Bash(sed -i \"s/jdKeywords: ExtractedKeywords/_jdKeywords: ExtractedKeywords/g; s/langProfile: JobLanguageProfile/_langProfile: JobLanguageProfile/g\" src/lib/document/variantGenerator.ts)",
+      "Bash(sed -i \"s/\\\\bjdKeywords\\\\b/_jdKeywords/g; s/\\\\blangProfile\\\\b/_langProfile/g\" src/lib/document/variantGenerator.ts)",
+      "Bash(sed -i 's/const rateLimitResponse = getJobLimiter\\(request\\)/const rateLimitResponse = await getJobLimiter\\(request\\)/g' src/app/api/jobs/[id]/route.ts)",
+      "Bash(sed -i 's/const rateLimitResponse = updateJobLimiter\\(request\\)/const rateLimitResponse = await updateJobLimiter\\(request\\)/g' src/app/api/jobs/[id]/route.ts)",
+      "Bash(sed -i 's/const rateLimitResponse = deleteJobLimiter\\(request\\)/const rateLimitResponse = await deleteJobLimiter\\(request\\)/g' src/app/api/jobs/[id]/route.ts)"
+    ],
+    "deny": [],
+    "ask": [],
+    "additionalDirectories": [
+      "\\tmp",
+      "C:\\Users\\rajaj\\CareerPropel\\src\\app\\api\\jobs\\[id]"
+    ]
+  }
+}

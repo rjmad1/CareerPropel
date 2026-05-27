@@ -16,10 +16,9 @@ export async function GET(_request: NextRequest) {
     const candidate = await prisma.candidate.findUnique({
       where: { email: userEmail },
       include: {
-        profileScore: true,
-        profileEntities: true,
         skills: true,
         achievements: true,
+        profileData: true,
       },
     });
 
@@ -30,21 +29,16 @@ export async function GET(_request: NextRequest) {
       );
     }
 
+    const profileDataCount = candidate.profileData.length;
+
     const profile = {
       candidateId: candidate.id,
       name: candidate.name,
       email: candidate.email,
-      completenessScore: candidate.profileScore,
       topSkills: candidate.skills.slice(0, 5),
       recentAchievements: candidate.achievements.slice(0, 5),
       extractionQuality: {
-        totalEntities: candidate.profileEntities.length,
-        averageConfidence: candidate.profileEntities.length > 0
-          ? candidate.profileEntities.reduce((sum: number, e: any) => sum + e.confidence, 0) / candidate.profileEntities.length
-          : 0,
-        documentCount: await prisma.profileData.count({
-          where: { candidateId: candidate.id },
-        }),
+        documentCount: profileDataCount,
         lastExtraction: candidate.updatedAt,
       },
     };
@@ -81,9 +75,10 @@ export async function PUT(request: NextRequest) {
       );
     }
 
+    const { name, email } = body;
     const updated = await prisma.candidate.update({
       where: { id: candidate.id },
-      data: body,
+      data: { name, email },
     });
 
     return NextResponse.json({ profile: updated }, { status: 200 });

@@ -1,427 +1,359 @@
-'use client';
+'use client'
 
-import { Suspense } from 'react';
-import { useSession } from 'next-auth/react';
-import { useEffect, useState, useCallback } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { NavLayout } from '@/components/Layout/NavLayout';
-import { JobDetailPanel } from '@/domains/jobs';
-import Link from 'next/link';
-import { Button, Card, Badge, Input, Modal, ModalHeader, ModalTitle, ModalBody, ModalFooter, Spinner } from '@/components/ui';
+import { useSession, signOut } from 'next-auth/react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import {
-  Mic,
-  DollarSign,
-  User,
-  BarChart3,
-  Briefcase,
-  Plus,
-  RotateCw,
-  ArrowRight,
-  ShieldCheck,
-  AlertCircle,
-  X,
-  Sparkles,
-  PartyPopper
-} from 'lucide-react';
+  AppBar,
+  Toolbar,
+  Container,
+  Box,
+  Grid,
+  Card,
+  CardContent,
+  CardHeader,
+  TextField,
+  Button,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  Chip,
+  Alert,
+  CircularProgress,
+  Typography,
+  Paper,
+  Divider,
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
+import LogoutIcon from '@mui/icons-material/Logout'
+import WorkIcon from '@mui/icons-material/Work'
+import BusinessIcon from '@mui/icons-material/Business'
+import RefreshIcon from '@mui/icons-material/Refresh'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import AddIcon from '@mui/icons-material/Add'
 
 interface Job {
-  id: string;
-  title: string;
-  company: string;
-  stage: string;
-  url?: string;
-  createdAt: string;
+  id: string
+  title: string
+  company: string
+  stage: string
+  url?: string
+  createdAt: string
 }
 
-const STAGE_COLOR_MAP: Record<string, 'primary' | 'success' | 'warning' | 'error' | 'gray'> = {
-  SOURCED: 'gray',
-  INTERESTED: 'primary',
-  RESUME_TAILORING: 'primary',
-  APPLIED: 'primary',
-  RECRUITER_SCREEN: 'primary',
-  HIRING_MANAGER: 'warning',
-  TECHNICAL_INTERVIEW: 'primary',
-  SYSTEM_DESIGN: 'primary',
-  BEHAVIORAL: 'warning',
-  FINAL_ROUND: 'warning',
-  OFFER: 'success',
-  NEGOTIATION: 'success',
-  REJECTED: 'error',
-  ARCHIVED: 'gray',
-};
+const StyledCard = styled(Card)(({ theme }) => ({
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  transition: 'box-shadow 0.3s ease',
+  '&:hover': {
+    boxShadow: theme.shadows[8],
+  },
+}))
 
-const STAGE_LABELS: Record<string, string> = {
-  SOURCED: 'Sourced',
-  INTERESTED: 'Interested',
-  RESUME_TAILORING: 'Tailoring',
-  APPLIED: 'Applied',
-  RECRUITER_SCREEN: 'Recruiter Screen',
-  HIRING_MANAGER: 'Hiring Manager',
-  TECHNICAL_INTERVIEW: 'Technical',
-  SYSTEM_DESIGN: 'System Design',
-  BEHAVIORAL: 'Behavioral',
-  FINAL_ROUND: 'Final Round',
-  OFFER: 'Offer',
-  NEGOTIATION: 'Negotiation',
-  REJECTED: 'Rejected',
-  ARCHIVED: 'Archived',
-};
+const JobListItem = styled(ListItem)(({ theme }) => ({
+  borderLeft: `4px solid ${theme.palette.primary.main}`,
+  '&:hover': {
+    backgroundColor: theme.palette.action.hover,
+  },
+  marginBottom: theme.spacing(1),
+  borderRadius: theme.spacing(1),
+}))
 
-const QUICK_LINKS = [
-  { href: '/interview-prep', label: 'Interview Prep', description: 'AI-generated prep kits for every role', icon: Mic, bgClass: 'bg-blue-50 hover:bg-blue-100/80 border border-blue-100', iconColor: 'text-blue-600' },
-  { href: '/offers', label: 'Offers', description: 'Compare and evaluate compensation packages', icon: DollarSign, bgClass: 'bg-emerald-50 hover:bg-emerald-100/80 border border-emerald-100', iconColor: 'text-emerald-600' },
-  { href: '/profile', label: 'Profile', description: 'Manage skills, achievements, and ATS score', icon: User, bgClass: 'bg-amber-50 hover:bg-amber-100/80 border border-amber-100', iconColor: 'text-amber-600' },
-  { href: '/analytics', label: 'Analytics', description: 'Pipeline conversion rates and salary insights', icon: BarChart3, bgClass: 'bg-purple-50 hover:bg-purple-100/80 border border-purple-100', iconColor: 'text-purple-600' },
-];
+const StageChip = styled(Chip)(({ theme }) => ({
+  marginTop: theme.spacing(1),
+}))
 
-function DashboardContent() {
-  const { data: session, status } = useSession();
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [jobs, setJobs] = useState<Job[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [onboardCheckLoading, setOnboardCheckLoading] = useState(true);
-  const [showWelcome, setShowWelcome] = useState(false);
-  const [error, setError] = useState('');
-  const [title, setTitle] = useState('');
-  const [company, setCompany] = useState('');
-  const [url, setUrl] = useState('');
-  const [submitLoading, setSubmitLoading] = useState(false);
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
-
-  const fetchJobs = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/jobs?limit=20');
-      if (!response.ok) {
-        const text = await response.text();
-        let msg = `Failed to fetch jobs (${response.status})`;
-        try { msg = JSON.parse(text)?.error?.message ?? msg; } catch { /* */ }
-        throw new Error(msg);
-      }
-      const data = await response.json();
-      const rawJobs: Job[] = Array.isArray(data) ? data : data.data ?? [];
-      setJobs(rawJobs);
-      setError('');
-    } catch {
-      setError('Failed to fetch jobs');
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+export default function DashboardPage() {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+  const [jobs, setJobs] = useState<Job[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [title, setTitle] = useState('')
+  const [company, setCompany] = useState('')
+  const [url, setUrl] = useState('')
+  const [submitLoading, setSubmitLoading] = useState(false)
 
   useEffect(() => {
-    async function checkOnboardingAndFetch() {
-      if (status === 'unauthenticated') {
-        router.push('/login');
-        return;
-      }
-
-      if (status === 'authenticated') {
-        try {
-          const res = await fetch('/api/account');
-          if (res.ok) {
-            const result = await res.json();
-            const prefs = result?.data?.preferences || {};
-            
-            // Redirect if not onboarded
-            if (!prefs.onboarded) {
-              router.push('/onboarding');
-              return;
-            }
-
-            // Display welcome state if parameter active
-            if (searchParams.get('welcome') === '1') {
-              setShowWelcome(true);
-            }
-          }
-        } catch (e) {
-          console.error('Failed to verify onboarding status:', e);
-        } finally {
-          setOnboardCheckLoading(false);
-          fetchJobs();
-        }
-      }
+    if (status === 'unauthenticated') {
+      router.push('/login')
+    } else if (status === 'authenticated') {
+      fetchJobs()
     }
+  }, [status])
 
-    checkOnboardingAndFetch();
-  }, [status, router, fetchJobs, searchParams]);
+  async function fetchJobs() {
+    try {
+      setLoading(true)
+      const response = await fetch('/api/jobs')
+      const data = await response.json()
+
+      if (data.data) {
+        setJobs(data.data)
+      }
+      setError('')
+    } catch (err) {
+      setError('Failed to fetch jobs')
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   async function handleAddJob(e: React.FormEvent) {
-    e.preventDefault();
+    e.preventDefault()
     try {
-      setSubmitLoading(true);
+      setSubmitLoading(true)
       const response = await fetch('/api/jobs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, company, url: url || undefined, stage: 'interested' }),
-      });
-      if (!response.ok) throw new Error('Failed to create job');
-      setTitle('');
-      setCompany('');
-      setUrl('');
-      setShowAddForm(false);
-      await fetchJobs();
-    } catch {
-      setError('Failed to add job');
+        body: JSON.stringify({ title, company, url, stage: 'interested' }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to create job')
+      }
+
+      setTitle('')
+      setCompany('')
+      setUrl('')
+      await fetchJobs()
+    } catch (err) {
+      setError('Failed to add job')
+      console.error(err)
     } finally {
-      setSubmitLoading(false);
+      setSubmitLoading(false)
     }
   }
 
-  const stageKey = (stage: string) => stage?.toUpperCase() ?? '';
-
-  if (status === 'loading' || onboardCheckLoading) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-3">
-        <Spinner className="w-10 h-10 text-indigo-600" />
-        <span className="text-sm text-slate-500 font-medium">Booting Career Operating System...</span>
-      </div>
-    );
+  const getStageColor = (stage: string) => {
+    const colors: { [key: string]: any } = {
+      interested: 'info',
+      applied: 'primary',
+      interview: 'warning',
+      offer: 'success',
+      rejected: 'error',
+    }
+    return colors[stage] || 'default'
   }
-  if (!session) return null;
 
-  const userName = session.user?.email ? session.user.email.split('@')[0] : '';
+  if (status === 'loading') {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    )
+  }
+
+  if (!session) {
+    return null
+  }
 
   return (
-    <NavLayout
-      title="Dashboard"
-      subtitle={`Welcome back${userName ? ', ' + userName : ''}! Here's your career pipeline.`}
-    >
-      <div className="p-6 max-w-5xl mx-auto space-y-8">
-        {showWelcome && (
-          <div className="bg-gradient-to-r from-blue-600/95 to-indigo-600/95 text-white rounded-3xl p-6 shadow-xl relative overflow-hidden backdrop-blur-md border border-indigo-400/20">
-            <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl pointer-events-none" />
-            <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div className="space-y-2">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-white text-[10px] font-bold uppercase tracking-wider">
-                  <PartyPopper className="w-3.5 h-3.5" />
-                  <span>Onboarding Complete</span>
-                </div>
-                <h3 className="text-xl font-bold flex items-center gap-2">
-                  <Sparkles className="w-5 h-5 text-amber-300 animate-pulse" />
-                  <span>Your Career OS is Active & Custom-Configured!</span>
-                </h3>
-                <p className="text-xs text-blue-100 max-w-2xl leading-relaxed">
-                  We have successfully mapped your career goals, privacy presets, and budget limits to all 11+ outcome presets. You can manage encrypted API keys, fallback routes, or offline discovery anytime under settings.
-                </p>
-              </div>
-              <button 
-                onClick={() => setShowWelcome(false)}
-                className="bg-white hover:bg-slate-100 text-indigo-950 px-5 py-2.5 rounded-xl text-xs font-extrabold transition-all shrink-0 shadow-sm"
-              >
-                Get Started
-              </button>
-            </div>
-          </div>
-        )}
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      {/* AppBar */}
+      <AppBar position="sticky">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 600 }}>
+            CareerPropel Dashboard
+          </Typography>
+          <Typography variant="body2" sx={{ mr: 3, opacity: 0.9 }}>
+            {session.user?.email}
+          </Typography>
+          <Button
+            color="inherit"
+            startIcon={<LogoutIcon />}
+            onClick={() => signOut()}
+            sx={{
+              textTransform: 'none',
+              fontSize: '1rem',
+              '&:hover': {
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              },
+            }}
+          >
+            Sign Out
+          </Button>
+        </Toolbar>
+      </AppBar>
 
+      {/* Main Content */}
+      <Container maxWidth="lg" sx={{ py: 4, flex: 1 }}>
         {error && (
-          <div className="flex items-center justify-between p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm" role="alert">
-            <div className="flex items-center gap-2">
-              <AlertCircle className="h-5 w-5 shrink-0" />
-              <span>{error}</span>
-            </div>
-            <button onClick={() => setError('')} className="text-red-500 hover:text-red-700 p-1" aria-label="Dismiss error">
-              <X className="h-4 w-4" />
-            </button>
-          </div>
+          <Alert severity="error" sx={{ mb: 3 }} onClose={() => setError('')}>
+            {error}
+          </Alert>
         )}
 
-        {/* Quick Navigation Cards */}
-        <div>
-          <span className="text-[11px] tracking-wider uppercase font-semibold text-slate-500 block mb-3">
-            Quick Access
-          </span>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {QUICK_LINKS.map((link) => {
-              const IconComponent = link.icon;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`flex flex-col items-start p-5 rounded-xl shadow-xs transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 ${link.bgClass}`}
-                >
-                  <IconComponent className={`mb-3 h-7 w-7 ${link.iconColor}`} />
-                  <span className="text-sm font-bold text-slate-900 mb-1">
-                    {link.label}
-                  </span>
-                  <span className="text-xs text-slate-500 leading-snug">
-                    {link.description}
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
+        <Grid container spacing={3}>
+          {/* Add New Job Form */}
+          <Grid size={{ xs: 12, md: 6 }}>
+            <StyledCard>
+              <CardHeader
+                title="Add New Job"
+                avatar={<AddIcon sx={{ color: 'primary.main' }} />}
+                titleTypographyProps={{ variant: 'h6' }}
+              />
+              <Divider />
+              <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+                <Box component="form" onSubmit={handleAddJob} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  <TextField
+                    label="Job Title"
+                    placeholder="e.g., Senior Software Engineer"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    required
+                    fullWidth
+                    variant="outlined"
+                    disabled={submitLoading}
+                  />
+                  <TextField
+                    label="Company"
+                    placeholder="e.g., Google"
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    required
+                    fullWidth
+                    variant="outlined"
+                    disabled={submitLoading}
+                  />
+                  <TextField
+                    label="Job URL"
+                    placeholder="https://example.com/jobs/123 (optional)"
+                    type="url"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)}
+                    fullWidth
+                    variant="outlined"
+                    disabled={submitLoading}
+                  />
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    fullWidth
+                    disabled={submitLoading}
+                    startIcon={submitLoading ? <CircularProgress size={20} color="inherit" /> : <AddIcon />}
+                    sx={{ mt: 1 }}
+                  >
+                    {submitLoading ? 'Adding Job...' : 'Add Job'}
+                  </Button>
+                </Box>
+              </CardContent>
+            </StyledCard>
+          </Grid>
 
-        {/* Jobs Section */}
-        <div>
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-[11px] tracking-wider uppercase font-semibold text-slate-500">
-              Recent Jobs {jobs.length > 0 && `(${jobs.length})`}
-            </span>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={fetchJobs}
-                disabled={loading}
-                aria-label="Refresh jobs"
-                className="h-8 w-8 p-0 rounded-lg hover:bg-slate-100 text-slate-500"
-              >
-                <RotateCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-              </Button>
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={() => setShowAddForm(true)}
-                className="h-8 px-3 text-xs gap-1.5"
-              >
-                <Plus className="h-4 w-4" /> Add Job
-              </Button>
-            </div>
-          </div>
-
-          {/* Jobs List Card */}
-          <Card className="overflow-hidden bg-white shadow-xs border border-slate-200 rounded-xl">
-            {loading ? (
-              <div className="flex justify-center items-center py-12">
-                <Spinner size="md" />
-              </div>
-            ) : jobs.length === 0 ? (
-              <div className="text-center py-12 px-4 space-y-4">
-                <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-slate-100 text-slate-400">
-                  <Briefcase className="h-6 w-6" />
-                </div>
-                <div className="space-y-1">
-                  <h4 className="text-sm font-bold text-slate-900">No jobs tracked yet</h4>
-                  <p className="text-xs text-slate-500">
-                    Start tracking applications to manage your pipeline.
-                  </p>
-                </div>
-                <Button variant="primary" size="sm" onClick={() => setShowAddForm(true)} className="gap-1.5 mx-auto">
-                  <Plus className="h-4 w-4" /> Add Your First Job
-                </Button>
-              </div>
-            ) : (
-              <div className="divide-y divide-slate-100">
-                {jobs.map((job) => {
-                  const sk = stageKey(job.stage);
-                  return (
-                    <div
-                      key={job.id}
-                      data-testid="job-card"
-                      onClick={() => setSelectedJobId(job.id)}
-                      className="px-5 py-4 flex items-center justify-between gap-4 cursor-pointer transition-colors hover:bg-slate-50/70"
-                    >
-                      <div className="min-w-0 flex-1">
-                        <h4 className="text-sm font-semibold text-slate-950 truncate leading-snug">
-                          {job.title}
-                        </h4>
-                        <p className="text-xs text-slate-500 font-medium leading-normal mt-0.5">
-                          {job.company}
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-3 shrink-0">
-                        <Badge variant={STAGE_COLOR_MAP[sk] ?? 'gray'} size="sm">
-                          {STAGE_LABELS[sk] ?? job.stage}
-                        </Badge>
-                        <Link
-                          href="/interview-prep"
-                          onClick={(e: React.MouseEvent) => e.stopPropagation()}
-                          className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 hover:text-blue-700 transition-colors p-1"
-                        >
-                          Prepare <ArrowRight className="h-3 w-3" />
-                        </Link>
-                      </div>
-                    </div>
-                  );
-                })}
-                {jobs.length >= 20 && (
-                  <div className="bg-slate-50/50 py-2.5 text-center border-t border-slate-100">
-                    <span className="text-[10px] font-medium text-slate-500">
-                      Showing most recent 20 jobs
-                    </span>
-                  </div>
+          {/* Jobs List */}
+          <Grid size={{ xs: 12, md: 6 }}>
+            <StyledCard>
+              <CardHeader
+                title="Your Jobs"
+                action={
+                  <Button
+                    size="small"
+                    startIcon={<RefreshIcon />}
+                    onClick={fetchJobs}
+                    disabled={loading}
+                  >
+                    Refresh
+                  </Button>
+                }
+                titleTypographyProps={{ variant: 'h6' }}
+              />
+              <Divider />
+              <CardContent sx={{ flexGrow: 1, overflow: 'auto' }}>
+                {loading ? (
+                  <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+                    <CircularProgress />
+                  </Box>
+                ) : jobs.length === 0 ? (
+                  <Typography color="text.secondary" sx={{ py: 4, textAlign: 'center' }}>
+                    No jobs yet. Add one to get started!
+                  </Typography>
+                ) : (
+                  <List sx={{ width: '100%' }}>
+                    {jobs.map((job) => (
+                      <JobListItem key={job.id} disablePadding sx={{ mb: 1 }}>
+                        <ListItemIcon sx={{ minWidth: 40 }}>
+                          <WorkIcon color="primary" />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={
+                            <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                              {job.title}
+                            </Typography>
+                          }
+                          secondary={
+                            <Box>
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
+                                <BusinessIcon sx={{ fontSize: 18, color: 'text.secondary' }} />
+                                <Typography variant="body2" color="text.secondary">
+                                  {job.company}
+                                </Typography>
+                              </Box>
+                              <StageChip
+                                label={job.stage}
+                                size="small"
+                                color={getStageColor(job.stage)}
+                                variant="outlined"
+                              />
+                            </Box>
+                          }
+                        />
+                      </JobListItem>
+                    ))}
+                  </List>
                 )}
-              </div>
-            )}
-          </Card>
-        </div>
+              </CardContent>
+            </StyledCard>
+          </Grid>
 
-        {/* Auth Status Alert */}
-        <div className="flex items-start gap-3 p-4 bg-blue-50/60 border border-blue-100 rounded-xl text-slate-700">
-          <ShieldCheck className="h-5 w-5 text-blue-600 shrink-0 mt-0.5" />
-          <div className="text-xs space-y-0.5">
-            <p className="font-semibold text-slate-900">Security Layer Active</p>
-            <p className="text-slate-600 font-medium">
-              Authenticated as <strong className="text-slate-900 font-bold">{session.user?.email}</strong> — all pipeline endpoints fully secured.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Add Job Modal */}
-      <Modal isOpen={showAddForm} onClose={() => setShowAddForm(false)} className="max-w-md w-full">
-        <ModalHeader onClose={() => setShowAddForm(false)}>
-          <ModalTitle>Track New Job</ModalTitle>
-        </ModalHeader>
-        <form onSubmit={handleAddJob}>
-          <ModalBody className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <Input
-                label="Job Title"
-                required
-                placeholder="e.g. Frontend Architect"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                disabled={submitLoading}
+          {/* Authentication Status */}
+          <Grid size={{ xs: 12 }}>
+            <StyledCard>
+              <CardHeader
+                title="Authentication Status"
+                avatar={<CheckCircleIcon sx={{ color: 'success.main' }} />}
+                titleTypographyProps={{ variant: 'h6' }}
               />
-              <Input
-                label="Company"
-                required
-                placeholder="e.g. DeepMind"
-                value={company}
-                onChange={(e) => setCompany(e.target.value)}
-                disabled={submitLoading}
-              />
-            </div>
-            <Input
-              label="Job URL (optional)"
-              type="url"
-              placeholder="https://jobs.google.com/..."
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              disabled={submitLoading}
-            />
-          </ModalBody>
-          <ModalFooter>
-            <Button variant="ghost" size="sm" onClick={() => setShowAddForm(false)} disabled={submitLoading}>
-              Cancel
-            </Button>
-            <Button type="submit" variant="primary" size="sm" loading={submitLoading}>
-              Add Job
-            </Button>
-          </ModalFooter>
-        </form>
-      </Modal>
-
-      {selectedJobId && (
-        <JobDetailPanel
-          jobId={selectedJobId}
-          onClose={() => setSelectedJobId(null)}
-        />
-      )}
-    </NavLayout>
-  );
-}
-
-export default function DashboardPage() {
-  return (
-    <Suspense>
-      <DashboardContent />
-    </Suspense>
-  );
+              <Divider />
+              <CardContent>
+                <Grid container spacing={3}>
+                  <Grid size={{ xs: 12, md: 6 }}>
+                    <Paper variant="outlined" sx={{ p: 2 }}>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+                        Email Address
+                      </Typography>
+                      <Typography variant="body1" sx={{ fontWeight: 500 }}>
+                        {session.user?.email}
+                      </Typography>
+                    </Paper>
+                  </Grid>
+                  <Grid size={{ xs: 12, md: 6 }}>
+                    <Paper variant="outlined" sx={{ p: 2 }}>
+                      <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+                        Status
+                      </Typography>
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <CheckCircleIcon color="success" />
+                        <Typography variant="body1" sx={{ fontWeight: 500, color: 'success.main' }}>
+                          Authenticated
+                        </Typography>
+                      </Box>
+                    </Paper>
+                  </Grid>
+                </Grid>
+                <Typography variant="body2" color="text.secondary" sx={{ mt: 3 }}>
+                  ✓ Your authentication is working! All API endpoints are protected and will only return your data.
+                </Typography>
+              </CardContent>
+            </StyledCard>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
+  )
 }

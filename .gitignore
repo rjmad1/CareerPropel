@@ -48,24 +48,5 @@ Thumbs.db
 .next
 .turbo
 
-# TypeScript build info
-tsconfig.tsbuildinfo
-
-# Claude Code local settings
-.claude/settings.local.json
-.vercel
-
-# Cypress local credentials (use cypress.env.json.example as template)
-cypress.env.json
-
-# Cypress test artifacts
-cypress/screenshots/
-cypress/videos/
-
-# Generated / tool artifacts
-scan_output.txt
-skills-lock.json
-dev.log
-test-results.log
-test-results.json
-.agents/
+# Graphify generated output
+graphify-out/

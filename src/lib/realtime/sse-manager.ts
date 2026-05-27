@@ -14,7 +14,7 @@
  * The connection stays alive until ALL handlers are removed (ref-counted teardown).
  */
 
-import { AnyWebSocketMessage } from '@/lib/websocket/types';
+import { AnyWebSocketMessage } from '@/types/agent';
 import { emitNavigationEvent } from '@/lib/navigation/analytics';
 
 // SSE event types the server emits

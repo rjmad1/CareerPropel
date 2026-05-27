@@ -1,7 +1,8 @@
-import { prisma } from "@/lib/db";
+import { PrismaClient } from '@prisma/client';
 import type { LogOfferInput, UpdateOfferInput, ListOffersQuery } from '@/lib/validation/schemas';
 import { createActivity } from './jobs';
 
+const prisma = new PrismaClient();
 
 /**
  * Get offers for a user
@@ -81,9 +82,9 @@ export async function logOffer(userId: string, data: LogOfferInput) {
       candidateId: job.candidateId,
       jobId: data.jobId,
       salary: data.salary,
-      equity: data.equity ? JSON.stringify(data.equity) : null,
-      bonus: data.bonus?.amount ?? null,
-      benefits: data.benefits ? JSON.stringify(data.benefits) : null,
+      equity: data.equity ? JSON.stringify(data.equity) : undefined,
+      bonus: typeof data.bonus === 'number' ? data.bonus : data.bonus?.amount ?? undefined,
+      benefits: data.benefits ? JSON.stringify(data.benefits) : undefined,
       startDate: data.startDate ? new Date(data.startDate) : undefined,
       status: data.status || 'received',
       negotiated: data.negotiated || false,
@@ -119,12 +120,9 @@ export async function updateOffer(userId: string, offerId: string, data: UpdateO
   const updated = await prisma.offer.update({
     where: { id: offerId },
     data: {
-      salary: data.salary,
-      status: data.status,
-      negotiated: data.negotiated,
-      notes: data.notes,
-      equity: data.equity !== undefined ? JSON.stringify(data.equity) : undefined,
-      bonus: data.bonus !== undefined ? (data.bonus?.amount ?? null) : undefined,
+      ...data,
+      equity: data.equity ? JSON.stringify(data.equity) : undefined,
+      bonus: typeof data.bonus === 'number' ? data.bonus : (data.bonus as any)?.amount ?? undefined,
     },
     include: { job: true },
   });

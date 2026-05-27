@@ -39,10 +39,8 @@ function buildTargetedSummary(
   // Include up to 3 JD title keywords naturally
   const titleKeywords = jdKeywords.title.slice(0, 3).join(', ');
 
-  const companyRef = targetCompany ? ` for ${targetCompany}` : '';
-
   return (
-    `${targetRole} with ${yearsRounded}+ years of experience in ${topIndustry}. ` +
+    `${targetRole}${targetCompany ? ` for ${targetCompany}` : ''} with ${yearsRounded}+ years of experience in ${topIndustry}. ` +
     `Proven track record in ${titleKeywords || 'cross-functional leadership and delivery'}. ` +
     `${profile.professionalSummary}`
   ).trim();

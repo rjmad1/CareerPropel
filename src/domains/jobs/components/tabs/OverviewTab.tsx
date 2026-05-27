@@ -18,11 +18,9 @@ export default function OverviewTab({ job }: OverviewTabProps) {
     setNotes(job.notes || '');
   }, [job.notes]);
 
-  const formattedDate = new Date(job.appliedAt || job.createdAt).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
+  const formattedDate = job.appliedAt
+    ? new Date(job.appliedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+    : 'Not applied';
 
   const handleSaveNotes = () => {
     if (isSaving) return;
@@ -134,8 +132,8 @@ export default function OverviewTab({ job }: OverviewTabProps) {
         )}
       </div>
 
-      {/* Job Description */}
-      {job.description && (
+      {/* Job URL if available */}
+      {job.url && (
         <div>
           <h3 className="text-sm font-semibold text-gray-900 mb-4">Description</h3>
           <div
@@ -152,7 +150,7 @@ export default function OverviewTab({ job }: OverviewTabProps) {
         <div>
           <h3 className="text-sm font-semibold text-gray-900 mb-4">Job Listing</h3>
           <a
-            href={sanitizeUrl(job.url) ?? undefined}
+            href={job.url}
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-blue-600 hover:text-blue-700 underline"

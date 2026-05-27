@@ -213,6 +213,19 @@ Focus on authentic, mutually beneficial connections, not spray-and-pray outreach
   return prompts[agentType];
 }
 
+/** Returns the raw template string for a given agent type (used for versioning/hashing). */
+export function buildAgentUserPromptTemplate(agentType: AgentType): string {
+  const templates: Record<AgentType, string> = {
+    'resume-tailor': `Resume Tailoring Task:\nJob Description:\n{{jobDescription}}\n\nCurrent Resume:\n{{resume}}\n\nCompany: {{companyName}}\n\nPlease tailor the resume for this job opportunity.`,
+    'job-match': `Job Matching Task:\nCandidate Profile:\n{{userProfile}}\n\nJob Description:\n{{jobDescription}}\n\nCompany: {{companyName}}\n\nPlease evaluate the alignment between this candidate and job opportunity.`,
+    'interview-prep': `Interview Preparation Task:\nCandidate Background:\n{{userProfile}}\n\nJob Description:\n{{jobDescription}}\n\nCompany: {{companyName}}\n\nPlease generate comprehensive interview preparation materials.`,
+    'research': `Research Task:\nCompany: {{companyName}}\n\nAvailable Information: {{companyInfo}}\n\nJob Description:\n{{jobDescription}}\n\nPlease research and synthesize information about this company.`,
+    'follow-up': `Follow-up Communication Task:\nCompany: {{companyName}}\n\nInterview Summary:\n{{jobDescription}}\n\nCandidate Profile:\n{{userProfile}}\n\nPlease craft a personalized follow-up email.`,
+    'networking': `Networking Strategy Task:\nCandidate Background:\n{{userProfile}}\n\nTarget Role/Industry:\n{{jobDescription}}\n\nCompany Focus:\n{{companyName}}\n\nPlease develop a prioritized networking strategy.`,
+  };
+  return templates[agentType] ?? 'Unknown agent type template.';
+}
+
 export function buildAgentUserPrompt(
   agentType: AgentType,
   context: AgentPromptContext

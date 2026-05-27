@@ -58,7 +58,7 @@ async function moveJobStage(jobId: string, newStage: JobStage): Promise<MoveResu
     throw new Error(err?.error || 'Failed to move job');
   }
   const json = await res.json();
-  return { agentType: json.agentType ?? null, executionId: json.executionId ?? null };
+  return { success: true, agentType: json.agentType ?? null, executionId: json.executionId ?? null };
 }
 
 const AGENT_LABELS: Record<string, string> = {
@@ -129,8 +129,8 @@ function JobsContent() {
     await updateMutation.mutateAsync({ jobId, updates });
   };
 
-  const handleJobMove = async (jobId: string, newStage: JobStage): Promise<MoveResult> => {
-    const result = await moveJobStage(jobId, newStage);
+  const handleJobMove = async (jobId: string, newStage: string): Promise<MoveResult> => {
+    const result = await moveJobStage(jobId, newStage as JobStage);
     queryClient.invalidateQueries({ queryKey: ['jobs'] });
     if (result.agentType) {
       const label = AGENT_LABELS[result.agentType] ?? result.agentType;

@@ -118,7 +118,7 @@ export const useJobStore = create<JobStoreState>((set, get) => ({
       filtered = filtered.filter((job) =>
         job.title.toLowerCase().includes(search) ||
         job.company.toLowerCase().includes(search) ||
-        job.location.toLowerCase().includes(search)
+        (job.location?.toLowerCase().includes(search) ?? false)
       );
     }
 
@@ -142,8 +142,8 @@ export const useJobStore = create<JobStoreState>((set, get) => ({
         aVal = a.matchScore || 0;
         bVal = b.matchScore || 0;
       } else if (sort.field === 'appliedAt') {
-        aVal = new Date(a.appliedAt).getTime();
-        bVal = new Date(b.appliedAt).getTime();
+        aVal = a.appliedAt ? new Date(a.appliedAt).getTime() : 0;
+        bVal = b.appliedAt ? new Date(b.appliedAt).getTime() : 0;
       } else if (sort.field === 'salary') {
         aVal = a.salary?.max || 0;
         bVal = b.salary?.max || 0;

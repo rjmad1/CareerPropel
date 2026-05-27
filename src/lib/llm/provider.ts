@@ -1,18 +1,13 @@
 /**
- * Core LLM Gateway & Provider Proxy
- *
- * Upgraded:
- * - Redirects legacy calls through the new AIProviderOrchestrator
- * - Dynamically maps prompts to outcome-based Capability Presets
- * - Automatically injects bidirectional PII Redaction middleware
- * - Backwards-compatible interface definitions
+ * LLM Provider Abstraction Layer
+ * Enables switching between Anthropic, Nvidia NIM, and other providers via environment configuration
  */
 
-import { AIProviderOrchestrator, CAPABILITY_PRESETS } from './orchestrator';
-import { redactPii, restorePii } from './privacy';
-import { log } from '@/lib/logging/logger';
+import { AnthropicProvider } from './anthropic';
+import { NvidiaNimProvider } from './nvidia-nim';
+import { runStreamWithProviderResilience, runWithProviderResilience } from './resilience';
 
-export type LLMProviderName = 'anthropic' | 'nvidia-nim' | 'orchestrated';
+export type LLMProviderName = 'anthropic' | 'nvidia-nim';
 
 export interface LLMMessage {
   role: 'user' | 'assistant' | 'system';
@@ -36,125 +31,56 @@ export interface LLMCallResult {
   totalTokens: number;
 }
 
-export interface LLMProvider {
-  name: string;
-  getDefaultModel(): string;
-  callLLM(
-    messages: LLMMessage[],
-    options?: LLMCallOptions
-  ): Promise<LLMCallResult>;
+export interface LLMProviderClient {
+  name: LLMProviderName;
+  callLLM(messages: LLMMessage[], options?: LLMCallOptions): Promise<LLMCallResult>;
   streamLLM(
     messages: LLMMessage[],
     options?: LLMCallOptions
   ): AsyncIterable<string>;
+  getDefaultModel(): string;
 }
 
-/**
- * Heuristically map a prompt request to the optimal capability preset
- */
-function resolvePreset(messages: LLMMessage[], options?: LLMCallOptions): keyof typeof CAPABILITY_PRESETS {
-  const context = (options?.systemPrompt || '') + ' ' + messages.map((m) => m.content).join(' ');
-  const lowercaseContext = context.toLowerCase();
+let providerInstance: LLMProviderClient | null = null;
 
-  if (lowercaseContext.includes('ats') || lowercaseContext.includes('keyword') || lowercaseContext.includes('score')) {
-    return 'ATS_OPTIMIZATION';
-  }
-  
-  if (lowercaseContext.includes('interview') || lowercaseContext.includes('star story') || lowercaseContext.includes('question')) {
-    return 'TECHNICAL_INTERVIEW';
-  }
+export function initializeLLMProvider(): LLMProviderClient {
+  if (providerInstance) return providerInstance;
 
-  if (lowercaseContext.includes('coach') || lowercaseContext.includes('career') || lowercaseContext.includes('trajectory')) {
-    return 'CAREER_COACHING';
+  const provider = process.env.LLM_PROVIDER || 'anthropic';
+
+  switch (provider) {
+    case 'nvidia-nim':
+      providerInstance = new NvidiaNimProvider();
+      break;
+    case 'anthropic':
+    default:
+      providerInstance = new AnthropicProvider();
+      break;
   }
 
-  return 'RESUME_OPTIMIZATION'; // Safe default
+  console.log(`[LLM] Initialized provider: ${providerInstance.name}`);
+  return providerInstance;
 }
 
-/**
- * Execute call through the orchestrator with automated PII Redaction
- */
+export function getLLMProvider(): LLMProviderClient {
+  if (!providerInstance) {
+    return initializeLLMProvider();
+  }
+  return providerInstance;
+}
+
 export async function callLLM(
   messages: LLMMessage[],
   options?: LLMCallOptions
 ): Promise<LLMCallResult> {
-  const presetKey = resolvePreset(messages, options);
-  
-  // 1. Local PII Redaction Step
-  const tokenMaps: Record<number, Record<string, string>> = {};
-  const sanitizedMessages = messages.map((m, idx) => {
-    const { redactedText, tokenMap } = redactPii(m.content);
-    tokenMaps[idx] = tokenMap;
-    return { ...m, content: redactedText };
-  });
-
-  // Inject system prompt into option-based message structure if provided
-  if (options?.systemPrompt) {
-    const { redactedText, tokenMap } = redactPii(options.systemPrompt);
-    options.systemPrompt = redactedText;
-    tokenMaps[-1] = tokenMap; // map system prompt
-  }
-
-  log.info({ presetKey }, 'Proxying callLLM invocation through unified orchestrator');
-
-  // 2. Call the Orchestrator with fallback chains
-  const result = await AIProviderOrchestrator.executeWithFallback(
-    presetKey,
-    sanitizedMessages
-  );
-
-  // 3. Restore PII local values in response content
-  let finalContent = result.content;
-  for (const tokenMap of Object.values(tokenMaps)) {
-    finalContent = restorePii(finalContent, tokenMap);
-  }
-
-  return {
-    content: finalContent,
-    stopReason: result.stopReason,
-    inputTokens: result.inputTokens,
-    outputTokens: result.outputTokens,
-    totalTokens: result.totalTokens,
-  };
+  const provider = getLLMProvider();
+  return runWithProviderResilience(provider.name, () => provider.callLLM(messages, options));
 }
 
-/**
- * Execute stream through the orchestrator with automated PII Redaction
- */
 export async function* streamLLM(
   messages: LLMMessage[],
   options?: LLMCallOptions
 ): AsyncIterable<string> {
-  const presetKey = resolvePreset(messages, options);
-  
-  // 1. Local PII Redaction Step
-  const tokenMaps: Record<number, Record<string, string>> = {};
-  const sanitizedMessages = messages.map((m, idx) => {
-    const { redactedText, tokenMap } = redactPii(m.content);
-    tokenMaps[idx] = tokenMap;
-    return { ...m, content: redactedText };
-  });
-
-  if (options?.systemPrompt) {
-    const { redactedText, tokenMap } = redactPii(options.systemPrompt);
-    options.systemPrompt = redactedText;
-    tokenMaps[-1] = tokenMap;
-  }
-
-  log.info({ presetKey }, 'Proxying streamLLM invocation through unified orchestrator');
-
-  // 2. Stream from the Orchestrator
-  const streamSource = AIProviderOrchestrator.streamWithFallback(
-    presetKey,
-    sanitizedMessages
-  );
-
-  for await (const chunk of streamSource) {
-    // 3. Restore PII local values for each chunk safely
-    let restoredChunk = chunk;
-    for (const tokenMap of Object.values(tokenMaps)) {
-      restoredChunk = restorePii(restoredChunk, tokenMap);
-    }
-    yield restoredChunk;
-  }
+  const provider = getLLMProvider();
+  yield* runStreamWithProviderResilience(provider.name, () => provider.streamLLM(messages, options));
 }

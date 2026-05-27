@@ -10,29 +10,43 @@ export const dynamic = 'force-dynamic'
  */
 export async function GET(
   request: NextRequest,
-  context: { params: Promise<{ executionId: string }> }
+  { params }: { params: Promise<{ executionId: string }> }
 ) {
   try {
-    const { executionId } = await context.params;
-    const limit = parseInt(request.nextUrl.searchParams.get('limit') || '50');
-    const offset = parseInt(request.nextUrl.searchParams.get('offset') || '0');
+    const { executionId } = await params;
+    const pageSize = parseInt(
+      request.nextUrl.searchParams.get('pageSize') ||
+        request.nextUrl.searchParams.get('limit') ||
+        '50'
+    );
+    const page = parseInt(request.nextUrl.searchParams.get('page') || '0');
+    const offset = parseInt(request.nextUrl.searchParams.get('offset') || String(page * pageSize));
+    const level = request.nextUrl.searchParams.get('level');
 
     const logs = await prisma.eventLog.findMany({
-      where: { executionId },
+      where: {
+        executionId,
+        ...(level ? { level } : {}),
+      },
       orderBy: { timestamp: 'desc' },
-      take: limit,
+      take: pageSize,
       skip: offset,
     });
 
     const total = await prisma.eventLog.count({
-      where: { executionId },
+      where: {
+        executionId,
+        ...(level ? { level } : {}),
+      },
     });
 
     return NextResponse.json(
       {
         logs,
         total,
-        limit,
+        page,
+        pageSize,
+        hasMore: offset + logs.length < total,
         offset,
       },
       { status: 200 }

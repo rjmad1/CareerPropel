@@ -7,12 +7,10 @@ import {
   LLMMessage,
   LLMCallOptions,
   LLMCallResult,
-  LLMProvider,
+  LLMProviderClient,
 } from './provider';
 
-type ILLMProvider = LLMProvider;
-
-export class AnthropicProvider implements ILLMProvider {
+export class AnthropicProvider implements LLMProviderClient {
   name = 'anthropic' as const;
   private client: Anthropic;
   private defaultModel = 'claude-3-5-sonnet-20241022';
@@ -102,7 +100,7 @@ export class AnthropicProvider implements ILLMProvider {
           role: m.role as 'user' | 'assistant',
           content: m.content,
         })),
-      stream: true,
+      stream: true as const,
     });
 
     for await (const event of await stream) {
