@@ -6,7 +6,7 @@
 
 # Interface: ModalHeaderProps
 
-Defined in: [src/components/ui/Modal.tsx:67](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/ui/Modal.tsx#L67)
+Defined in: [src/components/ui/Modal.tsx:67](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/ui/Modal.tsx#L67)
 
 ## Extends
 
@@ -967,7 +967,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2953
 
 > **children**: `ReactNode`
 
-Defined in: [src/components/ui/Modal.tsx:68](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/ui/Modal.tsx#L68)
+Defined in: [src/components/ui/Modal.tsx:68](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/ui/Modal.tsx#L68)
 
 #### Overrides
 
@@ -1591,7 +1591,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2507
 
 > `optional` **onClose?**: () => `void`
 
-Defined in: [src/components/ui/Modal.tsx:69](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/ui/Modal.tsx#L69)
+Defined in: [src/components/ui/Modal.tsx:69](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/ui/Modal.tsx#L69)
 
 #### Returns
 

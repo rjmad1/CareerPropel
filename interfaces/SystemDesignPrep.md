@@ -6,7 +6,7 @@
 
 # Interface: SystemDesignPrep
 
-Defined in: [src/types/interview.ts:205](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L205)
+Defined in: [src/types/interview.ts:205](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L205)
 
 System design interview prep
 
@@ -16,7 +16,7 @@ System design interview prep
 
 > **architectures**: [`ArchitecturePattern`](ArchitecturePattern.md)[]
 
-Defined in: [src/types/interview.ts:209](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L209)
+Defined in: [src/types/interview.ts:209](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L209)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/interview.ts:209](https://github.com/rjmad1/CareerPropel/
 
 > **caseStudies**: [`CaseStudy`](CaseStudy.md)[]
 
-Defined in: [src/types/interview.ts:210](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L210)
+Defined in: [src/types/interview.ts:210](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L210)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/interview.ts:210](https://github.com/rjmad1/CareerPropel/
 
 > **databases**: [`DatabaseSelection`](DatabaseSelection.md)[]
 
-Defined in: [src/types/interview.ts:208](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L208)
+Defined in: [src/types/interview.ts:208](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L208)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/interview.ts:208](https://github.com/rjmad1/CareerPropel/
 
 > **designPatterns**: [`DesignPattern`](DesignPattern.md)[]
 
-Defined in: [src/types/interview.ts:206](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L206)
+Defined in: [src/types/interview.ts:206](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L206)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/interview.ts:206](https://github.com/rjmad1/CareerPropel/
 
 > **frameworkForDesign**: [`DesignFramework`](DesignFramework.md)
 
-Defined in: [src/types/interview.ts:211](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L211)
+Defined in: [src/types/interview.ts:211](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L211)
 
 ***
 
@@ -56,4 +56,4 @@ Defined in: [src/types/interview.ts:211](https://github.com/rjmad1/CareerPropel/
 
 > **scalingTechniques**: [`ScalingTechnique`](ScalingTechnique.md)[]
 
-Defined in: [src/types/interview.ts:207](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L207)
+Defined in: [src/types/interview.ts:207](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L207)

@@ -6,7 +6,7 @@
 
 # Interface: RoleBreakdown
 
-Defined in: [src/types/interview.ts:74](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L74)
+Defined in: [src/types/interview.ts:74](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L74)
 
 Role breakdown and requirements
 
@@ -16,7 +16,7 @@ Role breakdown and requirements
 
 > **experienceRequired**: `string`
 
-Defined in: [src/types/interview.ts:81](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L81)
+Defined in: [src/types/interview.ts:81](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L81)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/interview.ts:81](https://github.com/rjmad1/CareerPropel/b
 
 > **location**: `string`
 
-Defined in: [src/types/interview.ts:83](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L83)
+Defined in: [src/types/interview.ts:83](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L83)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/interview.ts:83](https://github.com/rjmad1/CareerPropel/b
 
 > **preferredSkills**: [`Skill`](Skill.md)[]
 
-Defined in: [src/types/interview.ts:80](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L80)
+Defined in: [src/types/interview.ts:80](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L80)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/interview.ts:80](https://github.com/rjmad1/CareerPropel/b
 
 > **reportingLine**: `string`
 
-Defined in: [src/types/interview.ts:77](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L77)
+Defined in: [src/types/interview.ts:77](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L77)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/interview.ts:77](https://github.com/rjmad1/CareerPropel/b
 
 > **requiredSkills**: [`Skill`](Skill.md)[]
 
-Defined in: [src/types/interview.ts:79](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L79)
+Defined in: [src/types/interview.ts:79](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L79)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/types/interview.ts:79](https://github.com/rjmad1/CareerPropel/b
 
 > **responsibilities**: [`Responsibility`](Responsibility.md)[]
 
-Defined in: [src/types/interview.ts:78](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L78)
+Defined in: [src/types/interview.ts:78](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L78)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [src/types/interview.ts:78](https://github.com/rjmad1/CareerPropel/b
 
 > **roleTitle**: `string`
 
-Defined in: [src/types/interview.ts:75](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L75)
+Defined in: [src/types/interview.ts:75](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L75)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [src/types/interview.ts:75](https://github.com/rjmad1/CareerPropel/b
 
 > **seniority**: `"junior"` \| `"mid"` \| `"senior"` \| `"staff"` \| `"principal"`
 
-Defined in: [src/types/interview.ts:76](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L76)
+Defined in: [src/types/interview.ts:76](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L76)
 
 ***
 
@@ -80,7 +80,7 @@ Defined in: [src/types/interview.ts:76](https://github.com/rjmad1/CareerPropel/b
 
 > `optional` **teamSize?**: `number`
 
-Defined in: [src/types/interview.ts:82](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L82)
+Defined in: [src/types/interview.ts:82](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L82)
 
 ***
 
@@ -88,4 +88,4 @@ Defined in: [src/types/interview.ts:82](https://github.com/rjmad1/CareerPropel/b
 
 > `optional` **travelPercentage?**: `number`
 
-Defined in: [src/types/interview.ts:84](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/interview.ts#L84)
+Defined in: [src/types/interview.ts:84](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/interview.ts#L84)

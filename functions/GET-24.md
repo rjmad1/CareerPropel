@@ -8,7 +8,7 @@
 
 > **GET**(): `Promise`\<`NextResponse`\<`unknown`\>\>
 
-Defined in: [src/app/api/calendar/authorize/route.ts:14](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/app/api/calendar/authorize/route.ts#L14)
+Defined in: [src/app/api/calendar/authorize/route.ts:14](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/app/api/calendar/authorize/route.ts#L14)
 
 GET /api/calendar/authorize
 Redirects the authenticated user to Google's OAuth2 consent screen.

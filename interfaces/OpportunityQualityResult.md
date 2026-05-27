@@ -6,7 +6,7 @@
 
 # Interface: OpportunityQualityResult
 
-Defined in: [src/lib/analytics/opportunity-intelligence.ts:45](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/opportunity-intelligence.ts#L45)
+Defined in: [src/lib/analytics/opportunity-intelligence.ts:45](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/opportunity-intelligence.ts#L45)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/opportunity-intelligence.ts:45](https://github.co
 
 > **compensationMismatches**: `string`[]
 
-Defined in: [src/lib/analytics/opportunity-intelligence.ts:49](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/opportunity-intelligence.ts#L49)
+Defined in: [src/lib/analytics/opportunity-intelligence.ts:49](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/opportunity-intelligence.ts#L49)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/opportunity-intelligence.ts:49](https://github.co
 
 > **generatedAt**: `string`
 
-Defined in: [src/lib/analytics/opportunity-intelligence.ts:51](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/opportunity-intelligence.ts#L51)
+Defined in: [src/lib/analytics/opportunity-intelligence.ts:51](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/opportunity-intelligence.ts#L51)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/analytics/opportunity-intelligence.ts:51](https://github.co
 
 > **highProbability**: [`OpportunityQualityScore`](OpportunityQualityScore.md)[]
 
-Defined in: [src/lib/analytics/opportunity-intelligence.ts:47](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/opportunity-intelligence.ts#L47)
+Defined in: [src/lib/analytics/opportunity-intelligence.ts:47](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/opportunity-intelligence.ts#L47)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/analytics/opportunity-intelligence.ts:47](https://github.co
 
 > **lowROI**: [`OpportunityQualityScore`](OpportunityQualityScore.md)[]
 
-Defined in: [src/lib/analytics/opportunity-intelligence.ts:48](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/opportunity-intelligence.ts#L48)
+Defined in: [src/lib/analytics/opportunity-intelligence.ts:48](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/opportunity-intelligence.ts#L48)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/analytics/opportunity-intelligence.ts:48](https://github.co
 
 > **scores**: [`OpportunityQualityScore`](OpportunityQualityScore.md)[]
 
-Defined in: [src/lib/analytics/opportunity-intelligence.ts:46](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/opportunity-intelligence.ts#L46)
+Defined in: [src/lib/analytics/opportunity-intelligence.ts:46](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/opportunity-intelligence.ts#L46)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/lib/analytics/opportunity-intelligence.ts:46](https://github.co
 
 > **totalActive**: `number`
 
-Defined in: [src/lib/analytics/opportunity-intelligence.ts:50](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/opportunity-intelligence.ts#L50)
+Defined in: [src/lib/analytics/opportunity-intelligence.ts:50](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/opportunity-intelligence.ts#L50)

@@ -8,7 +8,7 @@
 
 > **GET**(`request`, `context`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `execution`: `object` & `object`; `logs`: `object`[]; `toolCalls`: `object`[]; \}\>\>
 
-Defined in: [src/app/api/agent/execution/\[executionId\]/route.ts:12](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/app/api/agent/execution/[executionId]/route.ts#L12)
+Defined in: [src/app/api/agent/execution/\[executionId\]/route.ts:12](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/app/api/agent/execution/[executionId]/route.ts#L12)
 
 GET /api/agent/execution/[executionId]
 Fetch execution details with tool calls and logs

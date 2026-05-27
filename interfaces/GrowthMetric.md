@@ -6,7 +6,7 @@
 
 # Interface: GrowthMetric
 
-Defined in: [src/lib/analytics/types.ts:146](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L146)
+Defined in: [src/lib/analytics/types.ts:146](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L146)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/types.ts:146](https://github.com/rjmad1/CareerPro
 
 > **changePercent**: `number` \| `null`
 
-Defined in: [src/lib/analytics/types.ts:149](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L149)
+Defined in: [src/lib/analytics/types.ts:149](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L149)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/types.ts:149](https://github.com/rjmad1/CareerPro
 
 > **current**: `number` \| `null`
 
-Defined in: [src/lib/analytics/types.ts:147](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L147)
+Defined in: [src/lib/analytics/types.ts:147](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L147)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/analytics/types.ts:147](https://github.com/rjmad1/CareerPro
 
 > **direction**: `"stable"` \| `"declining"` \| `"improving"` \| `"insufficient_data"`
 
-Defined in: [src/lib/analytics/types.ts:150](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L150)
+Defined in: [src/lib/analytics/types.ts:150](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L150)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/lib/analytics/types.ts:150](https://github.com/rjmad1/CareerPro
 
 > **previous**: `number` \| `null`
 
-Defined in: [src/lib/analytics/types.ts:148](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L148)
+Defined in: [src/lib/analytics/types.ts:148](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L148)

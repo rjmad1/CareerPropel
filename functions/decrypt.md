@@ -8,7 +8,7 @@
 
 > **decrypt**(`ciphertext`): `string`
 
-Defined in: [src/lib/crypto/tokenEncryption.ts:80](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/crypto/tokenEncryption.ts#L80)
+Defined in: [src/lib/crypto/tokenEncryption.ts:80](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/crypto/tokenEncryption.ts#L80)
 
 Decrypt a compound ciphertext string produced by `encrypt()`.
 Throws if the authentication tag verification fails (data tampering detected).

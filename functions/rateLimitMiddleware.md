@@ -8,7 +8,7 @@
 
 > **rateLimitMiddleware**(`request`): `Promise`\<`NextResponse`\<`unknown`\> \| `null`\>
 
-Defined in: [src/lib/middleware/rateLimiter.ts:66](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/middleware/rateLimiter.ts#L66)
+Defined in: [src/lib/middleware/rateLimiter.ts:66](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/middleware/rateLimiter.ts#L66)
 
 ## Parameters
 

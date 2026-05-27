@@ -8,7 +8,7 @@
 
 > **aggregateConfidence**(`levels`): [`ConfidenceLevel`](../type-aliases/ConfidenceLevel.md)
 
-Defined in: [src/lib/analytics/governance.ts:23](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/governance.ts#L23)
+Defined in: [src/lib/analytics/governance.ts:23](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/governance.ts#L23)
 
 Aggregate multiple confidence levels into a single level (pessimistic average).
 

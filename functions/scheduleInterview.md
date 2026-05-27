@@ -8,7 +8,7 @@
 
 > **scheduleInterview**(`userId`, `data`): `Promise`\<`object` & `object` \| `null`\>
 
-Defined in: [src/lib/db/interviews.ts:79](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/db/interviews.ts#L79)
+Defined in: [src/lib/db/interviews.ts:79](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/db/interviews.ts#L79)
 
 Schedule a new interview
 

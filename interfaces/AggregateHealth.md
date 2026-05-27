@@ -6,7 +6,7 @@
 
 # Interface: AggregateHealth
 
-Defined in: [src/lib/health/checks.ts:15](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/health/checks.ts#L15)
+Defined in: [src/lib/health/checks.ts:15](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/health/checks.ts#L15)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/health/checks.ts:15](https://github.com/rjmad1/CareerPropel
 
 > **overall**: [`HealthStatus`](../type-aliases/HealthStatus.md)
 
-Defined in: [src/lib/health/checks.ts:16](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/health/checks.ts#L16)
+Defined in: [src/lib/health/checks.ts:16](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/health/checks.ts#L16)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/health/checks.ts:16](https://github.com/rjmad1/CareerPropel
 
 > **subsystems**: `object`
 
-Defined in: [src/lib/health/checks.ts:17](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/health/checks.ts#L17)
+Defined in: [src/lib/health/checks.ts:17](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/health/checks.ts#L17)
 
 #### database
 

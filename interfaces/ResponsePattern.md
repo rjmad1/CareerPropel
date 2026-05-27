@@ -6,7 +6,7 @@
 
 # Interface: ResponsePattern
 
-Defined in: [src/lib/analytics/types.ts:122](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L122)
+Defined in: [src/lib/analytics/types.ts:122](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L122)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/types.ts:122](https://github.com/rjmad1/CareerPro
 
 > **avgResponseDays**: `number` \| `null`
 
-Defined in: [src/lib/analytics/types.ts:123](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L123)
+Defined in: [src/lib/analytics/types.ts:123](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L123)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/types.ts:123](https://github.com/rjmad1/CareerPro
 
 > **bestResponseDayOfWeek**: `string` \| `null`
 
-Defined in: [src/lib/analytics/types.ts:125](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L125)
+Defined in: [src/lib/analytics/types.ts:125](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L125)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/lib/analytics/types.ts:125](https://github.com/rjmad1/CareerPro
 
 > **responseRate**: `number` \| `null`
 
-Defined in: [src/lib/analytics/types.ts:124](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L124)
+Defined in: [src/lib/analytics/types.ts:124](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L124)

@@ -6,7 +6,7 @@
 
 # Class: APIError
 
-Defined in: [src/lib/api/client.ts:13](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L13)
+Defined in: [src/lib/api/client.ts:13](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/api/client.ts#L13)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/api/client.ts:13](https://github.com/rjmad1/CareerPropel/bl
 
 > **new APIError**(`statusCode`, `code`, `message`, `details?`): `APIError`
 
-Defined in: [src/lib/api/client.ts:14](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L14)
+Defined in: [src/lib/api/client.ts:14](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/api/client.ts#L14)
 
 #### Parameters
 
@@ -64,7 +64,7 @@ Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:26
 
 > **code**: `string`
 
-Defined in: [src/lib/api/client.ts:16](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L16)
+Defined in: [src/lib/api/client.ts:16](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/api/client.ts#L16)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [src/lib/api/client.ts:16](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **details?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [src/lib/api/client.ts:18](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L18)
+Defined in: [src/lib/api/client.ts:18](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/api/client.ts#L18)
 
 ***
 
@@ -116,7 +116,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1078
 
 > **statusCode**: `number`
 
-Defined in: [src/lib/api/client.ts:15](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/api/client.ts#L15)
+Defined in: [src/lib/api/client.ts:15](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/api/client.ts#L15)
 
 ***
 

@@ -6,7 +6,7 @@
 
 # Class: TtlExpiredError
 
-Defined in: [src/lib/governance/boundedExecution.ts:92](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/boundedExecution.ts#L92)
+Defined in: [src/lib/governance/boundedExecution.ts:92](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L92)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/governance/boundedExecution.ts:92](https://github.com/rjmad
 
 > **new TtlExpiredError**(`traceId`, `ttlMs`): `TtlExpiredError`
 
-Defined in: [src/lib/governance/boundedExecution.ts:93](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/boundedExecution.ts#L93)
+Defined in: [src/lib/governance/boundedExecution.ts:93](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L93)
 
 #### Parameters
 

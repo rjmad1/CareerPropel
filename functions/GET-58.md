@@ -8,7 +8,7 @@
 
 > **GET**(`_request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `accomplishments`: `object`[]; \}\>\>
 
-Defined in: [src/app/api/profile/accomplishments/route.ts:11](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/app/api/profile/accomplishments/route.ts#L11)
+Defined in: [src/app/api/profile/accomplishments/route.ts:11](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/app/api/profile/accomplishments/route.ts#L11)
 
 GET /api/profile/accomplishments
 Fetch all achievements staged by the logged-in candidate.

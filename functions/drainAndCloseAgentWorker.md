@@ -8,7 +8,7 @@
 
 > **drainAndCloseAgentWorker**(`worker`, `workerId`): `Promise`\<`void`\>
 
-Defined in: [src/lib/queue/worker.ts:358](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/queue/worker.ts#L358)
+Defined in: [src/lib/queue/worker.ts:358](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/queue/worker.ts#L358)
 
 Gracefully drain and close the agent worker.
 Poll actual active-job count; wait up to DRAIN_TIMEOUT_MS before forcing close.

@@ -8,7 +8,7 @@
 
 > **parseDeepLink**(`url`): [`DeepLinkRoute`](../type-aliases/DeepLinkRoute.md)
 
-Defined in: [src/lib/navigation/deep-link.ts:31](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/navigation/deep-link.ts#L31)
+Defined in: [src/lib/navigation/deep-link.ts:31](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/navigation/deep-link.ts#L31)
 
 Parse the current URL into a typed deep-link state object.
 Can be called on the server (with a URL object) or client (with location).

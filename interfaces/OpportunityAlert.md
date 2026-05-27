@@ -6,7 +6,7 @@
 
 # Interface: OpportunityAlert
 
-Defined in: [src/lib/analytics/types.ts:58](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L58)
+Defined in: [src/lib/analytics/types.ts:58](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L58)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/types.ts:58](https://github.com/rjmad1/CareerProp
 
 > **message**: `string`
 
-Defined in: [src/lib/analytics/types.ts:66](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L66)
+Defined in: [src/lib/analytics/types.ts:66](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L66)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/types.ts:66](https://github.com/rjmad1/CareerProp
 
 > **severity**: `"high"` \| `"low"` \| `"medium"`
 
-Defined in: [src/lib/analytics/types.ts:59](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L59)
+Defined in: [src/lib/analytics/types.ts:59](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L59)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/lib/analytics/types.ts:59](https://github.com/rjmad1/CareerProp
 
 > **type**: `"compensation_mismatch"` \| `"overqualification"` \| `"underqualification"` \| `"stale"` \| `"low_match"`
 
-Defined in: [src/lib/analytics/types.ts:60](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L60)
+Defined in: [src/lib/analytics/types.ts:60](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L60)

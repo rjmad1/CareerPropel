@@ -6,7 +6,7 @@
 
 # Interface: JobSort
 
-Defined in: [src/types/job.ts:93](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/job.ts#L93)
+Defined in: [src/types/job.ts:93](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/job.ts#L93)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/job.ts:93](https://github.com/rjmad1/CareerPropel/blob/e2
 
 > **direction**: `"desc"` \| `"asc"`
 
-Defined in: [src/types/job.ts:95](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/job.ts#L95)
+Defined in: [src/types/job.ts:95](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/job.ts#L95)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [src/types/job.ts:95](https://github.com/rjmad1/CareerPropel/blob/e2
 
 > **field**: `"title"` \| `"company"` \| `"salary"` \| `"matchScore"` \| `"appliedAt"`
 
-Defined in: [src/types/job.ts:94](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/job.ts#L94)
+Defined in: [src/types/job.ts:94](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/job.ts#L94)

@@ -8,7 +8,7 @@
 
 > **checkExecutionPolicy**(`agentType`, `opts`): [`PolicyCheckResult`](../interfaces/PolicyCheckResult.md)
 
-Defined in: [src/lib/governance/policyEngine.ts:127](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/policyEngine.ts#L127)
+Defined in: [src/lib/governance/policyEngine.ts:127](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/policyEngine.ts#L127)
 
 ## Parameters
 

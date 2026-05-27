@@ -6,7 +6,7 @@
 
 # Interface: FunnelStage
 
-Defined in: [src/lib/analytics/types.ts:31](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L31)
+Defined in: [src/lib/analytics/types.ts:31](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L31)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/types.ts:31](https://github.com/rjmad1/CareerProp
 
 > **avgDaysInStage**: `number`
 
-Defined in: [src/lib/analytics/types.ts:35](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L35)
+Defined in: [src/lib/analytics/types.ts:35](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L35)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/types.ts:35](https://github.com/rjmad1/CareerProp
 
 > **conversionRate**: `number` \| `null`
 
-Defined in: [src/lib/analytics/types.ts:34](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L34)
+Defined in: [src/lib/analytics/types.ts:34](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L34)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/analytics/types.ts:34](https://github.com/rjmad1/CareerProp
 
 > **count**: `number`
 
-Defined in: [src/lib/analytics/types.ts:33](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L33)
+Defined in: [src/lib/analytics/types.ts:33](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L33)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/analytics/types.ts:33](https://github.com/rjmad1/CareerProp
 
 > **dropOffCount**: `number`
 
-Defined in: [src/lib/analytics/types.ts:36](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L36)
+Defined in: [src/lib/analytics/types.ts:36](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L36)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/lib/analytics/types.ts:36](https://github.com/rjmad1/CareerProp
 
 > **stage**: `string`
 
-Defined in: [src/lib/analytics/types.ts:32](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L32)
+Defined in: [src/lib/analytics/types.ts:32](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L32)

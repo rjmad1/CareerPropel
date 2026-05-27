@@ -8,7 +8,7 @@
 
 > **normalizeKeyword**(`raw`): `string`
 
-Defined in: [src/lib/ats/keywordNormalizer.ts:43](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/ats/keywordNormalizer.ts#L43)
+Defined in: [src/lib/ats/keywordNormalizer.ts:43](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/ats/keywordNormalizer.ts#L43)
 
 Normalize a single keyword to its canonical ATS form.
 Returns the input unchanged if no canonical form is known.

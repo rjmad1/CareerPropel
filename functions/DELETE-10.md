@@ -8,7 +8,7 @@
 
 > **DELETE**(`request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `success`: `boolean`; \}\>\>
 
-Defined in: [src/app/api/profile/accomplishments/route.ts:158](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/app/api/profile/accomplishments/route.ts#L158)
+Defined in: [src/app/api/profile/accomplishments/route.ts:158](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/app/api/profile/accomplishments/route.ts#L158)
 
 DELETE /api/profile/accomplishments
 Delete an accomplishment log.

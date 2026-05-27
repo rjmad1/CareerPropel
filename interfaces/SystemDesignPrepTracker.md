@@ -6,7 +6,7 @@
 
 # Interface: SystemDesignPrepTracker
 
-Defined in: [src/types/preparation.ts:223](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/preparation.ts#L223)
+Defined in: [src/types/preparation.ts:223](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L223)
 
 System design prep tracker
 
@@ -16,7 +16,7 @@ System design prep tracker
 
 > **architectureFamiliar**: `string`[]
 
-Defined in: [src/types/preparation.ts:227](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/preparation.ts#L227)
+Defined in: [src/types/preparation.ts:227](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L227)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/preparation.ts:227](https://github.com/rjmad1/CareerPrope
 
 > **completedDesigns**: [`SystemDesignAttempt`](SystemDesignAttempt.md)[]
 
-Defined in: [src/types/preparation.ts:225](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/preparation.ts#L225)
+Defined in: [src/types/preparation.ts:225](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L225)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/preparation.ts:225](https://github.com/rjmad1/CareerPrope
 
 > **conceptsMastered**: `string`[]
 
-Defined in: [src/types/preparation.ts:226](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/preparation.ts#L226)
+Defined in: [src/types/preparation.ts:226](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L226)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/preparation.ts:226](https://github.com/rjmad1/CareerPrope
 
 > **jobId**: `string`
 
-Defined in: [src/types/preparation.ts:224](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/preparation.ts#L224)
+Defined in: [src/types/preparation.ts:224](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L224)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/preparation.ts:224](https://github.com/rjmad1/CareerPrope
 
 > **overallProgress**: `number`
 
-Defined in: [src/types/preparation.ts:228](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/preparation.ts#L228)
+Defined in: [src/types/preparation.ts:228](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L228)
 
 ***
 
@@ -56,4 +56,4 @@ Defined in: [src/types/preparation.ts:228](https://github.com/rjmad1/CareerPrope
 
 > **readyForRound**: `boolean`
 
-Defined in: [src/types/preparation.ts:229](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/preparation.ts#L229)
+Defined in: [src/types/preparation.ts:229](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/preparation.ts#L229)

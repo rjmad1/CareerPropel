@@ -8,7 +8,7 @@
 
 > `const` **KanbanBoard**: `React.FC`\<[`KanbanBoardProps`](../interfaces/KanbanBoardProps.md)\>
 
-Defined in: [src/components/Kanban/KanbanBoard.tsx:45](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/Kanban/KanbanBoard.tsx#L45)
+Defined in: [src/components/Kanban/KanbanBoard.tsx:45](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Kanban/KanbanBoard.tsx#L45)
 
 KanbanBoard - Main Kanban/swimlane view of job applications
 

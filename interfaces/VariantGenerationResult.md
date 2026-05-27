@@ -6,7 +6,7 @@
 
 # Interface: VariantGenerationResult
 
-Defined in: [src/lib/document/variantGenerator.ts:39](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/variantGenerator.ts#L39)
+Defined in: [src/lib/document/variantGenerator.ts:39](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L39)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/document/variantGenerator.ts:39](https://github.com/rjmad1/
 
 > **\_jdKeywords**: [`ExtractedKeywords`](ExtractedKeywords.md)
 
-Defined in: [src/lib/document/variantGenerator.ts:49](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/variantGenerator.ts#L49)
+Defined in: [src/lib/document/variantGenerator.ts:49](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L49)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/document/variantGenerator.ts:49](https://github.com/rjmad1/
 
 > **atsScore**: `number`
 
-Defined in: [src/lib/document/variantGenerator.ts:43](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/variantGenerator.ts#L43)
+Defined in: [src/lib/document/variantGenerator.ts:43](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L43)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/document/variantGenerator.ts:43](https://github.com/rjmad1/
 
 > **bulletQualityScore**: `number`
 
-Defined in: [src/lib/document/variantGenerator.ts:47](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/variantGenerator.ts#L47)
+Defined in: [src/lib/document/variantGenerator.ts:47](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L47)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/document/variantGenerator.ts:47](https://github.com/rjmad1/
 
 > **content**: `string`
 
-Defined in: [src/lib/document/variantGenerator.ts:40](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/variantGenerator.ts#L40)
+Defined in: [src/lib/document/variantGenerator.ts:40](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L40)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/document/variantGenerator.ts:40](https://github.com/rjmad1/
 
 > **gapReport**: [`KeywordGapReport`](KeywordGapReport.md)
 
-Defined in: [src/lib/document/variantGenerator.ts:50](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/variantGenerator.ts#L50)
+Defined in: [src/lib/document/variantGenerator.ts:50](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L50)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/document/variantGenerator.ts:50](https://github.com/rjmad1/
 
 > **keywordCoverage**: `number`
 
-Defined in: [src/lib/document/variantGenerator.ts:44](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/variantGenerator.ts#L44)
+Defined in: [src/lib/document/variantGenerator.ts:44](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L44)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/document/variantGenerator.ts:44](https://github.com/rjmad1/
 
 > **parserErrors**: `string`[]
 
-Defined in: [src/lib/document/variantGenerator.ts:52](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/variantGenerator.ts#L52)
+Defined in: [src/lib/document/variantGenerator.ts:52](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L52)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/document/variantGenerator.ts:52](https://github.com/rjmad1/
 
 > **parserWarnings**: `string`[]
 
-Defined in: [src/lib/document/variantGenerator.ts:51](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/variantGenerator.ts#L51)
+Defined in: [src/lib/document/variantGenerator.ts:51](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L51)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/lib/document/variantGenerator.ts:51](https://github.com/rjmad1/
 
 > **profileVersionHash**: `string`
 
-Defined in: [src/lib/document/variantGenerator.ts:48](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/variantGenerator.ts#L48)
+Defined in: [src/lib/document/variantGenerator.ts:48](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L48)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [src/lib/document/variantGenerator.ts:48](https://github.com/rjmad1/
 
 > **recommendations**: `string`[]
 
-Defined in: [src/lib/document/variantGenerator.ts:53](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/variantGenerator.ts#L53)
+Defined in: [src/lib/document/variantGenerator.ts:53](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L53)
 
 ***
 
@@ -94,7 +94,7 @@ Defined in: [src/lib/document/variantGenerator.ts:53](https://github.com/rjmad1/
 
 > **recruiterScore**: `number`
 
-Defined in: [src/lib/document/variantGenerator.ts:45](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/variantGenerator.ts#L45)
+Defined in: [src/lib/document/variantGenerator.ts:45](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L45)
 
 ***
 
@@ -102,7 +102,7 @@ Defined in: [src/lib/document/variantGenerator.ts:45](https://github.com/rjmad1/
 
 > `optional` **targetCompany?**: `string`
 
-Defined in: [src/lib/document/variantGenerator.ts:42](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/variantGenerator.ts#L42)
+Defined in: [src/lib/document/variantGenerator.ts:42](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L42)
 
 ***
 
@@ -110,7 +110,7 @@ Defined in: [src/lib/document/variantGenerator.ts:42](https://github.com/rjmad1/
 
 > **targetRole**: `string`
 
-Defined in: [src/lib/document/variantGenerator.ts:41](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/variantGenerator.ts#L41)
+Defined in: [src/lib/document/variantGenerator.ts:41](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L41)
 
 ***
 
@@ -118,4 +118,4 @@ Defined in: [src/lib/document/variantGenerator.ts:41](https://github.com/rjmad1/
 
 > **topThirdScore**: `number`
 
-Defined in: [src/lib/document/variantGenerator.ts:46](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/document/variantGenerator.ts#L46)
+Defined in: [src/lib/document/variantGenerator.ts:46](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/document/variantGenerator.ts#L46)

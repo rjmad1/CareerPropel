@@ -8,7 +8,7 @@
 
 > **CalendarPage**(): `Element`
 
-Defined in: [src/app/calendar/page.tsx:339](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/app/calendar/page.tsx#L339)
+Defined in: [src/app/calendar/page.tsx:339](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/app/calendar/page.tsx#L339)
 
 ## Returns
 

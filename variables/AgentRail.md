@@ -8,7 +8,7 @@
 
 > `const` **AgentRail**: `React.FC`
 
-Defined in: [src/components/Agent/AgentRail.tsx:32](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/components/Agent/AgentRail.tsx#L32)
+Defined in: [src/components/Agent/AgentRail.tsx:32](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/components/Agent/AgentRail.tsx#L32)
 
 AgentRail - Real-time sidebar showing all agents and their status
 

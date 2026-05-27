@@ -6,7 +6,7 @@
 
 # Interface: ProviderCapabilitySpec
 
-Defined in: [src/lib/governance/providerQualification.ts:15](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/providerQualification.ts#L15)
+Defined in: [src/lib/governance/providerQualification.ts:15](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/providerQualification.ts#L15)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/governance/providerQualification.ts:15](https://github.com/
 
 > **allowedProviders**: [`LLMProviderName`](../type-aliases/LLMProviderName.md)[]
 
-Defined in: [src/lib/governance/providerQualification.ts:16](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/providerQualification.ts#L16)
+Defined in: [src/lib/governance/providerQualification.ts:16](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/providerQualification.ts#L16)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/governance/providerQualification.ts:16](https://github.com/
 
 > **minModelTier**: [`ModelTier`](../type-aliases/ModelTier.md)
 
-Defined in: [src/lib/governance/providerQualification.ts:18](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/providerQualification.ts#L18)
+Defined in: [src/lib/governance/providerQualification.ts:18](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/providerQualification.ts#L18)
 
 Minimum model tier required
 
@@ -32,7 +32,7 @@ Minimum model tier required
 
 > **rationale**: `string`
 
-Defined in: [src/lib/governance/providerQualification.ts:20](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/providerQualification.ts#L20)
+Defined in: [src/lib/governance/providerQualification.ts:20](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/providerQualification.ts#L20)
 
 Rationale for the restriction
 
@@ -42,7 +42,7 @@ Rationale for the restriction
 
 > **requiresHighFactuality**: `boolean`
 
-Defined in: [src/lib/governance/providerQualification.ts:24](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/providerQualification.ts#L24)
+Defined in: [src/lib/governance/providerQualification.ts:24](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/providerQualification.ts#L24)
 
 Whether high factuality is required (salary, company data)
 
@@ -52,6 +52,6 @@ Whether high factuality is required (salary, company data)
 
 > **requiresLowHallucination**: `boolean`
 
-Defined in: [src/lib/governance/providerQualification.ts:22](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/providerQualification.ts#L22)
+Defined in: [src/lib/governance/providerQualification.ts:22](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/providerQualification.ts#L22)
 
 Whether hallucination-low models are required

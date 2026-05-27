@@ -6,7 +6,7 @@
 
 # Interface: CompensationPoint
 
-Defined in: [src/lib/analytics/types.ts:92](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L92)
+Defined in: [src/lib/analytics/types.ts:92](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L92)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/types.ts:92](https://github.com/rjmad1/CareerProp
 
 > **company**: `string`
 
-Defined in: [src/lib/analytics/types.ts:95](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L95)
+Defined in: [src/lib/analytics/types.ts:95](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L95)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/types.ts:95](https://github.com/rjmad1/CareerProp
 
 > **date**: `string`
 
-Defined in: [src/lib/analytics/types.ts:93](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L93)
+Defined in: [src/lib/analytics/types.ts:93](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L93)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/lib/analytics/types.ts:93](https://github.com/rjmad1/CareerProp
 
 > **salary**: `number`
 
-Defined in: [src/lib/analytics/types.ts:94](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/analytics/types.ts#L94)
+Defined in: [src/lib/analytics/types.ts:94](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/analytics/types.ts#L94)

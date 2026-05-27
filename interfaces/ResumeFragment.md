@@ -6,7 +6,7 @@
 
 # Interface: ResumeFragment
 
-Defined in: [src/types/profile.ts:114](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L114)
+Defined in: [src/types/profile.ts:114](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L114)
 
 Resume fragment for reuse
 
@@ -16,7 +16,7 @@ Resume fragment for reuse
 
 > `optional` **achievementId?**: `string`
 
-Defined in: [src/types/profile.ts:121](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L121)
+Defined in: [src/types/profile.ts:121](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L121)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/profile.ts:121](https://github.com/rjmad1/CareerPropel/bl
 
 > **candidateId**: `string`
 
-Defined in: [src/types/profile.ts:116](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L116)
+Defined in: [src/types/profile.ts:116](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L116)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/profile.ts:116](https://github.com/rjmad1/CareerPropel/bl
 
 > **content**: `string`
 
-Defined in: [src/types/profile.ts:118](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L118)
+Defined in: [src/types/profile.ts:118](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L118)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/profile.ts:118](https://github.com/rjmad1/CareerPropel/bl
 
 > **createdAt**: `Date`
 
-Defined in: [src/types/profile.ts:122](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L122)
+Defined in: [src/types/profile.ts:122](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L122)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/profile.ts:122](https://github.com/rjmad1/CareerPropel/bl
 
 > **id**: `string`
 
-Defined in: [src/types/profile.ts:115](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L115)
+Defined in: [src/types/profile.ts:115](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L115)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/types/profile.ts:115](https://github.com/rjmad1/CareerPropel/bl
 
 > **jobRelevance**: `string`[]
 
-Defined in: [src/types/profile.ts:120](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L120)
+Defined in: [src/types/profile.ts:120](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L120)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [src/types/profile.ts:120](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **lastUsed?**: `Date`
 
-Defined in: [src/types/profile.ts:123](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L123)
+Defined in: [src/types/profile.ts:123](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L123)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [src/types/profile.ts:123](https://github.com/rjmad1/CareerPropel/bl
 
 > **section**: `"skill"` \| `"achievement"` \| `"experience"` \| `"project"`
 
-Defined in: [src/types/profile.ts:117](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L117)
+Defined in: [src/types/profile.ts:117](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L117)
 
 ***
 
@@ -80,4 +80,4 @@ Defined in: [src/types/profile.ts:117](https://github.com/rjmad1/CareerPropel/bl
 
 > **sourceDocument**: `string`
 
-Defined in: [src/types/profile.ts:119](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/types/profile.ts#L119)
+Defined in: [src/types/profile.ts:119](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/types/profile.ts#L119)

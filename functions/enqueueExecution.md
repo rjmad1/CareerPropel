@@ -8,7 +8,7 @@
 
 > **enqueueExecution**(`data`): `Promise`\<`Job`\<[`ExecutionJobData`](../interfaces/ExecutionJobData.md), `any`, `string`\>\>
 
-Defined in: [src/lib/queue/queues.ts:37](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/queue/queues.ts#L37)
+Defined in: [src/lib/queue/queues.ts:37](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/queue/queues.ts#L37)
 
 ## Parameters
 

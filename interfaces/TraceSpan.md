@@ -6,7 +6,7 @@
 
 # Interface: TraceSpan
 
-Defined in: [src/lib/observability/tracing.ts:1](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/tracing.ts#L1)
+Defined in: [src/lib/observability/tracing.ts:1](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/observability/tracing.ts#L1)
 
 ## Methods
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/observability/tracing.ts:1](https://github.com/rjmad1/Caree
 
 > **addEvent**(`name`, `attributes?`): `void`
 
-Defined in: [src/lib/observability/tracing.ts:2](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/tracing.ts#L2)
+Defined in: [src/lib/observability/tracing.ts:2](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/observability/tracing.ts#L2)
 
 #### Parameters
 
@@ -36,7 +36,7 @@ Defined in: [src/lib/observability/tracing.ts:2](https://github.com/rjmad1/Caree
 
 > **end**(`attributes?`): `void`
 
-Defined in: [src/lib/observability/tracing.ts:3](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/observability/tracing.ts#L3)
+Defined in: [src/lib/observability/tracing.ts:3](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/observability/tracing.ts#L3)
 
 #### Parameters
 

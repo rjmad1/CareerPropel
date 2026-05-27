@@ -6,7 +6,7 @@
 
 # Interface: AgentPolicy
 
-Defined in: [src/lib/governance/policyEngine.ts:14](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/policyEngine.ts#L14)
+Defined in: [src/lib/governance/policyEngine.ts:14](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/policyEngine.ts#L14)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/governance/policyEngine.ts:14](https://github.com/rjmad1/Ca
 
 > **allowedTools**: `string`[]
 
-Defined in: [src/lib/governance/policyEngine.ts:24](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/policyEngine.ts#L24)
+Defined in: [src/lib/governance/policyEngine.ts:24](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/policyEngine.ts#L24)
 
 Allowed tool names (empty = none)
 
@@ -24,7 +24,7 @@ Allowed tool names (empty = none)
 
 > **blockOnHallucinationRisk**: `boolean`
 
-Defined in: [src/lib/governance/policyEngine.ts:38](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/policyEngine.ts#L38)
+Defined in: [src/lib/governance/policyEngine.ts:38](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/policyEngine.ts#L38)
 
 Whether hallucination check failure blocks persistence
 
@@ -34,7 +34,7 @@ Whether hallucination check failure blocks persistence
 
 > **executionTtlSeconds**: `number`
 
-Defined in: [src/lib/governance/policyEngine.ts:32](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/policyEngine.ts#L32)
+Defined in: [src/lib/governance/policyEngine.ts:32](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/policyEngine.ts#L32)
 
 Execution TTL in seconds
 
@@ -44,7 +44,7 @@ Execution TTL in seconds
 
 > **maxConcurrentPerUser**: `number`
 
-Defined in: [src/lib/governance/policyEngine.ts:34](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/policyEngine.ts#L34)
+Defined in: [src/lib/governance/policyEngine.ts:34](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/policyEngine.ts#L34)
 
 Max concurrent executions per user for this agent type
 
@@ -54,7 +54,7 @@ Max concurrent executions per user for this agent type
 
 > **maxCostUsdPerExecution**: `number`
 
-Defined in: [src/lib/governance/policyEngine.ts:18](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/policyEngine.ts#L18)
+Defined in: [src/lib/governance/policyEngine.ts:18](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/policyEngine.ts#L18)
 
 Estimated max cost USD per execution
 
@@ -64,7 +64,7 @@ Estimated max cost USD per execution
 
 > **maxFallbackDepth**: `number`
 
-Defined in: [src/lib/governance/policyEngine.ts:22](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/policyEngine.ts#L22)
+Defined in: [src/lib/governance/policyEngine.ts:22](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/policyEngine.ts#L22)
 
 Max provider fallback depth
 
@@ -74,7 +74,7 @@ Max provider fallback depth
 
 > **maxInputContextChars**: `number`
 
-Defined in: [src/lib/governance/policyEngine.ts:26](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/policyEngine.ts#L26)
+Defined in: [src/lib/governance/policyEngine.ts:26](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/policyEngine.ts#L26)
 
 Max input context size in characters
 
@@ -84,7 +84,7 @@ Max input context size in characters
 
 > **maxOutputChars**: `number`
 
-Defined in: [src/lib/governance/policyEngine.ts:28](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/policyEngine.ts#L28)
+Defined in: [src/lib/governance/policyEngine.ts:28](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/policyEngine.ts#L28)
 
 Max output size in characters
 
@@ -94,7 +94,7 @@ Max output size in characters
 
 > **maxRetries**: `number`
 
-Defined in: [src/lib/governance/policyEngine.ts:20](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/policyEngine.ts#L20)
+Defined in: [src/lib/governance/policyEngine.ts:20](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/policyEngine.ts#L20)
 
 Max retry attempts (queue-level)
 
@@ -104,7 +104,7 @@ Max retry attempts (queue-level)
 
 > **maxTokensPerExecution**: `number`
 
-Defined in: [src/lib/governance/policyEngine.ts:16](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/policyEngine.ts#L16)
+Defined in: [src/lib/governance/policyEngine.ts:16](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/policyEngine.ts#L16)
 
 Max total token spend per single execution
 
@@ -114,7 +114,7 @@ Max total token spend per single execution
 
 > **piiHandling**: `"redact"` \| `"passthrough"` \| `"reject"`
 
-Defined in: [src/lib/governance/policyEngine.ts:30](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/policyEngine.ts#L30)
+Defined in: [src/lib/governance/policyEngine.ts:30](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/policyEngine.ts#L30)
 
 How PII in input is handled
 
@@ -124,6 +124,6 @@ How PII in input is handled
 
 > **requireValidationPass**: `boolean`
 
-Defined in: [src/lib/governance/policyEngine.ts:36](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/policyEngine.ts#L36)
+Defined in: [src/lib/governance/policyEngine.ts:36](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/policyEngine.ts#L36)
 
 Whether the output must pass all validation layers to persist

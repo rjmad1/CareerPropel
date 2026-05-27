@@ -6,7 +6,7 @@
 
 # Interface: GoldenTestCase
 
-Defined in: [src/lib/governance/regressionHarness.ts:12](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L12)
+Defined in: [src/lib/governance/regressionHarness.ts:12](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/regressionHarness.ts#L12)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:12](https://github.com/rjma
 
 > **agentType**: [`AgentType`](../type-aliases/AgentType.md)
 
-Defined in: [src/lib/governance/regressionHarness.ts:14](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L14)
+Defined in: [src/lib/governance/regressionHarness.ts:14](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/regressionHarness.ts#L14)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:14](https://github.com/rjma
 
 > **forbiddenPhrases**: `string`[]
 
-Defined in: [src/lib/governance/regressionHarness.ts:22](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L22)
+Defined in: [src/lib/governance/regressionHarness.ts:22](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/regressionHarness.ts#L22)
 
 Strings that must NOT appear in the output (hallucination guards)
 
@@ -32,7 +32,7 @@ Strings that must NOT appear in the output (hallucination guards)
 
 > **id**: `string`
 
-Defined in: [src/lib/governance/regressionHarness.ts:13](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L13)
+Defined in: [src/lib/governance/regressionHarness.ts:13](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/regressionHarness.ts#L13)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:13](https://github.com/rjma
 
 > **input**: `Record`\<`string`, `string`\>
 
-Defined in: [src/lib/governance/regressionHarness.ts:16](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L16)
+Defined in: [src/lib/governance/regressionHarness.ts:16](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/regressionHarness.ts#L16)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:16](https://github.com/rjma
 
 > **latencyBaselineMs**: `number`
 
-Defined in: [src/lib/governance/regressionHarness.ts:26](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L26)
+Defined in: [src/lib/governance/regressionHarness.ts:26](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/regressionHarness.ts#L26)
 
 Baseline latency budget in ms; regression if exceeded by >50%
 
@@ -58,7 +58,7 @@ Baseline latency budget in ms; regression if exceeded by >50%
 
 > **name**: `string`
 
-Defined in: [src/lib/governance/regressionHarness.ts:15](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L15)
+Defined in: [src/lib/governance/regressionHarness.ts:15](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/regressionHarness.ts#L15)
 
 ***
 
@@ -66,7 +66,7 @@ Defined in: [src/lib/governance/regressionHarness.ts:15](https://github.com/rjma
 
 > **requiredKeys**: `string`[]
 
-Defined in: [src/lib/governance/regressionHarness.ts:18](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L18)
+Defined in: [src/lib/governance/regressionHarness.ts:18](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/regressionHarness.ts#L18)
 
 Expected structural keys that must be present in output
 
@@ -76,7 +76,7 @@ Expected structural keys that must be present in output
 
 > **requiredPhrases**: `string`[]
 
-Defined in: [src/lib/governance/regressionHarness.ts:24](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L24)
+Defined in: [src/lib/governance/regressionHarness.ts:24](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/regressionHarness.ts#L24)
 
 Strings that MUST appear in the output
 
@@ -86,7 +86,7 @@ Strings that MUST appear in the output
 
 > **scoreAssertions**: `object`[]
 
-Defined in: [src/lib/governance/regressionHarness.ts:20](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L20)
+Defined in: [src/lib/governance/regressionHarness.ts:20](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/regressionHarness.ts#L20)
 
 Minimum confidence/score fields and their expected ranges
 
@@ -108,6 +108,6 @@ Minimum confidence/score fields and their expected ranges
 
 > **tokenBaseline**: `number`
 
-Defined in: [src/lib/governance/regressionHarness.ts:28](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/regressionHarness.ts#L28)
+Defined in: [src/lib/governance/regressionHarness.ts:28](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/regressionHarness.ts#L28)
 
 Baseline token count; regression if exceeded by >30%

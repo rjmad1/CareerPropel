@@ -8,7 +8,7 @@
 
 > **useCreateInterview**(): `UseMutationResult`\<[`CreateInterviewInput`](../interfaces/CreateInterviewInput.md), `Error`, [`CreateInterviewInput`](../interfaces/CreateInterviewInput.md), `unknown`\>
 
-Defined in: [src/domains/jobs/hooks/useMutations.ts:24](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/domains/jobs/hooks/useMutations.ts#L24)
+Defined in: [src/domains/jobs/hooks/useMutations.ts:24](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/domains/jobs/hooks/useMutations.ts#L24)
 
 ## Returns
 

@@ -8,7 +8,7 @@
 
 > **isConnected**(`candidateId`): `Promise`\<`boolean`\>
 
-Defined in: [src/lib/calendar/googleCalendar.ts:232](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/calendar/googleCalendar.ts#L232)
+Defined in: [src/lib/calendar/googleCalendar.ts:232](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/calendar/googleCalendar.ts#L232)
 
 Returns true if the candidate has connected Google Calendar.
 

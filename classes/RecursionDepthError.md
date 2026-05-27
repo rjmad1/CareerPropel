@@ -6,7 +6,7 @@
 
 # Class: RecursionDepthError
 
-Defined in: [src/lib/governance/boundedExecution.ts:78](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/boundedExecution.ts#L78)
+Defined in: [src/lib/governance/boundedExecution.ts:78](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L78)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/governance/boundedExecution.ts:78](https://github.com/rjmad
 
 > **new RecursionDepthError**(`depth`, `maxDepth`, `traceId`): `RecursionDepthError`
 
-Defined in: [src/lib/governance/boundedExecution.ts:79](https://github.com/rjmad1/CareerPropel/blob/e27dc2255dfcd722bf066d42863ad645581bd8ce/src/lib/governance/boundedExecution.ts#L79)
+Defined in: [src/lib/governance/boundedExecution.ts:79](https://github.com/rjmad1/CareerPropel/blob/5ee4707e2d92f783f3887535a834f186f97a5968/src/lib/governance/boundedExecution.ts#L79)
 
 #### Parameters
 
