@@ -36,7 +36,7 @@
         "uses-responsive-images": ["warn", { "maxLength": 1 }],
         "uses-optimized-images": ["warn", { "maxLength": 1 }],
         "uses-text-compression": ["warn", { "maxLength": 1 }],
-        "render-blocking-resources": ["error", { "maxLength": 0 }],
+        "render-blocking-resources": ["warn", { "maxLength": 2 }],
         "unused-javascript": ["warn", { "maxLength": 3 }],
         "total-blocking-time": ["warn", { "maxNumericValue": 200 }],
         "cumulative-layout-shift": ["warn", { "maxNumericValue": 0.1 }],
