@@ -37,11 +37,11 @@ import { sanitizeQueuePayload } from '@/lib/queue/payload';
 import { enqueueExecution } from '@/lib/queue/queues';
 
 const routeLogger = createLogger({ route: '/api/agents/execute' });
-const executeRateLimiter = createRateLimiter(20, 60000);
+const executeRateLimiter = createRateLimiter(20, 60);
 
 export async function POST(request: NextRequest) {
   try {
-    const rateLimited = executeRateLimiter(request);
+    const rateLimited = await executeRateLimiter(request);
     if (rateLimited) {
       return rateLimited;
     }

@@ -11,8 +11,8 @@ import { handleCorsPreFlight, applyCorsHeaders } from '@/lib/middleware/cors'
 
 
 // Rate limiters for different operations
-const getJobsLimiter = createRateLimiter(100, 60000) // 100 per minute
-const createJobLimiter = createRateLimiter(20, 60000) // 20 per minute
+const getJobsLimiter = createRateLimiter(100, 60) // 100 per minute
+const createJobLimiter = createRateLimiter(20, 60) // 20 per minute
 
 /**
  * GET /api/jobs
