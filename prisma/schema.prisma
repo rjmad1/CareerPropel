@@ -789,6 +789,21 @@ model SessionActivity {
   @@index([riskScore])
 }
 
+model ProductFunnelMetric {
+  id        String   @id @default(cuid())
+  email     String   // Identifies user session / candidate
+  funnel    String   // 'resume' | 'job' | 'interview' | 'appraisal' | 'networking'
+  step      String   // 'uploaded', 'parsed', 'profileCreated', 'profileCompleted', etc.
+  status    String   // 'viewed', 'started', 'submitted', 'completed', 'failed', 'abandoned'
+  metadata  Json?    // Contextual payload (e.g. latency, size, error message)
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@index([funnel])
+  @@index([step])
+  @@index([status])
+}
+
 // ─── Calendar Integration ─────────────────────────────────────────────────────
 
 model CalendarToken {
@@ -1993,3 +2008,24 @@ model PatternLibraryEntry {
   @@index([conversionRate])
   @@index([active])
 }
+
+/// Durable append-only event ledger for all agent execution events.
+model ExecutionEventLedger {
+  id            String   @id @default(cuid())
+  eventId       String   @unique
+  executionId   String
+  eventType     String
+  payload       Json
+  traceId       String?
+  spanId        String?
+  correlationId String?
+  timestamp     DateTime @default(now())
+  replayable    Boolean  @default(true)
+  sourceRuntime String
+
+  @@index([executionId])
+  @@index([correlationId])
+  @@index([timestamp])
+  @@index([eventType])
+}
+

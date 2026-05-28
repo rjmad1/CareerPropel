@@ -29,6 +29,8 @@ import type { LLMProviderName } from '@/lib/llm/provider';
 import { inspectForHallucinations, inspectInputForInjection } from '@/lib/governance/hallucinationControls';
 import { checkExecutionPolicy, estimateCostUsd, getPolicy } from '@/lib/governance/policyEngine';
 
+import { transitionExecutionState } from '@/lib/runtime/execution-state-machine';
+
 const executionLogger = createLogger({ component: 'agent-executor' });
 
 export interface ExecutionContext {
@@ -46,13 +48,12 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
   const logContext = { executionId, agentType, userId, correlationId, requestId };
 
   try {
-    // Transition to running state
-    await prisma.agentExecution.update({
-      where: { id: executionId },
-      data: {
-        status: 'running',
-        startedAt: new Date(),
-      },
+    // Transition to running state via state machine
+    await transitionExecutionState(executionId, 'running', {
+      actor: 'agent-executor',
+      correlationId,
+      requestId,
+      userId,
     });
 
     // Publish Redis events
@@ -270,12 +271,18 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       return;
     }
 
+    // ── Transition state to completed atomically and log audit
+    await transitionExecutionState(executionId, 'completed', {
+      actor: 'agent-executor',
+      correlationId,
+      requestId,
+      userId,
+    });
+
     // ── Persist execution result with provenance ──────────────────────────────
     await prisma.agentExecution.update({
       where: { id: executionId },
       data: {
-        status: 'completed',
-        completedAt: new Date(),
         output: JSON.stringify(finalOutput),
         tokenCount,
         inputTokens,
@@ -656,11 +663,22 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       return;
     }
 
+    // Transition to failed state via state machine
+    try {
+      await transitionExecutionState(executionId, 'failed', {
+        actor: 'agent-executor',
+        correlationId,
+        requestId,
+        userId,
+        justification: errorMessage,
+      });
+    } catch (transErr) {
+      executionLogger.error({ executionId, err: transErr }, 'Failed to transition to failed state during crash recovery');
+    }
+
     await prisma.agentExecution.update({
       where: { id: executionId },
       data: {
-        status: 'failed',
-        completedAt: new Date(),
         errorMessage,
       },
     });

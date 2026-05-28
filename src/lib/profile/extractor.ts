@@ -1,48 +1,47 @@
 import { ProfileEntity } from '@/types/profile';
 
 /**
- * Entity Extraction Engine
+ * Layer 1 Deterministic Entity Extraction Engine
  * 
- * Simulates semantic NLP extraction of candidate skills,
- * achievements, companies, and projects from parsed text blocks.
+ * Performs high-speed local text parsing using regular expressions and keyword scanners
+ * to build the initial candidate profile before AI enrichment.
  */
-
 
 const EXTRACTION_RULES = [
   {
-    pattern: /Next\.js|React|TypeScript|Node\.js|Prisma|GraphQL|PostgreSQL|Tailwind/i,
+    pattern: /\b(next\.js|react|typescript|node\.js|prisma|graphql|postgresql|tailwind|python|aws|docker|kubernetes|javascript|css|html|go|rust|mongodb)\b/i,
     type: 'skill' as const,
-    tags: ['technical', 'frontend', 'backend'],
-    confidence: 0.95
+    tags: ['technical', 'deterministic'],
+    confidence: 0.90
   },
   {
-    pattern: /reduced latency|grew revenue|optimized performance|dashboard latency|latency by/i,
+    pattern: /(\b(reduced|optimized|improved|increased|grew|scaled|saved)\b.*(\d+%|\$[\d,]+|\d+\s?x\b|\d+\s?ms))/i,
     type: 'achievement' as const,
-    tags: ['quantifiable', 'latency', 'performance'],
+    tags: ['quantifiable', 'performance', 'deterministic'],
+    confidence: 0.85
+  },
+  {
+    pattern: /\b(Senior Software Engineer|Software Developer|TechCorp|Engineer|Lead Developer|Architect|Programmer|Consultant)\b/i,
+    type: 'experience' as const,
+    tags: ['career', 'deterministic'],
     confidence: 0.88
   },
   {
-    pattern: /Senior Software Engineer|Software Developer|TechCorp/i,
-    type: 'experience' as const,
-    tags: ['career', 'corporate'],
-    confidence: 0.92
-  },
-  {
-    pattern: /Bachelor of Science|Computer Science|GPA/i,
+    pattern: /\b(Bachelor|Master|Ph\.D\.|B\.S\.|M\.S\.|Computer Science|Engineering|University|College|GPA)\b/i,
     type: 'education' as const,
-    tags: ['academic', 'degree'],
-    confidence: 0.98
+    tags: ['academic', 'deterministic'],
+    confidence: 0.95
   },
   {
-    pattern: /AWS Certified|Solutions Architect/i,
+    pattern: /\b(AWS Certified|Solutions Architect|Certified Kubernetes Administrator|CKA|Scrum Master|PMP)\b/i,
     type: 'certification' as const,
-    tags: ['cloud', 'credentials'],
-    confidence: 0.94
+    tags: ['credentials', 'certification', 'deterministic'],
+    confidence: 0.92
   }
 ];
 
 /**
- * Extract semantic entities from plain text
+ * Extract baseline profile entities from plain text deterministically
  */
 export function extractProfileEntities(
   text: string,
@@ -54,6 +53,7 @@ export function extractProfileEntities(
 
   lines.forEach((line, index) => {
     EXTRACTION_RULES.forEach((rule) => {
+      // Find matching keywords/regexes
       if (rule.pattern.test(line)) {
         // Prevent duplicate skill entries of same content
         if (rule.type === 'skill' && entities.some((e) => e.content.toLowerCase() === line.toLowerCase())) {
@@ -64,12 +64,27 @@ export function extractProfileEntities(
           ? crypto.randomUUID()
           : `${Date.now()}-${index}-${Math.random().toString(36).slice(2, 9)}`;
         const id = `extracted_entity_${uid}`;
+
+        // Locate exact matching word or sentence segment for skill
+        let finalContent = line;
+        if (rule.type === 'skill') {
+          const match = line.match(rule.pattern);
+          if (match && match[0]) {
+            finalContent = match[0].charAt(0).toUpperCase() + match[0].slice(1).toLowerCase();
+          }
+        }
+
+        // Prevent duplicates of same content after capitalization
+        if (entities.some((e) => e.content.toLowerCase() === finalContent.toLowerCase() && e.type === rule.type)) {
+          return;
+        }
+
         entities.push({
           id,
           candidateId,
           type: rule.type,
-          content: line,
-          confidence: Math.round((rule.confidence + (Math.random() * 0.05 - 0.025)) * 100) / 100,
+          content: finalContent,
+          confidence: rule.confidence,
           source,
           tags: rule.tags,
           relatedEntityIds: [],
@@ -81,7 +96,7 @@ export function extractProfileEntities(
     });
   });
 
-  // If nothing is extracted, inject fallback entities so the user has some parsed output
+  // If nothing is extracted, inject transparent confidence-scored fallback entities
   if (entities.length === 0) {
     const defaultSkills = ['TypeScript', 'React', 'Next.js', 'PostgreSQL', 'Tailwind CSS'];
     defaultSkills.forEach((skill, index) => {
@@ -90,9 +105,9 @@ export function extractProfileEntities(
         candidateId,
         type: 'skill',
         content: skill,
-        confidence: 0.95,
-        source,
-        tags: ['technical', 'injected'],
+        confidence: 0.50, // Flagged low confidence degraded mode
+        source: 'resume', // fallback source
+        tags: ['technical', 'fallback'],
         relatedEntityIds: [],
         extractedAt: new Date(),
         createdAt: new Date(),
@@ -104,10 +119,10 @@ export function extractProfileEntities(
       id: 'def_ach_1',
       candidateId,
       type: 'achievement',
-      content: 'Reduced dashboard latency by 32% utilizing optimistic client state updates.',
-      confidence: 0.88,
-      source,
-      tags: ['latency', 'performance'],
+      content: 'Local deterministic extraction completed: profile template initialized.',
+      confidence: 0.50,
+      source: 'resume',
+      tags: ['fallback'],
       relatedEntityIds: [],
       extractedAt: new Date(),
       createdAt: new Date(),

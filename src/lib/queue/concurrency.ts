@@ -1,5 +1,7 @@
 import { redis } from '@/lib/redis/redisClient';
 import { runtimeSettings } from '@/lib/runtime/settings';
+import { getAdaptiveLimits } from '@/lib/queue/adaptive-concurrency';
+import { ChaosFaultInjector } from '@/lib/testing/chaos';
 
 const SLOT_TTL_SECONDS = Math.max(
   Math.ceil(runtimeSettings.executionTimeoutMs / 1000) + 60,
@@ -35,10 +37,16 @@ export async function acquireExecutionSlots(
   agentType: string,
   executionId: string
 ) {
+  if (ChaosFaultInjector.isWorkerDuplicateLockEnabled()) {
+    return false;
+  }
+
+  const limits = await getAdaptiveLimits(userId, agentType);
+
   const userAcquired = await acquireSlot(
     getUserSlotKey(userId),
     executionId,
-    runtimeSettings.userConcurrencyLimit
+    limits.userLimit
   );
 
   if (!userAcquired) {
@@ -48,7 +56,7 @@ export async function acquireExecutionSlots(
   const agentAcquired = await acquireSlot(
     getAgentSlotKey(agentType),
     executionId,
-    runtimeSettings.agentConcurrencyLimit
+    limits.agentLimit
   );
 
   if (!agentAcquired) {
@@ -66,3 +74,4 @@ export async function releaseExecutionSlots(userId: string, agentType: string, e
     .srem(getAgentSlotKey(agentType), executionId)
     .exec();
 }
+

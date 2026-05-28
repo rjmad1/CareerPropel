@@ -302,39 +302,23 @@ function calculatePortfolioScore(profile: RawProfileData): number {
 }
 
 /**
- * Detect skill gaps by comparing profile to job descriptions
+ * Detect skill gaps by comparing profile to job descriptions via backend hybrid API
  */
-export function detectSkillGaps(
-  profile: RawProfileData,
+export async function detectSkillGaps(
+  candidateId: string,
   jobDescriptions: string[]
-): {
+): Promise<{
   missingSkills: string[];
   gapLevel: 'low' | 'medium' | 'high';
   recommendations: string[];
-} {
-  // Mock implementation - would use NLP/Claude in production
-  const profileSkills = profile.skills?.map((s) => s.name.toLowerCase()) ?? [];
-  const jobKeywords = jobDescriptions
-    .join(' ')
-    .toLowerCase()
-    .split(/\s+/)
-    .filter((w) => w.length > 4);
-
-  const uniqueJobSkills = Array.from(new Set(jobKeywords));
-  const missingSkills = uniqueJobSkills.filter((s) => !profileSkills.includes(s));
-
-  const gapPercent = missingSkills.length / Math.max(uniqueJobSkills.length, 1);
-  const gapLevel = gapPercent > 0.5 ? 'high' : gapPercent > 0.3 ? 'medium' : 'low';
-
-  return {
-    missingSkills: missingSkills.slice(0, 5),
-    gapLevel,
-    recommendations: [
-      `Learn ${missingSkills[0] || 'the required skills'} to improve match`,
-      'Build projects showcasing target skills',
-      'Take online courses in high-demand areas',
-    ],
-  };
+}> {
+  const res = await fetch(`/api/profile/skill-gaps`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ candidateId, jobDescriptions }),
+  });
+  if (!res.ok) throw new Error('Failed to detect skill gaps');
+  return res.json();
 }
 
 /**

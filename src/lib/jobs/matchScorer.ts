@@ -8,6 +8,9 @@ export interface MatchAnalysis {
   gaps: string[];
   nextSteps: string[];
   scoredAt: string;
+  source?: 'ai' | 'fallback';
+  confidence?: 'high' | 'medium' | 'low';
+  reason?: string;
 }
 
 /**
@@ -110,10 +113,11 @@ Scoring guide:
       gaps: Array.isArray(parsed.gaps) ? parsed.gaps.map(String) : [],
       nextSteps: Array.isArray(parsed.nextSteps) ? parsed.nextSteps.map(String) : [],
       scoredAt: new Date().toISOString(),
+      source: 'ai',
+      confidence: 'high',
     };
   } catch (err) {
     console.error('[matchScorer] AI scoring failed — job:', jobId, 'candidate:', candidateId, err);
-    // Fallback heuristic score if Claude is unavailable
     const hasDescription = Boolean(job.description);
     const skillCount = candidate.skills.length;
     const fallbackScore = Math.min(
@@ -123,11 +127,14 @@ Scoring guide:
 
     analysis = {
       score: fallbackScore,
-      summary: `Heuristic score based on profile completeness (${skillCount} skills). Add a job description for AI-powered analysis.`,
+      summary: `AI analysis temporarily unavailable. Using estimated scoring based on profile completeness (${skillCount} skills).`,
       strengths: skillCount > 0 ? [`${skillCount} skills on profile`] : [],
       gaps: ['Add job description for detailed gap analysis', 'Complete profile for better scoring'],
       nextSteps: ['Paste the full job description', 'Add your key achievements to the profile'],
       scoredAt: new Date().toISOString(),
+      source: 'fallback',
+      confidence: 'low',
+      reason: 'AI provider temporarily offline. Displaying estimated score.',
     };
   }
 

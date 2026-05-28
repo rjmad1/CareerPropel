@@ -14,6 +14,7 @@ import FlagIcon from '@mui/icons-material/Flag'
 import HistoryIcon from '@mui/icons-material/History'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import ShieldIcon from '@mui/icons-material/Shield'
+import WarningIcon from '@mui/icons-material/Warning'
 
 const DRAWER_WIDTH = 220
 
@@ -22,6 +23,7 @@ const NAV = [
   { label: 'Users',         href: '/admin/users',        icon: <PeopleIcon fontSize="small" /> },
   { label: 'Permissions',   href: '/admin/permissions',  icon: <SecurityIcon fontSize="small" /> },
   { label: 'Runtime',       href: '/admin/runtime',      icon: <SpeedIcon fontSize="small" /> },
+  { label: 'Dead-Letter',   href: '/admin/dlq',          icon: <WarningIcon fontSize="small" /> },
   { label: 'Feature Flags', href: '/admin/feature-flags', icon: <FlagIcon fontSize="small" /> },
   { label: 'Audit',         href: '/admin/audit',        icon: <HistoryIcon fontSize="small" /> },
 ]

@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { Box, CircularProgress } from '@mui/material'
+import { NavLayout } from '@/components/Layout/NavLayout'
 import IntegratedDashboard from '@/components/CareerOS/IntegratedDashboard'
 
 export default function DashboardPage() {
@@ -35,6 +36,10 @@ export default function DashboardPage() {
     return null;
   }
 
-  return <IntegratedDashboard candidateId={candidateId} />
+  return (
+    <NavLayout>
+      <IntegratedDashboard candidateId={candidateId} />
+    </NavLayout>
+  )
 }
 

@@ -124,7 +124,10 @@ ${jobDescription ? 'Compare keywords in the resume against the job description.'
         ].filter(Boolean),
         strengths: ['Resume submitted for analysis'],
         keywords: { found: [], missing: [] },
-        summary: 'Basic heuristic analysis (AI unavailable). Review suggestions to improve your score.',
+        summary: 'AI analysis temporarily unavailable. Using estimated local scoring.',
+        source: 'fallback',
+        confidence: 'low',
+        reason: 'AI provider temporarily offline. Displaying estimated score.',
       },
       { status: 200 }
     );

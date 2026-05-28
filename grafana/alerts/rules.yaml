@@ -1,0 +1,62 @@
+groups:
+  - name: career-propel-alerts
+    rules:
+      - alert: QueueBacklogGrowth
+        expr: bullmq_queue_waiting_jobs > 100
+        for: 5m
+        labels:
+          severity: warning
+          component: queue
+        annotations:
+          summary: "Queue backlog growth detected"
+          description: "Execution queue backlog has exceeded 100 jobs for over 5 minutes."
+
+      - alert: StagnantJobs
+        expr: bullmq_queue_active_jobs_stale > 0
+        for: 10m
+        labels:
+          severity: critical
+          component: queue
+        annotations:
+          summary: "Stagnant execution jobs detected"
+          description: "Active jobs are stalled or failing to heartbeat."
+
+      - alert: DLQDepthSpike
+        expr: bullmq_queue_dlq_jobs_count > 5
+        for: 1m
+        labels:
+          severity: warning
+          component: dlq
+        annotations:
+          summary: "DLQ depth growth detected"
+          description: "Dead Letter Queue has jobs requiring manual recovery."
+
+      - alert: DisconnectedWorkers
+        expr: bullmq_worker_active_count == 0
+        for: 2m
+        labels:
+          severity: critical
+          component: worker
+        annotations:
+          summary: "All execution workers are offline"
+          description: "No active workers are registered or heartbeat keys have expired."
+
+      - alert: LeadershipConflict
+        expr: scheduler_leadership_conflict_flag == 1
+        for: 1m
+        labels:
+          severity: critical
+          component: scheduler
+        annotations:
+          summary: "Scheduler leadership conflict"
+          description: "Multiple scheduler instances are claiming the leader lease."
+
+      - alert: RedisReconnectStorm
+        expr: redis_reconnect_storm_rate > 5
+        for: 1m
+        labels:
+          severity: warning
+          component: redis
+        annotations:
+          summary: "Redis Reconnect Storm"
+          description: "High frequency of Redis reconnections detected."

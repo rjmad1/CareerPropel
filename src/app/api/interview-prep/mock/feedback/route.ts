@@ -25,17 +25,21 @@ interface FeedbackResponse {
   areasForImprovement: string[];
 }
 
+import { trackFunnelEvent } from '@/lib/observability/funnel';
+
 export async function POST(request: NextRequest) {
   let body: FeedbackRequest = { sessionId: 'unknown', responses: [] };
 
   try {
-    await getAuthContext();
+    const { userEmail } = await getAuthContext();
 
     body = await request.json();
 
     if (!body.sessionId || !body.responses || body.responses.length === 0) {
       return NextResponse.json({ error: 'sessionId and responses are required' }, { status: 400 });
     }
+
+    await trackFunnelEvent(userEmail, 'interview', 'session', 'started');
 
     const responseText = body.responses
       .map(([id, answer], i) => {
@@ -98,6 +102,9 @@ Scores are out of 10. Be specific and reference the actual responses.`,
       areasForImprovement: parsed.areasForImprovement ?? [],
     };
 
+    await trackFunnelEvent(userEmail, 'interview', 'question', 'completed', { count: body.responses.length });
+    await trackFunnelEvent(userEmail, 'interview', 'session', 'completed');
+
     return NextResponse.json(feedback);
   } catch (error) {
     // Surface auth errors properly
@@ -106,6 +113,15 @@ Scores are out of 10. Be specific and reference the actual responses.`,
     }
 
     console.error('[mock/feedback] Error generating feedback:', error);
+    
+    try {
+      const { userEmail } = await getAuthContext();
+      if (userEmail) {
+        await trackFunnelEvent(userEmail, 'interview', 'question', 'completed', { count: body.responses.length });
+        await trackFunnelEvent(userEmail, 'interview', 'session', 'completed', { fallback: true });
+      }
+    } catch {}
+
     // Return graceful fallback using the already-parsed body
     const fallback: FeedbackResponse = {
       sessionId: body.sessionId,

@@ -1,6 +1,7 @@
 import { EventLog } from '@prisma/client';
 import { redis } from '@/lib/redis/redisClient';
 import { createLogger } from '@/lib/logging/logger';
+import { realtimeEventUnionSchema } from '@/contracts/events/realtime';
 
 const eventLogger = createLogger({ component: 'queue-events' });
 
@@ -48,9 +49,14 @@ export type ExecutionRealtimeEvent =
 
 export async function publishRealtimeEvent(userId: string, event: ExecutionRealtimeEvent) {
   try {
-    await redis.publish(realtimeChannels.executionEvents(userId), JSON.stringify(event));
+    const eventWithTimestamp = {
+      ...event,
+      timestamp: event.timestamp || new Date().toISOString(),
+    };
+    const validated = realtimeEventUnionSchema.parse(eventWithTimestamp);
+    await redis.publish(realtimeChannels.executionEvents(userId), JSON.stringify(validated));
   } catch (error) {
-    eventLogger.error({ err: error, userId, eventType: event.type }, 'Failed to publish realtime event');
+    eventLogger.error({ err: error, userId, eventType: event.type }, 'Failed to validate or publish realtime event');
   }
 }
 
@@ -63,17 +69,19 @@ export async function publishAgentStatusSnapshot(
 
   try {
     await redis.set(key, JSON.stringify(payload), 'EX', 3600);
+    const event = {
+      type: 'agent:status_update' as const,
+      userId,
+      agentType,
+      ...payload,
+      timestamp: new Date().toISOString(),
+    };
+    const validated = realtimeEventUnionSchema.parse(event);
     await redis.publish(
       realtimeChannels.agentStatus(userId),
-      JSON.stringify({
-        type: 'agent:status_update',
-        userId,
-        agentType,
-        ...payload,
-        timestamp: new Date().toISOString(),
-      })
+      JSON.stringify(validated)
     );
   } catch (error) {
-    eventLogger.error({ err: error, userId, agentType }, 'Failed to publish agent status snapshot');
+    eventLogger.error({ err: error, userId, agentType }, 'Failed to validate or publish agent status snapshot');
   }
 }

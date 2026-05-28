@@ -6,6 +6,7 @@ import { ApiErrors } from '@/lib/errors/ApiError'
 import { requirePermission } from '@/lib/security/authorization/middleware'
 import { prisma } from '@/lib/db'
 import { logAuditEvent, AuditAction } from '@/lib/logging/auditLog'
+import { transitionExecutionState } from '@/lib/runtime/execution-state-machine'
 
 export const dynamic = 'force-dynamic'
 
@@ -32,11 +33,18 @@ export async function POST(request: NextRequest) {
       throw ApiErrors.INVALID_REQUEST('Only failed or interrupted executions can be replayed')
     }
 
-    // Reset to queued state for worker pickup
+    // Reset to queued state for worker pickup via state machine
+    await transitionExecutionState(executionId, 'queued', {
+      actor: userEmail,
+      justification: justification || 'Admin manual replay trigger',
+      correlationId: execution.correlationId || undefined,
+      requestId: execution.requestId || undefined,
+      userId: execution.userId,
+    });
+
     await prisma.agentExecution.update({
       where: { id: executionId },
       data: {
-        status: 'queued',
         errorMessage: null,
         retryCount: { increment: 1 },
         queuedAt: new Date(),

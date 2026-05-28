@@ -1,0 +1,58 @@
+[
+  {
+    "id": "net_lead_1",
+    "company": "TechCorp Solutions",
+    "targetRole": "Software Engineer",
+    "expectedContacts": [
+      {
+        "name": "Sarah Connor",
+        "title": "Director of Engineering",
+        "department": "Engineering",
+        "relevance": "high"
+      },
+      {
+        "name": "John Doe",
+        "title": "HR Talent Acquisition",
+        "department": "Recruiting",
+        "relevance": "high"
+      },
+      {
+        "name": "Alice Smith",
+        "title": "Senior Recruiter",
+        "department": "HR",
+        "relevance": "high"
+      },
+      {
+        "name": "Bob Johnson",
+        "title": "Office Manager",
+        "department": "Operations",
+        "relevance": "low"
+      }
+    ]
+  },
+  {
+    "id": "net_lead_2",
+    "company": "AnalyticsCorp",
+    "targetRole": "Product Manager",
+    "expectedContacts": [
+      {
+        "name": "David Lee",
+        "title": "Head of Product",
+        "department": "Product",
+        "relevance": "high"
+      },
+      {
+        "name": "Elena Rivas",
+        "title": "Lead Recruiter",
+        "department": "Talent",
+        "relevance": "high"
+      },
+      {
+        "name": "Chris Miller",
+        "title": "Customer Support Lead",
+        "department": "Support",
+        "relevance": "low"
+      }
+    ]
+  }
+]

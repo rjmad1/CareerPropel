@@ -6,20 +6,23 @@ import { recordQueueMetric, recordWorkerExecution, recordWorkerRetry } from '@/l
 import { classifyError } from '@/lib/observability/failure-classification';
 import { startTraceSpan } from '@/lib/observability/tracing';
 import { acquireExecutionSlots, releaseExecutionSlots } from '@/lib/queue/concurrency';
-import { enqueueDeadLetter } from '@/lib/queue/queues';
+import { enqueueDeadLetter, PARTITIONED_QUEUES, QueuePartition } from '@/lib/queue/queues';
 import { publishRealtimeEvent } from '@/lib/queue/events';
 import { getExecutionQueue, type ExecutionJobData } from '@/lib/queue/queues';
 import { ConcurrencyLimitError, NonRetryableExecutionError } from '@/lib/queue/retry-policy';
 import { createRedisClient, disconnectRedisClient } from '@/lib/redis/redisClient';
 import { runtimeSettings } from '@/lib/runtime/settings';
-import { executionJobDataSchema } from '@/lib/validation/runtimeSchemas';
+import { executionJobDataSchema } from '@/contracts/queue/jobs';
+import { transitionExecutionState } from '@/lib/runtime/execution-state-machine';
+import { logEventToLedger } from '@/lib/runtime/ledger';
 
 const workerLogger = createLogger({ component: 'worker' });
 const workerConnection = createRedisClient('career-propel:worker');
 const queueEventsConnection = createRedisClient('career-propel:queue-events');
 
-let executionWorker: Worker<ExecutionJobData> | null = null;
-let queueEvents: QueueEvents | null = null;
+// Maintain registry of multiple active partitioned workers and event listeners
+const activeWorkers = new Map<QueuePartition, Worker<ExecutionJobData>>();
+const activeEvents = new Map<QueuePartition, QueueEvents>();
 
 function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
   return new Promise<T>((resolve, reject) => {
@@ -44,11 +47,16 @@ async function processExecution(job: Job<ExecutionJobData>) {
   // Enforce contract validation before executing
   const validatedData = executionJobDataSchema.parse(job.data);
   const { executionId, userId, agentType, promptContext, correlationId, requestId } = validatedData;
+  
   const trace = startTraceSpan('queue.execute-agent', {
-    executionId,
-    userId,
-    agentType,
-    queueJobId: job.id,
+    correlationId,
+    attributes: {
+      executionId,
+      userId,
+      agentType,
+      queueJobId: job.id,
+      partition: job.queueName,
+    },
   });
 
   const acquired = await acquireExecutionSlots(userId, agentType, executionId);
@@ -63,8 +71,18 @@ async function processExecution(job: Job<ExecutionJobData>) {
       'Worker picked up execution'
     );
 
+    // Persist pickup into the event ledger
+    await logEventToLedger({
+      executionId,
+      eventType: 'execution:worker_pickup',
+      payload: { queueJobId: job.id, partition: job.queueName },
+      correlationId,
+      traceId: trace.traceId,
+      spanId: trace.spanId,
+      sourceRuntime: 'worker',
+    });
+
     // Defensive check: verify AgentExecution row exists before doing anything else
-    // We retry up to 5 times with a 100ms delay to account for database commit/replication lag
     let executionExists = null;
     for (let attempt = 1; attempt <= 5; attempt++) {
       executionExists = await prisma.agentExecution.findUnique({
@@ -91,11 +109,6 @@ async function processExecution(job: Job<ExecutionJobData>) {
       );
     }
 
-    workerLogger.info(
-      { executionId, userId, agentType, queueJobId: job.id, correlationId, requestId },
-      'Worker pickup validation succeeded: AgentExecution row verified'
-    );
-
     await prisma.agentExecution.update({
       where: { id: executionId },
       data: {
@@ -119,6 +132,17 @@ async function processExecution(job: Job<ExecutionJobData>) {
       timestamp: new Date().toISOString(),
     });
 
+    // Persist started status in event ledger
+    await logEventToLedger({
+      executionId,
+      eventType: 'execution:started',
+      payload: { queueJobId: job.id, status: 'running' },
+      correlationId,
+      traceId: trace.traceId,
+      spanId: trace.spanId,
+      sourceRuntime: 'worker',
+    });
+
     const cleanPromptContext: Record<string, string | undefined> = {};
     for (const [key, val] of Object.entries(promptContext)) {
       cleanPromptContext[key] = val === null ? undefined : val;
@@ -137,20 +161,50 @@ async function processExecution(job: Job<ExecutionJobData>) {
     );
 
     const durationMs = Date.now() - startedAt;
-    recordQueueMetric(runtimeSettings.executionQueueName, durationMs, true);
+    recordQueueMetric(job.queueName, durationMs, true);
     recordWorkerExecution('agent-worker', durationMs, true);
     trace.end({ success: true, durationMs });
+
+    // Persist completed event in event ledger
+    await logEventToLedger({
+      executionId,
+      eventType: 'execution:completed',
+      payload: { queueJobId: job.id, status: 'completed', durationMs },
+      correlationId,
+      traceId: trace.traceId,
+      spanId: trace.spanId,
+      sourceRuntime: 'worker',
+    });
+
   } catch (error) {
     const durationMs = Date.now() - startedAt;
     const failure = classifyError(error, { executionId, userId, agentType, queueJobId: job.id });
-    recordQueueMetric(runtimeSettings.executionQueueName, durationMs, false);
+    recordQueueMetric(job.queueName, durationMs, false);
     recordWorkerExecution('agent-worker', durationMs, false);
+    
     trace.addEvent('execution.failed', {
       message: error instanceof Error ? error.message : String(error),
       failureType: failure.failureType,
       retryable: failure.retryable,
     });
     trace.end({ success: false, durationMs });
+
+    // Persist failed attempt event in event ledger
+    await logEventToLedger({
+      executionId,
+      eventType: 'execution:failed_attempt',
+      payload: {
+        queueJobId: job.id,
+        attemptsMade: job.attemptsMade,
+        error: error instanceof Error ? error.message : String(error),
+        failureType: failure.failureType,
+        retryable: failure.retryable,
+      },
+      correlationId,
+      traceId: trace.traceId,
+      spanId: trace.spanId,
+      sourceRuntime: 'worker',
+    });
 
     if (!failure.retryable) {
       throw new NonRetryableExecutionError(
@@ -164,144 +218,207 @@ async function processExecution(job: Job<ExecutionJobData>) {
   }
 }
 
-export function createExecutionWorker() {
-  if (executionWorker) {
-    return executionWorker;
-  }
-
-  executionWorker = new Worker<ExecutionJobData>(
-    runtimeSettings.executionQueueName,
-    processExecution,
-    {
-      connection: workerConnection,
-      concurrency: runtimeSettings.queueConcurrency,
-      autorun: false,
-      maxStalledCount: runtimeSettings.queueMaxStalledCount,
-      lockDuration: runtimeSettings.executionTimeoutMs,
-      metrics: {
-        maxDataPoints: 1000,
-      },
-    }
-  );
-
-  queueEvents = new QueueEvents(runtimeSettings.executionQueueName, {
-    connection: queueEventsConnection,
+/**
+ * Handles cleanup, state transition, DLQ enqueuing, and events when a job fails.
+ */
+async function handleJobFailure(job: Job<ExecutionJobData>, error: Error) {
+  const failure = classifyError(error, {
+    executionId: job.data.executionId,
+    queueJobId: job.id,
+    attemptsMade: job.attemptsMade,
   });
 
-  executionWorker.on('failed', async (job, error) => {
-    if (!job) {
-      return;
-    }
-
-    const failure = classifyError(error, {
+  workerLogger.error(
+    {
       executionId: job.data.executionId,
       queueJobId: job.id,
       attemptsMade: job.attemptsMade,
-    });
+      correlationId: job.data.correlationId,
+      requestId: job.data.requestId,
+      failureType: failure.failureType,
+      retryable: failure.retryable,
+      err: error,
+    },
+    'Execution job failed'
+  );
 
-    workerLogger.error(
-      {
-        executionId: job.data.executionId,
-        queueJobId: job.id,
-        attemptsMade: job.attemptsMade,
-        correlationId: job.data.correlationId,
-        requestId: job.data.requestId,
-        failureType: failure.failureType,
-        retryable: failure.retryable,
-        err: error,
-      },
-      'Execution job failed'
-    );
+  // If we exceeded queue attempts or hit non-retryable error
+  if (job.attemptsMade >= (job.opts.attempts || runtimeSettings.queueAttempts) || !failure.retryable) {
+    try {
+      const currentExecution = await prisma.agentExecution.findUnique({
+        where: { id: job.data.executionId },
+        select: { status: true },
+      });
 
-    if (job.attemptsMade >= (job.opts.attempts || runtimeSettings.queueAttempts)) {
-      try {
-        const currentExecution = await prisma.agentExecution.findUnique({
-          where: { id: job.data.executionId },
-          select: { status: true },
+      if (currentExecution && currentExecution.status !== 'failed' && currentExecution.status !== 'completed') {
+        await transitionExecutionState(job.data.executionId, 'failed', {
+          actor: 'agent-worker',
+          correlationId: job.data.correlationId,
+          requestId: job.data.requestId,
+          userId: job.data.userId,
+          justification: error.message || 'Execution failed permanently after maximum queue attempts',
         });
 
-        if (currentExecution && currentExecution.status !== 'failed' && currentExecution.status !== 'completed') {
-          await prisma.agentExecution.update({
-            where: { id: job.data.executionId },
-            data: {
-              status: 'failed',
-              completedAt: new Date(),
-              errorMessage: error.message || 'Execution failed permanently after maximum queue attempts',
-            },
-          });
-          workerLogger.info(
-            { executionId: job.data.executionId },
-            'Updated database execution status to failed for DLQ job'
-          );
-        }
-      } catch (dbErr) {
-        workerLogger.error(
-          { err: dbErr, executionId: job.data.executionId },
-          'Failed to update database execution status for DLQ job'
+        await prisma.agentExecution.update({
+          where: { id: job.data.executionId },
+          data: {
+            errorMessage: error.message || 'Execution failed permanently after maximum queue attempts',
+          },
+        });
+        
+        workerLogger.info(
+          { executionId: job.data.executionId },
+          'Updated database execution status to failed for DLQ job via state machine'
         );
       }
+    } catch (dbErr) {
+      workerLogger.error(
+        { err: dbErr, executionId: job.data.executionId },
+        'Failed to update database execution status for DLQ job'
+      );
+    }
 
-      await enqueueDeadLetter({
-        executionId: job.data.executionId,
-        queueJobId: String(job.id),
-        userId: job.data.userId,
-        agentType: job.data.agentType,
-        failedAt: new Date().toISOString(),
+    // Persist final execution failure in ledger
+    await logEventToLedger({
+      executionId: job.data.executionId,
+      eventType: 'execution:failed',
+      payload: {
+        queueJobId: job.id,
         reason: error.message,
         attemptsMade: job.attemptsMade,
-        correlationId: job.data.correlationId,
-        requestId: job.data.requestId,
-      });
+      },
+      correlationId: job.data.correlationId,
+      sourceRuntime: 'worker',
+    });
 
-      await publishRealtimeEvent(job.data.userId, {
-        type: 'execution:failed',
-        executionId: job.data.executionId,
-        userId: job.data.userId,
-        agentType: job.data.agentType,
-        status: 'failed',
-        currentTask: error.message,
-        correlationId: job.data.correlationId,
-        requestId: job.data.requestId,
-        queueJobId: String(job.id),
-        timestamp: new Date().toISOString(),
-      });
-    }
-  });
+    await enqueueDeadLetter({
+      executionId: job.data.executionId,
+      queueJobId: String(job.id),
+      userId: job.data.userId,
+      agentType: job.data.agentType,
+      failedAt: new Date().toISOString(),
+      reason: error.message,
+      attemptsMade: job.attemptsMade,
+      correlationId: job.data.correlationId,
+      requestId: job.data.requestId,
+    });
 
-  executionWorker.on('completed', (job) => {
-    workerLogger.info(
-      {
-        executionId: job.data.executionId,
+    // Persist DLQ route event in ledger
+    await logEventToLedger({
+      executionId: job.data.executionId,
+      eventType: 'execution:dlq_route',
+      payload: {
         queueJobId: job.id,
+        reason: error.message,
         attemptsMade: job.attemptsMade,
       },
-      'Execution job completed'
-    );
-  });
+      correlationId: job.data.correlationId,
+      sourceRuntime: 'worker',
+    });
 
-  queueEvents.on('stalled', ({ jobId }) => {
-    workerLogger.warn({ jobId }, 'Execution job stalled');
-  });
-
-  return executionWorker;
+    await publishRealtimeEvent(job.data.userId, {
+      type: 'execution:failed',
+      executionId: job.data.executionId,
+      userId: job.data.userId,
+      agentType: job.data.agentType,
+      status: 'failed',
+      currentTask: error.message,
+      correlationId: job.data.correlationId,
+      requestId: job.data.requestId,
+      queueJobId: String(job.id),
+      timestamp: new Date().toISOString(),
+    });
+  }
 }
 
-export async function startExecutionWorker() {
-  const worker = createExecutionWorker();
-  await queueEvents?.waitUntilReady();
-  await worker.run();
-  return worker;
+/**
+ * Creates workers for all partitions and registers callbacks.
+ */
+export function createExecutionWorkers(): Worker<ExecutionJobData>[] {
+  if (activeWorkers.size > 0) {
+    return Array.from(activeWorkers.values());
+  }
+
+  const partitionsToRun: Exclude<QueuePartition, 'dlq'>[] = [
+    'high-priority',
+    'standard',
+    'heavy',
+    'maintenance',
+  ];
+
+  for (const partition of partitionsToRun) {
+    const queueName = PARTITIONED_QUEUES[partition];
+    const worker = new Worker<ExecutionJobData>(
+      queueName,
+      processExecution,
+      {
+        connection: workerConnection,
+        concurrency: runtimeSettings.queueConcurrency,
+        autorun: false,
+        maxStalledCount: runtimeSettings.queueMaxStalledCount,
+        lockDuration: runtimeSettings.executionTimeoutMs,
+        metrics: {
+          maxDataPoints: 1000,
+        },
+      }
+    );
+
+    const events = new QueueEvents(queueName, {
+      connection: queueEventsConnection,
+    });
+
+    worker.on('failed', async (job, error) => {
+      if (!job) return;
+      await handleJobFailure(job, error);
+    });
+
+    worker.on('completed', (job) => {
+      workerLogger.info(
+        {
+          executionId: job.data.executionId,
+          queueJobId: job.id,
+          attemptsMade: job.attemptsMade,
+          partition,
+        },
+        'Execution job completed'
+      );
+    });
+
+    events.on('stalled', ({ jobId }) => {
+      workerLogger.warn({ jobId, partition }, 'Execution job stalled');
+    });
+
+    activeWorkers.set(partition, worker);
+    activeEvents.set(partition, events);
+  }
+
+  return Array.from(activeWorkers.values());
+}
+
+/**
+ * Deprecated/Compatibility helper. Returns standard worker for legacy references.
+ */
+export function createExecutionWorker(): Worker<ExecutionJobData> {
+  createExecutionWorkers();
+  return activeWorkers.get('standard')!;
+}
+
+export async function startExecutionWorker(): Promise<Worker<ExecutionJobData>> {
+  createExecutionWorkers();
+  await Promise.all(Array.from(activeEvents.values()).map((e) => e.waitUntilReady()));
+  await Promise.all(Array.from(activeWorkers.values()).map((w) => w.run()));
+  return activeWorkers.get('standard')!;
 }
 
 export async function closeExecutionWorker() {
   await Promise.all([
-    executionWorker?.close(),
-    queueEvents?.close(),
+    ...Array.from(activeWorkers.values()).map((w) => w.close()),
+    ...Array.from(activeEvents.values()).map((e) => e.close()),
     disconnectRedisClient(workerConnection),
     disconnectRedisClient(queueEventsConnection),
   ]);
-  executionWorker = null;
-  queueEvents = null;
+  activeWorkers.clear();
+  activeEvents.clear();
 }
 
 export async function getWorkerHeartbeat() {

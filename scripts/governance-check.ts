@@ -131,6 +131,16 @@ if (fs.existsSync(realTimeHookPath)) {
   logSuccess('useRealTime hook file not found.');
 }
 
+// 5. Run PII and Secret Redaction Validation Scan
+const { execSync } = require('child_process');
+try {
+  console.log('\nRunning PII & Secret Redaction Validation Scan...');
+  execSync('npx tsx scripts/ci/validate-redaction.ts', { stdio: 'inherit' });
+  logSuccess('PII & Secret Redaction Validation check passed.');
+} catch (err) {
+  logError('PII & Secret Redaction Validation check failed.');
+}
+
 console.log('\n--- GOVERNANCE CHECK COMPLETED ---');
 if (exitCode !== 0) {
   console.log('\x1b[31mGovernance check FAILED. Please resolve the errors listed above.\x1b[0m');
@@ -139,3 +149,4 @@ if (exitCode !== 0) {
   logSuccess('All governance checks PASSED successfully!');
   process.exit(0);
 }
+

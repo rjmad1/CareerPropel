@@ -12,7 +12,7 @@ import { getAllProviderHealthReports, hasProviderDegradation } from '@/lib/obser
 
 export async function GET(_req: NextRequest) {
   const reports   = getAllProviderHealthReports();
-  const snapshot  = getMetricsSnapshot();
+  const snapshot  = await getMetricsSnapshot();
   const degraded  = hasProviderDegradation();
 
   // Merge health-window report with aggregate counters from metrics store

@@ -1,11 +1,11 @@
 # CareerPropel
 
-This repository now keeps current working documentation in [ActiveDocumentation_CareerPropel](./ActiveDocumentation_CareerPropel/README.md) and legacy or superseded material in [ArchiveDocumentation_CareerPropel](./ArchiveDocumentation_CareerPropel/README.md).
+This repository now keeps current working documentation in [docs/README.md](./docs/README.md) and legacy or superseded material in [ArchiveDocumentation_CareerPropel/README.md](./ArchiveDocumentation_CareerPropel/README.md).
 
 ## Start Here
 
-- Active docs: [ActiveDocumentation_CareerPropel](./ActiveDocumentation_CareerPropel/README.md)
-- Archived docs: [ArchiveDocumentation_CareerPropel](./ArchiveDocumentation_CareerPropel/README.md)
+- Active docs: [docs/README.md](./docs/README.md)
+- Archived docs: [ArchiveDocumentation_CareerPropel/README.md](./ArchiveDocumentation_CareerPropel/README.md)
 - Runtime manifest: [package.json](./package.json)
 - Live schema: [prisma/schema.prisma](./prisma/schema.prisma)
 
@@ -13,7 +13,7 @@ This repository now keeps current working documentation in [ActiveDocumentation_
 
 Read these first:
 
-1. [ActiveDocumentation_CareerPropel/README.md](./ActiveDocumentation_CareerPropel/README.md)
+1. [docs/README.md](./docs/README.md)
 2. [prisma/schema.prisma](./prisma/schema.prisma)
 3. [src/bin](./src/bin)
 4. [src/lib/queue](./src/lib/queue)

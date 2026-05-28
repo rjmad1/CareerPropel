@@ -20,6 +20,8 @@ const GenerateDocumentSchema = z.object({
  * Generate a tailored resume or cover letter using AI.
  * Fetches job context and candidate profile automatically.
  */
+import { trackFunnelEvent } from '@/lib/observability/funnel';
+
 export async function POST(request: NextRequest) {
   try {
     const { userEmail } = await getAuthContext();
@@ -32,6 +34,8 @@ export async function POST(request: NextRequest) {
     }
 
     const { type, jobId, tone, focusAreas, additionalContext } = validation.data;
+
+    await trackFunnelEvent(userEmail, 'job', 'tailor', 'started', { type });
 
     // Fetch candidate record
     const candidate = await prisma.candidate.findUnique({
@@ -70,8 +74,16 @@ export async function POST(request: NextRequest) {
         ? await generateTailoredResume(input)
         : await generateCoverLetter(input);
 
+    await trackFunnelEvent(userEmail, 'job', 'tailor', 'completed', { type });
+
     return successResponse(result, 201);
   } catch (error) {
+    try {
+      const { userEmail } = await getAuthContext();
+      if (userEmail) {
+        await trackFunnelEvent(userEmail, 'job', 'tailor', 'failed', { error: error instanceof Error ? error.message : String(error) });
+      }
+    } catch {}
     return errorResponse(error);
   }
 }

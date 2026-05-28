@@ -41,12 +41,16 @@ export async function GET(_request: NextRequest) {
  * Takes a list of staged accomplishment IDs and compiles them into a comprehensive
  * performance appraisal self-evaluation or a promotion business case.
  */
+import { trackFunnelEvent } from '@/lib/observability/funnel';
+
 export async function POST(request: NextRequest) {
   try {
     const { userEmail } = await getAuthContext();
     if (!userEmail) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    await trackFunnelEvent(userEmail, 'appraisal', 'generate', 'started');
 
     const { ids, title, type } = await request.json();
 
@@ -140,9 +144,18 @@ Use professional corporate vocabulary (sustainable growth, velocity, scope, cros
       },
     });
 
+    await trackFunnelEvent(userEmail, 'appraisal', 'generate', 'completed');
+    await trackFunnelEvent(userEmail, 'appraisal', 'export', 'completed');
+
     return NextResponse.json({ success: true, content: result.content, session }, { status: 200 });
   } catch (error) {
     console.error('Error compiling appraisal:', error);
+    try {
+      const { userEmail } = await getAuthContext();
+      if (userEmail) {
+        await trackFunnelEvent(userEmail, 'appraisal', 'generate', 'failed', { error: error instanceof Error ? error.message : String(error) });
+      }
+    } catch {}
     return NextResponse.json(
       { error: error instanceof Error ? error.message : 'Internal Server Error' },
       { status: 500 }

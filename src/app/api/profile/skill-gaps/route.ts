@@ -68,6 +68,35 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // 1. Layer 1: Deterministic Skill Inventory Comparison
+    const candidateSkillsLower = candidate.skills.map((s) => s.name.toLowerCase());
+    
+    // Clean up JDs text to extract key tech terms
+    const jdWords = allDescriptions.join(' ').toLowerCase().split(/[^a-zA-Z0-9#\-\.+]/).filter(w => w.length > 2);
+    const standardSkillsDict = [
+      'react', 'typescript', 'next.js', 'nextjs', 'node.js', 'nodejs', 'graphql', 'postgresql', 
+      'prisma', 'aws', 'docker', 'kubernetes', 'python', 'go', 'rust', 'system design', 
+      'agile', 'scrum', 'ci/cd', 'terraform', 'redis', 'tailwindcss', 'jest', 'cypress'
+    ];
+    
+    const jdSkills = Array.from(new Set(jdWords.filter(w => standardSkillsDict.includes(w))));
+    const deterministicMissing = jdSkills.filter(s => !candidateSkillsLower.includes(s));
+    
+    // Normalize casing for display
+    const normalizedMissing = deterministicMissing.map(s => {
+      if (s === 'nextjs' || s === 'next.js') return 'Next.js';
+      if (s === 'nodejs' || s === 'node.js') return 'Node.js';
+      if (s === 'postgresql') return 'PostgreSQL';
+      if (s === 'tailwindcss') return 'Tailwind CSS';
+      if (s === 'redis') return 'Redis';
+      if (s === 'aws') return 'AWS';
+      if (s === 'graphql') return 'GraphQL';
+      return s.charAt(0).toUpperCase() + s.slice(1);
+    });
+
+    const gapPercent = normalizedMissing.length / Math.max(jdSkills.length, 1);
+    const deterministicGapLevel = gapPercent > 0.5 ? 'high' : gapPercent > 0.25 ? 'medium' : 'low';
+
     const profileSkills = candidate.skills.map((s) => s.name).join(', ') || 'None listed';
     const rawContent = candidate.profileData[0]?.content as Record<string, unknown> | null | undefined;
     let resumeText = 'Not available';
@@ -75,62 +104,83 @@ export async function POST(request: NextRequest) {
       resumeText = typeof rawContent.text === 'string' ? rawContent.text : JSON.stringify(rawContent);
     }
 
-    const result = await callLLM(
-      [
-        {
-          role: 'user',
-          content: `Identify skill gaps between a candidate's profile and their target job descriptions.
-
-## Candidate Skills
-${profileSkills}
-
-## Resume Summary
-${resumeText.slice(0, 2000)}
-
-## Target Job Descriptions
-${allDescriptions.slice(0, 5).join('\n\n---\n\n').slice(0, 3000)}
-
-Return ONLY valid JSON (no markdown fences):
-{
-  "missingSkills": ["skill1", "skill2", "skill3", "skill4", "skill5"],
-  "gapLevel": "low|medium|high",
-  "recommendations": [
-    "Specific, actionable recommendation 1",
-    "Specific, actionable recommendation 2",
-    "Specific, actionable recommendation 3"
-  ]
-}
-
-missingSkills: top 5 skills in the JDs not found in the profile.
-gapLevel: low (<30% gap), medium (30-60%), high (>60%).
-recommendations: concrete steps to close the gaps.`,
-        },
-      ],
-      {
-        systemPrompt:
-          'You are a career skills analyst. Identify genuine, specific skill gaps — not vague platitudes. Return valid JSON only.',
-        maxTokens: 600,
-        temperature: 0.3,
-      }
-    );
-
-    const rawResponse = result.content.trim();
-    const fenceMatch = rawResponse.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
-    const jsonText = fenceMatch ? fenceMatch[1] : rawResponse;
-
-    let parsed: Record<string, unknown>;
+    // 2. Layer 2: Best-Effort AI Gap Prioritization
     try {
-      parsed = JSON.parse(jsonText);
-    } catch {
-      console.error('[skill-gaps] Failed to parse LLM JSON:', jsonText.slice(0, 200));
-      return NextResponse.json({ missingSkills: [], gapLevel: 'low', recommendations: [] });
-    }
+      const result = await callLLM(
+        [
+          {
+            role: 'user',
+            content: `Identify and prioritize skill gaps between a candidate's profile and their target job descriptions.
+  
+  ## Candidate Skills
+  ${profileSkills}
+  
+  ## Resume Summary
+  ${resumeText.slice(0, 2000)}
+  
+  ## Deterministically Missing Core Skills
+  ${normalizedMissing.join(', ')}
+  
+  ## Target Job Descriptions
+  ${allDescriptions.slice(0, 5).join('\n\n---\n\n').slice(0, 3000)}
+  
+  Return ONLY valid JSON (no markdown fences):
+  {
+    "prioritizedMissingSkills": ["skill1", "skill2", "skill3"],
+    "recommendations": [
+      "Specific, actionable learning recommendation 1",
+      "Specific, actionable recommendation 2",
+      "Specific, actionable recommendation 3"
+    ]
+  }
+  
+  prioritizedMissingSkills: the top 5 highest value skills to learn next, ordered by priority.
+  recommendations: concrete professional actions/courses to close these gaps.`,
+          },
+        ],
+        {
+          systemPrompt:
+            'You are a career skills analyst. Prioritize core gaps and write high-impact learning strategies. Return valid JSON only.',
+          maxTokens: 600,
+          temperature: 0.3,
+        }
+      );
 
-    return NextResponse.json({
-      missingSkills: Array.isArray(parsed.missingSkills) ? parsed.missingSkills.slice(0, 5) : [],
-      gapLevel: ['low', 'medium', 'high'].includes(parsed.gapLevel as string) ? parsed.gapLevel : 'low',
-      recommendations: Array.isArray(parsed.recommendations) ? parsed.recommendations.slice(0, 3) : [],
-    });
+      const rawResponse = result.content.trim();
+      const fenceMatch = rawResponse.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+      const jsonText = fenceMatch ? fenceMatch[1] : rawResponse;
+      const parsed = JSON.parse(jsonText);
+
+      return NextResponse.json({
+        missingSkills: Array.isArray(parsed.prioritizedMissingSkills)
+          ? parsed.prioritizedMissingSkills.slice(0, 5)
+          : normalizedMissing.slice(0, 5),
+        gapLevel: deterministicGapLevel,
+        recommendations: Array.isArray(parsed.recommendations) ? parsed.recommendations.slice(0, 3) : [],
+        source: 'ai',
+        confidence: 'high'
+      });
+    } catch (aiErr) {
+      console.warn('[skill-gaps] AI prioritization failed. Activating degraded mode fallback:', aiErr);
+      
+      // Fallback: fail-open gracefully to Layer 1 deterministic baseline with fallback recommendations
+      const defaultRecommendations = normalizedMissing.slice(0, 3).map((skill) => (
+        `Review resources and build a sandbox project demonstrating your ${skill} capability.`
+      ));
+
+      if (defaultRecommendations.length === 0) {
+        defaultRecommendations.push('Add target job descriptions to identify structural skill gaps.');
+      }
+
+      return NextResponse.json({
+        missingSkills: normalizedMissing.slice(0, 5),
+        gapLevel: deterministicGapLevel,
+        recommendations: defaultRecommendations,
+        source: 'fallback',
+        confidence: 'low',
+        reason: 'AI prioritization service offline. Displaying local deterministic catalog gaps.'
+      });
+    }
   } catch (error) {
     console.error('[skill-gaps] Error:', error);
     return NextResponse.json(

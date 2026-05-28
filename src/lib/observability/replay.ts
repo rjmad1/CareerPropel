@@ -42,6 +42,8 @@ const SIDE_EFFECT_AGENT_TYPES = new Set([
 
 // ── Assessment ─────────────────────────────────────────────────────────────
 
+// ── Assessment ─────────────────────────────────────────────────────────────
+
 export async function assessReplayEligibility(executionId: string): Promise<ReplayAssessment> {
   const execution = await prisma.agentExecution.findUnique({
     where: { id: executionId },
@@ -72,19 +74,36 @@ export async function assessReplayEligibility(executionId: string): Promise<Repl
   }
 
   // Only terminal states can be replayed
-  if (execution.status !== 'failed') {
-    reasons.push(`Execution is in state "${execution.status}" — only failed executions can be replayed`);
+  if (execution.status !== 'failed' && execution.status !== 'completed') {
+    reasons.push(`Execution is in state "${execution.status}" — only terminal executions can be replayed`);
+  }
+
+  // Check event gap and sequence integrity in the ledger
+  const ledgerEvents = await prisma.executionEventLedger.findMany({
+    where: { executionId },
+    orderBy: { timestamp: 'asc' },
+  });
+
+  if (ledgerEvents.length === 0) {
+    reasons.push('No event sequence found in durable ledger for this execution (possible gap/loss)');
+  } else {
+    // Assert sequence ordering: pickup must occur before completed/failed
+    const pickupIdx = ledgerEvents.findIndex(e => e.eventType === 'execution:worker_pickup');
+    const termIdx = ledgerEvents.findIndex(e => ['execution:completed', 'execution:failed'].includes(e.eventType));
+    if (pickupIdx !== -1 && termIdx !== -1 && termIdx < pickupIdx) {
+      reasons.push('Ledger sequence violation: terminal event preceding worker pickup');
+    }
   }
 
   // Extract failure classification from last ERROR log
   const lastError = execution.eventLogs[0];
   const logMeta   = lastError?.metadata as Record<string, unknown> | null | undefined;
   const failureType = (logMeta?.failureType as string) ?? null;
-  const retryable   = failureType
+  const retryable   = execution.status === 'failed'
     ? (classifyError(new Error(execution.errorMessage ?? ''), {}).retryable)
     : false;
 
-  if (!retryable) {
+  if (execution.status === 'failed' && !retryable) {
     reasons.push(`Failure type "${failureType ?? 'unknown'}" is not retryable`);
   }
 
@@ -94,12 +113,17 @@ export async function assessReplayEligibility(executionId: string): Promise<Repl
     reasons.push(`Agent type "${execution.agentType}" may trigger external side effects — manual review required`);
   }
 
-  // Prior replay count (tracked in metadata)
-  const meta            = execution.metadata as Record<string, unknown> | null | undefined;
-  const priorReplayCount = Number(meta?.replayCount ?? 0);
+  // Prior replay count (tracked in durable event ledger instead of metadata)
+  const replayEvents = await prisma.executionEventLedger.findMany({
+    where: {
+      executionId,
+      eventType: 'execution:replay',
+    },
+  });
+  const priorReplayCount = replayEvents.length;
   const duplicateRisk    = priorReplayCount > 0;
   if (duplicateRisk) {
-    reasons.push(`Execution has been replayed ${priorReplayCount} time(s) — duplicate risk`);
+    reasons.push(`Execution has been replayed ${priorReplayCount} time(s) via event ledger`);
   }
 
   // Sanitized input keys (surface what's in the payload without the values)
@@ -113,7 +137,9 @@ export async function assessReplayEligibility(executionId: string): Promise<Repl
 
   // Determine eligibility
   let eligibility: ReplayEligibility;
-  if (execution.status !== 'failed' || !retryable) {
+  if (execution.status !== 'failed' && execution.status !== 'completed') {
+    eligibility = 'ineligible';
+  } else if (execution.status === 'failed' && !retryable) {
     eligibility = 'ineligible';
   } else if (sideEffectRisk || duplicateRisk) {
     eligibility = 'conditional'; // requires manual operator approval
@@ -135,24 +161,26 @@ export async function assessReplayEligibility(executionId: string): Promise<Repl
   };
 }
 
-/** Increment the replay counter on the execution record */
+/** Record replay action to the durable append-only event ledger */
 export async function markReplayed(executionId: string) {
   const execution = await prisma.agentExecution.findUnique({
     where: { id: executionId },
-    select: { metadata: true },
+    select: { correlationId: true },
   });
 
-  const meta            = (execution?.metadata as Record<string, unknown>) ?? {};
-  const priorReplayCount = Number(meta.replayCount ?? 0);
+  const correlationId = execution?.correlationId || null;
 
-  await prisma.agentExecution.update({
-    where: { id: executionId },
+  // Insert replay event to ledger
+  await prisma.executionEventLedger.create({
     data: {
-      metadata: {
-        ...meta,
-        replayCount:  priorReplayCount + 1,
-        lastReplayAt: new Date().toISOString(),
-      },
+      eventId: `ev_ledg_rep_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      executionId,
+      eventType: 'execution:replay',
+      payload: { timestamp: new Date().toISOString() },
+      correlationId,
+      replayable: false,
+      sourceRuntime: 'api-replay',
     },
   });
 }
+

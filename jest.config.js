@@ -18,6 +18,9 @@ const customConfig = {
     // Integration tests require live DB/Redis — run via test:integration
     '/src/__tests__/integration/',
   ],
+  transformIgnorePatterns: [
+    '/node_modules/(?!(msgpackr|msgpackr-extract)/)',
+  ],
   // collectCoverageFrom: Intentional allowlist — phased coverage rollout.
   // Currently covers: security primitives (apiKey, csrfToken, rbac, objectGuards, sanitizeContent),
   // safety utilities, scoring engine, navigation helpers, validation schemas, and API error classes.

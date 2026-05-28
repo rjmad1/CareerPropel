@@ -16,6 +16,7 @@
 
 import { AnyWebSocketMessage } from '@/types/agent';
 import { emitNavigationEvent } from '@/lib/navigation/analytics';
+import { realtimeEventUnionSchema } from '@/contracts/events/realtime';
 
 // SSE event types the server emits
 const SSE_EVENT_TYPES = [
@@ -89,7 +90,14 @@ function getOrCreateConnection(endpoint: string): SseConnection {
     es.addEventListener(type, (e: MessageEvent) => {
       try {
         const data = JSON.parse(e.data);
-        const msg = { type, data } as unknown as AnyWebSocketMessage;
+        const eventObject = { type, ...data };
+        // Enforce runtime validation at client boundary
+        const validated = realtimeEventUnionSchema.safeParse(eventObject);
+        if (!validated.success) {
+          console.warn('[SSE Manager] Client received malformed realtime event ignored:', validated.error.message, eventObject);
+          return;
+        }
+        const msg = { type, data: validated.data } as unknown as AnyWebSocketMessage;
         handlers.get(type)?.forEach((h) => {
           try { h(msg); } catch { /* handler error must not break SSE loop */ }
         });

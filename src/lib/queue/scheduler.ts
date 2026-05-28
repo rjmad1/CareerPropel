@@ -5,6 +5,7 @@ import { getExecutionQueue, getDeadLetterQueue } from '@/lib/queue/queues';
 import { prisma } from '@/lib/db';
 import { publishRealtimeEvent } from '@/lib/queue/events';
 import { CANONICAL_WORKERS } from '@/lib/queue/health';
+import crypto from 'crypto';
 
 const schedulerLogger = createLogger({ component: 'scheduler' });
 const schedulerConnection = createRedisClient('career-propel:scheduler');
@@ -257,6 +258,91 @@ async function failOrphanExecution(
   });
 }
 
+let isLeader = false;
+let leadershipInterval: NodeJS.Timeout | null = null;
+const schedulerInstanceId = `sched-node-${crypto.randomUUID()}`;
+const SCHEDULER_LOCK_ID = 1234567890; // Bigint for PostgreSQL advisory lock
+
+async function acquireOrRenewLeadership() {
+  try {
+    if (isLeader) {
+      // Just check that connection to DB is alive
+      await prisma.$queryRaw`SELECT 1`;
+      return;
+    }
+
+    const result = await prisma.$queryRaw<Array<{ pg_try_advisory_lock: boolean }>>`SELECT pg_try_advisory_lock(${SCHEDULER_LOCK_ID})`;
+    const acquired = result?.[0]?.pg_try_advisory_lock === true;
+
+    if (acquired) {
+      promoteToLeader();
+    }
+  } catch (error) {
+    schedulerLogger.error({ err: error }, 'Leadership election PostgreSQL advisory lock failed');
+    if (isLeader) {
+      demoteLeader('Database connection failure');
+    }
+  }
+}
+
+function promoteToLeader() {
+  isLeader = true;
+  schedulerLogger.info(
+    { instanceId: schedulerInstanceId },
+    'Scheduler node promoted to LEADER via PostgreSQL Advisory Lock. Activating loops.'
+  );
+
+  if (!cleanupTimer) {
+    cleanupTimer = setInterval(async () => {
+      if (!isLeader) return;
+      try {
+        const queue = getExecutionQueue();
+        await queue.clean(24 * 60 * 60 * 1000, 1000, 'completed');
+        await queue.clean(7 * 24 * 60 * 60 * 1000, 1000, 'failed');
+
+        // Trigger Event Ledger Lifecycle Policy Sweep autonomously
+        const { runEventLedgerLifecycleSweep } = await import('@/lib/runtime/ledger');
+        await runEventLedgerLifecycleSweep();
+      } catch (err) {
+        schedulerLogger.error({ err }, 'Error during completed/failed jobs clean-up and ledger lifecycle sweep');
+      }
+    }, runtimeSettings.schedulerCleanupIntervalMs);
+  }
+
+
+  if (!reconciliationTimer) {
+    reconciliationTimer = setInterval(async () => {
+      if (!isLeader) return;
+      await reconcileOrphanExecutions();
+      await auditQueueAndWorkerHealth();
+    }, 60 * 1000);
+  }
+
+  void reconcileOrphanExecutions().catch((err) => {
+    schedulerLogger.error({ err }, 'Initial post-promotion reconciliation failed');
+  });
+  void auditQueueAndWorkerHealth().catch((err) => {
+    schedulerLogger.error({ err }, 'Initial post-promotion health audit failed');
+  });
+}
+
+function demoteLeader(reason: string) {
+  isLeader = false;
+  schedulerLogger.warn(
+    { instanceId: schedulerInstanceId, reason },
+    'Scheduler node DEMOTED from leader. Suspending loops.'
+  );
+
+  if (cleanupTimer) {
+    clearInterval(cleanupTimer);
+    cleanupTimer = null;
+  }
+  if (reconciliationTimer) {
+    clearInterval(reconciliationTimer);
+    reconciliationTimer = null;
+  }
+}
+
 export async function startQueueScheduler() {
   if (!scheduler) {
     scheduler = {
@@ -270,50 +356,37 @@ export async function startQueueScheduler() {
   await scheduler.waitUntilReady();
   schedulerLogger.info(
     {
+      instanceId: schedulerInstanceId,
       executionQueueName: runtimeSettings.executionQueueName,
-      workerHeartbeatSeconds: runtimeSettings.workerHeartbeatSeconds,
     },
-    'Scheduler runtime ready'
+    'Scheduler process initialized. Starting leadership election loop.'
   );
 
-  // Completed/failed jobs clean-up loop
-  if (!cleanupTimer) {
-    cleanupTimer = setInterval(async () => {
-      const queue = getExecutionQueue();
-      await queue.clean(24 * 60 * 60 * 1000, 1000, 'completed');
-      await queue.clean(7 * 24 * 60 * 60 * 1000, 1000, 'failed');
-    }, runtimeSettings.schedulerCleanupIntervalMs);
+  await acquireOrRenewLeadership();
+  if (!leadershipInterval) {
+    leadershipInterval = setInterval(async () => {
+      await acquireOrRenewLeadership();
+    }, 3000);
   }
-
-  // Periodic stuck/orphaned execution recovery & health audit loop (run every 1 minute)
-  if (!reconciliationTimer) {
-    reconciliationTimer = setInterval(async () => {
-      await reconcileOrphanExecutions();
-      await auditQueueAndWorkerHealth();
-    }, 60 * 1000);
-  }
-
-  // Run initial reconciliation and health audit on boot
-  void reconcileOrphanExecutions().catch((err) => {
-    schedulerLogger.error({ err }, 'Initial post-boot reconciliation failed');
-  });
-  void auditQueueAndWorkerHealth().catch((err) => {
-    schedulerLogger.error({ err }, 'Initial post-boot health audit failed');
-  });
 
   return scheduler;
 }
 
 export async function closeQueueScheduler() {
-  if (cleanupTimer) {
-    clearInterval(cleanupTimer);
-    cleanupTimer = null;
+  if (leadershipInterval) {
+    clearInterval(leadershipInterval);
+    leadershipInterval = null;
   }
-  if (reconciliationTimer) {
-    clearInterval(reconciliationTimer);
-    reconciliationTimer = null;
+
+  demoteLeader('Scheduler shutdown initiated');
+
+  try {
+    await prisma.$queryRaw`SELECT pg_advisory_unlock(${SCHEDULER_LOCK_ID})`;
+  } catch (err) {
+    // ignore lock release errors on shutdown
   }
 
   await Promise.all([scheduler?.close(), disconnectRedisClient(schedulerConnection)]);
   scheduler = null;
 }
+

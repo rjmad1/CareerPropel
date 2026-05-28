@@ -4,6 +4,7 @@ import { createLogger } from '@/lib/logging/logger';
 import { startExecutionWorker } from '@/lib/queue/workers';
 import { registerGracefulShutdown } from '@/lib/runtime/shutdown';
 import { startWorkerHeartbeat } from '@/lib/queue/health';
+import { enforceStartupGates } from '@/lib/runtime/startup-validator';
 import {
   createDiscoveryWorker,
   createEnrichmentWorker,
@@ -25,6 +26,9 @@ Sentry.init({
 const workerLogger = createLogger({ runtime: 'worker' });
 
 async function main() {
+  // Enforce startup gates
+  await enforceStartupGates();
+
   // Start worker heartbeats
   const stopExecutionHb = startWorkerHeartbeat('execution-worker');
   const stopDiscoveryHb = startWorkerHeartbeat('networking-discovery');

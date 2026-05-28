@@ -1,0 +1,38 @@
+[
+  {
+    "id": "bench_res_1",
+    "name": "Jane Doe (Senior React Engineer)",
+    "text": "Jane Doe | Senior Software Engineer\nemail: jane.doe@example.com\nSummary: High-impact Frontend Specialist with 6 years experience optimizing React and TypeScript web architectures.\nTechnical Skills: React, TypeScript, Next.js, Redux, Tailwind CSS, Jest, AWS, GraphQL.\nExperience:\n- TechCorp Solutions (2023 - Present) | Senior Frontend Engineer\n  * Led migration of 12 internal projects to Next.js, reducing dashboard interaction latency by 320ms.\n  * Optimized React rendering pipeline, boosting Lighthouse speed index by 24%.\nEducation:\n- University of Tech | Bachelor of Science in Computer Science | GPA: 3.9\nCertifications:\n- AWS Certified Solutions Architect",
+    "expectedSkills": ["react", "typescript", "next.js", "redux", "tailwind css", "jest", "aws", "graphql"],
+    "expectedAchievements": [
+      "Led migration of 12 internal projects to Next.js, reducing dashboard interaction latency by 320ms.",
+      "Optimized React rendering pipeline, boosting Lighthouse speed index by 24%."
+    ],
+    "expectedEducationsCount": 1,
+    "expectedCertificationsCount": 1
+  },
+  {
+    "id": "bench_res_2",
+    "name": "Bob Smith (Full Stack Developer)",
+    "text": "Bob Smith | Software Engineer\nSummary: Resilient Full Stack Developer skilled in Node.js, Express, PostgreSQL, and Docker.\nTechnical Skills: Node.js, Express, PostgreSQL, Prisma, Docker, Kubernetes, Python.\nExperience:\n- CloudScale Systems (2022 - Present) | Software Developer\n  * Mapped database indexes in PostgreSQL, reducing API endpoint query execution times by 45%.\n  * Automated deployment configurations in Kubernetes clusters.\nEducation:\n- State College | Computer Science Coursework",
+    "expectedSkills": ["node.js", "express", "postgresql", "prisma", "docker", "kubernetes", "python"],
+    "expectedAchievements": [
+      "Mapped database indexes in PostgreSQL, reducing API endpoint query execution times by 45%.",
+      "Automated deployment configurations in Kubernetes clusters."
+    ],
+    "expectedEducationsCount": 1,
+    "expectedCertificationsCount": 0
+  },
+  {
+    "id": "bench_res_3",
+    "name": "Alice Johnson (Data Engineer)",
+    "text": "Alice Johnson | Lead Data Engineer\nSummary: Passionate Data Engineer with 8 years experience building large scale ETL pipelines and analytics clusters.\nTechnical Skills: Python, SQL, Apache Spark, Snowflake, Airflow, DBT, AWS.\nExperience:\n- AnalyticsCorp (2021 - Present) | Lead Data Engineer\n  * Built real-time Apache Spark ETL pipeline handling 50M+ daily events, saving $12,000 in monthly compute costs.\n  * Restructured Snowflake warehouse clusters, accelerating operational report generation speeds by 3.5x.\nEducation:\n- University of Engineering | Master of Science in Data Science\nCertifications:\n- AWS Certified Big Data Specialty",
+    "expectedSkills": ["python", "sql", "apache spark", "snowflake", "airflow", "dbt", "aws"],
+    "expectedAchievements": [
+      "Built real-time Apache Spark ETL pipeline handling 50M+ daily events, saving $12,000 in monthly compute costs.",
+      "Restructured Snowflake warehouse clusters, accelerating operational report generation speeds by 3.5x."
+    ],
+    "expectedEducationsCount": 1,
+    "expectedCertificationsCount": 1
+  }
+]

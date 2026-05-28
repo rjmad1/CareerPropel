@@ -9,6 +9,7 @@ import {
   storeIdempotency,
 } from './idempotency';
 import { enqueueExecution } from './queues';
+import { evaluateAdmission } from './admission-control';
 
 export async function enqueueAgentExecution(
   agentType: string,
@@ -23,6 +24,15 @@ export async function enqueueAgentExecution(
   if (existing) {
     log.info({ executionId: existing, agentType, userId }, 'Returning existing execution (idempotency hit)');
     return existing;
+  }
+
+  // Enforce Queue Admission Control
+  const admission = await evaluateAdmission(userId, agentType);
+  if (!admission.allowed) {
+    throw Object.assign(
+      new Error(`Admission Control Rejected: ${admission.reason}`),
+      { code: 'ADMISSION_REJECTED' }
+    );
   }
 
   // Cost ceiling validation before creating any DB record

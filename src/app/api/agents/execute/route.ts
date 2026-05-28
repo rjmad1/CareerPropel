@@ -27,14 +27,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
-import { AgentType } from '@/lib/agents/prompts/prompts';
 import { getCurrentUser } from '@/app/api/middleware/auth';
-import { appendExecutionLog } from '@/lib/agents/core/store';
 import { createLogger } from '@/lib/logging/logger';
 import { createRateLimiter } from '@/lib/middleware/rateLimiter';
-import { publishRealtimeEvent } from '@/lib/queue/events';
 import { sanitizeQueuePayload } from '@/lib/queue/payload';
-import { enqueueExecution } from '@/lib/queue/queues';
+import { enqueueAgentExecution } from '@/lib/queue/enqueue';
+
+import { agentExecuteRequestSchema } from '@/contracts/api/execute';
 
 const routeLogger = createLogger({ route: '/api/agents/execute' });
 const executeRateLimiter = createRateLimiter(20, 60);
@@ -46,37 +45,16 @@ export async function POST(request: NextRequest) {
       return rateLimited;
     }
 
-    // Parse request body
+    // Parse and validate request body via centralized Zod contract
     const body = await request.json();
-    const { agentType, context, jobId } = body as {
-      agentType: AgentType;
-      context: Record<string, string | undefined>;
-      jobId?: string;
-    };
-
-    // Validate input
-    if (!agentType) {
+    const parsed = agentExecuteRequestSchema.safeParse(body);
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: 'agentType is required' },
+        { error: parsed.error.errors[0]?.message || 'Invalid request body' },
         { status: 400 }
       );
     }
-
-    const validAgentTypes: AgentType[] = [
-      'resume-tailor',
-      'job-match',
-      'interview-prep',
-      'research',
-      'follow-up',
-      'networking',
-    ];
-
-    if (!validAgentTypes.includes(agentType)) {
-      return NextResponse.json(
-        { error: `Invalid agentType. Must be one of: ${validAgentTypes.join(', ')}` },
-        { status: 400 }
-      );
-    }
+    const { agentType, context, jobId } = parsed.data;
 
     const currentUser = await getCurrentUser(request);
     const userId =
@@ -91,160 +69,48 @@ export async function POST(request: NextRequest) {
       string | undefined
     >;
 
-    // Feature flag: route to BullMQ queue or legacy cron path
-    const useQueue = process.env.QUEUE_EXECUTION_ENABLED === 'true';
-
-    if (useQueue) {
-      try {
-        const execution = await prisma.agentExecution.create({
-          data: {
-            userId,
-            jobId,
-            agentType,
-            status: 'queued',
-            input: JSON.stringify(sanitizedContext || {}),
-            requestId,
-            correlationId,
-            metadata: {
-              requestId,
-              correlationId,
-              executionModel: 'bullmq',
-            },
-          },
-        });
-
-        routeLogger.info(
-          {
-            executionId: execution.id,
-            userId,
-            agentType,
-            requestId,
-            correlationId,
-          },
-          'Agent execution row created in database'
-        );
-
-        const job = await enqueueExecution({
-          executionId: execution.id,
-          agentType,
-          userId,
-          promptContext: sanitizedContext,
-          requestId: requestId || `req-${Date.now()}`,
-          correlationId: correlationId || `corr-${Date.now()}`,
-          submittedAt: new Date().toISOString(),
-          jobId,
-        });
-
-        routeLogger.info(
-          {
-            executionId: execution.id,
-            queueJobId: job.id,
-            userId,
-            agentType,
-            requestId,
-            correlationId,
-          },
-          'Agent execution enqueued'
-        );
-
-        await prisma.agentExecution.update({
-          where: { id: execution.id },
-          data: {
-            queueJobId: String(job.id),
-          },
-        });
-
-        return NextResponse.json({
-          executionId: execution.id,
-          queueJobId: job.id,
-          status: 'queued',
-          message: 'Agent execution queued for processing',
-        }, { status: 202 });
-      } catch (enqueueErr: unknown) {
-        const e = enqueueErr as { code?: string; message?: string };
-        if (e?.code === 'COST_CEILING_EXCEEDED') {
-          return NextResponse.json({ error: e.message }, { status: 400 });
-        }
-        throw enqueueErr; // let outer catch handle unexpected errors
-      }
-    }
-
-    // ── Legacy cron path ────────────────────────────────────────────────────
-    const execution = await prisma.agentExecution.create({
-      data: {
-        userId,
-        jobId,
+    try {
+      const executionId = await enqueueAgentExecution(
         agentType,
-        status: 'queued',
-        input: JSON.stringify(sanitizedContext || {}),
-        requestId,
-        correlationId,
-        metadata: {
+        userId,
+        { ...sanitizedContext, jobId, requestId, correlationId },
+        request.headers.get('x-idempotency-key') || undefined
+      );
+
+      // Fetch the enqueued execution to retrieve its queueJobId
+      const execution = await prisma.agentExecution.findUnique({
+        where: { id: executionId },
+        select: { queueJobId: true },
+      });
+
+      routeLogger.info(
+        {
+          executionId,
+          queueJobId: execution?.queueJobId || null,
+          userId,
+          agentType,
           requestId,
           correlationId,
-          executionModel: 'bullmq',
         },
-      },
-    });
+        'Agent execution successfully routed and enqueued'
+      );
 
-    await appendExecutionLog(
-      execution.id,
-      userId,
-      agentType,
-      'INFO',
-      `Agent execution queued: ${agentType}`,
-      { agentType, userId, requestId, correlationId }
-    );
-
-    const job = await enqueueExecution({
-      executionId: execution.id,
-      userId,
-      agentType,
-      promptContext: sanitizedContext,
-      requestId,
-      correlationId,
-      submittedAt: new Date().toISOString(),
-      jobId,
-    });
-
-    await prisma.agentExecution.update({
-      where: { id: execution.id },
-      data: {
-        queueJobId: String(job.id),
-      },
-    });
-
-    await publishRealtimeEvent(userId, {
-      type: 'execution:queued',
-      executionId: execution.id,
-      userId,
-      agentType,
-      status: 'queued',
-      currentTask: `Queued ${agentType}`,
-      correlationId,
-      requestId,
-      queueJobId: String(job.id),
-      timestamp: new Date().toISOString(),
-    });
-
-    routeLogger.info(
-      {
-        executionId: execution.id,
-        queueJobId: job.id,
-        userId,
-        agentType,
-        requestId,
-        correlationId,
-      },
-      'Agent execution enqueued'
-    );
-
-    return NextResponse.json({
-      executionId: execution.id,
-      queueJobId: job.id,
-      status: 'queued',
-      message: 'Agent execution queued for processing',
-    });
+      return NextResponse.json({
+        executionId,
+        queueJobId: execution?.queueJobId || null,
+        status: 'queued',
+        message: 'Agent execution queued for processing',
+      }, { status: 202 });
+    } catch (enqueueErr: unknown) {
+      const e = enqueueErr as { code?: string; message?: string };
+      if (e?.code === 'COST_CEILING_EXCEEDED') {
+        return NextResponse.json({ error: e.message }, { status: 400 });
+      }
+      if (e?.code === 'ADMISSION_REJECTED') {
+        return NextResponse.json({ error: e.message }, { status: 429 });
+      }
+      throw enqueueErr;
+    }
   } catch (error) {
     routeLogger.error({ err: error }, 'Failed to enqueue agent execution');
     return NextResponse.json(

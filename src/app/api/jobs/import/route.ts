@@ -26,9 +26,13 @@ const ImportSchema = z.object({
  * Save scraped jobs as JobImport staging records and immediately
  * create Job pipeline entries for each.
  */
+import { trackFunnelEvent } from '@/lib/observability/funnel';
+
 export async function POST(request: NextRequest) {
   try {
     const { userEmail } = await getAuthContext();
+
+    await trackFunnelEvent(userEmail, 'job', 'import', 'started');
 
     const candidate = await prisma.candidate.findUniqueOrThrow({
       where: { email: userEmail },
@@ -73,8 +77,16 @@ export async function POST(request: NextRequest) {
       created.push(job.id);
     }
 
+    await trackFunnelEvent(userEmail, 'job', 'import', 'completed', { count: created.length });
+
     return successResponse({ imported: created.length, jobIds: created });
   } catch (error) {
+    try {
+      const { userEmail } = await getAuthContext();
+      if (userEmail) {
+        await trackFunnelEvent(userEmail, 'job', 'import', 'failed', { error: error instanceof Error ? error.message : String(error) });
+      }
+    } catch {}
     return errorResponse(error);
   }
 }

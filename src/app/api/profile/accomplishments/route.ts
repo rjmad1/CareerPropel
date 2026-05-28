@@ -43,12 +43,16 @@ export async function GET(_request: NextRequest) {
  * POST /api/profile/accomplishments
  * Create a new accomplishment log.
  */
+import { trackFunnelEvent } from '@/lib/observability/funnel';
+
 export async function POST(request: NextRequest) {
   try {
     const { userEmail } = await getAuthContext();
     if (!userEmail) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
+
+    await trackFunnelEvent(userEmail, 'appraisal', 'capture', 'started');
 
     const candidate = await prisma.candidate.findUnique({
       where: { email: userEmail },
@@ -82,9 +86,17 @@ export async function POST(request: NextRequest) {
       },
     });
 
+    await trackFunnelEvent(userEmail, 'appraisal', 'capture', 'completed');
+
     return NextResponse.json({ accomplishment }, { status: 201 });
   } catch (error) {
     console.error('Error creating accomplishment:', error);
+    try {
+      const { userEmail } = await getAuthContext();
+      if (userEmail) {
+        await trackFunnelEvent(userEmail, 'appraisal', 'capture', 'failed', { error: error instanceof Error ? error.message : String(error) });
+      }
+    } catch {}
     return NextResponse.json(
       { error: 'Failed to create accomplishment' },
       { status: 500 }

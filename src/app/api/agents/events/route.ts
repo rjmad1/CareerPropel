@@ -6,7 +6,7 @@
 
 import { NextRequest } from 'next/server';
 import { getAuthContext } from '@/lib/middleware/auth';
-import { subscribeToUser, keepAliveConnection } from '@/lib/realtime/sharedSubscriber';
+import { subscribeToUser, keepAliveConnection, getBufferedEventsForUser } from '@/lib/realtime/sharedSubscriber';
 import { createLogger } from '@/lib/logging/logger';
 
 const sseLogger = createLogger({ component: 'agents-events-sse' });
@@ -17,6 +17,7 @@ const HEARTBEAT_MS = 25_000;
 
 export async function GET(_request: NextRequest) {
   const { userEmail } = await getAuthContext();
+  const lastEventId = _request.headers.get('last-event-id') || _request.nextUrl.searchParams.get('lastEventId');
 
   const encoder = new TextEncoder();
 
@@ -53,6 +54,21 @@ export async function GET(_request: NextRequest) {
 
       // Send initial empty snapshot (realtime updates arrive via Redis pub/sub)
       send('snapshot', {});
+
+      // Last-Event-ID recovery replay for client reconnections
+      if (lastEventId) {
+        try {
+          const missedEvents = getBufferedEventsForUser(userEmail, lastEventId);
+          if (missedEvents.length > 0) {
+            sseLogger.info({ userEmail, lastEventId, count: missedEvents.length }, 'Replaying missed SSE events from reconnect buffer');
+            for (const ev of missedEvents) {
+              send(ev.type, ev);
+            }
+          }
+        } catch (replayErr) {
+          sseLogger.warn({ userEmail, lastEventId, err: replayErr }, 'Failed to replay missed SSE events');
+        }
+      }
 
       try {
         unsubscribe = await subscribeToUser(userEmail, (event) => {

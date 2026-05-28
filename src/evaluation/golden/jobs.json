@@ -1,0 +1,47 @@
+[
+  {
+    "id": "bench_job_1",
+    "title": "Senior Frontend Developer",
+    "description": "Looking for a Senior React Developer who has deep expertise in TypeScript, React, Next.js, and CSS frameworks like Tailwind. Experience with unit testing using Jest is required. Experience with AWS cloud deployments is a plus.",
+    "expectedAtsScores": {
+      "bench_res_1": 0.95,
+      "bench_res_2": 0.40,
+      "bench_res_3": 0.15
+    },
+    "expectedSkillGaps": {
+      "bench_res_1": [],
+      "bench_res_2": ["react", "next.js", "tailwind css", "jest"],
+      "bench_res_3": ["react", "typescript", "next.js", "tailwind css", "jest"]
+    }
+  },
+  {
+    "id": "bench_job_2",
+    "title": "Lead Backend / Infrastructure Engineer",
+    "description": "Seeking a Senior Software Engineer with strong background in Node.js, PostgreSQL databases, Prisma ORM, Docker containerization, and Kubernetes cluster orchestration. Python experience is highly desirable.",
+    "expectedAtsScores": {
+      "bench_res_1": 0.35,
+      "bench_res_2": 0.92,
+      "bench_res_3": 0.50
+    },
+    "expectedSkillGaps": {
+      "bench_res_1": ["node.js", "postgresql", "prisma", "docker", "kubernetes"],
+      "bench_res_2": [],
+      "bench_res_3": ["node.js", "postgresql", "prisma", "docker", "kubernetes"]
+    }
+  },
+  {
+    "id": "bench_job_3",
+    "title": "Principal Data Engineer",
+    "description": "Looking for a Principal Data Engineer with experience in Python, advanced SQL query design, Apache Spark streaming, Snowflake data warehouses, Airflow workflow scheduling, DBT modeling, and AWS big data services.",
+    "expectedAtsScores": {
+      "bench_res_1": 0.20,
+      "bench_res_2": 0.45,
+      "bench_res_3": 0.96
+    },
+    "expectedSkillGaps": {
+      "bench_res_1": ["python", "sql", "apache spark", "snowflake", "airflow", "dbt"],
+      "bench_res_2": ["apache spark", "snowflake", "airflow", "dbt", "aws"],
+      "bench_res_3": []
+    }
+  }
+]

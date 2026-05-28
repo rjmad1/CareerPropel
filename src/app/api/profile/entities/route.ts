@@ -32,6 +32,8 @@ export async function GET(request: NextRequest) {
   }
 }
 
+import { trackFunnelEvent } from '@/lib/observability/funnel';
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -41,11 +43,24 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'candidateId, type, and content are required' }, { status: 400 });
     }
 
+    const candidate = await prisma.candidate.findUnique({
+      where: { id: candidateId },
+      select: { email: true }
+    });
+
+    if (candidate) {
+      await trackFunnelEvent(candidate.email, 'resume', 'profile', 'started');
+    }
+
     const entity = await prisma.profileData.upsert({
       where: { candidateId_type: { candidateId, type } },
       update: { content },
       create: { candidateId, type, content },
     });
+
+    if (candidate) {
+      await trackFunnelEvent(candidate.email, 'resume', 'profile', 'completed');
+    }
 
     return NextResponse.json(entity, { status: 201 });
   } catch (error) {

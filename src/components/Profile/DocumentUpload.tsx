@@ -3,7 +3,6 @@
 import React, { useState, useRef } from 'react';
 import { DocumentParsingJob } from '@/types/knowledge-graph';
 import { parseDocumentText } from '@/lib/profile/parser';
-import { extractProfileEntities } from '@/lib/profile/extractor';
 import { ProfileEntity } from '@/types/profile';
 
 interface DocumentUploadProps {
@@ -13,7 +12,7 @@ interface DocumentUploadProps {
 
 export const DocumentUpload: React.FC<DocumentUploadProps> = ({
   onEntitiesExtracted,
-  candidateId,
+  candidateId: _candidateId,
 }) => {
   const [dragActive, setDragActive] = useState(false);
   const [job, setJob] = useState<DocumentParsingJob | null>(null);
@@ -107,14 +106,37 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
 
       await new Promise((resolve) => setTimeout(resolve, 600));
 
-      const source = file.name.endsWith('.json') ? 'linkedin' : 'resume';
-      const extracted = extractProfileEntities(parsedText, source, candidateId);
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      const extractRes = await fetch('/api/profile/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      if (!extractRes.ok) {
+        throw new Error('AI semantic entity extraction failed.');
+      }
+      const extractData = await extractRes.json();
+      const extracted = extractData.entities as ProfileEntity[];
+
       const avgConfidence = parseFloat(
         (extracted.reduce((sum, e) => sum + e.confidence, 0) / Math.max(extracted.length, 1)).toFixed(2)
       );
 
+      const isFallback = extractData.source === 'fallback';
+
       setJob((prev) => {
         if (!prev) return null;
+        const finalLogs = [
+          ...prev.logs,
+          {
+            timestamp: new Date().toLocaleTimeString(),
+            level: (isFallback ? 'warn' : 'success') as 'warn' | 'success',
+            message: isFallback
+              ? 'AI provider offline. Degraded to local deterministic extraction baseline.'
+              : `Successfully extracted ${extracted.length} semantic entities! (Average Confidence: ${avgConfidence * 100}%)`
+          }
+        ];
         return {
           ...prev,
           status: 'completed',
@@ -122,14 +144,7 @@ export const DocumentUpload: React.FC<DocumentUploadProps> = ({
           confidenceScore: avgConfidence,
           entitiesExtracted: extracted.length,
           completedAt: new Date().toISOString(),
-          logs: [
-            ...prev.logs,
-            {
-              timestamp: new Date().toLocaleTimeString(),
-              level: 'success',
-              message: `Successfully extracted ${extracted.length} semantic entities! (Average Confidence: ${avgConfidence * 100}%)`
-            }
-          ]
+          logs: finalLogs
         };
       });
 

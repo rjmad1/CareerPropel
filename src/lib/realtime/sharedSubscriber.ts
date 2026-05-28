@@ -23,8 +23,36 @@ interface SSEConnection {
   lastActive: number;
 }
 
+interface BufferedEvent {
+  eventId: string;
+  timestamp: number;
+  payload: any;
+}
+
 const connectionRegistry = new Map<string, SSEConnection>();
 const userConnectionMap = new Map<string, string[]>(); // userId -> connectionIds[]
+
+// W3C Reconnect Buffer
+const eventBuffer = new Map<string, BufferedEvent[]>();
+const BUFFER_CAP = 100;
+let eventCounter = 0;
+
+import { checkReplayStorm, shouldThrottleEvent } from './flood-protection';
+
+export function getBufferedEventsForUser(userId: string, lastEventId: string): any[] {
+  const { isStorm } = checkReplayStorm(userId);
+  if (isStorm) {
+    realtimeLogger.warn({ userId, lastEventId }, 'Refusing to recover events due to active Replay Storm');
+    return [];
+  }
+
+  const userBuf = eventBuffer.get(userId) || [];
+  const idx = userBuf.findIndex((e) => e.eventId === lastEventId);
+  if (idx === -1) {
+    return userBuf.map((e) => e.payload);
+  }
+  return userBuf.slice(idx + 1).map((e) => e.payload);
+}
 
 async function ensureSubscriber() {
   if (!subscriberReady) {
@@ -34,6 +62,25 @@ async function ensureSubscriber() {
           const event = JSON.parse(message);
           
           if (event.userId) {
+            // Apply emitter event rate throttling
+            if (shouldThrottleEvent(event.userId)) {
+              realtimeLogger.warn({ userId: event.userId }, 'Throttled user event emission to prevent flood');
+              return;
+            }
+
+            // Monotonic W3C Event ID generation
+            eventCounter++;
+            const eventId = `ev_${Date.now()}_${eventCounter}`;
+            event.eventId = eventId;
+
+            // Cap rolling buffer to 100 messages
+            const userBuf = eventBuffer.get(event.userId) || [];
+            userBuf.push({ eventId, timestamp: Date.now(), payload: event });
+            if (userBuf.length > BUFFER_CAP) {
+              userBuf.shift();
+            }
+            eventBuffer.set(event.userId, userBuf);
+
             emitter.emit(`user:${event.userId}`, event);
           }
           
@@ -46,6 +93,7 @@ async function ensureSubscriber() {
           realtimeLogger.warn({ err: error, channel }, 'Failed to parse realtime event');
         }
       });
+
 
       await subscriber.psubscribe(
         'agent-events:*',

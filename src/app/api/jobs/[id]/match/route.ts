@@ -47,6 +47,8 @@ export async function GET(
  * Run AI match scoring against the candidate's profile.
  * Persists the score and returns the full analysis.
  */
+import { trackFunnelEvent } from '@/lib/observability/funnel';
+
 export async function POST(
   _request: NextRequest,
   context: { params: Promise<{ id: string }> }
@@ -54,6 +56,8 @@ export async function POST(
   try {
     const { userEmail } = await getAuthContext();
     const { id } = await context.params;
+
+    await trackFunnelEvent(userEmail, 'job', 'match', 'started');
 
     const candidate = await prisma.candidate.findUnique({
       where: { email: userEmail },
@@ -74,8 +78,17 @@ export async function POST(
     }
 
     const analysis = await scoreJobMatch(id, candidate.id);
+
+    await trackFunnelEvent(userEmail, 'job', 'match', 'completed', { score: analysis.score });
+
     return successResponse(analysis);
   } catch (error) {
+    try {
+      const { userEmail } = await getAuthContext();
+      if (userEmail) {
+        await trackFunnelEvent(userEmail, 'job', 'match', 'failed', { error: error instanceof Error ? error.message : String(error) });
+      }
+    } catch {}
     return errorResponse(error);
   }
 }

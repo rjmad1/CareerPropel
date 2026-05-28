@@ -2,6 +2,9 @@ import { prisma } from '@/lib/db';
 import { getMetricsSnapshot } from '@/lib/observability/metrics';
 import { redis } from '@/lib/redis/redisClient';
 import { getQueueMetrics } from '@/lib/queue/queues';
+import { runProviderProbe } from '@/lib/observability/probes/provider-probe';
+import { runQueueProbe } from '@/lib/observability/probes/queue-probe';
+import { runE2EProbe } from '@/lib/observability/probes/e2e-probe';
 
 export const CANONICAL_WORKERS = [
   'execution-worker',
@@ -42,21 +45,34 @@ export function startWorkerHeartbeat(workerName: CanonicalWorkerName) {
 export async function getHealthSnapshot() {
   const startedAt = Date.now();
 
-  const [redisStatus, databaseStatus, queueMetrics] = await Promise.all([
+  const [redisStatus, databaseStatus, queueMetrics, providerProbe, queueProbe, e2eProbe] = await Promise.all([
     checkRedis(),
     checkDatabase(),
     getQueueMetrics(),
+    runProviderProbe('anthropic'),
+    runQueueProbe(),
+    runE2EProbe(),
   ]);
 
+  const allHealthy = redisStatus.status === 'ok' &&
+                     databaseStatus.status === 'ok' &&
+                     providerProbe.status === 'healthy' &&
+                     queueProbe.status === 'healthy' &&
+                     e2eProbe.status === 'healthy';
+
   return {
-    status:
-      redisStatus.status === 'ok' && databaseStatus.status === 'ok' ? 'ok' : 'degraded',
+    status: allHealthy ? 'ok' : 'degraded',
     checks: {
       redis: redisStatus,
       database: databaseStatus,
       queue: queueMetrics,
+      probes: {
+        provider: providerProbe,
+        queue: queueProbe,
+        e2e: e2eProbe,
+      }
     },
-    metrics: getMetricsSnapshot(),
+    metrics: await getMetricsSnapshot(),
     durationMs: Date.now() - startedAt,
     timestamp: new Date().toISOString(),
   };

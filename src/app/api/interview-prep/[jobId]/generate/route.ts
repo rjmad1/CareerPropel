@@ -18,10 +18,14 @@ interface RouteParams {
   params: Promise<{ jobId: string }>
 }
 
+import { trackFunnelEvent } from '@/lib/observability/funnel';
+
 export async function POST(request: NextRequest, { params }: RouteParams) {
   try {
     const { jobId } = await params
     const { userEmail } = await getAuthContext()
+
+    await trackFunnelEvent(userEmail, 'interview', 'generate', 'started');
 
     // Allow caller to supply extra context; fall back to DB values
     const body = await request.json().catch(() => ({}))
@@ -115,8 +119,16 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
       include: { starStories: true },
     })
 
+    await trackFunnelEvent(userEmail, 'interview', 'generate', 'completed');
+
     return successResponse(prep)
   } catch (error) {
+    try {
+      const { userEmail } = await getAuthContext()
+      if (userEmail) {
+        await trackFunnelEvent(userEmail, 'interview', 'generate', 'failed', { error: error instanceof Error ? error.message : String(error) });
+      }
+    } catch {}
     return errorResponse(error)
   }
 }

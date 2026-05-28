@@ -28,11 +28,15 @@ export interface UseProfileCompletionResult {
  */
 export function useProfileCompletion(
   candidateId: string,
-  profile?: Record<string, unknown>,
+  _profile?: Record<string, unknown>,
   targetJobDescriptions?: string[]
 ): UseProfileCompletionResult {
   const [score, setScore] = useState<ProfileScore | null>(null);
   const [recommendations, setRecommendations] = useState<ProfileRecommendation[]>([]);
+  const [skillGaps, setSkillGaps] = useState<{ missingSkills: string[]; gapLevel: 'low' | 'medium' | 'high' }>({
+    missingSkills: [],
+    gapLevel: 'low'
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [, setProgressTracker] = useState<Record<string, number>>({});
@@ -43,34 +47,24 @@ export function useProfileCompletion(
   const fetchCompletion = useCallback(async () => {
     try {
       setLoading(true);
-      const [scoreData, recsData] = await Promise.all([
+      const [scoreData, recsData, gapsData] = await Promise.all([
         getProfileScore(candidateId),
         generateProfileRecommendations(candidateId),
+        detectSkillGaps(candidateId, targetJobDescriptions ?? []),
       ]);
 
       setScore(scoreData);
       setRecommendations(recsData);
+      setSkillGaps({
+        missingSkills: gapsData.missingSkills,
+        gapLevel: gapsData.gapLevel,
+      });
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to fetch completion data'));
     } finally {
       setLoading(false);
     }
-  }, [candidateId]);
-
-  /**
-   * Detect skill gaps
-   */
-  const skillGaps = useMemo(() => {
-    if (!profile || !targetJobDescriptions || targetJobDescriptions.length === 0) {
-      return { missingSkills: [], gapLevel: 'low' as const };
-    }
-
-    const gaps = detectSkillGaps(profile, targetJobDescriptions);
-    return {
-      missingSkills: gaps.missingSkills,
-      gapLevel: gaps.gapLevel,
-    };
-  }, [profile, targetJobDescriptions]);
+  }, [candidateId, targetJobDescriptions]);
 
   /**
    * Calculate milestones

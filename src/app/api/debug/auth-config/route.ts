@@ -8,22 +8,26 @@
  * Response: Status of NextAuth environment variables and configuration
  */
 
+import { NextRequest } from 'next/server';
+import { withAuth } from '@/lib/middleware/withAuth';
+
 export const dynamic = 'force-dynamic'
 
-export async function GET(_request: Request) {
-  // Only allow in development
-  if (process.env.NODE_ENV === 'production') {
-    return new Response(
-      JSON.stringify({
-        error: 'This endpoint is only available in development',
-        status: 'disabled'
-      }),
-      {
-        status: 403,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    )
-  }
+export const GET = withAuth(
+  async (_request: NextRequest) => {
+    // Only allow in development
+    if (process.env.NODE_ENV === 'production') {
+      return new Response(
+        JSON.stringify({
+          error: 'This endpoint is only available in development',
+          status: 'disabled'
+        }),
+        {
+          status: 403,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      )
+    }
 
   try {
     const config = {
@@ -80,4 +84,11 @@ export async function GET(_request: Request) {
       }
     )
   }
-}
+  },
+  {
+    classification: 'privileged',
+    roles: ['SUPER_ADMIN'],
+    rateLimitClass: 'standard',
+    auditSensitivity: 'high'
+  }
+)

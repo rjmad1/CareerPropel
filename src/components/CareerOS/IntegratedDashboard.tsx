@@ -6,6 +6,7 @@ import { KanbanBoard } from '@/components/Kanban/KanbanBoard';
 import { useProfile } from '@/hooks/useProfile';
 import { useProfileCompletion } from '@/hooks/useProfileCompletion';
 import { useJobBoard } from '@/hooks/useJobBoard';
+import { useNavigation } from '@/hooks/useNavigation';
 
 export const IntegratedDashboard: React.FC<{ candidateId: string }> = ({
   candidateId,
@@ -13,6 +14,7 @@ export const IntegratedDashboard: React.FC<{ candidateId: string }> = ({
   const { score: profileScore } = useProfile(candidateId);
   const { completeness, breakdown } = useProfileCompletion(candidateId);
   const { jobs, loading, error, moveJob } = useJobBoard();
+  const { navigate } = useNavigation();
 
   return (
     <div className="flex h-screen bg-gray-900 text-gray-100">
@@ -106,7 +108,10 @@ export const IntegratedDashboard: React.FC<{ candidateId: string }> = ({
               </p>
             </div>
 
-            <button className="w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors">
+            <button
+              onClick={() => navigate('/profile')}
+              className="w-full px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
+            >
               Edit Profile
             </button>
           </div>

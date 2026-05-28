@@ -117,9 +117,9 @@ function providerAlerts(): Alert[] {
   return alerts;
 }
 
-function workerAlerts(): Alert[] {
+async function workerAlerts(): Promise<Alert[]> {
   const alerts: Alert[] = [];
-  const snapshot = getMetricsSnapshot();
+  const snapshot = await getMetricsSnapshot();
 
   for (const [name, m] of Object.entries(snapshot.workers)) {
     if (m.count < 5) continue; // not enough samples
@@ -187,7 +187,7 @@ export async function evaluateAlerts(): Promise<AlertsSnapshot> {
   const [queue, provider, worker, runtime] = await Promise.all([
     queueAlerts(),
     Promise.resolve(providerAlerts()),
-    Promise.resolve(workerAlerts()),
+    workerAlerts(),
     Promise.resolve(runtimeAlerts()),
   ]);
 

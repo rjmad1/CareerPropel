@@ -6,9 +6,12 @@
 
 | Document | Description |
 |---|---|
+| [Documentation Index](INDEX.md) | Full table of contents for all platform docs |
 | [Repository Map](repository-map.md) | Directory structure and module ownership |
 | [Getting Started](getting-started.md) | Local development setup |
 | [Development Workflow](development-workflow.md) | Day-to-day engineering practices |
+| [GA Readiness Checklist](readiness/GA_READINESS_CHECKLIST.md) | Release governance & checklists |
+| [Reliability Engineering](reliability/RELIABILITY_ENGINEERING.md) | Platform resilience and SLAs |
 | [Architecture Overview](../wiki/architecture/system-overview.md) | System design and runtime topology |
 | [Agent System](../wiki/components/agent-system.md) | AI execution pipeline |
 | [Governance Layer](../wiki/components/governance.md) | Policy engine, prompt versioning, output validation |

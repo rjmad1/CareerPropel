@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 import { CAPABILITY_PRESETS } from '@/lib/llm/orchestrator';
+import { trackFunnelEvent } from '@/lib/observability/funnel';
 
 export const dynamic = 'force-dynamic';
 
@@ -147,6 +148,9 @@ export async function POST(request: NextRequest) {
         });
       }
     });
+
+    // Record Onboarding completion in funnel metrics
+    await trackFunnelEvent(email, 'resume', 'profile', 'completed');
 
     return NextResponse.json({
       success: true,

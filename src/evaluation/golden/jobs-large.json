@@ -1,0 +1,4258 @@
+[
+  {
+    "id": "bench_job_1",
+    "title": "Senior Software Engineer (React/TypeScript)",
+    "description": "Looking for a Senior Software Engineer specializing in frontend development with React, TypeScript, and Next.js, who has experience deploying on AWS.",
+    "expectedRankOrder": [
+      "bench_res_1",
+      "bench_res_2",
+      "bench_res_3",
+      "bench_res_4",
+      "bench_res_5",
+      "bench_res_6",
+      "bench_res_7",
+      "bench_res_8",
+      "bench_res_9",
+      "bench_res_10",
+      "bench_res_11",
+      "bench_res_12",
+      "bench_res_13",
+      "bench_res_14",
+      "bench_res_15",
+      "bench_res_16",
+      "bench_res_17",
+      "bench_res_18",
+      "bench_res_19",
+      "bench_res_20",
+      "bench_res_21",
+      "bench_res_22",
+      "bench_res_23",
+      "bench_res_24",
+      "bench_res_25",
+      "bench_res_26",
+      "bench_res_27",
+      "bench_res_28",
+      "bench_res_29",
+      "bench_res_30",
+      "bench_res_31",
+      "bench_res_32",
+      "bench_res_33",
+      "bench_res_34",
+      "bench_res_137",
+      "bench_res_138",
+      "bench_res_139",
+      "bench_res_140",
+      "bench_res_141",
+      "bench_res_142",
+      "bench_res_143",
+      "bench_res_144",
+      "bench_res_145",
+      "bench_res_146",
+      "bench_res_147",
+      "bench_res_148",
+      "bench_res_149",
+      "bench_res_150",
+      "bench_res_151",
+      "bench_res_152",
+      "bench_res_153",
+      "bench_res_154",
+      "bench_res_155",
+      "bench_res_156",
+      "bench_res_157",
+      "bench_res_158",
+      "bench_res_159",
+      "bench_res_160",
+      "bench_res_161",
+      "bench_res_162",
+      "bench_res_163",
+      "bench_res_164",
+      "bench_res_165",
+      "bench_res_166",
+      "bench_res_167",
+      "bench_res_168",
+      "bench_res_169",
+      "bench_res_170",
+      "bench_res_35",
+      "bench_res_36",
+      "bench_res_37",
+      "bench_res_38",
+      "bench_res_39",
+      "bench_res_40",
+      "bench_res_41",
+      "bench_res_42",
+      "bench_res_43",
+      "bench_res_44",
+      "bench_res_45",
+      "bench_res_46",
+      "bench_res_47",
+      "bench_res_48",
+      "bench_res_49",
+      "bench_res_50",
+      "bench_res_51",
+      "bench_res_52",
+      "bench_res_53",
+      "bench_res_54",
+      "bench_res_55",
+      "bench_res_56",
+      "bench_res_57",
+      "bench_res_58",
+      "bench_res_59",
+      "bench_res_60",
+      "bench_res_61",
+      "bench_res_62",
+      "bench_res_63",
+      "bench_res_64",
+      "bench_res_65",
+      "bench_res_66",
+      "bench_res_67",
+      "bench_res_68",
+      "bench_res_69",
+      "bench_res_70",
+      "bench_res_71",
+      "bench_res_72",
+      "bench_res_73",
+      "bench_res_74",
+      "bench_res_75",
+      "bench_res_76",
+      "bench_res_77",
+      "bench_res_78",
+      "bench_res_79",
+      "bench_res_80",
+      "bench_res_81",
+      "bench_res_82",
+      "bench_res_83",
+      "bench_res_84",
+      "bench_res_85",
+      "bench_res_86",
+      "bench_res_87",
+      "bench_res_88",
+      "bench_res_89",
+      "bench_res_90",
+      "bench_res_91",
+      "bench_res_92",
+      "bench_res_93",
+      "bench_res_94",
+      "bench_res_95",
+      "bench_res_96",
+      "bench_res_97",
+      "bench_res_98",
+      "bench_res_99",
+      "bench_res_100",
+      "bench_res_101",
+      "bench_res_102",
+      "bench_res_103",
+      "bench_res_104",
+      "bench_res_105",
+      "bench_res_106",
+      "bench_res_107",
+      "bench_res_108",
+      "bench_res_109",
+      "bench_res_110",
+      "bench_res_111",
+      "bench_res_112",
+      "bench_res_113",
+      "bench_res_114",
+      "bench_res_115",
+      "bench_res_116",
+      "bench_res_117",
+      "bench_res_118",
+      "bench_res_119",
+      "bench_res_120",
+      "bench_res_121",
+      "bench_res_122",
+      "bench_res_123",
+      "bench_res_124",
+      "bench_res_125",
+      "bench_res_126",
+      "bench_res_127",
+      "bench_res_128",
+      "bench_res_129",
+      "bench_res_130",
+      "bench_res_131",
+      "bench_res_132",
+      "bench_res_133",
+      "bench_res_134",
+      "bench_res_135",
+      "bench_res_136",
+      "bench_res_171",
+      "bench_res_172",
+      "bench_res_173",
+      "bench_res_174",
+      "bench_res_175",
+      "bench_res_176",
+      "bench_res_177",
+      "bench_res_178",
+      "bench_res_179",
+      "bench_res_180",
+      "bench_res_181",
+      "bench_res_182",
+      "bench_res_183",
+      "bench_res_184",
+      "bench_res_185",
+      "bench_res_186",
+      "bench_res_187",
+      "bench_res_188",
+      "bench_res_189",
+      "bench_res_190",
+      "bench_res_191",
+      "bench_res_192",
+      "bench_res_193",
+      "bench_res_194",
+      "bench_res_195",
+      "bench_res_196",
+      "bench_res_197",
+      "bench_res_198",
+      "bench_res_199",
+      "bench_res_200",
+      "bench_res_201",
+      "bench_res_202",
+      "bench_res_203",
+      "bench_res_204"
+    ],
+    "expectedSkillGaps": {
+      "bench_res_1": [
+        "aws"
+      ],
+      "bench_res_2": [
+        "aws"
+      ],
+      "bench_res_3": [
+        "aws"
+      ],
+      "bench_res_4": [
+        "aws"
+      ],
+      "bench_res_5": [
+        "aws"
+      ],
+      "bench_res_6": [
+        "aws"
+      ],
+      "bench_res_7": [
+        "aws"
+      ],
+      "bench_res_8": [
+        "aws"
+      ],
+      "bench_res_9": [
+        "aws"
+      ],
+      "bench_res_10": [
+        "aws"
+      ],
+      "bench_res_11": [
+        "aws"
+      ],
+      "bench_res_12": [
+        "aws"
+      ],
+      "bench_res_13": [
+        "aws"
+      ],
+      "bench_res_14": [
+        "aws"
+      ],
+      "bench_res_15": [
+        "aws"
+      ],
+      "bench_res_16": [
+        "aws"
+      ],
+      "bench_res_17": [
+        "aws"
+      ],
+      "bench_res_18": [
+        "aws"
+      ],
+      "bench_res_19": [
+        "aws"
+      ],
+      "bench_res_20": [
+        "aws"
+      ],
+      "bench_res_21": [
+        "aws"
+      ],
+      "bench_res_22": [
+        "aws"
+      ],
+      "bench_res_23": [
+        "aws"
+      ],
+      "bench_res_24": [
+        "aws"
+      ],
+      "bench_res_25": [
+        "aws"
+      ],
+      "bench_res_26": [
+        "aws"
+      ],
+      "bench_res_27": [
+        "aws"
+      ],
+      "bench_res_28": [
+        "aws"
+      ],
+      "bench_res_29": [
+        "aws"
+      ],
+      "bench_res_30": [
+        "aws"
+      ],
+      "bench_res_31": [
+        "aws"
+      ],
+      "bench_res_32": [
+        "aws"
+      ],
+      "bench_res_33": [
+        "aws"
+      ],
+      "bench_res_34": [
+        "aws"
+      ],
+      "bench_res_137": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_138": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_139": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_140": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_141": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_142": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_143": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_144": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_145": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_146": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_147": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_148": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_149": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_150": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_151": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_152": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_153": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_154": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_155": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_156": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_157": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_158": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_159": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_160": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_161": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_162": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_163": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_164": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_165": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_166": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_167": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_168": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_169": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_170": [
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_35": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_36": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_37": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_38": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_39": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_40": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_41": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_42": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_43": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_44": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_45": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_46": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_47": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_48": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_49": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_50": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_51": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_52": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_53": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_54": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_55": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_56": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_57": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_58": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_59": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_60": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_61": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_62": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_63": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_64": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_65": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_66": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_67": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_68": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_69": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_70": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_71": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_72": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_73": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_74": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_75": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_76": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_77": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_78": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_79": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_80": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_81": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_82": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_83": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_84": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_85": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_86": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_87": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_88": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_89": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_90": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_91": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_92": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_93": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_94": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_95": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_96": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_97": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_98": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_99": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_100": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_101": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_102": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_103": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_104": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_105": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_106": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_107": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_108": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_109": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_110": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_111": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_112": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_113": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_114": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_115": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_116": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_117": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_118": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_119": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_120": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_121": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_122": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_123": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_124": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_125": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_126": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_127": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_128": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_129": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_130": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_131": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_132": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_133": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_134": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_135": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_136": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_171": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_172": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_173": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_174": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_175": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_176": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_177": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_178": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_179": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_180": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_181": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_182": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_183": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_184": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_185": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_186": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_187": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_188": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_189": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_190": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_191": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_192": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_193": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_194": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_195": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_196": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_197": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_198": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_199": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_200": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_201": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_202": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_203": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ],
+      "bench_res_204": [
+        "react",
+        "typescript",
+        "next.js",
+        "aws"
+      ]
+    }
+  },
+  {
+    "id": "bench_job_2",
+    "title": "Principal Product Manager",
+    "description": "Seeking a Product Management specialist with experience in Agile scrum methodologies, Google Analytics conversions, and digital product user retention.",
+    "expectedRankOrder": [
+      "bench_res_35",
+      "bench_res_36",
+      "bench_res_37",
+      "bench_res_38",
+      "bench_res_39",
+      "bench_res_40",
+      "bench_res_41",
+      "bench_res_42",
+      "bench_res_43",
+      "bench_res_44",
+      "bench_res_45",
+      "bench_res_46",
+      "bench_res_47",
+      "bench_res_48",
+      "bench_res_49",
+      "bench_res_50",
+      "bench_res_51",
+      "bench_res_52",
+      "bench_res_53",
+      "bench_res_54",
+      "bench_res_55",
+      "bench_res_56",
+      "bench_res_57",
+      "bench_res_58",
+      "bench_res_59",
+      "bench_res_60",
+      "bench_res_61",
+      "bench_res_62",
+      "bench_res_63",
+      "bench_res_64",
+      "bench_res_65",
+      "bench_res_66",
+      "bench_res_67",
+      "bench_res_68",
+      "bench_res_172",
+      "bench_res_173",
+      "bench_res_174",
+      "bench_res_177",
+      "bench_res_178",
+      "bench_res_179",
+      "bench_res_182",
+      "bench_res_183",
+      "bench_res_184",
+      "bench_res_187",
+      "bench_res_188",
+      "bench_res_189",
+      "bench_res_192",
+      "bench_res_193",
+      "bench_res_194",
+      "bench_res_197",
+      "bench_res_198",
+      "bench_res_199",
+      "bench_res_202",
+      "bench_res_203",
+      "bench_res_204",
+      "bench_res_1",
+      "bench_res_2",
+      "bench_res_3",
+      "bench_res_4",
+      "bench_res_5",
+      "bench_res_6",
+      "bench_res_7",
+      "bench_res_8",
+      "bench_res_9",
+      "bench_res_10",
+      "bench_res_11",
+      "bench_res_12",
+      "bench_res_13",
+      "bench_res_14",
+      "bench_res_15",
+      "bench_res_16",
+      "bench_res_17",
+      "bench_res_18",
+      "bench_res_19",
+      "bench_res_20",
+      "bench_res_21",
+      "bench_res_22",
+      "bench_res_23",
+      "bench_res_24",
+      "bench_res_25",
+      "bench_res_26",
+      "bench_res_27",
+      "bench_res_28",
+      "bench_res_29",
+      "bench_res_30",
+      "bench_res_31",
+      "bench_res_32",
+      "bench_res_33",
+      "bench_res_34",
+      "bench_res_69",
+      "bench_res_70",
+      "bench_res_71",
+      "bench_res_72",
+      "bench_res_73",
+      "bench_res_74",
+      "bench_res_75",
+      "bench_res_76",
+      "bench_res_77",
+      "bench_res_78",
+      "bench_res_79",
+      "bench_res_80",
+      "bench_res_81",
+      "bench_res_82",
+      "bench_res_83",
+      "bench_res_84",
+      "bench_res_85",
+      "bench_res_86",
+      "bench_res_87",
+      "bench_res_88",
+      "bench_res_89",
+      "bench_res_90",
+      "bench_res_91",
+      "bench_res_92",
+      "bench_res_93",
+      "bench_res_94",
+      "bench_res_95",
+      "bench_res_96",
+      "bench_res_97",
+      "bench_res_98",
+      "bench_res_99",
+      "bench_res_100",
+      "bench_res_101",
+      "bench_res_102",
+      "bench_res_103",
+      "bench_res_104",
+      "bench_res_105",
+      "bench_res_106",
+      "bench_res_107",
+      "bench_res_108",
+      "bench_res_109",
+      "bench_res_110",
+      "bench_res_111",
+      "bench_res_112",
+      "bench_res_113",
+      "bench_res_114",
+      "bench_res_115",
+      "bench_res_116",
+      "bench_res_117",
+      "bench_res_118",
+      "bench_res_119",
+      "bench_res_120",
+      "bench_res_121",
+      "bench_res_122",
+      "bench_res_123",
+      "bench_res_124",
+      "bench_res_125",
+      "bench_res_126",
+      "bench_res_127",
+      "bench_res_128",
+      "bench_res_129",
+      "bench_res_130",
+      "bench_res_131",
+      "bench_res_132",
+      "bench_res_133",
+      "bench_res_134",
+      "bench_res_135",
+      "bench_res_136",
+      "bench_res_137",
+      "bench_res_138",
+      "bench_res_139",
+      "bench_res_140",
+      "bench_res_141",
+      "bench_res_142",
+      "bench_res_143",
+      "bench_res_144",
+      "bench_res_145",
+      "bench_res_146",
+      "bench_res_147",
+      "bench_res_148",
+      "bench_res_149",
+      "bench_res_150",
+      "bench_res_151",
+      "bench_res_152",
+      "bench_res_153",
+      "bench_res_154",
+      "bench_res_155",
+      "bench_res_156",
+      "bench_res_157",
+      "bench_res_158",
+      "bench_res_159",
+      "bench_res_160",
+      "bench_res_161",
+      "bench_res_162",
+      "bench_res_163",
+      "bench_res_164",
+      "bench_res_165",
+      "bench_res_166",
+      "bench_res_167",
+      "bench_res_168",
+      "bench_res_169",
+      "bench_res_170",
+      "bench_res_171",
+      "bench_res_175",
+      "bench_res_176",
+      "bench_res_180",
+      "bench_res_181",
+      "bench_res_185",
+      "bench_res_186",
+      "bench_res_190",
+      "bench_res_191",
+      "bench_res_195",
+      "bench_res_196",
+      "bench_res_200",
+      "bench_res_201"
+    ],
+    "expectedSkillGaps": {
+      "bench_res_35": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_36": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_37": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_38": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_39": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_40": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_41": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_42": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_43": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_44": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_45": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_46": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_47": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_48": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_49": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_50": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_51": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_52": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_53": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_54": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_55": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_56": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_57": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_58": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_59": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_60": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_61": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_62": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_63": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_64": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_65": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_66": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_67": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_68": [
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_172": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_173": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_174": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_177": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_178": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_179": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_182": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_183": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_184": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_187": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_188": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_189": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_192": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_193": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_194": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_197": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_198": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_199": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_202": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_203": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_204": [
+        "product management",
+        "agile",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_1": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_2": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_3": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_4": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_5": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_6": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_7": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_8": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_9": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_10": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_11": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_12": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_13": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_14": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_15": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_16": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_17": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_18": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_19": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_20": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_21": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_22": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_23": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_24": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_25": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_26": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_27": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_28": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_29": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_30": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_31": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_32": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_33": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_34": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_69": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_70": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_71": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_72": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_73": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_74": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_75": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_76": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_77": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_78": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_79": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_80": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_81": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_82": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_83": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_84": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_85": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_86": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_87": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_88": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_89": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_90": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_91": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_92": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_93": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_94": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_95": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_96": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_97": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_98": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_99": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_100": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_101": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_102": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_103": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_104": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_105": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_106": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_107": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_108": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_109": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_110": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_111": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_112": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_113": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_114": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_115": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_116": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_117": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_118": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_119": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_120": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_121": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_122": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_123": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_124": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_125": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_126": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_127": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_128": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_129": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_130": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_131": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_132": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_133": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_134": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_135": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_136": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_137": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_138": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_139": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_140": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_141": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_142": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_143": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_144": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_145": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_146": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_147": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_148": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_149": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_150": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_151": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_152": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_153": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_154": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_155": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_156": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_157": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_158": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_159": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_160": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_161": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_162": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_163": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_164": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_165": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_166": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_167": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_168": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_169": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_170": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_171": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_175": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_176": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_180": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_181": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_185": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_186": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_190": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_191": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_195": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_196": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_200": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ],
+      "bench_res_201": [
+        "product management",
+        "agile",
+        "scrum",
+        "google analytics",
+        "conversions",
+        "user retention"
+      ]
+    }
+  },
+  {
+    "id": "bench_job_3",
+    "title": "Engineering Director / Executive",
+    "description": "Looking for an Engineering Director with experience in strategic leadership, scalable budgeting, vendor management, and scaling squads globally.",
+    "expectedRankOrder": [
+      "bench_res_69",
+      "bench_res_70",
+      "bench_res_71",
+      "bench_res_72",
+      "bench_res_73",
+      "bench_res_74",
+      "bench_res_75",
+      "bench_res_76",
+      "bench_res_77",
+      "bench_res_78",
+      "bench_res_79",
+      "bench_res_80",
+      "bench_res_81",
+      "bench_res_82",
+      "bench_res_83",
+      "bench_res_84",
+      "bench_res_85",
+      "bench_res_86",
+      "bench_res_87",
+      "bench_res_88",
+      "bench_res_89",
+      "bench_res_90",
+      "bench_res_91",
+      "bench_res_92",
+      "bench_res_93",
+      "bench_res_94",
+      "bench_res_95",
+      "bench_res_96",
+      "bench_res_97",
+      "bench_res_98",
+      "bench_res_99",
+      "bench_res_100",
+      "bench_res_101",
+      "bench_res_102",
+      "bench_res_1",
+      "bench_res_2",
+      "bench_res_3",
+      "bench_res_4",
+      "bench_res_5",
+      "bench_res_6",
+      "bench_res_7",
+      "bench_res_8",
+      "bench_res_9",
+      "bench_res_10",
+      "bench_res_11",
+      "bench_res_12",
+      "bench_res_13",
+      "bench_res_14",
+      "bench_res_15",
+      "bench_res_16",
+      "bench_res_17",
+      "bench_res_18",
+      "bench_res_19",
+      "bench_res_20",
+      "bench_res_21",
+      "bench_res_22",
+      "bench_res_23",
+      "bench_res_24",
+      "bench_res_25",
+      "bench_res_26",
+      "bench_res_27",
+      "bench_res_28",
+      "bench_res_29",
+      "bench_res_30",
+      "bench_res_31",
+      "bench_res_32",
+      "bench_res_33",
+      "bench_res_34",
+      "bench_res_35",
+      "bench_res_36",
+      "bench_res_37",
+      "bench_res_38",
+      "bench_res_39",
+      "bench_res_40",
+      "bench_res_41",
+      "bench_res_42",
+      "bench_res_43",
+      "bench_res_44",
+      "bench_res_45",
+      "bench_res_46",
+      "bench_res_47",
+      "bench_res_48",
+      "bench_res_49",
+      "bench_res_50",
+      "bench_res_51",
+      "bench_res_52",
+      "bench_res_53",
+      "bench_res_54",
+      "bench_res_55",
+      "bench_res_56",
+      "bench_res_57",
+      "bench_res_58",
+      "bench_res_59",
+      "bench_res_60",
+      "bench_res_61",
+      "bench_res_62",
+      "bench_res_63",
+      "bench_res_64",
+      "bench_res_65",
+      "bench_res_66",
+      "bench_res_67",
+      "bench_res_68",
+      "bench_res_103",
+      "bench_res_104",
+      "bench_res_105",
+      "bench_res_106",
+      "bench_res_107",
+      "bench_res_108",
+      "bench_res_109",
+      "bench_res_110",
+      "bench_res_111",
+      "bench_res_112",
+      "bench_res_113",
+      "bench_res_114",
+      "bench_res_115",
+      "bench_res_116",
+      "bench_res_117",
+      "bench_res_118",
+      "bench_res_119",
+      "bench_res_120",
+      "bench_res_121",
+      "bench_res_122",
+      "bench_res_123",
+      "bench_res_124",
+      "bench_res_125",
+      "bench_res_126",
+      "bench_res_127",
+      "bench_res_128",
+      "bench_res_129",
+      "bench_res_130",
+      "bench_res_131",
+      "bench_res_132",
+      "bench_res_133",
+      "bench_res_134",
+      "bench_res_135",
+      "bench_res_136",
+      "bench_res_137",
+      "bench_res_138",
+      "bench_res_139",
+      "bench_res_140",
+      "bench_res_141",
+      "bench_res_142",
+      "bench_res_143",
+      "bench_res_144",
+      "bench_res_145",
+      "bench_res_146",
+      "bench_res_147",
+      "bench_res_148",
+      "bench_res_149",
+      "bench_res_150",
+      "bench_res_151",
+      "bench_res_152",
+      "bench_res_153",
+      "bench_res_154",
+      "bench_res_155",
+      "bench_res_156",
+      "bench_res_157",
+      "bench_res_158",
+      "bench_res_159",
+      "bench_res_160",
+      "bench_res_161",
+      "bench_res_162",
+      "bench_res_163",
+      "bench_res_164",
+      "bench_res_165",
+      "bench_res_166",
+      "bench_res_167",
+      "bench_res_168",
+      "bench_res_169",
+      "bench_res_170",
+      "bench_res_171",
+      "bench_res_172",
+      "bench_res_173",
+      "bench_res_174",
+      "bench_res_175",
+      "bench_res_176",
+      "bench_res_177",
+      "bench_res_178",
+      "bench_res_179",
+      "bench_res_180",
+      "bench_res_181",
+      "bench_res_182",
+      "bench_res_183",
+      "bench_res_184",
+      "bench_res_185",
+      "bench_res_186",
+      "bench_res_187",
+      "bench_res_188",
+      "bench_res_189",
+      "bench_res_190",
+      "bench_res_191",
+      "bench_res_192",
+      "bench_res_193",
+      "bench_res_194",
+      "bench_res_195",
+      "bench_res_196",
+      "bench_res_197",
+      "bench_res_198",
+      "bench_res_199",
+      "bench_res_200",
+      "bench_res_201",
+      "bench_res_202",
+      "bench_res_203",
+      "bench_res_204"
+    ],
+    "expectedSkillGaps": {
+      "bench_res_69": [],
+      "bench_res_70": [],
+      "bench_res_71": [],
+      "bench_res_72": [],
+      "bench_res_73": [],
+      "bench_res_74": [],
+      "bench_res_75": [],
+      "bench_res_76": [],
+      "bench_res_77": [],
+      "bench_res_78": [],
+      "bench_res_79": [],
+      "bench_res_80": [],
+      "bench_res_81": [],
+      "bench_res_82": [],
+      "bench_res_83": [],
+      "bench_res_84": [],
+      "bench_res_85": [],
+      "bench_res_86": [],
+      "bench_res_87": [],
+      "bench_res_88": [],
+      "bench_res_89": [],
+      "bench_res_90": [],
+      "bench_res_91": [],
+      "bench_res_92": [],
+      "bench_res_93": [],
+      "bench_res_94": [],
+      "bench_res_95": [],
+      "bench_res_96": [],
+      "bench_res_97": [],
+      "bench_res_98": [],
+      "bench_res_99": [],
+      "bench_res_100": [],
+      "bench_res_101": [],
+      "bench_res_102": [],
+      "bench_res_1": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_2": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_3": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_4": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_5": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_6": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_7": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_8": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_9": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_10": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_11": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_12": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_13": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_14": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_15": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_16": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_17": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_18": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_19": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_20": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_21": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_22": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_23": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_24": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_25": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_26": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_27": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_28": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_29": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_30": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_31": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_32": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_33": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_34": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_35": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_36": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_37": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_38": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_39": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_40": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_41": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_42": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_43": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_44": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_45": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_46": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_47": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_48": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_49": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_50": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_51": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_52": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_53": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_54": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_55": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_56": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_57": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_58": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_59": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_60": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_61": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_62": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_63": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_64": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_65": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_66": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_67": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_68": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_103": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_104": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_105": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_106": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_107": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_108": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_109": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_110": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_111": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_112": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_113": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_114": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_115": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_116": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_117": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_118": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_119": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_120": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_121": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_122": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_123": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_124": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_125": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_126": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_127": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_128": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_129": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_130": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_131": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_132": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_133": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_134": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_135": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_136": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_137": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_138": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_139": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_140": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_141": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_142": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_143": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_144": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_145": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_146": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_147": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_148": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_149": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_150": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_151": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_152": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_153": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_154": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_155": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_156": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_157": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_158": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_159": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_160": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_161": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_162": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_163": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_164": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_165": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_166": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_167": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_168": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_169": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_170": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_171": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_172": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_173": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_174": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_175": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_176": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_177": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_178": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_179": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_180": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_181": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_182": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_183": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_184": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_185": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_186": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_187": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_188": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_189": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_190": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_191": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_192": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_193": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_194": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_195": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_196": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_197": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_198": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_199": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_200": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_201": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_202": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_203": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ],
+      "bench_res_204": [
+        "leadership",
+        "budgeting",
+        "vendor management",
+        "scaling"
+      ]
+    }
+  }
+]

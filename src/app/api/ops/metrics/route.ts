@@ -21,7 +21,7 @@ export async function GET(_req: NextRequest) {
   }
 
   return NextResponse.json({
-    metrics:  getMetricsSnapshot(),
+    metrics:  await getMetricsSnapshot(),
     runtime:  getRuntimeSnapshot(),
   });
 }

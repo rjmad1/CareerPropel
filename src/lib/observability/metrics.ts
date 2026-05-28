@@ -1,14 +1,4 @@
-/**
- * In-memory operational metrics store.
- *
- * Tracks:
- *  - queue / worker / provider aggregate counters
- *  - rolling latency samples for p50/p95/p99 percentiles (last 1000 per key)
- *  - time-bucketed counters (1m / 5m / 15m windows) for rates
- *  - concurrency gauge (active executions in flight)
- *  - SSE stream gauge
- *  - DLQ depth
- */
+import { prisma } from '@/lib/db';
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -44,6 +34,13 @@ let sseHeartbeatFailures = 0;
 
 /** DLQ depth is updated by the health check on demand — stored here for snapshots */
 let dlqDepth = 0;
+
+/** Product analytics funnel counters */
+let onboardingCompletions = 0;
+let resumeUploadSuccesses = 0;
+let resumeUploadFailures = 0;
+let aiExtractionSuccesses = 0;
+let aiExtractionFallbackDegraded = 0;
 
 // ── Ring-buffer helpers ────────────────────────────────────────────────────
 
@@ -202,6 +199,18 @@ export function recordSseHeartbeatFailure()  { sseHeartbeatFailures += 1; }
 
 export function updateDlqDepth(depth: number) { dlqDepth = depth; }
 
+// ── Product Funnel Analytics ───────────────────────────────────────────────
+
+export function recordOnboardingCompletion() { onboardingCompletions += 1; }
+export function recordResumeUpload(success: boolean) {
+  if (success) resumeUploadSuccesses += 1;
+  else resumeUploadFailures += 1;
+}
+export function recordAiExtraction(source: 'ai' | 'fallback') {
+  if (source === 'ai') aiExtractionSuccesses += 1;
+  else aiExtractionFallbackDegraded += 1;
+}
+
 // ── Snapshot ───────────────────────────────────────────────────────────────
 
 function formatAggregate(metric: AggregateMetric) {
@@ -218,7 +227,61 @@ function formatAggregate(metric: AggregateMetric) {
   };
 }
 
-export function getMetricsSnapshot() {
+export async function getMetricsSnapshot() {
+  let resumeUploads = 0;
+  let resumeParses = 0;
+  let profilesCreated = 0;
+  let profilesCompleted = 0;
+
+  let jobsImported = 0;
+  let matchesGenerated = 0;
+  let resumesTailored = 0;
+  let applicationsExported = 0;
+
+  let prepsGenerated = 0;
+  let interviewQuestionsCompleted = 0;
+  let interviewSessionsCompleted = 0;
+
+  let achievementsCaptured = 0;
+  let appraisalReviewsGenerated = 0;
+  let appraisalReviewsExported = 0;
+
+  try {
+    const funnelCounts = await prisma.productFunnelMetric.groupBy({
+      by: ['funnel', 'step', 'status'],
+      _count: {
+        id: true,
+      },
+    });
+
+    for (const group of funnelCounts) {
+      const count = group._count.id;
+      if (group.funnel === 'resume') {
+        if (group.step === 'upload' && group.status === 'completed') resumeUploads += count;
+        else if (group.step === 'parse' && group.status === 'completed') resumeParses += count;
+        else if (group.step === 'profile') {
+          if (group.status === 'started') profilesCreated += count;
+          else if (group.status === 'completed') profilesCompleted += count;
+        }
+      } else if (group.funnel === 'job') {
+        if (group.step === 'import' && group.status === 'completed') jobsImported += count;
+        else if (group.step === 'match' && group.status === 'completed') matchesGenerated += count;
+        else if (group.step === 'tailor' && group.status === 'completed') resumesTailored += count;
+        else if (group.step === 'export' && group.status === 'completed') applicationsExported += count;
+      } else if (group.funnel === 'interview') {
+        if (group.step === 'generate' && group.status === 'completed') prepsGenerated += count;
+        else if (group.step === 'question' && group.status === 'completed') interviewQuestionsCompleted += count;
+        else if (group.step === 'session' && group.status === 'completed') interviewSessionsCompleted += count;
+      } else if (group.funnel === 'appraisal') {
+        if (group.step === 'capture' && group.status === 'completed') achievementsCaptured += count;
+        else if (group.step === 'generate' && group.status === 'completed') appraisalReviewsGenerated += count;
+        else if (group.step === 'export' && group.status === 'completed') appraisalReviewsExported += count;
+      }
+    }
+  } catch (error) {
+    console.error('[getMetricsSnapshot] Failed to aggregate funnel stats:', error);
+  }
+
   return {
     queues: Object.fromEntries(
       Array.from(queueMetrics.entries()).map(([k, v]) => [k, formatAggregate(v)])
@@ -247,6 +310,47 @@ export function getMetricsSnapshot() {
     },
     dlq: {
       depth: dlqDepth,
+    },
+    productAnalytics: {
+      onboardingCompletions,
+      resumeUpload: {
+        success: resumeUploadSuccesses,
+        failure: resumeUploadFailures,
+        rate: (resumeUploadSuccesses + resumeUploadFailures) > 0 
+          ? Number((resumeUploadSuccesses / (resumeUploadSuccesses + resumeUploadFailures)).toFixed(4)) 
+          : 1.0
+      },
+      aiExtraction: {
+        success: aiExtractionSuccesses,
+        fallbackDegraded: aiExtractionFallbackDegraded,
+        fallbackRate: (aiExtractionSuccesses + aiExtractionFallbackDegraded) > 0
+          ? Number((aiExtractionFallbackDegraded / (aiExtractionSuccesses + aiExtractionFallbackDegraded)).toFixed(4))
+          : 0.0
+      },
+      funnels: {
+        resume: {
+          uploaded: resumeUploads,
+          parsed: resumeParses,
+          profileCreated: profilesCreated,
+          profileCompleted: profilesCompleted,
+        },
+        job: {
+          imported: jobsImported,
+          matchGenerated: matchesGenerated,
+          resumeTailored: resumesTailored,
+          applicationExported: applicationsExported,
+        },
+        interview: {
+          prepGenerated: prepsGenerated,
+          questionsCompleted: interviewQuestionsCompleted,
+          sessionCompleted: interviewSessionsCompleted,
+        },
+        appraisal: {
+          achievementCaptured: achievementsCaptured,
+          reviewGenerated: appraisalReviewsGenerated,
+          reviewExported: appraisalReviewsExported,
+        }
+      }
     },
     snapshotAt: new Date().toISOString(),
   };
