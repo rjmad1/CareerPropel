@@ -6,7 +6,7 @@
 
 # Interface: ScrapingJobPayload
 
-Defined in: [src/lib/scraping/scrapingQueue.ts:20](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/scrapingQueue.ts#L20)
+Defined in: [src/lib/scraping/scrapingQueue.ts:20](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/scrapingQueue.ts#L20)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/scraping/scrapingQueue.ts:20](https://github.com/rjmad1/Car
 
 > `optional` **correlationId?**: `string`
 
-Defined in: [src/lib/scraping/scrapingQueue.ts:26](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/scrapingQueue.ts#L26)
+Defined in: [src/lib/scraping/scrapingQueue.ts:26](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/scrapingQueue.ts#L26)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/scraping/scrapingQueue.ts:26](https://github.com/rjmad1/Car
 
 > **executionId**: `string`
 
-Defined in: [src/lib/scraping/scrapingQueue.ts:21](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/scrapingQueue.ts#L21)
+Defined in: [src/lib/scraping/scrapingQueue.ts:21](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/scrapingQueue.ts#L21)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/scraping/scrapingQueue.ts:21](https://github.com/rjmad1/Car
 
 > **payload**: `Record`\<`string`, `any`\>
 
-Defined in: [src/lib/scraping/scrapingQueue.ts:25](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/scrapingQueue.ts#L25)
+Defined in: [src/lib/scraping/scrapingQueue.ts:25](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/scrapingQueue.ts#L25)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/scraping/scrapingQueue.ts:25](https://github.com/rjmad1/Car
 
 > **provider**: `"linkedin"` \| `"indeed"`
 
-Defined in: [src/lib/scraping/scrapingQueue.ts:24](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/scrapingQueue.ts#L24)
+Defined in: [src/lib/scraping/scrapingQueue.ts:24](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/scrapingQueue.ts#L24)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/scraping/scrapingQueue.ts:24](https://github.com/rjmad1/Car
 
 > **retries**: `number`
 
-Defined in: [src/lib/scraping/scrapingQueue.ts:27](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/scrapingQueue.ts#L27)
+Defined in: [src/lib/scraping/scrapingQueue.ts:27](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/scrapingQueue.ts#L27)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/scraping/scrapingQueue.ts:27](https://github.com/rjmad1/Car
 
 > **taskType**: [`ScrapingTaskType`](../type-aliases/ScrapingTaskType.md)
 
-Defined in: [src/lib/scraping/scrapingQueue.ts:23](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/scrapingQueue.ts#L23)
+Defined in: [src/lib/scraping/scrapingQueue.ts:23](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/scrapingQueue.ts#L23)
 
 ***
 
@@ -62,4 +62,4 @@ Defined in: [src/lib/scraping/scrapingQueue.ts:23](https://github.com/rjmad1/Car
 
 > **userId**: `string`
 
-Defined in: [src/lib/scraping/scrapingQueue.ts:22](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/scrapingQueue.ts#L22)
+Defined in: [src/lib/scraping/scrapingQueue.ts:22](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/scrapingQueue.ts#L22)

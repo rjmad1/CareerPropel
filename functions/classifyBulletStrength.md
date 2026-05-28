@@ -6,9 +6,9 @@
 
 # Function: classifyBulletStrength()
 
-> **classifyBulletStrength**(`text`): `"strong"` \| `"weak"` \| `"moderate"`
+> **classifyBulletStrength**(`text`): `"strong"` \| `"moderate"` \| `"weak"`
 
-Defined in: [src/lib/profile/master-profile/normalizer.ts:108](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/profile/master-profile/normalizer.ts#L108)
+Defined in: [src/lib/profile/master-profile/normalizer.ts:108](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/profile/master-profile/normalizer.ts#L108)
 
 ## Parameters
 
@@ -18,4 +18,4 @@ Defined in: [src/lib/profile/master-profile/normalizer.ts:108](https://github.co
 
 ## Returns
 
-`"strong"` \| `"weak"` \| `"moderate"`
+`"strong"` \| `"moderate"` \| `"weak"`

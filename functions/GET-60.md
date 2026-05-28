@@ -6,19 +6,20 @@
 
 # Function: GET()
 
-> **GET**(`request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `breakdown`: \{ `achievements`: `number`; `profileData`: `number`; `skills`: `number`; \}; `candidateId`: `string`; `score`: `number`; \}\>\>
+> **GET**(`_request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `candidateId`: `string`; `email`: `string`; `extractionQuality`: \{ `documentCount`: `number`; `lastExtraction`: `Date`; \}; `name`: `string`; `recentAchievements`: `object`[]; `topSkills`: `object`[]; \}\>\>
 
-Defined in: [src/app/api/profile/completeness/route.ts:11](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/profile/completeness/route.ts#L11)
+Defined in: [src/app/api/profile/route.ts:12](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/profile/route.ts#L12)
 
-GET /api/profile/completeness?candidateId={id}
-Compute profile completeness score from actual schema data.
+GET /api/profile
+Fetch the authenticated user's profile summary.
+candidateId is resolved from the session — callers cannot enumerate other users.
 
 ## Parameters
 
-### request
+### \_request
 
 `NextRequest`
 
 ## Returns
 
-`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `breakdown`: \{ `achievements`: `number`; `profileData`: `number`; `skills`: `number`; \}; `candidateId`: `string`; `score`: `number`; \}\>\>
+`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `candidateId`: `string`; `email`: `string`; `extractionQuality`: \{ `documentCount`: `number`; `lastExtraction`: `Date`; \}; `name`: `string`; `recentAchievements`: `object`[]; `topSkills`: `object`[]; \}\>\>

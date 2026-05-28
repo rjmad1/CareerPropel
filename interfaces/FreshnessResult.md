@@ -6,7 +6,7 @@
 
 # Interface: FreshnessResult
 
-Defined in: [src/lib/analytics/governance.ts:87](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/governance.ts#L87)
+Defined in: [src/lib/analytics/governance.ts:87](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/governance.ts#L87)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/governance.ts:87](https://github.com/rjmad1/Caree
 
 > **freshness**: [`FreshnessLabel`](../type-aliases/FreshnessLabel.md)
 
-Defined in: [src/lib/analytics/governance.ts:90](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/governance.ts#L90)
+Defined in: [src/lib/analytics/governance.ts:90](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/governance.ts#L90)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/governance.ts:90](https://github.com/rjmad1/Caree
 
 > **isStale**: `boolean`
 
-Defined in: [src/lib/analytics/governance.ts:89](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/governance.ts#L89)
+Defined in: [src/lib/analytics/governance.ts:89](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/governance.ts#L89)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/lib/analytics/governance.ts:89](https://github.com/rjmad1/Caree
 
 > **staleDays**: `number`
 
-Defined in: [src/lib/analytics/governance.ts:88](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/governance.ts#L88)
+Defined in: [src/lib/analytics/governance.ts:88](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/governance.ts#L88)

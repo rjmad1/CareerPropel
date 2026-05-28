@@ -6,9 +6,9 @@
 
 # Function: GET()
 
-> **GET**(`_req`, `__namedParameters`): `Promise`\<`NextResponse`\<\{ `data`: \{ `actions`: `JsonValue`; `candidateId`: `string`; `createdAt`: `Date`; `expiresAt`: `Date` \| `null`; `generatedAt`: `Date`; `healthBreakdown`: `JsonValue`; `id`: `string`; `jobId`: `string`; `momentumScore`: `number`; `readinessScore`: `number`; `suggestedWorkflow`: `string` \| `null`; `updatedAt`: `Date`; `urgencyScore`: `number`; \}; \}\> \| `NextResponse`\<\{ `error`: \{ `message`: `any`; \}; \}\>\>
+> **GET**(`_req`): `Promise`\<`NextResponse`\<\{ `counts`: \{\[`index`: `string`\]: `number`; \}; `items`: `object`[]; `timestamp`: `string`; \}\>\>
 
-Defined in: [src/app/api/opportunities/\[jobId\]/plan/route.ts:14](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/opportunities/[jobId]/plan/route.ts#L14)
+Defined in: [src/app/api/ops/dlq/route.ts:16](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/ops/dlq/route.ts#L16)
 
 ## Parameters
 
@@ -16,16 +16,6 @@ Defined in: [src/app/api/opportunities/\[jobId\]/plan/route.ts:14](https://githu
 
 `NextRequest`
 
-### \_\_namedParameters
-
-#### params
-
-\{ `jobId`: `string`; \}
-
-#### params.jobId
-
-`string`
-
 ## Returns
 
-`Promise`\<`NextResponse`\<\{ `data`: \{ `actions`: `JsonValue`; `candidateId`: `string`; `createdAt`: `Date`; `expiresAt`: `Date` \| `null`; `generatedAt`: `Date`; `healthBreakdown`: `JsonValue`; `id`: `string`; `jobId`: `string`; `momentumScore`: `number`; `readinessScore`: `number`; `suggestedWorkflow`: `string` \| `null`; `updatedAt`: `Date`; `urgencyScore`: `number`; \}; \}\> \| `NextResponse`\<\{ `error`: \{ `message`: `any`; \}; \}\>\>
+`Promise`\<`NextResponse`\<\{ `counts`: \{\[`index`: `string`\]: `number`; \}; `items`: `object`[]; `timestamp`: `string`; \}\>\>

@@ -6,7 +6,7 @@
 
 # Interface: PolicyCheckResult
 
-Defined in: [src/lib/governance/policyEngine.ts:122](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/policyEngine.ts#L122)
+Defined in: [src/lib/governance/policyEngine.ts:164](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/governance/policyEngine.ts#L164)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/governance/policyEngine.ts:122](https://github.com/rjmad1/C
 
 > **allowed**: `boolean`
 
-Defined in: [src/lib/governance/policyEngine.ts:123](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/policyEngine.ts#L123)
+Defined in: [src/lib/governance/policyEngine.ts:165](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/governance/policyEngine.ts#L165)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [src/lib/governance/policyEngine.ts:123](https://github.com/rjmad1/C
 
 > **violations**: [`PolicyViolation`](PolicyViolation.md)[]
 
-Defined in: [src/lib/governance/policyEngine.ts:124](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/policyEngine.ts#L124)
+Defined in: [src/lib/governance/policyEngine.ts:166](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/governance/policyEngine.ts#L166)

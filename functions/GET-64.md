@@ -6,10 +6,10 @@
 
 # Function: GET()
 
-> **GET**(): `Promise`\<`NextResponse`\<[`AggregateHealth`](../interfaces/AggregateHealth.md)\>\>
+> **GET**(): `Promise`\<`Response`\>
 
-Defined in: [src/app/api/ready/route.ts:8](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/ready/route.ts#L8)
+Defined in: [src/app/ready/route.ts:3](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/ready/route.ts#L3)
 
 ## Returns
 
-`Promise`\<`NextResponse`\<[`AggregateHealth`](../interfaces/AggregateHealth.md)\>\>
+`Promise`\<`Response`\>

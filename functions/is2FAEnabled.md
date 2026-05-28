@@ -8,7 +8,7 @@
 
 > **is2FAEnabled**(`email`): `Promise`\<`boolean`\>
 
-Defined in: [src/lib/security/twoFactor.ts:137](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/security/twoFactor.ts#L137)
+Defined in: [src/lib/security/twoFactor.ts:141](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/security/twoFactor.ts#L141)
 
 ## Parameters
 

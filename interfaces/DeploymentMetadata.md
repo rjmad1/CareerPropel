@@ -6,7 +6,7 @@
 
 # Interface: DeploymentMetadata
 
-Defined in: [src/lib/deployment/metadata.ts:3](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/deployment/metadata.ts#L3)
+Defined in: [src/lib/deployment/metadata.ts:3](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/deployment/metadata.ts#L3)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/deployment/metadata.ts:3](https://github.com/rjmad1/CareerP
 
 > **deploymentEnvironment**: `"production"` \| `"staging"`
 
-Defined in: [src/lib/deployment/metadata.ts:6](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/deployment/metadata.ts#L6)
+Defined in: [src/lib/deployment/metadata.ts:6](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/deployment/metadata.ts#L6)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/deployment/metadata.ts:6](https://github.com/rjmad1/CareerP
 
 > **deploymentSha**: `string`
 
-Defined in: [src/lib/deployment/metadata.ts:5](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/deployment/metadata.ts#L5)
+Defined in: [src/lib/deployment/metadata.ts:5](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/deployment/metadata.ts#L5)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/deployment/metadata.ts:5](https://github.com/rjmad1/CareerP
 
 > **deploymentTimestamp**: `string`
 
-Defined in: [src/lib/deployment/metadata.ts:8](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/deployment/metadata.ts#L8)
+Defined in: [src/lib/deployment/metadata.ts:8](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/deployment/metadata.ts#L8)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/deployment/metadata.ts:8](https://github.com/rjmad1/CareerP
 
 > **deploymentVersion**: `string`
 
-Defined in: [src/lib/deployment/metadata.ts:4](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/deployment/metadata.ts#L4)
+Defined in: [src/lib/deployment/metadata.ts:4](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/deployment/metadata.ts#L4)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/deployment/metadata.ts:4](https://github.com/rjmad1/CareerP
 
 > **previousDeploymentVersion**: `string` \| `null`
 
-Defined in: [src/lib/deployment/metadata.ts:9](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/deployment/metadata.ts#L9)
+Defined in: [src/lib/deployment/metadata.ts:9](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/deployment/metadata.ts#L9)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/lib/deployment/metadata.ts:9](https://github.com/rjmad1/CareerP
 
 > **railwayServiceId**: `string` \| `null`
 
-Defined in: [src/lib/deployment/metadata.ts:7](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/deployment/metadata.ts#L7)
+Defined in: [src/lib/deployment/metadata.ts:7](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/deployment/metadata.ts#L7)

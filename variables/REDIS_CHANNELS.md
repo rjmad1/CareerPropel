@@ -8,7 +8,7 @@
 
 > `const` **REDIS\_CHANNELS**: `object`
 
-Defined in: [src/lib/realtime/events.ts:132](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L132)
+Defined in: [src/lib/realtime/events.ts:138](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L138)
 
 Redis channel names
 

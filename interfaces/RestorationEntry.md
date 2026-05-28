@@ -6,7 +6,7 @@
 
 # Interface: RestorationEntry
 
-Defined in: [src/lib/navigation/restoration.ts:16](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/navigation/restoration.ts#L16)
+Defined in: [src/lib/navigation/restoration.ts:16](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/navigation/restoration.ts#L16)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/navigation/restoration.ts:16](https://github.com/rjmad1/Car
 
 > `optional` **payload?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [src/lib/navigation/restoration.ts:20](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/navigation/restoration.ts#L20)
+Defined in: [src/lib/navigation/restoration.ts:20](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/navigation/restoration.ts#L20)
 
 Arbitrary per-route payload (filters, page, tab, etc.)
 
@@ -24,7 +24,7 @@ Arbitrary per-route payload (filters, page, tab, etc.)
 
 > **scrollY**: `number`
 
-Defined in: [src/lib/navigation/restoration.ts:17](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/navigation/restoration.ts#L17)
+Defined in: [src/lib/navigation/restoration.ts:17](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/navigation/restoration.ts#L17)
 
 ***
 
@@ -32,4 +32,4 @@ Defined in: [src/lib/navigation/restoration.ts:17](https://github.com/rjmad1/Car
 
 > **timestamp**: `number`
 
-Defined in: [src/lib/navigation/restoration.ts:18](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/navigation/restoration.ts#L18)
+Defined in: [src/lib/navigation/restoration.ts:18](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/navigation/restoration.ts#L18)

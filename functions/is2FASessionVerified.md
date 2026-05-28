@@ -6,9 +6,9 @@
 
 # Function: is2FASessionVerified()
 
-> **is2FASessionVerified**(`sessionId`): `boolean`
+> **is2FASessionVerified**(`sessionId`): `Promise`\<`boolean`\>
 
-Defined in: [src/lib/security/twoFactor.ts:201](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/security/twoFactor.ts#L201)
+Defined in: [src/lib/security/twoFactor.ts:214](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/security/twoFactor.ts#L214)
 
 ## Parameters
 
@@ -18,4 +18,4 @@ Defined in: [src/lib/security/twoFactor.ts:201](https://github.com/rjmad1/Career
 
 ## Returns
 
-`boolean`
+`Promise`\<`boolean`\>

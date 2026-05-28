@@ -6,16 +6,25 @@
 
 # Function: GET()
 
-> **GET**(`request`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<`object` & `object`\>\>\>
+> **GET**(`_req`, `context`): `Promise`\<`NextResponse`\<`any`\>\>
 
-Defined in: [src/app/api/interview-prep/route.ts:17](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/interview-prep/route.ts#L17)
+Defined in: [src/app/api/interviews/\[id\]/route.ts:15](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/interviews/[id]/route.ts#L15)
+
+GET /api/interviews/[id]
+Get a single interview
 
 ## Parameters
 
-### request
+### \_req
 
 `NextRequest`
 
+### context
+
+#### params
+
+`Promise`\<\{ `id`: `string`; \}\>
+
 ## Returns
 
-`Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<`object` & `object`\>\>\>
+`Promise`\<`NextResponse`\<`any`\>\>

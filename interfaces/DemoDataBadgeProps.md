@@ -6,7 +6,7 @@
 
 # Interface: DemoDataBadgeProps
 
-Defined in: [src/components/ui/DemoDataBadge.tsx:23](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/ui/DemoDataBadge.tsx#L23)
+Defined in: [src/components/ui/DemoDataBadge.tsx:23](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/components/ui/DemoDataBadge.tsx#L23)
 
 ## Extends
 
@@ -1291,7 +1291,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2957
 
 > `optional` **label?**: `string`
 
-Defined in: [src/components/ui/DemoDataBadge.tsx:25](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/ui/DemoDataBadge.tsx#L25)
+Defined in: [src/components/ui/DemoDataBadge.tsx:25](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/components/ui/DemoDataBadge.tsx#L25)
 
 ***
 
@@ -3483,7 +3483,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2961
 
 > `optional` **showTooltip?**: `boolean`
 
-Defined in: [src/components/ui/DemoDataBadge.tsx:26](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/ui/DemoDataBadge.tsx#L26)
+Defined in: [src/components/ui/DemoDataBadge.tsx:26](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/components/ui/DemoDataBadge.tsx#L26)
 
 ***
 
@@ -3491,7 +3491,7 @@ Defined in: [src/components/ui/DemoDataBadge.tsx:26](https://github.com/rjmad1/C
 
 > `optional` **size?**: `"xs"` \| `"sm"`
 
-Defined in: [src/components/ui/DemoDataBadge.tsx:24](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/ui/DemoDataBadge.tsx#L24)
+Defined in: [src/components/ui/DemoDataBadge.tsx:24](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/components/ui/DemoDataBadge.tsx#L24)
 
 ***
 

@@ -6,7 +6,7 @@
 
 # Interface: DatabaseSelection
 
-Defined in: [src/types/interview.ts:231](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L231)
+Defined in: [src/types/interview.ts:231](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L231)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/interview.ts:231](https://github.com/rjmad1/CareerPropel/
 
 > **bestFor**: `string`
 
-Defined in: [src/types/interview.ts:236](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L236)
+Defined in: [src/types/interview.ts:236](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L236)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/interview.ts:236](https://github.com/rjmad1/CareerPropel/
 
 > **examples**: `string`[]
 
-Defined in: [src/types/interview.ts:233](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L233)
+Defined in: [src/types/interview.ts:233](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L233)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/interview.ts:233](https://github.com/rjmad1/CareerPropel/
 
 > **strengths**: `string`[]
 
-Defined in: [src/types/interview.ts:234](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L234)
+Defined in: [src/types/interview.ts:234](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L234)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/interview.ts:234](https://github.com/rjmad1/CareerPropel/
 
 > **tradeoffs**: `string`
 
-Defined in: [src/types/interview.ts:237](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L237)
+Defined in: [src/types/interview.ts:237](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L237)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/interview.ts:237](https://github.com/rjmad1/CareerPropel/
 
 > **type**: `"SQL"` \| `"NoSQL"` \| `"Cache"` \| `"TimeSeries"` \| `"GraphDB"`
 
-Defined in: [src/types/interview.ts:232](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L232)
+Defined in: [src/types/interview.ts:232](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L232)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/types/interview.ts:232](https://github.com/rjmad1/CareerPropel/
 
 > **weaknesses**: `string`[]
 
-Defined in: [src/types/interview.ts:235](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L235)
+Defined in: [src/types/interview.ts:235](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L235)

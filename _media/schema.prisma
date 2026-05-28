@@ -182,6 +182,7 @@ model Job {
   mockInterviewSessions MockInterviewSession[]
   opportunityPlan       OpportunityPlan?
   resumeVariants        ResumeVariant[]
+  jobIntelligence       JobIntelligence?
 
   @@index([candidateId])
   @@index([stage])
@@ -1349,4 +1350,164 @@ model ApplicationPackageItem {
   @@index([packageId])
   @@index([resumeVariantId])
 }
+
+// ─── Role Intelligence & Fit Evaluation Engine ─────────────────────────────────
+
+model JobIntelligence {
+  id                 String               @id @default(cuid())
+  jobId              String               @unique
+  job                Job                  @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  inferredRoleTitle  String?              // Real operational role behind inflated title
+  overallConfidence  Float                @default(0.0)
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  archetypes         RoleArchetype[]
+  requirements       RequirementBreakdown[]
+  businessProblems   BusinessProblem[]
+  signals            OperationalSignal[]
+  roleFitAnalyses    RoleFitAnalysis[]
+}
+
+model RoleArchetype {
+  id                String          @id @default(cuid())
+  jobIntelligenceId String
+  jobIntelligence   JobIntelligence @relation(fields: [jobIntelligenceId], references: [id], onDelete: Cascade)
+  archetype         String          // Builder, Operator, Strategist, Maintainer, Optimizer, Researcher, Executor, Process Scaler, Systems Integrator, Customer-Facing Translator, Technical Lead, Transformation Driver
+  weight            Float           // E.g., 0.60
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@index([jobIntelligenceId])
+}
+
+model RequirementBreakdown {
+  id                String          @id @default(cuid())
+  jobIntelligenceId String
+  jobIntelligence   JobIntelligence @relation(fields: [jobIntelligenceId], references: [id], onDelete: Cascade)
+  type              String          // "hard" or "soft"
+  originalText      String
+  normalizedText    String
+  confidence        Float           @default(1.0)
+  deconstruction    Json            // { tools: string[], decisions: string[], outputs: string[], metrics: string[], ownership: string, operationalComplexity: string, collaborationSurfaceArea: string, businessImpact: string, executionCadence: string, riskLevel: string }
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@index([jobIntelligenceId])
+}
+
+model BusinessProblem {
+  id                String          @id @default(cuid())
+  jobIntelligenceId String
+  jobIntelligence   JobIntelligence @relation(fields: [jobIntelligenceId], references: [id], onDelete: Cascade)
+  problemArea       String          // e.g. "onboarding completion"
+  description       String
+  inferredFriction  String?
+  urgencySignal     String?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  strengthEvidences StrengthEvidence[]
+
+  @@index([jobIntelligenceId])
+}
+
+model OperationalSignal {
+  id                String          @id @default(cuid())
+  jobIntelligenceId String
+  jobIntelligence   JobIntelligence @relation(fields: [jobIntelligenceId], references: [id], onDelete: Cascade)
+  type              String          // decision_ownership, operational_scope, execution_complexity, systems_responsibility, reporting_structure, organizational_leverage
+  description       String
+  value             String
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@index([jobIntelligenceId])
+}
+
+model RoleFitAnalysis {
+  id                 String               @id @default(cuid())
+  candidateId        String
+  jobIntelligenceId  String
+  jobIntelligence    JobIntelligence      @relation(fields: [jobIntelligenceId], references: [id], onDelete: Cascade)
+  overallFitScore    Float                @default(0.0)
+  conversionProb     Float                @default(0.0)
+  immediateContribution Float             @default(0.0)
+  credibilityRisk    Float                @default(0.0)
+  skillTransferScore Float                @default(0.0)
+  businessProbAlign  Float                @default(0.0)
+  roleClarityScore   Float                @default(0.0)
+  painMatchScore     Float                @default(0.0)
+  adaptationRiskScore Float               @default(0.0)
+  scoringSnapshot    Json?                // relational / JSON snapshot for exact weights
+  reasoning          String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+
+  strengths          StrengthEvidence[]
+  gaps               FitGap[]
+
+  @@unique([candidateId, jobIntelligenceId])
+  @@index([candidateId])
+  @@index([jobIntelligenceId])
+}
+
+model StrengthEvidence {
+  id                String          @id @default(cuid())
+  roleFitAnalysisId String
+  roleFitAnalysis   RoleFitAnalysis @relation(fields: [roleFitAnalysisId], references: [id], onDelete: Cascade)
+  businessProblemId String?
+  businessProblem   BusinessProblem? @relation(fields: [businessProblemId], references: [id], onDelete: SetNull)
+  capabilityName    String
+  candidateProof    String          // Demonstrated execution evidence
+  employerInterpretation String     // In employer language
+  measurableOutcome String
+  businessImpact    String
+  scale             String?
+  decisionOwnership String?
+  operationalComplexity String?
+  systemsInfluenced String?
+  stakeholderLevel  String?
+  repeatability     String?
+  priorityLevel     String          // HIGH, MEDIUM, LOW
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@index([roleFitAnalysisId])
+  @@index([businessProblemId])
+}
+
+model FitGap {
+  id                String          @id @default(cuid())
+  roleFitAnalysisId String
+  roleFitAnalysis   RoleFitAnalysis @relation(fields: [roleFitAnalysisId], references: [id], onDelete: Cascade)
+  type              String          // "trainable", "credibility-killing", "domain-depth"
+  description       String
+  penaltyLevel      String          // LOW, SEVERE, CRITICAL
+  adaptationCost    Float           @default(0.0)
+  mitigationStrategy String?
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+
+  @@index([roleFitAnalysisId])
+}
+
+model PatternLibraryEntry {
+  id                  String   @id @default(cuid())
+  candidateId         String
+  roleArchetype       String
+  operationalKeywords String[]
+  businessProblems    String[]
+  successMetrics      String[]
+  languagePatterns    String[]
+  achievementsMapped  String[]
+  conversionCount     Int      @default(0)
+  successScore        Float    @default(0.0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([candidateId])
+  @@index([roleArchetype])
+}
+
 

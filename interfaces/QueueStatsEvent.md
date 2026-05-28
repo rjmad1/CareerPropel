@@ -6,7 +6,7 @@
 
 # Interface: QueueStatsEvent
 
-Defined in: [src/lib/realtime/events.ts:84](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L84)
+Defined in: [src/lib/realtime/events.ts:90](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L90)
 
 Queue stats event
 Published periodically with queue depth and throughput
@@ -17,7 +17,7 @@ Published periodically with queue depth and throughput
 
 > **avgProcessingTime**: `number`
 
-Defined in: [src/lib/realtime/events.ts:91](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L91)
+Defined in: [src/lib/realtime/events.ts:97](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L97)
 
 ***
 
@@ -25,7 +25,7 @@ Defined in: [src/lib/realtime/events.ts:91](https://github.com/rjmad1/CareerProp
 
 > **completed**: `number`
 
-Defined in: [src/lib/realtime/events.ts:89](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L89)
+Defined in: [src/lib/realtime/events.ts:95](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L95)
 
 ***
 
@@ -33,7 +33,7 @@ Defined in: [src/lib/realtime/events.ts:89](https://github.com/rjmad1/CareerProp
 
 > **failed**: `number`
 
-Defined in: [src/lib/realtime/events.ts:90](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L90)
+Defined in: [src/lib/realtime/events.ts:96](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L96)
 
 ***
 
@@ -41,7 +41,7 @@ Defined in: [src/lib/realtime/events.ts:90](https://github.com/rjmad1/CareerProp
 
 > **pending**: `number`
 
-Defined in: [src/lib/realtime/events.ts:87](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L87)
+Defined in: [src/lib/realtime/events.ts:93](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L93)
 
 ***
 
@@ -49,7 +49,7 @@ Defined in: [src/lib/realtime/events.ts:87](https://github.com/rjmad1/CareerProp
 
 > **running**: `number`
 
-Defined in: [src/lib/realtime/events.ts:88](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L88)
+Defined in: [src/lib/realtime/events.ts:94](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L94)
 
 ***
 
@@ -57,7 +57,7 @@ Defined in: [src/lib/realtime/events.ts:88](https://github.com/rjmad1/CareerProp
 
 > **throughputPerMin**: `number`
 
-Defined in: [src/lib/realtime/events.ts:92](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L92)
+Defined in: [src/lib/realtime/events.ts:98](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L98)
 
 ***
 
@@ -65,7 +65,7 @@ Defined in: [src/lib/realtime/events.ts:92](https://github.com/rjmad1/CareerProp
 
 > **timestamp**: `Date`
 
-Defined in: [src/lib/realtime/events.ts:93](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L93)
+Defined in: [src/lib/realtime/events.ts:99](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L99)
 
 ***
 
@@ -73,7 +73,7 @@ Defined in: [src/lib/realtime/events.ts:93](https://github.com/rjmad1/CareerProp
 
 > **type**: `"queue:stats"`
 
-Defined in: [src/lib/realtime/events.ts:85](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L85)
+Defined in: [src/lib/realtime/events.ts:91](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L91)
 
 ***
 
@@ -81,4 +81,4 @@ Defined in: [src/lib/realtime/events.ts:85](https://github.com/rjmad1/CareerProp
 
 > **userId**: `string`
 
-Defined in: [src/lib/realtime/events.ts:86](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L86)
+Defined in: [src/lib/realtime/events.ts:92](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L92)

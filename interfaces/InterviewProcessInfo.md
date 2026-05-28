@@ -6,7 +6,7 @@
 
 # Interface: InterviewProcessInfo
 
-Defined in: [src/types/company.ts:140](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L140)
+Defined in: [src/types/company.ts:140](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/company.ts#L140)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/company.ts:140](https://github.com/rjmad1/CareerPropel/bl
 
 > **assessment**: `object`
 
-Defined in: [src/types/company.ts:147](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L147)
+Defined in: [src/types/company.ts:147](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/company.ts#L147)
 
 #### behavioral
 
@@ -38,7 +38,7 @@ Defined in: [src/types/company.ts:147](https://github.com/rjmad1/CareerPropel/bl
 
 > **feedbackGiven**: `boolean`
 
-Defined in: [src/types/company.ts:154](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L154)
+Defined in: [src/types/company.ts:154](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/company.ts#L154)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/company.ts:154](https://github.com/rjmad1/CareerPropel/bl
 
 > **humanInterviews**: `number`
 
-Defined in: [src/types/company.ts:153](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L153)
+Defined in: [src/types/company.ts:153](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/company.ts#L153)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/types/company.ts:153](https://github.com/rjmad1/CareerPropel/bl
 
 > **rounds**: [`InterviewRound`](InterviewRound.md)[]
 
-Defined in: [src/types/company.ts:141](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L141)
+Defined in: [src/types/company.ts:141](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/company.ts#L141)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/types/company.ts:141](https://github.com/rjmad1/CareerPropel/bl
 
 > **totalTime**: `number`
 
-Defined in: [src/types/company.ts:142](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L142)
+Defined in: [src/types/company.ts:142](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/company.ts#L142)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/types/company.ts:142](https://github.com/rjmad1/CareerPropel/bl
 
 > **typicalDuration**: `object`
 
-Defined in: [src/types/company.ts:143](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/company.ts#L143)
+Defined in: [src/types/company.ts:143](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/company.ts#L143)
 
 #### max
 

@@ -6,16 +6,13 @@
 
 # Function: POST()
 
-> **POST**(`request`): `Promise`\<`NextResponse`\<`unknown`\>\>
+> **POST**(`request`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `imported`: `number`; `jobIds`: `string`[]; \}\>\>\>
 
-Defined in: [src/app/api/jobs/route.ts:104](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/jobs/route.ts#L104)
+Defined in: [src/app/api/jobs/import/route.ts:29](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/jobs/import/route.ts#L29)
 
-POST /api/jobs
-Create a new job
-Protected: Requires authentication
-Rate Limited: 20 requests per minute per IP
-CSRF Protected: Requires valid CSRF token (optional in dev)
-Job will be created for the authenticated user
+POST /api/jobs/import
+Save scraped jobs as JobImport staging records and immediately
+create Job pipeline entries for each.
 
 ## Parameters
 
@@ -25,4 +22,4 @@ Job will be created for the authenticated user
 
 ## Returns
 
-`Promise`\<`NextResponse`\<`unknown`\>\>
+`Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `imported`: `number`; `jobIds`: `string`[]; \}\>\>\>

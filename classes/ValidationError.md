@@ -6,7 +6,7 @@
 
 # Class: ValidationError
 
-Defined in: [src/app/api/middleware/auth.ts:90](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/middleware/auth.ts#L90)
+Defined in: [src/app/api/middleware/auth.ts:90](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/middleware/auth.ts#L90)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [src/app/api/middleware/auth.ts:90](https://github.com/rjmad1/Career
 
 > **new ValidationError**(`message?`, `details?`): `ValidationError`
 
-Defined in: [src/app/api/middleware/auth.ts:93](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/middleware/auth.ts#L93)
+Defined in: [src/app/api/middleware/auth.ts:93](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/middleware/auth.ts#L93)
 
 #### Parameters
 
@@ -44,7 +44,7 @@ Defined in: [src/app/api/middleware/auth.ts:93](https://github.com/rjmad1/Career
 
 > `optional` **cause?**: `unknown`
 
-Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:26
+Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:24
 
 #### Inherited from
 
@@ -56,7 +56,7 @@ Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:26
 
 > **details**: `Record`\<`string`, `string`[]\>
 
-Defined in: [src/app/api/middleware/auth.ts:91](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/middleware/auth.ts#L91)
+Defined in: [src/app/api/middleware/auth.ts:91](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/middleware/auth.ts#L91)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [src/app/api/middleware/auth.ts:91](https://github.com/rjmad1/Career
 
 > **message**: `string`
 
-Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1077
+Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1075
 
 #### Inherited from
 
@@ -76,7 +76,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1077
 
 > **name**: `string`
 
-Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
+Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1074
 
 #### Inherited from
 
@@ -88,7 +88,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
 
 > `optional` **stack?**: `string`
 
-Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1078
+Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
 
 #### Inherited from
 

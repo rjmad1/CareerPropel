@@ -6,12 +6,9 @@
 
 # Variable: GET
 
-> `const` **GET**: (`request`, `context`) => `Promise`\<`NextResponse`\<`unknown`\>\>
+> `const` **GET**: (`request`, `context`) => `Promise`\<`Response`\>
 
-Defined in: [src/app/api/jobs/search/status/route.ts:13](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/jobs/search/status/route.ts#L13)
-
-GET /api/jobs/search/status
-Retrieves status and transient results of a queue-driven Indeed/LinkedIn job search task.
+Defined in: [src/app/api/health/route.ts:7](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/health/route.ts#L7)
 
 ## Parameters
 
@@ -27,4 +24,4 @@ Retrieves status and transient results of a queue-driven Indeed/LinkedIn job sea
 
 ## Returns
 
-`Promise`\<`NextResponse`\<`unknown`\>\>
+`Promise`\<`Response`\>

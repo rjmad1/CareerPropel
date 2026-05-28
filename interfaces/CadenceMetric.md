@@ -6,7 +6,7 @@
 
 # Interface: CadenceMetric
 
-Defined in: [src/lib/analytics/types.ts:115](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L115)
+Defined in: [src/lib/analytics/types.ts:115](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L115)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/types.ts:115](https://github.com/rjmad1/CareerPro
 
 > **appsPerWeek**: `number`
 
-Defined in: [src/lib/analytics/types.ts:116](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L116)
+Defined in: [src/lib/analytics/types.ts:116](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L116)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/types.ts:116](https://github.com/rjmad1/CareerPro
 
 > **consistency**: `number`
 
-Defined in: [src/lib/analytics/types.ts:119](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L119)
+Defined in: [src/lib/analytics/types.ts:119](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L119)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/analytics/types.ts:119](https://github.com/rjmad1/CareerPro
 
 > **peakDayOfWeek**: `string` \| `null`
 
-Defined in: [src/lib/analytics/types.ts:118](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L118)
+Defined in: [src/lib/analytics/types.ts:118](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L118)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/lib/analytics/types.ts:118](https://github.com/rjmad1/CareerPro
 
 > **trend**: `"stable"` \| `"increasing"` \| `"declining"`
 
-Defined in: [src/lib/analytics/types.ts:117](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L117)
+Defined in: [src/lib/analytics/types.ts:117](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L117)

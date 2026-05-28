@@ -6,7 +6,7 @@
 
 # Interface: AgentExecutionSummary
 
-Defined in: [src/hooks/useAgents.ts:5](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useAgents.ts#L5)
+Defined in: [src/hooks/useAgents.ts:5](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useAgents.ts#L5)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/hooks/useAgents.ts:5](https://github.com/rjmad1/CareerPropel/bl
 
 > **agentType**: [`AgentType`](../type-aliases/AgentType-2.md)
 
-Defined in: [src/hooks/useAgents.ts:7](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useAgents.ts#L7)
+Defined in: [src/hooks/useAgents.ts:7](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useAgents.ts#L7)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/hooks/useAgents.ts:7](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **completedAt?**: `string`
 
-Defined in: [src/hooks/useAgents.ts:16](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useAgents.ts#L16)
+Defined in: [src/hooks/useAgents.ts:16](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useAgents.ts#L16)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/hooks/useAgents.ts:16](https://github.com/rjmad1/CareerPropel/b
 
 > **createdAt**: `string`
 
-Defined in: [src/hooks/useAgents.ts:14](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useAgents.ts#L14)
+Defined in: [src/hooks/useAgents.ts:14](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useAgents.ts#L14)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/hooks/useAgents.ts:14](https://github.com/rjmad1/CareerPropel/b
 
 > `optional` **durationMs?**: `number`
 
-Defined in: [src/hooks/useAgents.ts:13](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useAgents.ts#L13)
+Defined in: [src/hooks/useAgents.ts:13](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useAgents.ts#L13)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/hooks/useAgents.ts:13](https://github.com/rjmad1/CareerPropel/b
 
 > `optional` **errorMessage?**: `string`
 
-Defined in: [src/hooks/useAgents.ts:11](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useAgents.ts#L11)
+Defined in: [src/hooks/useAgents.ts:11](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useAgents.ts#L11)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/hooks/useAgents.ts:11](https://github.com/rjmad1/CareerPropel/b
 
 > **id**: `string`
 
-Defined in: [src/hooks/useAgents.ts:6](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useAgents.ts#L6)
+Defined in: [src/hooks/useAgents.ts:6](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useAgents.ts#L6)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/hooks/useAgents.ts:6](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **output?**: `Record`\<`string`, `any`\>
 
-Defined in: [src/hooks/useAgents.ts:10](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useAgents.ts#L10)
+Defined in: [src/hooks/useAgents.ts:10](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useAgents.ts#L10)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/hooks/useAgents.ts:10](https://github.com/rjmad1/CareerPropel/b
 
 > **progress**: `number`
 
-Defined in: [src/hooks/useAgents.ts:9](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useAgents.ts#L9)
+Defined in: [src/hooks/useAgents.ts:9](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useAgents.ts#L9)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/hooks/useAgents.ts:9](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **startedAt?**: `string`
 
-Defined in: [src/hooks/useAgents.ts:15](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useAgents.ts#L15)
+Defined in: [src/hooks/useAgents.ts:15](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useAgents.ts#L15)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [src/hooks/useAgents.ts:15](https://github.com/rjmad1/CareerPropel/b
 
 > **status**: `"completed"` \| `"queued"` \| `"running"` \| `"failed"`
 
-Defined in: [src/hooks/useAgents.ts:8](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useAgents.ts#L8)
+Defined in: [src/hooks/useAgents.ts:8](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useAgents.ts#L8)
 
 ***
 
@@ -94,4 +94,4 @@ Defined in: [src/hooks/useAgents.ts:8](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **tokenCount?**: `number`
 
-Defined in: [src/hooks/useAgents.ts:12](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useAgents.ts#L12)
+Defined in: [src/hooks/useAgents.ts:12](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useAgents.ts#L12)

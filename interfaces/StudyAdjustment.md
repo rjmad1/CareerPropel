@@ -6,7 +6,7 @@
 
 # Interface: StudyAdjustment
 
-Defined in: [src/types/preparation.ts:84](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L84)
+Defined in: [src/types/preparation.ts:84](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L84)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/preparation.ts:84](https://github.com/rjmad1/CareerPropel
 
 > **changes**: `string`
 
-Defined in: [src/types/preparation.ts:87](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L87)
+Defined in: [src/types/preparation.ts:87](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L87)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/preparation.ts:87](https://github.com/rjmad1/CareerPropel
 
 > **date**: `Date`
 
-Defined in: [src/types/preparation.ts:85](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L85)
+Defined in: [src/types/preparation.ts:85](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L85)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/preparation.ts:85](https://github.com/rjmad1/CareerPropel
 
 > `optional` **newCompletionDate?**: `Date`
 
-Defined in: [src/types/preparation.ts:88](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L88)
+Defined in: [src/types/preparation.ts:88](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L88)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/types/preparation.ts:88](https://github.com/rjmad1/CareerPropel
 
 > **reason**: `"falling_behind"` \| `"interview_postponed"` \| `"weak_area"` \| `"strong_area"`
 
-Defined in: [src/types/preparation.ts:86](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L86)
+Defined in: [src/types/preparation.ts:86](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L86)

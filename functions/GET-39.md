@@ -6,19 +6,22 @@
 
 # Function: GET()
 
-> **GET**(`req`): `Promise`\<`NextResponse`\<`any`\>\>
+> **GET**(`request`, `context`): `Promise`\<`NextResponse`\<`unknown`\>\>
 
-Defined in: [src/app/api/interviews/route.ts:16](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/interviews/route.ts#L16)
-
-GET /api/interviews
-List interviews for authenticated user
+Defined in: [src/app/api/jobs/\[id\]/activities/route.ts:13](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/jobs/[id]/activities/route.ts#L13)
 
 ## Parameters
 
-### req
+### request
 
 `NextRequest`
 
+### context
+
+#### params
+
+`Promise`\<\{ `id`: `string`; \}\>
+
 ## Returns
 
-`Promise`\<`NextResponse`\<`any`\>\>
+`Promise`\<`NextResponse`\<`unknown`\>\>

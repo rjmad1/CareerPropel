@@ -6,7 +6,7 @@
 
 # Interface: ResumeAlignmentProgress
 
-Defined in: [src/types/preparation.ts:305](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L305)
+Defined in: [src/types/preparation.ts:305](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L305)
 
 Resume alignment progress
 
@@ -16,7 +16,7 @@ Resume alignment progress
 
 > **currentVersion**: `string`
 
-Defined in: [src/types/preparation.ts:311](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L311)
+Defined in: [src/types/preparation.ts:311](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L311)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/preparation.ts:311](https://github.com/rjmad1/CareerPrope
 
 > **jobId**: `string`
 
-Defined in: [src/types/preparation.ts:306](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L306)
+Defined in: [src/types/preparation.ts:306](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L306)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/preparation.ts:306](https://github.com/rjmad1/CareerPrope
 
 > **keywordMatches**: [`KeywordProgress`](KeywordProgress.md)[]
 
-Defined in: [src/types/preparation.ts:309](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L309)
+Defined in: [src/types/preparation.ts:309](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L309)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/preparation.ts:309](https://github.com/rjmad1/CareerPrope
 
 > **matchScore**: `number`
 
-Defined in: [src/types/preparation.ts:308](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L308)
+Defined in: [src/types/preparation.ts:308](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L308)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/preparation.ts:308](https://github.com/rjmad1/CareerPrope
 
 > **suggestedEdits**: [`EditProgress`](EditProgress.md)[]
 
-Defined in: [src/types/preparation.ts:310](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L310)
+Defined in: [src/types/preparation.ts:310](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L310)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/types/preparation.ts:310](https://github.com/rjmad1/CareerPrope
 
 > **targetRole**: `string`
 
-Defined in: [src/types/preparation.ts:307](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L307)
+Defined in: [src/types/preparation.ts:307](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L307)
 
 ***
 
@@ -64,4 +64,4 @@ Defined in: [src/types/preparation.ts:307](https://github.com/rjmad1/CareerPrope
 
 > **updatedAt**: `Date`
 
-Defined in: [src/types/preparation.ts:312](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L312)
+Defined in: [src/types/preparation.ts:312](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L312)

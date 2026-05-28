@@ -6,7 +6,7 @@
 
 # Interface: VariantGenerationInput
 
-Defined in: [src/lib/document/variantGenerator.ts:27](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/variantGenerator.ts#L27)
+Defined in: [src/lib/document/variantGenerator.ts:27](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/variantGenerator.ts#L27)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/document/variantGenerator.ts:27](https://github.com/rjmad1/
 
 > `optional` **jobDescription?**: `string`
 
-Defined in: [src/lib/document/variantGenerator.ts:32](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/variantGenerator.ts#L32)
+Defined in: [src/lib/document/variantGenerator.ts:32](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/variantGenerator.ts#L32)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/document/variantGenerator.ts:32](https://github.com/rjmad1/
 
 > `optional` **jobId?**: `string`
 
-Defined in: [src/lib/document/variantGenerator.ts:34](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/variantGenerator.ts#L34)
+Defined in: [src/lib/document/variantGenerator.ts:34](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/variantGenerator.ts#L34)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/document/variantGenerator.ts:34](https://github.com/rjmad1/
 
 > `optional` **jobTitle?**: `string`
 
-Defined in: [src/lib/document/variantGenerator.ts:33](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/variantGenerator.ts#L33)
+Defined in: [src/lib/document/variantGenerator.ts:33](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/variantGenerator.ts#L33)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/document/variantGenerator.ts:33](https://github.com/rjmad1/
 
 > **profile**: [`MasterProfile`](MasterProfile.md)
 
-Defined in: [src/lib/document/variantGenerator.ts:28](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/variantGenerator.ts#L28)
+Defined in: [src/lib/document/variantGenerator.ts:28](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/variantGenerator.ts#L28)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/document/variantGenerator.ts:28](https://github.com/rjmad1/
 
 > `optional` **targetCompany?**: `string`
 
-Defined in: [src/lib/document/variantGenerator.ts:30](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/variantGenerator.ts#L30)
+Defined in: [src/lib/document/variantGenerator.ts:30](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/variantGenerator.ts#L30)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/document/variantGenerator.ts:30](https://github.com/rjmad1/
 
 > `optional` **targetIndustry?**: `string`
 
-Defined in: [src/lib/document/variantGenerator.ts:31](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/variantGenerator.ts#L31)
+Defined in: [src/lib/document/variantGenerator.ts:31](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/variantGenerator.ts#L31)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/document/variantGenerator.ts:31](https://github.com/rjmad1/
 
 > **targetRole**: `string`
 
-Defined in: [src/lib/document/variantGenerator.ts:29](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/variantGenerator.ts#L29)
+Defined in: [src/lib/document/variantGenerator.ts:29](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/variantGenerator.ts#L29)
 
 ***
 
@@ -70,6 +70,6 @@ Defined in: [src/lib/document/variantGenerator.ts:29](https://github.com/rjmad1/
 
 > `optional` **useAIBullets?**: `boolean`
 
-Defined in: [src/lib/document/variantGenerator.ts:36](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/variantGenerator.ts#L36)
+Defined in: [src/lib/document/variantGenerator.ts:36](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/variantGenerator.ts#L36)
 
 Whether to use AI to write role experience bullets (vs. use bank bullets directly)

@@ -6,7 +6,7 @@
 
 # Interface: PerformanceTrend
 
-Defined in: [src/lib/analytics/types.ts:159](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L159)
+Defined in: [src/lib/analytics/types.ts:159](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L159)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/types.ts:159](https://github.com/rjmad1/CareerPro
 
 > **dataPoints**: `number`
 
-Defined in: [src/lib/analytics/types.ts:163](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L163)
+Defined in: [src/lib/analytics/types.ts:163](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L163)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/types.ts:163](https://github.com/rjmad1/CareerPro
 
 > **direction**: `"stable"` \| `"declining"` \| `"improving"` \| `"insufficient_data"`
 
-Defined in: [src/lib/analytics/types.ts:162](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L162)
+Defined in: [src/lib/analytics/types.ts:162](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L162)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/analytics/types.ts:162](https://github.com/rjmad1/CareerPro
 
 > **historicalAvgScore**: `number` \| `null`
 
-Defined in: [src/lib/analytics/types.ts:161](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L161)
+Defined in: [src/lib/analytics/types.ts:161](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L161)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/lib/analytics/types.ts:161](https://github.com/rjmad1/CareerPro
 
 > **recentAvgScore**: `number` \| `null`
 
-Defined in: [src/lib/analytics/types.ts:160](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L160)
+Defined in: [src/lib/analytics/types.ts:160](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L160)

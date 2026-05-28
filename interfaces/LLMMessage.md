@@ -6,7 +6,7 @@
 
 # Interface: LLMMessage
 
-Defined in: [src/lib/llm/orchestrator.ts:17](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L17)
+Defined in: [src/lib/llm/orchestrator.ts:17](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/llm/orchestrator.ts#L17)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/llm/orchestrator.ts:17](https://github.com/rjmad1/CareerPro
 
 > **content**: `string`
 
-Defined in: [src/lib/llm/orchestrator.ts:19](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L19)
+Defined in: [src/lib/llm/orchestrator.ts:19](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/llm/orchestrator.ts#L19)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [src/lib/llm/orchestrator.ts:19](https://github.com/rjmad1/CareerPro
 
 > **role**: `"user"` \| `"system"` \| `"assistant"`
 
-Defined in: [src/lib/llm/orchestrator.ts:18](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L18)
+Defined in: [src/lib/llm/orchestrator.ts:18](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/llm/orchestrator.ts#L18)

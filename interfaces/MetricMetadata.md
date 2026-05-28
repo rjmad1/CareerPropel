@@ -6,7 +6,7 @@
 
 # Interface: MetricMetadata
 
-Defined in: [src/lib/analytics/types.ts:14](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L14)
+Defined in: [src/lib/analytics/types.ts:14](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L14)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/types.ts:14](https://github.com/rjmad1/CareerProp
 
 > **confidence**: [`ConfidenceLevel`](../type-aliases/ConfidenceLevel.md)
 
-Defined in: [src/lib/analytics/types.ts:15](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L15)
+Defined in: [src/lib/analytics/types.ts:15](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L15)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/types.ts:15](https://github.com/rjmad1/CareerProp
 
 > `optional` **note?**: `string`
 
-Defined in: [src/lib/analytics/types.ts:20](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L20)
+Defined in: [src/lib/analytics/types.ts:20](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L20)
 
 Human-readable note shown in UI, e.g. "estimated from industry baseline"
 
@@ -32,7 +32,7 @@ Human-readable note shown in UI, e.g. "estimated from industry baseline"
 
 > `optional` **sampleSize?**: `number`
 
-Defined in: [src/lib/analytics/types.ts:17](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L17)
+Defined in: [src/lib/analytics/types.ts:17](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L17)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/lib/analytics/types.ts:17](https://github.com/rjmad1/CareerProp
 
 > **source**: [`DataSourceType`](../type-aliases/DataSourceType.md)
 
-Defined in: [src/lib/analytics/types.ts:16](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L16)
+Defined in: [src/lib/analytics/types.ts:16](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L16)
 
 ***
 
@@ -48,4 +48,4 @@ Defined in: [src/lib/analytics/types.ts:16](https://github.com/rjmad1/CareerProp
 
 > `optional` **staleDays?**: `number`
 
-Defined in: [src/lib/analytics/types.ts:18](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L18)
+Defined in: [src/lib/analytics/types.ts:18](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L18)

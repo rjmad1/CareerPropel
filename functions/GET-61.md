@@ -6,19 +6,10 @@
 
 # Function: GET()
 
-> **GET**(`request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `entities`: `object`[]; `total`: `number`; \}\>\>
+> **GET**(): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<[`LocalRuntimeStatus`](../interfaces/LocalRuntimeStatus.md)\>\>
 
-Defined in: [src/app/api/profile/entities/route.ts:11](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/profile/entities/route.ts#L11)
-
-GET /api/profile/entities?candidateId={id}&type={type}
-Fetch profile data entries (resume, cover_letter, linkedin_export, notes, etc.)
-
-## Parameters
-
-### request
-
-`NextRequest`
+Defined in: [src/app/api/settings/ai-providers/scan/route.ts:14](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/settings/ai-providers/scan/route.ts#L14)
 
 ## Returns
 
-`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `entities`: `object`[]; `total`: `number`; \}\>\>
+`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<[`LocalRuntimeStatus`](../interfaces/LocalRuntimeStatus.md)\>\>

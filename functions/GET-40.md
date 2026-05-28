@@ -6,13 +6,16 @@
 
 # Function: GET()
 
-> **GET**(`request`, `context`): `Promise`\<`NextResponse`\<`unknown`\>\>
+> **GET**(`_request`, `context`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `score`: `number`; \}\>\>\>
 
-Defined in: [src/app/api/jobs/\[id\]/activities/route.ts:13](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/jobs/[id]/activities/route.ts#L13)
+Defined in: [src/app/api/jobs/\[id\]/match/route.ts:13](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/jobs/[id]/match/route.ts#L13)
+
+GET /api/jobs/:id/match
+Return the stored match score for a job.
 
 ## Parameters
 
-### request
+### \_request
 
 `NextRequest`
 
@@ -24,4 +27,4 @@ Defined in: [src/app/api/jobs/\[id\]/activities/route.ts:13](https://github.com/
 
 ## Returns
 
-`Promise`\<`NextResponse`\<`unknown`\>\>
+`Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `score`: `number`; \}\>\>\>

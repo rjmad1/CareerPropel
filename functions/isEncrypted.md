@@ -8,7 +8,7 @@
 
 > **isEncrypted**(`value`): `boolean`
 
-Defined in: [src/lib/crypto/tokenEncryption.ts:112](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/crypto/tokenEncryption.ts#L112)
+Defined in: [src/lib/crypto/tokenEncryption.ts:112](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/crypto/tokenEncryption.ts#L112)
 
 Returns true if the given string looks like an encrypted value
 (has the `iv:tag:ciphertext` compound format).

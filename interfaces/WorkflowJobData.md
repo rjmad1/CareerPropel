@@ -6,7 +6,7 @@
 
 # Interface: WorkflowJobData
 
-Defined in: [src/lib/workflow/types.ts:154](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L154)
+Defined in: [src/lib/workflow/types.ts:158](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L158)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/workflow/types.ts:154](https://github.com/rjmad1/CareerProp
 
 > **schemaVersion**: `number`
 
-Defined in: [src/lib/workflow/types.ts:158](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L158)
+Defined in: [src/lib/workflow/types.ts:162](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L162)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/workflow/types.ts:158](https://github.com/rjmad1/CareerProp
 
 > **stepIndex**: `number`
 
-Defined in: [src/lib/workflow/types.ts:156](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L156)
+Defined in: [src/lib/workflow/types.ts:160](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L160)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/workflow/types.ts:156](https://github.com/rjmad1/CareerProp
 
 > **userId**: `string`
 
-Defined in: [src/lib/workflow/types.ts:157](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L157)
+Defined in: [src/lib/workflow/types.ts:161](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L161)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/lib/workflow/types.ts:157](https://github.com/rjmad1/CareerProp
 
 > **workflowExecutionId**: `string`
 
-Defined in: [src/lib/workflow/types.ts:155](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L155)
+Defined in: [src/lib/workflow/types.ts:159](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L159)

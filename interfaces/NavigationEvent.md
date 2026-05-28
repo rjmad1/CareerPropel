@@ -6,7 +6,7 @@
 
 # Interface: NavigationEvent
 
-Defined in: [src/lib/navigation/analytics.ts:34](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/navigation/analytics.ts#L34)
+Defined in: [src/lib/navigation/analytics.ts:34](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/navigation/analytics.ts#L34)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/navigation/analytics.ts:34](https://github.com/rjmad1/Caree
 
 > `optional` **durationMs?**: `number`
 
-Defined in: [src/lib/navigation/analytics.ts:41](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/navigation/analytics.ts#L41)
+Defined in: [src/lib/navigation/analytics.ts:41](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/navigation/analytics.ts#L41)
 
 Duration in ms (for latency events)
 
@@ -24,7 +24,7 @@ Duration in ms (for latency events)
 
 > `optional` **from?**: `string`
 
-Defined in: [src/lib/navigation/analytics.ts:37](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/navigation/analytics.ts#L37)
+Defined in: [src/lib/navigation/analytics.ts:37](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/navigation/analytics.ts#L37)
 
 Route being navigated FROM
 
@@ -34,7 +34,7 @@ Route being navigated FROM
 
 > `optional` **meta?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [src/lib/navigation/analytics.ts:43](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/navigation/analytics.ts#L43)
+Defined in: [src/lib/navigation/analytics.ts:43](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/navigation/analytics.ts#L43)
 
 Contextual extras
 
@@ -44,7 +44,7 @@ Contextual extras
 
 > **timestamp**: `number`
 
-Defined in: [src/lib/navigation/analytics.ts:44](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/navigation/analytics.ts#L44)
+Defined in: [src/lib/navigation/analytics.ts:44](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/navigation/analytics.ts#L44)
 
 ***
 
@@ -52,7 +52,7 @@ Defined in: [src/lib/navigation/analytics.ts:44](https://github.com/rjmad1/Caree
 
 > `optional` **to?**: `string`
 
-Defined in: [src/lib/navigation/analytics.ts:39](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/navigation/analytics.ts#L39)
+Defined in: [src/lib/navigation/analytics.ts:39](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/navigation/analytics.ts#L39)
 
 Route being navigated TO
 
@@ -62,4 +62,4 @@ Route being navigated TO
 
 > **type**: [`NavigationEventType`](../type-aliases/NavigationEventType.md)
 
-Defined in: [src/lib/navigation/analytics.ts:35](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/navigation/analytics.ts#L35)
+Defined in: [src/lib/navigation/analytics.ts:35](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/navigation/analytics.ts#L35)

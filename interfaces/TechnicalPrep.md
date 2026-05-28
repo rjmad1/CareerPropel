@@ -6,7 +6,7 @@
 
 # Interface: TechnicalPrep
 
-Defined in: [src/types/interview.ts:129](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L129)
+Defined in: [src/types/interview.ts:129](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L129)
 
 Technical preparation materials
 
@@ -16,7 +16,7 @@ Technical preparation materials
 
 > **algorithms**: [`Concept`](Concept.md)[]
 
-Defined in: [src/types/interview.ts:132](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L132)
+Defined in: [src/types/interview.ts:132](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L132)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/interview.ts:132](https://github.com/rjmad1/CareerPropel/
 
 > **dataStructures**: [`Concept`](Concept.md)[]
 
-Defined in: [src/types/interview.ts:131](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L131)
+Defined in: [src/types/interview.ts:131](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L131)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/interview.ts:131](https://github.com/rjmad1/CareerPropel/
 
 > **practiceProblems**: [`PracticeProblem`](PracticeProblem.md)[]
 
-Defined in: [src/types/interview.ts:135](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L135)
+Defined in: [src/types/interview.ts:135](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L135)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/interview.ts:135](https://github.com/rjmad1/CareerPropel/
 
 > **programmingLanguages**: [`ProgrammingLanguagePrep`](ProgrammingLanguagePrep.md)[]
 
-Defined in: [src/types/interview.ts:130](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L130)
+Defined in: [src/types/interview.ts:130](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L130)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/interview.ts:130](https://github.com/rjmad1/CareerPropel/
 
 > **studyPlan**: [`StudyBlock`](StudyBlock.md)[]
 
-Defined in: [src/types/interview.ts:137](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L137)
+Defined in: [src/types/interview.ts:137](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L137)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/types/interview.ts:137](https://github.com/rjmad1/CareerPropel/
 
 > **systemDesignConcepts**: [`SystemDesignConcept`](SystemDesignConcept.md)[]
 
-Defined in: [src/types/interview.ts:133](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L133)
+Defined in: [src/types/interview.ts:133](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L133)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [src/types/interview.ts:133](https://github.com/rjmad1/CareerPropel/
 
 > **toolsAndFrameworks**: [`ToolPrep`](ToolPrep.md)[]
 
-Defined in: [src/types/interview.ts:134](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L134)
+Defined in: [src/types/interview.ts:134](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L134)
 
 ***
 
@@ -72,4 +72,4 @@ Defined in: [src/types/interview.ts:134](https://github.com/rjmad1/CareerPropel/
 
 > **weakAreas**: `string`[]
 
-Defined in: [src/types/interview.ts:136](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L136)
+Defined in: [src/types/interview.ts:136](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L136)

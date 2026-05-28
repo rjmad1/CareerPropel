@@ -6,7 +6,7 @@
 
 # Interface: StepResult
 
-Defined in: [src/lib/workflow/types.ts:74](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L74)
+Defined in: [src/lib/workflow/types.ts:78](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L78)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/workflow/types.ts:74](https://github.com/rjmad1/CareerPrope
 
 > `optional` **agentExecutionId?**: `string`
 
-Defined in: [src/lib/workflow/types.ts:77](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L77)
+Defined in: [src/lib/workflow/types.ts:81](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L81)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/workflow/types.ts:77](https://github.com/rjmad1/CareerPrope
 
 > `optional` **approvalRequestId?**: `string`
 
-Defined in: [src/lib/workflow/types.ts:78](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L78)
+Defined in: [src/lib/workflow/types.ts:82](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L82)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/workflow/types.ts:78](https://github.com/rjmad1/CareerPrope
 
 > `optional` **error?**: `string`
 
-Defined in: [src/lib/workflow/types.ts:80](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L80)
+Defined in: [src/lib/workflow/types.ts:84](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L84)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/workflow/types.ts:80](https://github.com/rjmad1/CareerPrope
 
 > `optional` **nextStepKey?**: `string`
 
-Defined in: [src/lib/workflow/types.ts:79](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L79)
+Defined in: [src/lib/workflow/types.ts:83](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L83)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/workflow/types.ts:79](https://github.com/rjmad1/CareerPrope
 
 > `optional` **output?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [src/lib/workflow/types.ts:76](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L76)
+Defined in: [src/lib/workflow/types.ts:80](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L80)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/workflow/types.ts:76](https://github.com/rjmad1/CareerPrope
 
 > `optional` **skipped?**: `boolean`
 
-Defined in: [src/lib/workflow/types.ts:81](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L81)
+Defined in: [src/lib/workflow/types.ts:85](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L85)
 
 ***
 
@@ -62,4 +62,4 @@ Defined in: [src/lib/workflow/types.ts:81](https://github.com/rjmad1/CareerPrope
 
 > **success**: `boolean`
 
-Defined in: [src/lib/workflow/types.ts:75](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L75)
+Defined in: [src/lib/workflow/types.ts:79](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L79)

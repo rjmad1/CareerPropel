@@ -6,7 +6,7 @@
 
 # Interface: AgentJobData
 
-Defined in: [src/lib/queue/job-definitions.ts:4](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/queue/job-definitions.ts#L4)
+Defined in: [src/lib/queue/job-definitions.ts:4](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/queue/job-definitions.ts#L4)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/queue/job-definitions.ts:4](https://github.com/rjmad1/Caree
 
 > **agentType**: `string`
 
-Defined in: [src/lib/queue/job-definitions.ts:6](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/queue/job-definitions.ts#L6)
+Defined in: [src/lib/queue/job-definitions.ts:6](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/queue/job-definitions.ts#L6)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/queue/job-definitions.ts:6](https://github.com/rjmad1/Caree
 
 > **context**: `Record`\<`string`, `unknown`\>
 
-Defined in: [src/lib/queue/job-definitions.ts:8](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/queue/job-definitions.ts#L8)
+Defined in: [src/lib/queue/job-definitions.ts:8](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/queue/job-definitions.ts#L8)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/queue/job-definitions.ts:8](https://github.com/rjmad1/Caree
 
 > **executionId**: `string`
 
-Defined in: [src/lib/queue/job-definitions.ts:5](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/queue/job-definitions.ts#L5)
+Defined in: [src/lib/queue/job-definitions.ts:5](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/queue/job-definitions.ts#L5)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/queue/job-definitions.ts:5](https://github.com/rjmad1/Caree
 
 > **executionVersion**: `number`
 
-Defined in: [src/lib/queue/job-definitions.ts:11](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/queue/job-definitions.ts#L11)
+Defined in: [src/lib/queue/job-definitions.ts:11](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/queue/job-definitions.ts#L11)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/queue/job-definitions.ts:11](https://github.com/rjmad1/Care
 
 > `optional` **idempotencyKey?**: `string`
 
-Defined in: [src/lib/queue/job-definitions.ts:9](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/queue/job-definitions.ts#L9)
+Defined in: [src/lib/queue/job-definitions.ts:9](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/queue/job-definitions.ts#L9)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/queue/job-definitions.ts:9](https://github.com/rjmad1/Caree
 
 > `optional` **originalJobId?**: `string`
 
-Defined in: [src/lib/queue/job-definitions.ts:13](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/queue/job-definitions.ts#L13)
+Defined in: [src/lib/queue/job-definitions.ts:13](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/queue/job-definitions.ts#L13)
 
 Stable ID for dedup-safe requeueing when chain deps aren't ready
 
@@ -64,7 +64,7 @@ Stable ID for dedup-safe requeueing when chain deps aren't ready
 
 > **schemaVersion**: `number`
 
-Defined in: [src/lib/queue/job-definitions.ts:10](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/queue/job-definitions.ts#L10)
+Defined in: [src/lib/queue/job-definitions.ts:10](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/queue/job-definitions.ts#L10)
 
 ***
 
@@ -72,4 +72,4 @@ Defined in: [src/lib/queue/job-definitions.ts:10](https://github.com/rjmad1/Care
 
 > **userId**: `string`
 
-Defined in: [src/lib/queue/job-definitions.ts:7](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/queue/job-definitions.ts#L7)
+Defined in: [src/lib/queue/job-definitions.ts:7](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/queue/job-definitions.ts#L7)

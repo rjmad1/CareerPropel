@@ -8,7 +8,7 @@
 
 > **restorePii**(`redactedOutputText`, `tokenMap`): `string`
 
-Defined in: [src/lib/llm/privacy.ts:134](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/privacy.ts#L134)
+Defined in: [src/lib/llm/privacy.ts:134](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/llm/privacy.ts#L134)
 
 Restore redacted text placeholders to their original values in inbound LLM outputs
 

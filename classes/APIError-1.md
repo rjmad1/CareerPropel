@@ -6,7 +6,7 @@
 
 # Class: APIError
 
-Defined in: [src/lib/api/client.ts:13](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/api/client.ts#L13)
+Defined in: [src/lib/api/client.ts:13](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/api/client.ts#L13)
 
 ## Extends
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/api/client.ts:13](https://github.com/rjmad1/CareerPropel/bl
 
 > **new APIError**(`statusCode`, `code`, `message`, `details?`): `APIError`
 
-Defined in: [src/lib/api/client.ts:14](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/api/client.ts#L14)
+Defined in: [src/lib/api/client.ts:14](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/api/client.ts#L14)
 
 #### Parameters
 
@@ -52,7 +52,7 @@ Defined in: [src/lib/api/client.ts:14](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **cause?**: `unknown`
 
-Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:26
+Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:24
 
 #### Inherited from
 
@@ -64,7 +64,7 @@ Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:26
 
 > **code**: `string`
 
-Defined in: [src/lib/api/client.ts:16](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/api/client.ts#L16)
+Defined in: [src/lib/api/client.ts:16](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/api/client.ts#L16)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [src/lib/api/client.ts:16](https://github.com/rjmad1/CareerPropel/bl
 
 > `optional` **details?**: `Record`\<`string`, `unknown`\>
 
-Defined in: [src/lib/api/client.ts:18](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/api/client.ts#L18)
+Defined in: [src/lib/api/client.ts:18](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/api/client.ts#L18)
 
 ***
 
@@ -80,7 +80,7 @@ Defined in: [src/lib/api/client.ts:18](https://github.com/rjmad1/CareerPropel/bl
 
 > **message**: `string`
 
-Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1077
+Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1075
 
 #### Inherited from
 
@@ -92,7 +92,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1077
 
 > **name**: `string`
 
-Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
+Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1074
 
 #### Inherited from
 
@@ -104,7 +104,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
 
 > `optional` **stack?**: `string`
 
-Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1078
+Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
 
 #### Inherited from
 
@@ -116,7 +116,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1078
 
 > **statusCode**: `number`
 
-Defined in: [src/lib/api/client.ts:15](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/api/client.ts#L15)
+Defined in: [src/lib/api/client.ts:15](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/api/client.ts#L15)
 
 ***
 

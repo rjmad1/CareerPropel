@@ -6,9 +6,9 @@
 
 # Variable: GET
 
-> `const` **GET**: (`request`, `context`) => `Promise`\<`NextResponse`\<`unknown`\>\>
+> `const` **GET**: (`request`, `context`) => `Promise`\<`Response`\>
 
-Defined in: [src/app/api/settings/ai-providers/route.ts:25](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/settings/ai-providers/route.ts#L25)
+Defined in: [src/app/api/jobs/search/\[jobId\]/events/route.ts:17](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/jobs/search/[jobId]/events/route.ts#L17)
 
 ## Parameters
 
@@ -24,4 +24,4 @@ Defined in: [src/app/api/settings/ai-providers/route.ts:25](https://github.com/r
 
 ## Returns
 
-`Promise`\<`NextResponse`\<`unknown`\>\>
+`Promise`\<`Response`\>

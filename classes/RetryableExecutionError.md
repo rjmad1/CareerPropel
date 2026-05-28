@@ -6,7 +6,7 @@
 
 # Class: RetryableExecutionError
 
-Defined in: [src/lib/queue/retry-policy.ts:4](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/queue/retry-policy.ts#L4)
+Defined in: [src/lib/queue/retry-policy.ts:4](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/queue/retry-policy.ts#L4)
 
 ## Extends
 
@@ -23,7 +23,7 @@ Defined in: [src/lib/queue/retry-policy.ts:4](https://github.com/rjmad1/CareerPr
 
 > **new RetryableExecutionError**(`message`): `RetryableExecutionError`
 
-Defined in: [src/lib/queue/retry-policy.ts:5](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/queue/retry-policy.ts#L5)
+Defined in: [src/lib/queue/retry-policy.ts:5](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/queue/retry-policy.ts#L5)
 
 #### Parameters
 
@@ -45,7 +45,7 @@ Defined in: [src/lib/queue/retry-policy.ts:5](https://github.com/rjmad1/CareerPr
 
 > `optional` **cause?**: `unknown`
 
-Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:26
+Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:24
 
 #### Inherited from
 
@@ -57,7 +57,7 @@ Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:26
 
 > **message**: `string`
 
-Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1077
+Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1075
 
 #### Inherited from
 
@@ -69,7 +69,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1077
 
 > **name**: `string`
 
-Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
+Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1074
 
 #### Inherited from
 
@@ -81,7 +81,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
 
 > `optional` **stack?**: `string`
 
-Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1078
+Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
 
 #### Inherited from
 

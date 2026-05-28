@@ -6,7 +6,7 @@
 
 # Interface: IndeedJob
 
-Defined in: [src/lib/scraping/indeed.ts:13](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/indeed.ts#L13)
+Defined in: [src/lib/scraping/indeed.ts:13](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/indeed.ts#L13)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/scraping/indeed.ts:13](https://github.com/rjmad1/CareerProp
 
 > **company**: `string`
 
-Defined in: [src/lib/scraping/indeed.ts:15](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/indeed.ts#L15)
+Defined in: [src/lib/scraping/indeed.ts:15](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/indeed.ts#L15)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/scraping/indeed.ts:15](https://github.com/rjmad1/CareerProp
 
 > **description**: `string`
 
-Defined in: [src/lib/scraping/indeed.ts:17](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/indeed.ts#L17)
+Defined in: [src/lib/scraping/indeed.ts:17](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/indeed.ts#L17)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/scraping/indeed.ts:17](https://github.com/rjmad1/CareerProp
 
 > **location**: `string`
 
-Defined in: [src/lib/scraping/indeed.ts:16](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/indeed.ts#L16)
+Defined in: [src/lib/scraping/indeed.ts:16](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/indeed.ts#L16)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/scraping/indeed.ts:16](https://github.com/rjmad1/CareerProp
 
 > **postedAt**: `string`
 
-Defined in: [src/lib/scraping/indeed.ts:19](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/indeed.ts#L19)
+Defined in: [src/lib/scraping/indeed.ts:19](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/indeed.ts#L19)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/scraping/indeed.ts:19](https://github.com/rjmad1/CareerProp
 
 > `optional` **salary?**: `string`
 
-Defined in: [src/lib/scraping/indeed.ts:20](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/indeed.ts#L20)
+Defined in: [src/lib/scraping/indeed.ts:20](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/indeed.ts#L20)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/scraping/indeed.ts:20](https://github.com/rjmad1/CareerProp
 
 > **title**: `string`
 
-Defined in: [src/lib/scraping/indeed.ts:14](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/indeed.ts#L14)
+Defined in: [src/lib/scraping/indeed.ts:14](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/indeed.ts#L14)
 
 ***
 
@@ -62,4 +62,4 @@ Defined in: [src/lib/scraping/indeed.ts:14](https://github.com/rjmad1/CareerProp
 
 > **url**: `string`
 
-Defined in: [src/lib/scraping/indeed.ts:18](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/scraping/indeed.ts#L18)
+Defined in: [src/lib/scraping/indeed.ts:18](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/scraping/indeed.ts#L18)

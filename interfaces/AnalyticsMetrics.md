@@ -6,7 +6,7 @@
 
 # Interface: AnalyticsMetrics
 
-Defined in: [src/lib/analytics/export.ts:9](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/export.ts#L9)
+Defined in: [src/lib/analytics/export.ts:9](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/export.ts#L9)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/export.ts:9](https://github.com/rjmad1/CareerProp
 
 > **applicationsByDate**: `Record`\<`string`, `number`\>
 
-Defined in: [src/lib/analytics/export.ts:29](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/export.ts#L29)
+Defined in: [src/lib/analytics/export.ts:29](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/export.ts#L29)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/export.ts:29](https://github.com/rjmad1/CareerPro
 
 > **averageDaysInPipeline**: `number`
 
-Defined in: [src/lib/analytics/export.ts:28](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/export.ts#L28)
+Defined in: [src/lib/analytics/export.ts:28](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/export.ts#L28)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/analytics/export.ts:28](https://github.com/rjmad1/CareerPro
 
 > **interviewRate**: `number`
 
-Defined in: [src/lib/analytics/export.ts:36](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/export.ts#L36)
+Defined in: [src/lib/analytics/export.ts:36](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/export.ts#L36)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/analytics/export.ts:36](https://github.com/rjmad1/CareerPro
 
 > **matchScoreDistribution**: `Record`\<`string`, `number`\>
 
-Defined in: [src/lib/analytics/export.ts:19](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/export.ts#L19)
+Defined in: [src/lib/analytics/export.ts:19](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/export.ts#L19)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/analytics/export.ts:19](https://github.com/rjmad1/CareerPro
 
 > **offerRate**: `number`
 
-Defined in: [src/lib/analytics/export.ts:37](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/export.ts#L37)
+Defined in: [src/lib/analytics/export.ts:37](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/export.ts#L37)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/analytics/export.ts:37](https://github.com/rjmad1/CareerPro
 
 > **outcomesSummary**: `object`
 
-Defined in: [src/lib/analytics/export.ts:20](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/export.ts#L20)
+Defined in: [src/lib/analytics/export.ts:20](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/export.ts#L20)
 
 #### applied
 
@@ -86,7 +86,7 @@ Defined in: [src/lib/analytics/export.ts:20](https://github.com/rjmad1/CareerPro
 
 > **rejectionRate**: `number`
 
-Defined in: [src/lib/analytics/export.ts:35](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/export.ts#L35)
+Defined in: [src/lib/analytics/export.ts:35](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/export.ts#L35)
 
 ***
 
@@ -94,7 +94,7 @@ Defined in: [src/lib/analytics/export.ts:35](https://github.com/rjmad1/CareerPro
 
 > **salaryMetrics**: `object`
 
-Defined in: [src/lib/analytics/export.ts:13](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/export.ts#L13)
+Defined in: [src/lib/analytics/export.ts:13](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/export.ts#L13)
 
 #### average
 
@@ -118,7 +118,7 @@ Defined in: [src/lib/analytics/export.ts:13](https://github.com/rjmad1/CareerPro
 
 > **stageBreakdown**: `Record`\<`string`, `number`\>
 
-Defined in: [src/lib/analytics/export.ts:12](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/export.ts#L12)
+Defined in: [src/lib/analytics/export.ts:12](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/export.ts#L12)
 
 ***
 
@@ -126,7 +126,7 @@ Defined in: [src/lib/analytics/export.ts:12](https://github.com/rjmad1/CareerPro
 
 > **successRate**: `number`
 
-Defined in: [src/lib/analytics/export.ts:11](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/export.ts#L11)
+Defined in: [src/lib/analytics/export.ts:11](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/export.ts#L11)
 
 ***
 
@@ -134,7 +134,7 @@ Defined in: [src/lib/analytics/export.ts:11](https://github.com/rjmad1/CareerPro
 
 > **topCompanies**: `object`[]
 
-Defined in: [src/lib/analytics/export.ts:30](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/export.ts#L30)
+Defined in: [src/lib/analytics/export.ts:30](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/export.ts#L30)
 
 #### applications
 
@@ -154,4 +154,4 @@ Defined in: [src/lib/analytics/export.ts:30](https://github.com/rjmad1/CareerPro
 
 > **totalApplications**: `number`
 
-Defined in: [src/lib/analytics/export.ts:10](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/export.ts#L10)
+Defined in: [src/lib/analytics/export.ts:10](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/export.ts#L10)

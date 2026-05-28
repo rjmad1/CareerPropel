@@ -6,7 +6,7 @@
 
 # Interface: MockInterviewQuestion
 
-Defined in: [src/hooks/useInterviewPrep.ts:228](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useInterviewPrep.ts#L228)
+Defined in: [src/hooks/useInterviewPrep.ts:228](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useInterviewPrep.ts#L228)
 
 Hook for managing mock interview simulation state
 
@@ -16,7 +16,7 @@ Hook for managing mock interview simulation state
 
 > **category**: `string`
 
-Defined in: [src/hooks/useInterviewPrep.ts:232](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useInterviewPrep.ts#L232)
+Defined in: [src/hooks/useInterviewPrep.ts:232](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useInterviewPrep.ts#L232)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/hooks/useInterviewPrep.ts:232](https://github.com/rjmad1/Career
 
 > **difficulty**: `"medium"` \| `"easy"` \| `"hard"`
 
-Defined in: [src/hooks/useInterviewPrep.ts:233](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useInterviewPrep.ts#L233)
+Defined in: [src/hooks/useInterviewPrep.ts:233](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useInterviewPrep.ts#L233)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/hooks/useInterviewPrep.ts:233](https://github.com/rjmad1/Career
 
 > **expectedDuration**: `number`
 
-Defined in: [src/hooks/useInterviewPrep.ts:231](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useInterviewPrep.ts#L231)
+Defined in: [src/hooks/useInterviewPrep.ts:231](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useInterviewPrep.ts#L231)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/hooks/useInterviewPrep.ts:231](https://github.com/rjmad1/Career
 
 > **id**: `string`
 
-Defined in: [src/hooks/useInterviewPrep.ts:229](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useInterviewPrep.ts#L229)
+Defined in: [src/hooks/useInterviewPrep.ts:229](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useInterviewPrep.ts#L229)
 
 ***
 
@@ -48,4 +48,4 @@ Defined in: [src/hooks/useInterviewPrep.ts:229](https://github.com/rjmad1/Career
 
 > **text**: `string`
 
-Defined in: [src/hooks/useInterviewPrep.ts:230](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useInterviewPrep.ts#L230)
+Defined in: [src/hooks/useInterviewPrep.ts:230](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useInterviewPrep.ts#L230)

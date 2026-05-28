@@ -6,7 +6,7 @@
 
 # Interface: SystemDesignConcept
 
-Defined in: [src/types/interview.ts:160](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L160)
+Defined in: [src/types/interview.ts:160](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L160)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/interview.ts:160](https://github.com/rjmad1/CareerPropel/
 
 > **commonPatterns**: `string`[]
 
-Defined in: [src/types/interview.ts:166](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L166)
+Defined in: [src/types/interview.ts:166](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L166)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/interview.ts:166](https://github.com/rjmad1/CareerPropel/
 
 > **description**: `string`
 
-Defined in: [src/types/interview.ts:162](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L162)
+Defined in: [src/types/interview.ts:162](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L162)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/interview.ts:162](https://github.com/rjmad1/CareerPropel/
 
 > **examples**: `string`[]
 
-Defined in: [src/types/interview.ts:165](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L165)
+Defined in: [src/types/interview.ts:165](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L165)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/interview.ts:165](https://github.com/rjmad1/CareerPropel/
 
 > **name**: `string`
 
-Defined in: [src/types/interview.ts:161](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L161)
+Defined in: [src/types/interview.ts:161](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L161)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/interview.ts:161](https://github.com/rjmad1/CareerPropel/
 
 > **tradeoffs**: `string`
 
-Defined in: [src/types/interview.ts:163](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L163)
+Defined in: [src/types/interview.ts:163](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L163)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/types/interview.ts:163](https://github.com/rjmad1/CareerPropel/
 
 > **whenToUse**: `string`
 
-Defined in: [src/types/interview.ts:164](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L164)
+Defined in: [src/types/interview.ts:164](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L164)

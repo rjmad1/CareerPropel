@@ -6,7 +6,7 @@
 
 # Interface: AgentMetrics
 
-Defined in: [src/types/agent.ts:116](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L116)
+Defined in: [src/types/agent.ts:116](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/agent.ts#L116)
 
 Agent performance metrics
 
@@ -16,7 +16,7 @@ Agent performance metrics
 
 > **averageDuration**: `number`
 
-Defined in: [src/types/agent.ts:121](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L121)
+Defined in: [src/types/agent.ts:121](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/agent.ts#L121)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/agent.ts:121](https://github.com/rjmad1/CareerPropel/blob
 
 > **averageTokensUsed**: `number`
 
-Defined in: [src/types/agent.ts:123](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L123)
+Defined in: [src/types/agent.ts:123](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/agent.ts#L123)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/agent.ts:123](https://github.com/rjmad1/CareerPropel/blob
 
 > **currentQueueDepth**: `number`
 
-Defined in: [src/types/agent.ts:124](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L124)
+Defined in: [src/types/agent.ts:124](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/agent.ts#L124)
 
 ***
 
@@ -40,7 +40,7 @@ Defined in: [src/types/agent.ts:124](https://github.com/rjmad1/CareerPropel/blob
 
 > **failureCount**: `number`
 
-Defined in: [src/types/agent.ts:120](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L120)
+Defined in: [src/types/agent.ts:120](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/agent.ts#L120)
 
 ***
 
@@ -48,7 +48,7 @@ Defined in: [src/types/agent.ts:120](https://github.com/rjmad1/CareerPropel/blob
 
 > `optional` **lastRun?**: `Date`
 
-Defined in: [src/types/agent.ts:125](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L125)
+Defined in: [src/types/agent.ts:125](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/agent.ts#L125)
 
 ***
 
@@ -56,7 +56,7 @@ Defined in: [src/types/agent.ts:125](https://github.com/rjmad1/CareerPropel/blob
 
 > **successCount**: `number`
 
-Defined in: [src/types/agent.ts:119](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L119)
+Defined in: [src/types/agent.ts:119](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/agent.ts#L119)
 
 ***
 
@@ -64,7 +64,7 @@ Defined in: [src/types/agent.ts:119](https://github.com/rjmad1/CareerPropel/blob
 
 > **successRate**: `number`
 
-Defined in: [src/types/agent.ts:122](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L122)
+Defined in: [src/types/agent.ts:122](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/agent.ts#L122)
 
 ***
 
@@ -72,7 +72,7 @@ Defined in: [src/types/agent.ts:122](https://github.com/rjmad1/CareerPropel/blob
 
 > **totalExecutions**: `number`
 
-Defined in: [src/types/agent.ts:118](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L118)
+Defined in: [src/types/agent.ts:118](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/agent.ts#L118)
 
 ***
 
@@ -80,4 +80,4 @@ Defined in: [src/types/agent.ts:118](https://github.com/rjmad1/CareerPropel/blob
 
 > **type**: [`AgentType`](../type-aliases/AgentType-2.md)
 
-Defined in: [src/types/agent.ts:117](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/agent.ts#L117)
+Defined in: [src/types/agent.ts:117](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/agent.ts#L117)

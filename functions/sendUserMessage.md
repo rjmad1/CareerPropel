@@ -8,7 +8,7 @@
 
 > **sendUserMessage**(`io`, `userEmail`, `eventType`, `data`): `void`
 
-Defined in: [src/lib/socket/auth.ts:158](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/socket/auth.ts#L158)
+Defined in: [src/lib/socket/auth.ts:158](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/socket/auth.ts#L158)
 
 Send message to specific user
 

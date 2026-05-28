@@ -6,7 +6,7 @@
 
 # Interface: KeywordProgress
 
-Defined in: [src/types/preparation.ts:315](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L315)
+Defined in: [src/types/preparation.ts:315](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L315)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/preparation.ts:315](https://github.com/rjmad1/CareerPrope
 
 > `optional` **addedAt?**: `Date`
 
-Defined in: [src/types/preparation.ts:319](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L319)
+Defined in: [src/types/preparation.ts:319](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L319)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/preparation.ts:319](https://github.com/rjmad1/CareerPrope
 
 > **foundInResume**: `boolean`
 
-Defined in: [src/types/preparation.ts:318](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L318)
+Defined in: [src/types/preparation.ts:318](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L318)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/preparation.ts:318](https://github.com/rjmad1/CareerPrope
 
 > **frequency**: `number`
 
-Defined in: [src/types/preparation.ts:320](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L320)
+Defined in: [src/types/preparation.ts:320](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L320)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/preparation.ts:320](https://github.com/rjmad1/CareerPrope
 
 > **importance**: `"critical"` \| `"important"` \| `"useful"`
 
-Defined in: [src/types/preparation.ts:317](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L317)
+Defined in: [src/types/preparation.ts:317](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L317)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/types/preparation.ts:317](https://github.com/rjmad1/CareerPrope
 
 > **keyword**: `string`
 
-Defined in: [src/types/preparation.ts:316](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/preparation.ts#L316)
+Defined in: [src/types/preparation.ts:316](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/preparation.ts#L316)

@@ -6,7 +6,7 @@
 
 # Interface: CompensationGuide
 
-Defined in: [src/types/interview.ts:301](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L301)
+Defined in: [src/types/interview.ts:301](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L301)
 
 Compensation discussion guide
 
@@ -16,7 +16,7 @@ Compensation discussion guide
 
 > **benefitsToPrioritize**: `string`[]
 
-Defined in: [src/types/interview.ts:316](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L316)
+Defined in: [src/types/interview.ts:316](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L316)
 
 ***
 
@@ -24,7 +24,7 @@ Defined in: [src/types/interview.ts:316](https://github.com/rjmad1/CareerPropel/
 
 > `optional` **equityConsiderations?**: `string`
 
-Defined in: [src/types/interview.ts:317](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L317)
+Defined in: [src/types/interview.ts:317](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L317)
 
 ***
 
@@ -32,7 +32,7 @@ Defined in: [src/types/interview.ts:317](https://github.com/rjmad1/CareerPropel/
 
 > **marketRange**: `object`
 
-Defined in: [src/types/interview.ts:302](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L302)
+Defined in: [src/types/interview.ts:302](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L302)
 
 #### currency
 
@@ -60,7 +60,7 @@ Defined in: [src/types/interview.ts:302](https://github.com/rjmad1/CareerPropel/
 
 > **negotiationTalkingPoints**: [`NegotiationPoint`](NegotiationPoint.md)[]
 
-Defined in: [src/types/interview.ts:314](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L314)
+Defined in: [src/types/interview.ts:314](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L314)
 
 ***
 
@@ -68,7 +68,7 @@ Defined in: [src/types/interview.ts:314](https://github.com/rjmad1/CareerPropel/
 
 > **redFlags**: `string`[]
 
-Defined in: [src/types/interview.ts:315](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L315)
+Defined in: [src/types/interview.ts:315](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L315)
 
 ***
 
@@ -76,7 +76,7 @@ Defined in: [src/types/interview.ts:315](https://github.com/rjmad1/CareerPropel/
 
 > **yourEstimate**: `object`
 
-Defined in: [src/types/interview.ts:309](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L309)
+Defined in: [src/types/interview.ts:309](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L309)
 
 #### justification
 

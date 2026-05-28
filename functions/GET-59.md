@@ -6,19 +6,19 @@
 
 # Function: GET()
 
-> **GET**(`_request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `sessions`: `object`[]; \}\>\>
+> **GET**(`request`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `recommendations`: `string`[]; \}\>\>
 
-Defined in: [src/app/api/profile/appraisal-compile/route.ts:12](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/profile/appraisal-compile/route.ts#L12)
+Defined in: [src/app/api/profile/recommendations/route.ts:11](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/profile/recommendations/route.ts#L11)
 
-GET /api/profile/appraisal-compile
-Returns all past AppraisalSession records for the logged-in candidate.
+GET /api/profile/recommendations?candidateId={id}
+Return profile improvement recommendations based on completeness gaps.
 
 ## Parameters
 
-### \_request
+### request
 
 `NextRequest`
 
 ## Returns
 
-`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `sessions`: `object`[]; \}\>\>
+`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `recommendations`: `string`[]; \}\>\>

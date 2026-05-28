@@ -6,26 +6,16 @@
 
 # Function: GET()
 
-> **GET**(`_req`, `__namedParameters`): `Promise`\<`NextResponse`\<\{ `data`: \{ `breakdown`: [`HealthScoreBreakdown`](../interfaces/HealthScoreBreakdown.md); `daysSinceLastActivity`: `number`; `label`: `"active"` \| `"stale"` \| `"at_risk"` \| `"momentum"` \| `"hot"`; \}; \}\> \| `NextResponse`\<\{ `error`: \{ `message`: `any`; \}; \}\>\>
+> **GET**(`req`): `Promise`\<`NextResponse`\<[`CostSnapshot`](../interfaces/CostSnapshot.md)\>\>
 
-Defined in: [src/app/api/opportunities/\[jobId\]/health/route.ts:9](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/opportunities/[jobId]/health/route.ts#L9)
+Defined in: [src/app/api/ops/cost/route.ts:15](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/ops/cost/route.ts#L15)
 
 ## Parameters
 
-### \_req
+### req
 
 `NextRequest`
 
-### \_\_namedParameters
-
-#### params
-
-\{ `jobId`: `string`; \}
-
-#### params.jobId
-
-`string`
-
 ## Returns
 
-`Promise`\<`NextResponse`\<\{ `data`: \{ `breakdown`: [`HealthScoreBreakdown`](../interfaces/HealthScoreBreakdown.md); `daysSinceLastActivity`: `number`; `label`: `"active"` \| `"stale"` \| `"at_risk"` \| `"momentum"` \| `"hot"`; \}; \}\> \| `NextResponse`\<\{ `error`: \{ `message`: `any`; \}; \}\>\>
+`Promise`\<`NextResponse`\<[`CostSnapshot`](../interfaces/CostSnapshot.md)\>\>

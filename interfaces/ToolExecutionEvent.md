@@ -6,7 +6,7 @@
 
 # Interface: ToolExecutionEvent
 
-Defined in: [src/lib/realtime/events.ts:37](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L37)
+Defined in: [src/lib/realtime/events.ts:43](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L43)
 
 Tool execution event
 Published when an agent tool executes
@@ -17,7 +17,7 @@ Published when an agent tool executes
 
 > **agentType**: [`AgentType`](../type-aliases/AgentType-1.md)
 
-Defined in: [src/lib/realtime/events.ts:40](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L40)
+Defined in: [src/lib/realtime/events.ts:46](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L46)
 
 ***
 
@@ -25,7 +25,7 @@ Defined in: [src/lib/realtime/events.ts:40](https://github.com/rjmad1/CareerProp
 
 > **duration**: `number`
 
-Defined in: [src/lib/realtime/events.ts:44](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L44)
+Defined in: [src/lib/realtime/events.ts:50](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L50)
 
 ***
 
@@ -33,7 +33,7 @@ Defined in: [src/lib/realtime/events.ts:44](https://github.com/rjmad1/CareerProp
 
 > **executionId**: `string`
 
-Defined in: [src/lib/realtime/events.ts:41](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L41)
+Defined in: [src/lib/realtime/events.ts:47](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L47)
 
 ***
 
@@ -41,7 +41,7 @@ Defined in: [src/lib/realtime/events.ts:41](https://github.com/rjmad1/CareerProp
 
 > **status**: `"success"` \| `"failed"` \| `"pending"`
 
-Defined in: [src/lib/realtime/events.ts:43](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L43)
+Defined in: [src/lib/realtime/events.ts:49](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L49)
 
 ***
 
@@ -49,7 +49,7 @@ Defined in: [src/lib/realtime/events.ts:43](https://github.com/rjmad1/CareerProp
 
 > **timestamp**: `Date`
 
-Defined in: [src/lib/realtime/events.ts:45](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L45)
+Defined in: [src/lib/realtime/events.ts:51](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L51)
 
 ***
 
@@ -57,7 +57,7 @@ Defined in: [src/lib/realtime/events.ts:45](https://github.com/rjmad1/CareerProp
 
 > **toolName**: `string`
 
-Defined in: [src/lib/realtime/events.ts:42](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L42)
+Defined in: [src/lib/realtime/events.ts:48](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L48)
 
 ***
 
@@ -65,7 +65,7 @@ Defined in: [src/lib/realtime/events.ts:42](https://github.com/rjmad1/CareerProp
 
 > **type**: `"tool:execution"`
 
-Defined in: [src/lib/realtime/events.ts:38](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L38)
+Defined in: [src/lib/realtime/events.ts:44](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L44)
 
 ***
 
@@ -73,4 +73,4 @@ Defined in: [src/lib/realtime/events.ts:38](https://github.com/rjmad1/CareerProp
 
 > **userId**: `string`
 
-Defined in: [src/lib/realtime/events.ts:39](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L39)
+Defined in: [src/lib/realtime/events.ts:45](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L45)

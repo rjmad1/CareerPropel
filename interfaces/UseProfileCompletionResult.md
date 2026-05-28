@@ -6,7 +6,7 @@
 
 # Interface: UseProfileCompletionResult
 
-Defined in: [src/hooks/useProfileCompletion.ts:5](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useProfileCompletion.ts#L5)
+Defined in: [src/hooks/useProfileCompletion.ts:5](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useProfileCompletion.ts#L5)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/hooks/useProfileCompletion.ts:5](https://github.com/rjmad1/Care
 
 > **breakdown**: `Record`\<`string`, `number`\>
 
-Defined in: [src/hooks/useProfileCompletion.ts:7](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useProfileCompletion.ts#L7)
+Defined in: [src/hooks/useProfileCompletion.ts:7](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useProfileCompletion.ts#L7)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/hooks/useProfileCompletion.ts:7](https://github.com/rjmad1/Care
 
 > **completeness**: `number`
 
-Defined in: [src/hooks/useProfileCompletion.ts:6](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useProfileCompletion.ts#L6)
+Defined in: [src/hooks/useProfileCompletion.ts:6](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useProfileCompletion.ts#L6)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/hooks/useProfileCompletion.ts:6](https://github.com/rjmad1/Care
 
 > **error**: `Error` \| `null`
 
-Defined in: [src/hooks/useProfileCompletion.ts:15](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useProfileCompletion.ts#L15)
+Defined in: [src/hooks/useProfileCompletion.ts:15](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useProfileCompletion.ts#L15)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/hooks/useProfileCompletion.ts:15](https://github.com/rjmad1/Car
 
 > **loading**: `boolean`
 
-Defined in: [src/hooks/useProfileCompletion.ts:14](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useProfileCompletion.ts#L14)
+Defined in: [src/hooks/useProfileCompletion.ts:14](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useProfileCompletion.ts#L14)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/hooks/useProfileCompletion.ts:14](https://github.com/rjmad1/Car
 
 > **milestones**: `object`
 
-Defined in: [src/hooks/useProfileCompletion.ts:9](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useProfileCompletion.ts#L9)
+Defined in: [src/hooks/useProfileCompletion.ts:9](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useProfileCompletion.ts#L9)
 
 #### next
 
@@ -62,7 +62,7 @@ Defined in: [src/hooks/useProfileCompletion.ts:9](https://github.com/rjmad1/Care
 
 > **recommendations**: [`ProfileRecommendation`](ProfileRecommendation.md)[]
 
-Defined in: [src/hooks/useProfileCompletion.ts:8](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useProfileCompletion.ts#L8)
+Defined in: [src/hooks/useProfileCompletion.ts:8](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useProfileCompletion.ts#L8)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/hooks/useProfileCompletion.ts:8](https://github.com/rjmad1/Care
 
 > **skillGaps**: `object`
 
-Defined in: [src/hooks/useProfileCompletion.ts:10](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useProfileCompletion.ts#L10)
+Defined in: [src/hooks/useProfileCompletion.ts:10](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useProfileCompletion.ts#L10)
 
 #### gapLevel
 
@@ -86,7 +86,7 @@ Defined in: [src/hooks/useProfileCompletion.ts:10](https://github.com/rjmad1/Car
 
 > **trackProgress**: (`category`, `improvement`) => `void`
 
-Defined in: [src/hooks/useProfileCompletion.ts:17](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/hooks/useProfileCompletion.ts#L17)
+Defined in: [src/hooks/useProfileCompletion.ts:17](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/hooks/useProfileCompletion.ts#L17)
 
 #### Parameters
 

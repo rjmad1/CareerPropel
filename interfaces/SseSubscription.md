@@ -6,7 +6,7 @@
 
 # Interface: SseSubscription
 
-Defined in: [src/lib/realtime/sse-manager.ts:107](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/sse-manager.ts#L107)
+Defined in: [src/lib/realtime/sse-manager.ts:107](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/sse-manager.ts#L107)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/realtime/sse-manager.ts:107](https://github.com/rjmad1/Care
 
 > **connected**: `boolean`
 
-Defined in: [src/lib/realtime/sse-manager.ts:109](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/sse-manager.ts#L109)
+Defined in: [src/lib/realtime/sse-manager.ts:109](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/sse-manager.ts#L109)
 
 Current connection state
 
@@ -24,7 +24,7 @@ Current connection state
 
 > **onConnectionChange**: (`listener`) => () => `void`
 
-Defined in: [src/lib/realtime/sse-manager.ts:113](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/sse-manager.ts#L113)
+Defined in: [src/lib/realtime/sse-manager.ts:113](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/sse-manager.ts#L113)
 
 Subscribe to connection state changes. Returns unsubscribe fn.
 
@@ -44,7 +44,7 @@ Subscribe to connection state changes. Returns unsubscribe fn.
 
 > **release**: () => `void`
 
-Defined in: [src/lib/realtime/sse-manager.ts:115](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/sse-manager.ts#L115)
+Defined in: [src/lib/realtime/sse-manager.ts:115](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/sse-manager.ts#L115)
 
 Release this subscription's hold on the connection.
 
@@ -58,7 +58,7 @@ Release this subscription's hold on the connection.
 
 > **subscribe**: (`type`, `handler`) => () => `void`
 
-Defined in: [src/lib/realtime/sse-manager.ts:111](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/sse-manager.ts#L111)
+Defined in: [src/lib/realtime/sse-manager.ts:111](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/sse-manager.ts#L111)
 
 Subscribe to a specific event type. Returns unsubscribe fn.
 

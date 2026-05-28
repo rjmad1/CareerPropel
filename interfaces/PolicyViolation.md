@@ -6,7 +6,7 @@
 
 # Interface: PolicyViolation
 
-Defined in: [src/lib/governance/policyEngine.ts:115](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/policyEngine.ts#L115)
+Defined in: [src/lib/governance/policyEngine.ts:157](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/governance/policyEngine.ts#L157)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/governance/policyEngine.ts:115](https://github.com/rjmad1/C
 
 > **actual**: `string` \| `number`
 
-Defined in: [src/lib/governance/policyEngine.ts:118](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/policyEngine.ts#L118)
+Defined in: [src/lib/governance/policyEngine.ts:160](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/governance/policyEngine.ts#L160)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/governance/policyEngine.ts:118](https://github.com/rjmad1/C
 
 > **limit**: `string` \| `number`
 
-Defined in: [src/lib/governance/policyEngine.ts:117](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/policyEngine.ts#L117)
+Defined in: [src/lib/governance/policyEngine.ts:159](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/governance/policyEngine.ts#L159)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/governance/policyEngine.ts:117](https://github.com/rjmad1/C
 
 > **message**: `string`
 
-Defined in: [src/lib/governance/policyEngine.ts:119](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/policyEngine.ts#L119)
+Defined in: [src/lib/governance/policyEngine.ts:161](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/governance/policyEngine.ts#L161)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/lib/governance/policyEngine.ts:119](https://github.com/rjmad1/C
 
 > **policy**: `string`
 
-Defined in: [src/lib/governance/policyEngine.ts:116](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/governance/policyEngine.ts#L116)
+Defined in: [src/lib/governance/policyEngine.ts:158](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/governance/policyEngine.ts#L158)

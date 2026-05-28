@@ -8,7 +8,7 @@
 
 > **profileJobLanguage**(`jobTitle`, `company`, `jobDescription`): [`JobLanguageProfile`](../interfaces/JobLanguageProfile.md)
 
-Defined in: [src/lib/ats/jobLanguageProfiler.ts:133](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/ats/jobLanguageProfiler.ts#L133)
+Defined in: [src/lib/ats/jobLanguageProfiler.ts:133](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/ats/jobLanguageProfiler.ts#L133)
 
 ## Parameters
 

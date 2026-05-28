@@ -8,7 +8,7 @@
 
 > **POST**(`request`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `body`: `string`; `subject`: `string`; \}\>\>\>
 
-Defined in: [src/app/api/emails/generate/route.ts:26](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/emails/generate/route.ts#L26)
+Defined in: [src/app/api/emails/generate/route.ts:26](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/emails/generate/route.ts#L26)
 
 POST /api/emails/generate
 Generate a professional email using AI (thank-you, follow-up, counter-offer, withdraw).

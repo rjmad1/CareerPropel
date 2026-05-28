@@ -6,7 +6,7 @@
 
 # Interface: LongitudinalIntelligence
 
-Defined in: [src/lib/analytics/types.ts:137](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L137)
+Defined in: [src/lib/analytics/types.ts:137](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L137)
 
 ## Extended by
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/analytics/types.ts:137](https://github.com/rjmad1/CareerPro
 
 > **compensationGrowth**: [`ScoredMetric`](ScoredMetric.md)\<[`GrowthMetric`](GrowthMetric.md)\>
 
-Defined in: [src/lib/analytics/types.ts:138](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L138)
+Defined in: [src/lib/analytics/types.ts:138](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L138)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [src/lib/analytics/types.ts:138](https://github.com/rjmad1/CareerPro
 
 > **interviewPerformanceTrend**: [`ScoredMetric`](ScoredMetric.md)\<[`PerformanceTrend`](PerformanceTrend.md)\>
 
-Defined in: [src/lib/analytics/types.ts:140](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L140)
+Defined in: [src/lib/analytics/types.ts:140](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L140)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [src/lib/analytics/types.ts:140](https://github.com/rjmad1/CareerPro
 
 > **marketAlignment**: [`ScoredMetric`](ScoredMetric.md)\<`number`\>
 
-Defined in: [src/lib/analytics/types.ts:143](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L143)
+Defined in: [src/lib/analytics/types.ts:143](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L143)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [src/lib/analytics/types.ts:143](https://github.com/rjmad1/CareerPro
 
 > **networkingExpansion**: [`GrowthMetric`](GrowthMetric.md)
 
-Defined in: [src/lib/analytics/types.ts:141](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L141)
+Defined in: [src/lib/analytics/types.ts:141](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L141)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [src/lib/analytics/types.ts:141](https://github.com/rjmad1/CareerPro
 
 > **pipelineHealthTrend**: [`PipelineHealthPoint`](PipelineHealthPoint.md)[]
 
-Defined in: [src/lib/analytics/types.ts:142](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L142)
+Defined in: [src/lib/analytics/types.ts:142](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L142)
 
 ***
 
@@ -58,4 +58,4 @@ Defined in: [src/lib/analytics/types.ts:142](https://github.com/rjmad1/CareerPro
 
 > **skillEvolution**: [`SkillSnapshot`](SkillSnapshot.md)[]
 
-Defined in: [src/lib/analytics/types.ts:139](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L139)
+Defined in: [src/lib/analytics/types.ts:139](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L139)

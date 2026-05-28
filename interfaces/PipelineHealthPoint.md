@@ -6,7 +6,7 @@
 
 # Interface: PipelineHealthPoint
 
-Defined in: [src/lib/analytics/types.ts:166](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L166)
+Defined in: [src/lib/analytics/types.ts:166](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L166)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/types.ts:166](https://github.com/rjmad1/CareerPro
 
 > **newApplications**: `number`
 
-Defined in: [src/lib/analytics/types.ts:169](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L169)
+Defined in: [src/lib/analytics/types.ts:169](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L169)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/types.ts:169](https://github.com/rjmad1/CareerPro
 
 > **offerCount**: `number`
 
-Defined in: [src/lib/analytics/types.ts:170](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L170)
+Defined in: [src/lib/analytics/types.ts:170](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L170)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/analytics/types.ts:170](https://github.com/rjmad1/CareerPro
 
 > **period**: `string`
 
-Defined in: [src/lib/analytics/types.ts:167](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L167)
+Defined in: [src/lib/analytics/types.ts:167](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L167)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/analytics/types.ts:167](https://github.com/rjmad1/CareerPro
 
 > **rejectionCount**: `number`
 
-Defined in: [src/lib/analytics/types.ts:171](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L171)
+Defined in: [src/lib/analytics/types.ts:171](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L171)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/lib/analytics/types.ts:171](https://github.com/rjmad1/CareerPro
 
 > **totalActive**: `number`
 
-Defined in: [src/lib/analytics/types.ts:168](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L168)
+Defined in: [src/lib/analytics/types.ts:168](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L168)

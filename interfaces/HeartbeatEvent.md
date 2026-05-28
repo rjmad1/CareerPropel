@@ -6,7 +6,7 @@
 
 # Interface: HeartbeatEvent
 
-Defined in: [src/lib/realtime/events.ts:112](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L112)
+Defined in: [src/lib/realtime/events.ts:118](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L118)
 
 Heartbeat event
 Published periodically to keep connection alive
@@ -17,7 +17,7 @@ Published periodically to keep connection alive
 
 > **timestamp**: `Date`
 
-Defined in: [src/lib/realtime/events.ts:114](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L114)
+Defined in: [src/lib/realtime/events.ts:120](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L120)
 
 ***
 
@@ -25,4 +25,4 @@ Defined in: [src/lib/realtime/events.ts:114](https://github.com/rjmad1/CareerPro
 
 > **type**: `"heartbeat"`
 
-Defined in: [src/lib/realtime/events.ts:113](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/realtime/events.ts#L113)
+Defined in: [src/lib/realtime/events.ts:119](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/realtime/events.ts#L119)

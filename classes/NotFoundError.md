@@ -6,7 +6,7 @@
 
 # Class: NotFoundError
 
-Defined in: [src/lib/errors.ts:6](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/errors.ts#L6)
+Defined in: [src/lib/errors.ts:6](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/errors.ts#L6)
 
 Shared typed error classes for route helpers and domain logic.
 Typed status codes let consuming code inspect error.status without `as any` casts.
@@ -21,7 +21,7 @@ Typed status codes let consuming code inspect error.status without `as any` cast
 
 > **new NotFoundError**(`message`): `NotFoundError`
 
-Defined in: [src/lib/errors.ts:10](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/errors.ts#L10)
+Defined in: [src/lib/errors.ts:10](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/errors.ts#L10)
 
 #### Parameters
 
@@ -43,7 +43,7 @@ Defined in: [src/lib/errors.ts:10](https://github.com/rjmad1/CareerPropel/blob/e
 
 > `optional` **cause?**: `unknown`
 
-Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:26
+Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:24
 
 #### Inherited from
 
@@ -55,7 +55,7 @@ Defined in: node\_modules/typescript/lib/lib.es2022.error.d.ts:26
 
 > **message**: `string`
 
-Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1077
+Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1075
 
 #### Inherited from
 
@@ -67,7 +67,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1077
 
 > `readonly` **name**: `"NotFoundError"` = `'NotFoundError'`
 
-Defined in: [src/lib/errors.ts:8](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/errors.ts#L8)
+Defined in: [src/lib/errors.ts:8](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/errors.ts#L8)
 
 #### Overrides
 
@@ -79,7 +79,7 @@ Defined in: [src/lib/errors.ts:8](https://github.com/rjmad1/CareerPropel/blob/e8
 
 > `optional` **stack?**: `string`
 
-Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1078
+Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1076
 
 #### Inherited from
 
@@ -91,7 +91,7 @@ Defined in: node\_modules/typescript/lib/lib.es5.d.ts:1078
 
 > `readonly` **status**: `404` = `404`
 
-Defined in: [src/lib/errors.ts:7](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/errors.ts#L7)
+Defined in: [src/lib/errors.ts:7](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/errors.ts#L7)
 
 ***
 

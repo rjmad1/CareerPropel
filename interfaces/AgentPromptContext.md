@@ -6,7 +6,7 @@
 
 # Interface: AgentPromptContext
 
-Defined in: [src/lib/agents/prompts.ts:23](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/agents/prompts.ts#L23)
+Defined in: [src/lib/agents/prompts.ts:35](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/agents/prompts.ts#L35)
 
 ## Indexable
 
@@ -18,7 +18,7 @@ Defined in: [src/lib/agents/prompts.ts:23](https://github.com/rjmad1/CareerPrope
 
 > `optional` **companyInfo?**: `string`
 
-Defined in: [src/lib/agents/prompts.ts:27](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/agents/prompts.ts#L27)
+Defined in: [src/lib/agents/prompts.ts:39](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/agents/prompts.ts#L39)
 
 ***
 
@@ -26,7 +26,7 @@ Defined in: [src/lib/agents/prompts.ts:27](https://github.com/rjmad1/CareerPrope
 
 > `optional` **companyName?**: `string`
 
-Defined in: [src/lib/agents/prompts.ts:26](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/agents/prompts.ts#L26)
+Defined in: [src/lib/agents/prompts.ts:38](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/agents/prompts.ts#L38)
 
 ***
 
@@ -34,7 +34,7 @@ Defined in: [src/lib/agents/prompts.ts:26](https://github.com/rjmad1/CareerPrope
 
 > `optional` **jobDescription?**: `string`
 
-Defined in: [src/lib/agents/prompts.ts:25](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/agents/prompts.ts#L25)
+Defined in: [src/lib/agents/prompts.ts:37](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/agents/prompts.ts#L37)
 
 ***
 
@@ -42,7 +42,7 @@ Defined in: [src/lib/agents/prompts.ts:25](https://github.com/rjmad1/CareerPrope
 
 > `optional` **previousInterviews?**: `string`
 
-Defined in: [src/lib/agents/prompts.ts:29](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/agents/prompts.ts#L29)
+Defined in: [src/lib/agents/prompts.ts:41](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/agents/prompts.ts#L41)
 
 ***
 
@@ -50,7 +50,7 @@ Defined in: [src/lib/agents/prompts.ts:29](https://github.com/rjmad1/CareerPrope
 
 > `optional` **resume?**: `string`
 
-Defined in: [src/lib/agents/prompts.ts:24](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/agents/prompts.ts#L24)
+Defined in: [src/lib/agents/prompts.ts:36](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/agents/prompts.ts#L36)
 
 ***
 
@@ -58,4 +58,4 @@ Defined in: [src/lib/agents/prompts.ts:24](https://github.com/rjmad1/CareerPrope
 
 > `optional` **userProfile?**: `string`
 
-Defined in: [src/lib/agents/prompts.ts:28](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/agents/prompts.ts#L28)
+Defined in: [src/lib/agents/prompts.ts:40](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/agents/prompts.ts#L40)

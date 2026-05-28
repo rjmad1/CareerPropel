@@ -6,7 +6,7 @@
 
 # Interface: CostRate
 
-Defined in: [src/lib/llm/orchestrator.ts:109](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L109)
+Defined in: [src/lib/llm/orchestrator.ts:109](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/llm/orchestrator.ts#L109)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/llm/orchestrator.ts:109](https://github.com/rjmad1/CareerPr
 
 > **inputPerMillion**: `number`
 
-Defined in: [src/lib/llm/orchestrator.ts:110](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L110)
+Defined in: [src/lib/llm/orchestrator.ts:110](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/llm/orchestrator.ts#L110)
 
 ***
 
@@ -22,4 +22,4 @@ Defined in: [src/lib/llm/orchestrator.ts:110](https://github.com/rjmad1/CareerPr
 
 > **outputPerMillion**: `number`
 
-Defined in: [src/lib/llm/orchestrator.ts:111](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L111)
+Defined in: [src/lib/llm/orchestrator.ts:111](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/llm/orchestrator.ts#L111)

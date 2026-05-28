@@ -6,19 +6,25 @@
 
 # Function: POST()
 
-> **POST**(`req`): `Promise`\<`NextResponse`\<`any`\>\>
+> **POST**(`request`, `context`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `emailScript`: `string`; `redLines`: `string`[]; `talkingPoints`: `string`[]; \}\>\>\>
 
-Defined in: [src/app/api/offers/route.ts:60](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/offers/route.ts#L60)
+Defined in: [src/app/api/offers/\[id\]/script/route.ts:20](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/offers/[id]/script/route.ts#L20)
 
-POST /api/offers
-Log a new offer
+POST /api/offers/[id]/script
+Generate an AI negotiation script (email + talking points) for an offer.
 
 ## Parameters
 
-### req
+### request
 
 `NextRequest`
 
+### context
+
+#### params
+
+`Promise`\<\{ `id`: `string`; \}\>
+
 ## Returns
 
-`Promise`\<`NextResponse`\<`any`\>\>
+`Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `emailScript`: `string`; `redLines`: `string`[]; `talkingPoints`: `string`[]; \}\>\>\>

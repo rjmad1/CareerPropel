@@ -8,7 +8,7 @@
 
 > **GET**(`request`, `__namedParameters`): `Promise`\<`NextResponse`\<`unknown`\>\>
 
-Defined in: [src/app/api/jobs/\[id\]/route.ts:25](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/jobs/[id]/route.ts#L25)
+Defined in: [src/app/api/jobs/\[id\]/route.ts:26](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/jobs/[id]/route.ts#L26)
 
 GET /api/jobs/[id]
 Retrieve a specific job by ID

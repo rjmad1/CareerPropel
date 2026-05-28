@@ -6,13 +6,9 @@
 
 # Function: POST()
 
-> **POST**(`request`): `Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `imported`: `number`; `jobIds`: `string`[]; \}\>\>\>
+> **POST**(`request`, `context`): `Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `executionId`: `string`; `success`: `boolean`; \}\>\>
 
-Defined in: [src/app/api/jobs/import/route.ts:29](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/app/api/jobs/import/route.ts#L29)
-
-POST /api/jobs/import
-Save scraped jobs as JobImport staging records and immediately
-create Job pipeline entries for each.
+Defined in: [src/app/api/jobs/\[id\]/role-intelligence/route.ts:104](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/app/api/jobs/[id]/role-intelligence/route.ts#L104)
 
 ## Parameters
 
@@ -20,6 +16,12 @@ create Job pipeline entries for each.
 
 `NextRequest`
 
+### context
+
+#### params
+
+`Promise`\<\{ `id`: `string`; \}\>
+
 ## Returns
 
-`Promise`\<`NextResponse`\<[`ApiErrorResponse`](../interfaces/ApiErrorResponse.md)\> \| `NextResponse`\<[`SuccessResponse`](../interfaces/SuccessResponse.md)\<\{ `imported`: `number`; `jobIds`: `string`[]; \}\>\>\>
+`Promise`\<`NextResponse`\<\{ `error`: `string`; \}\> \| `NextResponse`\<\{ `executionId`: `string`; `success`: `boolean`; \}\>\>

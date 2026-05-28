@@ -6,7 +6,7 @@
 
 # Interface: SwimlaneConfig
 
-Defined in: [src/types/job.ts:124](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/job.ts#L124)
+Defined in: [src/types/job.ts:124](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/job.ts#L124)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/job.ts:124](https://github.com/rjmad1/CareerPropel/blob/e
 
 > **bgColor**: `string`
 
-Defined in: [src/types/job.ts:129](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/job.ts#L129)
+Defined in: [src/types/job.ts:129](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/job.ts#L129)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/job.ts:129](https://github.com/rjmad1/CareerPropel/blob/e
 
 > **borderColor**: `string`
 
-Defined in: [src/types/job.ts:128](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/job.ts#L128)
+Defined in: [src/types/job.ts:128](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/job.ts#L128)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/job.ts:128](https://github.com/rjmad1/CareerPropel/blob/e
 
 > **color**: `string`
 
-Defined in: [src/types/job.ts:127](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/job.ts#L127)
+Defined in: [src/types/job.ts:127](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/job.ts#L127)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/job.ts:127](https://github.com/rjmad1/CareerPropel/blob/e
 
 > **description**: `string`
 
-Defined in: [src/types/job.ts:126](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/job.ts#L126)
+Defined in: [src/types/job.ts:126](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/job.ts#L126)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/job.ts:126](https://github.com/rjmad1/CareerPropel/blob/e
 
 > `optional` **icon?**: `string`
 
-Defined in: [src/types/job.ts:130](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/job.ts#L130)
+Defined in: [src/types/job.ts:130](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/job.ts#L130)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/types/job.ts:130](https://github.com/rjmad1/CareerPropel/blob/e
 
 > **label**: `string`
 
-Defined in: [src/types/job.ts:125](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/job.ts#L125)
+Defined in: [src/types/job.ts:125](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/job.ts#L125)

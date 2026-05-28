@@ -6,7 +6,7 @@
 
 # Interface: IconProps
 
-Defined in: [src/components/ui/Icon.tsx:4](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/ui/Icon.tsx#L4)
+Defined in: [src/components/ui/Icon.tsx:4](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/components/ui/Icon.tsx#L4)
 
 ## Extends
 
@@ -2447,7 +2447,7 @@ Defined in: node\_modules/@types/react/index.d.ts:3843
 
 > **name**: `string`
 
-Defined in: [src/components/ui/Icon.tsx:5](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/ui/Icon.tsx#L5)
+Defined in: [src/components/ui/Icon.tsx:5](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/components/ui/Icon.tsx#L5)
 
 #### Overrides
 
@@ -4963,7 +4963,7 @@ Defined in: node\_modules/@types/react/index.d.ts:3886
 
 > `optional` **size?**: `"lg"` \| `"xs"` \| `"sm"` \| `"md"` \| `"xl"`
 
-Defined in: [src/components/ui/Icon.tsx:6](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/ui/Icon.tsx#L6)
+Defined in: [src/components/ui/Icon.tsx:6](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/components/ui/Icon.tsx#L6)
 
 ***
 

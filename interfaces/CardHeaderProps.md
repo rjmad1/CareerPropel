@@ -6,7 +6,7 @@
 
 # Interface: CardHeaderProps
 
-Defined in: [src/components/ui/Card.tsx:29](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/ui/Card.tsx#L29)
+Defined in: [src/components/ui/Card.tsx:29](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/components/ui/Card.tsx#L29)
 
 ## Extends
 
@@ -967,7 +967,7 @@ Defined in: node\_modules/@types/react/index.d.ts:2953
 
 > **children**: `ReactNode`
 
-Defined in: [src/components/ui/Card.tsx:30](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/ui/Card.tsx#L30)
+Defined in: [src/components/ui/Card.tsx:30](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/components/ui/Card.tsx#L30)
 
 #### Overrides
 

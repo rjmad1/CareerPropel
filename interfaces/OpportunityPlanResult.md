@@ -6,7 +6,7 @@
 
 # Interface: OpportunityPlanResult
 
-Defined in: [src/lib/workflow/types.ts:124](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L124)
+Defined in: [src/lib/workflow/types.ts:128](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L128)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/workflow/types.ts:124](https://github.com/rjmad1/CareerProp
 
 > **actions**: [`RecommendedAction`](RecommendedAction.md)[]
 
-Defined in: [src/lib/workflow/types.ts:129](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L129)
+Defined in: [src/lib/workflow/types.ts:133](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L133)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/workflow/types.ts:129](https://github.com/rjmad1/CareerProp
 
 > **healthBreakdown**: [`HealthScoreBreakdown`](HealthScoreBreakdown.md)
 
-Defined in: [src/lib/workflow/types.ts:130](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L130)
+Defined in: [src/lib/workflow/types.ts:134](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L134)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/workflow/types.ts:130](https://github.com/rjmad1/CareerProp
 
 > **jobId**: `string`
 
-Defined in: [src/lib/workflow/types.ts:125](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L125)
+Defined in: [src/lib/workflow/types.ts:129](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L129)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/workflow/types.ts:125](https://github.com/rjmad1/CareerProp
 
 > **momentumScore**: `number`
 
-Defined in: [src/lib/workflow/types.ts:128](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L128)
+Defined in: [src/lib/workflow/types.ts:132](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L132)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/workflow/types.ts:128](https://github.com/rjmad1/CareerProp
 
 > **readinessScore**: `number`
 
-Defined in: [src/lib/workflow/types.ts:127](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L127)
+Defined in: [src/lib/workflow/types.ts:131](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L131)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/workflow/types.ts:127](https://github.com/rjmad1/CareerProp
 
 > `optional` **suggestedWorkflow?**: `string`
 
-Defined in: [src/lib/workflow/types.ts:131](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L131)
+Defined in: [src/lib/workflow/types.ts:135](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L135)
 
 ***
 
@@ -62,4 +62,4 @@ Defined in: [src/lib/workflow/types.ts:131](https://github.com/rjmad1/CareerProp
 
 > **urgencyScore**: `number`
 
-Defined in: [src/lib/workflow/types.ts:126](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L126)
+Defined in: [src/lib/workflow/types.ts:130](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L130)

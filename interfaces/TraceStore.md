@@ -6,7 +6,7 @@
 
 # Interface: TraceStore
 
-Defined in: [src/lib/logging/traceContext.ts:12](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/logging/traceContext.ts#L12)
+Defined in: [src/lib/logging/traceContext.ts:21](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/logging/traceContext.ts#L21)
 
 ## Properties
 
@@ -14,4 +14,4 @@ Defined in: [src/lib/logging/traceContext.ts:12](https://github.com/rjmad1/Caree
 
 > **correlationId**: `string`
 
-Defined in: [src/lib/logging/traceContext.ts:13](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/logging/traceContext.ts#L13)
+Defined in: [src/lib/logging/traceContext.ts:22](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/logging/traceContext.ts#L22)

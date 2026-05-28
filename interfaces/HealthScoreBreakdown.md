@@ -6,7 +6,7 @@
 
 # Interface: HealthScoreBreakdown
 
-Defined in: [src/lib/workflow/types.ts:86](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L86)
+Defined in: [src/lib/workflow/types.ts:90](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L90)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/workflow/types.ts:86](https://github.com/rjmad1/CareerPrope
 
 > **followUpCadence**: `number`
 
-Defined in: [src/lib/workflow/types.ts:92](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L92)
+Defined in: [src/lib/workflow/types.ts:96](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L96)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/workflow/types.ts:92](https://github.com/rjmad1/CareerPrope
 
 > **inactivityPenalty**: `number`
 
-Defined in: [src/lib/workflow/types.ts:89](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L89)
+Defined in: [src/lib/workflow/types.ts:93](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L93)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/workflow/types.ts:89](https://github.com/rjmad1/CareerPrope
 
 > **interviewProgression**: `number`
 
-Defined in: [src/lib/workflow/types.ts:88](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L88)
+Defined in: [src/lib/workflow/types.ts:92](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L92)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/workflow/types.ts:88](https://github.com/rjmad1/CareerPrope
 
 > **matchQuality**: `number`
 
-Defined in: [src/lib/workflow/types.ts:90](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L90)
+Defined in: [src/lib/workflow/types.ts:94](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L94)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/workflow/types.ts:90](https://github.com/rjmad1/CareerPrope
 
 > **networkingEngagement**: `number`
 
-Defined in: [src/lib/workflow/types.ts:91](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L91)
+Defined in: [src/lib/workflow/types.ts:95](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L95)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/workflow/types.ts:91](https://github.com/rjmad1/CareerPrope
 
 > **overall**: `number`
 
-Defined in: [src/lib/workflow/types.ts:93](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L93)
+Defined in: [src/lib/workflow/types.ts:97](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L97)
 
 ***
 
@@ -62,4 +62,4 @@ Defined in: [src/lib/workflow/types.ts:93](https://github.com/rjmad1/CareerPrope
 
 > **recruiterResponsiveness**: `number`
 
-Defined in: [src/lib/workflow/types.ts:87](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L87)
+Defined in: [src/lib/workflow/types.ts:91](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L91)

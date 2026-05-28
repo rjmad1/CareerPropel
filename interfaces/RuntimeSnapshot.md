@@ -6,7 +6,7 @@
 
 # Interface: RuntimeSnapshot
 
-Defined in: [src/lib/observability/runtime-metrics.ts:46](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/observability/runtime-metrics.ts#L46)
+Defined in: [src/lib/observability/runtime-metrics.ts:46](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/observability/runtime-metrics.ts#L46)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/observability/runtime-metrics.ts:46](https://github.com/rjm
 
 > **eventLoopLagMs**: `number`
 
-Defined in: [src/lib/observability/runtime-metrics.ts:48](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/observability/runtime-metrics.ts#L48)
+Defined in: [src/lib/observability/runtime-metrics.ts:48](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/observability/runtime-metrics.ts#L48)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/observability/runtime-metrics.ts:48](https://github.com/rjm
 
 > **lagSampleCount**: `number`
 
-Defined in: [src/lib/observability/runtime-metrics.ts:49](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/observability/runtime-metrics.ts#L49)
+Defined in: [src/lib/observability/runtime-metrics.ts:49](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/observability/runtime-metrics.ts#L49)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/observability/runtime-metrics.ts:49](https://github.com/rjm
 
 > **memory**: `object`
 
-Defined in: [src/lib/observability/runtime-metrics.ts:52](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/observability/runtime-metrics.ts#L52)
+Defined in: [src/lib/observability/runtime-metrics.ts:52](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/observability/runtime-metrics.ts#L52)
 
 #### externalMb
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/observability/runtime-metrics.ts:52](https://github.com/rjm
 
 > **nodeVersion**: `string`
 
-Defined in: [src/lib/observability/runtime-metrics.ts:51](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/observability/runtime-metrics.ts#L51)
+Defined in: [src/lib/observability/runtime-metrics.ts:51](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/observability/runtime-metrics.ts#L51)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/observability/runtime-metrics.ts:51](https://github.com/rjm
 
 > **redisReconnects**: `number`
 
-Defined in: [src/lib/observability/runtime-metrics.ts:50](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/observability/runtime-metrics.ts#L50)
+Defined in: [src/lib/observability/runtime-metrics.ts:50](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/observability/runtime-metrics.ts#L50)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/observability/runtime-metrics.ts:50](https://github.com/rjm
 
 > **snapshotAt**: `string`
 
-Defined in: [src/lib/observability/runtime-metrics.ts:58](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/observability/runtime-metrics.ts#L58)
+Defined in: [src/lib/observability/runtime-metrics.ts:58](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/observability/runtime-metrics.ts#L58)
 
 ***
 
@@ -78,4 +78,4 @@ Defined in: [src/lib/observability/runtime-metrics.ts:58](https://github.com/rjm
 
 > **uptimeSeconds**: `number`
 
-Defined in: [src/lib/observability/runtime-metrics.ts:47](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/observability/runtime-metrics.ts#L47)
+Defined in: [src/lib/observability/runtime-metrics.ts:47](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/observability/runtime-metrics.ts#L47)

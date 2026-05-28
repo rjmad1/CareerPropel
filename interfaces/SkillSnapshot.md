@@ -6,7 +6,7 @@
 
 # Interface: SkillSnapshot
 
-Defined in: [src/lib/analytics/types.ts:153](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L153)
+Defined in: [src/lib/analytics/types.ts:153](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L153)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/analytics/types.ts:153](https://github.com/rjmad1/CareerPro
 
 > **addedAt**: `string`
 
-Defined in: [src/lib/analytics/types.ts:156](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L156)
+Defined in: [src/lib/analytics/types.ts:156](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L156)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/analytics/types.ts:156](https://github.com/rjmad1/CareerPro
 
 > **name**: `string`
 
-Defined in: [src/lib/analytics/types.ts:154](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L154)
+Defined in: [src/lib/analytics/types.ts:154](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L154)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/lib/analytics/types.ts:154](https://github.com/rjmad1/CareerPro
 
 > **proficiency**: `string`
 
-Defined in: [src/lib/analytics/types.ts:155](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/analytics/types.ts#L155)
+Defined in: [src/lib/analytics/types.ts:155](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/analytics/types.ts#L155)

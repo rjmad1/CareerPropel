@@ -8,7 +8,7 @@
 
 > `const` **NotificationCenter**: `React.FC`
 
-Defined in: [src/components/Notifications/NotificationCenter.tsx:29](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/components/Notifications/NotificationCenter.tsx#L29)
+Defined in: [src/components/Notifications/NotificationCenter.tsx:29](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/components/Notifications/NotificationCenter.tsx#L29)
 
 NotificationCenter - Manages and displays all toast notifications
 

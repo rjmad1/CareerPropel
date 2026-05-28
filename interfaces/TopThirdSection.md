@@ -6,7 +6,7 @@
 
 # Interface: TopThirdSection
 
-Defined in: [src/lib/document/topThirdOptimizer.ts:19](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/topThirdOptimizer.ts#L19)
+Defined in: [src/lib/document/topThirdOptimizer.ts:19](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/topThirdOptimizer.ts#L19)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/document/topThirdOptimizer.ts:19](https://github.com/rjmad1
 
 > **content**: `string`
 
-Defined in: [src/lib/document/topThirdOptimizer.ts:21](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/topThirdOptimizer.ts#L21)
+Defined in: [src/lib/document/topThirdOptimizer.ts:21](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/topThirdOptimizer.ts#L21)
 
 Rendered Markdown for the top-third block
 
@@ -24,7 +24,7 @@ Rendered Markdown for the top-third block
 
 > **placed**: `string`[]
 
-Defined in: [src/lib/document/topThirdOptimizer.ts:23](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/topThirdOptimizer.ts#L23)
+Defined in: [src/lib/document/topThirdOptimizer.ts:23](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/topThirdOptimizer.ts#L23)
 
 Keywords successfully placed in this section
 
@@ -34,6 +34,6 @@ Keywords successfully placed in this section
 
 > **score**: `number`
 
-Defined in: [src/lib/document/topThirdOptimizer.ts:25](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/topThirdOptimizer.ts#L25)
+Defined in: [src/lib/document/topThirdOptimizer.ts:25](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/topThirdOptimizer.ts#L25)
 
 Score 0–100 for how well this section serves ATS + recruiter needs

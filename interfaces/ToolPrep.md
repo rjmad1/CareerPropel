@@ -6,7 +6,7 @@
 
 # Interface: ToolPrep
 
-Defined in: [src/types/interview.ts:169](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L169)
+Defined in: [src/types/interview.ts:169](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L169)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/interview.ts:169](https://github.com/rjmad1/CareerPropel/
 
 > **alternativesToCompare**: `string`[]
 
-Defined in: [src/types/interview.ts:175](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L175)
+Defined in: [src/types/interview.ts:175](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L175)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/interview.ts:175](https://github.com/rjmad1/CareerPropel/
 
 > **category**: `string`
 
-Defined in: [src/types/interview.ts:171](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L171)
+Defined in: [src/types/interview.ts:171](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L171)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/interview.ts:171](https://github.com/rjmad1/CareerPropel/
 
 > **gotchas**: `string`[]
 
-Defined in: [src/types/interview.ts:174](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L174)
+Defined in: [src/types/interview.ts:174](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L174)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/interview.ts:174](https://github.com/rjmad1/CareerPropel/
 
 > **keyFeatures**: `string`[]
 
-Defined in: [src/types/interview.ts:173](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L173)
+Defined in: [src/types/interview.ts:173](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L173)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/types/interview.ts:173](https://github.com/rjmad1/CareerPropel/
 
 > **name**: `string`
 
-Defined in: [src/types/interview.ts:170](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L170)
+Defined in: [src/types/interview.ts:170](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L170)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/types/interview.ts:170](https://github.com/rjmad1/CareerPropel/
 
 > **relevance**: `"primary"` \| `"secondary"`
 
-Defined in: [src/types/interview.ts:172](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L172)
+Defined in: [src/types/interview.ts:172](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L172)

@@ -6,7 +6,7 @@
 
 # Interface: GraphEdge
 
-Defined in: [src/types/knowledge-graph.ts:27](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/knowledge-graph.ts#L27)
+Defined in: [src/types/knowledge-graph.ts:27](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/knowledge-graph.ts#L27)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/knowledge-graph.ts:27](https://github.com/rjmad1/CareerPr
 
 > **confidence**: `number`
 
-Defined in: [src/types/knowledge-graph.ts:32](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/knowledge-graph.ts#L32)
+Defined in: [src/types/knowledge-graph.ts:32](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/knowledge-graph.ts#L32)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/knowledge-graph.ts:32](https://github.com/rjmad1/CareerPr
 
 > **id**: `string`
 
-Defined in: [src/types/knowledge-graph.ts:28](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/knowledge-graph.ts#L28)
+Defined in: [src/types/knowledge-graph.ts:28](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/knowledge-graph.ts#L28)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/knowledge-graph.ts:28](https://github.com/rjmad1/CareerPr
 
 > **relationType**: [`RelationshipType`](../type-aliases/RelationshipType.md)
 
-Defined in: [src/types/knowledge-graph.ts:31](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/knowledge-graph.ts#L31)
+Defined in: [src/types/knowledge-graph.ts:31](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/knowledge-graph.ts#L31)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/types/knowledge-graph.ts:31](https://github.com/rjmad1/CareerPr
 
 > **sourceId**: `string`
 
-Defined in: [src/types/knowledge-graph.ts:29](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/knowledge-graph.ts#L29)
+Defined in: [src/types/knowledge-graph.ts:29](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/knowledge-graph.ts#L29)
 
 ***
 
@@ -46,4 +46,4 @@ Defined in: [src/types/knowledge-graph.ts:29](https://github.com/rjmad1/CareerPr
 
 > **targetId**: `string`
 
-Defined in: [src/types/knowledge-graph.ts:30](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/knowledge-graph.ts#L30)
+Defined in: [src/types/knowledge-graph.ts:30](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/knowledge-graph.ts#L30)

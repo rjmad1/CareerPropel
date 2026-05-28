@@ -6,7 +6,7 @@
 
 # Interface: OpportunityHealthInput
 
-Defined in: [src/lib/workflow/types.ts:96](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L96)
+Defined in: [src/lib/workflow/types.ts:100](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L100)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/workflow/types.ts:96](https://github.com/rjmad1/CareerPrope
 
 > **activeWorkflowCount**: `number`
 
-Defined in: [src/lib/workflow/types.ts:107](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L107)
+Defined in: [src/lib/workflow/types.ts:111](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L111)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/workflow/types.ts:107](https://github.com/rjmad1/CareerProp
 
 > **candidateId**: `string`
 
-Defined in: [src/lib/workflow/types.ts:98](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L98)
+Defined in: [src/lib/workflow/types.ts:102](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L102)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/workflow/types.ts:98](https://github.com/rjmad1/CareerPrope
 
 > **contactCount**: `number`
 
-Defined in: [src/lib/workflow/types.ts:106](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L106)
+Defined in: [src/lib/workflow/types.ts:110](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L110)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/workflow/types.ts:106](https://github.com/rjmad1/CareerProp
 
 > **daysSinceLastActivity**: `number`
 
-Defined in: [src/lib/workflow/types.ts:101](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L101)
+Defined in: [src/lib/workflow/types.ts:105](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L105)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/workflow/types.ts:101](https://github.com/rjmad1/CareerProp
 
 > **hasRecruiterContact**: `boolean`
 
-Defined in: [src/lib/workflow/types.ts:102](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L102)
+Defined in: [src/lib/workflow/types.ts:106](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L106)
 
 ***
 
@@ -54,7 +54,7 @@ Defined in: [src/lib/workflow/types.ts:102](https://github.com/rjmad1/CareerProp
 
 > **interviewCount**: `number`
 
-Defined in: [src/lib/workflow/types.ts:104](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L104)
+Defined in: [src/lib/workflow/types.ts:108](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L108)
 
 ***
 
@@ -62,7 +62,7 @@ Defined in: [src/lib/workflow/types.ts:104](https://github.com/rjmad1/CareerProp
 
 > **jobId**: `string`
 
-Defined in: [src/lib/workflow/types.ts:97](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L97)
+Defined in: [src/lib/workflow/types.ts:101](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L101)
 
 ***
 
@@ -70,7 +70,7 @@ Defined in: [src/lib/workflow/types.ts:97](https://github.com/rjmad1/CareerPrope
 
 > **matchScore**: `number`
 
-Defined in: [src/lib/workflow/types.ts:99](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L99)
+Defined in: [src/lib/workflow/types.ts:103](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L103)
 
 ***
 
@@ -78,7 +78,7 @@ Defined in: [src/lib/workflow/types.ts:99](https://github.com/rjmad1/CareerPrope
 
 > **pendingFollowUp**: `boolean`
 
-Defined in: [src/lib/workflow/types.ts:105](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L105)
+Defined in: [src/lib/workflow/types.ts:109](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L109)
 
 ***
 
@@ -86,7 +86,7 @@ Defined in: [src/lib/workflow/types.ts:105](https://github.com/rjmad1/CareerProp
 
 > **recruiterResponseCount**: `number`
 
-Defined in: [src/lib/workflow/types.ts:103](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L103)
+Defined in: [src/lib/workflow/types.ts:107](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L107)
 
 ***
 
@@ -94,4 +94,4 @@ Defined in: [src/lib/workflow/types.ts:103](https://github.com/rjmad1/CareerProp
 
 > **stage**: `string`
 
-Defined in: [src/lib/workflow/types.ts:100](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/workflow/types.ts#L100)
+Defined in: [src/lib/workflow/types.ts:104](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/workflow/types.ts#L104)

@@ -6,7 +6,7 @@
 
 # Interface: LLMCallResult
 
-Defined in: [src/lib/llm/orchestrator.ts:31](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L31)
+Defined in: [src/lib/llm/orchestrator.ts:31](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/llm/orchestrator.ts#L31)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/llm/orchestrator.ts:31](https://github.com/rjmad1/CareerPro
 
 > **content**: `string`
 
-Defined in: [src/lib/llm/orchestrator.ts:32](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L32)
+Defined in: [src/lib/llm/orchestrator.ts:32](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/llm/orchestrator.ts#L32)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/llm/orchestrator.ts:32](https://github.com/rjmad1/CareerPro
 
 > **costUsd**: `number`
 
-Defined in: [src/lib/llm/orchestrator.ts:37](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L37)
+Defined in: [src/lib/llm/orchestrator.ts:37](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/llm/orchestrator.ts#L37)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/lib/llm/orchestrator.ts:37](https://github.com/rjmad1/CareerPro
 
 > **inputTokens**: `number`
 
-Defined in: [src/lib/llm/orchestrator.ts:34](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L34)
+Defined in: [src/lib/llm/orchestrator.ts:34](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/llm/orchestrator.ts#L34)
 
 ***
 
@@ -38,7 +38,7 @@ Defined in: [src/lib/llm/orchestrator.ts:34](https://github.com/rjmad1/CareerPro
 
 > **outputTokens**: `number`
 
-Defined in: [src/lib/llm/orchestrator.ts:35](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L35)
+Defined in: [src/lib/llm/orchestrator.ts:35](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/llm/orchestrator.ts#L35)
 
 ***
 
@@ -46,7 +46,7 @@ Defined in: [src/lib/llm/orchestrator.ts:35](https://github.com/rjmad1/CareerPro
 
 > **stopReason**: `"stop_sequence"` \| `"end_turn"` \| `"max_tokens"`
 
-Defined in: [src/lib/llm/orchestrator.ts:33](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L33)
+Defined in: [src/lib/llm/orchestrator.ts:33](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/llm/orchestrator.ts#L33)
 
 ***
 
@@ -54,4 +54,4 @@ Defined in: [src/lib/llm/orchestrator.ts:33](https://github.com/rjmad1/CareerPro
 
 > **totalTokens**: `number`
 
-Defined in: [src/lib/llm/orchestrator.ts:36](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/llm/orchestrator.ts#L36)
+Defined in: [src/lib/llm/orchestrator.ts:36](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/llm/orchestrator.ts#L36)

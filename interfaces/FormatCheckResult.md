@@ -6,7 +6,7 @@
 
 # Interface: FormatCheckResult
 
-Defined in: [src/lib/document/atsFormatter.ts:27](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/atsFormatter.ts#L27)
+Defined in: [src/lib/document/atsFormatter.ts:27](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/atsFormatter.ts#L27)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/lib/document/atsFormatter.ts:27](https://github.com/rjmad1/Care
 
 > **cleaned**: `string`
 
-Defined in: [src/lib/document/atsFormatter.ts:30](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/atsFormatter.ts#L30)
+Defined in: [src/lib/document/atsFormatter.ts:30](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/atsFormatter.ts#L30)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/lib/document/atsFormatter.ts:30](https://github.com/rjmad1/Care
 
 > **passed**: `boolean`
 
-Defined in: [src/lib/document/atsFormatter.ts:28](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/atsFormatter.ts#L28)
+Defined in: [src/lib/document/atsFormatter.ts:28](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/atsFormatter.ts#L28)
 
 ***
 
@@ -30,4 +30,4 @@ Defined in: [src/lib/document/atsFormatter.ts:28](https://github.com/rjmad1/Care
 
 > **violations**: [`FormatViolation`](FormatViolation.md)[]
 
-Defined in: [src/lib/document/atsFormatter.ts:29](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/lib/document/atsFormatter.ts#L29)
+Defined in: [src/lib/document/atsFormatter.ts:29](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/lib/document/atsFormatter.ts#L29)

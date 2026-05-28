@@ -6,7 +6,7 @@
 
 # Interface: Responsibility
 
-Defined in: [src/types/interview.ts:87](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L87)
+Defined in: [src/types/interview.ts:87](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L87)
 
 ## Properties
 
@@ -14,7 +14,7 @@ Defined in: [src/types/interview.ts:87](https://github.com/rjmad1/CareerPropel/b
 
 > **description**: `string`
 
-Defined in: [src/types/interview.ts:89](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L89)
+Defined in: [src/types/interview.ts:89](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L89)
 
 ***
 
@@ -22,7 +22,7 @@ Defined in: [src/types/interview.ts:89](https://github.com/rjmad1/CareerPropel/b
 
 > **priority**: `"must_have"` \| `"important"` \| `"nice_to_have"`
 
-Defined in: [src/types/interview.ts:90](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L90)
+Defined in: [src/types/interview.ts:90](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L90)
 
 ***
 
@@ -30,7 +30,7 @@ Defined in: [src/types/interview.ts:90](https://github.com/rjmad1/CareerPropel/b
 
 > **title**: `string`
 
-Defined in: [src/types/interview.ts:88](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L88)
+Defined in: [src/types/interview.ts:88](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L88)
 
 ***
 
@@ -38,4 +38,4 @@ Defined in: [src/types/interview.ts:88](https://github.com/rjmad1/CareerPropel/b
 
 > `optional` **yourExpertise?**: `"none"` \| `"expert"` \| `"proficient"` \| `"learning"`
 
-Defined in: [src/types/interview.ts:91](https://github.com/rjmad1/CareerPropel/blob/e86ab7fb637179cc2eaf74357ae1f99399302a0f/src/types/interview.ts#L91)
+Defined in: [src/types/interview.ts:91](https://github.com/rjmad1/CareerPropel/blob/409c625125f0d1b63f66f92160c82ad4b76461b4/src/types/interview.ts#L91)
