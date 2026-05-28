@@ -37,8 +37,11 @@ CREATE INDEX IF NOT EXISTS "Permission_systemProtected_idx" ON "Permission"("sys
 
 DO $$ BEGIN
   ALTER TABLE "Permission"
-    ADD CONSTRAINT "Permission_resource_action_key" UNIQUE ("resource", "action");
-EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+    ADD CONSTRAINT "Permission_resource_action_key"
+    UNIQUE USING INDEX "Permission_resource_action_key";
+EXCEPTION
+  WHEN duplicate_object THEN NULL;
+END $$;
 
 -- ─── Extend UserRole ─────────────────────────────────────────────────────────
 
@@ -143,7 +146,10 @@ CREATE INDEX IF NOT EXISTS "AuthorizationAuditLog_correlationId_idx" ON "Authori
 -- ─── JobIntelligence: add missing candidate back-relation foreign key ──────────
 
 DO $$ BEGIN
-  IF NOT EXISTS (
+  IF EXISTS (
+    SELECT 1 FROM information_schema.tables
+    WHERE table_schema = 'public' AND table_name = 'JobIntelligence'
+  ) AND NOT EXISTS (
     SELECT 1 FROM information_schema.table_constraints
     WHERE constraint_name = 'JobIntelligence_candidateId_fkey'
   ) THEN
