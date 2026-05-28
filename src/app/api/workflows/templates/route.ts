@@ -16,8 +16,9 @@ export const GET = withAuth(
         metadata: t.metadata,
       }));
       return NextResponse.json({ data: templates });
-    } catch (err: any) {
-      return NextResponse.json({ error: { message: err.message ?? 'Failed to list templates' } }, { status: 500 });
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to list templates';
+      return NextResponse.json({ error: { message } }, { status: 500 });
     }
   },
   {

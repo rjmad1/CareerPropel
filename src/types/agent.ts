@@ -20,7 +20,7 @@ export interface AgentExecution {
   durationMs?: number;
 
   progress: number; // 0-100
-  output?: Record<string, any>;
+  output?: Record<string, unknown>;
   errorMessage?: string;
 
   toolCalls: ToolCall[];
@@ -50,8 +50,8 @@ export interface ToolCall {
   toolName: string;
 
   status: 'pending' | 'running' | 'success' | 'failed';
-  input?: Record<string, any>;
-  output?: Record<string, any>;
+  input?: Record<string, unknown>;
+  output?: Record<string, unknown>;
   error?: string;
 
   startedAt: Date;
@@ -59,7 +59,7 @@ export interface ToolCall {
   duration?: number; // milliseconds
 
   tokens?: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 /**
@@ -70,7 +70,7 @@ export interface EventLog {
   executionId: string;
   level: 'INFO' | 'WARN' | 'ERROR' | 'DEBUG';
   message: string;
-  data?: Record<string, any>;
+  data?: Record<string, unknown>;
   timestamp: Date;
 }
 

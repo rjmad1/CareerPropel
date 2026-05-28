@@ -114,7 +114,7 @@
   "hooks": {
     "SubagentStart": [
       {
-        "matcher": "code-builder|code-validator|validation-orchestrator",
+        "matcher": "code-builder|code-validator|validation-orchestrator|merge-governor",
         "hooks": [
           {
             "type": "command",
@@ -125,7 +125,7 @@
     ],
     "SubagentStop": [
       {
-        "matcher": "code-builder|code-validator|validation-orchestrator",
+        "matcher": "code-builder|code-validator|validation-orchestrator|merge-governor",
         "hooks": [
           {
             "type": "command",

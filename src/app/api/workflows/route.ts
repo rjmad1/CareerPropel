@@ -54,11 +54,10 @@ export const GET = withAuth(
       ]);
 
       return NextResponse.json({ data: executions, total, limit, offset });
-    } catch (err: any) {
-      return NextResponse.json(
-        { error: { message: err.message ?? 'Failed to list workflows' } },
-        { status: err.status ?? 500 },
-      );
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to list workflows';
+      const status = (err as { status?: number }).status ?? 500;
+      return NextResponse.json({ error: { message } }, { status });
     }
   },
   {
@@ -94,11 +93,10 @@ export const POST = withAuth(
       });
 
       return NextResponse.json({ data: { workflowId } }, { status: 201 });
-    } catch (err: any) {
-      return NextResponse.json(
-        { error: { message: err.message ?? 'Failed to create workflow' } },
-        { status: err.status ?? 500 },
-      );
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to create workflow';
+      const status = (err as { status?: number }).status ?? 500;
+      return NextResponse.json({ error: { message } }, { status });
     }
   },
   {

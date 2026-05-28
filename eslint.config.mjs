@@ -9,7 +9,8 @@ const __dirname = path.dirname(__filename);
 
 const compat = new FlatCompat({ baseDirectory: __dirname });
 
-export default [
+const config = [
+  { ignores: ['.next/**', 'node_modules/**', 'coverage/**'] },
   ...compat.extends('next/core-web-vitals'),
   {
     files: ['src/**/*.{ts,tsx}'],
@@ -28,4 +29,18 @@ export default [
       '@typescript-eslint/no-require-imports': 'warn',
     },
   },
+  // Test files: relax strict type rules — mocking requires loose typing
+  {
+    files: [
+      'src/__tests__/**/*.{ts,tsx}',
+      '**/*.test.{ts,tsx}',
+      '**/*.spec.{ts,tsx}',
+    ],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
 ];
+
+export default config;

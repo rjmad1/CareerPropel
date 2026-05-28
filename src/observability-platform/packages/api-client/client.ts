@@ -3,14 +3,19 @@ import { Trace, Span, WorkflowDAG, AgentMetric, AuditLog, TelemetryStatus } from
 // Helper to generate a random ID
 const uuid = () => Math.random().toString(36).substring(2, 11);
 
+/** Internal extension that carries pre-computed span list alongside a Trace. */
+interface TraceWithSpans extends Trace {
+  _spans?: Span[];
+}
+
 // Standard mock data store
 const MOCK_AGENTS = ['Support-Agent', 'Requirement-Agent', 'Repo-Explorer', 'Code-Optimizer', 'Deployer-Agent'];
 const MOCK_MODELS = ['gemini-1.5-pro', 'gemini-1.5-flash', 'claude-3-5-sonnet', 'gpt-4o'];
 
 export class TelemetryApiClient {
-  private static subscribers: Set<(event: { type: string; payload: any }) => void> = new Set();
+  private static subscribers: Set<(event: { type: string; payload: unknown }) => void> = new Set();
   private static simulationInterval: NodeJS.Timeout | null = null;
-  private static traces: Trace[] = [];
+  private static traces: TraceWithSpans[] = [];
 
   constructor() {
     if (TelemetryApiClient.traces.length === 0) {
@@ -116,7 +121,7 @@ export class TelemetryApiClient {
       });
 
       // Keep reference to individual spans if queried
-      (TelemetryApiClient.traces[TelemetryApiClient.traces.length - 1] as any)._spans = spans;
+      TelemetryApiClient.traces[TelemetryApiClient.traces.length - 1]._spans = spans;
     }
   }
 
@@ -136,7 +141,7 @@ export class TelemetryApiClient {
     if (!trace) return null;
     return {
       trace,
-      spans: (trace as any)._spans || [],
+      spans: (trace as TraceWithSpans)._spans || [],
     };
   }
 
@@ -149,7 +154,7 @@ export class TelemetryApiClient {
     const nodes = details.spans.map(s => ({
       id: s.id,
       label: s.name.replace('Execution Frame: ', ''),
-      type: (s.type === 'PIPELINE' ? 'orchestrator' : 'agent') as any,
+      type: (s.type === 'PIPELINE' ? 'orchestrator' : 'agent') as 'orchestrator' | 'agent',
       status: s.status,
       durationMs: s.durationMs,
       cost: s.cost,
@@ -171,7 +176,7 @@ export class TelemetryApiClient {
     const counts: Record<string, { count: number; success: number; latency: number; cost: number; tokens: number }> = {};
     
     TelemetryApiClient.traces.forEach(t => {
-      const spans = (t as any)._spans as Span[] || [];
+      const spans = (t as TraceWithSpans)._spans || [];
       spans.forEach(s => {
         if (s.agentName) {
           if (!counts[s.agentName]) {
@@ -219,7 +224,7 @@ export class TelemetryApiClient {
   }
 
   // Real-time updates subscription
-  subscribeToRealTimeEvents(callback: (event: { type: string; payload: any }) => void) {
+  subscribeToRealTimeEvents(callback: (event: { type: string; payload: unknown }) => void) {
     TelemetryApiClient.subscribers.add(callback);
     
     // Start active mock stream simulator if not already running

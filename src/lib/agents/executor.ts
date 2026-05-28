@@ -281,6 +281,255 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       },
     });
 
+    // ── Post-processing hooks for Role Intelligence & Fit Evaluation ─────────────
+    const jobId = (promptContext as any).jobId as string | undefined;
+    const candidate = await prisma.candidate.findUnique({
+      where: { email: userId },
+      select: { id: true },
+    });
+    const candidateId = candidate?.id;
+
+    if (agentType === 'role-intelligence' && jobId) {
+      const data = finalOutput as any;
+      const jobIntel = await prisma.jobIntelligence.upsert({
+        where: { jobId },
+        create: {
+          jobId,
+          inferredRoleTitle: data.inferredRoleTitle,
+          overallConfidence: data.overallConfidence ?? 0.0,
+        },
+        update: {
+          inferredRoleTitle: data.inferredRoleTitle,
+          overallConfidence: data.overallConfidence ?? 0.0,
+        },
+      });
+
+      await prisma.roleArchetype.deleteMany({ where: { jobIntelligenceId: jobIntel.id } });
+      if (Array.isArray(data.archetypes)) {
+        await prisma.roleArchetype.createMany({
+          data: data.archetypes.map((a: any) => ({
+            jobIntelligenceId: jobIntel.id,
+            archetype: a.archetype,
+            weight: a.weight ?? 0.0,
+          })),
+        });
+      }
+
+      await prisma.requirementBreakdown.deleteMany({ where: { jobIntelligenceId: jobIntel.id } });
+      if (Array.isArray(data.requirements)) {
+        await prisma.requirementBreakdown.createMany({
+          data: data.requirements.map((r: any) => ({
+            jobIntelligenceId: jobIntel.id,
+            type: r.type,
+            originalText: r.originalText,
+            normalizedText: r.normalizedText,
+            confidence: r.confidence ?? 1.0,
+            deconstruction: r.deconstruction ?? {},
+          })),
+        });
+      }
+
+      await prisma.businessProblem.deleteMany({ where: { jobIntelligenceId: jobIntel.id } });
+      if (Array.isArray(data.businessProblems)) {
+        await prisma.businessProblem.createMany({
+          data: data.businessProblems.map((p: any) => ({
+            jobIntelligenceId: jobIntel.id,
+            problemArea: p.problemArea,
+            description: p.description,
+            inferredFriction: p.inferredFriction,
+            urgencySignal: p.urgencySignal,
+          })),
+        });
+      }
+
+      await prisma.operationalSignal.deleteMany({ where: { jobIntelligenceId: jobIntel.id } });
+      if (Array.isArray(data.signals)) {
+        await prisma.operationalSignal.createMany({
+          data: data.signals.map((s: any) => ({
+            jobIntelligenceId: jobIntel.id,
+            type: s.type,
+            description: s.description,
+            value: s.value,
+          })),
+        });
+      }
+    }
+
+    if ((agentType === 'fit-analysis' || agentType === 'strength-mapper') && jobId && candidateId) {
+      const data = finalOutput as any;
+      let jobIntel = await prisma.jobIntelligence.findUnique({ where: { jobId } });
+      if (!jobIntel) {
+        jobIntel = await prisma.jobIntelligence.create({
+          data: { jobId, inferredRoleTitle: 'Inferred Operational Role', overallConfidence: 50 },
+        });
+      }
+
+      const analysis = await prisma.roleFitAnalysis.upsert({
+        where: {
+          candidateId_jobIntelligenceId: {
+            candidateId,
+            jobIntelligenceId: jobIntel.id,
+          },
+        },
+        create: {
+          candidateId,
+          jobIntelligenceId: jobIntel.id,
+        },
+        update: {},
+      });
+
+      await prisma.strengthEvidence.deleteMany({ where: { roleFitAnalysisId: analysis.id } });
+      if (Array.isArray(data.strengths)) {
+        const problems = await prisma.businessProblem.findMany({ where: { jobIntelligenceId: jobIntel.id } });
+        const problemMap = new Map(problems.map(p => [p.problemArea.toLowerCase(), p.id]));
+
+        for (const s of data.strengths) {
+          const businessProblemId = problemMap.get((s.problemArea || '').toLowerCase()) || null;
+          await prisma.strengthEvidence.create({
+            data: {
+              roleFitAnalysisId: analysis.id,
+              businessProblemId,
+              capabilityName: s.capabilityName,
+              candidateProof: s.candidateProof,
+              employerInterpretation: s.employerInterpretation,
+              measurableOutcome: s.measurableOutcome,
+              businessImpact: s.businessImpact,
+              scale: s.scale || null,
+              decisionOwnership: s.decisionOwnership || null,
+              operationalComplexity: s.operationalComplexity || null,
+              systemsInfluenced: s.systemsInfluenced || null,
+              stakeholderLevel: s.stakeholderLevel || null,
+              repeatability: s.repeatability || null,
+              priorityLevel: s.priorityLevel || 'MEDIUM',
+            },
+          });
+        }
+      }
+    }
+
+    if (agentType === 'gap-analyzer' && jobId && candidateId) {
+      const data = finalOutput as any;
+      let jobIntel = await prisma.jobIntelligence.findUnique({ where: { jobId } });
+      if (!jobIntel) {
+        jobIntel = await prisma.jobIntelligence.create({
+          data: { jobId, inferredRoleTitle: 'Inferred Operational Role', overallConfidence: 50 },
+        });
+      }
+
+      const analysis = await prisma.roleFitAnalysis.upsert({
+        where: {
+          candidateId_jobIntelligenceId: {
+            candidateId,
+            jobIntelligenceId: jobIntel.id,
+          },
+        },
+        create: {
+          candidateId,
+          jobIntelligenceId: jobIntel.id,
+          adaptationRiskScore: data.adaptationBurdenScore ?? 0.0,
+        },
+        update: {
+          adaptationRiskScore: data.adaptationBurdenScore ?? 0.0,
+        },
+      });
+
+      await prisma.fitGap.deleteMany({ where: { roleFitAnalysisId: analysis.id } });
+      if (Array.isArray(data.gaps)) {
+        await prisma.fitGap.createMany({
+          data: data.gaps.map((g: any) => ({
+            roleFitAnalysisId: analysis.id,
+            type: g.type,
+            description: g.description,
+            penaltyLevel: g.penaltyLevel || 'LOW',
+            adaptationCost: g.adaptationCost ?? 0.0,
+            mitigationStrategy: g.mitigationStrategy,
+          })),
+        });
+      }
+    }
+
+    if (agentType === 'conversion-scorer' && jobId && candidateId) {
+      const data = finalOutput as any;
+      let jobIntel = await prisma.jobIntelligence.findUnique({ where: { jobId } });
+      if (!jobIntel) {
+        jobIntel = await prisma.jobIntelligence.create({
+          data: { jobId, inferredRoleTitle: 'Inferred Operational Role', overallConfidence: 50 },
+        });
+      }
+
+      const archetypes = await prisma.roleArchetype.findMany({
+        where: { jobIntelligenceId: jobIntel.id },
+        select: { archetype: true, weight: true }
+      });
+
+      const { calculateFitScore } = await import('@/lib/scoring/scoringEngine');
+      const scoreResult = calculateFitScore({
+        dimensions: data.dimensions || [],
+        credibilityRiskLevel: data.credibilityRiskLevel || 'NONE',
+        adaptationBurdenLevel: data.adaptationBurdenLevel || 'LOW',
+        archetypes
+      });
+
+      const getScore = (dim: string) => scoreResult.dimensionDetails.find(d => d.dimension === dim)?.score ?? 0;
+
+      await prisma.roleFitAnalysis.upsert({
+        where: {
+          candidateId_jobIntelligenceId: {
+            candidateId,
+            jobIntelligenceId: jobIntel.id,
+          },
+        },
+        create: {
+          candidateId,
+          jobIntelligenceId: jobIntel.id,
+          overallFitScore: scoreResult.finalScore,
+          conversionProb: scoreResult.finalScore,
+          immediateContribution: getScore('immediateContribution'),
+          credibilityRisk: data.credibilityRiskLevel === 'NONE' ? 0.0 : data.credibilityRiskLevel === 'LOW' ? 15.0 : data.credibilityRiskLevel === 'MODERATE' ? 35.0 : data.credibilityRiskLevel === 'HIGH' ? 65.0 : 85.0,
+          skillTransferScore: getScore('adjacentSkillTransfer'),
+          businessProbAlign: getScore('businessProblemAlignment'),
+          roleClarityScore: getScore('archetypeAlignment'),
+          painMatchScore: getScore('businessProblemAlignment'),
+          adaptationRiskScore: scoreResult.adaptationMultiplier * 100,
+          scoringSnapshot: scoreResult as any,
+          reasoning: scoreResult.recommendationBand + ': ' + data.reasoning,
+        },
+        update: {
+          overallFitScore: scoreResult.finalScore,
+          conversionProb: scoreResult.finalScore,
+          immediateContribution: getScore('immediateContribution'),
+          credibilityRisk: data.credibilityRiskLevel === 'NONE' ? 0.0 : data.credibilityRiskLevel === 'LOW' ? 15.0 : data.credibilityRiskLevel === 'MODERATE' ? 35.0 : data.credibilityRiskLevel === 'HIGH' ? 65.0 : 85.0,
+          skillTransferScore: getScore('adjacentSkillTransfer'),
+          businessProbAlign: getScore('businessProblemAlignment'),
+          roleClarityScore: getScore('archetypeAlignment'),
+          painMatchScore: getScore('businessProblemAlignment'),
+          adaptationRiskScore: scoreResult.adaptationMultiplier * 100,
+          scoringSnapshot: scoreResult as any,
+          reasoning: scoreResult.recommendationBand + ': ' + data.reasoning,
+        },
+      });
+    }
+
+    if (agentType === 'pattern-miner' && candidateId) {
+      const data = finalOutput as any;
+      if (Array.isArray(data.entries)) {
+        for (const entry of data.entries) {
+          await prisma.patternLibraryEntry.create({
+            data: {
+              candidateId,
+              roleArchetype: entry.roleArchetype,
+              operationalKeywords: entry.operationalKeywords ?? [],
+              businessProblems: entry.businessProblems ?? [],
+              successMetrics: entry.successMetrics ?? [],
+              languagePatterns: entry.languagePatterns ?? [],
+              achievementsMapped: entry.achievementsMapped ?? [],
+              successScore: entry.successScore ?? 0.0,
+            },
+          });
+        }
+      }
+    }
+
     await appendExecutionLog(
       executionId,
       userId,

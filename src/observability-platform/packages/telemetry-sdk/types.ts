@@ -7,7 +7,7 @@ export interface TelemetryMetadata {
   environment: 'development' | 'staging' | 'production';
   executorId?: string;
   sessionTags?: string[];
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface GenerationDetails {
@@ -37,7 +37,7 @@ export interface Span {
   durationMs: number;
   cost: number;
   agentName?: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   generation?: GenerationDetails;
 }
 
@@ -108,6 +108,6 @@ export interface PluginWidget {
   version: string;
   description?: string;
   enabled: boolean;
-  onRender: (container: HTMLElement, data: any) => void;
+  onRender: (container: HTMLElement, data: unknown) => void;
   onDestroy?: () => void;
 }

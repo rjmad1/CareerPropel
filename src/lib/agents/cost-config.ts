@@ -8,6 +8,12 @@ export const AGENT_COST_CEILINGS: Readonly<Record<string, number>> = {
   'interview-prep': 2,
   'research':       1.5,
   'networking':     1,
+  'role-intelligence': 1,
+  'fit-analysis':   1.5,
+  'strength-mapper': 1.5,
+  'gap-analyzer':   1,
+  'conversion-scorer': 1,
+  'pattern-miner':   1,
 };
 
 // Retries typically use cached/shorter prompts — apply a discount.

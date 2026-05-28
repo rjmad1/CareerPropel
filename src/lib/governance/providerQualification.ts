@@ -69,6 +69,48 @@ export const AGENT_CAPABILITY_MATRIX: Record<AgentType, ProviderCapabilitySpec> 
     requiresLowHallucination: false,
     requiresHighFactuality: false,
   },
+  'role-intelligence': {
+    allowedProviders: ['anthropic'],
+    minModelTier: 'frontier',
+    rationale: 'Deconstructing role operational requirements requires the highest reasoning capability',
+    requiresLowHallucination: true,
+    requiresHighFactuality: false,
+  },
+  'fit-analysis': {
+    allowedProviders: ['anthropic'],
+    minModelTier: 'frontier',
+    rationale: 'Mapping user proof to business pain points requires high-quality reasoning',
+    requiresLowHallucination: true,
+    requiresHighFactuality: false,
+  },
+  'strength-mapper': {
+    allowedProviders: ['anthropic', 'nvidia-nim'],
+    minModelTier: 'standard',
+    rationale: 'Synthesizing strengths from history is standard rewrite/synthesis task',
+    requiresLowHallucination: false,
+    requiresHighFactuality: false,
+  },
+  'conversion-scorer': {
+    allowedProviders: ['anthropic'],
+    minModelTier: 'frontier',
+    rationale: 'Deterministic 11-dimension scoring and validation requires high logic fidelity',
+    requiresLowHallucination: true,
+    requiresHighFactuality: false,
+  },
+  'gap-analyzer': {
+    allowedProviders: ['anthropic'],
+    minModelTier: 'frontier',
+    rationale: 'Gap classification and learning curve risk scoring requires precise reasoning',
+    requiresLowHallucination: true,
+    requiresHighFactuality: false,
+  },
+  'pattern-miner': {
+    allowedProviders: ['anthropic', 'nvidia-nim'],
+    minModelTier: 'standard',
+    rationale: 'Mining keywords and correlation patterns is structural synthesis',
+    requiresLowHallucination: false,
+    requiresHighFactuality: false,
+  },
 };
 
 // ─── Model tier registry ──────────────────────────────────────────────────────

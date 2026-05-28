@@ -124,9 +124,10 @@ export const POST = withAuth(
             userEmail,
             promptContext as Record<string, unknown>,
           );
-        } catch (enqueueErr: any) {
-          if (enqueueErr?.code === 'COST_CEILING_EXCEEDED') {
-            return NextResponse.json({ error: enqueueErr.message }, { status: 400 });
+        } catch (enqueueErr: unknown) {
+          const qErr = enqueueErr as { code?: string; message?: string };
+          if (qErr?.code === 'COST_CEILING_EXCEEDED') {
+            return NextResponse.json({ error: qErr.message }, { status: 400 });
           }
           throw enqueueErr;
         }
@@ -171,7 +172,7 @@ export const POST = withAuth(
         },
         { status: 202 }
       );
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('[Resume Tailor] Error:', err);
       return NextResponse.json(
         { error: err instanceof Error ? err.message : 'Unknown error' },

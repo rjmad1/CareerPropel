@@ -34,10 +34,11 @@ export const GET = withAuth(
       }
 
       return NextResponse.json({ data: plan });
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const e = err as { message?: string; status?: number };
       return NextResponse.json(
-        { error: { message: err.message ?? 'Failed to fetch plan' } },
-        { status: err.status ?? 500 },
+        { error: { message: e.message ?? 'Failed to fetch plan' } },
+        { status: e.status ?? 500 },
       );
     }
   },
@@ -57,10 +58,11 @@ export const POST = withAuth(
 
       const plan = await generateOpportunityPlan(jobId, candidate.id);
       return NextResponse.json({ data: plan }, { status: 201 });
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const e = err as { message?: string; status?: number };
       return NextResponse.json(
-        { error: { message: err.message ?? 'Failed to generate plan' } },
-        { status: err.status ?? 500 },
+        { error: { message: e.message ?? 'Failed to generate plan' } },
+        { status: e.status ?? 500 },
       );
     }
   },

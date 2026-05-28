@@ -16,11 +16,10 @@ export const POST = withAuth(
       const body = await req.json().catch(() => ({}));
       await cancelWorkflow(id, c.id, body.reason);
       return NextResponse.json({ data: { cancelled: true } });
-    } catch (err: any) {
-      return NextResponse.json(
-        { error: { message: err.message ?? 'Failed to cancel workflow' } },
-        { status: err.status ?? 500 },
-      );
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to cancel workflow';
+      const status = (err as { status?: number }).status ?? 500;
+      return NextResponse.json({ error: { message } }, { status });
     }
   },
   {

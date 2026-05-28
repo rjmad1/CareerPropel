@@ -54,3 +54,6 @@ graphify-out/
 # Local security credentials
 /credentials.md
 
+# ESLint temporary report files
+eslint-*.json
+

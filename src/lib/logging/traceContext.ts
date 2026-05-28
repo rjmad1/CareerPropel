@@ -6,13 +6,14 @@
  * queues, and background workers.
  */
 
-let traceStoreInstance: any;
+import { AsyncLocalStorage } from 'async_hooks';
+
+let traceStoreInstance: AsyncLocalStorage<TraceStore> | undefined;
 
 if (typeof window === 'undefined') {
   try {
-    const { AsyncLocalStorage } = require('async_hooks');
-    traceStoreInstance = new AsyncLocalStorage();
-  } catch (e) {
+    traceStoreInstance = new AsyncLocalStorage<TraceStore>();
+  } catch {
     // Fallback if async_hooks is unavailable
   }
 }

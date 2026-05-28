@@ -4,6 +4,10 @@ export type WorkflowStatus =
   | 'queued' | 'running' | 'waiting_for_approval'
   | 'blocked' | 'failed' | 'completed' | 'cancelled';
 
+export const VALID_WORKFLOW_STATUSES: WorkflowStatus[] = [
+  'queued', 'running', 'waiting_for_approval', 'blocked', 'failed', 'completed', 'cancelled',
+];
+
 export type StepStatus =
   | 'pending' | 'running' | 'waiting_for_approval'
   | 'completed' | 'failed' | 'skipped';

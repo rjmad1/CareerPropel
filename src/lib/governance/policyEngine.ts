@@ -104,6 +104,48 @@ export const AGENT_POLICIES: Record<AgentType, AgentPolicy> = {
     requireValidationPass: false,
     blockOnHallucinationRisk: false,
   },
+  'role-intelligence': {
+    ...DEFAULT_POLICY,
+    maxTokensPerExecution: 8000,
+    maxCostUsdPerExecution: 0.15,
+    requireValidationPass: true,
+    blockOnHallucinationRisk: true,
+  },
+  'fit-analysis': {
+    ...DEFAULT_POLICY,
+    maxTokensPerExecution: 8000,
+    maxCostUsdPerExecution: 0.15,
+    requireValidationPass: true,
+    blockOnHallucinationRisk: true,
+  },
+  'strength-mapper': {
+    ...DEFAULT_POLICY,
+    maxTokensPerExecution: 6000,
+    maxCostUsdPerExecution: 0.10,
+    requireValidationPass: true,
+    blockOnHallucinationRisk: true,
+  },
+  'conversion-scorer': {
+    ...DEFAULT_POLICY,
+    maxTokensPerExecution: 6000,
+    maxCostUsdPerExecution: 0.10,
+    requireValidationPass: true,
+    blockOnHallucinationRisk: true,
+  },
+  'gap-analyzer': {
+    ...DEFAULT_POLICY,
+    maxTokensPerExecution: 6000,
+    maxCostUsdPerExecution: 0.10,
+    requireValidationPass: true,
+    blockOnHallucinationRisk: true,
+  },
+  'pattern-miner': {
+    ...DEFAULT_POLICY,
+    maxTokensPerExecution: 6000,
+    maxCostUsdPerExecution: 0.10,
+    requireValidationPass: true,
+    blockOnHallucinationRisk: true,
+  },
 };
 
 export function getPolicy(agentType: AgentType): AgentPolicy {

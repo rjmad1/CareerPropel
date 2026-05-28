@@ -23,6 +23,8 @@ interface LiveEvent {
   timestamp: string;
 }
 
+const client = new TelemetryApiClient();
+
 export default function LiveStreamConsole() {
   const [events, setEvents] = useState<LiveEvent[]>([]);
   const [activeTokensCount, setActiveTokensCount] = useState(0);
@@ -30,7 +32,6 @@ export default function LiveStreamConsole() {
   const [runningCount, setRunningCount] = useState(0);
 
   const consoleEndRef = useRef<HTMLDivElement>(null);
-  const client = new TelemetryApiClient();
 
   useEffect(() => {
     // Hook up active WebSocket subscriber

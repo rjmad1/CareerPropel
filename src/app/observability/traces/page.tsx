@@ -16,6 +16,8 @@ import {
 } from 'lucide-react';
 
 
+const client = new TelemetryApiClient();
+
 export default function TraceExplorer() {
   const [traces, setTraces] = useState<Trace[]>([]);
   const [selectedTraceId, setSelectedTraceId] = useState<string | null>(null);
@@ -31,15 +33,13 @@ export default function TraceExplorer() {
   const [envFilter, setEnvFilter] = useState('ALL');
   const [activeTab, setActiveTab] = useState<'tree' | 'dag' | 'swimlanes' | 'payloads'>('tree');
 
-  const client = new TelemetryApiClient();
-
   useEffect(() => {
     async function loadTraces() {
       const data = await client.getTraces();
       setTraces(data);
-      // Auto-select first trace if available
-      if (data.length > 0 && !selectedTraceId) {
-        setSelectedTraceId(data[0].id);
+      // Auto-select first trace if none selected yet (functional updater avoids closure staleness)
+      if (data.length > 0) {
+        setSelectedTraceId(prev => prev ?? data[0].id);
       }
     }
     loadTraces();

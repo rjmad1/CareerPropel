@@ -7,6 +7,7 @@ import { sanitizeUserFeedback } from '@/lib/safety/promptSanitizer'
 import { getAuthContext } from '@/lib/middleware/auth'
 import { createRateLimiter } from '@/lib/middleware/rateLimiter'
 import { handleCorsPreFlight, applyCorsHeaders } from '@/lib/middleware/cors'
+import { recordConversionOutcome } from '@/lib/scoring/telemetry'
 
 
 
@@ -131,7 +132,7 @@ export async function PATCH(
     }
 
     // Prepare update data with sanitization
-    const updateData: any = {}
+    const updateData: Record<string, string | null> = {}
     if (title !== undefined) updateData.title = title
     if (company !== undefined) updateData.company = company
     if (url !== undefined) updateData.url = url
@@ -145,6 +146,32 @@ export async function PATCH(
       data: updateData,
       include: { activities: true },
     })
+
+    // Record conversion outcome telemetry if stage is changing
+    if (stage !== undefined && stage !== existingJob.stage) {
+      let outcome: 'progressed' | 'rejected' | 'offer' | null = null
+      if (stage === 'offer' || stage === 'negotiation') {
+        outcome = 'offer'
+      } else if ([
+        'recruiter_screen',
+        'hiring_manager',
+        'technical_interview',
+        'system_design',
+        'behavioral',
+        'final_round'
+      ].includes(stage)) {
+        outcome = 'progressed'
+      } else if (stage === 'rejected') {
+        outcome = 'rejected'
+      }
+
+      if (outcome) {
+        // Record conversion outcome asynchronously to avoid blocking the API response
+        recordConversionOutcome(existingJob.candidate.id, id, stage, outcome).catch((err) => {
+          console.error('[Telemetry] Error recording conversion outcome:', err)
+        })
+      }
+    }
 
     const response = successResponse(job)
     return applyCorsHeaders(request, response)

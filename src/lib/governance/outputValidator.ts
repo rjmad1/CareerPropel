@@ -142,6 +142,117 @@ const networkingSchema = z.object({
   followUpSequence: z.array(z.string()).max(10),
 });
 
+const roleIntelligenceSchema = z.object({
+  inferredRoleTitle: z.string().min(3).max(100),
+  overallConfidence: z.number().min(0).max(100),
+  archetypes: z.array(z.object({
+    archetype: z.enum(['Builder', 'Operator', 'Strategist', 'Maintainer', 'Optimizer', 'Researcher', 'Executor', 'Process Scaler', 'Systems Integrator', 'Customer-Facing Translator', 'Technical Lead', 'Transformation Driver']),
+    weight: z.number().min(0).max(1)
+  })).min(1).max(12),
+  requirements: z.array(z.object({
+    type: z.enum(['hard', 'soft']),
+    originalText: z.string().min(5),
+    normalizedText: z.string().min(5),
+    confidence: z.number().min(0).max(100),
+    deconstruction: z.object({
+      tools: z.array(z.string()),
+      decisions: z.array(z.string()),
+      outputs: z.array(z.string()),
+      metrics: z.array(z.string()),
+      ownership: z.string(),
+      operationalComplexity: z.string(),
+      collaborationSurfaceArea: z.string(),
+      businessImpact: z.string(),
+      executionCadence: z.string(),
+      riskLevel: z.enum(['LOW', 'MEDIUM', 'HIGH'])
+    })
+  })).min(1),
+  businessProblems: z.array(z.object({
+    problemArea: z.string().min(3),
+    description: z.string().min(10),
+    inferredFriction: z.string().min(5),
+    urgencySignal: z.string().min(5)
+  })).min(1),
+  signals: z.array(z.object({
+    type: z.enum(['decision_ownership', 'operational_scope', 'execution_complexity', 'systems_responsibility', 'reporting_structure', 'organizational_leverage']),
+    description: z.string(),
+    value: z.string()
+  }))
+});
+
+const fitAnalysisSchema = z.object({
+  strengths: z.array(z.object({
+    problemArea: z.string().min(3),
+    capabilityName: z.string().min(2),
+    candidateProof: z.string().min(10),
+    employerInterpretation: z.string().min(5),
+    measurableOutcome: z.string().min(3),
+    businessImpact: z.string().min(5),
+    scale: z.string().optional(),
+    decisionOwnership: z.string().optional(),
+    operationalComplexity: z.string().optional(),
+    systemsInfluenced: z.string().optional(),
+    stakeholderLevel: z.string().optional(),
+    repeatability: z.string().optional(),
+    priorityLevel: z.enum(['HIGH', 'MEDIUM', 'LOW'])
+  })).min(1)
+});
+
+const strengthMapperSchema = z.object({
+  strengths: z.array(z.object({
+    problemArea: z.string().min(3),
+    capabilityName: z.string().min(2),
+    candidateProof: z.string().min(10),
+    employerInterpretation: z.string().min(5),
+    measurableOutcome: z.string().min(3),
+    businessImpact: z.string().min(5),
+    scale: z.string().optional(),
+    decisionOwnership: z.string().optional(),
+    operationalComplexity: z.string().optional(),
+    systemsInfluenced: z.string().optional(),
+    stakeholderLevel: z.string().optional(),
+    repeatability: z.string().optional(),
+    priorityLevel: z.enum(['HIGH', 'MEDIUM', 'LOW'])
+  })).min(1)
+});
+
+const gapAnalyzerSchema = z.object({
+  gaps: z.array(z.object({
+    type: z.enum(['trainable', 'credibility-killing', 'domain-depth']),
+    description: z.string().min(5),
+    penaltyLevel: z.enum(['LOW', 'SEVERE', 'CRITICAL']),
+    adaptationCost: z.number().min(0).max(100),
+    mitigationStrategy: z.string().min(5)
+  })),
+  adaptationBurdenScore: z.number().min(0).max(100),
+  learningCurveSummary: z.string().min(10)
+});
+
+const conversionScorerSchema = z.object({
+  dimensions: z.array(z.object({
+    dimension: z.enum(['executionProof', 'businessProblemAlignment', 'responsibilityOverlap', 'immediateContribution', 'domainFamiliarity', 'archetypeAlignment', 'adjacentSkillTransfer', 'strategicImpact', 'toolOverlap', 'keywordOverlap']),
+    score: z.number().min(0).max(100),
+    confidence: z.number().min(0).max(100),
+    evidence: z.array(z.string()),
+    reasoning: z.string().min(5)
+  })).min(10).max(10), // must evaluate all 10 canonical dimensions
+  credibilityRiskLevel: z.enum(['NONE', 'LOW', 'MODERATE', 'HIGH', 'EXTREME', 'FRAUDULENT']),
+  adaptationBurdenLevel: z.enum(['LOW', 'MODERATE', 'HIGH', 'EXTREME']),
+  reasoning: z.string().min(10)
+});
+
+const patternMinerSchema = z.object({
+  entries: z.array(z.object({
+    roleArchetype: z.string(),
+    operationalKeywords: z.array(z.string()),
+    businessProblems: z.array(z.string()),
+    successMetrics: z.array(z.string()),
+    languagePatterns: z.array(z.string()),
+    achievementsMapped: z.array(z.string()),
+    successScore: z.number().min(0).max(100)
+  }))
+});
+
 const agentSchemas: Record<AgentType, z.ZodType<unknown>> = {
   'resume-tailor': resumeTailorSchema,
   'job-match': jobMatchSchema,
@@ -149,6 +260,12 @@ const agentSchemas: Record<AgentType, z.ZodType<unknown>> = {
   'research': researchSchema,
   'follow-up': followUpSchema,
   'networking': networkingSchema,
+  'role-intelligence': roleIntelligenceSchema,
+  'fit-analysis': fitAnalysisSchema,
+  'strength-mapper': strengthMapperSchema,
+  'conversion-scorer': conversionScorerSchema,
+  'gap-analyzer': gapAnalyzerSchema,
+  'pattern-miner': patternMinerSchema,
 };
 
 // ─── Semantic validation rules ────────────────────────────────────────────────

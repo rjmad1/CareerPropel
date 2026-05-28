@@ -24,10 +24,11 @@ export const GET = withAuth(
       const label = healthLabel(breakdown.overall);
 
       return NextResponse.json({ data: { breakdown, label, daysSinceLastActivity: input.daysSinceLastActivity } });
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const e = err as { message?: string; status?: number };
       return NextResponse.json(
-        { error: { message: err.message ?? 'Failed to compute health score' } },
-        { status: err.status ?? 500 },
+        { error: { message: e.message ?? 'Failed to compute health score' } },
+        { status: e.status ?? 500 },
       );
     }
   },

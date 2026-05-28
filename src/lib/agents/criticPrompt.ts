@@ -26,6 +26,12 @@ const MIN_ACCEPTABLE_SCORE: Record<AgentType, number> = {
   'research':       6,
   'follow-up':      7,
   'networking':     6,
+  'role-intelligence': 7,
+  'fit-analysis': 7,
+  'strength-mapper': 7,
+  'conversion-scorer': 7,
+  'gap-analyzer': 7,
+  'pattern-miner': 7,
 };
 
 export async function critiqueOutput(

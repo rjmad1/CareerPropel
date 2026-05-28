@@ -31,6 +31,12 @@ function mapAgentType(phase2Type: ExtendedAgentType): LegacyAgentType {
     'linkedin-profile': 'research',
     'linkedin-search': 'research',
     'indeed-search': 'research',
+    'role-intelligence': 'role_intelligence',
+    'fit-analysis': 'fit_analysis',
+    'strength-mapper': 'strength_mapper',
+    'conversion-scorer': 'conversion_scorer',
+    'gap-analyzer': 'gap_analyzer',
+    'pattern-miner': 'pattern_miner',
   };
 
   return typeMap[phase2Type] || ('research' as LegacyAgentType);

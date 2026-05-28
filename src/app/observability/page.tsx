@@ -16,12 +16,12 @@ import {
 
 import Link from 'next/link';
 
+const client = new TelemetryApiClient();
+
 export default function ObservabilityDashboard() {
   const [traces, setTraces] = useState<Trace[]>([]);
   const [agentMetrics, setAgentMetrics] = useState<AgentMetric[]>([]);
   const [loading, setLoading] = useState(true);
-
-  const client = new TelemetryApiClient();
 
   useEffect(() => {
     async function loadData() {

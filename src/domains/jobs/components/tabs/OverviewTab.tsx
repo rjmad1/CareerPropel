@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Briefcase, Calendar } from 'lucide-react';
+import { Briefcase, Calendar, Brain } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { Job } from '@/types/job';
 import { sanitizeUrl } from '@/lib/security/sanitizeContent';
 import { useUpdateJobNotes } from '../../hooks/useMutations';
@@ -39,8 +40,28 @@ export default function OverviewTab({ job }: OverviewTabProps) {
     );
   };
 
+  const router = useRouter();
+
   return (
-    <div className="p-12 space-y-12">
+    <div className="p-12 space-y-12 animate-fade-in">
+      {/* Role Intelligence Workspace trigger */}
+      <div className="bg-slate-50 p-6 rounded-xl border border-slate-200 flex flex-col gap-3">
+        <div className="flex items-center gap-2 text-slate-800">
+          <Brain size={18} className="text-blue-600 animate-pulse" />
+          <h4 className="text-sm font-extrabold">Role Operational Fit</h4>
+        </div>
+        <p className="text-xs text-slate-500 font-semibold leading-normal">
+          Deconstruct operational scope, map evidence against problems, and score interview conversion probability.
+        </p>
+        <button
+          onClick={() => router.push(`/role-intelligence/${job.id}`)}
+          className="w-full bg-blue-600 text-white rounded-lg py-2.5 text-xs font-bold hover:bg-blue-700 active:bg-blue-800 transition-colors flex items-center justify-center gap-1.5 shadow-sm cursor-pointer"
+        >
+          <Brain size={14} />
+          <span>Open Role Intelligence Workspace</span>
+        </button>
+      </div>
+
       {/* Key Details */}
       <div>
         <h3 className="text-sm font-semibold text-gray-900 mb-6">Position Details</h3>

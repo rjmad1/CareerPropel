@@ -29,18 +29,19 @@ export function withAuth(handler: AuthenticatedHandler, policy: RoutePolicy) {
 
 
     return runWithTrace(correlationId, async () => {
-      let auth: AuthContext = { userId: '', userEmail: '', session: null as any };
+      let auth: AuthContext = { userId: '', userEmail: '', session: null as unknown as AuthContext['session'] };
       let isAuthenticated = false;
 
       try {
         auth = await getAuthContext();
         isAuthenticated = true;
-      } catch (error: any) {
+      } catch (error: unknown) {
         if (policy.classification !== 'public') {
+          const errObj = error as { message?: string; code?: string };
           const isAuthError =
-            error?.message?.includes('Unauthorized') ||
-            error?.message?.includes('Not authenticated') ||
-            error?.code === 'UNAUTHORIZED';
+            errObj?.message?.includes('Unauthorized') ||
+            errObj?.message?.includes('Not authenticated') ||
+            errObj?.code === 'UNAUTHORIZED';
 
           if (isAuthError) {
             return NextResponse.json(
@@ -75,13 +76,13 @@ export function withAuth(handler: AuthenticatedHandler, policy: RoutePolicy) {
         // Execute actual handler — await params for Next.js 16 compatibility
         const params = context?.params ? await context.params : {};
         return await handler(request, auth, params);
-      } catch (error: any) {
+      } catch (error: unknown) {
         log.error({ err: error, path: request.nextUrl.pathname }, '[withAuth] Route handler execution crashed');
         return NextResponse.json(
           {
             error: {
               code: 'INTERNAL_SERVER_ERROR',
-              message: error.message || 'An unexpected error occurred.',
+              message: error instanceof Error ? error.message : 'An unexpected error occurred.',
             },
           },
           { status: 500 }

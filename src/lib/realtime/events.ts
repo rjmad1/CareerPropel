@@ -12,7 +12,13 @@ export type AgentType =
   | 'interview_prep'
   | 'networking'
   | 'follow_up'
-  | 'analytics';
+  | 'analytics'
+  | 'role_intelligence'
+  | 'fit_analysis'
+  | 'strength_mapper'
+  | 'conversion_scorer'
+  | 'gap_analyzer'
+  | 'pattern_miner';
 
 /**
  * Agent status update event

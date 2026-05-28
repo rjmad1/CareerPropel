@@ -3,7 +3,7 @@ import { randomBytes, createHmac } from 'crypto'
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const speakeasy = require('speakeasy') as any
 import QRCode from 'qrcode'
-
+import { redis } from '@/lib/redis/redisClient'
 // ============================================================================
 // TOTP Setup
 // ============================================================================
@@ -51,7 +51,11 @@ export function generateBackupCodes(count: number = 10): string[] {
 }
 
 export function hashBackupCode(code: string): string {
-  return createHmac('sha256', process.env.NEXTAUTH_SECRET || 'secret')
+  const secret = process.env.BACKUP_CODE_SECRET
+  if (!secret) {
+    throw new Error('BACKUP_CODE_SECRET environment variable is not defined')
+  }
+  return createHmac('sha256', secret)
     .update(code.replace(/-/g, ''))
     .digest('hex')
 }
@@ -151,8 +155,11 @@ export async function create2FASession(email: string): Promise<string> {
   const sessionId = randomBytes(32).toString('hex')
   const expiresAt = new Date(Date.now() + 5 * 60 * 1000)
 
-  ;(global as any).twoFASessions = (global as any).twoFASessions || new Map()
-  ;(global as any).twoFASessions.set(sessionId, { email, expiresAt, verified: false })
+  await redis.setex(
+    `2fa_session:${sessionId}`,
+    5 * 60,
+    JSON.stringify({ email, expiresAt, verified: false })
+  )
 
   return sessionId
 }
@@ -162,10 +169,11 @@ export async function verify2FASession(
   totpCode: string,
   backupCode?: string
 ): Promise<boolean> {
-  ;(global as any).twoFASessions = (global as any).twoFASessions || new Map()
-  const session = (global as any).twoFASessions.get(sessionId)
+  const sessionStr = await redis.get(`2fa_session:${sessionId}`)
+  if (!sessionStr) return false
 
-  if (!session || new Date() > session.expiresAt) return false
+  const session = JSON.parse(sessionStr)
+  if (new Date() > new Date(session.expiresAt)) return false
 
   const twoFa = await prisma.twoFactorSecret.findUnique({
     where: { email: session.email },
@@ -186,6 +194,11 @@ export async function verify2FASession(
 
   if (isValid) {
     session.verified = true
+    await redis.setex(
+      `2fa_session:${sessionId}`,
+      5 * 60,
+      JSON.stringify(session)
+    )
     await logSecurityEvent('2FA_VERIFIED', session.email, {
       method: backupCode ? 'BACKUP_CODE' : 'TOTP'
     })
@@ -198,11 +211,12 @@ export async function verify2FASession(
   return isValid
 }
 
-export function is2FASessionVerified(sessionId: string): boolean {
-  ;(global as any).twoFASessions = (global as any).twoFASessions || new Map()
-  const session = (global as any).twoFASessions.get(sessionId)
+export async function is2FASessionVerified(sessionId: string): Promise<boolean> {
+  const sessionStr = await redis.get(`2fa_session:${sessionId}`)
+  if (!sessionStr) return false
 
-  if (!session || new Date() > session.expiresAt) return false
+  const session = JSON.parse(sessionStr)
+  if (new Date() > new Date(session.expiresAt)) return false
   return session.verified === true
 }
 

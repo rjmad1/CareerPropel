@@ -15,11 +15,10 @@ export const POST = withAuth(
 
       await resumeWorkflow(id, c.id);
       return NextResponse.json({ data: { resumed: true } });
-    } catch (err: any) {
-      return NextResponse.json(
-        { error: { message: err.message ?? 'Failed to resume workflow' } },
-        { status: err.status ?? 500 },
-      );
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to resume workflow';
+      const status = (err as { status?: number }).status ?? 500;
+      return NextResponse.json({ error: { message } }, { status });
     }
   },
   {

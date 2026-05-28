@@ -7,10 +7,10 @@ import {
   UserCheck
 } from 'lucide-react';
 
+const client = new TelemetryApiClient();
+
 export default function GovernanceConsole() {
   const [logs, setLogs] = useState<AuditLog[]>([]);
-
-  const client = new TelemetryApiClient();
 
   useEffect(() => {
     async function loadLogs() {
