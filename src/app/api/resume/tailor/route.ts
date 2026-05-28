@@ -29,7 +29,7 @@ import { withAuth } from '@/lib/middleware/withAuth';
 import { prisma } from '@/lib/db';
 import { enqueueAgentExecution } from '@/lib/queue/enqueue';
 import { assembleMasterProfile } from '@/lib/profile/master-profile/assembler';
-import { publishAgentStatus } from '@/lib/agents/redis-integration';
+import { publishAgentStatus } from '@/lib/agents/telemetry/redis-integration';
 
 export const dynamic = 'force-dynamic';
 

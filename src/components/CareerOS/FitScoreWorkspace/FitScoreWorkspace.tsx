@@ -206,7 +206,7 @@ function RoleIntelligenceCard({ deconstruction }: { deconstruction: any }) {
   );
 }
 
-function GapSummaryCard({ gaps, onReanalyze }: { gaps: any[]; _jobId: string | null; onReanalyze: (stages: string[]) => void }) {
+function GapSummaryCard({ gaps, onReanalyze }: { gaps: any[]; onReanalyze: (stages: string[]) => void }) {
   if (!gaps || gaps.length === 0) return null;
 
   const credibilityGaps = gaps.filter((g: any) => g.classification === 'CREDIBILITY_KILLING');
@@ -524,7 +524,6 @@ export function FitScoreWorkspace() {
             {!!deconstructionData?.data && (
               <GapSummaryCard
                 gaps={(deconstructionData.data as any).businessProblems || []}
-                _jobId={selectedJobId}
                 onReanalyze={handleReanalyze}
               />
             )}

@@ -4,7 +4,7 @@
  * allowed tools, context/output size, PII handling.
  */
 
-import { AgentType } from '@/lib/agents/prompts';
+import { AgentType } from '@/lib/agents/prompts/prompts';
 import { createLogger } from '@/lib/logging/logger';
 
 const log = createLogger({ component: 'policy-engine' });

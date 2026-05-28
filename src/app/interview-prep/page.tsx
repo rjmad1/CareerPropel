@@ -53,10 +53,6 @@ function InterviewPrepContent() {
   // Scroll restoration for the jobs list
   useRestorableScroll({ key: '/interview-prep' });
 
-  useEffect(() => {
-    fetchJobs();
-  }, []);
-
   async function fetchJobs() {
     try {
       setLoading(true);
@@ -69,6 +65,10 @@ function InterviewPrepContent() {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
 
   const filtered = jobs.filter(
     (j) =>

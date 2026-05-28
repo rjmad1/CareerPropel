@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
-import { planNextAction, PlannerInput } from '@/lib/agents/plannerPrompt';
+import { planNextAction, PlannerInput } from '@/lib/agents/prompts/plannerPrompt';
 import { enqueueAgentExecution } from '@/lib/queue/enqueue';
 
 export const dynamic = 'force-dynamic';

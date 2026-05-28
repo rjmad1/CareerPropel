@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { getAuthContext } from '@/lib/middleware/auth';
 import { enqueueAgentExecution } from '@/lib/queue/enqueue';
-import { AgentType } from '@/lib/agents/prompts';
+import { AgentType } from '@/lib/agents/prompts/prompts';
 
 export const dynamic = 'force-dynamic';
 

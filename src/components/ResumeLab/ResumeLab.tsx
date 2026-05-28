@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useMemo } from 'react';
 import { VariantManager, ResumeVariant } from './VariantManager';
 import { ResumeEditor } from './ResumeEditor';
 import { Sparkles } from 'lucide-react';
@@ -61,15 +61,16 @@ Backend specialist focused on high-throughput database sharding, memory caching 
 export const ResumeLab: React.FC = () => {
   const [variants, setVariants] = useState<ResumeVariant[]>(INITIAL_VARIANTS);
   const [selectedVariantId, setSelectedVariantId] = useState<string>('var_1');
-  const savedContentRef = useRef<Record<string, string>>({});
+  const [savedContents, setSavedContents] = useState<Record<string, string>>({});
 
-  // Guard — mark dirty whenever content differs from last saved state
-  const isDirtyFn = () => {
-    return variants.some((v) => {
-      const saved = savedContentRef.current[v.id];
-      return saved !== undefined && saved !== v.content;
-    });
-  };
+  const isDirty = useMemo(
+    () =>
+      variants.some((v) => {
+        const saved = savedContents[v.id];
+        return saved !== undefined && saved !== v.content;
+      }),
+    [variants, savedContents]
+  );
 
   const {
     showConfirm,
@@ -77,14 +78,14 @@ export const ResumeLab: React.FC = () => {
     onCancelDiscard,
   } = useUnsavedChangesGuard({
     message: 'You have unsaved resume changes. Leave without saving?',
-    isDirtyExternal: isDirtyFn(),
+    isDirtyExternal: isDirty,
   });
 
   // Mark baseline when variant is first loaded
   const handleSelectVariant = (id: string) => {
     const found = variants.find((v) => v.id === id);
-    if (found && !(id in savedContentRef.current)) {
-      savedContentRef.current[id] = found.content;
+    if (found && !(id in savedContents)) {
+      setSavedContents((prev) => ({ ...prev, [id]: found.content }));
     }
     setSelectedVariantId(id);
   };

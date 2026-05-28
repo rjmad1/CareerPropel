@@ -15,9 +15,13 @@ export default function OverviewTab({ job }: OverviewTabProps) {
   const [isSaving, setIsSaving] = useState(false);
   const { mutate: updateNotes } = useUpdateJobNotes();
 
+  // Sync notes when the selected job changes (identified by job.id)
+  // We don't need isFirstRender because changing job.id means we are viewing a new job,
+  // and in that case we always want to reset the notes display.
   useEffect(() => {
     setNotes(job.notes || '');
-  }, [job.notes]);
+    setIsEditingNotes(false);
+  }, [job.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const formattedDate = job.appliedAt
     ? new Date(job.appliedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })

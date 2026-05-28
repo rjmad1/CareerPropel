@@ -7,7 +7,7 @@ export const executionJobDataSchema = z.object({
   promptContext: z.record(z.string().nullable().optional()),
   requestId: z.string().min(1, 'requestId is required'),
   correlationId: z.string().min(1, 'correlationId is required'),
-  submittedAt: z.string(),
+  submittedAt: z.string().refine((s) => !Number.isNaN(Date.parse(s)), { message: 'submittedAt must be a valid ISO datetime string' }),
   jobId: z.string().nullable().optional(),
   payloadVersion: z.string().optional().default('1.0.0'),
 });

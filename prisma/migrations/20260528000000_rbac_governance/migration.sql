@@ -35,6 +35,8 @@ ALTER TABLE "Permission"
 CREATE INDEX IF NOT EXISTS "Permission_resource_idx"        ON "Permission"("resource");
 CREATE INDEX IF NOT EXISTS "Permission_systemProtected_idx" ON "Permission"("systemProtected");
 
+CREATE UNIQUE INDEX IF NOT EXISTS "Permission_resource_action_key" ON "Permission"("resource", "action");
+
 DO $$ BEGIN
   ALTER TABLE "Permission"
     ADD CONSTRAINT "Permission_resource_action_key"

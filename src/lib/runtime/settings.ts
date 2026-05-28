@@ -20,6 +20,10 @@ export const runtimeSettings = {
   maxQueuePayloadBytes: Number(process.env.MAX_QUEUE_PAYLOAD_BYTES || 32768),
   userConcurrencyLimit: Number(process.env.USER_CONCURRENCY_LIMIT || 2),
   agentConcurrencyLimit: Number(process.env.AGENT_CONCURRENCY_LIMIT || 5),
+  queueBacklogWarningThreshold: Number(process.env.QUEUE_BACKLOG_WARNING_THRESHOLD || 20),
+  dlqWarningThreshold: Number(process.env.DLQ_WARNING_THRESHOLD || 0),
+  heartbeatStaleMs: Number(process.env.HEARTBEAT_STALE_MS || 60000),
+  heartbeatCriticalMs: Number(process.env.HEARTBEAT_CRITICAL_MS || 120000),
   defaultPort: Number(process.env.PORT || 3000),
   defaultHostname: process.env.HOSTNAME || '0.0.0.0',
 } as const;

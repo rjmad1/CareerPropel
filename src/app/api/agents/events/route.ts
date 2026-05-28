@@ -7,6 +7,9 @@
 import { NextRequest } from 'next/server';
 import { getAuthContext } from '@/lib/middleware/auth';
 import { subscribeToUser, keepAliveConnection } from '@/lib/realtime/sharedSubscriber';
+import { createLogger } from '@/lib/logging/logger';
+
+const sseLogger = createLogger({ component: 'agents-events-sse' });
 
 export const dynamic = 'force-dynamic';
 
@@ -17,6 +20,24 @@ export async function GET(_request: NextRequest) {
 
   const encoder = new TextEncoder();
 
+  let unsubscribe: (() => void) | null = null;
+  let heartbeat: ReturnType<typeof setInterval> | null = null;
+  let isCleanedUp = false;
+
+  const cleanup = () => {
+    if (isCleanedUp) return;
+    isCleanedUp = true;
+    sseLogger.info({ userEmail, route: 'agents/events/route', action: 'cleanup' }, 'Cleaning up SSE connection and subscriptions');
+    if (heartbeat) {
+      clearInterval(heartbeat);
+      heartbeat = null;
+    }
+    if (unsubscribe) {
+      unsubscribe();
+      unsubscribe = null;
+    }
+  };
+
   const stream = new ReadableStream({
     async start(controller) {
       const send = (event: string, data: unknown) => {
@@ -26,13 +47,12 @@ export async function GET(_request: NextRequest) {
           );
         } catch {
           // client disconnected
+          cleanup();
         }
       };
 
       // Send initial empty snapshot (realtime updates arrive via Redis pub/sub)
       send('snapshot', {});
-
-      let unsubscribe: (() => void) | null = null;
 
       try {
         unsubscribe = await subscribeToUser(userEmail, (event) => {
@@ -40,30 +60,24 @@ export async function GET(_request: NextRequest) {
         });
       } catch (error) {
         // Redis or subscription error - client gets snapshot only
+        sseLogger.error({ userEmail, err: error, route: 'agents/events/route' }, 'Failed to subscribe to Redis');
       }
 
       // Heartbeat keeps the connection alive through proxies
-      const heartbeat = setInterval(() => {
+      heartbeat = setInterval(() => {
         try {
           controller.enqueue(encoder.encode(': heartbeat\n\n'));
           // Assert active connection health in shared subscriber connection map
           keepAliveConnection(userEmail);
         } catch {
-          clearInterval(heartbeat);
-          if (unsubscribe) {
-            unsubscribe();
-          }
+          cleanup();
         }
       }, HEARTBEAT_MS);
-
-      // Cleanup when client closes
-      return () => {
-        clearInterval(heartbeat);
-        if (unsubscribe) {
-          unsubscribe();
-        }
-      };
     },
+    cancel(reason) {
+      sseLogger.info({ userEmail, reason, route: 'agents/events/route' }, 'Stream cancelled');
+      cleanup();
+    }
   });
 
   return new Response(stream, {

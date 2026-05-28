@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
-import { getExecutionEnvelope } from '@/lib/agents/store';
+import { getExecutionEnvelope } from '@/lib/agents/core/store';
 
 // Mark as dynamic to prevent build-time static generation
 export const dynamic = 'force-dynamic'

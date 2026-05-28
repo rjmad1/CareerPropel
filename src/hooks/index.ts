@@ -18,7 +18,6 @@ export { useProfileCompletion } from './useProfileCompletion';
 export { useInterviewPrep, useInterviewPrepProgress, useMockInterview } from './useInterviewPrep';
 export type { MockInterviewQuestion, MockInterviewSession } from './useInterviewPrep';
 export { useRealTime } from './useRealTime';
-export { useSocket } from './useSocket';
 export { useUIStore } from './useUIStore';
 export { useJobStore } from './useJobStore';
 export { useMoveJob } from './useMoveJob';

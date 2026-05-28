@@ -21,10 +21,10 @@ import {
   publishAgentStarted,
   publishAgentCompleted,
   publishAgentStatus,
-} from '@/lib/agents/redis-integration';
+} from '@/lib/agents/telemetry/redis-integration';
 
 // Mock Redis integration to assert pub/sub event updates
-jest.mock('@/lib/agents/redis-integration', () => ({
+jest.mock('@/lib/agents/telemetry/redis-integration', () => ({
   publishAgentStarted: jest.fn().mockResolvedValue(undefined),
   publishAgentCompleted: jest.fn().mockResolvedValue(undefined),
   publishAgentStatus: jest.fn().mockResolvedValue(undefined),

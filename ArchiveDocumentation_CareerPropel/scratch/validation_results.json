@@ -1,0 +1,743 @@
+{
+  "tables": [
+    {
+      "table_name": "AgentExecution"
+    },
+    {
+      "table_name": "EventLog"
+    },
+    {
+      "table_name": "Job"
+    },
+    {
+      "table_name": "PromptVersion"
+    },
+    {
+      "table_name": "ToolCall"
+    }
+  ],
+  "agentExecutionCols": [
+    {
+      "column_name": "actualCost",
+      "data_type": "double precision",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "agentType",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "column_name": "attempts",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "column_name": "completedAt",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "correlationId",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "costUsd",
+      "data_type": "double precision",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP"
+    },
+    {
+      "column_name": "currentTask",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "deploymentEnvironment",
+      "data_type": "USER-DEFINED",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "deploymentSha",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "deploymentTimestamp",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "deploymentVersion",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "durationMs",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "errorMessage",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "estimatedCost",
+      "data_type": "double precision",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "executionSource",
+      "data_type": "USER-DEFINED",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "failureClassification",
+      "data_type": "USER-DEFINED",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "fallbackReason",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "fallbackUsed",
+      "data_type": "boolean",
+      "is_nullable": "NO",
+      "column_default": "false"
+    },
+    {
+      "column_name": "id",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "column_name": "input",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "inputTokens",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "interruptedAt",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "interruptionReason",
+      "data_type": "USER-DEFINED",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "jobId",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "latencyMs",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "metadata",
+      "data_type": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "model",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "modelId",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "output",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "outputTokens",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "policyValidated",
+      "data_type": "boolean",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "previousDeploymentVersion",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "progress",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "column_name": "promptHash",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "promptVersionId",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "provider",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "providerId",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "queueJobId",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "queuedAt",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "railwayServiceId",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "requestId",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "retryCount",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0"
+    },
+    {
+      "column_name": "retryLineage",
+      "data_type": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "sanitizerVersion",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "schemaValidated",
+      "data_type": "boolean",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "semanticValidated",
+      "data_type": "boolean",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "startedAt",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "status",
+      "data_type": "USER-DEFINED",
+      "is_nullable": "NO",
+      "column_default": "'queued'::\"AgentExecutionStatus\""
+    },
+    {
+      "column_name": "tokenCount",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "tokenUsage",
+      "data_type": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "updatedAt",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "column_name": "userId",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "column_name": "validationErrors",
+      "data_type": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "validationPassed",
+      "data_type": "boolean",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "validationVersion",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "workerId",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    }
+  ],
+  "toolCallCols": [
+    {
+      "column_name": "completedAt",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP"
+    },
+    {
+      "column_name": "durationMs",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "error",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "executionId",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "column_name": "id",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "column_name": "input",
+      "data_type": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "output",
+      "data_type": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "startedAt",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "status",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": "'pending'::text"
+    },
+    {
+      "column_name": "tokens",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "tool",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "column_name": "toolName",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    }
+  ],
+  "eventLogCols": [
+    {
+      "column_name": "executionId",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "column_name": "id",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "column_name": "level",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "column_name": "message",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "column_name": "metadata",
+      "data_type": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "timestamp",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP"
+    }
+  ],
+  "promptVersionCols": [
+    {
+      "column_name": "agentType",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "canaryPercent",
+      "data_type": "double precision",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "capability",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "column_name": "changelog",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "createdAt",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "NO",
+      "column_default": "CURRENT_TIMESTAMP"
+    },
+    {
+      "column_name": "createdBy",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "deprecatedAt",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "id",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "column_name": "isActive",
+      "data_type": "boolean",
+      "is_nullable": "NO",
+      "column_default": "true"
+    },
+    {
+      "column_name": "outputSchemaVersion",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "preprocessingVersion",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "sanitizerVersion",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "systemHash",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "systemPrompt",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "template",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null
+    },
+    {
+      "column_name": "userPromptHash",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "userPromptTemplate",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null
+    },
+    {
+      "column_name": "version",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": "'1.0.0'::text"
+    }
+  ],
+  "indexes": [
+    {
+      "tablename": "AgentExecution",
+      "indexname": "AgentExecution_agentType_createdAt_idx",
+      "indexdef": "CREATE INDEX \"AgentExecution_agentType_createdAt_idx\" ON public.\"AgentExecution\" USING btree (\"agentType\", \"createdAt\")"
+    },
+    {
+      "tablename": "AgentExecution",
+      "indexname": "AgentExecution_executionSource_idx",
+      "indexdef": "CREATE INDEX \"AgentExecution_executionSource_idx\" ON public.\"AgentExecution\" USING btree (\"executionSource\")"
+    },
+    {
+      "tablename": "AgentExecution",
+      "indexname": "AgentExecution_jobId_idx",
+      "indexdef": "CREATE INDEX \"AgentExecution_jobId_idx\" ON public.\"AgentExecution\" USING btree (\"jobId\")"
+    },
+    {
+      "tablename": "AgentExecution",
+      "indexname": "AgentExecution_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"AgentExecution_pkey\" ON public.\"AgentExecution\" USING btree (id)"
+    },
+    {
+      "tablename": "AgentExecution",
+      "indexname": "AgentExecution_promptVersionId_idx",
+      "indexdef": "CREATE INDEX \"AgentExecution_promptVersionId_idx\" ON public.\"AgentExecution\" USING btree (\"promptVersionId\")"
+    },
+    {
+      "tablename": "AgentExecution",
+      "indexname": "AgentExecution_queueJobId_idx",
+      "indexdef": "CREATE INDEX \"AgentExecution_queueJobId_idx\" ON public.\"AgentExecution\" USING btree (\"queueJobId\")"
+    },
+    {
+      "tablename": "AgentExecution",
+      "indexname": "AgentExecution_queuedAt_idx",
+      "indexdef": "CREATE INDEX \"AgentExecution_queuedAt_idx\" ON public.\"AgentExecution\" USING btree (\"queuedAt\")"
+    },
+    {
+      "tablename": "AgentExecution",
+      "indexname": "AgentExecution_status_idx",
+      "indexdef": "CREATE INDEX \"AgentExecution_status_idx\" ON public.\"AgentExecution\" USING btree (status)"
+    },
+    {
+      "tablename": "AgentExecution",
+      "indexname": "AgentExecution_userId_idx",
+      "indexdef": "CREATE INDEX \"AgentExecution_userId_idx\" ON public.\"AgentExecution\" USING btree (\"userId\")"
+    },
+    {
+      "tablename": "EventLog",
+      "indexname": "EventLog_executionId_idx",
+      "indexdef": "CREATE INDEX \"EventLog_executionId_idx\" ON public.\"EventLog\" USING btree (\"executionId\")"
+    },
+    {
+      "tablename": "EventLog",
+      "indexname": "EventLog_executionId_timestamp_idx",
+      "indexdef": "CREATE INDEX \"EventLog_executionId_timestamp_idx\" ON public.\"EventLog\" USING btree (\"executionId\", \"timestamp\")"
+    },
+    {
+      "tablename": "EventLog",
+      "indexname": "EventLog_level_timestamp_idx",
+      "indexdef": "CREATE INDEX \"EventLog_level_timestamp_idx\" ON public.\"EventLog\" USING btree (level, \"timestamp\")"
+    },
+    {
+      "tablename": "EventLog",
+      "indexname": "EventLog_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"EventLog_pkey\" ON public.\"EventLog\" USING btree (id)"
+    },
+    {
+      "tablename": "EventLog",
+      "indexname": "EventLog_timestamp_idx",
+      "indexdef": "CREATE INDEX \"EventLog_timestamp_idx\" ON public.\"EventLog\" USING btree (\"timestamp\")"
+    },
+    {
+      "tablename": "PromptVersion",
+      "indexname": "PromptVersion_agentType_idx",
+      "indexdef": "CREATE INDEX \"PromptVersion_agentType_idx\" ON public.\"PromptVersion\" USING btree (\"agentType\")"
+    },
+    {
+      "tablename": "PromptVersion",
+      "indexname": "PromptVersion_agentType_isActive_idx",
+      "indexdef": "CREATE INDEX \"PromptVersion_agentType_isActive_idx\" ON public.\"PromptVersion\" USING btree (\"agentType\", \"isActive\")"
+    },
+    {
+      "tablename": "PromptVersion",
+      "indexname": "PromptVersion_agentType_version_key",
+      "indexdef": "CREATE UNIQUE INDEX \"PromptVersion_agentType_version_key\" ON public.\"PromptVersion\" USING btree (\"agentType\", version)"
+    },
+    {
+      "tablename": "PromptVersion",
+      "indexname": "PromptVersion_capability_idx",
+      "indexdef": "CREATE INDEX \"PromptVersion_capability_idx\" ON public.\"PromptVersion\" USING btree (capability)"
+    },
+    {
+      "tablename": "PromptVersion",
+      "indexname": "PromptVersion_capability_version_key",
+      "indexdef": "CREATE UNIQUE INDEX \"PromptVersion_capability_version_key\" ON public.\"PromptVersion\" USING btree (capability, version)"
+    },
+    {
+      "tablename": "PromptVersion",
+      "indexname": "PromptVersion_isActive_idx",
+      "indexdef": "CREATE INDEX \"PromptVersion_isActive_idx\" ON public.\"PromptVersion\" USING btree (\"isActive\")"
+    },
+    {
+      "tablename": "PromptVersion",
+      "indexname": "PromptVersion_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"PromptVersion_pkey\" ON public.\"PromptVersion\" USING btree (id)"
+    },
+    {
+      "tablename": "ToolCall",
+      "indexname": "ToolCall_executionId_idx",
+      "indexdef": "CREATE INDEX \"ToolCall_executionId_idx\" ON public.\"ToolCall\" USING btree (\"executionId\")"
+    },
+    {
+      "tablename": "ToolCall",
+      "indexname": "ToolCall_pkey",
+      "indexdef": "CREATE UNIQUE INDEX \"ToolCall_pkey\" ON public.\"ToolCall\" USING btree (id)"
+    },
+    {
+      "tablename": "ToolCall",
+      "indexname": "ToolCall_toolName_idx",
+      "indexdef": "CREATE INDEX \"ToolCall_toolName_idx\" ON public.\"ToolCall\" USING btree (\"toolName\")"
+    }
+  ],
+  "foreignKeys": [
+    {
+      "constraint_name": "ToolCall_executionId_fkey",
+      "table_name": "ToolCall",
+      "column_name": "executionId",
+      "foreign_table_name": "AgentExecution",
+      "foreign_column_name": "id"
+    },
+    {
+      "constraint_name": "EventLog_executionId_fkey",
+      "table_name": "EventLog",
+      "column_name": "executionId",
+      "foreign_table_name": "AgentExecution",
+      "foreign_column_name": "id"
+    },
+    {
+      "constraint_name": "AgentExecution_promptVersionId_fkey",
+      "table_name": "AgentExecution",
+      "column_name": "promptVersionId",
+      "foreign_table_name": "PromptVersion",
+      "foreign_column_name": "id"
+    },
+    {
+      "constraint_name": "AgentExecution_jobId_fkey",
+      "table_name": "AgentExecution",
+      "column_name": "jobId",
+      "foreign_table_name": "Job",
+      "foreign_column_name": "id"
+    }
+  ]
+}

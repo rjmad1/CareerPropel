@@ -1,3 +1,13 @@
+/**
+ * DEPRECATED RUNTIME PATH
+ *
+ * Canonical replacement:
+ * src/lib/queue/queues.ts
+ *
+ * Removal condition:
+ * Remove after legacy workflows and dynamic DAG steps are migrated to the new BullMQ queue model.
+ */
+
 import { Queue } from 'bullmq';
 import { createBullMQRedisConnection } from '@/lib/redis/redisClient';
 import type { WorkflowJobData } from './types';

@@ -5,7 +5,7 @@
 
 import crypto from 'crypto';
 import { prisma } from '@/lib/db';
-import { AgentType, getAgentSystemPrompt, buildAgentUserPromptTemplate } from '@/lib/agents/prompts';
+import { AgentType, getAgentSystemPrompt, buildAgentUserPromptTemplate } from '@/lib/agents/prompts/prompts';
 import { createLogger } from '@/lib/logging/logger';
 
 const log = createLogger({ component: 'prompt-registry' });

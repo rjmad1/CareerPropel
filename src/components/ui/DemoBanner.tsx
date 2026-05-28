@@ -23,16 +23,14 @@ export function DemoBanner() {
   const [dismissed, setDismissed] = useState(true); // Start hidden to avoid flash
 
   useEffect(() => {
-    // Only show for demo accounts
     const email = session?.user?.email ?? '';
     if (!email.startsWith('demo+')) {
-      setDismissed(true);
       return;
     }
-    // Check localStorage dismiss state
     try {
       const saved = sessionStorage.getItem(DISMISS_KEY);
-      setDismissed(saved === 'true');
+      if (saved === 'true') return;
+      setDismissed(false);
     } catch {
       setDismissed(false);
     }

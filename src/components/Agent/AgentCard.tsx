@@ -9,6 +9,7 @@ interface AgentCardProps {
   isCompact?: boolean;
   isSelected?: boolean;
   onSelect?: () => void;
+  onExecute?: () => void;
   onPause?: () => void;
   onResume?: () => void;
   onCancel?: () => void;
@@ -38,6 +39,7 @@ export const AgentCard: React.FC<AgentCardProps> = ({
   isCompact = true,
   isSelected = false,
   onSelect,
+  onExecute,
   onPause,
   onResume,
   onCancel,
@@ -54,7 +56,7 @@ export const AgentCard: React.FC<AgentCardProps> = ({
           'p-6 border-b border-gray-200 cursor-pointer hover:bg-gray-50 transition-colors',
           isSelected && 'bg-blue-50 border-l-4 border-l-blue-500'
         )}
-        data-cy={`agent-rail-item-${agent.id}`}
+        data-testid={`agent-rail-item-${agent.id}`}
       >
         <div className="flex items-start gap-4">
           <div className="flex-1 min-w-0">
@@ -75,7 +77,7 @@ export const AgentCard: React.FC<AgentCardProps> = ({
                   <div
                     className="bg-green-500 h-3 rounded-full transition-all duration-300"
                     style={{ width: `${Math.min(agent.progress, 100)}%` }}
-                    data-cy="agent-progress-bar"
+                    data-testid="agent-progress-bar"
                   />
                 </div>
                 <p className="text-xs text-gray-500 mt-2">{agent.progress}%</p>
@@ -180,7 +182,16 @@ export const AgentCard: React.FC<AgentCardProps> = ({
 
       {/* Action Buttons */}
       <div className="flex gap-4">
-        {agent.status === 'running' && (
+        {(agent.status === 'idle' || agent.status === 'failed' || agent.status === 'completed') && onExecute && (
+          <button
+            onClick={onExecute}
+            className="flex-1 px-6 py-4 text-sm font-medium bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors"
+          >
+            Execute
+          </button>
+        )}
+
+        {agent.status === 'running' && onPause && (
           <button
             onClick={onPause}
             disabled={isPauseLoading}
@@ -190,7 +201,7 @@ export const AgentCard: React.FC<AgentCardProps> = ({
           </button>
         )}
 
-        {agent.status === 'paused' && (
+        {agent.status === 'paused' && onResume && (
           <button
             onClick={onResume}
             disabled={isPauseLoading}
@@ -200,7 +211,7 @@ export const AgentCard: React.FC<AgentCardProps> = ({
           </button>
         )}
 
-        {(agent.status === 'running' || agent.status === 'paused') && (
+        {(agent.status === 'running' || agent.status === 'paused') && onCancel && (
           <button
             onClick={onCancel}
             className="flex-1 px-6 py-4 text-sm font-medium bg-red-500 hover:bg-red-600 text-white rounded-md transition-colors"

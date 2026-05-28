@@ -144,17 +144,19 @@
       "PowerShell(docker exec 1bc744351935 psql -U postgres -d career_propel -c \"SELECT migration_name, finished_at, rolled_back_at, applied_steps_count FROM _prisma_migrations ORDER BY started_at DESC LIMIT 10;\" 2>&1)",
       "PowerShell(docker exec 1bc744351935 psql -U postgres -d career_propel -c \"\\\\dt\" 2>&1)",
       "PowerShell(head -20)",
-      "PowerShell($env:DATABASE_URL = \"postgresql://postgres:postgres@localhost:5432/career_propel\"; Set-Location \"c:\\\\Users\\\\rajaj\\\\CareerPropel\"; npx prisma migrate reset --force 2>&1)",
-      "PowerShell($env:DATABASE_URL = \"postgresql://postgres:opendeepwiki123@localhost:5432/career_propel\"; Set-Location \"c:\\\\Users\\\\rajaj\\\\CareerPropel\"; npx prisma migrate reset --force 2>&1)",
-      "PowerShell($env:DATABASE_URL = \"postgresql://postgres:opendeepwiki123@localhost:5432/career_propel\"; Set-Location \"c:\\\\Users\\\\rajaj\\\\CareerPropel\"; npx prisma validate 2>&1)",
+      "PowerShell($env:DATABASE_URL = $env:DATABASE_URL; Set-Location \"c:\\\\Users\\\\rajaj\\\\CareerPropel\"; npx prisma migrate reset --force 2>&1)",
+      "PowerShell($env:DATABASE_URL = $env:DATABASE_URL; Set-Location \"c:\\\\Users\\\\rajaj\\\\CareerPropel\"; npx prisma migrate reset --force 2>&1)",
+      "PowerShell($env:DATABASE_URL = $env:DATABASE_URL; Set-Location \"c:\\\\Users\\\\rajaj\\\\CareerPropel\"; npx prisma validate 2>&1)",
       "PowerShell(docker exec 1bc744351935 psql -U postgres -d career_propel -c \"SELECT con.conname, cls.relname AS backing_index FROM pg_constraint con JOIN pg_class cls ON cls.oid = con.conindid WHERE con.conname = 'Permission_resource_action_key';\" 2>&1)",
-      "PowerShell($env:DATABASE_URL = \"postgresql://postgres:opendeepwiki123@localhost:5432/career_propel\"; Set-Location \"c:\\\\Users\\\\rajaj\\\\CareerPropel\"; npx prisma migrate status 2>&1)",
+      "PowerShell($env:DATABASE_URL = $env:DATABASE_URL; Set-Location \"c:\\\\Users\\\\rajaj\\\\CareerPropel\"; npx prisma migrate status 2>&1)",
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); [print\\(f'{c[\\\\\"name\\\\\"]}: {c.get\\(\\\\\"state\\\\\",c.get\\(\\\\\"conclusion\\\\\",\\\\\"?\\\\\"\\)\\)} | {c.get\\(\\\\\"description\\\\\",\\\\\"\\\\\"\\)} | {c.get\\(\\\\\"targetUrl\\\\\",\\\\\"\\\\\"\\)}'\\) for c in d['statusCheckRollup']]\")",
       "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); [print\\(f'{s[\\\\\"context\\\\\"]}: {s[\\\\\"state\\\\\"]} | {s[\\\\\"description\\\\\"]} | {s[\\\\\"target_url\\\\\"]}'\\) for s in data]\")",
       "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); [print\\(f'{s[\\\\\"context\\\\\"]}: {s[\\\\\"state\\\\\"]} | {s[\\\\\"description\\\\\"]}'\\) for s in data]\")",
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d['status'], d['conclusion']\\); [print\\(f'  {j[\\\\\"name\\\\\"]}: {j[\\\\\"conclusion\\\\\"]}'\\) for j in d['jobs']]\")",
       "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); [print\\(f'--- Comment by {c[\\\\\"user\\\\\"][\\\\\"login\\\\\"]} ---\\\\n{c[\\\\\"body\\\\\"][:500]}\\\\n'\\) for c in data[-5:]]\")",
-      "Bash(python3 -c \"import json; d=json.load\\(open\\('c:/Users/rajaj/CareerPropel/vercel.json'\\)\\); cmd=d.get\\('buildCommand',''\\); print\\(f'buildCommand: {repr\\(cmd\\)}'\\); print\\(f'Length: {len\\(cmd\\)} chars'\\); print\\('OK' if len\\(cmd\\) <= 256 else 'EXCEEDS 256'\\)\")"
+      "Bash(python3 -c \"import json; d=json.load\\(open\\('c:/Users/rajaj/CareerPropel/vercel.json'\\)\\); cmd=d.get\\('buildCommand',''\\); print\\(f'buildCommand: {repr\\(cmd\\)}'\\); print\\(f'Length: {len\\(cmd\\)} chars'\\); print\\('OK' if len\\(cmd\\) <= 256 else 'EXCEEDS 256'\\)\")",
+      "Read(//c/Users/rajaj/**)",
+      "WebFetch(domain:github.com)"
     ],
     "deny": [
       "Read(./.env)",
@@ -168,7 +170,8 @@
       "C:\\Users\\rajaj\\career-ops\\src\\lib\\workflow",
       "C:\\Users\\rajaj\\career-ops",
       "\\tmp",
-      "c:\\Users\\rajaj\\CareerPropel\\src\\app\\api\\networking\\contacts\\[id]"
+      "c:\\Users\\rajaj\\CareerPropel\\src\\app\\api\\networking\\contacts\\[id]",
+      "C:\\Users\\rajaj\\.continue"
     ]
   },
   "hooks": {

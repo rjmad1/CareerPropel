@@ -17,7 +17,7 @@ import { enqueueExecution } from '@/lib/queue/queues';
 import { assessReplayEligibility, markReplayed } from '@/lib/observability/replay';
 import { createLogger } from '@/lib/logging/logger';
 import { sanitizeQueuePayload } from '@/lib/queue/payload';
-import type { AgentType } from '@/lib/agents/prompts';
+import type { AgentType } from '@/lib/agents/prompts/prompts';
 
 const replayLogger = createLogger({ component: 'dlq-replay' });
 

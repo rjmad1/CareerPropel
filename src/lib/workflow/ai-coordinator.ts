@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/db';
 import { log } from '@/lib/logging/logger';
-import type { AgentType } from '@/lib/agents/prompts';
+import type { AgentType } from '@/lib/agents/prompts/prompts';
 
 const RECENCY_WINDOW_MS = 72 * 60 * 60 * 1000; // 72 hours
 

@@ -1,0 +1,18 @@
+id: no-direct-redis
+language: typescript
+
+rule:
+  pattern: |
+    new Redis($$$)
+
+ignores:
+  - "src/lib/redis/**"
+  - "src/infrastructure/redis/**"
+  - "src/lib/security/authorization/authorizationCache.ts"
+  - "src/__tests__/**"
+  - "tests/**"
+  - "cypress/**"
+
+message: "Direct Redis instantiation is forbidden. Use shared redisClient/runtime abstraction."
+
+severity: error

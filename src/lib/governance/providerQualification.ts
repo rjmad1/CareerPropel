@@ -4,7 +4,7 @@
  * Rejects unsupported provider/capability combinations before LLM dispatch.
  */
 
-import { AgentType } from '@/lib/agents/prompts';
+import { AgentType } from '@/lib/agents/prompts/prompts';
 import { LLMProviderName } from '@/lib/llm/provider';
 import { createLogger } from '@/lib/logging/logger';
 

@@ -1,0 +1,40 @@
+rules:
+  - id: web-runtime-imports-worker
+    languages:
+      - typescript
+    severity: ERROR
+    message: Web runtime must not import worker internals.
+    paths:
+      include:
+        - src/app/**/*
+        - src/pages/**/*
+        - src/bin/web.ts
+    patterns:
+      - pattern: import $$$ from "$PATH"
+      - metavariable-regex:
+          metavariable: $PATH
+          regex: .*worker.*
+
+  - id: no-test-imports
+    languages:
+      - typescript
+    severity: ERROR
+    message: Runtime code must not import test modules.
+    paths:
+      exclude:
+        - src/__tests__/**/*
+        - tests/**/*
+        - cypress/**/*
+    patterns:
+      - pattern: import $$$ from "$PATH"
+      - metavariable-regex:
+          metavariable: $PATH
+          regex: .*(__tests__|mocks|fixtures).*
+
+  - id: deprecated-socket-usage
+    languages:
+      - typescript
+    severity: ERROR
+    patterns:
+      - pattern-regex: "socket\\.io|SocketIO|useSocket"
+    message: Socket.IO architecture has been deprecated.

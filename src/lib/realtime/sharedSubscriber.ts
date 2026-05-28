@@ -89,13 +89,24 @@ export async function subscribeToUser(
   // Governance: enforce limit on parallel user connections to evict zombie sessions/tabs
   const activeUserConns = userConnectionMap.get(userId) || [];
   if (activeUserConns.length >= 5) {
-    const oldestConnId = activeUserConns.shift();
-    if (oldestConnId) {
-      const oldestConn = connectionRegistry.get(oldestConnId);
-      if (oldestConn) {
-        emitter.off(oldestConn.eventName, oldestConn.handler);
-        connectionRegistry.delete(oldestConnId);
-        realtimeLogger.warn({ userId, connectionId: oldestConnId }, 'Evicted oldest stale user subscription due to connection limit (tab cap hit)');
+    // LRU eviction: find the connection with the oldest lastActive timestamp
+    let lruConnId: string | undefined;
+    let lruLastActive = Infinity;
+    for (const connId of activeUserConns) {
+      const c = connectionRegistry.get(connId);
+      if (c && c.lastActive < lruLastActive) {
+        lruLastActive = c.lastActive;
+        lruConnId = connId;
+      }
+    }
+    if (lruConnId) {
+      const evictedConn = connectionRegistry.get(lruConnId);
+      if (evictedConn) {
+        emitter.off(evictedConn.eventName, evictedConn.handler);
+        connectionRegistry.delete(lruConnId);
+        const idx = activeUserConns.indexOf(lruConnId);
+        if (idx !== -1) activeUserConns.splice(idx, 1);
+        realtimeLogger.info({ userId, connectionId: lruConnId, lastActive: evictedConn.lastActive }, 'Evicted LRU stale user subscription due to connection limit (tab cap hit)');
       }
     }
   }
@@ -148,8 +159,9 @@ export function keepAliveConnection(userId: string) {
 }
 
 // Periodic cleanup of stale/zombie connections (run every 60 seconds)
+let staleCleanupIntervalId: ReturnType<typeof setInterval> | undefined;
 if (typeof setInterval !== 'undefined') {
-  setInterval(() => {
+  staleCleanupIntervalId = setInterval(() => {
     const now = Date.now();
     const staleThreshold = 5 * 60 * 1000; // 5 minutes of no activity
     for (const [connId, conn] of connectionRegistry.entries()) {
@@ -192,6 +204,12 @@ export function getSubscriberMetrics() {
 export async function closeSharedSubscriber() {
   if (!subscriberReady) {
     return;
+  }
+
+  // Clear the periodic cleanup interval to prevent leaks
+  if (staleCleanupIntervalId !== undefined) {
+    clearInterval(staleCleanupIntervalId);
+    staleCleanupIntervalId = undefined;
   }
 
   subscriber.removeAllListeners('pmessage');

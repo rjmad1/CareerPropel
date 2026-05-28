@@ -1,0 +1,37 @@
+name: Sync Wiki to GitHub
+
+on:
+  push:
+    branches:
+      - main
+      - merge-antigravity-recovery
+    paths:
+      - 'wiki/**'
+
+# Prevent multiple sync runs from conflicting
+concurrency:
+  group: wiki-sync-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    name: Sync Local Wiki to GitHub Wiki
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to push to the wiki repository
+    steps:
+      - name: Checkout main repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Sync Wiki
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/sync-wiki.js

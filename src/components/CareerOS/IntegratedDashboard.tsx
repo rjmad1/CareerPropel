@@ -24,9 +24,15 @@ export const IntegratedDashboard: React.FC<{ candidateId: string }> = ({
       {/* Center: Real Kanban Board */}
       <div className="flex-1 overflow-hidden flex flex-col min-w-0">
         {/* Header */}
-        <div className="border-b border-gray-700 px-6 py-4 bg-gray-800 flex-shrink-0">
-          <h1 className="text-xl font-bold text-white">Career OS</h1>
-          <p className="text-xs text-gray-400 mt-1">AI-Powered Career Execution Platform</p>
+        <div className="border-b border-gray-700 px-6 py-4 bg-gray-800 flex-shrink-0 flex justify-between items-center">
+          <div>
+            <h1 className="text-xl font-bold text-white">Career OS</h1>
+            <p className="text-xs text-gray-400 mt-1">AI-Powered Career Execution Platform</p>
+          </div>
+          <div className="text-right">
+            <span className="text-xs font-semibold text-gray-300 block">Integrated Dashboard</span>
+            <span className="text-xs text-gray-400 block font-mono">Candidate: Raja Jeevan Kumar Maduri</span>
+          </div>
         </div>
 
         {/* Loading / Error states */}

@@ -36,7 +36,10 @@ export function useRestorableScroll(options: UseRestorableScrollOptions = {}) {
   const pathname = usePathname();
   const { key, containerRef, debounceMs = 200 } = options;
   const payloadRef = useRef(options.payload);
-  payloadRef.current = options.payload;
+
+  useEffect(() => {
+    payloadRef.current = options.payload;
+  }, [options.payload]);
 
   const restorationKey = key ?? pathname ?? '/';
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);

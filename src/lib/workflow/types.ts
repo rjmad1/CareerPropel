@@ -1,4 +1,4 @@
-import type { AgentType } from '@/lib/agents/prompts';
+import type { AgentType } from '@/lib/agents/prompts/prompts';
 
 export type WorkflowStatus =
   | 'queued' | 'running' | 'waiting_for_approval'

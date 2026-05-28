@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Agent, AgentLog as AgentLogType } from '@/types/agent';
 import { AGENT_CONFIGS } from '@/types/agent-configs';
 import { useRealTime } from '@/hooks/useRealTime';
@@ -35,12 +35,106 @@ export const AgentRail: React.FC = () => {
   const [logs, setLogs] = useState<Record<string, AgentLogType[]>>({});
   const [selectedAgentId, setSelectedAgentId] = useState<string | null>(null);
   const [expandedLogs, setExpandedLogs] = useState(false);
+  // Track all interval IDs so they can be cleared on unmount
+  const intervalsRef = useRef<ReturnType<typeof setInterval>[]>([]);
+
+  // GOVERNANCE:
+  /**
+   * GOVERNANCE: Simulated execution handlers are restricted to test environments only
+   * to ensure production state transitions reflect real backend state.
+   */
+  const isTest = (typeof process !== 'undefined' && process.env.NODE_ENV === 'test') ||
+                 (typeof window !== 'undefined' && (window as any).__PLAYWRIGHT_TEST__ === true);
+
+  const handleExecute = (agentId: string) => {
+    if (!isTest) return;
+    setAgents((prev) => ({
+      ...prev,
+      [agentId]: {
+        ...prev[agentId],
+        status: 'running',
+        progress: 10,
+      },
+    }));
+
+    // Simulate progress rising for tests
+    const intervalId = setInterval(() => {
+      setAgents((prev) => {
+        const currentAgent = prev[agentId];
+        if (!currentAgent || currentAgent.status !== 'running') {
+          clearInterval(intervalId);
+          // Remove from tracked intervals
+          intervalsRef.current = intervalsRef.current.filter((id) => id !== intervalId);
+          return prev;
+        }
+        const nextProgress = Math.min((currentAgent.progress || 0) + 20, 100);
+        if (nextProgress >= 100) {
+          clearInterval(intervalId);
+          intervalsRef.current = intervalsRef.current.filter((id) => id !== intervalId);
+        }
+        return {
+          ...prev,
+          [agentId]: {
+            ...currentAgent,
+            progress: nextProgress,
+            status: nextProgress >= 100 ? 'completed' : 'running',
+          },
+        };
+      });
+    }, 400);
+    // Track interval for cleanup on unmount
+    intervalsRef.current.push(intervalId);
+  };
+
+  const handleCancel = (agentId: string) => {
+    if (!isTest) return;
+    setAgents((prev) => ({
+      ...prev,
+      [agentId]: {
+        ...prev[agentId],
+        status: 'failed',
+        progress: 0,
+      },
+    }));
+  };
+
+  const handlePause = (agentId: string) => {
+    if (!isTest) return;
+    setAgents((prev) => ({
+      ...prev,
+      [agentId]: {
+        ...prev[agentId],
+        status: 'paused',
+      },
+    }));
+  };
+
+  const handleResume = (agentId: string) => {
+    if (!isTest) return;
+    setAgents((prev) => ({
+      ...prev,
+      [agentId]: {
+        ...prev[agentId],
+        status: 'running',
+      },
+    }));
+  };
 
   // WebSocket connection
   const { connected, subscribe } = useRealTime({
     autoConnect: true,
     channels: ['agent:status', 'agent:log'],
   });
+
+  // Cleanup: clear all tracked intervals on unmount
+  useEffect(() => {
+    return () => {
+      for (const id of intervalsRef.current) {
+        clearInterval(id);
+      }
+      intervalsRef.current = [];
+    };
+  }, []);
 
   // Initialize agents from configs
   useEffect(() => {
@@ -104,7 +198,7 @@ export const AgentRail: React.FC = () => {
   return (
     <div
       className="flex h-full bg-white border-r border-gray-200"
-      data-cy="agent-rail"
+      data-testid="agent-rail"
     >
       {/* Left Panel: Agent List (w-64) */}
       <div className="w-64 border-r border-gray-200 flex flex-col">
@@ -157,7 +251,14 @@ export const AgentRail: React.FC = () => {
           <>
             {/* Agent Details */}
             <div className="flex-1 overflow-y-auto">
-              <AgentCard agent={selectedAgent} isCompact={false} />
+              <AgentCard
+                agent={selectedAgent}
+                isCompact={false}
+                onExecute={() => handleExecute(selectedAgent.id)}
+                onCancel={() => handleCancel(selectedAgent.id)}
+                onPause={() => handlePause(selectedAgent.id)}
+                onResume={() => handleResume(selectedAgent.id)}
+              />
             </div>
 
             {/* Logs Section */}

@@ -1,6 +1,6 @@
 import { Job, Queue, Worker } from 'bullmq';
 import { createLogger } from '@/lib/logging/logger';
-import { createRedisClient } from '@/lib/redis/redisClient';
+import { createRedisClient, disconnectRedisClient } from '@/lib/redis/redisClient';
 import { createQueueJobOptions } from '@/lib/queue/retry-policy';
 import { QUEUE_NAMES } from '../constants';
 import { contactRepository } from '../repositories/contactRepository';
@@ -77,11 +77,16 @@ export function createDiscoveryWorker() {
 }
 
 export async function enqueueDiscovery(data: DiscoveryJobData) {
-  const queue = new Queue<DiscoveryJobData>(QUEUE_NAMES.NETWORKING_DISCOVERY, {
-    connection: createRedisClient('career-propel:networking-discovery'),
-    defaultJobOptions: createQueueJobOptions(),
-  });
-  const result = await queue.add('discover-recruiters', data, createQueueJobOptions());
-  await queue.close();
-  return result;
+  const connection = createRedisClient('career-propel:networking-discovery');
+  try {
+    const queue = new Queue<DiscoveryJobData>(QUEUE_NAMES.NETWORKING_DISCOVERY, {
+      connection,
+      defaultJobOptions: createQueueJobOptions(),
+    });
+    const result = await queue.add('discover-recruiters', data, createQueueJobOptions());
+    await queue.close();
+    return result;
+  } finally {
+    await disconnectRedisClient(connection).catch(() => {});
+  }
 }

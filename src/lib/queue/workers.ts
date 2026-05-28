@@ -1,6 +1,6 @@
 import { Job, QueueEvents, Worker } from 'bullmq';
 import { prisma } from '@/lib/db';
-import { executeAgent } from '@/lib/agents/executor';
+import { executeAgent } from '@/lib/agents/execution/executor';
 import { createLogger } from '@/lib/logging/logger';
 import { recordQueueMetric, recordWorkerExecution, recordWorkerRetry } from '@/lib/observability/metrics';
 import { classifyError } from '@/lib/observability/failure-classification';
@@ -61,6 +61,39 @@ async function processExecution(job: Job<ExecutionJobData>) {
     workerLogger.info(
       { executionId, userId, agentType, queueJobId: job.id, correlationId, requestId },
       'Worker picked up execution'
+    );
+
+    // Defensive check: verify AgentExecution row exists before doing anything else
+    // We retry up to 5 times with a 100ms delay to account for database commit/replication lag
+    let executionExists = null;
+    for (let attempt = 1; attempt <= 5; attempt++) {
+      executionExists = await prisma.agentExecution.findUnique({
+        where: { id: executionId },
+        select: { id: true },
+      });
+      if (executionExists) {
+        break;
+      }
+      workerLogger.warn(
+        { executionId, attempt, queueJobId: job.id },
+        'Worker pickup validation: AgentExecution row not found, retrying in 100ms...'
+      );
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+
+    if (!executionExists) {
+      workerLogger.warn(
+        { executionId, userId, agentType, queueJobId: job.id, correlationId, requestId },
+        'Worker pickup validation failed: AgentExecution row not found in database'
+      );
+      throw new NonRetryableExecutionError(
+        `AgentExecution record with ID ${executionId} not found in database`
+      );
+    }
+
+    workerLogger.info(
+      { executionId, userId, agentType, queueJobId: job.id, correlationId, requestId },
+      'Worker pickup validation succeeded: AgentExecution row verified'
     );
 
     await prisma.agentExecution.update({
@@ -181,6 +214,33 @@ export function createExecutionWorker() {
     );
 
     if (job.attemptsMade >= (job.opts.attempts || runtimeSettings.queueAttempts)) {
+      try {
+        const currentExecution = await prisma.agentExecution.findUnique({
+          where: { id: job.data.executionId },
+          select: { status: true },
+        });
+
+        if (currentExecution && currentExecution.status !== 'failed' && currentExecution.status !== 'completed') {
+          await prisma.agentExecution.update({
+            where: { id: job.data.executionId },
+            data: {
+              status: 'failed',
+              completedAt: new Date(),
+              errorMessage: error.message || 'Execution failed permanently after maximum queue attempts',
+            },
+          });
+          workerLogger.info(
+            { executionId: job.data.executionId },
+            'Updated database execution status to failed for DLQ job'
+          );
+        }
+      } catch (dbErr) {
+        workerLogger.error(
+          { err: dbErr, executionId: job.data.executionId },
+          'Failed to update database execution status for DLQ job'
+        );
+      }
+
       await enqueueDeadLetter({
         executionId: job.data.executionId,
         queueJobId: String(job.id),

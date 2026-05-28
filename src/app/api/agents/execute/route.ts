@@ -27,9 +27,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
-import { AgentType } from '@/lib/agents/prompts';
+import { AgentType } from '@/lib/agents/prompts/prompts';
 import { getCurrentUser } from '@/app/api/middleware/auth';
-import { appendExecutionLog } from '@/lib/agents/store';
+import { appendExecutionLog } from '@/lib/agents/core/store';
 import { createLogger } from '@/lib/logging/logger';
 import { createRateLimiter } from '@/lib/middleware/rateLimiter';
 import { publishRealtimeEvent } from '@/lib/queue/events';
@@ -96,17 +96,67 @@ export async function POST(request: NextRequest) {
 
     if (useQueue) {
       try {
+        const execution = await prisma.agentExecution.create({
+          data: {
+            userId,
+            jobId,
+            agentType,
+            status: 'queued',
+            input: JSON.stringify(sanitizedContext || {}),
+            requestId,
+            correlationId,
+            metadata: {
+              requestId,
+              correlationId,
+              executionModel: 'bullmq',
+            },
+          },
+        });
+
+        routeLogger.info(
+          {
+            executionId: execution.id,
+            userId,
+            agentType,
+            requestId,
+            correlationId,
+          },
+          'Agent execution row created in database'
+        );
+
         const job = await enqueueExecution({
-          executionId: `pending-${Date.now()}`,
+          executionId: execution.id,
           agentType,
           userId,
-          promptContext: (context || {}) as Record<string, string | undefined>,
+          promptContext: sanitizedContext,
           requestId: requestId || `req-${Date.now()}`,
           correlationId: correlationId || `corr-${Date.now()}`,
           submittedAt: new Date().toISOString(),
+          jobId,
         });
+
+        routeLogger.info(
+          {
+            executionId: execution.id,
+            queueJobId: job.id,
+            userId,
+            agentType,
+            requestId,
+            correlationId,
+          },
+          'Agent execution enqueued'
+        );
+
+        await prisma.agentExecution.update({
+          where: { id: execution.id },
+          data: {
+            queueJobId: String(job.id),
+          },
+        });
+
         return NextResponse.json({
-          executionId: job.id,
+          executionId: execution.id,
+          queueJobId: job.id,
           status: 'queued',
           message: 'Agent execution queued for processing',
         }, { status: 202 });

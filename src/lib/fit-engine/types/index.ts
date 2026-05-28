@@ -1,7 +1,10 @@
 /**
  * Core type definitions for the Fit Evaluation Engine.
- * These types model the ~11-dimensional scoring pipeline
+ * These types model the 12-dimensional scoring pipeline
  * and the job deconstruction → strength mapping → gap analysis → weighted scoring flow.
+ *
+ * IMPORTANT: Keep FitDimension in sync with the Prisma schema (FitDimension enum).
+ * Any additions or renames here must be mirrored in prisma/schema.prisma and vice-versa.
  */
 
 import { RoleArchetype, GapClassification, PatternCategory } from '@prisma/client';

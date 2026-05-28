@@ -32,6 +32,21 @@ jobs:
       - name: Type check
         run: npm run type-check
 
+      - name: AST Governance
+        run: npm run governance:ast
+
+      - name: Install Semgrep
+        run: pip install semgrep
+
+      - name: Semgrep Governance
+        run: semgrep scan --config .semgrep
+
+      - name: Dependency Governance
+        run: npm run depcruise
+
+      - name: Circular Dependency Check
+        run: npm run madge:ci
+
   test:
     name: Unit Tests
     runs-on: ubuntu-latest

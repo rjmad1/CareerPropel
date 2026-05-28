@@ -1,0 +1,12 @@
+id: deprecated-workflow-runtime
+language: typescript
+
+rule:
+  pattern: import $$$ from "$PATH"
+constraints:
+  PATH:
+    regex: ".*src/lib/workflow.*|.*/lib/workflow.*"
+
+message: "Legacy workflow runtime usage is deprecated."
+
+severity: warning

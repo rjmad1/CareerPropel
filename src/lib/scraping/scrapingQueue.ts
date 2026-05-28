@@ -12,7 +12,7 @@
 import { redis } from '../redis/redisClient';
 import { prisma } from '../db';
 import { log } from '../logging/logger';
-import { publishAgentStarted, publishAgentCompleted, publishAgentStatus, ExtendedAgentType } from '../agents/redis-integration';
+import { publishAgentStarted, publishAgentCompleted, publishAgentStatus, ExtendedAgentType } from '../agents/telemetry/redis-integration';
 
 
 export type ScrapingTaskType = 'profile' | 'search';

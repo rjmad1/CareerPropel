@@ -46,7 +46,7 @@ export function useProfile(
     autoRefresh?: boolean;
     onStaleDetected?: () => void;
   }
-): UseProfileResult {
+ ): UseProfileResult {
   const [profile, setProfile] = useState<ProfileSummary | null>(null);
   const [score, setScore] = useState<ProfileScore | null>(null);
   const [entities, setEntities] = useState<ProfileEntity[]>([]);
@@ -56,13 +56,13 @@ export function useProfile(
   const [unsavedChanges, setUnsavedChanges] = useState(false);
 
   const cacheTTL = options?.cacheTTL || 15 * 60 * 1000; // 15 minutes
-  const lastFetchRef = useRef<Date | null>(null);
+  const [lastFetch, setLastFetch] = useState<Date | null>(null);
   const pendingChangesRef = useRef<Record<string, unknown>>({});
 
   const isStale = useCallback(() => {
-    if (!lastFetchRef.current) return true;
-    return Date.now() - lastFetchRef.current.getTime() > cacheTTL;
-  }, [cacheTTL]);
+    if (!lastFetch) return true;
+    return Date.now() - lastFetch.getTime() > cacheTTL;
+  }, [lastFetch, cacheTTL]);
 
   /**
    * Fetch all profile data
@@ -83,7 +83,7 @@ export function useProfile(
       setScore(scoreData);
       setEntities(entitiesData);
       setRecommendations(recsData);
-      lastFetchRef.current = new Date();
+      setLastFetch(new Date());
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to fetch profile'));
     } finally {
@@ -106,7 +106,7 @@ export function useProfile(
           await updateProfile(candidateId, pendingChangesRef.current);
           pendingChangesRef.current = {};
           setUnsavedChanges(false);
-          lastFetchRef.current = new Date();
+          setLastFetch(new Date());
         } catch (err) {
           setError(err instanceof Error ? err : new Error('Save failed'));
         }
@@ -160,7 +160,7 @@ export function useProfile(
    * Auto-refresh on stale detection
    */
   useEffect(() => {
-    if (!options?.autoRefresh || !lastFetchRef.current) return;
+    if (!options?.autoRefresh || !lastFetch) return;
 
     const interval = setInterval(() => {
       if (isStale()) {
@@ -170,7 +170,7 @@ export function useProfile(
     }, cacheTTL / 2);
 
     return () => clearInterval(interval);
-  }, [cacheTTL, isStale, fetchProfile, options]);
+  }, [cacheTTL, isStale, fetchProfile, options, lastFetch]);
 
   return {
     profile,
@@ -188,7 +188,7 @@ export function useProfile(
     discardChanges,
 
     isStale: isStale(),
-    lastFetch: lastFetchRef.current,
+    lastFetch,
   };
 }
 

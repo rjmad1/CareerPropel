@@ -34,7 +34,7 @@ jest.mock('@/lib/llm/provider', () => ({
 }));
 
 // Mock Redis pub/sub operations to avoid needing a real subscriber in tests
-jest.mock('@/lib/agents/redis-integration', () => ({
+jest.mock('@/lib/agents/telemetry/redis-integration', () => ({
   publishAgentStarted: jest.fn().mockResolvedValue(undefined),
   publishAgentCompleted: jest.fn().mockResolvedValue(undefined),
   publishAgentStatus: jest.fn().mockResolvedValue(undefined),
@@ -45,13 +45,13 @@ import {
   executeAgent,
   processPendingExecutions,
   type ExecutionContext,
-} from '@/lib/agents/executor';
+} from '@/lib/agents/execution/executor';
 import { streamLLM, callLLM } from '@/lib/llm/provider';
 import {
   publishAgentStarted,
   publishAgentCompleted,
   publishAgentStatus,
-} from '@/lib/agents/redis-integration';
+} from '@/lib/agents/telemetry/redis-integration';
 
 const mockStreamLLM = streamLLM as jest.MockedFunction<typeof streamLLM>;
 const mockCallLLM = callLLM as jest.MockedFunction<typeof callLLM>;

@@ -3,7 +3,7 @@
  * Golden test cases, regression scoring, hallucination checks, latency/cost baselines.
  */
 
-import { AgentType } from '@/lib/agents/prompts';
+import { AgentType } from '@/lib/agents/prompts/prompts';
 import { validateAgentOutput } from './outputValidator';
 import { createLogger } from '@/lib/logging/logger';
 

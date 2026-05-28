@@ -1,9 +1,10 @@
 import { createLogger } from '@/lib/logging/logger';
 import { createRedisClient, disconnectRedisClient } from '@/lib/redis/redisClient';
 import { runtimeSettings } from '@/lib/runtime/settings';
-import { getExecutionQueue } from '@/lib/queue/queues';
+import { getExecutionQueue, getDeadLetterQueue } from '@/lib/queue/queues';
 import { prisma } from '@/lib/db';
 import { publishRealtimeEvent } from '@/lib/queue/events';
+import { CANONICAL_WORKERS } from '@/lib/queue/health';
 
 const schedulerLogger = createLogger({ component: 'scheduler' });
 const schedulerConnection = createRedisClient('career-propel:scheduler');
@@ -141,6 +142,89 @@ export async function reconcileOrphanExecutions() {
   }
 }
 
+async function auditQueueAndWorkerHealth() {
+  try {
+    const queue = getExecutionQueue();
+    const dlq = getDeadLetterQueue();
+
+    const [counts, dlqCounts] = await Promise.all([
+      queue.getJobCounts('waiting', 'active', 'failed'),
+      dlq.getJobCounts('waiting', 'active', 'failed'),
+    ]);
+
+    const dlqTotal = (dlqCounts.waiting || 0) + (dlqCounts.active || 0) + (dlqCounts.failed || 0);
+    if (dlqTotal > runtimeSettings.dlqWarningThreshold) {
+      schedulerLogger.warn(
+        { dlqCount: dlqTotal, threshold: runtimeSettings.dlqWarningThreshold },
+        'DLQ depth growth detected! DLQ contains failed jobs requiring manual recovery.'
+      );
+    }
+
+    const backlog = counts.waiting || 0;
+    if (backlog > runtimeSettings.queueBacklogWarningThreshold) {
+      schedulerLogger.warn(
+        { backlogCount: backlog, threshold: runtimeSettings.queueBacklogWarningThreshold },
+        'Queue backlog growth detected! High latency expected for new executions.'
+      );
+    }
+
+    const activeJobs = await queue.getJobs(['active']);
+    for (const job of activeJobs) {
+      if (job.attemptsMade > 2) {
+        schedulerLogger.warn(
+          {
+            jobId: job.id,
+            attemptsMade: job.attemptsMade,
+            executionId: job.data?.executionId,
+            correlationId: job.data?.correlationId,
+          },
+          'Repeated job execution retry spike detected!'
+        );
+      }
+    }
+
+    const now = Date.now();
+    for (const workerName of CANONICAL_WORKERS) {
+      if (workerName === 'scheduler-process') continue;
+
+      const key = `heartbeat:${workerName}`;
+      const v = await schedulerConnection.get(key);
+
+      if (!v) {
+        schedulerLogger.warn(
+          { workerName },
+          'Worker heartbeat missing! Worker has not registered a heartbeat key in Redis.'
+        );
+        continue;
+      }
+
+      try {
+        const { ts } = JSON.parse(v) as { ts: number };
+        const elapsed = now - ts;
+
+        if (elapsed > runtimeSettings.heartbeatCriticalMs) {
+          schedulerLogger.error(
+            { workerName, lastHeartbeatAgoMs: elapsed },
+            'Worker runtime STALLED (CRITICAL)! Heartbeat elapsed limit exceeded.'
+          );
+        } else if (elapsed > runtimeSettings.heartbeatStaleMs) {
+          schedulerLogger.warn(
+            { workerName, lastHeartbeatAgoMs: elapsed },
+            'Worker heartbeat STALE! Worker may be under high CPU load or experiencing network latency.'
+          );
+        }
+      } catch (err) {
+        schedulerLogger.error(
+          { workerName, rawValue: v, err },
+          'Failed to parse worker heartbeat value'
+        );
+      }
+    }
+  } catch (error) {
+    schedulerLogger.error({ err: error }, 'Error occurred during queue and worker health audit');
+  }
+}
+
 async function failOrphanExecution(
   executionId: string,
   userId: string,
@@ -201,16 +285,20 @@ export async function startQueueScheduler() {
     }, runtimeSettings.schedulerCleanupIntervalMs);
   }
 
-  // Periodic stuck/orphaned execution recovery loop (run every 2 minutes)
+  // Periodic stuck/orphaned execution recovery & health audit loop (run every 1 minute)
   if (!reconciliationTimer) {
     reconciliationTimer = setInterval(async () => {
       await reconcileOrphanExecutions();
-    }, 2 * 60 * 1000);
+      await auditQueueAndWorkerHealth();
+    }, 60 * 1000);
   }
 
-  // Run initial reconciliation on boot to instantly stabilize after any system crashes/restarts!
+  // Run initial reconciliation and health audit on boot
   void reconcileOrphanExecutions().catch((err) => {
     schedulerLogger.error({ err }, 'Initial post-boot reconciliation failed');
+  });
+  void auditQueueAndWorkerHealth().catch((err) => {
+    schedulerLogger.error({ err }, 'Initial post-boot health audit failed');
   });
 
   return scheduler;

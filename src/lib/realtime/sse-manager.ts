@@ -22,10 +22,17 @@ const SSE_EVENT_TYPES = [
   'snapshot',
   'agent:status_update',
   'agent:execution_update',
+  'agent:started',
+  'agent:completed',
+  'tool:execution',
+  'queue:stats',
   'job:update',
   'job:created',
   'job:deleted',
   'notification',
+  'execution:update',
+  'toolcall:complete',
+  'log:new',
 ];
 
 type MessageHandler = (msg: AnyWebSocketMessage) => void;
@@ -46,6 +53,7 @@ function getOrCreateConnection(endpoint: string): SseConnection {
   if (connections.has(endpoint)) {
     const conn = connections.get(endpoint)!;
     conn.refCount++;
+    console.log(`[SSE Manager] Reused connection to endpoint "${endpoint}". Subscriptions: ${conn.refCount}, Total endpoints: ${connections.size}`);
     return conn;
   }
 
@@ -63,6 +71,7 @@ function getOrCreateConnection(endpoint: string): SseConnection {
 
   es.onopen = () => {
     conn.connected = true;
+    console.log(`[SSE Manager] Connection opened to endpoint "${endpoint}"`);
     connectionListeners.forEach((l) => l(true));
     emitNavigationEvent('sse_subscription_preserved', {
       meta: { endpoint, event: 'open' },
@@ -71,6 +80,7 @@ function getOrCreateConnection(endpoint: string): SseConnection {
 
   es.onerror = () => {
     conn.connected = false;
+    console.error(`[SSE Manager] Connection error for endpoint "${endpoint}"`);
     connectionListeners.forEach((l) => l(false));
   };
 
@@ -88,6 +98,18 @@ function getOrCreateConnection(endpoint: string): SseConnection {
   });
 
   connections.set(endpoint, conn);
+  // GOVERNANCE:
+  /**
+   * GOVERNANCE: Playwright SSE connections count instrumentation global.
+   * Only exposed during test runs, wrapped in NODE_ENV === 'test' so it is tree-shaken
+   * and dead-code eliminated from production bundles.
+   */
+  if (process.env.NODE_ENV === 'test') {
+    if (typeof window !== 'undefined') {
+      (window as any).__sse_manager_connections_count = connections.size;
+    }
+  }
+  console.log(`[SSE Manager] Created connection to endpoint "${endpoint}". Subscriptions: 1, Total endpoints: ${connections.size}`);
   return conn;
 }
 
@@ -95,9 +117,22 @@ function releaseConnection(endpoint: string): void {
   const conn = connections.get(endpoint);
   if (!conn) return;
   conn.refCount--;
+  console.log(`[SSE Manager] Released subscription for endpoint "${endpoint}". Remaining subscriptions: ${conn.refCount}`);
   if (conn.refCount <= 0) {
+    console.log(`[SSE Manager] Closing EventSource connection to endpoint "${endpoint}"`);
     conn.es.close();
     connections.delete(endpoint);
+    // GOVERNANCE:
+    /**
+     * GOVERNANCE: Playwright SSE connections count instrumentation global.
+     * Only exposed during test runs, wrapped in NODE_ENV === 'test' so it is tree-shaken
+     * and dead-code eliminated from production bundles.
+     */
+    if (process.env.NODE_ENV === 'test') {
+      if (typeof window !== 'undefined') {
+        (window as any).__sse_manager_connections_count = connections.size;
+      }
+    }
     emitNavigationEvent('sse_subscription_lost', { meta: { endpoint } });
   }
 }

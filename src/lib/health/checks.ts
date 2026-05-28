@@ -57,6 +57,7 @@ export async function checkQueueHealth(): Promise<SubsystemHealth> {
   const t0 = performance.now();
   // Use a fresh connection per health check so it doesn't interfere with app clients.
   const conn = createBullMQRedisConnection();
+  log.debug('checkQueueHealth: Redis connection acquired');
   try {
     const { Queue } = await import('bullmq');
     const q = new Queue(runtimeSettings.executionQueueName, { connection: conn });
@@ -69,9 +70,11 @@ export async function checkQueueHealth(): Promise<SubsystemHealth> {
     }
     return { status: 'healthy', latencyMs, meta: { ...counts, paused } };
   } catch (err: unknown) {
-    await conn.quit().catch(() => {});
     log.error({ err }, 'Queue health check failed');
     return { status: 'unavailable', message: err instanceof Error ? err.message : String(err) };
+  } finally {
+    log.debug('checkQueueHealth: releasing Redis connection');
+    await conn.quit().catch(() => {});
   }
 }
 

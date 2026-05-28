@@ -24,78 +24,80 @@ export interface UseJobBoardReturn {
   getJobsByStage: (stage: StageId) => Job[]
 }
 
+const INITIAL_MOCK_JOBS: Job[] = [
+  // Mock data for development
+  {
+    id: '1',
+    title: 'Senior React Engineer',
+    company: 'Google',
+    stage: 'sourced',
+    matchScore: 92,
+    appliedAt: '2026-05-28T12:00:00.000Z',
+    salary: { min: 150000, max: 200000, currency: 'USD' },
+    location: 'Mountain View, CA',
+    createdAt: '2026-05-28T12:00:00.000Z',
+    updatedAt: '2026-05-28T12:00:00.000Z',
+    userId: 'dev',
+  },
+  {
+    id: '2',
+    title: 'Full Stack Engineer',
+    company: 'Microsoft',
+    stage: 'interested',
+    matchScore: 85,
+    appliedAt: null,
+    salary: { min: 140000, max: 180000, currency: 'USD' },
+    location: 'Seattle, WA',
+    createdAt: '2026-05-28T12:00:00.000Z',
+    updatedAt: '2026-05-28T12:00:00.000Z',
+    userId: 'dev',
+  },
+  {
+    id: '3',
+    title: 'Staff Engineer',
+    company: 'Meta',
+    stage: 'applied',
+    matchScore: 88,
+    appliedAt: '2026-05-27T12:00:00.000Z',
+    location: 'Menlo Park, CA',
+    createdAt: '2026-05-28T12:00:00.000Z',
+    updatedAt: '2026-05-28T12:00:00.000Z',
+    userId: 'dev',
+  },
+  {
+    id: '4',
+    title: 'Principal Engineer',
+    company: 'Apple',
+    stage: 'recruiter_screen',
+    matchScore: 90,
+    appliedAt: null,
+    recruiterEmail: 'recruiter@apple.com',
+    recruiterName: 'Sarah Chen',
+    location: 'Cupertino, CA',
+    createdAt: '2026-05-28T12:00:00.000Z',
+    updatedAt: '2026-05-28T12:00:00.000Z',
+    userId: 'dev',
+  },
+  {
+    id: '5',
+    title: 'Engineering Manager',
+    company: 'Amazon',
+    stage: 'hiring_manager',
+    matchScore: 87,
+    appliedAt: null,
+    location: 'Seattle, WA',
+    createdAt: '2026-05-28T12:00:00.000Z',
+    updatedAt: '2026-05-28T12:00:00.000Z',
+    userId: 'dev',
+  },
+]
+
 /**
  * useJobBoard Hook
  * Custom hook for managing Kanban board job state.
  */
 export function useJobBoard(): UseJobBoardReturn {
-  const [jobs, setJobs] = useState<Job[]>([
-    // Mock data for development
-    {
-      id: '1',
-      title: 'Senior React Engineer',
-      company: 'Google',
-      stage: 'sourced',
-      matchScore: 92,
-      appliedAt: new Date().toISOString(),
-      salary: { min: 150000, max: 200000, currency: 'USD' },
-      location: 'Mountain View, CA',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      userId: 'dev',
-    },
-    {
-      id: '2',
-      title: 'Full Stack Engineer',
-      company: 'Microsoft',
-      stage: 'interested',
-      matchScore: 85,
-      appliedAt: null,
-      salary: { min: 140000, max: 180000, currency: 'USD' },
-      location: 'Seattle, WA',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      userId: 'dev',
-    },
-    {
-      id: '3',
-      title: 'Staff Engineer',
-      company: 'Meta',
-      stage: 'applied',
-      matchScore: 88,
-      appliedAt: new Date(Date.now() - 86400000).toISOString(),
-      location: 'Menlo Park, CA',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      userId: 'dev',
-    },
-    {
-      id: '4',
-      title: 'Principal Engineer',
-      company: 'Apple',
-      stage: 'recruiter_screen',
-      matchScore: 90,
-      appliedAt: null,
-      recruiterEmail: 'recruiter@apple.com',
-      recruiterName: 'Sarah Chen',
-      location: 'Cupertino, CA',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      userId: 'dev',
-    },
-    {
-      id: '5',
-      title: 'Engineering Manager',
-      company: 'Amazon',
-      stage: 'hiring_manager',
-      matchScore: 87,
-      appliedAt: null,
-      location: 'Seattle, WA',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      userId: 'dev',
-    },
-  ])
+  const [jobs, setJobs] = useState<Job[]>(INITIAL_MOCK_JOBS)
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null)
   const [loading] = useState(false)
   const [error] = useState<Error | null>(null)

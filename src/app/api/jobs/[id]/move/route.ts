@@ -11,7 +11,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { JobStage, PIPELINE_STAGES } from '@/types/job';
-import { getAgentForStage } from '@/lib/agents/stageTriggerMap';
+import { getAgentForStage } from '@/lib/agents/orchestration/stageTriggerMap';
 import { enqueueAgentExecution } from '@/lib/queue/enqueue';
 import { getAuthContext } from '@/lib/middleware/auth';
 

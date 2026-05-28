@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/db';
 import { log } from '@/lib/logging/logger';
 import { enqueueAgentExecution } from '@/lib/queue/enqueue';
-import type { AgentType } from '@/lib/agents/prompts';
+import type { AgentType } from '@/lib/agents/prompts/prompts';
 import { findCachedExecution } from './ai-coordinator';
 import { createApprovalRequest } from './approval-manager';
 import { ValidationCritic } from '@/lib/orchestration/critic';

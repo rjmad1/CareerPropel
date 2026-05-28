@@ -13,7 +13,7 @@ import {
   LLMCallOptions,
   LLMCallResult,
   LLMProviderClient,
-} from './provider';
+} from './types';
 
 export class NvidiaNimProvider implements LLMProviderClient {
   name = 'nvidia-nim' as const;

@@ -6,40 +6,20 @@
 import { AnthropicProvider } from './anthropic';
 import { NvidiaNimProvider } from './nvidia-nim';
 import { runStreamWithProviderResilience, runWithProviderResilience } from './resilience';
+import {
+  LLMMessage,
+  LLMCallOptions,
+  LLMCallResult,
+  LLMProviderClient,
+} from './types';
 
-export type LLMProviderName = 'anthropic' | 'nvidia-nim';
-
-export interface LLMMessage {
-  role: 'user' | 'assistant' | 'system';
-  content: string;
-}
-
-export interface LLMCallOptions {
-  model?: string;
-  maxTokens?: number;
-  temperature?: number;
-  topP?: number;
-  systemPrompt?: string;
-  jsonMode?: boolean;
-}
-
-export interface LLMCallResult {
-  content: string;
-  stopReason: 'end_turn' | 'max_tokens' | 'stop_sequence';
-  inputTokens: number;
-  outputTokens: number;
-  totalTokens: number;
-}
-
-export interface LLMProviderClient {
-  name: LLMProviderName;
-  callLLM(messages: LLMMessage[], options?: LLMCallOptions): Promise<LLMCallResult>;
-  streamLLM(
-    messages: LLMMessage[],
-    options?: LLMCallOptions
-  ): AsyncIterable<string>;
-  getDefaultModel(): string;
-}
+export type {
+  LLMProviderName,
+  LLMMessage,
+  LLMCallOptions,
+  LLMCallResult,
+  LLMProviderClient,
+} from './types';
 
 let providerInstance: LLMProviderClient | null = null;
 
@@ -48,7 +28,46 @@ export function initializeLLMProvider(): LLMProviderClient {
 
   const provider = process.env.LLM_PROVIDER || 'anthropic';
 
+  /**
+   * GOVERNANCE: Mock LLM provider may only be activated in test environments.
+   * Requires NODE_ENV === "test" AND ENABLE_TEST_LLM_MOCKS === "true".
+   * Otherwise an explicit error is thrown to prevent production leakage.
+   */
+  // Guard against unsupported mock activation
+  if (provider === 'mock') {
+    if (process.env.NODE_ENV !== 'test' || process.env.ENABLE_TEST_LLM_MOCKS !== 'true') {
+      throw new Error('Mock LLM provider can only be used when NODE_ENV="test" and ENABLE_TEST_LLM_MOCKS="true"');
+    }
+  }
+
   switch (provider) {
+    case 'mock':
+      providerInstance = {
+        name: 'nvidia-nim',
+        getDefaultModel() { return 'mock-model'; },
+        async callLLM(_messages: LLMMessage[], _options?: LLMCallOptions) {
+          return {
+            content: JSON.stringify({
+              summary: "This is a mock tailored summary.",
+              skills: ["React", "TypeScript", "Node.js"],
+              tailoredBullets: [
+                "Achieved 15% improvement in load times by optimizing bundling.",
+                "Redesigned data caching layer resulting in 30% reduction in database queries."
+              ],
+              confidence: 0.95,
+              reasoning: "Candidate experience aligns well with the requirements."
+            }),
+            stopReason: 'end_turn',
+            inputTokens: 100,
+            outputTokens: 100,
+            totalTokens: 200,
+          };
+        },
+        async *streamLLM(_messages: LLMMessage[], _options?: LLMCallOptions) {
+          yield 'This is a mock streamed response from the agent execution...';
+        }
+      } as any;
+      break;
     case 'nvidia-nim':
       providerInstance = new NvidiaNimProvider();
       break;
@@ -58,8 +77,8 @@ export function initializeLLMProvider(): LLMProviderClient {
       break;
   }
 
-  console.log(`[LLM] Initialized provider: ${providerInstance.name}`);
-  return providerInstance;
+  console.log(`[LLM] Initialized provider: ${providerInstance!.name}`);
+  return providerInstance!;
 }
 
 export function getLLMProvider(): LLMProviderClient {

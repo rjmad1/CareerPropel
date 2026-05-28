@@ -1,0 +1,20 @@
+id: no-inline-ai-execution
+language: typescript
+
+files:
+  - "src/app/**"
+  - "src/pages/**"
+
+rule:
+  any:
+    - pattern: streamLLM($$$)
+    - pattern: executeAgent($$$)
+
+ignores:
+  - "src/__tests__/**"
+  - "tests/**"
+  - "cypress/**"
+
+message: "AI execution outside worker runtime is forbidden."
+
+severity: error

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
+import { getExecutionQueue } from '@/lib/queue/queues';
+import { releaseExecutionSlots } from '@/lib/queue/concurrency';
 
 // Mark as dynamic to prevent build-time static generation
 export const dynamic = 'force-dynamic'
@@ -23,6 +25,13 @@ export async function POST(
       return NextResponse.json({ error: 'Execution not found' }, { status: 404 });
     }
 
+    if (execution.status === 'paused') {
+      return NextResponse.json(
+        { execution, message: 'Execution already paused' },
+        { status: 200 }
+      );
+    }
+
     if (execution.status !== 'running') {
       return NextResponse.json(
         { error: 'Execution is not running' },
@@ -30,10 +39,27 @@ export async function POST(
       );
     }
 
+    // Cancel active BullMQ job if present when pausing (it will be enqueued fresh upon resume)
+    if (execution.queueJobId) {
+      try {
+        const queue = getExecutionQueue();
+        const job = await queue.getJob(execution.queueJobId);
+        if (job) {
+          await job.discard();
+          await job.remove();
+        }
+      } catch (err) {
+        console.error(`[Pause Route] Error discarding/removing BullMQ job ${execution.queueJobId}:`, err);
+      }
+    }
+
     const updated = await prisma.agentExecution.update({
       where: { id: executionId },
       data: { status: 'paused' },
     });
+
+    // Release slot only after DB persists the paused status to avoid a race
+    await releaseExecutionSlots(execution.userId, execution.agentType, executionId);
 
     return NextResponse.json(
       { execution: updated, message: 'Execution paused' },

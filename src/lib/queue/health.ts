@@ -3,6 +3,42 @@ import { getMetricsSnapshot } from '@/lib/observability/metrics';
 import { redis } from '@/lib/redis/redisClient';
 import { getQueueMetrics } from '@/lib/queue/queues';
 
+export const CANONICAL_WORKERS = [
+  'execution-worker',
+  'networking-discovery',
+  'networking-enrichment',
+  'outreach-generation',
+  'followup-orchestration',
+  'engagement-tracking',
+  'scheduler-process'
+] as const;
+
+export type CanonicalWorkerName = typeof CANONICAL_WORKERS[number];
+
+export function startWorkerHeartbeat(workerName: CanonicalWorkerName) {
+  const key = `heartbeat:${workerName}`;
+  const updateHeartbeat = async () => {
+    try {
+      await redis.setex(key, 60, JSON.stringify({ ts: Date.now() }));
+    } catch (err) {
+      console.error(`Failed to publish heartbeat for ${workerName}`, err);
+    }
+  };
+
+  void updateHeartbeat();
+
+  const interval = setInterval(updateHeartbeat, 10000);
+
+  return async () => {
+    clearInterval(interval);
+    try {
+      await redis.del(key);
+    } catch (err) {
+      console.error(`Failed to clean up heartbeat for ${workerName} on shutdown`, err);
+    }
+  };
+}
+
 export async function getHealthSnapshot() {
   const startedAt = Date.now();
 

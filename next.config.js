@@ -7,6 +7,15 @@ const nextConfig = {
   // Renamed from experimental.serverComponentsExternalPackages in Next.js 15+.
   serverExternalPackages: ['playwright', 'playwright-core'],
 
+  async rewrites() {
+    return [
+      {
+        source: '/admin/queues/:path*',
+        destination: '/api/admin/queues/:path*',
+      },
+    ];
+  },
+
   async headers() {
     return [
       {
@@ -51,4 +60,20 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig
+const { withSentryConfig } = require("@sentry/nextjs");
+
+module.exports = withSentryConfig(
+  nextConfig,
+  {
+    silent: true,
+    org: "career-propel",
+    project: "career-propel",
+  },
+  {
+    widenClientFileUpload: true,
+    transpileClientSDK: true,
+    tunnelRoute: "/monitoring",
+    hideSourceMaps: true,
+    disableLogger: true,
+  }
+);

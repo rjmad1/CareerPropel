@@ -4,7 +4,7 @@
  * unsafe instruction filtering, unsupported-claim detection.
  */
 
-import { AgentType } from '@/lib/agents/prompts';
+import { AgentType } from '@/lib/agents/prompts/prompts';
 import { createLogger } from '@/lib/logging/logger';
 
 const log = createLogger({ component: 'hallucination-controls' });

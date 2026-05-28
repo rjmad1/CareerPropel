@@ -62,14 +62,11 @@ const navItems = [
 
 function RouteAnnouncer({ title }: { title?: string }) {
   const pathname = usePathname();
-  const [announcement, setAnnouncement] = useState('');
 
-  useEffect(() => {
-    const label = title ?? navItems.find(
-      (item) => pathname === item.href || pathname?.startsWith(item.href + '/'),
-    )?.label ?? 'Page';
-    setAnnouncement(`${label} — CareerPropel`);
-  }, [pathname, title]);
+  const label = title ?? navItems.find(
+    (item) => pathname === item.href || pathname?.startsWith(item.href + '/'),
+  )?.label ?? 'Page';
+  const announcement = `${label} — CareerPropel`;
 
   return (
     <div

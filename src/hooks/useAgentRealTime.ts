@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Agent, AgentExecution } from '@/types/agent';
 import { getCandidateExecutions } from '@/lib/agent/agentService';
+import { acquireSseSubscription } from '@/lib/realtime/sse-manager';
 
 export interface UseAgentRealTimeResult {
   agents: Record<string, Agent>;
@@ -114,73 +115,115 @@ export function useAgentRealTime(
   useEffect(() => {
     if (!options?.autoConnect || !candidateId) return;
 
-    let es: EventSource | null = null;
     let fallbackTimer: ReturnType<typeof setInterval> | null = null;
 
     const startPolling = () => {
       if (fallbackTimer) return;
+      console.log('[useAgentRealTime] Starting fallback polling');
       fallbackTimer = setInterval(fetchExecutions, refreshInterval);
     };
 
     const stopPolling = () => {
-      if (fallbackTimer) { clearInterval(fallbackTimer); fallbackTimer = null; }
+      if (fallbackTimer) {
+        console.log('[useAgentRealTime] Stopping fallback polling');
+        clearInterval(fallbackTimer);
+        fallbackTimer = null;
+      }
     };
 
-    try {
-      es = new EventSource('/api/agents/events');
+    console.log('[useAgentRealTime] Acquiring SSE subscription');
+    const sub = acquireSseSubscription('/api/agents/events');
 
-      es.addEventListener('snapshot', (e: MessageEvent) => {
-        try {
-          const snapshot = JSON.parse(e.data) as Record<string, Partial<Agent>>;
-          setAgents((prev) => {
-            const next = { ...prev };
-            Object.entries(snapshot).forEach(([type, status]) => {
-              next[type] = { ...prev[type], ...status };
-            });
-            return next;
+    const unsubSnapshot = sub.subscribe('snapshot', (msg) => {
+      try {
+        console.log('[useAgentRealTime] Received snapshot event');
+        const snapshot = msg.data as Record<string, Partial<Agent>>;
+        setAgents((prev) => {
+          const next = { ...prev };
+          Object.entries(snapshot).forEach(([type, status]) => {
+            next[type] = { ...prev[type], ...status };
           });
-        } catch { /* ignore parse errors */ }
-      });
+          return next;
+        });
+      } catch (err) {
+        console.error('[useAgentRealTime] Error handling snapshot:', err);
+      }
+    });
 
-      es.addEventListener('agent:status_update', (e: MessageEvent) => {
-        try {
-          const ev = JSON.parse(e.data);
-          setAgents((prev) => ({
-            ...prev,
-            [ev.agentType]: {
-              ...prev[ev.agentType],
-              status: ev.status,
-              lastActivity: ev.lastActivity,
-              tokensUsed: ev.tokensUsed ?? prev[ev.agentType]?.tokensUsed,
-            },
-          }));
-        } catch { /* ignore */ }
-      });
+    const unsubStatusUpdate = sub.subscribe('agent:status_update', (msg) => {
+      try {
+        const ev = msg.data as any;
+        console.log(`[useAgentRealTime] Received agent:status_update: ${ev.agentType} status=${ev.status}`);
+        setAgents((prev) => ({
+          ...prev,
+          [ev.agentType]: {
+            ...prev[ev.agentType],
+            status: ev.status,
+            lastActivity: ev.lastActivity,
+            tokensUsed: ev.tokensUsed ?? prev[ev.agentType]?.tokensUsed,
+          },
+        }));
+      } catch (err) {
+        console.error('[useAgentRealTime] Error handling status update:', err);
+      }
+    });
 
-      es.addEventListener('agent:execution_update', (e: MessageEvent) => {
-        try {
-          const ev = JSON.parse(e.data);
-          setAllExecutions((prev) =>
-            prev.map((x) => (x.id === ev.executionId ? { ...x, ...ev } : x))
-          );
-        } catch { /* ignore */ }
-      });
+    const unsubExecutionUpdate = sub.subscribe('agent:execution_update', (msg) => {
+      try {
+        const ev = msg.data as any;
+        console.log(`[useAgentRealTime] Received agent:execution_update: ${ev.executionId}`);
+        setAllExecutions((prev) =>
+          prev.map((x) => (x.id === ev.executionId ? { ...x, ...ev } : x))
+        );
+      } catch (err) {
+        console.error('[useAgentRealTime] Error handling execution update:', err);
+      }
+    });
 
-      // Refresh execution list when an agent starts or completes so AgentRail
-      // reflects status transitions without waiting for the polling interval.
-      es.addEventListener('agent:started', () => { fetchExecutions(); });
-      es.addEventListener('agent:completed', () => { fetchExecutions(); });
+    const unsubStarted = sub.subscribe('agent:started', () => {
+      console.log('[useAgentRealTime] Received agent:started. Triggering execution fetch.');
+      fetchExecutions();
+    });
 
-      es.onopen = () => { setIsConnected(true); stopPolling(); };
-      es.onerror = () => { setIsConnected(false); startPolling(); };
-    } catch {
+    const unsubCompleted = sub.subscribe('agent:completed', () => {
+      console.log('[useAgentRealTime] Received agent:completed. Triggering execution fetch.');
+      fetchExecutions();
+    });
+
+    const unsubConnChange = sub.onConnectionChange((connected) => {
+      console.log(`[useAgentRealTime] SSE connection state changed to: ${connected}`);
+      setIsConnected(connected);
+      if (connected) {
+        stopPolling();
+      } else {
+        startPolling();
+      }
+    });
+
+    // Sync initial connection state
+    Promise.resolve().then(() => {
+      setIsConnected(sub.connected);
+    });
+    if (sub.connected) {
+      stopPolling();
+    } else {
       startPolling();
     }
 
     return () => {
-      es?.close();
+      console.log('[useAgentRealTime] Releasing SSE subscription and cleaning up');
+      unsubSnapshot();
+      unsubStatusUpdate();
+      unsubExecutionUpdate();
+      unsubStarted();
+      unsubCompleted();
+      unsubConnChange();
+      sub.release();
       stopPolling();
-      if (pollIntervalRef.current) { clearInterval(pollIntervalRef.current); pollIntervalRef.current = null; }
+      if (pollIntervalRef.current) {
+        clearInterval(pollIntervalRef.current);
+        pollIntervalRef.current = null;
+      }
     };
   }, [candidateId, options?.autoConnect, refreshInterval, fetchExecutions]);
 
@@ -189,7 +232,9 @@ export function useAgentRealTime(
    */
   useEffect(() => {
     if (candidateId && options?.autoConnect) {
-      fetchExecutions();
+      Promise.resolve().then(() => {
+        fetchExecutions();
+      });
     }
   }, [candidateId, options?.autoConnect, fetchExecutions]);
 

@@ -14,7 +14,7 @@ import {
   deriveChildBoundary,
   assertBoundaryAllowsChild,
 } from './boundedExecution';
-import { AgentType } from '@/lib/agents/prompts';
+import { AgentType } from '@/lib/agents/prompts/prompts';
 import { getPolicy } from './policyEngine';
 import { createLogger } from '@/lib/logging/logger';
 

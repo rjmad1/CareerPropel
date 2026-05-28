@@ -8,7 +8,7 @@ import {
   LLMCallOptions,
   LLMCallResult,
   LLMProviderClient,
-} from './provider';
+} from './types';
 
 export class AnthropicProvider implements LLMProviderClient {
   name = 'anthropic' as const;

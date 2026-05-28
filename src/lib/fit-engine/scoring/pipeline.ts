@@ -79,7 +79,7 @@ export async function scoreFit(input: ScoringInput): Promise<ScoringOutput> {
     }
 
     // 3. Normalize weights to sum to 1
-    const normalizedWeights = normalizeWeights(weights as Record<FitDimension, number>);
+    const normalizedWeights = normalizeWeights(weights);
     logger.debug({ ...logContext, weights: normalizedWeights }, 'Normalized weights');
 
     // 4. Get LLM dimension assessments
@@ -98,7 +98,7 @@ export async function scoreFit(input: ScoringInput): Promise<ScoringOutput> {
     const adaptationRiskScore = dimensionScores.ADAPTATION_BURDEN?.score ?? 0;
 
     // 6. Determine recommendation
-    const recommendation = determineRecommendation(overallFitScore, credibilityRiskScore, adaptationRiskScore);
+    const recommendation = determineRecommendation(overallFitScore, credibilityRiskScore);
 
     // 7. Check suppression rules
     const suppression = checkSuppressionRules(dimensionScores);
@@ -301,8 +301,7 @@ function parseDimensionScores(raw: string, weights: Record<string, number>): Rec
 
 function determineRecommendation(
   score: number,
-  credibilityRisk: number,
-  _adaptationRisk: number
+  credibilityRisk: number
 ): { recommendation: FitScoreResult['recommendation']; rationale: string } {
   // Suppression overrides everything
   if (credibilityRisk >= 0.8) {
@@ -415,12 +414,12 @@ function buildRecruiterPerception(
   return parts.join('\n');
 }
 
-function normalizeWeights(weights: Record<string, number>): Record<string, number> {
-  const sum = Object.values(weights).reduce((s, w) => s + w, 0);
+function normalizeWeights<T extends string>(weights: Record<T, number>): Record<T, number> {
+  const sum = Object.values<number>(weights as Record<string, number>).reduce((s, w) => s + w, 0);
   if (sum === 0) return weights;
 
-  const normalized: Record<string, number> = {};
-  for (const [key, val] of Object.entries(weights)) {
+  const normalized = {} as Record<T, number>;
+  for (const [key, val] of Object.entries(weights) as [T, number][]) {
     normalized[key] = val / sum;
   }
   return normalized;

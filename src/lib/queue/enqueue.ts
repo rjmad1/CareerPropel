@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/db';
 import { log } from '@/lib/logging/logger';
-import { getCostCeiling, getProjectedCost } from '@/lib/agents/cost-config';
+import { getCostCeiling, getProjectedCost } from '@/lib/agents/policies/cost-config';
 import { getDeploymentMetadata } from '@/lib/deployment/metadata';
 import crypto from 'crypto';
 import {

@@ -4,7 +4,7 @@
  * Pure-function coverage — no I/O, no mocks.
  */
 
-import { getAgentForStage, STAGE_TRIGGER_MAP } from '@/lib/agents/stageTriggerMap';
+import { getAgentForStage, STAGE_TRIGGER_MAP } from '@/lib/agents/orchestration/stageTriggerMap';
 import { PIPELINE_STAGES, JobStage } from '@/types/job';
 
 describe('STAGE_TRIGGER_MAP', () => {

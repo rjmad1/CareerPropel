@@ -5,6 +5,35 @@ import { runtimeSettings } from '@/lib/runtime/settings';
 
 const redisLogger = createLogger({ component: 'redis' });
 
+const reconnectTimestamps = new Map<string, number[]>();
+const lastAlertTimestamps = new Map<string, number>();
+
+function trackReconnect(connectionName: string) {
+  const now = Date.now();
+  const attempts = reconnectTimestamps.get(connectionName) || [];
+  attempts.push(now);
+
+  // Filter to rolling 30-second window
+  const windowStart = now - 30000;
+  const recentAttempts = attempts.filter((ts) => ts >= windowStart);
+  reconnectTimestamps.set(connectionName, recentAttempts);
+
+  if (recentAttempts.length > 5) {
+    const lastAlert = lastAlertTimestamps.get(connectionName) || 0;
+    if (now - lastAlert > 60000) {
+      redisLogger.error(
+        {
+          connectionName,
+          reconnectCount: recentAttempts.length,
+          windowSeconds: 30,
+        },
+        'Redis Reconnect Storm Detected! High reconnection frequency observed.'
+      );
+      lastAlertTimestamps.set(connectionName, now);
+    }
+  }
+}
+
 function buildRedisClient(connectionName: string) {
   const client = new Redis(runtimeSettings.redisUrl, {
     connectionName,
@@ -26,6 +55,7 @@ function buildRedisClient(connectionName: string) {
   client.on('reconnecting', () => {
     redisLogger.warn({ connectionName }, 'Redis reconnecting');
     recordRedisReconnect();
+    trackReconnect(connectionName);
   });
 
   client.on('error', (error) => {

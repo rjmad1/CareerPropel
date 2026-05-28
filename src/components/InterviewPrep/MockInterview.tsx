@@ -140,11 +140,13 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
   const [showHint, setShowHint] = useState(false);
   const [feedback, setFeedback] = useState<AiFeedback | null>(null);
   const [error, setError] = useState('');
-  const sessionId = useRef(`session-${Date.now()}`);
+  const [isMounted, setIsMounted] = useState(false);
+  const sessionId = useRef('');
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const feedbackAbortRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
+    setIsMounted(true);
     return () => { feedbackAbortRef.current?.abort(); };
   }, []);
 
@@ -291,7 +293,7 @@ export const MockInterview: React.FC<MockInterviewProps> = ({ prep }) => {
             Start Mock Interview
           </button>
 
-          {prep.lastUpdated && (
+          {prep.lastUpdated && isMounted && (
             <div className="text-xs text-slate-400 text-center">
               Prep last updated: {new Date(prep.lastUpdated).toLocaleString()}
             </div>

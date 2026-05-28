@@ -47,6 +47,7 @@ Thumbs.db
 # Cache
 .next
 .turbo
+*.tsbuildinfo
 
 # Graphify generated output
 graphify-out/
@@ -56,4 +57,11 @@ graphify-out/
 
 # ESLint temporary report files
 eslint-*.json
+
+# Required stabilization exclusions
+coverage
+playwright-report
+test-results
+*.log
+.env.*.local
 

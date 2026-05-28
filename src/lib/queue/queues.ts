@@ -50,10 +50,16 @@ export async function enqueueExecution(data: ExecutionJobData) {
     'Enqueueing execution'
   );
 
+  // Normalise promptContext: convert null → undefined (schema allows null, but ExecutionJobData requires string | undefined)
+  const promptContext: Record<string, string | undefined> = Object.fromEntries(
+    Object.entries(validatedData.promptContext).map(([k, v]) => [k, v ?? undefined])
+  );
+
   return executionQueue.add('execute-agent', {
     ...validatedData,
-    promptContext: validatedData.promptContext as Record<string, string | undefined>,
-    jobId: validatedData.jobId || undefined,
+    promptContext,
+    // jobId: convert null → undefined to satisfy ExecutionJobData type (BullMQ doesn't distinguish them)
+    jobId: validatedData.jobId ?? undefined,
   }, {
     ...createQueueJobOptions({
       jobId: validatedData.executionId,

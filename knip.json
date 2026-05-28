@@ -1,0 +1,25 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": [
+    "src/app/**/page.tsx",
+    "src/app/**/layout.tsx",
+    "src/app/**/route.ts",
+    "src/app/**/error.tsx",
+    "src/app/**/global-error.tsx",
+    "src/bin/*.ts",
+    "src/middleware.ts",
+    "next.config.js"
+  ],
+  "project": ["src/**/*.{ts,tsx}"],
+  "ignore": [
+    "prisma/**",
+    "ArchiveDocumentation_CareerPropel/**",
+    ".next/**"
+  ],
+  "ignoreDependencies": [
+    "@prisma/client",
+    "prisma",
+    "@sentry/nextjs"
+  ],
+  "ignoreExportsUsedInFile": true
+}

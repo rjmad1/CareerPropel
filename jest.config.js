@@ -18,6 +18,11 @@ const customConfig = {
     // Integration tests require live DB/Redis — run via test:integration
     '/src/__tests__/integration/',
   ],
+  // collectCoverageFrom: Intentional allowlist — phased coverage rollout.
+  // Currently covers: security primitives (apiKey, csrfToken, rbac, objectGuards, sanitizeContent),
+  // safety utilities, scoring engine, navigation helpers, validation schemas, and API error classes.
+  // Phase 2 plan: expand to cover all src/lib/**/*.ts and src/app/api/**/*.ts once baseline hits 80%.
+  // Keep this list in sync with the coverage threshold below.
   collectCoverageFrom: [
     'src/lib/security/{apiKey,csrfToken,objectGuards,rbac,sanitizeContent}.ts',
     'src/lib/safety/**/*.ts',
