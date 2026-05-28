@@ -796,8 +796,8 @@ function NegotiateModal({
       setTab(0);
       setCounterAmount('');
       setNotes('');
-    } catch (err: any) {
-      setActionError(err.message ?? 'Something went wrong');
+    } catch (err: unknown) {
+      setActionError(err instanceof Error ? err.message : 'Something went wrong');
     } finally {
       setSubmitting(false);
     }
@@ -831,8 +831,8 @@ function NegotiateModal({
       const json = await res.json();
       setScript(json.data ?? json);
       setShowScript(true);
-    } catch (err: any) {
-      setScriptError(err.message ?? 'Something went wrong');
+    } catch (err: unknown) {
+      setScriptError(err instanceof Error ? err.message : 'Something went wrong');
     } finally {
       setGeneratingScript(false);
     }
@@ -862,8 +862,8 @@ function NegotiateModal({
       }
       const json = await res.json();
       setDecisionResult(json.data ?? json);
-    } catch (err: any) {
-      setDecisionError(err.message ?? 'Something went wrong');
+    } catch (err: unknown) {
+      setDecisionError(err instanceof Error ? err.message : 'Something went wrong');
     } finally {
       setScoringDecision(false);
     }

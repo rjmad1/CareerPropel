@@ -6,6 +6,7 @@
 
 import { NextRequest } from 'next/server'
 import { prisma } from '@/lib/db'
+import type { Prisma } from '@prisma/client'
 import { generateInterviewPrep } from '@/lib/interview/prepService'
 import { getAuthContext } from '@/lib/middleware/auth'
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
@@ -82,12 +83,12 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
         company: job.company,
         prepStatus: 'ready',
         confidenceScore: generated.confidenceScore,
-        companyResearch: generated.companyResearch as any,
-        roleBreakdown: generated.roleBreakdown as any,
-        technicalPrep: generated.technicalPrep as any,
-        systemDesignPrep: generated.systemDesignPrep as any,
-        resumeAlignment: generated.resumeAlignment as any,
-        compensationGuide: generated.compensationGuide as any,
+        companyResearch: generated.companyResearch as unknown as Prisma.InputJsonValue,
+        roleBreakdown: generated.roleBreakdown as unknown as Prisma.InputJsonValue,
+        technicalPrep: generated.technicalPrep as unknown as Prisma.InputJsonValue,
+        systemDesignPrep: generated.systemDesignPrep as unknown as Prisma.InputJsonValue,
+        resumeAlignment: generated.resumeAlignment as unknown as Prisma.InputJsonValue,
+        compensationGuide: generated.compensationGuide as unknown as Prisma.InputJsonValue,
         generatedAt: generated.generatedAt,
         userModifications: false,
         starStories: {

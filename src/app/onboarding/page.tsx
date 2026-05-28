@@ -372,10 +372,10 @@ export default function OnboardingPage() {
                     pros: 'Maximum intelligence, legal data-use constraints active.',
                     badge: 'Enterprise APIs'
                   }
-                ].map((mode: any) => (
+                ].map((mode) => (
                   <div
                     key={mode.key}
-                    onClick={() => setPrivacyMode(mode.key)}
+                    onClick={() => setPrivacyMode(mode.key as 'local' | 'enterprise' | 'zero_retention')}
                     className={`p-5 rounded-2xl border transition-all cursor-pointer relative hover:shadow-md ${
                       privacyMode === mode.key
                         ? 'bg-indigo-600/10 border-indigo-500/80 shadow-md shadow-indigo-500/5'
@@ -443,13 +443,13 @@ export default function OnboardingPage() {
                     icon: EyeOff,
                     border: 'border-slate-800 hover:border-indigo-500/40'
                   }
-                ].map((tier: any) => {
+                ].map((tier) => {
                   const IconComp = tier.icon;
                   const isSelected = computeTier === tier.key;
                   return (
                     <div
                       key={tier.key}
-                      onClick={() => setComputeTier(tier.key)}
+                      onClick={() => setComputeTier(tier.key as 'free' | 'managed' | 'byo')}
                       className={`p-5 rounded-2xl border transition-all cursor-pointer flex flex-col justify-between h-[180px] hover:shadow-lg ${
                         isSelected
                           ? 'bg-indigo-600/10 border-indigo-500/80 shadow-md shadow-indigo-500/5'

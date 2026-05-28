@@ -1,13 +1,11 @@
 import { NextRequest } from 'next/server'
+import { z } from 'zod'
 import { getAuthContext } from '@/lib/middleware/auth'
-import { hasPermission } from '@/lib/security/rbac'
-import { assignRoleToUser, removeRoleFromUser } from '@/lib/security/rbac'
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
 import { ApiErrors } from '@/lib/errors/ApiError'
+import { requirePermission } from '@/lib/security/authorization/middleware'
 import { prisma } from '@/lib/db'
-import { z } from 'zod'
 
-// Mark as dynamic to prevent build-time static generation of protected endpoint
 export const dynamic = 'force-dynamic'
 
 const AssignRoleSchema = z.object({
@@ -17,140 +15,104 @@ const AssignRoleSchema = z.object({
 
 /**
  * GET /api/admin/users
- * Get list of users with their roles
- * Protected: Requires authentication + 'users.manage' permission
+ * Returns candidates with their active roles — supports search and pagination.
  */
 export async function GET(request: NextRequest) {
   try {
-    const { userEmail } = await getAuthContext()
-
-    // Check admin permission
-    const hasAdminPerms = await hasPermission(userEmail, 'users.manage')
-    if (!hasAdminPerms) {
-      throw ApiErrors.FORBIDDEN('user management')
-    }
+    const { userEmail, userId } = await getAuthContext()
+    await requirePermission(userEmail, 'users.read', { actorId: userId })
 
     const { searchParams } = new URL(request.url)
-    const roleFilter = searchParams.get('role') || undefined
+    const search = searchParams.get('search') ?? ''
+    const page   = Math.max(1, parseInt(searchParams.get('page')  ?? '1', 10))
+    const limit  = Math.min(100, parseInt(searchParams.get('limit') ?? '50', 10))
 
-    // Get all users
-    let userRoles = await prisma.userRole.findMany({
+    const where = search
+      ? { OR: [{ email: { contains: search, mode: 'insensitive' as const } }, { name: { contains: search, mode: 'insensitive' as const } }] }
+      : {}
+
+    const [candidates, total] = await Promise.all([
+      prisma.candidate.findMany({
+        where,
+        select: {
+          id: true, email: true, name: true, emailVerified: true, createdAt: true,
+          jobs: { select: { id: true }, take: 1 },
+        },
+        orderBy: { createdAt: 'desc' },
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+      prisma.candidate.count({ where }),
+    ])
+
+    // Fetch active roles for these users
+    const emails = candidates.map((c) => c.email)
+    const userRoles = await prisma.userRole.findMany({
+      where: { email: { in: emails }, isActive: true },
       include: { role: true },
-      orderBy: { grantedAt: 'desc' },
     })
 
-    // Filter by role if specified
-    if (roleFilter) {
-      userRoles = userRoles.filter((ur: any) => ur.role.name === roleFilter)
-    }
-
-    // Group by email
-    const usersByEmail: {
-      [key: string]: { roles: string[]; grantedAt: Date[] }
-    } = {}
+    const rolesByEmail: Record<string, string[]> = {}
     for (const ur of userRoles) {
-      if (!usersByEmail[ur.email]) {
-        usersByEmail[ur.email] = { roles: [], grantedAt: [] }
-      }
-      usersByEmail[ur.email].roles.push(ur.role.name)
-      usersByEmail[ur.email].grantedAt.push(ur.grantedAt)
+      if (!rolesByEmail[ur.email]) rolesByEmail[ur.email] = []
+      rolesByEmail[ur.email].push(ur.role.name)
     }
 
-    const users = Object.entries(usersByEmail).map(([email, data]) => ({
-      email,
-      roles: data.roles,
-      roleCount: data.roles.length,
-      lastUpdated: new Date(Math.max(...data.grantedAt.map((d) => d.getTime()))),
+    const users = candidates.map((c) => ({
+      id: c.id,
+      email: c.email,
+      name: c.name,
+      emailVerified: c.emailVerified,
+      createdAt: c.createdAt,
+      roles: rolesByEmail[c.email] ?? [],
     }))
 
-    return successResponse({
-      total: users.length,
-      users,
-    })
-  } catch (error) {
-    const response = errorResponse(error)
-    return response
+    return successResponse({ total, page, limit, users })
+  } catch (err) {
+    return errorResponse(err)
   }
 }
 
 /**
- * POST /api/admin/users
- * Assign a role to a user
- * Protected: Requires authentication + 'roles.manage' permission
- * 
- * Request body:
- * - email: User email
- * - role: Role name (admin, recruiter, candidate)
+ * POST /api/admin/users — legacy: assign a role to a user by email
  */
 export async function POST(request: NextRequest) {
   try {
-    const { userEmail } = await getAuthContext()
-
-    // Check admin permission
-    const hasAdminPerms = await hasPermission(userEmail, 'roles.manage')
-    if (!hasAdminPerms) {
-      throw ApiErrors.FORBIDDEN('role assignment')
-    }
+    const { userEmail, userId } = await getAuthContext()
+    await requirePermission(userEmail, 'rbac.users.assign', { actorId: userId })
 
     const body = await request.json()
+    const parsed = AssignRoleSchema.safeParse(body)
+    if (!parsed.success) throw ApiErrors.VALIDATION_ERROR('email and role required')
 
-    // Validate request
-    const validation = AssignRoleSchema.safeParse(body)
-    if (!validation.success) {
-      throw ApiErrors.VALIDATION_ERROR('Invalid role assignment data')
-    }
+    const { email, role } = parsed.data
+    const { assignRole } = await import('@/lib/security/authorization/authorizationService')
+    await assignRole(email, role, userEmail)
 
-    const { email, role } = validation.data
-
-    // Assign role
-    await assignRoleToUser(email, role, userEmail)
-
-    return successResponse({
-      success: true,
-      message: `Role "${role}" assigned to ${email}`,
-    })
-  } catch (error) {
-    const response = errorResponse(error)
-    return response
+    return successResponse({ success: true, message: `Role "${role}" assigned to ${email}` })
+  } catch (err) {
+    return errorResponse(err)
   }
 }
 
 /**
- * DELETE /api/admin/users
- * Remove a role from a user
- * Protected: Requires authentication + 'roles.manage' permission
- * 
- * Query parameters:
- * - email: User email
- * - role: Role name to remove
+ * DELETE /api/admin/users — legacy: revoke a role from a user
  */
 export async function DELETE(request: NextRequest) {
   try {
-    const { userEmail } = await getAuthContext()
-
-    // Check admin permission
-    const hasAdminPerms = await hasPermission(userEmail, 'roles.manage')
-    if (!hasAdminPerms) {
-      throw ApiErrors.FORBIDDEN('role management')
-    }
+    const { userEmail, userId } = await getAuthContext()
+    await requirePermission(userEmail, 'rbac.users.assign', { actorId: userId })
 
     const { searchParams } = new URL(request.url)
     const email = searchParams.get('email')
-    const role = searchParams.get('role')
+    const role  = searchParams.get('role')
+    if (!email || !role) throw ApiErrors.INVALID_REQUEST('email and role query parameters required')
 
-    if (!email || !role) {
-      throw ApiErrors.INVALID_REQUEST('email and role query parameters are required')
-    }
+    const { revokeRole } = await import('@/lib/security/authorization/authorizationService')
+    await revokeRole(email, role, userEmail)
 
-    // Remove role
-    await removeRoleFromUser(email, role)
-
-    return successResponse({
-      success: true,
-      message: `Role "${role}" removed from ${email}`,
-    })
-  } catch (error) {
-    const response = errorResponse(error)
-    return response
+    return successResponse({ success: true, message: `Role "${role}" revoked from ${email}` })
+  } catch (err) {
+    return errorResponse(err)
   }
 }

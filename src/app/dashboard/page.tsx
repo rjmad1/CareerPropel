@@ -82,7 +82,7 @@ export default function DashboardPage() {
     } else if (status === 'authenticated') {
       fetchJobs()
     }
-  }, [status])
+  }, [status, router])
 
   async function fetchJobs() {
     try {
@@ -128,15 +128,15 @@ export default function DashboardPage() {
     }
   }
 
-  const getStageColor = (stage: string) => {
-    const colors: { [key: string]: any } = {
+  const getStageColor = (stage: string): 'default' | 'info' | 'primary' | 'warning' | 'success' | 'error' => {
+    const colors: Record<string, 'default' | 'info' | 'primary' | 'warning' | 'success' | 'error'> = {
       interested: 'info',
       applied: 'primary',
       interview: 'warning',
       offer: 'success',
       rejected: 'error',
     }
-    return colors[stage] || 'default'
+    return colors[stage] ?? 'default'
   }
 
   if (status === 'loading') {

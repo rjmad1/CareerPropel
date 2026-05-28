@@ -29,7 +29,7 @@ export async function createApprovalRequest(
       stepKey,
       candidateId,
       actionType,
-      payload: payload as any,
+      payload: payload as unknown as import('@prisma/client').Prisma.InputJsonValue,
       expiresAt,
     },
   });
@@ -102,7 +102,7 @@ export async function recordApprovalDecision(
     data: {
       decision,
       decisionNote: note ?? null,
-      modifiedPayload: modifiedPayload ? (modifiedPayload as any) : undefined,
+      modifiedPayload: modifiedPayload ? (modifiedPayload as unknown as import('@prisma/client').Prisma.InputJsonValue) : undefined,
       decidedAt: new Date(),
     },
   });

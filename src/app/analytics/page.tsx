@@ -103,7 +103,7 @@ function AnalyticsContent() {
     }
   }
 
-  const metrics: AnalyticsMetrics = useMemo(() => calculateAnalytics(jobs as any), [jobs]);
+  const metrics: AnalyticsMetrics = useMemo(() => calculateAnalytics(jobs as unknown as import('@prisma/client').Job[]), [jobs]);
   const stageBreakdownEntries = Object.entries(metrics.stageBreakdown).filter(([, c]) => c > 0).sort(([, a], [, b]) => b - a);
   const maxStageCount = Math.max(...stageBreakdownEntries.map(([, c]) => c), 1);
 

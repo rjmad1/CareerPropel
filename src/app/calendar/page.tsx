@@ -98,8 +98,8 @@ function CalendarContent() {
       const res = await fetch(`/api/calendar/sync?provider=${provider}`, { method: 'POST' });
       if (!res.ok) throw new Error('Sync failed');
       await fetchEvents();
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Sync failed');
     } finally {
       setSyncing(null);
     }

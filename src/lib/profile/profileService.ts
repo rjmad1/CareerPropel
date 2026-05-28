@@ -5,6 +5,22 @@ import {
   ProfileSummary,
 } from '@/types/profile';
 
+/** Shape of raw profile data used by local scoring helpers. */
+type RawProfileData = {
+  name?: string;
+  email?: string;
+  phone?: string;
+  location?: string;
+  professional_summary?: string;
+  candidateId?: string;
+  resume?: { content?: string; versions?: unknown[]; optimized?: boolean };
+  skills?: Array<{ name: string; endorsed?: boolean }>;
+  experience?: Array<{ title?: string; company?: string; description?: string }>;
+  education?: Array<{ degree?: string; school?: string; gpa?: string | number }>;
+  goals?: { desiredRoles?: unknown; desiredCompanies?: unknown; salaryRange?: unknown; geography?: unknown };
+  portfolio?: unknown[];
+};
+
 /**
  * Profile Service - API client for profile operations
  * 
@@ -47,8 +63,8 @@ export async function getProfileScore(candidateId: string): Promise<ProfileScore
  */
 export async function updateProfile(
   candidateId: string,
-  data: Partial<any>
-): Promise<any> {
+  data: Record<string, unknown>
+): Promise<unknown> {
   const res = await fetch(`/api/profile?candidateId=${candidateId}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -180,7 +196,7 @@ export async function generateCareerNarrative(
 /**
  * Calculate completeness score from profile data
  */
-export function calculateCompletenessScore(profile: any): ProfileScore {
+export function calculateCompletenessScore(profile: RawProfileData): ProfileScore {
   // Scoring weights for each category
   const weights = {
     personalInfo: 0.15,
@@ -215,7 +231,7 @@ export function calculateCompletenessScore(profile: any): ProfileScore {
 
   return {
     id: 'score_' + Date.now(),
-    candidateId: profile.candidateId,
+    candidateId: profile.candidateId ?? '',
     totalScore,
     personalInfoScore,
     resumeScore,
@@ -229,7 +245,7 @@ export function calculateCompletenessScore(profile: any): ProfileScore {
   };
 }
 
-function calculatePersonalInfoScore(profile: any): number {
+function calculatePersonalInfoScore(profile: RawProfileData): number {
   let score = 0;
   if (profile.name) score += 25;
   if (profile.email) score += 25;
@@ -238,7 +254,7 @@ function calculatePersonalInfoScore(profile: any): number {
   return score;
 }
 
-function calculateResumeScore(profile: any): number {
+function calculateResumeScore(profile: RawProfileData): number {
   if (!profile.resume) return 0;
   let score = 0;
   if (profile.resume.content) score += 50;
@@ -247,29 +263,29 @@ function calculateResumeScore(profile: any): number {
   return Math.min(score, 100);
 }
 
-function calculateSkillsScore(profile: any): number {
+function calculateSkillsScore(profile: RawProfileData): number {
   if (!profile.skills || profile.skills.length === 0) return 0;
   const count = profile.skills.length;
-  const endorsed = profile.skills.filter((s: any) => s.endorsed).length;
+  const endorsed = profile.skills.filter((s) => s.endorsed).length;
   return Math.min(Math.round((count / 10) * 50 + (endorsed / count) * 50), 100);
 }
 
-function calculateExperienceScore(profile: any): number {
+function calculateExperienceScore(profile: RawProfileData): number {
   if (!profile.experience || profile.experience.length === 0) return 0;
   const count = profile.experience.length;
-  const withDetails = profile.experience.filter((e: any) => e.description).length;
+  const withDetails = profile.experience.filter((e) => e.description).length;
   return Math.min(Math.round((count / 5) * 50 + (withDetails / count) * 50), 100);
 }
 
-function calculateEducationScore(profile: any): number {
+function calculateEducationScore(profile: RawProfileData): number {
   if (!profile.education || profile.education.length === 0) return 0;
   let score = 0;
   score += Math.min(profile.education.length * 25, 75);
-  if (profile.education.some((e: any) => e.gpa)) score += 25;
+  if (profile.education.some((e) => e.gpa)) score += 25;
   return Math.min(score, 100);
 }
 
-function calculateGoalsScore(profile: any): number {
+function calculateGoalsScore(profile: RawProfileData): number {
   if (!profile.goals) return 0;
   let score = 0;
   if (profile.goals.desiredRoles) score += 30;
@@ -279,7 +295,7 @@ function calculateGoalsScore(profile: any): number {
   return Math.min(score, 100);
 }
 
-function calculatePortfolioScore(profile: any): number {
+function calculatePortfolioScore(profile: RawProfileData): number {
   if (!profile.portfolio || profile.portfolio.length === 0) return 0;
   const count = profile.portfolio.length;
   return Math.min(count * 25, 100);
@@ -289,7 +305,7 @@ function calculatePortfolioScore(profile: any): number {
  * Detect skill gaps by comparing profile to job descriptions
  */
 export function detectSkillGaps(
-  profile: any,
+  profile: RawProfileData,
   jobDescriptions: string[]
 ): {
   missingSkills: string[];
@@ -297,7 +313,7 @@ export function detectSkillGaps(
   recommendations: string[];
 } {
   // Mock implementation - would use NLP/Claude in production
-  const profileSkills = profile.skills?.map((s: any) => s.name.toLowerCase()) || [];
+  const profileSkills = profile.skills?.map((s) => s.name.toLowerCase()) ?? [];
   const jobKeywords = jobDescriptions
     .join(' ')
     .toLowerCase()
@@ -324,16 +340,16 @@ export function detectSkillGaps(
 /**
  * Format profile for ATS (Applicant Tracking System)
  */
-export function formatProfileForATS(profile: any): string {
+export function formatProfileForATS(profile: RawProfileData): string {
   const sections = [
     profile.name,
     profile.email,
     profile.phone,
     profile.location,
     profile.professional_summary,
-    profile.skills?.map((s: any) => s.name).join(', '),
-    profile.experience?.map((e: any) => `${e.title} at ${e.company}`).join('; '),
-    profile.education?.map((e: any) => `${e.degree} from ${e.school}`).join('; '),
+    profile.skills?.map((s) => s.name).join(', '),
+    profile.experience?.map((e) => `${e.title} at ${e.company}`).join('; '),
+    profile.education?.map((e) => `${e.degree} from ${e.school}`).join('; '),
   ];
 
   return sections.filter(Boolean).join('\n');

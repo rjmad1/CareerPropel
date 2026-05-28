@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 1. Prepare user preferences update
-    const currentPrefs = (candidate.preferences as Record<string, any>) || {};
+    const currentPrefs = (candidate.preferences as Record<string, unknown>) || {};
     const updatedPreferences = {
       ...currentPrefs,
       onboarded: true,

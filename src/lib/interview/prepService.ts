@@ -535,7 +535,7 @@ function extractAchievements(_resume: string) {
   ];
 }
 
-function calculateRelevanceScore(_achievement: any, _jobDescription: string): number {
+function calculateRelevanceScore(_achievement: Record<string, unknown>, _jobDescription: string): number {
   return 0.8; // Would calculate based on keyword matching
 }
 
@@ -580,7 +580,7 @@ function getKeywordImportance(keyword: string, jobDescription: string): 'critica
   return 'useful';
 }
 
-function calculateOverallMatch(keywordMatches: any[]): number {
+function calculateOverallMatch(keywordMatches: Array<{ foundInResume: boolean }>): number {
   const matched = keywordMatches.filter(m => m.foundInResume).length;
   return Math.round((matched / keywordMatches.length) * 100);
 }
@@ -615,10 +615,10 @@ function estimateEquityRange(_company: string) {
 }
 
 function calculateConfidenceScore(
-  companyResearch: any,
-  roleBreakdown: any,
-  behavioralStories: any,
-  technicalPrep: any
+  companyResearch: CompanyResearch | null | undefined,
+  roleBreakdown: RoleBreakdown | null | undefined,
+  behavioralStories: BehavioralStory[],
+  technicalPrep: TechnicalPrep | null | undefined
 ): number {
   const components = [
     companyResearch ? 0.25 : 0,

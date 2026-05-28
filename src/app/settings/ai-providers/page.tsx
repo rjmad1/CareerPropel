@@ -256,7 +256,7 @@ export default function AiProvidersSettingsPage() {
               { presetName: 'RESUME_OPTIMIZATION', providerName: 'gemini', modelName: 'gemini-2.5-flash', maxCostLimit: 0.05, privacyMode: 'enterprise' },
               { presetName: 'ATS_OPTIMIZATION', providerName: 'groq', modelName: 'llama-3.1-8b-instant', maxCostLimit: 0.01, privacyMode: 'enterprise' },
               { presetName: 'TECHNICAL_INTERVIEW', providerName: 'anthropic', modelName: 'claude-3-5-sonnet-20241022', maxCostLimit: 0.15, privacyMode: 'enterprise' }
-            ]).map(([key, p]: any) => {
+            ]).map(([key, p]: [string, { presetName?: string; providerName: string; modelName: string; maxCostLimit: number; privacyMode: string }]) => {
               const name = p.presetName || key;
               const title = name.replaceAll('_', ' ');
 

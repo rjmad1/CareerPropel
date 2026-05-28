@@ -6,7 +6,7 @@ export interface Activity {
   type: 'stage_changed' | 'applied' | 'interview_scheduled' | 'interview_completed' | 'rejected' | 'offered' | 'note_added' | 'agent_action';
   timestamp: string;
   description: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export function useJobActivities(jobId: string) {
@@ -19,14 +19,17 @@ export function useJobActivities(jobId: string) {
         throw new Error(err?.error?.message || 'Failed to load activities');
       }
       const json = await res.json();
-      const raw: any[] = json.data ?? json ?? [];
-      return raw.map((item) => ({
-        id: item.id,
-        type: item.action as Activity['type'],
-        timestamp: item.createdAt,
-        description: item.metadata?.description ?? item.action,
-        metadata: item.metadata,
-      }));
+      const raw: Record<string, unknown>[] = json.data ?? json ?? [];
+      return raw.map((item) => {
+        const meta = item.metadata as Record<string, unknown> | undefined;
+        return {
+          id: item.id as string,
+          type: item.action as Activity['type'],
+          timestamp: item.createdAt as string,
+          description: (meta?.description as string | undefined) ?? (item.action as string),
+          metadata: meta,
+        };
+      });
     },
     enabled: !!jobId,
     staleTime: 2 * 60 * 1000, // 2 minutes

@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/db'
+import type { Prisma } from '@prisma/client'
 
 export enum AuditAction {
   // Authentication
@@ -45,7 +46,7 @@ export interface AuditLogEntry {
   email: string
   resourceType?: string
   resourceId?: string
-  changes?: Record<string, any>
+  changes?: Record<string, unknown>
   ipAddress?: string
   userAgent?: string
   status: 'SUCCESS' | 'FAILURE'
@@ -60,7 +61,7 @@ export async function logAuditEvent(entry: AuditLogEntry): Promise<void> {
         action: entry.action,
         resource: entry.resourceType || 'unknown',
         resourceId: entry.resourceId,
-        details: entry.changes as any,
+        details: entry.changes as unknown as Prisma.InputJsonValue | undefined,
         ipAddress: entry.ipAddress,
         userAgent: entry.userAgent,
         status: entry.status.toLowerCase(),
@@ -87,7 +88,7 @@ export async function logSecurityEvent(
   options: {
     resourceType?: string
     resourceId?: string
-    changes?: Record<string, any>
+    changes?: Record<string, unknown>
     ipAddress?: string
     userAgent?: string
     status?: 'SUCCESS' | 'FAILURE'
@@ -111,16 +112,17 @@ export async function getUserAuditLogs(
     startDate?: Date
     endDate?: Date
   } = {}
-): Promise<any[]> {
+): Promise<unknown[]> {
   const { limit = 50, offset = 0, action, startDate, endDate } = options
 
-  const where: any = { email }
+  const where: Record<string, unknown> = { email }
 
   if (action) where.action = action
   if (startDate || endDate) {
-    where.createdAt = {}
-    if (startDate) where.createdAt.gte = startDate
-    if (endDate) where.createdAt.lte = endDate
+    const createdAt: { gte?: Date; lte?: Date } = {}
+    if (startDate) createdAt.gte = startDate
+    if (endDate) createdAt.lte = endDate
+    where.createdAt = createdAt
   }
 
   return prisma.auditLog.findMany({
@@ -138,17 +140,18 @@ export async function getAllAuditLogs(options: {
   email?: string
   startDate?: Date
   endDate?: Date
-} = {}): Promise<any[]> {
+} = {}): Promise<unknown[]> {
   const { limit = 100, offset = 0, action, email, startDate, endDate } = options
 
-  const where: any = {}
+  const where: Record<string, unknown> = {}
 
   if (action) where.action = action
   if (email) where.email = { contains: email, mode: 'insensitive' }
   if (startDate || endDate) {
-    where.createdAt = {}
-    if (startDate) where.createdAt.gte = startDate
-    if (endDate) where.createdAt.lte = endDate
+    const createdAt: { gte?: Date; lte?: Date } = {}
+    if (startDate) createdAt.gte = startDate
+    if (endDate) createdAt.lte = endDate
+    where.createdAt = createdAt
   }
 
   return prisma.auditLog.findMany({
@@ -169,15 +172,16 @@ export async function detectSuspiciousActivity(
     startDate: new Date(Date.now() - 24 * 60 * 60 * 1000)
   })
 
-  const failedLogins = logs.filter(
-    (l: any) => l.action === 'LOGIN' && l.status === 'failure'
+  type LogEntry = { action?: string; status?: string; createdAt?: Date | string };
+  const failedLogins = (logs as LogEntry[]).filter(
+    (l) => l.action === 'LOGIN' && l.status === 'failure'
   )
   if (failedLogins.length > 5) {
     findings.push({ type: 'MULTIPLE_FAILED_LOGINS', severity: 'HIGH' })
   }
 
-  const lastHour = logs.filter(
-    (l: any) => new Date(l.createdAt) > new Date(Date.now() - 60 * 60 * 1000)
+  const lastHour = (logs as LogEntry[]).filter(
+    (l) => new Date(l.createdAt ?? 0) > new Date(Date.now() - 60 * 60 * 1000)
   )
   if (lastHour.length > 100) {
     findings.push({ type: 'RAPID_ACTIONS', severity: 'MEDIUM' })

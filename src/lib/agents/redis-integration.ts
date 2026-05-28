@@ -71,7 +71,7 @@ export async function publishAgentStarted(
   userId: string,
   executionId: string,
   agentType: ExtendedAgentType,
-  input: Record<string, any>
+  input: Record<string, unknown>
 ): Promise<void> {
   const event: AgentStartedEvent = {
     type: 'agent:started',
@@ -110,7 +110,7 @@ export async function publishAgentCompleted(
   executionId: string,
   agentType: ExtendedAgentType,
   status: 'success' | 'failed',
-  output: Record<string, any> | undefined,
+  output: Record<string, unknown> | undefined,
   error?: string | undefined,
   tokensUsed: number = 0,
   durationMs: number = 0

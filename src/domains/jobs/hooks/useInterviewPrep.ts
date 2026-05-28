@@ -20,8 +20,13 @@ export interface PrepData {
   likelyQuestions: string[];
 }
 
-function transformToPrepData(prep: any): PrepData {
-  const starStories = (prep.starStories ?? []).map((s: any) => ({
+type RawPrep = Record<string, unknown>;
+type RawStory = { title?: string; competency?: string; situation?: string; task?: string; action?: string; result?: string; interviewQuestions?: string[] };
+type RawLang = { language?: string; name?: string; keyFeatures?: string[]; commonPatterns?: string[] };
+type RawNews = string | { title?: string };
+
+function transformToPrepData(prep: RawPrep): PrepData {
+  const starStories = ((prep.starStories ?? []) as RawStory[]).map((s) => ({
     title: s.title ?? s.competency ?? '',
     situation: s.situation ?? '',
     task: s.task ?? '',
@@ -30,28 +35,27 @@ function transformToPrepData(prep: any): PrepData {
   }));
 
   const technicalPrep = prep.technicalPrep ?? {};
-  const languages: Array<{ language: string; keyFeatures: string[] }> =
-    technicalPrep.programmingLanguages ?? [];
-  const technicalConcepts = languages.map((l: any) => ({
+  const languages: RawLang[] = (technicalPrep as Record<string, unknown>).programmingLanguages as RawLang[] ?? [];
+  const technicalConcepts = languages.map((l) => ({
     topic: l.language ?? l.name ?? '',
     keyPoints: l.keyFeatures ?? l.commonPatterns ?? [],
   }));
 
-  const companyResearch = prep.companyResearch ?? {};
-  const recentNews: string[] = (companyResearch.recentNews ?? []).map(
-    (n: any) => (typeof n === 'string' ? n : n.title ?? '')
+  const companyResearch = prep.companyResearch as Record<string, unknown> | null ?? {};
+  const recentNews: string[] = (companyResearch.recentNews as RawNews[] ?? []).map(
+    (n) => (typeof n === 'string' ? n : n.title ?? '')
   );
 
   return {
     starStories,
     technicalConcepts,
     companyIntelligence: {
-      mission: companyResearch.culture ?? companyResearch.fundingStatus ?? '',
+      mission: (companyResearch.culture as string | undefined) ?? (companyResearch.fundingStatus as string | undefined) ?? '',
       recentNews,
-      culture: companyResearch.culture ?? '',
+      culture: (companyResearch.culture as string | undefined) ?? '',
     },
-    likelyQuestions: starStories.flatMap((_: any, i: number) => {
-      const story = prep.starStories?.[i];
+    likelyQuestions: starStories.flatMap((_, i: number) => {
+      const story = (prep.starStories as RawStory[] | undefined)?.[i];
       return story?.interviewQuestions ?? [];
     }),
   };

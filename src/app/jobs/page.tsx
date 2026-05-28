@@ -299,8 +299,8 @@ function ImportJobsModal({ open, onClose, onImported }: { open: boolean; onClose
       const json = await res.json();
       if (!res.ok) throw new Error(json.message ?? 'Search failed');
       setResults((json.data ?? json).jobs ?? []);
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Search failed');
     } finally {
       setSearching(false);
     }
@@ -320,8 +320,8 @@ function ImportJobsModal({ open, onClose, onImported }: { open: boolean; onClose
       const json = await res.json();
       if (!res.ok) throw new Error(json.message ?? 'Import failed');
       onImported();
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Import failed');
       setImporting(false);
     }
   }
@@ -466,8 +466,8 @@ function AddJobModal({ open, onClose, onCreated }: { open: boolean; onClose: () 
       await createJob({ title: title.trim(), company: company.trim(), url: url.trim() || undefined });
       onCreated();
       setTitle(''); setCompany(''); setUrl('');
-    } catch (err: any) {
-      setError(err.message || 'Failed to add job');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to add job');
     } finally {
       setSaving(false);
     }

@@ -285,7 +285,7 @@ export const ProfileIntelligence: React.FC = () => {
     }
   };
 
-  const getEdgeStyle = (edge: any) => {
+  const getEdgeStyle = (edge: { sourceId: string; targetId: string }) => {
     const activeId = hoveredNodeId || selectedNodeId;
     const isEdgeConnected = activeId && (edge.sourceId === activeId || edge.targetId === activeId);
     

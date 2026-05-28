@@ -17,7 +17,7 @@ interface FeedbackRequest {
   responses: Array<[string, string]>;
   questions?: Array<{ id: string; text: string; category: string }>;
   jobId?: string;
-  prep?: any;
+  prep?: Record<string, unknown>;
 }
 
 interface FeedbackResponse {
@@ -141,10 +141,10 @@ Scores are out of 10. Be specific and reference the actual responses.`,
             candidateId: candidate.id,
             jobId: validatedJobId,
             sessionId: body.sessionId,
-            questions: (body.questions ?? []) as any,
-            responses: body.responses as any,
+            questions: (body.questions ?? []) as import('@prisma/client').Prisma.InputJsonValue,
+            responses: body.responses as import('@prisma/client').Prisma.InputJsonValue,
             feedback: feedback.feedback,
-            scores: feedback.scores as any,
+            scores: feedback.scores as import('@prisma/client').Prisma.InputJsonValue,
             strengths: feedback.strengths,
             areasForImprovement: feedback.areasForImprovement,
             suggestions: feedback.suggestions,

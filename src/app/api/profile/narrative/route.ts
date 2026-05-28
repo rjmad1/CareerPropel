@@ -35,14 +35,14 @@ export async function POST(request: NextRequest) {
     const experienceText = experiences
       .slice(0, 5)
       .map((e) => {
-        const d = e.data as any;
+        const d = e.data as { title?: string; company?: string; startYear?: string; endYear?: string; description?: string; degree?: string; institution?: string };
         return `${d.title ?? 'Role'} at ${d.company ?? 'Company'} (${d.startYear ?? ''}–${d.endYear ?? 'Present'}): ${d.description ?? ''}`;
       })
       .join('\n');
 
     const educationText = educations
       .map((e) => {
-        const d = e.data as any;
+        const d = e.data as { title?: string; company?: string; startYear?: string; endYear?: string; description?: string; degree?: string; institution?: string };
         return `${d.degree ?? 'Degree'} from ${d.institution ?? 'Institution'}`;
       })
       .join('; ');

@@ -21,7 +21,7 @@ interface UseInterviewPrepResult {
   error: Error | null;
   refetch: () => Promise<void>;
   regenerate: (force?: boolean) => Promise<void>;
-  updateContent: (section: keyof InterviewPrep, content: any) => Promise<void>;
+  updateContent: (section: keyof InterviewPrep, content: unknown) => Promise<void>;
   isStale: boolean;
 }
 
@@ -124,7 +124,7 @@ export function useInterviewPrep(
 
   // Update specific section of interview prep
   const updateContent = useCallback(
-    async (section: keyof InterviewPrep, content: any) => {
+    async (section: keyof InterviewPrep, content: unknown) => {
       if (!jobId) {
         setError(new Error('Job ID is required'));
         return;

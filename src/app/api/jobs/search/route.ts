@@ -10,12 +10,21 @@ import { z } from 'zod';
 
 export const dynamic = 'force-dynamic';
 
+// CWE-22 / SSRF hardening: boardToken is interpolated directly into external API URLs
+// (e.g. https://boards.greenhouse.io/v1/boards/{boardToken}/jobs).
+// Restrict to lowercase alphanumeric + hyphens/underscores only — no path traversal,
+// query-string injection, or protocol-relative prefixes are possible with this allowlist.
+const BOARD_TOKEN_RE = /^[a-z0-9][a-z0-9_-]{0,63}$/i;
+
 const SearchSchema = z.object({
   source: z.enum(['greenhouse', 'indeed', 'linkedin', 'lever', 'ashby']),
-  query: z.string().min(1),
-  location: z.string().optional(),
+  query: z.string().min(1).max(200),
+  location: z.string().max(200).optional(),
   // Greenhouse/Lever/Ashby: board token / company handle (e.g. "stripe")
-  boardToken: z.string().optional(),
+  boardToken: z
+    .string()
+    .regex(BOARD_TOKEN_RE, 'boardToken must be alphanumeric with optional hyphens/underscores')
+    .optional(),
   limit: z.coerce.number().int().min(1).max(50).default(20),
 });
 

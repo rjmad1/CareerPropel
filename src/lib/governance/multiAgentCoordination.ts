@@ -181,7 +181,8 @@ export function recordStepCompletion(
 export function isCanaryRoute(userId: string, agentType: AgentType, canaryPercent: number): boolean {
   if (canaryPercent <= 0) return false;
   if (canaryPercent >= 100) return true;
-  const hash = crypto.createHash('md5').update(`${userId}:${agentType}`).digest('hex');
+  // SHA-256 replaces MD5 (CWE-327 — MD5 is cryptographically broken)
+  const hash = crypto.createHash('sha256').update(`${userId}:${agentType}`).digest('hex');
   const bucket = parseInt(hash.slice(0, 4), 16) % 100;
   return bucket < canaryPercent;
 }

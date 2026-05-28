@@ -51,8 +51,9 @@ export const JobCard: React.FC<JobCardProps> = ({
 
   // Subscribe to updates for this specific job
   useEffect(() => {
-    const unsubscribe = subscribe('job:update', (message: any) => {
-      if (message.type === 'job:update' && message.data.jobId === job.id) {
+    const unsubscribe = subscribe('job:update', (message: unknown) => {
+      const msg = message as { type?: string; data?: { jobId: string } };
+      if (msg.type === 'job:update' && msg.data?.jobId === job.id) {
         setIsUpdating(true);
         const timer = setTimeout(() => setIsUpdating(false), 1500);
         return () => clearTimeout(timer);

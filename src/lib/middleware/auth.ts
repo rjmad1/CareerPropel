@@ -33,7 +33,7 @@ export function checkOwnership(userId: string, resourceOwnerId: string) {
   }
 }
 
-export function getUserIdFromSession(session: any): string {
+export function getUserIdFromSession(session: { user?: { id?: string } } | null): string {
   const userId = session?.user?.id
   if (!userId) {
     throw ApiErrors.UNAUTHORIZED()

@@ -142,7 +142,7 @@ export function broadcastJobUpdate(
   io: SocketServer,
   jobId: string,
   eventType: string,
-  data: any
+  data: unknown
 ): void {
   io.to(`job:${jobId}`).emit('job:update', {
     jobId,
@@ -159,7 +159,7 @@ export function sendUserMessage(
   io: SocketServer,
   userEmail: string,
   eventType: string,
-  data: any
+  data: unknown
 ): void {
   io.to(`user:${userEmail}`).emit(eventType, {
     data,

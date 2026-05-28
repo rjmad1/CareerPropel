@@ -7,7 +7,7 @@ import type { UploadDocumentInput, ListDocumentsQuery } from '@/lib/validation/s
 export async function getDocuments(userId: string, query: ListDocumentsQuery) {
   const { limit, offset, type, jobId, sortBy, sortOrder } = query;
 
-  const where: any = {
+  const where: Record<string, unknown> = {
     candidateId: userId,
   };
 

@@ -1,4 +1,5 @@
 import { NextRequest } from 'next/server'
+import type { Prisma } from '@prisma/client'
 import { getAuthContext } from '@/lib/middleware/auth'
 import { successResponse, errorResponse } from '@/lib/utils/apiResponse'
 import { prisma } from '@/lib/db'
@@ -30,7 +31,7 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(searchParams.get('offset') || '0')
 
     // Build query
-    const where: any = { email: userEmail }
+    const where: Prisma.AuditLogWhereInput = { email: userEmail }
     if (action) where.action = action
     if (resource) where.resource = resource
     if (severity) where.severity = severity

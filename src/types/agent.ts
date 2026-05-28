@@ -133,7 +133,7 @@ export interface ExecutionTimelineEvent {
   timestamp: Date;
   agent: AgentType;
   jobId?: string;
-  data: Record<string, any>;
+  data: Record<string, unknown>;
 }
 
 /**
@@ -149,7 +149,7 @@ export interface ExecutionSummary {
   successfulTools: number;
   failedTools: number;
   errorMessage?: string;
-  output?: Record<string, any>;
+  output?: Record<string, unknown>;
 }
 
 /**
@@ -181,7 +181,7 @@ export interface AgentLog {
   timestamp: Date;
   level: 'info' | 'warning' | 'error' | 'debug';
   message: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 /** Generic real-time message shape (SSE/WebSocket agnostic) */

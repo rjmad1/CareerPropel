@@ -478,7 +478,7 @@ function calculateConfidenceScore(job: Job): number {
   return Math.min(0.9, (job.matchScore / 100) * 0.9 + 0.1);
 }
 
-function formatFundingStatus(funding: any): string {
+function formatFundingStatus(funding: { stage?: string; lastRound?: { date: string | Date } }): string {
   if (funding.stage === 'public') return 'Public company';
   if (funding.stage === 'acquired') return `Acquired (${funding.stage})`;
   if (funding.lastRound) {

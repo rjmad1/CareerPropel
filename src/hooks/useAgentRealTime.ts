@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Agent } from '@/types/agent';
+import { Agent, AgentExecution } from '@/types/agent';
 import { getCandidateExecutions } from '@/lib/agent/agentService';
 
 export interface UseAgentRealTimeResult {
   agents: Record<string, Agent>;
-  allExecutions: any[]; // AgentExecution[]
+  allExecutions: AgentExecution[];
   activeCount: number;
   runningCount: number;
   failedCount: number;
@@ -12,7 +12,7 @@ export interface UseAgentRealTimeResult {
   isLoading: boolean;
   error: Error | null;
 
-  subscribe: (channel: string, callback: (data: any) => void) => () => void;
+  subscribe: (channel: string, callback: (data: unknown) => void) => () => void;
   unsubscribe: (channel: string) => void;
   refresh: () => Promise<void>;
 }
@@ -36,12 +36,12 @@ export function useAgentRealTime(
   }
 ): UseAgentRealTimeResult {
   const [agents, setAgents] = useState<Record<string, Agent>>({});
-  const [allExecutions, setAllExecutions] = useState<any[]>([]);
+  const [allExecutions, setAllExecutions] = useState<AgentExecution[]>([]);
   const [isConnected, setIsConnected] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const subscriptionsRef = useRef<Map<string, Set<(data: any) => void>>>(
+  const subscriptionsRef = useRef<Map<string, Set<(data: unknown) => void>>>(
     new Map()
   );
   const pollIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -90,7 +90,7 @@ export function useAgentRealTime(
   /**
    * Subscribe to a channel
    */
-  const subscribe = useCallback((channel: string, callback: (data: any) => void) => {
+  const subscribe = useCallback((channel: string, callback: (data: unknown) => void) => {
     if (!subscriptionsRef.current.has(channel)) {
       subscriptionsRef.current.set(channel, new Set());
     }
@@ -131,11 +131,11 @@ export function useAgentRealTime(
 
       es.addEventListener('snapshot', (e: MessageEvent) => {
         try {
-          const snapshot = JSON.parse(e.data) as Record<string, any>;
+          const snapshot = JSON.parse(e.data) as Record<string, Partial<Agent>>;
           setAgents((prev) => {
             const next = { ...prev };
             Object.entries(snapshot).forEach(([type, status]) => {
-              next[type] = { ...prev[type], ...(status as any) };
+              next[type] = { ...prev[type], ...status };
             });
             return next;
           });

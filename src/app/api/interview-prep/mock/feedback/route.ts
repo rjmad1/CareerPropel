@@ -101,7 +101,7 @@ Scores are out of 10. Be specific and reference the actual responses.`,
     return NextResponse.json(feedback);
   } catch (error) {
     // Surface auth errors properly
-    if ((error as any)?.statusCode === 401) {
+    if ((error as { statusCode?: number })?.statusCode === 401) {
       return errorResponse(error);
     }
 

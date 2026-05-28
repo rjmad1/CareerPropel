@@ -196,8 +196,8 @@ function ScheduleDialog({ open, jobs, onSuccess, onClose }: ScheduleDialogProps)
         throw new Error(err?.error?.message ?? 'Failed to schedule interview');
       }
       onSuccess();
-    } catch (err: any) {
-      setError(err.message ?? 'Something went wrong');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Something went wrong');
       setSaving(false);
     }
   }
@@ -360,8 +360,8 @@ function FeedbackDialog({ open, interview, onClose, onSuccess }: FeedbackDialogP
         throw new Error(err?.error?.message ?? 'Update failed');
       }
       onSuccess();
-    } catch (err: any) {
-      setError(err.message ?? 'Something went wrong');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Something went wrong');
       setSaving(false);
     }
   }

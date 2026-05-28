@@ -28,7 +28,7 @@ export interface UseProfileCompletionResult {
  */
 export function useProfileCompletion(
   candidateId: string,
-  profile?: any,
+  profile?: Record<string, unknown>,
   targetJobDescriptions?: string[]
 ): UseProfileCompletionResult {
   const [score, setScore] = useState<ProfileScore | null>(null);

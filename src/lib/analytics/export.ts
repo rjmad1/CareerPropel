@@ -55,11 +55,11 @@ export function calculateAnalytics(jobs: Job[]): AnalyticsMetrics {
 
   const salaries = jobs
     .filter((job) => {
-      const s = job.salary as any;
+      const s = job.salary as { min?: number; max?: number } | null;
       return s?.min || s?.max;
     })
     .map((job) => {
-      const s = job.salary as any;
+      const s = job.salary as { min?: number; max?: number } | null;
       return { min: s?.min || 0, max: s?.max || 0 };
     });
 
@@ -159,7 +159,7 @@ function getMatchScoreDistribution(jobs: Job[]): Record<string, number> {
   };
 
   jobs.forEach((job) => {
-    const score = (job as any).matchScore || 0;
+    const score = (job as { matchScore?: number }).matchScore ?? 0;
     if (score <= 20) distribution['0-20']++;
     else if (score <= 40) distribution['21-40']++;
     else if (score <= 60) distribution['41-60']++;

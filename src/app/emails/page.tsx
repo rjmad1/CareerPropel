@@ -127,8 +127,8 @@ export default function EmailsPage() {
       const label = [form.jobTitle, form.company].filter(Boolean).join(' @ ') || typeInfo.label;
       setHistory((prev) => [{ email, type: form.type, label }, ...prev].slice(0, 10));
       getNotificationManager().success('Email Ready', `${typeInfo.label} email drafted${label !== typeInfo.label ? ` for ${label}` : ''}`);
-    } catch (err: any) {
-      getNotificationManager().error('Generation Failed', err.message ?? 'Something went wrong');
+    } catch (err: unknown) {
+      getNotificationManager().error('Generation Failed', err instanceof Error ? err.message : 'Something went wrong');
     } finally {
       setGenerating(false);
     }
@@ -199,7 +199,7 @@ export default function EmailsPage() {
                         <Textarea
                           key={key}
                           label={label}
-                          value={(form as any)[key]}
+                          value={(form as unknown as Record<string, string>)[key]}
                           onChange={(e) => setField(key, e.target.value)}
                           placeholder={`Enter ${label.toLowerCase()}…`}
                           rows={3}
@@ -212,7 +212,7 @@ export default function EmailsPage() {
                         key={key}
                         label={label}
                         type={isNumber ? 'number' : 'text'}
-                        value={(form as any)[key]}
+                        value={(form as unknown as Record<string, string>)[key]}
                         onChange={(e) => setField(key, e.target.value)}
                         placeholder={`Enter ${label.toLowerCase()}…`}
                       />

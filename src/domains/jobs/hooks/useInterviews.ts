@@ -24,24 +24,25 @@ export function useInterviews(jobId: string) {
       const res = await fetch(`/api/interviews?jobId=${encodeURIComponent(jobId)}`);
       if (!res.ok) return [];
       const json = await res.json();
-      const items: any[] = json.data?.items ?? json.data ?? [];
+      const items: Record<string, unknown>[] = json.data?.items ?? json.data ?? [];
 
-      return items.map((interview: any): Interview => {
-        const dt = new Date(interview.scheduledAt);
+      return items.map((interview): Interview => {
+        const dt = new Date(interview.scheduledAt as string);
         const date = dt.toISOString().slice(0, 10);
         const time = dt.toISOString().slice(11, 16);
-        const rawType: string = interview.type || '';
+        const rawType = (interview.type as string) || '';
+        const interviewer = interview.interviewer as { name?: string } | undefined;
 
         return {
-          id: interview.id,
+          id: interview.id as string,
           type: (API_TO_UI_TYPE[rawType] || rawType) as Interview['type'],
           date,
           time,
-          interviewer: interview.interviewer?.name,
-          location: interview.location,
-          meetingLink: interview.meetingLink,
-          notes: interview.notes,
-          status: interview.status || 'scheduled',
+          interviewer: interviewer?.name,
+          location: interview.location as string | undefined,
+          meetingLink: interview.meetingLink as string | undefined,
+          notes: interview.notes as string | undefined,
+          status: ((interview.status as string) || 'scheduled') as Interview['status'],
         };
       });
     },

@@ -10,6 +10,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ─── RBAC Governance Enums ────────────────────────────────────────────────────
+
+/// Canonical role classification for the governance layer.
+enum RoleType {
+  SUPER_ADMIN
+  PLATFORM_ADMIN
+  SECURITY_ADMIN
+  SUPPORT_ADMIN
+  JOB_SEEKER
+  CUSTOM
+}
+
+/// Effect of a capability override: explicit allow or deny.
+enum CapabilityEffect {
+  allow
+  deny
+}
+
+/// Rollout strategy for feature flags.
+enum RolloutStrategy {
+  all
+  percentage
+  allowlist
+  role_scoped
+  disabled
+}
+
 // ─── Enums (RASUI-012: state-machine integrity) ───────────────────────────────
 
 /// 14-stage job pipeline. DB-enforced — invalid stages cannot be persisted.
@@ -118,35 +145,43 @@ model Candidate {
   createdAt                 DateTime  @default(now())
   updatedAt                 DateTime  @updatedAt
 
-  jobs              Job[]
-  profileData       ProfileData[]
-  skills            Skill[]
-  achievements      Achievement[]
-  documents         Document[]
-  interviewFeedback InterviewFeedback[]
-  offers            Offer[]
-  interviews        Interview[]
-  profileEntities   ProfileEntity[]
-  profileScore      ProfileScore?
-  interviewPreps    InterviewPrep[]
-  starStories       StarStory[]
-  calendarTokens    CalendarToken[]
-  calendarEvents    CalendarEvent[]
-  jobImports        JobImport[]
-  accomplishments       Accomplishment[]
-  appraisalSessions     AppraisalSession[]
-  contacts              Contact[]
-  mockInterviewSessions MockInterviewSession[]
-  workflowExecutions    WorkflowExecution[]
-  approvalRequests      ApprovalRequest[]
-  opportunityPlans      OpportunityPlan[]
-  workflowSchedules     WorkflowSchedule[]
+  jobs                    Job[]
+  profileData             ProfileData[]
+  skills                  Skill[]
+  achievements            Achievement[]
+  documents               Document[]
+  interviewFeedback       InterviewFeedback[]
+  offers                  Offer[]
+  interviews              Interview[]
+  profileEntities         ProfileEntity[]
+  profileScore            ProfileScore?
+  interviewPreps          InterviewPrep[]
+  starStories             StarStory[]
+  calendarTokens          CalendarToken[]
+  calendarEvents          CalendarEvent[]
+  jobImports              JobImport[]
+  accomplishments         Accomplishment[]
+  appraisalSessions       AppraisalSession[]
+  contacts                Contact[]
+  mockInterviewSessions   MockInterviewSession[]
+  workflowExecutions      WorkflowExecution[]
+  approvalRequests        ApprovalRequest[]
+  opportunityPlans        OpportunityPlan[]
+  workflowSchedules       WorkflowSchedule[]
   // Document orchestration
   accomplishmentBankItems AccomplishmentBankItem[]
   resumeVariants          ResumeVariant[]
   keywordAlignmentAudits  KeywordAlignmentAudit[]
   parserValidationReports ParserValidationReport[]
   applicationPackages     ApplicationPackage[]
+
+  // Role Intelligence & Fit Evaluation
+  jobIntelligence       JobIntelligence[]
+  strengthEvidences     StrengthEvidence[]
+  fitGaps               FitGap[]
+  fitScoringSnapshots   FitScoringSnapshot[]
+  roleFitAnalyses       RoleFitAnalysis[]
+  patternLibraryEntries PatternLibraryEntry[]
 }
 
 // ─── Job Pipeline ────────────────────────────────────────────────────────────
@@ -172,7 +207,12 @@ model Job {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
-  candidate             Candidate             @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  candidate             Candidate              @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  jobIntelligence       JobIntelligence?
+  strengthEvidences     StrengthEvidence[]
+  fitGaps               FitGap[]
+  fitScoringSnapshots   FitScoringSnapshot[]
+  roleFitAnalyses       RoleFitAnalysis[]
   activities            JobActivity[]
   interviewFeedback     InterviewFeedback[]
   offers                Offer[]
@@ -183,6 +223,7 @@ model Job {
   opportunityPlan       OpportunityPlan?
   resumeVariants        ResumeVariant[]
   jobIntelligence       JobIntelligence?
+  outreachCampaigns     OutreachCampaign[]
 
   @@index([candidateId])
   @@index([stage])
@@ -446,42 +487,42 @@ model AgentExecution {
   latencyMs     Int?
 
   // Retry lineage
-  retryCount           Int                  @default(0)
-  retryLineage         Json? // array of retry attempt objects
+  retryCount            Int                    @default(0)
+  retryLineage          Json? // array of retry attempt objects
   failureClassification FailureClassification?
 
   // Deployment provenance
-  deploymentVersion     String?
-  deploymentSha         String?
-  deploymentTimestamp   DateTime?
-  deploymentEnvironment DeploymentEnvironment?
-  railwayServiceId      String?
+  deploymentVersion         String?
+  deploymentSha             String?
+  deploymentTimestamp       DateTime?
+  deploymentEnvironment     DeploymentEnvironment?
+  railwayServiceId          String?
   previousDeploymentVersion String?
 
   // Governance fields (WI3/WI4)
   queueJobId        String?
   requestId         String?
   correlationId     String?
-  progress          Int       @default(0)
-  attempts          Int       @default(0)
+  progress          Int      @default(0)
+  attempts          Int      @default(0)
   providerId        String?
   currentTask       String?
   promptVersionId   String?
   promptHash        String?
   modelId           String?
-  fallbackUsed      Boolean   @default(false)
+  fallbackUsed      Boolean  @default(false)
   fallbackReason    String?
   sanitizerVersion  String?
   inputTokens       Int?
   outputTokens      Int?
   costUsd           Float?
-  validationPassed    Boolean?
-  validationErrors    Json?
-  validationVersion   String?
-  schemaValidated     Boolean?
-  semanticValidated   Boolean?
-  policyValidated     Boolean?
-  metadata            Json?
+  validationPassed  Boolean?
+  validationErrors  Json?
+  validationVersion String?
+  schemaValidated   Boolean?
+  semanticValidated Boolean?
+  policyValidated   Boolean?
+  metadata          Json?
 
   toolCalls     ToolCall[]
   eventLogs     EventLog[]
@@ -499,8 +540,8 @@ model AgentExecution {
 model ToolCall {
   id          String    @id @default(cuid())
   executionId String
-  tool        String    // tool name/identifier
-  toolName    String?   // alias/display name
+  tool        String // tool name/identifier
+  toolName    String? // alias/display name
   input       Json?
   output      Json?
   error       String?
@@ -533,27 +574,37 @@ model EventLog {
 // ─── Security & Admin ────────────────────────────────────────────────────────
 
 model Role {
-  id          String   @id @default(cuid())
-  name        String   @unique // "admin", "recruiter", "candidate", etc.
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                  String   @id @default(cuid())
+  name                String   @unique
+  description         String?
+  roleType            RoleType @default(CUSTOM)
+  immutableSystemRole Boolean  @default(false)
+  priority            Int      @default(100) // lower = higher priority in resolution
+  environmentScope    String? // null = all, "staging", "production"
+  metadata            Json?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
   permissions RolePermission[]
   userRoles   UserRole[]
 }
 
 model Permission {
-  id          String   @id @default(cuid())
-  name        String   @unique // "jobs.create", "jobs.read", "jobs.update", "jobs.delete", etc.
-  description String?
-  resource    String // "jobs", "users", "audit", etc.
-  action      String // "create", "read", "update", "delete", "manage"
-  createdAt   DateTime @default(now())
+  id              String   @id @default(cuid())
+  name            String   @unique // canonical key e.g. "agents.execute"
+  description     String?
+  resource        String // e.g. "agents"
+  action          String // e.g. "execute"
+  systemProtected Boolean  @default(false) // immutable system permissions
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
-  roles RolePermission[]
+  roles     RolePermission[]
+  overrides UserCapabilityOverride[]
 
   @@unique([resource, action])
+  @@index([resource])
+  @@index([systemProtected])
 }
 
 model RolePermission {
@@ -571,20 +622,93 @@ model RolePermission {
 }
 
 model UserRole {
-  id        String    @id @default(cuid())
-  email     String // Links to Candidate email
-  roleId    String
-  grantedBy String? // Email of admin who granted
-  grantedAt DateTime  @default(now())
-  expiresAt DateTime? // Optional role expiration
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id            String    @id @default(cuid())
+  email         String
+  roleId        String
+  grantedBy     String?
+  revokedBy     String?
+  justification String?
+  isActive      Boolean   @default(true)
+  grantedAt     DateTime  @default(now())
+  revokedAt     DateTime?
+  expiresAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
   @@unique([email, roleId])
   @@index([email])
   @@index([roleId])
+  @@index([isActive])
+  @@index([expiresAt])
+}
+
+/// Per-user permission overrides — temporary or permanent allow/deny that bypass role assignment.
+model UserCapabilityOverride {
+  id            String           @id @default(cuid())
+  userId        String // Candidate.id
+  permissionId  String
+  effect        CapabilityEffect
+  justification String?
+  createdBy     String // admin email who created this
+  expiresAt     DateTime?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, permissionId])
+  @@index([userId])
+  @@index([permissionId])
+  @@index([expiresAt])
+}
+
+/// Centralized feature flag store — gates platform capabilities at runtime.
+model FeatureFlag {
+  id              String          @id @default(cuid())
+  key             String          @unique
+  description     String?
+  enabled         Boolean         @default(false)
+  rolloutStrategy RolloutStrategy @default(disabled)
+  rolloutPercent  Float? // 0–100 for percentage rollouts
+  allowedUserIds  String[] // explicit user allowlist
+  allowedRoles    String[] // role-scoped rollout
+  environment     String? // null = all, "staging", "production"
+  metadata        Json?
+  createdBy       String?
+  updatedBy       String?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([key])
+  @@index([enabled])
+  @@index([environment])
+}
+
+/// Structured authorization decision log — separate from generic AuditLog for queryability.
+model AuthorizationAuditLog {
+  id            String   @id @default(cuid())
+  actorId       String? // Candidate.id of the actor
+  actorEmail    String
+  targetEmail   String? // user being acted upon (impersonation, role changes)
+  permission    String // permission evaluated e.g. "agents.execute"
+  decision      String // "allow" | "deny"
+  reason        String? // human-readable reason for the decision
+  resource      String? // resource being accessed
+  resourceId    String?
+  ipAddress     String?
+  userAgent     String?
+  correlationId String?
+  requestId     String?
+  metadata      Json?
+  createdAt     DateTime @default(now())
+
+  @@index([actorEmail])
+  @@index([permission])
+  @@index([decision])
+  @@index([createdAt])
+  @@index([correlationId])
 }
 
 model TwoFactorSecret {
@@ -680,10 +804,10 @@ model CalendarToken {
   updatedAt    DateTime  @updatedAt
 
   // Encryption versioning for key rotation
-  encryptionVersion Int      @default(1)
-  encryptionKeyId   String   @default("primary")
+  encryptionVersion Int       @default(1)
+  encryptionKeyId   String    @default("primary")
   migratedAt        DateTime?
-  isLegacy          Boolean  @default(true)
+  isLegacy          Boolean   @default(true)
 
   candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
 
@@ -736,37 +860,37 @@ model JobImport {
 // ─── AI Platform Evolution Configurations ────────────────────────────────────
 
 model AiProviderConfig {
-  id           String    @id @default(cuid())
+  id           String   @id @default(cuid())
   candidateId  String
-  providerName String    // "openai", "anthropic", "gemini", "ollama", "openrouter", etc.
-  endpointUrl  String?   // Custom endpoint (e.g. http://localhost:11434/api)
-  encryptedKey String?   // AES-GCM encrypted API key
-  isActive     Boolean   @default(true)
-  priority     Int       @default(1)
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  providerName String // "openai", "anthropic", "gemini", "ollama", "openrouter", etc.
+  endpointUrl  String? // Custom endpoint (e.g. http://localhost:11434/api)
+  encryptedKey String? // AES-GCM encrypted API key
+  isActive     Boolean  @default(true)
+  priority     Int      @default(1)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@unique([candidateId, providerName])
   @@index([candidateId])
 }
 
 model UserCapabilityPreset {
-  id           String    @id @default(cuid())
+  id           String   @id @default(cuid())
   candidateId  String
-  presetName   String    // "resume_optimization", "technical_interview", etc.
-  providerName String    // Selected fallback provider
-  modelName    String    // Selected fallback model
-  maxCostLimit Float     @default(0.05) // Max spend per invocation
-  privacyMode  String    @default("enterprise") // "local", "zero_retention", "enterprise", "anonymous"
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  presetName   String // "resume_optimization", "technical_interview", etc.
+  providerName String // Selected fallback provider
+  modelName    String // Selected fallback model
+  maxCostLimit Float    @default(0.05) // Max spend per invocation
+  privacyMode  String   @default("enterprise") // "local", "zero_retention", "enterprise", "anonymous"
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@unique([candidateId, presetName])
   @@index([candidateId])
 }
 
 model TokenUsageLog {
-  id           String    @id @default(cuid())
+  id           String   @id @default(cuid())
   candidateId  String
   executionId  String?
   presetName   String
@@ -775,33 +899,33 @@ model TokenUsageLog {
   inputTokens  Int
   outputTokens Int
   costUsd      Float
-  createdAt    DateTime  @default(now())
+  createdAt    DateTime @default(now())
 
   @@index([candidateId])
   @@index([createdAt])
 }
 
 model PromptVersion {
-  id                    String    @id @default(cuid())
-  capability            String    // E.g., "ATS_OPTIMIZATION"
-  agentType             String?   // agent type tag (e.g. "resume-tailor")
-  version               String    @default("1.0.0") // semver string
-  template              String    // User prompt template text
-  systemPrompt          String?   // system prompt override
-  systemHash            String?   // SHA-256 of systemPrompt
-  userPromptTemplate    String?   // user prompt template (alias for template)
-  userPromptHash        String?   // SHA-256 of user prompt template
-  preprocessingVersion  String?
-  sanitizerVersion      String?
-  outputSchemaVersion   String?
-  changelog             String?
-  createdBy             String?
-  isActive              Boolean   @default(true)
-  canaryPercent         Float?    // % of traffic for canary rollout
-  deprecatedAt          DateTime?
-  createdAt             DateTime  @default(now())
+  id                   String    @id @default(cuid())
+  capability           String // E.g., "ATS_OPTIMIZATION"
+  agentType            String? // agent type tag (e.g. "resume-tailor")
+  version              String    @default("1.0.0") // semver string
+  template             String // User prompt template text
+  systemPrompt         String? // system prompt override
+  systemHash           String? // SHA-256 of systemPrompt
+  userPromptTemplate   String? // user prompt template (alias for template)
+  userPromptHash       String? // SHA-256 of user prompt template
+  preprocessingVersion String?
+  sanitizerVersion     String?
+  outputSchemaVersion  String?
+  changelog            String?
+  createdBy            String?
+  isActive             Boolean   @default(true)
+  canaryPercent        Float? // % of traffic for canary rollout
+  deprecatedAt         DateTime?
+  createdAt            DateTime  @default(now())
 
-  executions  AgentExecution[]
+  executions AgentExecution[]
 
   @@unique([capability, version])
   @@unique([agentType, version])
@@ -830,10 +954,10 @@ model Accomplishment {
   candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
   title       String
   date        DateTime  @default(now())
-  category    String    // e.g. "Project", "Leadership", "Process Improvement", "Mentorship"
-  description String    // Markdown text of context/actions
-  metrics     String?   // JSON or text representing quantified results (e.g. "+15% speedup")
-  starContext String?   // Structured Situation-Task-Action-Result format
+  category    String // e.g. "Project", "Leadership", "Process Improvement", "Mentorship"
+  description String // Markdown text of context/actions
+  metrics     String? // JSON or text representing quantified results (e.g. "+15% speedup")
+  starContext String? // Structured Situation-Task-Action-Result format
   visibility  String    @default("private") // "private", "staged_for_appraisal", "public"
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -845,12 +969,12 @@ model AppraisalSession {
   id          String    @id @default(cuid())
   candidateId String
   candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
-  title       String    // e.g. "H1 2026 Performance Review"
+  title       String // e.g. "H1 2026 Performance Review"
   startDate   DateTime
   endDate     DateTime
   status      String    @default("draft") // "draft", "compiled", "archived"
-  selfReview  String?   // Generated self-appraisal draft text
-  impactDraft String?   // Generated promotion business case text
+  selfReview  String? // Generated self-appraisal draft text
+  impactDraft String? // Generated promotion business case text
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
@@ -860,19 +984,19 @@ model AppraisalSession {
 // ─── Mock Interview Sessions ─────────────────────────────────────────────────
 
 model MockInterviewSession {
-  id          String   @id @default(cuid())
-  candidateId String
-  jobId       String?
-  sessionId   String   // client-generated session identifier
-  questions   Json?    // Array<{ id, text, category, difficulty }>
-  responses   Json?    // Array<[questionId, answer]>
-  feedback    String?  // overall assessment text
-  scores      Json?    // { clarity, relevance, completeness, overall }
-  strengths   String[]
+  id                  String   @id @default(cuid())
+  candidateId         String
+  jobId               String?
+  sessionId           String // client-generated session identifier
+  questions           Json? // Array<{ id, text, category, difficulty }>
+  responses           Json? // Array<[questionId, answer]>
+  feedback            String? // overall assessment text
+  scores              Json? // { clarity, relevance, completeness, overall }
+  strengths           String[]
   areasForImprovement String[]
-  suggestions String[]
-  completedAt DateTime @default(now())
-  createdAt   DateTime @default(now())
+  suggestions         String[]
+  completedAt         DateTime @default(now())
+  createdAt           DateTime @default(now())
 
   candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
   job       Job?      @relation(fields: [jobId], references: [id], onDelete: Cascade)
@@ -882,10 +1006,60 @@ model MockInterviewSession {
   @@index([jobId])
 }
 
+// ─── Networking Enums ────────────────────────────────────────────────────────
+
+enum ContactType {
+  RECRUITER
+  HIRING_MANAGER
+  REFERRAL
+  PEER
+  ALUMNI
+  COMMUNITY
+}
+
+enum RecruiterType {
+  STAFFING_RECRUITER
+  INTERNAL_RECRUITER
+  ENGINEERING_MANAGER
+  DIRECTOR
+  VP
+}
+
+enum OutreachChannel {
+  LINKEDIN
+  EMAIL
+  PHONE
+}
+
+enum OutreachStatus {
+  DRAFT
+  QUEUED
+  SENT
+  FAILED
+  DELIVERED
+  VIEWED
+  REPLIED
+}
+
+enum OutreachCampaignStatus {
+  PLANNING
+  ACTIVE
+  PAUSED
+  COMPLETED
+  ARCHIVED
+}
+
+enum RelationshipStrength {
+  COLD
+  WARM
+  HOT
+  STRONG
+}
+
 // ─── Networking / Recruiter CRM ──────────────────────────────────────────────
 
 model Contact {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   candidateId String
   candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
 
@@ -897,20 +1071,122 @@ model Contact {
   linkedInUrl String?
 
   // "recruiter" | "hiring_manager" | "referral" | "peer" | "other"
-  type        String   @default("recruiter")
+  type   String @default("recruiter")
   // "to_contact" | "reached_out" | "responded" | "met" | "introduced" | "closed"
-  status      String   @default("to_contact")
+  status String @default("to_contact")
 
-  jobId       String?  // optional link to a pipeline job
-  notes       String?
-  followUpAt  DateTime?
+  jobId           String? // optional link to a pipeline job
+  notes           String?
+  followUpAt      DateTime?
   lastContactedAt DateTime?
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  // Intelligence fields
+  contactType              ContactType?
+  recruiterType            RecruiterType?
+  influenceScore           Float          @default(0)
+  hiringAuthorityScore     Float          @default(0)
+  outreachPriority         Int            @default(0)
+  responseProbability      Float          @default(0)
+  linkedinConnectionDegree Int?
+  mutualConnections        Int            @default(0)
+  discoveryMetadata        Json?
+  lastInteractionAt        DateTime?
+  lastReplyAt              DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  outreaches          Outreach[]
+  sourceRelationships RelationshipGraph[] @relation("SourceContact")
+  targetRelationships RelationshipGraph[] @relation("TargetContact")
 
   @@index([candidateId])
   @@index([candidateId, status])
+  @@index([contactType])
+  @@index([influenceScore])
+}
+
+model OutreachCampaign {
+  id          String                 @id @default(cuid())
+  candidateId String
+  jobId       String?
+  company     String
+  objective   String
+  status      OutreachCampaignStatus @default(PLANNING)
+  startedAt   DateTime?
+  completedAt DateTime?
+  metadata    Json?
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+
+  outreaches Outreach[]
+  job        Job?       @relation(fields: [jobId], references: [id])
+
+  @@index([candidateId])
+  @@index([status])
+}
+
+model Outreach {
+  id                  String          @id @default(cuid())
+  campaignId          String
+  contactId           String
+  channel             OutreachChannel
+  message             String          @db.Text
+  personalizedMessage String?         @db.Text
+  status              OutreachStatus  @default(DRAFT)
+  sequenceStep        Int             @default(0)
+  scheduledAt         DateTime?
+  sentAt              DateTime?
+  deliveredAt         DateTime?
+  viewedAt            DateTime?
+  repliedAt           DateTime?
+  responseSentiment   String?
+  approvedBy          String?
+  approvedAt          DateTime?
+  metadata            Json?
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+
+  campaign OutreachCampaign @relation(fields: [campaignId], references: [id])
+  contact  Contact          @relation(fields: [contactId], references: [id])
+
+  @@index([campaignId])
+  @@index([contactId])
+  @@index([status])
+}
+
+model RelationshipGraph {
+  id               String               @id @default(cuid())
+  candidateId      String
+  sourceContactId  String
+  targetContactId  String
+  relationshipType String
+  strength         RelationshipStrength @default(COLD)
+  confidence       Float                @default(0)
+  metadata         Json?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+
+  sourceContact Contact @relation("SourceContact", fields: [sourceContactId], references: [id])
+  targetContact Contact @relation("TargetContact", fields: [targetContactId], references: [id])
+
+  @@index([candidateId])
+  @@index([sourceContactId, targetContactId])
+}
+
+model EngagementMetric {
+  id          String   @id @default(cuid())
+  candidateId String
+  campaignId  String?
+  metricType  String
+  value       Float
+  dimension   String?
+  measuredAt  DateTime @default(now())
+  metadata    Json?
+  createdAt   DateTime @default(now())
+
+  @@index([candidateId, metricType])
+  @@index([measuredAt])
 }
 
 // ─── Workflow Orchestration ───────────────────────────────────────────────────
@@ -1000,8 +1276,8 @@ model WorkflowExecution {
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
 
-  candidate  Candidate              @relation(fields: [candidateId], references: [id], onDelete: Cascade)
-  definition WorkflowDefinition     @relation(fields: [definitionId], references: [id])
+  candidate  Candidate               @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  definition WorkflowDefinition      @relation(fields: [definitionId], references: [id])
   steps      WorkflowStepExecution[]
   approvals  ApprovalRequest[]
 
@@ -1096,8 +1372,8 @@ model WorkflowSchedule {
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
 
-  candidate  Candidate            @relation(fields: [candidateId], references: [id], onDelete: Cascade)
-  definition WorkflowDefinition?  @relation(fields: [definitionId], references: [id], onDelete: SetNull)
+  candidate  Candidate           @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  definition WorkflowDefinition? @relation(fields: [definitionId], references: [id], onDelete: SetNull)
 
   @@index([candidateId])
   @@index([isActive])
@@ -1140,18 +1416,18 @@ model AccomplishmentBankItem {
   candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
 
   // Structured STAR+ fields
-  action          String   // strong verb phrase: "Reduced", "Designed", "Led"
-  scope           String   // what/who was affected: "18 regional teams"
-  result          String   // outcome statement: "42% reduction in processing time"
-  metric          String?  // quantified figure: "42%", "$2M ARR"
-  evidence        String?  // proof source: "verified via Q3 eng metrics"
+  action   String // strong verb phrase: "Reduced", "Designed", "Led"
+  scope    String // what/who was affected: "18 regional teams"
+  result   String // outcome statement: "42% reduction in processing time"
+  metric   String? // quantified figure: "42%", "$2M ARR"
+  evidence String? // proof source: "verified via Q3 eng metrics"
 
   // Classification
-  category        String   // "leadership" | "technical" | "process" | "business_impact"
-  function        String?  // "engineering" | "product" | "ops" | "sales"
-  industry        String?  // "fintech" | "healthcare" | "saas"
-  domain          String?  // "cloud" | "frontend" | "data"
-  competency      String?  // "communication" | "execution" | "strategy"
+  category         String // "leadership" | "technical" | "process" | "business_impact"
+  function         String? // "engineering" | "product" | "ops" | "sales"
+  industry         String? // "fintech" | "healthcare" | "saas"
+  domain           String? // "cloud" | "frontend" | "data"
+  competency       String? // "communication" | "execution" | "strategy"
   operationalScale String? // "startup" | "growth" | "enterprise"
 
   // Associations
@@ -1160,10 +1436,10 @@ model AccomplishmentBankItem {
   associatedTools  String[]
 
   // Governance
-  isVerified   Boolean  @default(false)
+  isVerified             Boolean  @default(false)
   sourceAccomplishmentId String? // links back to raw Accomplishment if derived
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 
   @@index([candidateId])
   @@index([category])
@@ -1175,24 +1451,24 @@ model ResumeVariant {
   id          String    @id @default(cuid())
   candidateId String
   candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
-  jobId       String?   // optional link to a pipeline Job
+  jobId       String? // optional link to a pipeline Job
   job         Job?      @relation(fields: [jobId], references: [id], onDelete: SetNull)
 
   // Targeting
   targetRole     String
   targetIndustry String?
   targetCompany  String?
-  variantName    String   // human label: "Senior PM — Fintech Focus"
+  variantName    String // human label: "Senior PM — Fintech Focus"
 
   // Content (Markdown — ATS-safe)
-  content        String   // full resume markdown
+  content String // full resume markdown
 
   // Scoring
-  atsScore                 Float?  // 0–100 overall ATS score
-  keywordCoverage          Float?  // 0–1 fraction of JD keywords present
+  atsScore                   Float? // 0–100 overall ATS score
+  keywordCoverage            Float? // 0–1 fraction of JD keywords present
   recruiterOptimizationScore Float? // 0–100 skim-optimization score
-  topThirdScore            Float?  // 0–100 top-third quality score
-  bulletQualityScore       Float?  // 0–100 bullet quantification score
+  topThirdScore              Float? // 0–100 top-third quality score
+  bulletQualityScore         Float? // 0–100 bullet quantification score
 
   // Provenance
   generatedFromProfileVersion String? // hash/version of master profile used
@@ -1202,17 +1478,17 @@ model ResumeVariant {
 
   // Validation
   parserValidationStatus ParserStatus @default(pending)
-  parserReportId         String?      // FK to ParserValidationReport
+  parserReportId         String? // FK to ParserValidationReport
 
   // Versioning
-  version        Int      @default(1)
-  isCurrent      Boolean  @default(true) // only one current per (candidateId, targetRole, targetCompany)
+  version         Int     @default(1)
+  isCurrent       Boolean @default(true) // only one current per (candidateId, targetRole, targetCompany)
   parentVariantId String? // previous version
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  keywordAudits      KeywordAlignmentAudit[]
+  keywordAudits       KeywordAlignmentAudit[]
   applicationPackages ApplicationPackageItem[]
   parserReport        ParserValidationReport?  @relation(fields: [parserReportId], references: [id])
 
@@ -1224,39 +1500,39 @@ model ResumeVariant {
 
 /// Keyword alignment audit record — snapshot of JD vs resume keyword coverage
 model KeywordAlignmentAudit {
-  id             String    @id @default(cuid())
-  candidateId    String
-  candidate      Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  id              String         @id @default(cuid())
+  candidateId     String
+  candidate       Candidate      @relation(fields: [candidateId], references: [id], onDelete: Cascade)
   resumeVariantId String?
   resumeVariant   ResumeVariant? @relation(fields: [resumeVariantId], references: [id], onDelete: SetNull)
-  jobId          String?
+  jobId           String?
 
   // Input snapshot
-  jobTitle            String?
-  jobDescriptionHash  String?  // SHA-256 of JD text for dedup
-  jobDescriptionText  String?
+  jobTitle           String?
+  jobDescriptionHash String? // SHA-256 of JD text for dedup
+  jobDescriptionText String?
 
   // Extracted keywords
-  requiredKeywords    String[] // exact phrases from JD required section
-  preferredKeywords   String[] // from preferred/nice-to-have
-  titleKeywords       String[] // from job title
-  toolKeywords        String[] // tools, tech, platforms
-  domainKeywords      String[] // industry/domain terms
-  actionVerbKeywords  String[] // action verbs the JD uses
+  requiredKeywords   String[] // exact phrases from JD required section
+  preferredKeywords  String[] // from preferred/nice-to-have
+  titleKeywords      String[] // from job title
+  toolKeywords       String[] // tools, tech, platforms
+  domainKeywords     String[] // industry/domain terms
+  actionVerbKeywords String[] // action verbs the JD uses
 
   // Coverage
   matchedKeywords     String[] // keywords present in resume (exact)
   missingKeywords     String[] // keywords absent from resume
   overusedKeywords    String[] // keywords appearing too frequently
-  synonymizedKeywords Json?    // { original: string, used: string }[] — flagged synonymizations
+  synonymizedKeywords Json? // { original: string, used: string }[] — flagged synonymizations
 
   // Scores
-  coverageScore       Float?   // 0–1
-  exactMatchRate      Float?   // 0–1
-  synonymPenalty      Float?   // reduction for synonymized high-value terms
+  coverageScore  Float? // 0–1
+  exactMatchRate Float? // 0–1
+  synonymPenalty Float? // reduction for synonymized high-value terms
 
-  auditedAt  DateTime @default(now())
-  createdAt  DateTime @default(now())
+  auditedAt DateTime @default(now())
+  createdAt DateTime @default(now())
 
   @@index([candidateId])
   @@index([resumeVariantId])
@@ -1270,21 +1546,21 @@ model ParserValidationReport {
   candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
 
   // Validation checks
-  headingRecognition    ParserStatus @default(pending) // required headings detected
-  chronologyExtraction  ParserStatus @default(pending) // dates parsed correctly
-  keywordExtraction     ParserStatus @default(pending) // keywords extractable
-  sectionDetection      ParserStatus @default(pending) // sections identified
-  dateParsing           ParserStatus @default(pending) // consistent date formats
-  contactParsing        ParserStatus @default(pending) // name/email/phone extractable
-  overallStatus         ParserStatus @default(pending)
+  headingRecognition   ParserStatus @default(pending) // required headings detected
+  chronologyExtraction ParserStatus @default(pending) // dates parsed correctly
+  keywordExtraction    ParserStatus @default(pending) // keywords extractable
+  sectionDetection     ParserStatus @default(pending) // sections identified
+  dateParsing          ParserStatus @default(pending) // consistent date formats
+  contactParsing       ParserStatus @default(pending) // name/email/phone extractable
+  overallStatus        ParserStatus @default(pending)
 
   // Findings
-  warnings      String[] // non-fatal issues
-  errors        String[] // critical failures
+  warnings        String[] // non-fatal issues
+  errors          String[] // critical failures
   recommendations String[] // suggestions for improvement
 
   // Metadata
-  testedContent String?  // content that was tested (first 500 chars for dedup)
+  testedContent String? // content that was tested (first 500 chars for dedup)
   testedAt      DateTime @default(now())
   createdAt     DateTime @default(now())
 
@@ -1301,23 +1577,23 @@ model ApplicationPackage {
   candidate   Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
   jobId       String?
 
-  packageName    String
-  targetRole     String
-  targetCompany  String?
+  packageName   String
+  targetRole    String
+  targetCompany String?
 
   // Status
-  status         PackageStatus @default(draft)
+  status PackageStatus @default(draft)
 
   // Audit results (JSON snapshots)
-  atsAuditResult        Json?  // ATSAuditReport
+  atsAuditResult         Json? // ATSAuditReport
   consistencyAuditResult Json? // ConsistencyAuditReport
-  recruiterAuditResult  Json?  // RecruiterAuditReport
-  governanceAuditResult Json?  // GovernanceAuditReport
+  recruiterAuditResult   Json? // RecruiterAuditReport
+  governanceAuditResult  Json? // GovernanceAuditReport
 
   // Governance
-  finalizedAt    DateTime?
-  exportFormat   ExportFormat @default(markdown)
-  exportUrl      String?
+  finalizedAt  DateTime?
+  exportFormat ExportFormat @default(markdown)
+  exportUrl    String?
 
   // Provenance
   profileVersionHash String?
@@ -1334,180 +1610,387 @@ model ApplicationPackage {
 
 /// Individual item within an application package
 model ApplicationPackageItem {
-  id        String @id @default(cuid())
+  id        String             @id @default(cuid())
   packageId String
   package   ApplicationPackage @relation(fields: [packageId], references: [id], onDelete: Cascade)
 
-  itemType       String  // "resume" | "cover_letter" | "recruiter_note" | "linkedin_summary" | "follow_up_template"
+  itemType        String // "resume" | "cover_letter" | "recruiter_note" | "linkedin_summary" | "follow_up_template"
   resumeVariantId String?
   resumeVariant   ResumeVariant? @relation(fields: [resumeVariantId], references: [id], onDelete: SetNull)
-  documentId     String? // link to existing Document
-  content        String? // inline content for smaller artifacts
+  documentId      String? // link to existing Document
+  content         String? // inline content for smaller artifacts
 
-  sortOrder  Int      @default(0)
-  createdAt  DateTime @default(now())
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
 
   @@index([packageId])
   @@index([resumeVariantId])
 }
 
-// ─── Role Intelligence & Fit Evaluation Engine ─────────────────────────────────
 
+
+/// Inferred role archetype classification (ignoring recruiter title bias)
+enum RoleArchetype {
+  BUILDER
+  OPERATOR
+  STRATEGIST
+  MAINTAINER
+  OPTIMIZER
+  RESEARCHER
+  EXECUTOR
+  PROCESS_SCALER
+  SYSTEMS_INTEGRATOR
+  CUSTOMER_FACING_TRANSLATOR
+  TECHNICAL_LEAD
+  TRANSFORMATION_DRIVER
+}
+
+/// Classification of capability gaps
+enum GapClassification {
+  TRAINABLE
+  CREDIBILITY_KILLING
+  DOMAIN_DEPTH
+  ADAPTATION_SPEED
+}
+
+/// Fit scoring dimension keys
+enum FitDimension {
+  DEMONSTRATED_EXECUTION_PROOF
+  BUSINESS_PROBLEM_ALIGNMENT
+  RESPONSIBILITY_OVERLAP
+  TOOL_OVERLAP
+  KEYWORD_OVERLAP
+  ADJACENT_SKILL_TRANSFER
+  DOMAIN_FAMILIARITY
+  ARCHETYPE_ALIGNMENT
+  IMMEDIATE_CONTRIBUTION_CAPABILITY
+  STRATEGIC_IMPACT_ALIGNMENT
+  CREDIBILITY_RISK
+  ADAPTATION_BURDEN
+}
+
+/// Pattern library entry type
+enum PatternCategory {
+  HIGH_FIT_RESPONSIBILITY
+  BUSINESS_PROBLEM
+  HIRING_URGENCY_SIGNAL
+  INTERVIEW_CONVERTING_NARRATIVE
+  ARCHETYPE_CORRELATION
+  SUCCESS_METRIC
+}
+
+// ─── Role Intelligence Models ────────────────────────────────────────────────
+
+/// Job Intelligence — deconstructed operational metadata for a job posting
 model JobIntelligence {
-  id                 String               @id @default(cuid())
-  jobId              String               @unique
-  job                Job                  @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  inferredRoleTitle  String?              // Real operational role behind inflated title
-  overallConfidence  Float                @default(0.0)
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
+  id          String @id @default(cuid())
+  jobId       String @unique
+  candidateId String
 
-  archetypes         RoleArchetype[]
-  requirements       RequirementBreakdown[]
-  businessProblems   BusinessProblem[]
-  signals            OperationalSignal[]
-  roleFitAnalyses    RoleFitAnalysis[]
-}
+  // Step 1: Inferred role (no title bias)
+  inferredRole     String // e.g. "roadmap operator", "delivery manager"
+  roleArchetype    RoleArchetype // primary archetype
+  archetypeWeights Json // { BUILDER: 0.3, OPERATOR: 0.6, ... }
+  roleClarityScore Float // 0-1 how clearly the real role is defined
 
-model RoleArchetype {
-  id                String          @id @default(cuid())
-  jobIntelligenceId String
-  jobIntelligence   JobIntelligence @relation(fields: [jobIntelligenceId], references: [id], onDelete: Cascade)
-  archetype         String          // Builder, Operator, Strategist, Maintainer, Optimizer, Researcher, Executor, Process Scaler, Systems Integrator, Customer-Facing Translator, Technical Lead, Transformation Driver
-  weight            Float           // E.g., 0.60
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
+  // Step 2-3: Requirement breakdown (JSON for flexibility)
+  hardRequirements Json // [{ requirement, tools, decisions, outputs, metrics, ownership, complexity }]
+  softRequirements Json // [{ requirement, confidenceScore, reason }]
 
-  @@index([jobIntelligenceId])
-}
+  // Step 4: Operational signals extracted from responsibility patterns
+  operationalDomain           String // primary domain
+  recurringResponsibilities   Json // [{ responsibility, frequency, weight, companies }]
+  decisionOwnership           String[] // decisions this role owns
+  operationalScope            String // scope description
+  executionComplexity         Int // 1-10
+  systemsResponsibility       String? // systems this role manages
+  crossFunctionalCoordination String? // coordination scope
+  reportingStructure          Json? // reports to, manages
+  organizationalLeverage      Int // 1-10
 
-model RequirementBreakdown {
-  id                String          @id @default(cuid())
-  jobIntelligenceId String
-  jobIntelligence   JobIntelligence @relation(fields: [jobIntelligenceId], references: [id], onDelete: Cascade)
-  type              String          // "hard" or "soft"
-  originalText      String
-  normalizedText    String
-  confidence        Float           @default(1.0)
-  deconstruction    Json            // { tools: string[], decisions: string[], outputs: string[], metrics: string[], ownership: string, operationalComplexity: string, collaborationSurfaceArea: string, businessImpact: string, executionCadence: string, riskLevel: string }
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
+  // Metadata
+  analysisVersion Int      @default(1)
+  analyzedAt      DateTime @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
-  @@index([jobIntelligenceId])
-}
-
-model BusinessProblem {
-  id                String          @id @default(cuid())
-  jobIntelligenceId String
-  jobIntelligence   JobIntelligence @relation(fields: [jobIntelligenceId], references: [id], onDelete: Cascade)
-  problemArea       String          // e.g. "onboarding completion"
-  description       String
-  inferredFriction  String?
-  urgencySignal     String?
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
-
-  strengthEvidences StrengthEvidence[]
-
-  @@index([jobIntelligenceId])
-}
-
-model OperationalSignal {
-  id                String          @id @default(cuid())
-  jobIntelligenceId String
-  jobIntelligence   JobIntelligence @relation(fields: [jobIntelligenceId], references: [id], onDelete: Cascade)
-  type              String          // decision_ownership, operational_scope, execution_complexity, systems_responsibility, reporting_structure, organizational_leverage
-  description       String
-  value             String
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
-
-  @@index([jobIntelligenceId])
-}
-
-model RoleFitAnalysis {
-  id                 String               @id @default(cuid())
-  candidateId        String
-  jobIntelligenceId  String
-  jobIntelligence    JobIntelligence      @relation(fields: [jobIntelligenceId], references: [id], onDelete: Cascade)
-  overallFitScore    Float                @default(0.0)
-  conversionProb     Float                @default(0.0)
-  immediateContribution Float             @default(0.0)
-  credibilityRisk    Float                @default(0.0)
-  skillTransferScore Float                @default(0.0)
-  businessProbAlign  Float                @default(0.0)
-  roleClarityScore   Float                @default(0.0)
-  painMatchScore     Float                @default(0.0)
-  adaptationRiskScore Float               @default(0.0)
-  scoringSnapshot    Json?                // relational / JSON snapshot for exact weights
-  reasoning          String?
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
-
-  strengths          StrengthEvidence[]
-  gaps               FitGap[]
-
-  @@unique([candidateId, jobIntelligenceId])
-  @@index([candidateId])
-  @@index([jobIntelligenceId])
-}
-
-model StrengthEvidence {
-  id                String          @id @default(cuid())
-  roleFitAnalysisId String
-  roleFitAnalysis   RoleFitAnalysis @relation(fields: [roleFitAnalysisId], references: [id], onDelete: Cascade)
-  businessProblemId String?
-  businessProblem   BusinessProblem? @relation(fields: [businessProblemId], references: [id], onDelete: SetNull)
-  capabilityName    String
-  candidateProof    String          // Demonstrated execution evidence
-  employerInterpretation String     // In employer language
-  measurableOutcome String
-  businessImpact    String
-  scale             String?
-  decisionOwnership String?
-  operationalComplexity String?
-  systemsInfluenced String?
-  stakeholderLevel  String?
-  repeatability     String?
-  priorityLevel     String          // HIGH, MEDIUM, LOW
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
-
-  @@index([roleFitAnalysisId])
-  @@index([businessProblemId])
-}
-
-model FitGap {
-  id                String          @id @default(cuid())
-  roleFitAnalysisId String
-  roleFitAnalysis   RoleFitAnalysis @relation(fields: [roleFitAnalysisId], references: [id], onDelete: Cascade)
-  type              String          // "trainable", "credibility-killing", "domain-depth"
-  description       String
-  penaltyLevel      String          // LOW, SEVERE, CRITICAL
-  adaptationCost    Float           @default(0.0)
-  mitigationStrategy String?
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
-
-  @@index([roleFitAnalysisId])
-}
-
-model PatternLibraryEntry {
-  id                  String   @id @default(cuid())
-  candidateId         String
-  roleArchetype       String
-  operationalKeywords String[]
-  businessProblems    String[]
-  successMetrics      String[]
-  languagePatterns    String[]
-  achievementsMapped  String[]
-  conversionCount     Int      @default(0)
-  successScore        Float    @default(0.0)
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  // Relations
+  job                   Job                    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  candidate             Candidate              @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  requirementBreakdowns RequirementBreakdown[]
+  businessProblems      BusinessProblem[]
+  operationalSignals    OperationalSignal[]
 
   @@index([candidateId])
+  @@index([jobId])
   @@index([roleArchetype])
+  @@index([inferredRole])
 }
 
+/// Detailed requirement deconstruction — one per hard requirement
+model RequirementBreakdown {
+  id                String @id @default(cuid())
+  jobIntelligenceId String
+  requirement       String // original requirement text
+  classification    String // "hard" | "soft" | "wishlist"
+  confidenceScore   Float // 0-1 confidence in classification
 
+  // Deconstruction
+  tools                 String[] // tools/platforms mentioned
+  decisions             String[] // decisions this requirement implies
+  outputs               String[] // expected deliverables/outputs
+  metrics               String[] // success metrics implied
+  ownership             String // ownership level implied
+  operationalComplexity Int // 1-10
+  collaborationSurface  String[] // stakeholders/cross-functional touchpoints
+  businessImpact        String? // business outcome this requirement ties to
+  executionCadence      String? // daily, weekly, quarterly, etc
+  riskLevel             Int // 1-10 hiring risk if missing
+
+  createdAt DateTime @default(now())
+
+  jobIntelligence JobIntelligence @relation(fields: [jobIntelligenceId], references: [id], onDelete: Cascade)
+
+  @@index([jobIntelligenceId])
+  @@index([classification])
+}
+
+/// Business problems inferred from the job posting — employer pain points
+model BusinessProblem {
+  id                  String  @id @default(cuid())
+  jobIntelligenceId   String
+  problem             String // employer pain point description
+  category            String // scaling, execution, technical_debt, process, etc
+  severity            Int // 1-10
+  urgencySignal       String? // hiring urgency signals found
+  operationalFriction String? // specific operational friction
+  scalingChallenge    String? // scaling bottleneck
+  executionBottleneck String? // execution bottleneck
+  evidence            String? // text evidence from JD
+
+  createdAt DateTime @default(now())
+
+  jobIntelligence JobIntelligence @relation(fields: [jobIntelligenceId], references: [id], onDelete: Cascade)
+
+  @@index([jobIntelligenceId])
+  @@index([category])
+}
+
+/// Operational signals — recurring responsibility patterns
+model OperationalSignal {
+  id                String   @id @default(cuid())
+  jobIntelligenceId String
+  signal            String // signal description
+  signalType        String // recurring_responsibility, business_outcome, system_ownership, etc
+  frequency         Float // 0-1 frequency across related roles
+  weight            Float // importance weight for scoring
+  sourceCompanies   String[] // companies where this signal was found
+
+  createdAt DateTime @default(now())
+
+  jobIntelligence JobIntelligence @relation(fields: [jobIntelligenceId], references: [id], onDelete: Cascade)
+
+  @@index([jobIntelligenceId])
+  @@index([signalType])
+}
+
+/// Strength evidence — mapped candidate proof against employer needs
+model StrengthEvidence {
+  id          String  @id @default(cuid())
+  candidateId String
+  jobId       String?
+  source      String // resume, accomplishment, star_story, etc
+  capability  String // the capability demonstrated
+
+  // Evidence mapping
+  measurableOutcome     String? // quantified result
+  businessImpact        String? // business outcome
+  executionContext      String? // context of execution
+  scale                 String? // scale of impact
+  decisionOwnership     String? // decisions owned
+  operationalComplexity Int? // complexity level 1-10
+  systemsInfluenced     String[] // systems touched
+  stakeholderLevel      String? // stakeholder seniority
+  repeatability         String? // how repeatable is this
+
+  // Translation to employer language
+  employerInterpretation String? // normalized business language
+  economicImpact         String? // economic impact statement
+  operationalLeverage    String? // operational leverage
+
+  // Prioritization
+  rarityScore             Float @default(0) // 0-1 how rare/valuable
+  leverageScore           Float @default(0) // 0-1 how high-leverage
+  replacementCost         Float @default(0) // 0-1 how expensive to replace
+  businessBottleneckScore Float @default(0) // 0-1 how tied to business bottlenecks
+
+  // Problem matching
+  matchedProblems String[] // links to BusinessProblem descriptions
+  matchConfidence Float    @default(0) // 0-1
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job?      @relation(fields: [jobId], references: [id], onDelete: SetNull)
+
+  @@index([candidateId])
+  @@index([jobId])
+  @@index([capability])
+  @@index([rarityScore])
+}
+
+/// Fit gap analysis — classified gaps between candidate and role
+model FitGap {
+  id                String            @id @default(cuid())
+  candidateId       String
+  jobId             String
+  gap               String // gap description
+  classification    GapClassification // TRAINABLE, CREDIBILITY_KILLING, DOMAIN_DEPTH, ADAPTATION_SPEED
+  severity          Int // 1-10
+  penaltyMultiplier Float             @default(1.0) // multiplicative penalty on fit score
+
+  // For trainable gaps
+  adjacentProof     String? // adjacent evidence that mitigates
+  learningTime      String? // estimated learning time
+  learningResources String[] // resources to close gap
+
+  // For credibility-killing gaps
+  blockingReason   String? // why this gap blocks trust
+  alternativeRoute String? // alternative path if one exists
+
+  // For domain depth gaps
+  domainRequired String? // domain name
+  adjacentDomain String? // adjacent domain with proof
+
+  // Adaptation analysis
+  onboardingComplexity Int? // 1-10
+  learningCurve        String? // steep, moderate, shallow
+  operationalRampTime  String? // estimated ramp time
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([jobId])
+  @@index([classification])
+}
+
+/// Fit scoring snapshot — comprehensive per-role fit analysis
+model FitScoringSnapshot {
+  id          String @id @default(cuid())
+  candidateId String
+  jobId       String @unique
+
+  // Core scores
+  fitScore                       Float // 0-1 overall fit
+  interviewConversionProbability Float // 0-1 probability
+  immediateContributionScore     Float // 0-1
+  credibilityRiskScore           Float // 0-1 (inverted: higher = more risk)
+  skillTransferScore             Float // 0-1
+  businessProblemAlignmentScore  Float // 0-1
+  adaptationRiskScore            Float // 0-1 (higher = more risk)
+  roleClarityScore               Float // 0-1
+  employerPainMatchScore         Float // 0-1
+
+  // 11-dimension weighted breakdown
+  dimensionScores Json // { [FitDimension]: { score, weight, contribution, evidence } }
+
+  // Weights used (versions for recalibration)
+  weightsVersion Int  @default(1)
+  weights        Json // { [FitDimension]: weight }
+
+  // Probability determinants
+  strongestLeveragePoints     String[] // top 3 leverage factors
+  biggestBlockers             String[] // top 3 blocking factors
+  expectedRecruiterPerception String? // how recruiter will perceive this match
+
+  // Recommendation
+  recommendation          String // STRONG_PURSUE, PURSUE, CONSIDER, DEPRIORITIZE, SUPPRESS
+  recommendationRationale String?
+
+  // Suppression rules
+  suppressed        Boolean @default(false)
+  suppressionReason String?
+
+  // Run metadata
+  analysisVersion Int      @default(1)
+  analyzedAt      DateTime @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([jobId])
+  @@index([fitScore])
+  @@index([interviewConversionProbability])
+  @@index([suppressed])
+}
+
+/// Role intelligence analysis — non-unique version of FitScoringSnapshot for history
+model RoleFitAnalysis {
+  id          String @id @default(cuid())
+  candidateId String
+  jobId       String
+
+  // Analysis type
+  analysisType String // "role_intelligence" | "fit_analysis" | "strength_mapping" | "gap_analysis" | "conversion_scoring"
+
+  // Snapshot of results (JSON-backed for flexibility)
+  results Json
+
+  // Processing metadata
+  executionId  String? // link to AgentExecution
+  agentType    String? // which agent produced this
+  modelVersion String? // model version used
+  tokenUsage   Int?
+
+  createdAt DateTime @default(now())
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  job       Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([jobId])
+  @@index([analysisType])
+  @@index([createdAt])
+}
+
+/// Pattern library entry — reusable intelligence from successful matches
+model PatternLibraryEntry {
+  id          String          @id @default(cuid())
+  candidateId String
+  category    PatternCategory
+  pattern     String // the pattern/insight
+  description String? // human-readable description
+
+  // Correlation data
+  confidenceScore      Float          @default(0) // 0-1
+  frequencyObserved    Int            @default(1)
+  conversionRate       Float? // 0-1 interview conversion rate
+  archetypeCorrelation RoleArchetype? // archetype this pattern maps to
+
+  // Evidence
+  sourceJobIds String[] // job IDs where this was observed
+  evidenceText String? // textual evidence
+  metrics      Json? // performance metrics
+
+  // Weight impact
+  weightModifier Float   @default(0) // +/- adjustment to scoring weights
+  active         Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  candidate Candidate @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+
+  @@index([candidateId])
+  @@index([category])
+  @@index([conversionRate])
+  @@index([active])
+}

@@ -29,8 +29,8 @@ export async function GET(req: NextRequest) {
       jobId: searchParams.get('jobId') || undefined,
       type: searchParams.get('type') || undefined,
       status: searchParams.get('status') || undefined,
-      sortBy: (searchParams.get('sortBy') || 'scheduledAt') as any,
-      sortOrder: (searchParams.get('sortOrder') || 'asc') as any,
+      sortBy: searchParams.get('sortBy') || 'scheduledAt',
+      sortOrder: searchParams.get('sortOrder') || 'asc',
     };
 
     // Validate query

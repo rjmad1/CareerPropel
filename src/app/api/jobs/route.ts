@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Build query - only user's jobs
-    const where: any = {
+    const where: Record<string, unknown> = {
       candidateId: candidate.id,
     }
 

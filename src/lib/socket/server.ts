@@ -53,7 +53,7 @@ export function initializeSocketServer(io: SocketServer): void {
     })
 
     // Handle job update events
-    socket.on('job:update', (jobId: string, updateData: any, callback) => {
+    socket.on('job:update', (jobId: string, updateData: Record<string, unknown>, callback) => {
       try {
         // Verify user is in the job room (meaning they have access)
         if (!socket.rooms.has(`job:${jobId}`)) {
@@ -200,13 +200,13 @@ export function initializeSocketServer(io: SocketServer): void {
 /**
  * Broadcast helper functions for use in API routes
  */
-export function broadcastToUser(io: SocketServer, userEmail: string, event: string, data: any): void {
+export function broadcastToUser(io: SocketServer, userEmail: string, event: string, data: unknown): void {
   io.to(`user:${userEmail}`).emit(event, {
     data,
     timestamp: new Date().toISOString()
   })
 }
 
-export function broadcastToJob(io: SocketServer, jobId: string, event: string, data: any): void {
+export function broadcastToJob(io: SocketServer, jobId: string, event: string, data: unknown): void {
   broadcastJobUpdate(io, jobId, event, data)
 }

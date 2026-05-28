@@ -48,7 +48,7 @@ export const AgentRail: React.FC = () => {
     Object.entries(AGENT_CONFIGS).forEach(([type, config]) => {
       initialAgents[type] = {
         id: type,
-        type: type as any,
+        type: type as Agent['type'],
         name: config.name,
         status: 'idle',
         progress: 0,
@@ -65,14 +65,13 @@ export const AgentRail: React.FC = () => {
 
   // Subscribe to agent status updates
   useEffect(() => {
-    const unsubscribe = subscribe('agent:status', (message: any) => {
-      if (message.type === 'agent:status') {
+    const unsubscribe = subscribe('agent:status', (message: unknown) => {
+      const msg = message as { type?: string; data?: Record<string, unknown> };
+      if (msg.type === 'agent:status' && msg.data) {
+        const id = msg.data.id as string;
         setAgents((prev) => ({
           ...prev,
-          [message.data.id]: {
-            ...prev[message.data.id],
-            ...message.data,
-          },
+          [id]: { ...prev[id], ...msg.data },
         }));
       }
     });
@@ -82,17 +81,15 @@ export const AgentRail: React.FC = () => {
 
   // Subscribe to agent logs
   useEffect(() => {
-    const unsubscribe = subscribe('agent:log', (message: any) => {
-      if (message.type === 'agent:log') {
+    const unsubscribe = subscribe('agent:log', (message: unknown) => {
+      const msg = message as { type?: string; data?: Record<string, unknown> };
+      if (msg.type === 'agent:log' && msg.data) {
+        const agentId = msg.data.agentId as string;
         setLogs((prev) => {
-          const agentId = message.data.agentId;
           const agentLogs = prev[agentId] || [];
           // Keep last 100 logs per agent
-          const newLogs = [...agentLogs, message.data].slice(-100);
-          return {
-            ...prev,
-            [agentId]: newLogs,
-          };
+          const newLogs = [...agentLogs, msg.data as unknown as AgentLogType].slice(-100);
+          return { ...prev, [agentId]: newLogs };
         });
       }
     });

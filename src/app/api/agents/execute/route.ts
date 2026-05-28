@@ -110,9 +110,10 @@ export async function POST(request: NextRequest) {
           status: 'queued',
           message: 'Agent execution queued for processing',
         }, { status: 202 });
-      } catch (enqueueErr: any) {
-        if (enqueueErr?.code === 'COST_CEILING_EXCEEDED') {
-          return NextResponse.json({ error: enqueueErr.message }, { status: 400 });
+      } catch (enqueueErr: unknown) {
+        const e = enqueueErr as { code?: string; message?: string };
+        if (e?.code === 'COST_CEILING_EXCEEDED') {
+          return NextResponse.json({ error: e.message }, { status: 400 });
         }
         throw enqueueErr; // let outer catch handle unexpected errors
       }
@@ -243,7 +244,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    if ((execution as any).userId !== callerEmail && (execution as any).candidateId !== callerEmail) {
+    if (execution.userId !== callerEmail) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
@@ -260,7 +261,7 @@ export async function GET(request: NextRequest) {
       createdAt: execution.createdAt,
       startedAt: execution.startedAt,
       completedAt: execution.completedAt,
-      recentLogs: execution.eventLogs.map((log: any) => ({
+      recentLogs: execution.eventLogs.map((log) => ({
         level: log.level,
         message: log.message,
         timestamp: log.timestamp,

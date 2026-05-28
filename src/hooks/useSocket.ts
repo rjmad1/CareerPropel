@@ -94,21 +94,21 @@ export function useSocket(options: UseSocketOptions = {}) {
 export function useJobSocket(jobId: string) {
   const socket = useSocket()
   const [isSubscribed, setIsSubscribed] = useState(false)
-  const [jobData, setJobData] = useState<any>(null)
-  const [onlineUsers, setOnlineUsers] = useState<any[]>([])
+  const [jobData, setJobData] = useState<Record<string, unknown> | null>(null)
+  const [onlineUsers, setOnlineUsers] = useState<{ userEmail: string }[]>([])
 
   const subscribe = useCallback(() => {
     if (!socket) return
 
-    socket.emit('subscribe:job', jobId, (response: any) => {
+    socket.emit('subscribe:job', jobId, (response: { success: boolean; error?: string }) => {
       if (response.success) {
         console.log(`[Socket] Subscribed to job: ${jobId}`)
         setIsSubscribed(true)
-        
+
         // Get online users
-        socket.emit('job:getUsers', jobId, (response: any) => {
-          if (response.success) {
-            setOnlineUsers(response.users)
+        socket.emit('job:getUsers', jobId, (res: { success: boolean; users?: string[] }) => {
+          if (res.success) {
+            setOnlineUsers((res.users ?? []).map((email) => ({ userEmail: email })))
           }
         })
       } else {
@@ -138,7 +138,7 @@ export function useJobSocket(jobId: string) {
 
     socket.on('job:stageChanged', (data) => {
       if (data.jobId === jobId) {
-        setJobData((prev: any) => ({
+        setJobData((prev) => ({
           ...prev,
           stage: data.newStage,
           updatedAt: new Date().toISOString()
@@ -148,7 +148,7 @@ export function useJobSocket(jobId: string) {
 
     socket.on('job:notesUpdated', (data) => {
       if (data.jobId === jobId) {
-        setJobData((prev: any) => ({
+        setJobData((prev) => ({
           ...prev,
           notes: data.notes,
           updatedAt: new Date().toISOString()
@@ -240,11 +240,11 @@ export function useTypingIndicator(jobId: string) {
 export function useJobUpdate(jobId: string) {
   const socket = useSocket()
 
-  const updateJob = useCallback((updateData: any) => {
+  const updateJob = useCallback((updateData: Record<string, unknown>) => {
     if (!socket) return Promise.reject('Socket not connected')
 
     return new Promise((resolve, reject) => {
-      socket.emit('job:update', jobId, updateData, (response: any) => {
+      socket.emit('job:update', jobId, updateData, (response: { success: boolean; error?: string }) => {
         if (response.success) {
           resolve(response)
         } else {
@@ -258,7 +258,7 @@ export function useJobUpdate(jobId: string) {
     if (!socket) return Promise.reject('Socket not connected')
 
     return new Promise((resolve, reject) => {
-      socket.emit('job:stageChanged', jobId, newStage, (response: any) => {
+      socket.emit('job:stageChanged', jobId, newStage, (response: { success: boolean; error?: string }) => {
         if (response.success) {
           resolve(response)
         } else {
@@ -272,7 +272,7 @@ export function useJobUpdate(jobId: string) {
     if (!socket) return Promise.reject('Socket not connected')
 
     return new Promise((resolve, reject) => {
-      socket.emit('job:notesUpdated', jobId, notes, (response: any) => {
+      socket.emit('job:notesUpdated', jobId, notes, (response: { success: boolean; error?: string }) => {
         if (response.success) {
           resolve(response)
         } else {

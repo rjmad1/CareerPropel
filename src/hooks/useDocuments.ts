@@ -67,7 +67,7 @@ async function fetchDocuments(params?: {
   const { data } = await axios.get<{ data: DocumentsPage } | DocumentsPage>(
     `/api/documents?${query.toString()}`
   );
-  const payload = (data as any).data ?? data;
+  const payload = (data as { data?: DocumentsPage }).data ?? data;
   if (Array.isArray(payload)) {
     return { items: payload, total: payload.length, limit: payload.length, offset: 0 };
   }

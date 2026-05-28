@@ -28,8 +28,8 @@ export async function GET(req: NextRequest) {
       offset: searchParams.get('offset') ? parseInt(searchParams.get('offset')!) : 0,
       type: searchParams.get('type') || undefined,
       jobId: searchParams.get('jobId') || undefined,
-      sortBy: (searchParams.get('sortBy') || 'updatedAt') as any,
-      sortOrder: (searchParams.get('sortOrder') || 'desc') as any,
+      sortBy: searchParams.get('sortBy') || 'updatedAt',
+      sortOrder: searchParams.get('sortOrder') || 'desc',
     };
 
     // Validate query

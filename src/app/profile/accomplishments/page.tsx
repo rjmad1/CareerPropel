@@ -62,8 +62,8 @@ export default function AccomplishmentsPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to load accomplishments');
       setAccomplishments(data.accomplishments || []);
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'An error occurred');
     } finally {
       setLoading(false);
     }
@@ -104,8 +104,8 @@ export default function AccomplishmentsPage() {
       setIsFormOpen(false);
       resetForm();
       fetchAccomplishments();
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'An error occurred');
     }
   };
 
@@ -131,8 +131,8 @@ export default function AccomplishmentsPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to delete accomplishment');
       fetchAccomplishments();
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'An error occurred');
     }
   };
 
@@ -167,8 +167,8 @@ export default function AccomplishmentsPage() {
         setAiSuccess(true);
         setTimeout(() => setAiSuccess(false), 3000);
       }
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'An error occurred');
     } finally {
       setAiQuantifying(false);
     }

@@ -18,7 +18,7 @@ interface Activity {
   type: 'stage_changed' | 'applied' | 'interview_scheduled' | 'interview_completed' | 'rejected' | 'offered' | 'note_added' | 'agent_action';
   timestamp: string;
   description: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 const getActivityIcon = (type: Activity['type']) => {

@@ -7,7 +7,7 @@ export interface AgentExecutionSummary {
   agentType: AgentType;
   status: 'queued' | 'running' | 'completed' | 'failed';
   progress: number;
-  output?: Record<string, any>;
+  output?: Record<string, unknown>;
   errorMessage?: string;
   tokenCount?: number;
   durationMs?: number;

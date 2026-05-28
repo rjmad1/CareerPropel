@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/db';
+import { Prisma } from '@prisma/client';
 import { redis } from '@/lib/redis/redisClient';
 import { log } from '@/lib/logging/logger';
 import { getTemplate } from './templates';
@@ -16,6 +17,7 @@ import type {
   ApprovalDecision,
   ApprovalPayload,
   WorkflowStatus,
+  WorkflowStepDefinition,
 } from './types';
 
 const WORKFLOW_EVENT_CHANNEL = (candidateId: string) => `workflow:execution:${candidateId}`;
@@ -52,8 +54,8 @@ export async function createWorkflow(params: CreateWorkflowParams): Promise<stri
       displayName: template.displayName,
       description: template.description ?? null,
       version: template.version,
-      steps: template.steps as any,
-      metadata: template.metadata as any,
+      steps: template.steps as unknown as Prisma.InputJsonValue,
+      metadata: template.metadata as unknown as Prisma.InputJsonValue,
     },
   });
 
@@ -85,7 +87,7 @@ export async function createWorkflow(params: CreateWorkflowParams): Promise<stri
       definitionId: definition.id,
       status: 'queued',
       currentStepIndex: 0,
-      context: initialContext as any,
+      context: initialContext as Prisma.InputJsonValue,
       triggeredBy: triggeredBy ?? 'user',
     },
   });
@@ -160,7 +162,7 @@ export async function advanceWorkflow(workflowExecutionId: string): Promise<void
     });
   }
 
-  const templateSteps = execution.definition.steps as any[];
+  const templateSteps = execution.definition.steps as unknown as WorkflowStepDefinition[];
   const currentIndex = execution.currentStepIndex;
 
   if (currentIndex >= templateSteps.length) {
@@ -191,7 +193,7 @@ export async function advanceWorkflow(workflowExecutionId: string): Promise<void
   const contextUserId = wfContext.userId;
 
   // Skip already-completed or skipped steps
-  if (isTerminalStepStatus(stepExec.status as any)) {
+  if (isTerminalStepStatus(stepExec.status)) {
     await advanceToNextStep(workflowExecutionId, currentIndex, execution.candidateId, undefined, contextUserId);
     return;
   }
@@ -213,7 +215,7 @@ export async function advanceWorkflow(workflowExecutionId: string): Promise<void
       where: { id: stepExec.id },
       data: {
         status: 'waiting_for_approval',
-        output: result.output as any,
+        output: result.output as Prisma.InputJsonValue,
         agentExecutionId: result.agentExecutionId ?? null,
       },
     });
@@ -283,7 +285,7 @@ export async function advanceWorkflow(workflowExecutionId: string): Promise<void
     where: { id: stepExec.id },
     data: {
       status: newStatus,
-      output: result.output as any ?? null,
+      output: result.output != null ? (result.output as unknown as Prisma.InputJsonValue) : Prisma.JsonNull,
       agentExecutionId: result.agentExecutionId ?? null,
       completedAt: new Date(),
     },
@@ -297,7 +299,7 @@ export async function advanceWorkflow(workflowExecutionId: string): Promise<void
 
   await prisma.workflowExecution.update({
     where: { id: workflowExecutionId },
-    data: { context: updatedContext as any },
+    data: { context: updatedContext as Prisma.InputJsonValue },
   });
 
   // Determine next step index
@@ -305,7 +307,7 @@ export async function advanceWorkflow(workflowExecutionId: string): Promise<void
 
   // Handle condition branch jump
   if (stepDef.type === 'condition' && result.nextStepKey) {
-    const jumpTo = templateSteps.findIndex((s: any) => s.key === result.nextStepKey);
+    const jumpTo = templateSteps.findIndex((s) => s.key === result.nextStepKey);
     if (jumpTo !== -1) nextIndex = jumpTo;
   }
 
@@ -350,7 +352,7 @@ async function advanceToNextStep(
 
   if (!execution) return;
 
-  const templateSteps = execution.definition.steps as any[];
+  const templateSteps = execution.definition.steps as Array<{ key: string; type: string }>;
   const resolvedNextIndex = nextIndex ?? currentIndex + 1;
 
   if (resolvedNextIndex >= templateSteps.length) {
@@ -367,7 +369,7 @@ async function advanceToNextStep(
     return;
   }
 
-  const resolvedUserId = userId ?? ((execution.context as any)?.userId as string | undefined);
+  const resolvedUserId = userId ?? ((execution.context as WorkflowContext | null)?.userId);
 
   if (!resolvedUserId) {
     await prisma.workflowExecution.update({
@@ -412,7 +414,7 @@ export async function pauseWorkflow(workflowId: string, candidateId: string): Pr
   if (!execution) throw Object.assign(new Error('Workflow not found'), { status: 404 });
   if (execution.candidateId !== candidateId) throw Object.assign(new Error('Forbidden'), { status: 403 });
 
-  const next = getNextWorkflowStatus(execution.status as any, 'pause');
+  const next = getNextWorkflowStatus(execution.status as WorkflowStatus, 'pause');
   if (!next) {
     throw Object.assign(
       new Error(`Cannot pause workflow in status: ${execution.status}`),
@@ -428,7 +430,7 @@ export async function pauseWorkflow(workflowId: string, candidateId: string): Pr
 
   await prisma.workflowExecution.update({
     where: { id: workflowId },
-    data: { status: next, metadata: mergedMeta as any },
+    data: { status: next, metadata: mergedMeta as Prisma.InputJsonValue },
   });
 }
 
@@ -444,7 +446,7 @@ export async function resumeWorkflow(workflowId: string, candidateId: string): P
   if (!execution) throw Object.assign(new Error('Workflow not found'), { status: 404 });
   if (execution.candidateId !== candidateId) throw Object.assign(new Error('Forbidden'), { status: 403 });
 
-  const next = getNextWorkflowStatus(execution.status as any, 'resume');
+  const next = getNextWorkflowStatus(execution.status as WorkflowStatus, 'resume');
   if (!next) {
     throw Object.assign(
       new Error(`Cannot resume workflow in status: ${execution.status}`),
@@ -452,7 +454,7 @@ export async function resumeWorkflow(workflowId: string, candidateId: string): P
     );
   }
 
-  const userId = (execution.context as any)?.userId as string | undefined;
+  const userId = (execution.context as WorkflowContext | null)?.userId;
   if (!userId) {
     throw Object.assign(new Error('Cannot resume: userId missing from workflow context'), { status: 500 });
   }
@@ -558,7 +560,7 @@ export async function handleApprovalDecision(
         data: {
           status: 'completed',
           completedAt: new Date(),
-          output: { approvalId, decision, note } as any,
+          output: { approvalId, decision, note },
         },
       });
     }
@@ -569,7 +571,7 @@ export async function handleApprovalDecision(
       data: { status: 'running' },
     });
 
-    const userId = (execution.context as any)?.userId as string;
+    const userId = (execution.context as WorkflowContext | null)?.userId ?? '';
 
     // Advance to next step
     await advanceToNextStep(
@@ -619,7 +621,7 @@ export async function recoverWorkflow(workflowId: string, candidateId: string): 
     );
   }
 
-  const userId = (execution.context as any)?.userId as string | undefined;
+  const userId = (execution.context as WorkflowContext | null)?.userId;
   if (!userId) {
     throw Object.assign(new Error('Cannot recover: userId missing from workflow context'), { status: 500 });
   }

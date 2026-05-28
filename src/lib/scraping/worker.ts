@@ -86,9 +86,9 @@ async function processJobWithTimeout(job: ScrapingJobPayload): Promise<void> {
 
   try {
     await Promise.race([executeJob(job), timeoutPromise]);
-  } catch (error: any) {
+  } catch (error: unknown) {
     traceLog.error({ err: error }, '[Scraping Worker] Job execution failed');
-    await scrapingQueue.fail(job, error.message || String(error));
+    await scrapingQueue.fail(job, error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -101,7 +101,7 @@ async function executeJob(job: ScrapingJobPayload): Promise<void> {
     : 'indeed-search';
 
   if (job.taskType === 'profile' && job.provider === 'linkedin') {
-    const { profileUrl } = job.payload;
+    const profileUrl = job.payload.profileUrl as string;
     const profile = await importLinkedInProfile(profileUrl);
 
     // Get candidate ID
@@ -120,10 +120,10 @@ async function executeJob(job: ScrapingJobPayload): Promise<void> {
       create: {
         candidateId: candidate.id,
         type: 'linkedin_export',
-        content: profile as any,
+        content: profile as unknown as import('@prisma/client').Prisma.InputJsonValue,
       },
       update: {
-        content: profile as any,
+        content: profile as unknown as import('@prisma/client').Prisma.InputJsonValue,
       },
     });
 
@@ -146,8 +146,10 @@ async function executeJob(job: ScrapingJobPayload): Promise<void> {
     });
 
   } else if (job.taskType === 'search') {
-    const { query, location, limit } = job.payload;
-    let results: any[] = [];
+    const query = job.payload.query as string;
+    const location = job.payload.location as string | undefined;
+    const limit = job.payload.limit as number | undefined;
+    let results: unknown[] = [];
 
     if (job.provider === 'linkedin') {
       const rawJobs = await searchLinkedInJobs(query, location || 'United States', limit || 20);

@@ -4,7 +4,7 @@ export interface ThreatAlert {
   type: string
   severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL'
   message: string
-  details: any
+  details: Record<string, unknown>
 }
 
 /**

@@ -27,8 +27,8 @@ export async function GET(req: NextRequest) {
       limit: searchParams.get('limit') ? parseInt(searchParams.get('limit')!) : 50,
       offset: searchParams.get('offset') ? parseInt(searchParams.get('offset')!) : 0,
       status: searchParams.get('status') || undefined,
-      sortBy: (searchParams.get('sortBy') || 'createdAt') as any,
-      sortOrder: (searchParams.get('sortOrder') || 'desc') as any,
+      sortBy: searchParams.get('sortBy') || 'createdAt',
+      sortOrder: searchParams.get('sortOrder') || 'desc',
     };
 
     // Validate query

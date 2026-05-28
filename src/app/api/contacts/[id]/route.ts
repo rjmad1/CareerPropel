@@ -24,10 +24,11 @@ export async function GET(_req: NextRequest, context: { params: Promise<{ id: st
     const { userEmail } = await getAuthContext();
     const contact = await resolveContact(id, userEmail);
     return NextResponse.json({ data: contact });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const e = err as { message?: string; status?: number };
     return NextResponse.json(
-      { error: { message: err.message ?? 'Failed to fetch contact' } },
-      { status: err.status ?? 500 }
+      { error: { message: e.message ?? 'Failed to fetch contact' } },
+      { status: e.status ?? 500 }
     );
   }
 }
@@ -63,10 +64,11 @@ export async function PATCH(req: NextRequest, context: { params: Promise<{ id: s
     });
 
     return NextResponse.json({ data: updated });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const e = err as { message?: string; status?: number };
     return NextResponse.json(
-      { error: { message: err.message ?? 'Failed to update contact' } },
-      { status: err.status ?? 500 }
+      { error: { message: e.message ?? 'Failed to update contact' } },
+      { status: e.status ?? 500 }
     );
   }
 }
@@ -78,10 +80,11 @@ export async function DELETE(_req: NextRequest, context: { params: Promise<{ id:
     await resolveContact(id, userEmail);
     await prisma.contact.delete({ where: { id } });
     return NextResponse.json({ data: { deleted: true } });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const e = err as { message?: string; status?: number };
     return NextResponse.json(
-      { error: { message: err.message ?? 'Failed to delete contact' } },
-      { status: err.status ?? 500 }
+      { error: { message: e.message ?? 'Failed to delete contact' } },
+      { status: e.status ?? 500 }
     );
   }
 }

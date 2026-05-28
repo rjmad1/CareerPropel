@@ -71,8 +71,8 @@ export function MatchAnalysis({ jobId, initialScore = 0 }: MatchAnalysisProps) {
       const data: MatchAnalysisData = json.data ?? json;
       setAnalysis(data);
       setCurrentScore(data.score);
-    } catch (err: any) {
-      setError(err.message ?? 'Something went wrong');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Something went wrong');
     } finally {
       setLoading(false);
     }

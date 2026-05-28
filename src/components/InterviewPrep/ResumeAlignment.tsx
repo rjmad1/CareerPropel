@@ -229,9 +229,9 @@ export const ResumeAlignment: React.FC<ResumeAlignmentProps> = ({ prep }) => {
       
       link.parentNode?.removeChild(link);
       window.URL.revokeObjectURL(url);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('PDF Compilation failure:', err);
-      setCompileError(err.message || 'Failed to compile resume via serverless engine.');
+      setCompileError(err instanceof Error ? err.message : 'Failed to compile resume via serverless engine.');
       setTimeout(() => {
         setCompileError(null);
       }, 6000);

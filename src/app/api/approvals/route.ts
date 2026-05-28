@@ -16,10 +16,11 @@ export async function GET() {
 
     const approvals = await getPendingApprovals(candidate.id);
     return NextResponse.json({ data: approvals, total: approvals.length });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const e = err as { message?: string; status?: number };
     return NextResponse.json(
-      { error: { message: err.message ?? 'Failed to fetch pending approvals' } },
-      { status: err.status ?? 500 },
+      { error: { message: e.message ?? 'Failed to fetch pending approvals' } },
+      { status: e.status ?? 500 },
     );
   }
 }

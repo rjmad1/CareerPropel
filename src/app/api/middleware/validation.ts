@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ZodSchema } from 'zod';
-import { ValidationError } from './auth';
+import { ZodTypeAny } from 'zod';
+import { ValidationError, UnauthorizedError, ForbiddenError } from './auth';
 import { ApiError } from '@/lib/errors/ApiError';
 
 /**
  * Validate request body against Zod schema
  * Returns properly typed data based on schema
  */
-export async function validateRequest<T extends ZodSchema>(
+export async function validateRequest<T extends ZodTypeAny>(
   req: NextRequest,
   schema: T
-): Promise<{ valid: true; data: ReturnType<T['_output']> } | { valid: false; error: ValidationError }> {
+): Promise<{ valid: true; data: T['_output'] } | { valid: false; error: ValidationError }> {
   try {
     const body = await req.json();
     const result = schema.safeParse(body);
@@ -30,7 +30,7 @@ export async function validateRequest<T extends ZodSchema>(
       };
     }
 
-    return { valid: true, data: result.data as any };
+    return { valid: true, data: result.data };
   } catch (error) {
     return {
       valid: false,
@@ -58,14 +58,14 @@ export function validationErrorResponse(error: ValidationError) {
 /**
  * Success response formatter
  */
-export function successResponse(data: any, statusCode: number = 200) {
+export function successResponse(data: unknown, statusCode: number = 200) {
   return NextResponse.json(data, { status: statusCode });
 }
 
 /**
  * Error response formatter
  */
-export function errorResponse(error: any, statusCode: number = 500) {
+export function errorResponse(error: unknown, statusCode: number = 500) {
   // Handle ApiError (thrown by getAuthContext and other lib/middleware utilities)
   if (error instanceof ApiError) {
     return NextResponse.json(
@@ -74,8 +74,8 @@ export function errorResponse(error: any, statusCode: number = 500) {
     );
   }
 
-  // Handle custom error classes
-  if (error.name === 'UnauthorizedError') {
+  // Handle custom error classes via instanceof (safer than checking .name strings)
+  if (error instanceof UnauthorizedError) {
     return NextResponse.json(
       {
         error: {
@@ -87,7 +87,7 @@ export function errorResponse(error: any, statusCode: number = 500) {
     );
   }
 
-  if (error.name === 'ForbiddenError') {
+  if (error instanceof ForbiddenError) {
     return NextResponse.json(
       {
         error: {
@@ -99,15 +99,17 @@ export function errorResponse(error: any, statusCode: number = 500) {
     );
   }
 
-  if (error.name === 'ValidationError') {
+  if (error instanceof ValidationError) {
+    // details is always present on ValidationError instances
     return validationErrorResponse(error);
   }
 
+  const errObj = error as { message?: string };
   return NextResponse.json(
     {
       error: {
         code: 'INTERNAL_ERROR',
-        message: process.env.NODE_ENV === 'development' ? error.message : 'Internal server error',
+        message: process.env.NODE_ENV === 'development' ? errObj.message : 'Internal server error',
       },
     },
     { status: statusCode }

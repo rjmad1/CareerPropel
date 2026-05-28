@@ -231,7 +231,7 @@ export default function Home() {
                       {item.label}
                     </Typography>
                   </Box>
-                  <Chip label={item.status} color={item.color as any} variant="outlined" size="small" />
+                  <Chip label={item.status} color={item.color as 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'} variant="outlined" size="small" />
                 </StatusCard>
               </Grid>
             ))}

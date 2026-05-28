@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/db';
+import type { Prisma } from '@prisma/client';
 import type { UpdateProfileInput } from '@/lib/validation/schemas';
 
 /**
@@ -14,7 +15,7 @@ export async function getProfile(userId: string) {
  * Update user profile
  */
 export async function updateProfile(userId: string, data: UpdateProfileInput) {
-  const updateData: any = {};
+  const updateData: Record<string, unknown> = {};
 
   if (data.name !== undefined) updateData.name = data.name;
   if (data.email !== undefined) updateData.email = data.email;
@@ -37,7 +38,7 @@ export async function updateProfile(userId: string, data: UpdateProfileInput) {
 export async function createOrUpdateProfileField(
   userId: string,
   fieldType: string,
-  content: Record<string, any>
+  content: Record<string, unknown>
 ) {
   return prisma.profileData.upsert({
     where: {
@@ -46,11 +47,11 @@ export async function createOrUpdateProfileField(
         type: fieldType,
       },
     },
-    update: { content },
+    update: { content: content as unknown as Prisma.InputJsonValue },
     create: {
       candidateId: userId,
       type: fieldType,
-      content,
+      content: content as unknown as Prisma.InputJsonValue,
     },
   });
 }
@@ -59,7 +60,7 @@ export async function createOrUpdateProfileField(
  * Get profile fields
  */
 export async function getProfileFields(userId: string, type?: string) {
-  const where: any = { candidateId: userId };
+  const where: Record<string, unknown> = { candidateId: userId };
 
   if (type) {
     where.type = type;
@@ -110,14 +111,14 @@ export async function addAchievement(
   userId: string,
   title: string,
   description: string,
-  metrics?: Record<string, any>
+  metrics?: Record<string, unknown>
 ) {
   return prisma.achievement.create({
     data: {
       candidateId: userId,
       title,
       description,
-      metrics,
+      metrics: metrics as unknown as Prisma.InputJsonValue | undefined,
     },
   });
 }

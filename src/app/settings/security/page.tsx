@@ -53,8 +53,8 @@ export default function SecuritySettingsPage() {
       if (!res.ok) throw new Error(json.message ?? 'Setup failed');
       setSetupData(json.data ?? json);
       setStep('setup');
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Setup failed');
     } finally {
       setLoading(false);
     }
@@ -76,8 +76,8 @@ export default function SecuritySettingsPage() {
       if (!res.ok) throw new Error(json.message ?? 'Enable failed');
       setTotpCode('');
       setStep('enabled');
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Enable failed');
     } finally {
       setLoading(false);
     }
@@ -98,8 +98,8 @@ export default function SecuritySettingsPage() {
       if (!res.ok) throw new Error(json.message ?? 'Disable failed');
       setDisableCode('');
       setStep('disabled');
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Disable failed');
     } finally {
       setLoading(false);
     }

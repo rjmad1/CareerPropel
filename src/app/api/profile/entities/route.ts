@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'candidateId is required' }, { status: 400 });
     }
 
-    const where: any = { candidateId };
+    const where: Record<string, unknown> = { candidateId };
     if (type) where.type = type;
 
     const entities = await prisma.profileData.findMany({

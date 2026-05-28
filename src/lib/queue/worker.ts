@@ -12,10 +12,12 @@ import {
   publishAgentStarted,
   publishAgentCompleted,
   publishAgentStatus,
+  ExtendedAgentType,
 } from '@/lib/agents/redis-integration';
 import { log } from '@/lib/logging/logger';
 import { getCostCeiling, getProjectedCost } from '@/lib/agents/cost-config';
 import { getDeploymentMetadata } from '@/lib/deployment/metadata';
+import type { AgentType } from '@/lib/agents/prompts';
 import {
   AgentJobData,
   AGENT_QUEUE_NAME,
@@ -80,7 +82,7 @@ async function appendRetryLineage(executionId: string, attempt: RetryAttempt): P
     lineage.push({ ...attempt, ts: new Date().toISOString() });
     await prisma.agentExecution.update({
       where: { id: executionId },
-      data: { retryLineage: lineage as any },
+      data: { retryLineage: lineage as unknown as import('@prisma/client').Prisma.InputJsonValue },
     });
   } catch (err) {
     log.warn({ err, executionId }, 'Failed to append retry lineage');
@@ -113,13 +115,14 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
   let estimatedCost: number;
   try {
     estimatedCost = await validateCostCeiling(agentType, mutableContext, retryCount);
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
     await prisma.agentExecution.update({
       where: { id: executionId },
       data: {
         status: 'failed',
         completedAt: new Date(),
-        errorMessage: err.message,
+        errorMessage: msg,
         failureClassification: 'cost_ceiling',
       },
     });
@@ -149,8 +152,8 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
     HEARTBEAT_INTERVAL_MS,
   );
 
-  await publishAgentStarted(userId, executionId, agentType as any, mutableContext as any);
-  await publishAgentStatus(userId, executionId, agentType as any, 'running', 0, `Starting ${agentType}...`);
+  await publishAgentStarted(userId, executionId, agentType as ExtendedAgentType, mutableContext);
+  await publishAgentStatus(userId, executionId, agentType as ExtendedAgentType, 'running', 0, `Starting ${agentType}...`);
 
   let fullResponse = '';
   let tokenCount = 0;
@@ -165,9 +168,9 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
 
   try {
     // Check multi-agent chain dependencies before touching the LLM
-    const pipelineJobId = (mutableContext as any).jobId as string | undefined;
+    const pipelineJobId = (mutableContext.jobId) as string | undefined;
     if (pipelineJobId) {
-      const chain = await checkChainDependencies(agentType as any, userId, pipelineJobId);
+      const chain = await checkChainDependencies(agentType as AgentType, userId, pipelineJobId);
       if (!chain.ready) {
         jobLog.info({ pendingDeps: chain.pendingDeps }, 'Chain deps not satisfied — requeueing');
         const originalJobId = job.data.originalJobId ?? job.id;
@@ -182,18 +185,18 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
         });
         return;
       }
-      mutableContext = mergeUpstreamContext(agentType as any, mutableContext, chain.upstreamOutputs);
+      mutableContext = mergeUpstreamContext(agentType as AgentType, mutableContext, chain.upstreamOutputs);
     }
 
     // Enrich context with real candidate data so agents never see placeholder text
     enrichedContext = await buildAgentContext({
       userId,
       jobId: pipelineJobId,
-      overrides: mutableContext as any,
+      overrides: mutableContext as import('@/lib/agents/prompts').AgentPromptContext,
     });
 
-    const systemPrompt = getAgentSystemPrompt(agentType as any);
-    const userPrompt = buildAgentUserPrompt(agentType as any, enrichedContext);
+    const systemPrompt = getAgentSystemPrompt(agentType as AgentType);
+    const userPrompt = buildAgentUserPrompt(agentType as AgentType, enrichedContext);
 
     for await (const token of streamLLM(
       [{ role: 'user', content: userPrompt }],
@@ -208,14 +211,15 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
       fullResponse += token;
       tokenCount++;
     }
-  } catch (streamErr: any) {
+  } catch (streamErr: unknown) {
     clearTimeout(timeoutHandle);
     clearInterval(heartbeatTimer);
     const latencyMs = Date.now() - startTime;
+    const errObj = streamErr as { code?: string; name?: string; message?: string };
     let failureClassification: 'cost_ceiling' | 'timeout' | 'provider_error';
-    if (streamErr?.code === 'COST_CEILING_EXCEEDED') {
+    if (errObj?.code === 'COST_CEILING_EXCEEDED') {
       failureClassification = 'cost_ceiling';
-    } else if (streamErr?.name === 'AbortError' || streamErr?.message?.includes('timed out')) {
+    } else if (errObj?.name === 'AbortError' || errObj?.message?.includes('timed out')) {
       failureClassification = 'timeout';
     } else {
       failureClassification = 'provider_error';
@@ -228,7 +232,7 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
       tokenUsage: { inputTokens: 0, outputTokens: tokenCount },
       cost: 0,
       latencyMs,
-      failureReason: streamErr.message,
+      failureReason: errObj.message ?? String(streamErr),
     });
 
     await prisma.agentExecution.update({
@@ -236,12 +240,12 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
       data: {
         status: 'failed',
         completedAt: new Date(),
-        errorMessage: streamErr.message,
+        errorMessage: errObj.message ?? String(streamErr),
         failureClassification,
         latencyMs,
       },
     });
-    await publishAgentStatus(userId, executionId, agentType as any, 'failed', 0, 'Failed');
+    await publishAgentStatus(userId, executionId, agentType as ExtendedAgentType, 'failed', 0, 'Failed');
     throw streamErr;
   } finally {
     clearTimeout(timeoutHandle);
@@ -251,8 +255,8 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
   const latencyMs = Date.now() - startTime;
 
   // Critic quality-gate — runs before persistence
-  const userPromptForCritic = buildAgentUserPrompt(agentType as any, enrichedContext);
-  const criticResult = await critiqueOutput(agentType as any, userPromptForCritic, fullResponse);
+  const userPromptForCritic = buildAgentUserPrompt(agentType as AgentType, enrichedContext);
+  const criticResult = await critiqueOutput(agentType as AgentType, userPromptForCritic, fullResponse);
 
   if (!criticResult.accepted) {
     jobLog.warn(
@@ -270,7 +274,7 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
         output: JSON.stringify({ criticResult, rawResponse: fullResponse }),
       },
     });
-    await publishAgentStatus(userId, executionId, agentType as any, 'failed', 0, 'Quality gate failed');
+    await publishAgentStatus(userId, executionId, agentType as ExtendedAgentType, 'failed', 0, 'Quality gate failed');
     return;
   }
 
@@ -298,7 +302,7 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
       durationMs: latencyMs,
       latencyMs,
       actualCost,
-      tokenUsage: { inputTokens: 0, outputTokens: tokenCount } as any,
+      tokenUsage: { inputTokens: 0, outputTokens: tokenCount },
     },
   });
 
@@ -311,9 +315,9 @@ async function processAgentJob(job: Job<AgentJobData>, workerId: string): Promis
     latencyMs,
   });
 
-  await publishAgentCompleted(userId, executionId, agentType as any, 'success',
+  await publishAgentCompleted(userId, executionId, agentType as ExtendedAgentType, 'success',
     parsedOutput, undefined, tokenCount, latencyMs);
-  await publishAgentStatus(userId, executionId, agentType as any, 'completed', 0, 'Complete', tokenCount);
+  await publishAgentStatus(userId, executionId, agentType as ExtendedAgentType, 'completed', 0, 'Complete', tokenCount);
 
   jobLog.info({ tokenCount, latencyMs, actualCost }, 'Agent job completed');
 }

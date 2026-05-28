@@ -172,12 +172,13 @@ async function executeAgentCallStep(
   let executionId: string;
   try {
     executionId = await enqueueAgentExecution(agentType, wfContext.userId, stepContext);
-  } catch (err: any) {
+  } catch (err: unknown) {
     log.warn({ err, stepKey: step.key }, 'executeStep: enqueue failed');
-    if (step.optional && !FATAL_ERROR_CODES.has(err.code)) {
+    const errObj = err as { code?: string; message?: string };
+    if (step.optional && !FATAL_ERROR_CODES.has(errObj.code ?? '')) {
       return { success: true, skipped: true };
     }
-    return { success: false, error: err.message };
+    return { success: false, error: errObj.message };
   }
 
   const result = await waitForAgentExecution(executionId);

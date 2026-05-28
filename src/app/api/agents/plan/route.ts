@@ -97,8 +97,8 @@ export async function POST(request: NextRequest) {
           companyName: job.company,
           jobDescription: job.description ?? '',
         });
-      } catch (e: any) {
-        console.warn('[plan] Enqueue skipped:', e.message);
+      } catch (e: unknown) {
+        console.warn('[plan] Enqueue skipped:', e instanceof Error ? e.message : String(e));
       }
     }
 

@@ -15,6 +15,10 @@
 3. [High-Level Workflow Diagram](#3-high-level-workflow-diagram)
 4. [End-to-End Instruction Lifecycle](#4-end-to-end-instruction-lifecycle)
 5. [Agent Architecture](#5-agent-architecture)
+   - 5.1 [SDLC Coordination Agents](#51-sdlc-coordination-agents)
+   - 5.2 [Development Tooling Agents (Claude Code Subagents)](#52-development-tooling-agents-claude-code-subagents)
+   - 5.3 [CareerPropel Product Agents](#53-careerpropel-product-agents)
+   - 5.4 [Governance Layer (Cross-Cutting)](#54-governance-layer-cross-cutting)
 6. [Context Engineering Workflow](#6-context-engineering-workflow)
 7. [Prompt Engineering Workflow](#7-prompt-engineering-workflow)
 8. [Development Lifecycle (Modern AI-Native SDLC)](#8-development-lifecycle-modern-ai-native-sdlc)
@@ -132,13 +136,19 @@ graph TD
         CTX[Context Engine\nRAG + Memory]
     end
 
-    subgraph Orchestration["Orchestration Layer"]
+    subgraph DevTools["Development Tooling Agents (.claude/agents/)"]
+        VORCH[validation-orchestrator]
+        CBUILD[code-builder]
+        CVAL[code-validator]
+    end
+
+    subgraph Orchestration["SDLC Coordination Layer"]
         OA[Orchestrator Agent]
         PA[Planner Agent]
         AA[Architect Agent]
     end
 
-    subgraph Specialists["Specialized Agent Pool"]
+    subgraph Specialists["Specialized SDLC Agent Pool"]
         BE[Backend Agent]
         FE[Frontend Agent]
         DB[Database Agent]
@@ -154,7 +164,7 @@ graph TD
 
     subgraph VCS["Version Control & CI/CD"]
         GIT[Git\nBranch / Commit / PR]
-        CI[CI/CD Pipeline\nGitHub Actions / GitLab CI]
+        CI[CI/CD Pipeline\nGitHub Actions]
         REG[Container Registry\nArtifact Store]
     end
 
@@ -170,13 +180,39 @@ graph TD
         H4{Deploy Approval}
     end
 
+    subgraph ProductAgents["CareerPropel Product Agents (Runtime)"]
+        direction LR
+        PLAN_META[Planner Meta-Agent\nstageTriggerMap]
+        CRITIC[Critic Agent\nquality gate]
+        RT[Resume Tailor]
+        JM[Job Matcher]
+        RA[Research Agent]
+        IP[Interview Prep]
+        NA[Networking Agent]
+        FU[Follow-up Agent]
+        APP[Application Agent]
+        AN[Analytics Agent]
+    end
+
+    subgraph Gov["Governance Layer (src/lib/governance/)"]
+        POL[Policy Engine]
+        PR[Prompt Registry]
+        OV[Output Validator]
+        HC[Hallucination Controls]
+        PQ[Provider Qualification]
+    end
+
     DEV -->|Instruction| CC
     CC --> CTX
     CTX --> OA
     OA --> PA
     PA --> H1
     H1 -->|Approved| AA
-    AA --> BE & FE & DB & INF
+    AA --> VORCH
+    VORCH --> CBUILD
+    CBUILD -->|built| CVAL
+    CVAL -->|FAIL findings| CBUILD
+    CVAL -->|PASS| BE & FE & DB & INF
     BE & FE & DB & INF --> TEST
     TEST --> SEC
     SEC --> H3
@@ -195,6 +231,48 @@ graph TD
     CI -->|Failures| OA
     COMP --> H3
     REL --> REG
+
+    PROD --> ProductAgents
+    PLAN_META --> RT & JM & RA & IP & NA & FU & APP & AN
+    RA -->|upstream context| IP
+    RT & JM & RA & IP & NA & FU & APP & AN --> CRITIC
+    ProductAgents --> Gov
+```
+
+> **Reading this diagram:** The top half shows the SDLC build pipeline. The bottom-right shows the product agents running in production after deployment. Governance (bottom-left) is a cross-cutting concern that wraps every product agent call.
+
+**Separate product agent architecture diagram:**
+
+```mermaid
+flowchart LR
+    USER([👤 User\nJob Pipeline Event]) --> STM[Stage Trigger Map\nstageTriggerMap.ts]
+    USER --> MANUAL[Manual Trigger\nAgentRail UI]
+
+    STM --> QUEUE[BullMQ Queue]
+    MANUAL --> QUEUE
+
+    QUEUE --> PLANNER[Planner Meta-Agent\nplannerPrompt.ts]
+    PLANNER --> QUEUE
+
+    QUEUE --> GOV[Governance Stack\nPolicy → Prompt Registry → Provider Qualification]
+    GOV --> LLM[LLM Provider\nAnthropic / NVIDIA NIM / OpenAI-compatible]
+    LLM --> CRITIC[Critic Agent\ncriticPrompt.ts]
+    CRITIC -->|score ≥ threshold| PERSIST[Persist Output\n+ provenance]
+    CRITIC -->|score < threshold| FAIL[Log validation_error\nBlock persistence]
+
+    subgraph Agents["Queued Product Agents"]
+        RT[Resume Tailor\n60s / queue 10]
+        JM[Job Matcher\n45s / queue 20]
+        APP[Application Agent\n30s / queue 15]
+        RA[Research Agent\n120s / queue 5]
+        IP[Interview Prep\n90s / queue 8]
+        NA[Networking Agent\n45s / queue 12]
+        FU[Follow-up Agent\n15s / queue 25]
+        AN[Analytics Agent\n120s / queue 3]
+    end
+
+    GOV --> Agents
+    RA -->|chain dependency| IP
 ```
 
 ---
@@ -354,7 +432,21 @@ Upon approval:
 
 ## 5. Agent Architecture
 
-Each agent in the system has a clearly bounded scope of responsibility. Agents do not share implementation logic — they communicate only through structured inputs and outputs. This boundary enforcement prevents responsibility bleed and makes the system debuggable.
+The CareerPropel agentic system operates across **three distinct layers**, each with a different scope and lifecycle. Understanding the separation is critical to reasoning about blast radius, change risk, and correct SDLC routing.
+
+| Layer | Agents | Scope |
+|---|---|---|
+| **SDLC Coordination** | Orchestrator, Planner, Architect, Backend, Frontend, Database, Infrastructure, Security, Testing, Documentation, Refactoring, Reviewer/Critic, Compliance, Release | Development workflow; manage how code gets built and shipped |
+| **Development Tooling** | code-builder, code-validator, validation-orchestrator | Claude Code subagents; automated build-validate loops inside the IDE |
+| **Product Agents** | 8 career agents + 2 meta-agents + 10 AI feature services | Application runtime; deliver AI-powered career assistance to end users |
+
+Each agent has a clearly bounded scope of responsibility. Agents do not share implementation logic — they communicate only through structured inputs and outputs. This boundary enforcement prevents responsibility bleed and makes the system debuggable.
+
+---
+
+## 5.1 SDLC Coordination Agents
+
+The following agents coordinate the software development lifecycle. They plan, build, validate, document, and ship the CareerPropel product agents described in §5.3.
 
 ### Orchestrator Agent
 
@@ -507,6 +599,168 @@ Each agent in the system has a clearly bounded scope of responsibility. Agents d
 **Outputs:** Git tags, release notes, deployment trigger events  
 **Failure condition:** If CI pipeline fails, halt release and report  
 **Escalation rule:** Never tag a release without a green CI pipeline and explicit human approval
+
+---
+
+## 5.2 Development Tooling Agents (Claude Code Subagents)
+
+Three agents are configured in `.claude/agents/` and operate exclusively within the development workflow. They are invoked by the validation-orchestrator, which coordinates their interaction in a strict builder-then-validator loop.
+
+| Agent | File | Role | Model | Max Turns |
+|---|---|---|---|---|
+| **code-builder** | `.claude/agents/code-builder.md` | Writes and updates implementation code; feature work, bug fixes, refactors, test updates | Sonnet | 20 |
+| **code-validator** | `.claude/agents/code-validator.md` | Read-only; verifies correctness, completeness, regressions, requirement coverage. **Cannot modify files.** | Sonnet | 12 |
+| **validation-orchestrator** | `.claude/agents/validation-orchestrator.md` | Coordinates builder → validator loop; iterates until PASS or hard stop | Sonnet | 8 |
+
+**Loop protocol:**
+
+```text
+validation-orchestrator
+  → code-builder (implements)
+  → code-validator (validates; returns PASS or FAIL with findings)
+  → [FAIL] → code-builder (applies findings verbatim)
+  → code-validator (re-validates)
+  → repeat until PASS or maxTurns reached
+```
+
+`code-builder` triggers post-edit hooks on every file write (`validate-after-edit.sh`) and before stopping (`validate-before-stop.sh`), enforcing lint, typecheck, and test gates inline. It will not claim success unless these checks pass.
+
+---
+
+## 5.3 CareerPropel Product Agents
+
+These are the AI agents embedded in the CareerPropel application itself. They are the **deliverables** of the SDLC — the agents being built, not the agents doing the building. Every code change that touches these agents passes through the full SDLC lifecycle described in §8.
+
+### Core Career Agents
+
+Eight agents are registered in `src/types/agent-configs.ts` (configuration) and `src/types/agent.ts` (type definitions). All run as BullMQ queue workers, use Claude as the primary LLM, and are governed by the policy engine, prompt registry, output validator, and hallucination controls in `src/lib/governance/`.
+
+| Agent | Type Key | Description | Timeout | Queue Depth | Category |
+|---|---|---|---|---|---|
+| **Resume Tailor** | `resume-tailor` | Tailors resume bullet points, skills, and summary for a specific job description; matches language, quantifies impact | 60 s | 10 | Automation |
+| **Job Matcher** | `job-match` | Scores job-candidate alignment across skill match, experience, compensation fit, culture fit, and growth opportunity (0–100 per dimension) | 45 s | 20 | Automation |
+| **Application Agent** | `application` | Handles automated job application submissions | 30 s | 15 | Automation |
+| **Research Agent** | `research` | Synthesizes company intelligence: leadership, culture, competitive position, growth trajectory, red flags, recent news | 120 s | 5 | Analysis |
+| **Interview Prep** | `interview-prep` | Generates STAR stories, technical topic deep-dives, company-specific talking points, negotiation frameworks, likely question list | 90 s | 8 | Communication |
+| **Networking Agent** | `networking` | Identifies and prioritizes warm/cold outreach targets; generates conversation starters and value propositions per contact | 45 s | 12 | Communication |
+| **Follow-up Agent** | `follow-up` | Crafts personalized post-interview follow-up emails; produces a sequenced 2–3 step follow-up plan with CTAs | 15 s | 25 | Communication |
+| **Analytics Agent** | `analytics` | Computes career pipeline metrics, longitudinal performance trends, and career health scores | 120 s | 3 | Analysis |
+
+**Retry policy (all agents):** exponential backoff; `resume-tailor`, `job-match`, `interview-prep`, `networking` → 3 attempts; `application` → 5 attempts; `research`, `analytics` → 2 attempts.
+
+### Meta / Coordination Agents
+
+Two internal agents coordinate planning and quality gating. They are not directly user-invocable but run automatically within the execution pipeline.
+
+| Agent | File | Role |
+|---|---|---|
+| **Planner Agent** | `src/lib/agents/plannerPrompt.ts` | Career strategy AI: given job context, current stage, and readiness signals (has resume, has research, has interview prep, days since activity, days to interview), recommends the highest-value next agent action. Uses a deterministic stage-trigger map (`stageTriggerMap.ts`) as the primary source and LLM reasoning as override/enrichment. |
+| **Critic Agent** | `src/lib/agents/criticPrompt.ts` | Quality-control gate: runs a second LLM pass on every agent output before persistence, scoring 0–10 against per-agent minimum thresholds. Outputs below threshold are rejected and logged as `failureClassification='validation_error'`. |
+
+**Critic thresholds by agent type:**
+
+| Agent | Minimum Acceptable Score |
+|---|---|
+| resume-tailor | 7 / 10 |
+| interview-prep | 7 / 10 |
+| follow-up | 7 / 10 |
+| job-match | 6 / 10 |
+| research | 6 / 10 |
+| networking | 6 / 10 |
+
+### Stage-Trigger Map
+
+Agents fire automatically when a job card transitions into a pipeline stage (`src/lib/agents/stageTriggerMap.ts`). This is the primary deterministic routing layer, used by both the Planner Agent and the queue worker.
+
+| Pipeline Stage | Auto-Triggered Agent |
+|---|---|
+| `interested` | Job Matcher |
+| `resume_tailoring` | Resume Tailor |
+| `recruiter_screen` | Research Agent |
+| `hiring_manager` | Research Agent |
+| `technical_interview` | Interview Prep |
+| `system_design` | Interview Prep |
+| `behavioral` | Interview Prep |
+| `final_round` | Interview Prep |
+| `sourced`, `applied`, `offer`, `negotiation`, `rejected`, `archived` | *(none — manual trigger only)* |
+
+### Agent Dependency Chain
+
+`interview-prep` has a declared upstream dependency on `research` (`src/lib/agents/chainExecutor.ts`). When `interview-prep` is triggered, the chain executor checks for a completed `research` execution for the same job. If found, the research output is merged into the interview-prep context before dispatch.
+
+```text
+research
+  → cultureSummary, competitivePosition, redFlags, recentNews
+          ↓ merged as companyInfo string
+    interview-prep (receives enriched context)
+```
+
+If `research` has not yet completed, `interview-prep` is deferred until the dependency is satisfied. `AGENT_DEPENDENCIES` in `chainExecutor.ts` is the authoritative dependency registry — extend it there when adding new chaining rules.
+
+### AI-Powered Feature Services
+
+Beyond the queued agents, CareerPropel includes AI-powered feature services that execute as direct synchronous API calls (no queue, no retry policy, no Critic gate). These are single-call AI features integrated directly into API routes.
+
+| Service | Route / File | Description |
+|---|---|---|
+| **ATS Scorer** | `/api/profile/ats-check` | Keyword gap analysis and ATS compatibility scoring against a job description |
+| **Career Narrative Generator** | `/api/profile/narrative` | AI-generated career summary and professional narrative |
+| **Mock Interview Engine** | `/api/interview-prep/mock` | Generates mock interview questions tailored to a specific role and company |
+| **Mock Interview Feedback** | `/api/interview-prep/mock/feedback` | Evaluates a candidate's mock interview response with structured, actionable feedback |
+| **Job Match Scorer** | `src/lib/jobs/matchScorer.ts` | Claude-powered job-profile scoring; persists `matchScore` on the Job record |
+| **Document Generator** | `src/lib/document/generator.ts` | AI-assisted resume and cover letter generation |
+| **Interview Prep Refinement** | `src/lib/interviews/prepRefinementService.ts` | Refines and improves existing interview prep materials |
+| **Recommendations Engine** | `src/lib/analytics/recommendations-engine.ts` | AI-driven career action recommendations based on pipeline state |
+| **Profile Quantifier** | `/api/profile/quantify` | Quantifies career accomplishments with metrics and impact framing |
+| **Skill Gap Analyzer** | `/api/profile/skill-gaps` | Identifies skill gaps relative to target roles and generates a learning path |
+
+### LLM Provider Layer
+
+All agents and services route through a unified provider abstraction (`src/lib/llm/provider.ts`, `src/lib/llm/orchestrator.ts`):
+
+- **Primary:** Anthropic Claude — Sonnet for quality-critical tasks (resume tailoring, interview prep, research), Haiku for classification tasks
+- **Secondary:** NVIDIA NIM (`src/lib/llm/nvidia-nim.ts`)
+- **Generic OpenAI-compatible adapter:** Groq, OpenRouter, DeepSeek, Ollama, LM Studio (`src/lib/llm/orchestrator.ts`)
+- **Fallback chain:** Claude API → heuristic / rule-based → graceful error surfaced to user
+- **BYOK support:** Users may supply their own Anthropic API key via Settings → AI Providers; stored encrypted at rest (AES-256-CBC, `AI_MASTER_SECRET`)
+
+**Model routing policy:**
+
+| Use Case | Model |
+|---|---|
+| Interview prep, resume tailoring, research, narrative generation | `claude-sonnet-4-6` |
+| ATS analysis, mock interview feedback | `claude-sonnet-4-6` |
+| Simple classification tasks | `claude-haiku-4-5` |
+
+---
+
+## 5.4 Governance Layer (Cross-Cutting)
+
+Every agent execution — whether a queued product agent or a direct feature service call — passes through a shared governance stack enforced by `src/lib/governance/`. This layer is transparent to callers but mandatory.
+
+| Component | File | Responsibility |
+|---|---|---|
+| **Policy Engine** | `policyEngine.ts` | Per-agent concurrency limits, input size limits, cost estimation; blocks execution on policy violation before any LLM call is made |
+| **Prompt Registry** | `promptRegistry.ts` | Versioned prompt resolution; records `promptVersionId`, `promptHash`, and `sanitizerVersion` on every execution record |
+| **Output Validator** | `outputValidator.ts` | Three-layer validation: schema (JSON structure), semantic (required field presence), policy (content rules); normalizes output before persistence |
+| **Hallucination Controls** | `hallucinationControls.ts` | Prompt injection detection on input; hallucination risk inspection on output; configurable `blockOnHallucinationRisk` per agent policy |
+| **Provider Qualification** | `providerQualification.ts` | Asserts that the active LLM provider + model is qualified for the given agent type before dispatching; fails fast before LLM call |
+| **Bounded Execution** | `boundedExecution.ts` | Execution isolation, recursion depth limits (max depth 3 for nested orchestration), TTL enforcement (30 min max per plan), token budget per step |
+| **Multi-Agent Coordination** | `multiAgentCoordination.ts` | Orchestration plan validation (max 10 steps, no duplicate step IDs, budget feasibility), step-level context isolation, canary routing (deterministic hash-based rollout) |
+
+**Execution governance flow (per agent call):**
+
+```text
+1. Policy check (concurrency + input size)
+2. Prompt injection inspection on input
+3. Provider qualification assertion
+4. Prompt version resolution from registry
+5. LLM dispatch
+6. Output schema + semantic + policy validation
+7. Hallucination risk inspection
+8. Cost estimation recorded
+9. Persist result with full provenance (provider, model, promptVersionId, promptHash, validationVersion)
+```
 
 ---
 
@@ -682,8 +936,9 @@ All agent system prompts are stored in `/prompts/agents/`. Each template include
 |---|---|
 | **Human** | Reviews generated code diffs; requests changes if needed |
 | **AI (Backend, Frontend, Database, Infrastructure Agents)** | Generates code per approved design; writes to feature branch |
-| **Deliverable** | Proposed code changes staged on feature branch |
-| **Validation Gate** | Diff review by developer; syntax/type checking must pass |
+| **AI (validation-orchestrator → code-builder → code-validator)** | Runs builder-validator loop on generated code; iterates until PASS or hard stop; post-edit hooks enforce lint + typecheck + tests inline |
+| **Deliverable** | Proposed code changes staged on feature branch, validated by code-validator (PASS verdict) |
+| **Validation Gate** | Diff review by developer; syntax/type checking must pass; code-validator PASS required |
 
 ### Phase 5 — Testing
 
@@ -1559,4 +1814,4 @@ The goal of this workflow is not to remove the developer from the loop. It is to
 
 ---
 
-*This document is a living engineering artifact. It must be updated when the workflow changes. Proposed changes require a PR with tech lead approval. Last substantive revision: 2026-05-27.*
+*This document is a living engineering artifact. It must be updated when the workflow changes. Proposed changes require a PR with tech lead approval. Last substantive revision: 2026-05-27 — added §5.2 Development Tooling Agents, §5.3 CareerPropel Product Agents (8 core agents, 2 meta-agents, 10 AI feature services, stage-trigger map, dependency chain), §5.4 Governance Layer; updated §3 diagrams and §8 Phase 4.*

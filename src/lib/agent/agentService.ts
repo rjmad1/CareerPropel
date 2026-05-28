@@ -133,7 +133,7 @@ export async function cancelAgentExecution(executionId: string): Promise<AgentEx
  */
 export function subscribeToAgentExecution(
   executionId: string,
-  onUpdate: (event: { type: string; data: any }) => void,
+  onUpdate: (event: { type: string; data: unknown }) => void,
   onError?: (error: Error) => void
 ): () => void {
   try {

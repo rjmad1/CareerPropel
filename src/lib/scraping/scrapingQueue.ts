@@ -22,7 +22,7 @@ export interface ScrapingJobPayload {
   userId: string;
   taskType: ScrapingTaskType;
   provider: 'linkedin' | 'indeed';
-  payload: Record<string, any>;
+  payload: Record<string, unknown>;
   correlationId?: string;
   retries: number;
 }
@@ -157,7 +157,7 @@ export class ScrapingQueue {
   /**
    * Mark a scraping job as successfully completed.
    */
-  async complete(executionId: string, userId: string, agentType: ExtendedAgentType, result: any): Promise<void> {
+  async complete(executionId: string, userId: string, agentType: ExtendedAgentType, result: Record<string, unknown>): Promise<void> {
     await prisma.agentExecution.update({
       where: { id: executionId },
       data: {

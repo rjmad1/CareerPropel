@@ -40,7 +40,7 @@ export async function createAPIKey(
   return { key, id: apiKey.id }
 }
 
-export async function getAPIKey(email: string, keyId: string): Promise<any> {
+export async function getAPIKey(email: string, keyId: string): Promise<{ id: string; name: string; createdAt: Date; expiresAt: Date | null; lastUsedAt: Date | null } | null> {
   return prisma.apiKey.findFirst({
     where: { id: keyId, email },
     select: {
@@ -53,15 +53,18 @@ export async function getAPIKey(email: string, keyId: string): Promise<any> {
   })
 }
 
-export async function listAPIKeys(email: string): Promise<any[]> {
+export async function listAPIKeys(email: string): Promise<Array<{ id: string; name: string; prefix: string | null; createdAt: Date; expiresAt: Date | null; lastUsedAt: Date | null; revokedAt: Date | null; usageCount: number }>> {
   return prisma.apiKey.findMany({
     where: { email },
     select: {
       id: true,
       name: true,
+      prefix: true,
       createdAt: true,
       expiresAt: true,
-      lastUsedAt: true
+      lastUsedAt: true,
+      revokedAt: true,
+      usageCount: true,
     },
     orderBy: { createdAt: 'desc' }
   })
@@ -79,7 +82,7 @@ export async function verifyAPIKey(key: string): Promise<string | null> {
   })
 
   if (!apiKey) return null
-  if ((apiKey as any).revokedAt) return null  // belt-and-suspenders: mock may return revoked keys
+  if (apiKey.revokedAt) return null  // belt-and-suspenders: mock may return revoked keys
   if (apiKey.expiresAt && new Date() > apiKey.expiresAt) return null
 
   await prisma.apiKey.update({

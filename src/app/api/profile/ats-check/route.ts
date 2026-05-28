@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { callLLM } from '@/lib/llm/provider';
 import { getAuthContext } from '@/lib/middleware/auth';
+import { ApiError } from '@/lib/errors/ApiError';
 import { errorResponse } from '@/lib/utils/apiResponse';
 
 export const dynamic = 'force-dynamic';
@@ -83,8 +84,8 @@ ${jobDescription ? 'Compare keywords in the resume against the job description.'
 
     return NextResponse.json(analysis, { status: 200 });
   } catch (error) {
-    // If this is an auth error, surface it properly
-    if ((error as any)?.statusCode === 401) {
+    // Surface ApiErrors (auth, validation, etc.) directly; fall back to heuristics for LLM failures
+    if (error instanceof ApiError) {
       return errorResponse(error);
     }
 

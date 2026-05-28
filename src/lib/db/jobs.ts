@@ -126,7 +126,7 @@ export async function createJob(userId: string, data: CreateJobInput) {
       company: data.company,
       description: data.description,
       location: data.location,
-      salary: data.salary as any,
+      salary: data.salary,
       matchScore: data.matchScore || 0,
       appliedAt: new Date(),
       stage: 'sourced',

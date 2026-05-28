@@ -15,7 +15,7 @@ export async function appendExecutionLog(
       executionId,
       level,
       message,
-      metadata: metadata as any,
+      metadata: metadata as unknown as import('@prisma/client').Prisma.InputJsonValue,
     },
   });
 

@@ -42,10 +42,11 @@ export async function GET(req: NextRequest) {
     ]);
 
     return NextResponse.json({ data: contacts, total, limit, offset });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const e = err as { message?: string; status?: number };
     return NextResponse.json(
-      { error: { message: err.message ?? 'Failed to fetch contacts' } },
-      { status: err.status ?? 500 }
+      { error: { message: e.message ?? 'Failed to fetch contacts' } },
+      { status: e.status ?? 500 }
     );
   }
 }
@@ -80,10 +81,11 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ data: contact }, { status: 201 });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const e = err as { message?: string; status?: number };
     return NextResponse.json(
-      { error: { message: err.message ?? 'Failed to create contact' } },
-      { status: err.status ?? 500 }
+      { error: { message: e.message ?? 'Failed to create contact' } },
+      { status: e.status ?? 500 }
     );
   }
 }

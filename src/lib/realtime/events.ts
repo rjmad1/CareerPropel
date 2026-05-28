@@ -147,7 +147,7 @@ export const REDIS_CHANNELS = {
  * Publish event to Redis pub/sub
  */
 export async function publishEvent(
-  redis: any, // Redis client
+  redis: { publish(channel: string, message: string): Promise<unknown> },
   channel: string,
   event: RealtimeEvent
 ): Promise<void> {

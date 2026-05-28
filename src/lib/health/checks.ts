@@ -31,24 +31,24 @@ export async function checkDatabaseHealth(): Promise<SubsystemHealth> {
       return { status: 'degraded', latencyMs, message: 'DB responding but slow' };
     }
     return { status: 'healthy', latencyMs };
-  } catch (err: any) {
+  } catch (err: unknown) {
     log.error({ err }, 'Database health check failed');
-    return { status: 'unavailable', message: err.message };
+    return { status: 'unavailable', message: err instanceof Error ? err.message : String(err) };
   }
 }
 
 export async function checkRedisHealth(): Promise<SubsystemHealth> {
   const t0 = performance.now();
   try {
-    await (redis as any).ping();
+    await redis.ping();
     const latencyMs = Math.round(performance.now() - t0);
     if (latencyMs > 500) {
       return { status: 'degraded', latencyMs, message: 'Redis responding but slow' };
     }
     return { status: 'healthy', latencyMs };
-  } catch (err: any) {
+  } catch (err: unknown) {
     log.error({ err }, 'Redis health check failed');
-    return { status: 'unavailable', message: err.message };
+    return { status: 'unavailable', message: err instanceof Error ? err.message : String(err) };
   }
 }
 
@@ -68,20 +68,20 @@ export async function checkQueueHealth(): Promise<SubsystemHealth> {
       return { status: 'degraded', latencyMs, meta: { ...counts, paused }, message: paused ? 'Queue paused' : 'Queue slow' };
     }
     return { status: 'healthy', latencyMs, meta: { ...counts, paused } };
-  } catch (err: any) {
+  } catch (err: unknown) {
     await conn.quit().catch(() => {});
     log.error({ err }, 'Queue health check failed');
-    return { status: 'unavailable', message: err.message };
+    return { status: 'unavailable', message: err instanceof Error ? err.message : String(err) };
   }
 }
 
 export async function checkWorkerHealth(): Promise<SubsystemHealth> {
   try {
-    const keys = await (redis as any).keys('heartbeat:*');
+    const keys = await redis.keys('heartbeat:*');
     const now = Date.now();
     let activeCount = 0;
     if (keys.length > 0) {
-      const values: (string | null)[] = await (redis as any).mget(...keys);
+      const values = await redis.mget(...keys);
       for (const v of values) {
         if (!v) continue;
         const { ts } = JSON.parse(v) as { ts: number };
@@ -92,16 +92,16 @@ export async function checkWorkerHealth(): Promise<SubsystemHealth> {
       return { status: 'healthy', meta: { activeWorkers: activeCount } };
     }
     // No active workers — check if there's work waiting
-    const queueHealth = await (redis as any).get('queue:health');
+    const queueHealth = await redis.get('queue:health');
     const queueSnapshot = queueHealth ? JSON.parse(queueHealth) : null;
     const waiting = queueSnapshot?.waiting ?? 0;
     if (waiting > 0) {
       return { status: 'degraded', message: 'No active workers but jobs are waiting', meta: { waiting } };
     }
     return { status: 'healthy', meta: { activeWorkers: 0, waiting: 0 } };
-  } catch (err: any) {
+  } catch (err: unknown) {
     log.error({ err }, 'Worker health check failed');
-    return { status: 'unavailable', message: err.message };
+    return { status: 'unavailable', message: err instanceof Error ? err.message : String(err) };
   }
 }
 

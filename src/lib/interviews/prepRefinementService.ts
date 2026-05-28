@@ -41,7 +41,7 @@ async function loadRecentSessions(
   });
 
   return rows.map((r) => {
-    const s = (r.scores as any) ?? {};
+    const s = (r.scores as Record<string, number> | null) ?? {};
     return {
       completedAt: r.completedAt,
       overall: s.overall ?? 0,

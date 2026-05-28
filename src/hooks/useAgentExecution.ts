@@ -107,7 +107,7 @@ export function useAgentExecution(
         const response = await getAgentLogs(executionId, {
           page,
           pageSize: logsPerPage,
-          level: filterLevel as any,
+          level: filterLevel as 'INFO' | 'WARN' | 'ERROR' | 'DEBUG' | undefined,
         });
         setLogs(response.logs);
         setCurrentPage(response.page);
@@ -129,20 +129,21 @@ export function useAgentExecution(
 
     if (useSse) {
       // Try EventSource first (SSE)
-      const handleUpdate = (event: { type: string; data: any }) => {
+      const handleUpdate = (event: { type: string; data: unknown }) => {
         if (event.type === 'execution:update') {
-          setExecution(event.data);
+          setExecution(event.data as AgentExecution);
         } else if (event.type === 'toolcall:complete') {
+          const tc = event.data as ToolCall;
           setToolCalls((prev) => {
             const updated = [...prev];
-            const index = updated.findIndex((tc) => tc.id === event.data.id);
+            const index = updated.findIndex((t) => t.id === tc.id);
             if (index !== -1) {
-              updated[index] = event.data;
+              updated[index] = tc;
             }
             return updated;
           });
         } else if (event.type === 'log:new') {
-          setLogs((prev) => [...prev.slice(-49), event.data]); // Keep last 50
+          setLogs((prev) => [...prev.slice(-49), event.data as EventLog]); // Keep last 50
         }
       };
 

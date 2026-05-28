@@ -92,8 +92,8 @@ export default function DocumentsPage() {
         docType === 'cover_letter' ? 'Cover Letter Ready' : 'Resume Ready',
         `${doc.wordCount} words generated${job ? ` for ${job.title} @ ${job.company}` : ''}`
       );
-    } catch (err: any) {
-      getNotificationManager().error('Generation Failed', err.message ?? 'Something went wrong');
+    } catch (err: unknown) {
+      getNotificationManager().error('Generation Failed', err instanceof Error ? err.message : 'Something went wrong');
     } finally {
       setGenerating(false);
     }

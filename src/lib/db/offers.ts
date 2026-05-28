@@ -8,7 +8,7 @@ import { createActivity } from './jobs';
 export async function getOffers(userId: string, query: ListOffersQuery) {
   const { limit, offset, status, sortBy, sortOrder } = query;
 
-  const where: any = {
+  const where: Record<string, unknown> = {
     job: {
       candidateId: userId,
     },
@@ -120,7 +120,7 @@ export async function updateOffer(userId: string, offerId: string, data: UpdateO
     data: {
       ...data,
       equity: data.equity ? JSON.stringify(data.equity) : undefined,
-      bonus: typeof data.bonus === 'number' ? data.bonus : (data.bonus as any)?.amount ?? undefined,
+      bonus: typeof data.bonus === 'number' ? data.bonus : (data.bonus as { amount?: number } | undefined)?.amount ?? undefined,
     },
     include: { job: true },
   });

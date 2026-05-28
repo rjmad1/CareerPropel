@@ -73,8 +73,8 @@ export default function AppraisalsPage() {
         .filter((a: Accomplishment) => a.visibility === 'staged_for_appraisal')
         .map((a: Accomplishment) => a.id);
       setSelectedIds(stagedIds);
-    } catch (e: any) {
-      setError(e.message);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'An error occurred');
     } finally {
       setLoading(false);
     }
@@ -144,8 +144,8 @@ export default function AppraisalsPage() {
         getNotificationManager().success('Appraisal Ready', `${appraisalTitle} narrative compiled`);
         fetchPastSessions();
       }
-    } catch (e: any) {
-      getNotificationManager().error('Compilation Failed', e.message ?? 'Could not compile appraisal');
+    } catch (e: unknown) {
+      getNotificationManager().error('Compilation Failed', e instanceof Error ? e.message : 'Could not compile appraisal');
     } finally {
       setCompiling(false);
     }

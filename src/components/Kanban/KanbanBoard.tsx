@@ -61,9 +61,10 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
 
   // Subscribe to job updates
   useEffect(() => {
-    const unsubscribe = subscribe('job:update', (message: any) => {
-      if (message.type === 'job:update') {
-        const { jobId, changes } = message.data;
+    const unsubscribe = subscribe('job:update', (message: unknown) => {
+      const msg = message as { type?: string; data?: { jobId: string; changes: Record<string, unknown> } };
+      if (msg.type === 'job:update' && msg.data) {
+        const { jobId, changes } = msg.data;
         setJobs((prev) =>
           prev.map((job) =>
             job.id === jobId ? { ...job, ...changes } : job
@@ -77,9 +78,10 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
 
   // Subscribe to new jobs
   useEffect(() => {
-    const unsubscribe = subscribe('job:created', (message: any) => {
-      if (message.type === 'job:created') {
-        setJobs((prev) => [...prev, message.data.job]);
+    const unsubscribe = subscribe('job:created', (message: unknown) => {
+      const msg = message as { type?: string; data?: { job: Job } };
+      if (msg.type === 'job:created' && msg.data?.job) {
+        setJobs((prev) => [...prev, msg.data!.job]);
       }
     });
 
@@ -88,9 +90,10 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
 
   // Subscribe to job deletions
   useEffect(() => {
-    const unsubscribe = subscribe('job:deleted', (message: any) => {
-      if (message.type === 'job:deleted') {
-        setJobs((prev) => prev.filter((j) => j.id !== message.data.jobId));
+    const unsubscribe = subscribe('job:deleted', (message: unknown) => {
+      const msg = message as { type?: string; data?: { jobId: string } };
+      if (msg.type === 'job:deleted' && msg.data) {
+        setJobs((prev) => prev.filter((j) => j.id !== msg.data!.jobId));
       }
     });
 

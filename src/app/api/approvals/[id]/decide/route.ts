@@ -38,10 +38,11 @@ export async function POST(
     await handleApprovalDecision(params.id, candidate.id, decision, note, modifiedPayload);
 
     return NextResponse.json({ data: { recorded: true, decision } });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const e = err as { message?: string; status?: number };
     return NextResponse.json(
-      { error: { message: err.message ?? 'Failed to record decision' } },
-      { status: err.status ?? 500 },
+      { error: { message: e.message ?? 'Failed to record decision' } },
+      { status: e.status ?? 500 },
     );
   }
 }

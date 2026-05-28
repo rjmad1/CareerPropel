@@ -117,7 +117,7 @@ export const AdvancedJobFilterForm: React.FC<
   }, [onFiltersChange]);
 
   const handleFilterChange = useCallback(
-    (key: keyof FilterState, value: any) => {
+    (key: keyof FilterState, value: FilterState[keyof FilterState]) => {
       const newFilters = { ...filters, [key]: value };
       persistFilters(newFilters);
     },
@@ -214,12 +214,13 @@ export const AdvancedJobFilterForm: React.FC<
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = '.json';
-    input.onchange = (e: any) => {
-      const file = e.target.files[0];
+    input.onchange = (e: Event) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file) return;
       const reader = new FileReader();
-      reader.onload = (event: any) => {
+      reader.onload = (event: ProgressEvent<FileReader>) => {
         try {
-          const imported = JSON.parse(event.target.result);
+          const imported = JSON.parse(event.target?.result as string);
           persistFilters(imported);
         } catch (err) {
           console.error('Failed to import filters', err);

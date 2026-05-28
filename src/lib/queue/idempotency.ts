@@ -35,10 +35,10 @@ export function generateIdempotencyKey(
 
 export async function checkIdempotency(key: string): Promise<string | null> {
   try {
-    const cached = await (redis as any).get(key);
+    const cached = await redis.get(key);
     if (cached) {
       log.info({ key }, 'Idempotency cache hit — returning existing execution');
-      return cached as string;
+      return cached;
     }
     return null;
   } catch (err) {
@@ -53,7 +53,7 @@ export async function storeIdempotency(
   ttlSeconds = 86400,
 ): Promise<void> {
   try {
-    await (redis as any).setex(key, ttlSeconds, executionId);
+    await redis.setex(key, ttlSeconds, executionId);
     log.info({ key, executionId, ttlSeconds }, 'Idempotency key stored');
   } catch (err) {
     log.error({ err, key }, 'Failed to store idempotency key');
@@ -62,7 +62,7 @@ export async function storeIdempotency(
 
 export async function clearIdempotency(key: string): Promise<void> {
   try {
-    await (redis as any).del(key);
+    await redis.del(key);
     log.info({ key }, 'Idempotency key cleared');
   } catch (err) {
     log.error({ err, key }, 'Failed to clear idempotency key');

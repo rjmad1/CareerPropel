@@ -17,6 +17,7 @@ import { usePathname } from 'next/navigation';
 import {
   saveRestoration,
   restoreScroll,
+  loadRestoration,
   RestorationEntry,
 } from '@/lib/navigation/restoration';
 
@@ -85,7 +86,6 @@ export function useRestorableScroll(options: UseRestorableScrollOptions = {}) {
   /** Read saved payload without restoring scroll. */
   const getSavedPayload = useCallback(
     (): RestorationEntry['payload'] => {
-      const { loadRestoration } = require('@/lib/navigation/restoration');
       return loadRestoration(restorationKey)?.payload;
     },
     [restorationKey],

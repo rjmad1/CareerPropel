@@ -123,19 +123,19 @@ export class APIClient {
   }
 
   // Job endpoints
-  async getJobs(filters?: Record<string, string | number | boolean>): Promise<any[]> {
+  async getJobs(filters?: Record<string, string | number | boolean>): Promise<unknown[]> {
     return this.request('GET', '/jobs', { params: filters })
   }
 
-  async getJobById(id: string): Promise<any> {
+  async getJobById(id: string): Promise<unknown> {
     return this.request('GET', `/jobs/${id}`)
   }
 
-  async createJob(job: any): Promise<any> {
+  async createJob(job: Record<string, unknown>): Promise<unknown> {
     return this.request('POST', '/jobs', { body: JSON.stringify(job) })
   }
 
-  async updateJob(id: string, updates: any): Promise<any> {
+  async updateJob(id: string, updates: Record<string, unknown>): Promise<unknown> {
     return this.request('PUT', `/jobs/${id}`, { body: JSON.stringify(updates) })
   }
 
@@ -143,12 +143,12 @@ export class APIClient {
     return this.request('DELETE', `/jobs/${id}`)
   }
 
-  async moveJob(id: string, stage: string): Promise<any> {
+  async moveJob(id: string, stage: string): Promise<unknown> {
     return this.request('POST', `/jobs/${id}/move`, { body: JSON.stringify({ stage }) })
   }
 
   // Agent endpoints
-  async getAgents(): Promise<any[]> {
+  async getAgents(): Promise<unknown[]> {
     return this.request('GET', '/agents')
   }
 
@@ -156,28 +156,28 @@ export class APIClient {
     return this.request('GET', `/agents/${agentId}/logs`)
   }
 
-  async pauseAgent(agentId: string): Promise<any> {
+  async pauseAgent(agentId: string): Promise<unknown> {
     return this.request('POST', `/agents/${agentId}/pause`)
   }
 
   // User endpoints
-  async getUserProfile(): Promise<any> {
+  async getUserProfile(): Promise<unknown> {
     return this.request('GET', '/profile')
   }
 
-  async updateProfile(updates: any): Promise<any> {
+  async updateProfile(updates: Record<string, unknown>): Promise<unknown> {
     return this.request('PUT', '/profile', { body: JSON.stringify(updates) })
   }
 
   // Document endpoints — FormData body intentionally has no Content-Type override
-  async uploadDocument(file: File, jobId?: string): Promise<any> {
+  async uploadDocument(file: File, jobId?: string): Promise<unknown> {
     const formData = new FormData()
     formData.append('file', file)
     if (jobId) formData.append('jobId', jobId)
     return this.request('POST', '/documents', { body: formData })
   }
 
-  async getDocuments(): Promise<any[]> {
+  async getDocuments(): Promise<unknown[]> {
     return this.request('GET', '/documents')
   }
 }

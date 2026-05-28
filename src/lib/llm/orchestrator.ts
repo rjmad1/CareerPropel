@@ -174,7 +174,7 @@ export class OpenAiCompatibleAdapter implements IAIProviderAdapter {
       throw new Error(`[${this.name}] HTTP API Error: ${response.status} ${response.statusText}`);
     }
 
-    const data = (await response.json()) as any;
+    const data = await response.json() as { choices?: Array<{ message?: { content?: string }; finish_reason?: string }>; usage?: { prompt_tokens?: number; completion_tokens?: number } };
     const content = data.choices?.[0]?.message?.content || '';
     const inputTokens = data.usage?.prompt_tokens || 0;
     const outputTokens = data.usage?.completion_tokens || 0;

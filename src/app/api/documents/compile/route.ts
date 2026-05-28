@@ -72,10 +72,10 @@ export async function POST(request: NextRequest) {
       },
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('POST /api/documents/compile error:', error);
     return NextResponse.json(
-      { error: 'Failed to compile PDF document', message: error.message || 'Unknown error' }, 
+      { error: 'Failed to compile PDF document', message: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }
