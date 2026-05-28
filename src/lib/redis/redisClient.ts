@@ -49,6 +49,10 @@ export function createRedisClient(connectionName: string) {
   return buildRedisClient(connectionName);
 }
 
+export function createBullMQRedisConnection(connectionName = 'career-propel:bullmq') {
+  return buildRedisClient(connectionName);
+}
+
 export async function disconnectRedisClient(client: Redis) {
   if (client.status === 'end') {
     return;

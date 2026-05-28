@@ -2,17 +2,13 @@ import { prisma } from '@/lib/db';
 import { log } from '@/lib/logging/logger';
 import { getCostCeiling, getProjectedCost } from '@/lib/agents/cost-config';
 import { getDeploymentMetadata } from '@/lib/deployment/metadata';
+import crypto from 'crypto';
 import {
   generateIdempotencyKey,
   checkIdempotency,
   storeIdempotency,
 } from './idempotency';
-import {
-  getAgentQueue,
-  JOB_DEFAULTS,
-  SCHEMA_VERSION,
-  EXECUTION_VERSION,
-} from './job-definitions';
+import { enqueueExecution } from './queues';
 
 export async function enqueueAgentExecution(
   agentType: string,
@@ -42,6 +38,9 @@ export async function enqueueAgentExecution(
 
   const deployment = getDeploymentMetadata();
 
+  const correlationId = typeof context.correlationId === 'string' ? context.correlationId : `corr-${crypto.randomUUID()}`;
+  const requestId = typeof context.requestId === 'string' ? context.requestId : `req-${crypto.randomUUID()}`;
+
   const execution = await prisma.agentExecution.create({
     data: {
       userId,
@@ -52,6 +51,8 @@ export async function enqueueAgentExecution(
       executionSource: 'queue',
       queuedAt: new Date(),
       estimatedCost: projectedCost,
+      correlationId,
+      requestId,
       deploymentVersion: deployment.deploymentVersion,
       deploymentSha: deployment.deploymentSha,
       deploymentEnvironment: deployment.deploymentEnvironment,
@@ -63,19 +64,21 @@ export async function enqueueAgentExecution(
 
   await storeIdempotency(iKey, execution.id);
 
-  await getAgentQueue().add(
-    'agent-execution',
-    {
-      executionId: execution.id,
-      agentType,
-      userId,
-      context,
-      idempotencyKey: iKey,
-      schemaVersion: SCHEMA_VERSION,
-      executionVersion: EXECUTION_VERSION,
-    },
-    JOB_DEFAULTS,
-  );
+  const promptContext: Record<string, string | undefined> = {};
+  for (const [key, val] of Object.entries(context)) {
+    promptContext[key] = val !== null && val !== undefined ? String(val) : undefined;
+  }
+
+  await enqueueExecution({
+    executionId: execution.id,
+    userId,
+    agentType,
+    promptContext,
+    requestId,
+    correlationId,
+    submittedAt: new Date().toISOString(),
+    jobId: typeof context.jobId === 'string' ? context.jobId : undefined,
+  });
 
   log.info({ executionId: execution.id, agentType, userId }, 'Agent execution enqueued');
   return execution.id;

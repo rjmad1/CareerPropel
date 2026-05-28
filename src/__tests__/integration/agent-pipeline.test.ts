@@ -23,8 +23,14 @@
 jest.mock('@/lib/llm/provider', () => ({
   streamLLM: jest.fn(),
   callLLM: jest.fn(),
-  getLLMProvider: jest.fn(),
-  initializeLLMProvider: jest.fn(),
+  getLLMProvider: jest.fn(() => ({
+    name: 'anthropic',
+    getDefaultModel: () => 'claude-sonnet-4-6',
+  })),
+  initializeLLMProvider: jest.fn(() => ({
+    name: 'anthropic',
+    getDefaultModel: () => 'claude-sonnet-4-6',
+  })),
 }));
 
 // Mock Redis pub/sub operations to avoid needing a real subscriber in tests
@@ -40,7 +46,7 @@ import {
   processPendingExecutions,
   type ExecutionContext,
 } from '@/lib/agents/executor';
-import { streamLLM } from '@/lib/llm/provider';
+import { streamLLM, callLLM } from '@/lib/llm/provider';
 import {
   publishAgentStarted,
   publishAgentCompleted,
@@ -48,6 +54,7 @@ import {
 } from '@/lib/agents/redis-integration';
 
 const mockStreamLLM = streamLLM as jest.MockedFunction<typeof streamLLM>;
+const mockCallLLM = callLLM as jest.MockedFunction<typeof callLLM>;
 const mockPublishCompleted = publishAgentCompleted as jest.MockedFunction<typeof publishAgentCompleted>;
 const mockPublishStarted = publishAgentStarted as jest.MockedFunction<typeof publishAgentStarted>;
 // mockPublishStatus available if needed for future assertions
@@ -82,6 +89,14 @@ beforeEach(() => {
   // Default mock: LLM returns a valid JSON response
   mockStreamLLM.mockImplementation(async function* () {
     yield '{"summary": "Tailored resume for the role", "changes": ["Updated skills section"]}';
+  });
+
+  mockCallLLM.mockResolvedValue({
+    content: '{"summary": "Tailored resume for the role", "changes": ["Updated skills section"]}',
+    stopReason: 'end_turn',
+    inputTokens: 100,
+    outputTokens: 100,
+    totalTokens: 200,
   });
 });
 
@@ -124,6 +139,7 @@ describe('executeAgent — core lifecycle', () => {
   });
 
   it('transitions status to failed when LLM throws', async () => {
+    mockCallLLM.mockRejectedValueOnce(new Error('Claude API rate limit exceeded'));
     mockStreamLLM.mockImplementation(async function* () {
       throw new Error('Claude API rate limit exceeded');
       yield ''; // never reached, but needed for generator type
@@ -175,6 +191,13 @@ describe('executeAgent — core lifecycle', () => {
   });
 
   it('handles non-JSON LLM response gracefully', async () => {
+    mockCallLLM.mockResolvedValueOnce({
+      content: 'Here is your tailored resume: The resume has been updated to highlight...',
+      stopReason: 'end_turn',
+      inputTokens: 100,
+      outputTokens: 100,
+      totalTokens: 200,
+    });
     mockStreamLLM.mockImplementation(async function* () {
       yield 'Here is your tailored resume: The resume has been updated to highlight...';
     });

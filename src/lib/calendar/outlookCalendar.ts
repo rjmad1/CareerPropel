@@ -13,6 +13,7 @@
 
 import axios from 'axios';
 import { prisma } from '@/lib/db';
+import { encrypt, decrypt } from '@/lib/crypto/tokenEncryption';
 
 function clientId() {
   const v = process.env.OUTLOOK_CLIENT_ID;
@@ -93,14 +94,14 @@ export async function saveOutlookTokens(candidateId: string, tokens: MSTokenResp
     create: {
       candidateId,
       provider: 'outlook',
-      accessToken: tokens.access_token,
-      refreshToken: tokens.refresh_token ?? '',
+      accessToken: encrypt(tokens.access_token),
+      refreshToken: tokens.refresh_token ? encrypt(tokens.refresh_token) : '',
       expiresAt,
       scope: tokens.scope,
     },
     update: {
-      accessToken: tokens.access_token,
-      ...(tokens.refresh_token ? { refreshToken: tokens.refresh_token } : {}),
+      accessToken: encrypt(tokens.access_token),
+      ...(tokens.refresh_token ? { refreshToken: encrypt(tokens.refresh_token) } : {}),
       expiresAt,
       scope: tokens.scope,
     },
@@ -117,13 +118,15 @@ async function getValidOutlookToken(candidateId: string): Promise<string> {
     ? record.expiresAt.getTime() - Date.now() < 60_000
     : true;
 
-  if (!needsRefresh) return record.accessToken;
+  if (!needsRefresh) return decrypt(record.accessToken);
   if (!record.refreshToken) throw new Error('No refresh token — reconnect Outlook Calendar');
 
-  const fresh = await refreshOutlookToken(record.refreshToken);
+  const decryptedRefreshToken = decrypt(record.refreshToken);
+  const fresh = await refreshOutlookToken(decryptedRefreshToken);
+  const expiresAt = new Date(Date.now() + fresh.expires_in * 1000);
   await prisma.calendarToken.update({
     where: { candidateId_provider: { candidateId, provider: 'outlook' } },
-    data: { accessToken: fresh.access_token, expiresAt: new Date(Date.now() + fresh.expires_in * 1000) },
+    data: { accessToken: encrypt(fresh.access_token), expiresAt },
   });
   return fresh.access_token;
 }

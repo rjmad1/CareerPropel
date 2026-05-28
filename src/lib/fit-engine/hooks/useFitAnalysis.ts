@@ -4,7 +4,6 @@
  */
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import type { FullFitAnalysisResult } from '@/lib/fit-engine/types';
 import type { FitScoringSnapshot } from '@prisma/client';
 import { useState } from 'react';
 

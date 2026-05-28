@@ -222,7 +222,6 @@ model Job {
   mockInterviewSessions MockInterviewSession[]
   opportunityPlan       OpportunityPlan?
   resumeVariants        ResumeVariant[]
-  jobIntelligence       JobIntelligence?
   outreachCampaigns     OutreachCampaign[]
 
   @@index([candidateId])

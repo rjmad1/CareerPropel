@@ -1,7 +1,7 @@
 import { Worker, Job } from 'bullmq';
 import { log } from '@/lib/logging/logger';
 import { advanceWorkflow } from './engine';
-import { createBullMQRedisConnection } from '@/lib/queue/job-definitions';
+import { createBullMQRedisConnection } from '@/lib/redis/redisClient';
 import { WORKFLOW_QUEUE_NAME, getWorkflowQueue } from './queue';
 import type { WorkflowJobData } from './types';
 

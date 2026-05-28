@@ -19,56 +19,58 @@ export async function recordConversionOutcome(
   outcome: 'progressed' | 'rejected' | 'offer'
 ) {
   try {
-    // Find candidate's fit analysis for this job
-    const analysis = await prisma.roleFitAnalysis.findFirst({
+    // Find candidate's fit scoring snapshot for this job
+    const snapshot = await prisma.fitScoringSnapshot.findUnique({
       where: {
-        candidateId,
-        jobIntelligence: {
-          jobId
-        }
+        jobId,
       },
       include: {
-        jobIntelligence: {
+        job: {
           include: {
-            archetypes: true
+            jobIntelligence: true
           }
         }
       }
     });
 
-    if (!analysis || !analysis.jobIntelligence) return;
+    if (!snapshot || !snapshot.job || !snapshot.job.jobIntelligence) return;
+
+    const weights = snapshot.job.jobIntelligence.archetypeWeights as Record<string, number> | null;
+    if (!weights) return;
 
     // Record success correlation mapping or increment entry counters in PatternLibraryEntry
-    for (const arch of analysis.jobIntelligence.archetypes) {
+    for (const archetype of Object.keys(weights)) {
       const existingEntry = await prisma.patternLibraryEntry.findFirst({
         where: {
           candidateId,
-          roleArchetype: arch.archetype
+          archetypeCorrelation: archetype as any
         }
       });
 
-      const successDelta = outcome === 'progressed' || outcome === 'offer' ? 10.0 : -5.0;
+      const successfulOutcome = outcome === 'progressed' || outcome === 'offer';
 
       if (existingEntry) {
+        const newFrequency = existingEntry.frequencyObserved + 1;
+        const currentSuccesses = Math.round((existingEntry.conversionRate ?? 0) * existingEntry.frequencyObserved);
+        const newSuccesses = currentSuccesses + (successfulOutcome ? 1 : 0);
+        const newConversionRate = newSuccesses / newFrequency;
+
         await prisma.patternLibraryEntry.update({
           where: { id: existingEntry.id },
           data: {
-            conversionCount: existingEntry.conversionCount + (outcome === 'progressed' || outcome === 'offer' ? 1 : 0),
-            successScore: Math.max(0, Math.min(100, existingEntry.successScore + successDelta))
+            frequencyObserved: newFrequency,
+            conversionRate: newConversionRate
           }
         });
       } else {
         await prisma.patternLibraryEntry.create({
           data: {
             candidateId,
-            roleArchetype: arch.archetype,
-            conversionCount: outcome === 'progressed' || outcome === 'offer' ? 1 : 0,
-            successScore: outcome === 'progressed' || outcome === 'offer' ? 75.0 : 45.0,
-            operationalKeywords: [],
-            businessProblems: [],
-            successMetrics: [],
-            languagePatterns: [],
-            achievementsMapped: []
+            archetypeCorrelation: archetype as any,
+            category: 'ARCHETYPE_CORRELATION',
+            pattern: `High match correlation for archetype ${archetype}`,
+            frequencyObserved: 1,
+            conversionRate: successfulOutcome ? 1.0 : 0.0,
           }
         });
       }
@@ -88,15 +90,12 @@ export async function calibrateScoringWeights(candidateId: string): Promise<{
   archetypePerformances: Array<{ archetype: string; avgScore: number; successCount: number }>;
   suggestions: CalibrationSuggestion[];
 }> {
-  const analyses = await prisma.roleFitAnalysis.findMany({
+  const snapshots = await prisma.fitScoringSnapshot.findMany({
     where: { candidateId },
     include: {
-      jobIntelligence: {
+      job: {
         include: {
-          job: {
-            select: { stage: true }
-          },
-          archetypes: true
+          jobIntelligence: true
         }
       }
     }
@@ -107,38 +106,41 @@ export async function calibrateScoringWeights(candidateId: string): Promise<{
   let falsePositives = 0; // high score but rejected early
   const archetypeScores: Record<string, { sum: number; count: number; successes: number }> = {};
 
-  for (const analysis of analyses) {
-    if (!analysis.jobIntelligence) continue;
+  for (const snapshot of snapshots) {
+    if (!snapshot.job.jobIntelligence) continue;
 
     totalMapped++;
-    const stage = analysis.jobIntelligence.job.stage;
+    const stage = snapshot.job.stage;
     const isSuccessful = ['recruiter_screen', 'hiring_manager', 'technical_interview', 'system_design', 'behavioral', 'final_round', 'offer', 'negotiation'].includes(stage);
 
     if (isSuccessful) {
       successfulConversions++;
     }
 
+    const fitScore = snapshot.fitScore * 100;
+
     // High fit score (>75) but rejected / archived without interview
-    if (analysis.overallFitScore >= 75 && (stage === 'rejected' || stage === 'archived')) {
+    if (fitScore >= 75 && (stage === 'rejected' || stage === 'archived')) {
       falsePositives++;
     }
 
-    for (const arch of analysis.jobIntelligence.archetypes) {
-      const entry = archetypeScores[arch.archetype] ?? { sum: 0, count: 0, successes: 0 };
-      entry.sum += analysis.overallFitScore * arch.weight;
-      entry.count += arch.weight;
-      if (isSuccessful) {
-        entry.successes++;
+    const weights = snapshot.job.jobIntelligence.archetypeWeights as Record<string, number> | null;
+    if (weights) {
+      for (const [arch, weight] of Object.entries(weights)) {
+        const entry = archetypeScores[arch] ?? { sum: 0, count: 0, successes: 0 };
+        entry.sum += fitScore * weight;
+        entry.count += weight;
+        if (isSuccessful) {
+          entry.successes++;
+        }
+        archetypeScores[arch] = entry;
       }
-      archetypeScores[arch.archetype] = entry;
     }
   }
 
   const suggestions: CalibrationSuggestion[] = [];
 
   // Suggest dynamic weight calibrations based on outcomes
-  // E.g. If Keyword Overlap is currently 2% but high keyword-perfect matches lead to false-positives, suggest reducing keyword overlap weight further.
-  // If high demonstrated execution proof strongly correlates with offers/progressions, suggest increasing execution proof weight.
   for (const [archetype, stats] of Object.entries(archetypeScores)) {
     const avgScore = stats.count > 0 ? stats.sum / stats.count : 0;
     const conversionRate = stats.successes / (stats.count || 1);

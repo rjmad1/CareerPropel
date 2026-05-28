@@ -10,14 +10,15 @@
 import { prisma } from '@/lib/db';
 import { callLLM } from '@/lib/llm/provider';
 import { createLogger } from '@/lib/logging/logger';
-import type {
+import { Prisma } from '@prisma/client';
+import {
+  FitDimension,
   FitScoreResult,
   DimensionScore,
   JobDeconstructionResult,
   StrengthMappingResult,
   GapAnalysisResult,
-} from '@/lib/fit-engine/types';
-import { FitDimension } from '@prisma/client';
+} from '../types';
 import {
   DEFAULT_DIMENSION_WEIGHTS,
   RECOMMENDATION_THRESHOLDS,
@@ -72,12 +73,13 @@ export async function scoreFit(input: ScoringInput): Promise<ScoringOutput> {
     // 2. Apply pattern library adjustments
     if (patternAdjustments) {
       for (const adj of patternAdjustments) {
-        weights[adj.dimension] = clamp(weights[adj.dimension] + adj.modifier, 0, 1);
+        const baseWeight = weights[adj.dimension] ?? 0;
+        weights[adj.dimension] = clamp(baseWeight + adj.modifier, 0, 1);
       }
     }
 
     // 3. Normalize weights to sum to 1
-    const normalizedWeights = normalizeWeights(weights);
+    const normalizedWeights = normalizeWeights(weights as Record<FitDimension, number>);
     logger.debug({ ...logContext, weights: normalizedWeights }, 'Normalized weights');
 
     // 4. Get LLM dimension assessments
@@ -263,10 +265,18 @@ function parseDimensionScores(raw: string, weights: Record<string, number>): Rec
   }
 
   const validDimensions: FitDimension[] = [
-    'DEMONSTRATED_EXECUTION_PROOF', 'BUSINESS_PROBLEM_ALIGNMENT', 'RESPONSIBILITY_OVERLAP',
-    'TOOL_OVERLAP', 'KEYWORD_OVERLAP', 'ADJACENT_SKILL_TRANSFER', 'DOMAIN_FAMILIARITY',
-    'ARCHETYPE_ALIGNMENT', 'IMMEDIATE_CONTRIBUTION_CAPABILITY', 'STRATEGIC_IMPACT_ALIGNMENT',
-    'CREDIBILITY_RISK', 'ADAPTATION_BURDEN',
+    FitDimension.DEMONSTRATED_EXECUTION_PROOF,
+    FitDimension.BUSINESS_PROBLEM_ALIGNMENT,
+    FitDimension.RESPONSIBILITY_OVERLAP,
+    FitDimension.TOOL_OVERLAP,
+    FitDimension.KEYWORD_OVERLAP,
+    FitDimension.ADJACENT_SKILL_TRANSFER,
+    FitDimension.DOMAIN_FAMILIARITY,
+    FitDimension.ARCHETYPE_ALIGNMENT,
+    FitDimension.IMMEDIATE_CONTRIBUTION_CAPABILITY,
+    FitDimension.STRATEGIC_IMPACT_ALIGNMENT,
+    FitDimension.CREDIBILITY_RISK,
+    FitDimension.ADAPTATION_BURDEN,
   ];
 
   const dimensions: Record<FitDimension, DimensionScore> = {} as Record<FitDimension, DimensionScore>;
@@ -292,7 +302,7 @@ function parseDimensionScores(raw: string, weights: Record<string, number>): Rec
 function determineRecommendation(
   score: number,
   credibilityRisk: number,
-  adaptationRisk: number
+  _adaptationRisk: number
 ): { recommendation: FitScoreResult['recommendation']; rationale: string } {
   // Suppression overrides everything
   if (credibilityRisk >= 0.8) {
@@ -376,7 +386,7 @@ function extractTopFactors(
 }
 
 function buildRecruiterPerception(
-  dimensionScores: Record<FitDimension, DimensionScore>,
+  _dimensionScores: Record<FitDimension, DimensionScore>,
   recommendation: FitScoreResult['recommendation'],
   strengths: StrengthMappingResult,
   gaps: GapAnalysisResult
@@ -438,9 +448,9 @@ async function persistScoring(opts: {
       adaptationRiskScore: result.adaptationRiskScore,
       roleClarityScore: result.roleClarityScore,
       employerPainMatchScore: result.employerPainMatchScore,
-      dimensionScores: result.dimensionScores,
+      dimensionScores: result.dimensionScores as unknown as Prisma.InputJsonValue,
       weightsVersion: result.weightsVersion,
-      weights: result.weights,
+      weights: result.weights as unknown as Prisma.InputJsonValue,
       strongestLeveragePoints: result.strongestLeveragePoints,
       biggestBlockers: result.biggestBlockers,
       expectedRecruiterPerception: result.expectedRecruiterPerception,
@@ -461,9 +471,9 @@ async function persistScoring(opts: {
       adaptationRiskScore: result.adaptationRiskScore,
       roleClarityScore: result.roleClarityScore,
       employerPainMatchScore: result.employerPainMatchScore,
-      dimensionScores: result.dimensionScores,
+      dimensionScores: result.dimensionScores as unknown as Prisma.InputJsonValue,
       weightsVersion: result.weightsVersion,
-      weights: result.weights,
+      weights: result.weights as unknown as Prisma.InputJsonValue,
       strongestLeveragePoints: result.strongestLeveragePoints,
       biggestBlockers: result.biggestBlockers,
       expectedRecruiterPerception: result.expectedRecruiterPerception,
@@ -486,7 +496,7 @@ async function persistScoring(opts: {
         fitScore: result.overallFitScore,
         recommendation: result.recommendation,
         dimensionCount: Object.keys(result.dimensionScores).length,
-      },
+      } as unknown as Prisma.InputJsonValue,
       executionId: opts.executionId,
       agentType: 'fit-scoring',
       modelVersion: 'claude-sonnet-4-6',

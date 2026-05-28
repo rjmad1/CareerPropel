@@ -4,7 +4,7 @@
  */
 
 import { z } from 'zod';
-import { FitDimension } from '@prisma/client';
+import { FitDimension } from '../types';
 
 // ─── Analyze Request ─────────────────────────────────────────────────────────
 

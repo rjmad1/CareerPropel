@@ -4,7 +4,22 @@
  * and the job deconstruction → strength mapping → gap analysis → weighted scoring flow.
  */
 
-import { RoleArchetype, GapClassification, FitDimension, PatternCategory } from '@prisma/client';
+import { RoleArchetype, GapClassification, PatternCategory } from '@prisma/client';
+
+export enum FitDimension {
+  DEMONSTRATED_EXECUTION_PROOF = 'DEMONSTRATED_EXECUTION_PROOF',
+  BUSINESS_PROBLEM_ALIGNMENT = 'BUSINESS_PROBLEM_ALIGNMENT',
+  RESPONSIBILITY_OVERLAP = 'RESPONSIBILITY_OVERLAP',
+  TOOL_OVERLAP = 'TOOL_OVERLAP',
+  KEYWORD_OVERLAP = 'KEYWORD_OVERLAP',
+  ADJACENT_SKILL_TRANSFER = 'ADJACENT_SKILL_TRANSFER',
+  DOMAIN_FAMILIARITY = 'DOMAIN_FAMILIARITY',
+  ARCHETYPE_ALIGNMENT = 'ARCHETYPE_ALIGNMENT',
+  IMMEDIATE_CONTRIBUTION_CAPABILITY = 'IMMEDIATE_CONTRIBUTION_CAPABILITY',
+  STRATEGIC_IMPACT_ALIGNMENT = 'STRATEGIC_IMPACT_ALIGNMENT',
+  CREDIBILITY_RISK = 'CREDIBILITY_RISK',
+  ADAPTATION_BURDEN = 'ADAPTATION_BURDEN',
+}
 
 // ─── Stage 1: Job Deconstruction Output ──────────────────────────────────────
 

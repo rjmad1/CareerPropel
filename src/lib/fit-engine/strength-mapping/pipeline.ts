@@ -11,7 +11,6 @@ import { prisma } from '@/lib/db';
 import { callLLM } from '@/lib/llm/provider';
 import { createLogger } from '@/lib/logging/logger';
 import type { MappedStrength, StrengthMappingResult, JobDeconstructionResult } from '@/lib/fit-engine/types';
-import { FIT_ENGINE_PROMPT_VERSIONS } from '@/lib/fit-engine/constants';
 
 const logger = createLogger({ component: 'fit-engine:strength-mapping' });
 
