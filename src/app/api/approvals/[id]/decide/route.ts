@@ -11,9 +11,10 @@ const VALID_DECISIONS: ApprovalDecision[] = ['approved', 'rejected', 'modified']
 
 export async function POST(
   req: NextRequest,
-  { params }: { params: { id: string } },
+  context: { params: Promise<{ id: string }> },
 ) {
   try {
+    const { id } = await context.params;
     const { userEmail } = await getAuthContext();
     const candidate = await prisma.candidate.findUnique({
       where: { email: userEmail },
@@ -35,7 +36,7 @@ export async function POST(
       );
     }
 
-    await handleApprovalDecision(params.id, candidate.id, decision, note, modifiedPayload);
+    await handleApprovalDecision(id, candidate.id, decision, note, modifiedPayload);
 
     return NextResponse.json({ data: { recorded: true, decision } });
   } catch (err: unknown) {

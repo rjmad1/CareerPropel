@@ -15,9 +15,9 @@ function sseEvent(event: string, data: unknown) {
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { executionId: string } }
+  context: { params: Promise<{ executionId: string }> }
 ) {
-  const executionId = params.executionId;
+  const { executionId } = await context.params;
   const execution = await prisma.agentExecution.findUnique({
     where: { id: executionId },
   });

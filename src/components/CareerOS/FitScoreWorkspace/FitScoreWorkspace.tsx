@@ -10,7 +10,7 @@
  *  - Recommendations with suppression indicators
  */
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card, CardBody, CardHeader } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Spinner } from '@/components/ui/Spinner';

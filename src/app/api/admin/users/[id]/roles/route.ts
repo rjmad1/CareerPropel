@@ -22,15 +22,16 @@ const RevokeRoleBody = z.object({
 })
 
 /** PATCH /api/admin/users/[id]/roles — assign or revoke roles for a user */
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await context.params
     const { userEmail, userId } = await getAuthContext()
     await requirePermission(userEmail, 'rbac.users.assign', { actorId: userId })
 
     const body = await request.json()
     const { action, ...rest } = body as { action: 'assign' | 'revoke'; [k: string]: unknown }
 
-    const targetCandidate = await prisma.candidate.findUnique({ where: { id: params.id } })
+    const targetCandidate = await prisma.candidate.findUnique({ where: { id } })
     if (!targetCandidate) throw ApiErrors.NOT_FOUND('user')
 
     if (action === 'assign') {
@@ -55,7 +56,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
         email: userEmail,
         action: AuditAction.ROLE_CHANGED,
         resourceType: 'user_role',
-        resourceId: params.id,
+        resourceId: id,
         changes: { targetEmail: targetCandidate.email, roleName, op: 'assign', justification },
         status: 'SUCCESS',
       })
@@ -74,7 +75,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
         email: userEmail,
         action: AuditAction.ROLE_CHANGED,
         resourceType: 'user_role',
-        resourceId: params.id,
+        resourceId: id,
         changes: { targetEmail: targetCandidate.email, roleName, op: 'revoke', justification },
         status: 'SUCCESS',
       })

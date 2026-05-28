@@ -25,7 +25,7 @@ const deleteJobLimiter = createRateLimiter(30, 60) // 30 per minute
  */
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     // Handle CORS preflight
@@ -39,7 +39,7 @@ export async function GET(
     // Require authentication
     const { userEmail } = await getAuthContext()
 
-    const { id } = params
+    const { id } = await context.params
 
     // Validate ID format (basic check)
     if (!id || id.length < 5) {
@@ -81,7 +81,7 @@ export async function GET(
  */
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     // Handle CORS preflight
@@ -95,7 +95,7 @@ export async function PATCH(
     // Require authentication
     const { userEmail } = await getAuthContext()
 
-    const { id } = params
+    const { id } = await context.params
 
     // Validate ID format
     if (!id || id.length < 5) {
@@ -190,7 +190,7 @@ export async function PATCH(
  */
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     // Handle CORS preflight
@@ -204,7 +204,7 @@ export async function DELETE(
     // Require authentication
     const { userEmail } = await getAuthContext()
 
-    const { id } = params
+    const { id } = await context.params
 
     // Validate ID format
     if (!id || id.length < 5) {
