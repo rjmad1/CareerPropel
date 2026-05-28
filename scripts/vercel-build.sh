@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+# Resolve any previously failed migrations before deploying (safe no-op if already applied)
+npx prisma migrate resolve --rolled-back 20260523000000_add_jobid_mock_session_unique_fk 2>/dev/null || true
+npx prisma migrate resolve --rolled-back 20260524000000_runtime_modernization 2>/dev/null || true
+npx prisma migrate resolve --rolled-back 20260528000000_rbac_governance 2>/dev/null || true
+
+npx prisma migrate deploy
+npx prisma generate
+next build
