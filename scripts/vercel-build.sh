@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+# Execute self-healing migration repair to clean up any failed or rolled-back stabilization records
+echo "Executing self-healing database migration repairs..."
+npx prisma db execute --file prisma/migration_repair.sql --schema prisma/schema.prisma || echo "WARN: migration repair query failed (non-fatal)"
+
 # Resolve any previously failed migrations before deploying.
 # These are no-ops if migrations are already applied; errors are logged but do NOT abort the build
 # because the migration may simply not exist in this environment.
