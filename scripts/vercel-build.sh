@@ -8,6 +8,8 @@ echo "Resolving previously failed migrations (non-fatal)..."
 npx prisma migrate resolve --rolled-back 20260523000000_add_jobid_mock_session_unique_fk && echo "OK: 20260523000000 resolved" || echo "WARN: 20260523000000 resolve had non-zero exit (may already be applied or not exist)"
 npx prisma migrate resolve --rolled-back 20260524000000_runtime_modernization && echo "OK: 20260524000000 resolved" || echo "WARN: 20260524000000 resolve had non-zero exit (may already be applied or not exist)"
 npx prisma migrate resolve --rolled-back 20260528000000_rbac_governance && echo "OK: 20260528000000 resolved" || echo "WARN: 20260528000000 resolve had non-zero exit (may already be applied or not exist)"
+npx prisma migrate resolve --applied 20260529000000_stabilization_and_orchestration && echo "OK: 20260529000000 resolved" || echo "WARN: 20260529000000 resolve had non-zero exit (may already be applied or not exist)"
+
 
 if npx prisma migrate deploy; then
   echo "✅ Prisma migrations deployed successfully."
