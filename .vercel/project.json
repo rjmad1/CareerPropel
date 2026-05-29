@@ -1,16 +1,1 @@
-{
-  "projectId": "prj_Y1yMlZMF0D7auVc9oGjmG97lWAjy",
-  "orgId": "team_AY4wyFBs1gTJM5Ce9Q5OPV2Q",
-  "projectName": "career-propel",
-  "settings": {
-    "createdAt": 1778930344019,
-    "framework": "nextjs",
-    "devCommand": null,
-    "installCommand": null,
-    "buildCommand": null,
-    "outputDirectory": null,
-    "rootDirectory": null,
-    "directoryListing": false,
-    "nodeVersion": "24.x"
-  }
-}
+{"projectId":"prj_Y1yMlZMF0D7auVc9oGjmG97lWAjy","orgId":"team_AY4wyFBs1gTJM5Ce9Q5OPV2Q","projectName":"career-propel"}
