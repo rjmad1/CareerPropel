@@ -1,7 +1,15 @@
+import { createHash } from 'crypto';
 import { prisma } from '@/lib/db';
 
 export type FunnelName = 'resume' | 'job' | 'interview' | 'appraisal' | 'networking';
 export type FunnelStatus = 'viewed' | 'started' | 'submitted' | 'completed' | 'failed' | 'abandoned';
+
+function hashEmail(email: string): string {
+  const salt = process.env.METRICS_SALT || 'fallback-metrics-salt-value';
+  return createHash('sha256')
+    .update(email + salt)
+    .digest('hex');
+}
 
 /**
  * Persists a funnel event tracking user progression in the database.
@@ -15,9 +23,10 @@ export async function trackFunnelEvent(
   metadata?: Record<string, any>
 ): Promise<void> {
   try {
+    const emailHash = hashEmail(email);
     await prisma.productFunnelMetric.create({
       data: {
-        email,
+        emailHash,
         funnel,
         step,
         status,
@@ -25,7 +34,7 @@ export async function trackFunnelEvent(
       },
     });
 
-    console.log(`[FUNNEL] Event logged - Funnel: ${funnel}, Step: ${step}, Status: ${status}, Email: ${email}`);
+    console.log(`[FUNNEL] Event logged - Funnel: ${funnel}, Step: ${step}, Status: ${status}, EmailHash: ${emailHash}`);
   } catch (error) {
     // Fail silently: Telemetry failures must never disrupt core request performance or uptime
     console.error('[trackFunnelEvent] Telemetry persistence failed:', error);

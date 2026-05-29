@@ -791,14 +791,14 @@ model SessionActivity {
 
 model ProductFunnelMetric {
   id        String   @id @default(cuid())
-  email     String   // Identifies user session / candidate
+  emailHash String   // Salted SHA-256 hash of email to pseudonymize PII
   funnel    String   // 'resume' | 'job' | 'interview' | 'appraisal' | 'networking'
   step      String   // 'uploaded', 'parsed', 'profileCreated', 'profileCompleted', etc.
   status    String   // 'viewed', 'started', 'submitted', 'completed', 'failed', 'abandoned'
   metadata  Json?    // Contextual payload (e.g. latency, size, error message)
   createdAt DateTime @default(now())
 
-  @@index([email])
+  @@index([emailHash])
   @@index([funnel])
   @@index([step])
   @@index([status])

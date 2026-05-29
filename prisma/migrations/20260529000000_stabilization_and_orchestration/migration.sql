@@ -828,6 +828,7 @@ DO $$ BEGIN
   END IF;
   
   IF NOT EXISTS (SELECT 1 FROM information_schema.table_constraints WHERE constraint_name = 'PromptVersion_agentType_version_key') THEN
+    DROP INDEX IF EXISTS "PromptVersion_agentType_version_key";
     ALTER TABLE "PromptVersion" ADD CONSTRAINT "PromptVersion_agentType_version_key" UNIQUE ("agentType", "version");
   END IF;
   

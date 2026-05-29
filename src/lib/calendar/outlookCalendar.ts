@@ -98,12 +98,18 @@ export async function saveOutlookTokens(candidateId: string, tokens: MSTokenResp
       refreshToken: tokens.refresh_token ? encrypt(tokens.refresh_token) : '',
       expiresAt,
       scope: tokens.scope,
+      isLegacy: false,
+      encryptionVersion: 1,
+      encryptionKeyId: 'primary',
     },
     update: {
       accessToken: encrypt(tokens.access_token),
       ...(tokens.refresh_token ? { refreshToken: encrypt(tokens.refresh_token) } : {}),
       expiresAt,
       scope: tokens.scope,
+      isLegacy: false,
+      encryptionVersion: 1,
+      encryptionKeyId: 'primary',
     },
   });
 }
@@ -126,7 +132,13 @@ async function getValidOutlookToken(candidateId: string): Promise<string> {
   const expiresAt = new Date(Date.now() + fresh.expires_in * 1000);
   await prisma.calendarToken.update({
     where: { candidateId_provider: { candidateId, provider: 'outlook' } },
-    data: { accessToken: encrypt(fresh.access_token), expiresAt },
+    data: { 
+      accessToken: encrypt(fresh.access_token), 
+      expiresAt,
+      isLegacy: false,
+      encryptionVersion: 1,
+      encryptionKeyId: 'primary',
+    },
   });
   return fresh.access_token;
 }
