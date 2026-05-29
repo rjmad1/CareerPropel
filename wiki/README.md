@@ -8,9 +8,11 @@ Welcome to the engineering and operational source of truth for **Career Propel**
 
 Career Propel is a production-grade, AI-native career management SaaS platform designed to orchestrate a candidate's entire job search lifecycle.
 
+*   **[Enterprise Platform Documentation Book](Enterprise-Grade-Platform-Documentation)**: Full 16-chapter exhaustive manual for CareerPropel.
 *   **[Branding & Nomenclature](../BRANDING_RENAME_REPORT.md)**: Details on the transition from Career Ops to Career Propel.
 *   **[Setup & Getting Started](../docs/getting-started.md)**: Local installation, environment configuration, and initial database setup.
 *   **[Demo Data Guide](../docs/DEMO_DATA_GUIDE.md)**: Guidelines for seeding demo, medium, and stress profiles.
+
 
 ---
 
