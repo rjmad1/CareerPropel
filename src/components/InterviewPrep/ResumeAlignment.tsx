@@ -13,6 +13,7 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { InterviewPrep } from '../../types/interview';
+import { sanitizeHtml } from '@/lib/security/sanitizeContent';
 
 interface ResumeAlignmentProps {
   prep: InterviewPrep;
@@ -218,7 +219,11 @@ export const ResumeAlignment: React.FC<ResumeAlignmentProps> = ({ prep }) => {
       const url = window.URL.createObjectURL(blob);
 
       const link = document.createElement('a');
-      link.href = url;
+      if (url && (url.startsWith('blob:') || url.startsWith('http://') || url.startsWith('https://'))) {
+        link.href = sanitizeHtml(url);
+      } else {
+        throw new Error('Blocked insecure URL creation');
+      }
       
       const sanitizedHeadline = tailoredResumeData.headline.replace(/[^a-zA-Z0-9]/g, '_').slice(0, 30);
       const filename = `Resume_${tailoredResumeData.fullName.replace(/\s+/g, '_')}_${sanitizedHeadline}.pdf`;

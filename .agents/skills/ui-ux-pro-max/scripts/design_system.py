@@ -194,8 +194,13 @@ class DesignSystemGenerator:
         reasoning_effects = reasoning.get("key_effects", "")
         combined_effects = style_effects if style_effects else reasoning_effects
 
+        # Ensure project name is sanitized if derived from query
+        if not project_name:
+            safe_query = "".join(c for c in query if c.isalnum() or c in (' ', '-', '_')).strip()
+            project_name = safe_query.upper() if safe_query else "DEFAULT"
+
         return {
-            "project_name": project_name or query.upper(),
+            "project_name": project_name,
             "category": category,
             "pattern": {
                 "name": best_landing.get("Pattern Name", reasoning.get("pattern", "Hero + Features + CTA")),
@@ -505,7 +510,9 @@ def persist_design_system(design_system: dict, page: str = None, output_dir: str
     
     # Use project name for project-specific folder
     project_name = design_system.get("project_name", "default")
-    project_slug = project_name.lower().replace(' ', '-')
+    # Sanitize project_slug to prevent any path traversal or invalid directory characters
+    safe_project_slug = "".join(c for c in project_name.lower() if c.isalnum() or c in ('-', '_')).strip()
+    project_slug = safe_project_slug if safe_project_slug else "default"
     
     design_system_dir = base_dir / "design-system" / project_slug
     pages_dir = design_system_dir / "pages"

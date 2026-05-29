@@ -5,6 +5,7 @@ export const dynamic = 'force-dynamic';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { getNotificationManager } from '@/lib/notifications/manager';
 import { NavLayout } from '@/components/Layout/NavLayout';
+import { sanitizeUrl, sanitizeText } from '@/lib/security/sanitizeContent';
 import { Button, Input, Textarea, Card, Modal, ModalHeader, ModalTitle, ModalBody, ModalFooter, Select } from '@/components/ui';
 import {
   Plus, Users, Mail, Link2, Building2, Briefcase, MessageSquare, Edit3, Trash2,
@@ -469,8 +470,8 @@ function ContactsTab() {
                   <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500 mb-2">
                     {contact.company && <span className="flex items-center gap-1"><Building2 className="w-3.5 h-3.5" />{contact.company}</span>}
                     {contact.role && <span className="flex items-center gap-1"><Briefcase className="w-3.5 h-3.5" />{contact.role}</span>}
-                    {contact.email && <a href={`mailto:${contact.email}`} className="flex items-center gap-1 hover:text-blue-600"><Mail className="w-3.5 h-3.5" />{contact.email}</a>}
-                    {contact.linkedInUrl && <a href={contact.linkedInUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-blue-600"><Link2 className="w-3.5 h-3.5" />LinkedIn<ExternalLink className="w-3 h-3" /></a>}
+                    {contact.email && <a href={sanitizeUrl(`mailto:${contact.email}`) || undefined} className="flex items-center gap-1 hover:text-blue-600"><Mail className="w-3.5 h-3.5" />{sanitizeText(contact.email)}</a>}
+                    {contact.linkedInUrl && <a href={sanitizeUrl(contact.linkedInUrl) || undefined} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-blue-600"><Link2 className="w-3.5 h-3.5" />LinkedIn<ExternalLink className="w-3 h-3" /></a>}
                   </div>
                   {/* Intelligence scores */}
                   {contact.influenceScore > 0 && (

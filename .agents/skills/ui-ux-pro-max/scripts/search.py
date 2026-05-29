@@ -73,24 +73,44 @@ if __name__ == "__main__":
 
     # Design system takes priority
     if args.design_system:
+        import os
+        safe_page = None
+        if args.page:
+            base = os.path.basename(args.page)
+            safe_page = "".join(c for c in base if c.isalnum() or c in ('-', '_'))
+
+        safe_project_name = None
+        if args.project_name:
+            base = os.path.basename(args.project_name)
+            safe_project_name = "".join(c for c in base if c.isalnum() or c in (' ', '-', '_')).strip()
+
+        safe_output_dir = None
+        if args.output_dir:
+            normalized = os.path.normpath(args.output_dir)
+            if ".." in normalized.split(os.path.sep):
+                raise ValueError("Path traversal sequence detected in output directory")
+            if os.path.isabs(normalized):
+                raise ValueError("Absolute paths not allowed for output directory")
+            safe_output_dir = normalized
+
         result = generate_design_system(
             args.query, 
-            args.project_name, 
+            safe_project_name, 
             args.format,
             persist=args.persist,
-            page=args.page,
-            output_dir=args.output_dir
+            page=safe_page,
+            output_dir=safe_output_dir
         )
         print(result)
         
         # Print persistence confirmation
         if args.persist:
-            project_slug = args.project_name.lower().replace(' ', '-') if args.project_name else "default"
+            project_slug = safe_project_name.lower().replace(' ', '-') if safe_project_name else "default"
             print("\n" + "=" * 60)
             print(f"✅ Design system persisted to design-system/{project_slug}/")
             print(f"   📄 design-system/{project_slug}/MASTER.md (Global Source of Truth)")
-            if args.page:
-                page_filename = args.page.lower().replace(' ', '-')
+            if safe_page:
+                page_filename = safe_page.lower().replace(' ', '-')
                 print(f"   📄 design-system/{project_slug}/pages/{page_filename}.md (Page Overrides)")
             print("")
             print(f"📖 Usage: When building a page, check design-system/{project_slug}/pages/[page].md first.")

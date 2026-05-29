@@ -9,6 +9,21 @@ npx prisma migrate resolve --rolled-back 20260523000000_add_jobid_mock_session_u
 npx prisma migrate resolve --rolled-back 20260524000000_runtime_modernization && echo "OK: 20260524000000 resolved" || echo "WARN: 20260524000000 resolve had non-zero exit (may already be applied or not exist)"
 npx prisma migrate resolve --rolled-back 20260528000000_rbac_governance && echo "OK: 20260528000000 resolved" || echo "WARN: 20260528000000 resolve had non-zero exit (may already be applied or not exist)"
 
-npx prisma migrate deploy
+if npx prisma migrate deploy; then
+  echo "✅ Prisma migrations deployed successfully."
+else
+  echo "⚠️ Prisma migrate deploy failed. Checking for physical schema drift..."
+  # Run diff check. In git bash/cmd, we can search for the "No difference detected" line.
+  # Output might contain this exact phrase. Let's capture the diff output.
+  DIFF_OUT=$(npx prisma migrate diff --from-schema-datamodel prisma/schema.prisma --to-schema-datasource prisma/schema.prisma 2>&1 || true)
+  if echo "$DIFF_OUT" | grep -q "No difference detected"; then
+    echo "✅ No database schema drift detected. Proceeding safely (database was likely synced via db push)."
+  else
+    echo "❌ Database schema drift detected! Aborting build."
+    echo "$DIFF_OUT"
+    exit 1
+  fi
+fi
+
 npx prisma generate
 next build

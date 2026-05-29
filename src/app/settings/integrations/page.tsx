@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { getNotificationManager } from '@/lib/notifications/manager';
 import { NavLayout } from '@/components/Layout/NavLayout';
+import { sanitizeUrl } from '@/lib/security/sanitizeContent';
 import { Card, CardBody, Button } from '@/components/ui';
 import {
   Calendar,
@@ -298,7 +299,7 @@ export default function IntegrationsPage() {
                     <div className="flex items-center gap-2 shrink-0 flex-wrap justify-end">
                       {/* External info link */}
                       {integration.infoHref && (
-                        <a href={integration.infoHref}>
+                        <a href={integration.infoHref ? (sanitizeUrl(integration.infoHref) || undefined) : undefined}>
                           <Button variant="secondary" size="sm" className="flex items-center gap-1.5">
                             <ExternalLink className="w-3.5 h-3.5" />
                             {integration.infoLabel ?? 'Open'}
@@ -330,7 +331,7 @@ export default function IntegrationsPage() {
                             <Link2Off className="w-4 h-4" />
                           </button>
                         ) : (
-                          <a href={integration.connectHref}>
+                          <a href={integration.connectHref ? (sanitizeUrl(integration.connectHref) || undefined) : undefined}>
                             <Button variant="primary" size="sm" className="flex items-center gap-1.5" disabled={integration.loading}>
                               <LinkIcon className="w-3.5 h-3.5" />
                               Connect
