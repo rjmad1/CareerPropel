@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { sanitizeText, sanitizeUrl } from '@/lib/security/sanitizeContent'
+import { sanitizeText, sanitizeUrl, sanitizeHtml } from '@/lib/security/sanitizeContent'
 
 describe('sanitizeContent', () => {
   describe('sanitizeText', () => {
@@ -58,4 +58,22 @@ describe('sanitizeContent', () => {
       expect(sanitizeUrl('http://[')).toBe(null)
     })
   })
+
+  describe('sanitizeHtml', () => {
+    it('keeps safe tags on client and strips unsafe tags', () => {
+      const input = '<b>Hello</b> <script>alert(1)</script>'
+      expect(sanitizeHtml(input)).toBe('<b>Hello</b> ')
+    })
+
+    it('strips all tags on server fallback', () => {
+      (global as any).__MOCK_SERVER__ = true;
+      try {
+        const input = '<b>Hello</b> <script>alert(1)</script>'
+        expect(sanitizeHtml(input)).toBe('Hello ')
+      } finally {
+        delete (global as any).__MOCK_SERVER__;
+      }
+    })
+  })
 })
+

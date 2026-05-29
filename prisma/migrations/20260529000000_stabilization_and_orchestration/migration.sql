@@ -15,9 +15,19 @@
 -- Stage 1 statements in a separate autocommit database session (outside of a transaction block).
 
 -- ─── STAGE 1: ENUM EXTENSIONS ───────────────────────────────────────────────
+-- Pre-create enums defensively if they are missing in the target database
+DO $$ BEGIN
+  CREATE TYPE "AgentExecutionStatus" AS ENUM ('queued', 'running', 'paused', 'completed', 'failed', 'interrupted');
+EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+
+DO $$ BEGIN
+  CREATE TYPE "InterviewStatus" AS ENUM ('scheduled', 'completed', 'cancelled', 'rescheduled', 'no_show');
+EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+
 ALTER TYPE "AgentExecutionStatus" ADD VALUE IF NOT EXISTS 'paused';
 ALTER TYPE "AgentExecutionStatus" ADD VALUE IF NOT EXISTS 'interrupted';
 ALTER TYPE "InterviewStatus" ADD VALUE IF NOT EXISTS 'no_show';
+
 
 
 -- ─── STAGE 2: ENUM CREATION ──────────────────────────────────────────────────
