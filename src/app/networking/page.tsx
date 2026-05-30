@@ -467,12 +467,20 @@ function ContactsTab() {
                     <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border ${STATUS_STYLES[contact.status]}`}>{STATUS_LABELS[contact.status]}</span>
                     <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">{TYPE_LABELS[contact.type]}</span>
                   </div>
-                  <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500 mb-2">
-                    {contact.company && <span className="flex items-center gap-1"><Building2 className="w-3.5 h-3.5" />{contact.company}</span>}
-                    {contact.role && <span className="flex items-center gap-1"><Briefcase className="w-3.5 h-3.5" />{contact.role}</span>}
-                    {contact.email && <a href={sanitizeUrl(`mailto:${contact.email}`) || undefined} className="flex items-center gap-1 hover:text-blue-600"><Mail className="w-3.5 h-3.5" />{sanitizeText(contact.email)}</a>}
-                    {contact.linkedInUrl && <a href={sanitizeUrl(contact.linkedInUrl) || undefined} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-blue-600"><Link2 className="w-3.5 h-3.5" />LinkedIn<ExternalLink className="w-3 h-3" /></a>}
-                  </div>
+                  {(() => {
+                    const mailtoUrl = contact.email ? sanitizeUrl(`mailto:${contact.email}`) : null;
+                    const safeMailto = mailtoUrl && mailtoUrl.startsWith('mailto:') ? mailtoUrl : undefined;
+                    const linkedInUrl = contact.linkedInUrl ? sanitizeUrl(contact.linkedInUrl) : null;
+                    const safeLinkedIn = linkedInUrl && (linkedInUrl.startsWith('http://') || linkedInUrl.startsWith('https://')) ? linkedInUrl : undefined;
+                    return (
+                      <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500 mb-2">
+                        {contact.company && <span className="flex items-center gap-1"><Building2 className="w-3.5 h-3.5" />{contact.company}</span>}
+                        {contact.role && <span className="flex items-center gap-1"><Briefcase className="w-3.5 h-3.5" />{contact.role}</span>}
+                        {contact.email && safeMailto && <a href={safeMailto} className="flex items-center gap-1 hover:text-blue-600"><Mail className="w-3.5 h-3.5" />{sanitizeText(contact.email)}</a>}
+                        {contact.linkedInUrl && safeLinkedIn && <a href={safeLinkedIn} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 hover:text-blue-600"><Link2 className="w-3.5 h-3.5" />LinkedIn<ExternalLink className="w-3 h-3" /></a>}
+                      </div>
+                    );
+                  })()}
                   {/* Intelligence scores */}
                   {contact.influenceScore > 0 && (
                     <div className="mt-2 space-y-1 p-3 bg-slate-50 rounded-lg border border-slate-100">

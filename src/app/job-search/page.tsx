@@ -415,6 +415,7 @@ export default function JobSearchPage() {
               const isImporting = importing.has(idx);
               const isImported = imported.has(idx);
               const safeUrl = sanitizeUrl(job.url);
+              const hrefUrl = safeUrl && (safeUrl.startsWith('http://') || safeUrl.startsWith('https://')) ? safeUrl : undefined;
 
               return (
                 <Card key={idx} className={isImported ? 'border-green-200 dark:border-green-900' : ''}>
@@ -467,9 +468,9 @@ export default function JobSearchPage() {
                     </div>
 
                     <div className="flex sm:flex-col items-center sm:items-end gap-2 shrink-0">
-                      {safeUrl && (
+                      {hrefUrl && (
                         <a
-                          href={safeUrl}
+                          href={hrefUrl}
                           target="_blank"
                           rel="noreferrer noopener"
                           className="p-2 text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"

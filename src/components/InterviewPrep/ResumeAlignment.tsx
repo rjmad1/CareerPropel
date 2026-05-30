@@ -13,7 +13,6 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { InterviewPrep } from '../../types/interview';
-import { sanitizeHtml } from '@/lib/security/sanitizeContent';
 
 interface ResumeAlignmentProps {
   prep: InterviewPrep;
@@ -219,8 +218,9 @@ export const ResumeAlignment: React.FC<ResumeAlignmentProps> = ({ prep }) => {
       const url = window.URL.createObjectURL(blob);
 
       const link = document.createElement('a');
-      if (url && (url.startsWith('blob:') || url.startsWith('http://') || url.startsWith('https://'))) {
-        link.href = sanitizeHtml(url);
+      const safeUrl = url && (url.startsWith('blob:') || url.startsWith('http://') || url.startsWith('https://')) ? url : undefined;
+      if (safeUrl) {
+        link.href = safeUrl;
       } else {
         throw new Error('Blocked insecure URL creation');
       }

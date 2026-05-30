@@ -59,12 +59,14 @@ function getPurify() {
 
 ### C. URL-Context vs. HTML-Context Separation
 - **`sanitizeUrl(url)`**: Returns a validated URL only if it uses a safe protocol (`http:`, `https:`, `mailto:`, `tel:`). It does not need `DOMPurify` because protocol validation is sufficient to prevent `javascript:` XSS vectors in `href`.
-- **Audit Findings:** We have verified that the pages using `sanitizeUrl` place the output exclusively inside `href` attributes:
-  - `src/app/job-search/page.tsx`: `<a href={safeUrl}>`
-  - `src/app/jobs/page.tsx`: `<a href={safeUrl}>`
-  - `src/app/settings/integrations/page.tsx`: `<a href={sanitizeUrl(url)}>`
-  - `src/app/networking/page.tsx`: `<a href={sanitizeUrl(url)}>`
-  These are safe URL-only contexts. No `dangerouslySetInnerHTML` is used with these URLs.
+- **Audit Findings & Recent Fortifications:** We have verified that the pages using `sanitizeUrl` place the output exclusively inside `href` attributes:
+  - `src/app/job-search/page.tsx`: `<a href={safeUrl}>` (Fortified: strictly checks for `http://` or `https://` prefix)
+  - `src/app/jobs/page.tsx`: `<a href={safeUrl}>` (Fortified: strictly checks for `http://` or `https://` prefix)
+  - `src/app/settings/integrations/page.tsx`: `<a href={sanitizeUrl(url)}>` (Fortified: validates `http://` or `https://` prefixes for both `infoHref` and `connectHref`)
+  - `src/app/networking/page.tsx`: `<a href={sanitizeUrl(url)}>` (Fortified: strictly filters `mailto:` prefix for emails and `http://`/`https://` prefixes for LinkedIn URLs)
+  - `src/components/InterviewPrep/ResumeAlignment.tsx`: (Fortified: strictly filters `blob:` prefix or `http://`/`https://` prefixes for generated/external PDF links)
+
+  These are safe URL-only contexts, further hardened with strict protocol scheme checks to ensure malformed or relative protocol bypasses are rejected. No `dangerouslySetInnerHTML` is used with these URLs.
 
 ## 5. Sanitization Contracts (Test Specifications)
 To ensure the behavior is deterministic and secure, we define the following contracts:

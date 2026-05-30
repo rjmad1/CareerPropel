@@ -406,6 +406,7 @@ function ImportJobsModal({ open, onClose, onImported }: { open: boolean; onClose
               <div className="space-y-2.5 max-h-[250px] overflow-y-auto pr-1">
                 {results.map((job, i) => {
                   const safeUrl = sanitizeUrl(job.url);
+                  const hrefUrl = safeUrl && (safeUrl.startsWith('http://') || safeUrl.startsWith('https://')) ? safeUrl : undefined;
                   return (
                     <div
                       key={i}
@@ -424,8 +425,8 @@ function ImportJobsModal({ open, onClose, onImported }: { open: boolean; onClose
                         <p className="text-xs font-medium text-slate-500 mt-0.5">{sanitizeText(job.company)} · {sanitizeText(job.location)}</p>
                         {job.description && <p className="text-xs text-slate-400 truncate mt-1">{sanitizeText(job.description)}</p>}
                       </div>
-                      {!safeUrl || (!safeUrl.startsWith('http://') && !safeUrl.startsWith('https://')) ? null : (
-                        <a href={safeUrl} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} className="flex-shrink-0 text-xs font-semibold text-blue-600 hover:text-blue-700 border border-blue-200 hover:border-blue-300 bg-blue-50/50 hover:bg-blue-50 px-2.5 py-1 rounded-md transition-colors">
+                      {hrefUrl && (
+                        <a href={hrefUrl} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()} className="flex-shrink-0 text-xs font-semibold text-blue-600 hover:text-blue-700 border border-blue-200 hover:border-blue-300 bg-blue-50/50 hover:bg-blue-50 px-2.5 py-1 rounded-md transition-colors">
                           View
                         </a>
                       )}

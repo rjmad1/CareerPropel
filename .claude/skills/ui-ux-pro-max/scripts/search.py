@@ -86,6 +86,12 @@ if __name__ == "__main__":
 
         safe_output_dir = None
         if args.output_dir:
+            # Prevent path traversal by ensuring output directory resolves within CWD
+            cwd_abs = os.path.abspath(os.getcwd())
+            target_abs = os.path.abspath(os.path.normpath(args.output_dir))
+            if not target_abs.startswith(cwd_abs):
+                raise ValueError("Path traversal sequence detected in output directory")
+
             normalized = os.path.normpath(args.output_dir)
             if ".." in normalized.split(os.path.sep):
                 raise ValueError("Path traversal sequence detected in output directory")

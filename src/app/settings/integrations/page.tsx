@@ -261,88 +261,96 @@ export default function IntegrationsPage() {
                 <span>{label}</span>
               </div>
 
-              {items.map((integration) => (
-                <Card key={integration.id}>
-                  <CardBody className="p-5 flex items-center gap-4 justify-between flex-wrap sm:flex-nowrap">
-                    <div className="flex items-center gap-4 min-w-0">
-                      <div className="shrink-0">{integration.icon}</div>
-                      <div className="min-w-0">
-                        <div className="flex items-center flex-wrap gap-2">
-                          <span className="text-sm font-bold text-slate-800 dark:text-slate-200">
-                            {integration.name}
-                          </span>
-                          {integration.connected === true && (
-                            <span className="flex items-center gap-1 text-2xs font-semibold text-green-700 dark:text-green-400">
-                              <CheckCircle className="w-3 h-3" />
-                              Connected
+              {items.map((integration) => {
+                const infoUrl = integration.infoHref ? sanitizeUrl(integration.infoHref) : null;
+                const safeInfoUrl = infoUrl && (infoUrl.startsWith('/') || infoUrl.startsWith('http://') || infoUrl.startsWith('https://')) ? infoUrl : undefined;
+                const connectUrl = integration.connectHref ? sanitizeUrl(integration.connectHref) : null;
+                const safeConnectUrl = connectUrl && (connectUrl.startsWith('/') || connectUrl.startsWith('http://') || connectUrl.startsWith('https://')) ? connectUrl : undefined;
+                return (
+                  <Card key={integration.id}>
+                    <CardBody className="p-5 flex items-center gap-4 justify-between flex-wrap sm:flex-nowrap">
+                      <div className="flex items-center gap-4 min-w-0">
+                        <div className="shrink-0">{integration.icon}</div>
+                        <div className="min-w-0">
+                          <div className="flex items-center flex-wrap gap-2">
+                            <span className="text-sm font-bold text-slate-800 dark:text-slate-200">
+                              {integration.name}
                             </span>
-                          )}
-                          {integration.connected === false && (
-                            <span className="text-2xs font-medium text-slate-400">Not connected</span>
-                          )}
-                          {integration.connected === null && (
-                            <span className="text-2xs font-medium text-amber-600 dark:text-amber-400">Feature-flagged</span>
+                            {integration.connected === true && (
+                              <span className="flex items-center gap-1 text-2xs font-semibold text-green-700 dark:text-green-400">
+                                <CheckCircle className="w-3 h-3" />
+                                Connected
+                              </span>
+                            )}
+                            {integration.connected === false && (
+                              <span className="text-2xs font-medium text-slate-400">Not connected</span>
+                            )}
+                            {integration.connected === null && (
+                              <span className="text-2xs font-medium text-amber-600 dark:text-amber-400">Feature-flagged</span>
+                            )}
+                          </div>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                            {integration.description}
+                          </p>
+                          {integration.statusNote && (
+                            <p className="flex items-center gap-1 text-2xs text-slate-400 mt-1">
+                              <Info className="w-3 h-3 shrink-0" />
+                              {integration.statusNote}
+                            </p>
                           )}
                         </div>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                          {integration.description}
-                        </p>
-                        {integration.statusNote && (
-                          <p className="flex items-center gap-1 text-2xs text-slate-400 mt-1">
-                            <Info className="w-3 h-3 shrink-0" />
-                            {integration.statusNote}
-                          </p>
-                        )}
                       </div>
-                    </div>
 
-                    <div className="flex items-center gap-2 shrink-0 flex-wrap justify-end">
-                      {/* External info link */}
-                      {integration.infoHref && (
-                        <a href={integration.infoHref ? (sanitizeUrl(integration.infoHref) || undefined) : undefined}>
-                          <Button variant="secondary" size="sm" className="flex items-center gap-1.5">
-                            <ExternalLink className="w-3.5 h-3.5" />
-                            {integration.infoLabel ?? 'Open'}
-                          </Button>
-                        </a>
-                      )}
-
-                      {/* Sync button (calendar only when connected) */}
-                      {integration.syncAction && integration.connected && (
-                        <button
-                          onClick={integration.syncAction}
-                          disabled={integration.loading}
-                          className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors disabled:opacity-50"
-                          title="Sync"
-                        >
-                          <RefreshCw className={`w-4 h-4 ${syncing === integration.id.replace('-calendar', '') ? 'animate-spin text-blue-500' : ''}`} />
-                        </button>
-                      )}
-
-                      {/* Connect / Disconnect */}
-                      {integration.connectHref !== undefined && (
-                        integration.connected ? (
-                          <button
-                            onClick={integration.disconnectAction}
-                            disabled={integration.loading}
-                            className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-colors disabled:opacity-50"
-                            title="Disconnect"
-                          >
-                            <Link2Off className="w-4 h-4" />
-                          </button>
-                        ) : (
-                          <a href={integration.connectHref ? (sanitizeUrl(integration.connectHref) || undefined) : undefined}>
-                            <Button variant="primary" size="sm" className="flex items-center gap-1.5" disabled={integration.loading}>
-                              <LinkIcon className="w-3.5 h-3.5" />
-                              Connect
+                      <div className="flex items-center gap-2 shrink-0 flex-wrap justify-end">
+                        {/* External info link */}
+                        {integration.infoHref && safeInfoUrl && (
+                          <a href={safeInfoUrl}>
+                            <Button variant="secondary" size="sm" className="flex items-center gap-1.5">
+                              <ExternalLink className="w-3.5 h-3.5" />
+                              {integration.infoLabel ?? 'Open'}
                             </Button>
                           </a>
-                        )
-                      )}
-                    </div>
-                  </CardBody>
-                </Card>
-              ))}
+                        )}
+
+                        {/* Sync button (calendar only when connected) */}
+                        {integration.syncAction && integration.connected && (
+                          <button
+                            onClick={integration.syncAction}
+                            disabled={integration.loading}
+                            className="p-2 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors disabled:opacity-50"
+                            title="Sync"
+                          >
+                            <RefreshCw className={`w-4 h-4 ${syncing === integration.id.replace('-calendar', '') ? 'animate-spin text-blue-500' : ''}`} />
+                          </button>
+                        )}
+
+                        {/* Connect / Disconnect */}
+                        {integration.connectHref !== undefined && (
+                          integration.connected ? (
+                            <button
+                              onClick={integration.disconnectAction}
+                              disabled={integration.loading}
+                              className="p-2 text-red-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg transition-colors disabled:opacity-50"
+                              title="Disconnect"
+                            >
+                              <Link2Off className="w-4 h-4" />
+                            </button>
+                          ) : (
+                            safeConnectUrl && (
+                              <a href={safeConnectUrl}>
+                                <Button variant="primary" size="sm" className="flex items-center gap-1.5" disabled={integration.loading}>
+                                  <LinkIcon className="w-3.5 h-3.5" />
+                                  Connect
+                                </Button>
+                              </a>
+                            )
+                          )
+                        )}
+                      </div>
+                    </CardBody>
+                  </Card>
+                );
+              })}
             </section>
           );
         })}
