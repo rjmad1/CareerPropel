@@ -11,10 +11,45 @@ module.exports = {
         xs: '320px',
       },
       colors: {
-        // Semantic colors
-        primary: 'rgb(var(--color-primary))',
-        'primary-dark': 'rgb(var(--color-primary-dark))',
-        secondary: 'rgb(var(--color-secondary))',
+        // shadcn/ui colors
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
+        },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
+        accent: {
+          DEFAULT: 'hsl(var(--accent))',
+          foreground: 'hsl(var(--accent-foreground))',
+        },
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
+        },
+        
+        // Semantic colors (Legacy backup)
+        'color-primary': 'rgb(var(--color-primary))',
+        'color-primary-dark': 'rgb(var(--color-primary-dark))',
+        'color-secondary': 'rgb(var(--color-secondary))',
         success: 'rgb(var(--color-success))',
         warning: 'rgb(var(--color-warning))',
         error: 'rgb(var(--color-error))',
@@ -63,11 +98,11 @@ module.exports = {
         lg: '0px 10px 15px -3px rgba(0, 0, 0, 0.1)',
       },
       borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
         none: '0',
-        sm: '0.375rem',
         base: '0.5rem',
-        md: '0.625rem',
-        lg: '0.75rem',
         xl: '1rem',
       },
     },

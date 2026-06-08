@@ -1,5 +1,5 @@
 import React from 'react'
-import { cn } from '@/lib/utils'
+import { cn } from "@/lib/utils"
 
 export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -16,20 +16,20 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   circle?: boolean
 }
 
-/**
- * Skeleton Component
- * Placeholder component for loading states.
- */
-export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
-  ({ width = 'w-full', height = 'h-8', circle = false, className, ...props }, ref) => (
+function Skeleton({
+  className,
+  width,
+  height,
+  circle = false,
+  ...props
+}: SkeletonProps) {
+  return (
     <div
-      ref={ref}
       className={cn(
-        'bg-gray-200 animate-pulse',
-        circle && 'rounded-full',
-        !circle && 'rounded',
-        width,
-        height,
+        "animate-pulse bg-muted",
+        circle ? "rounded-full" : "rounded-lg",
+        width || "w-full",
+        height || "h-4",
         className
       )}
       aria-busy="true"
@@ -37,6 +37,6 @@ export const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
       {...props}
     />
   )
-)
+}
 
-Skeleton.displayName = 'Skeleton'
+export { Skeleton }

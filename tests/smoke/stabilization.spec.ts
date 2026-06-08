@@ -9,6 +9,7 @@ test.describe('Stabilization Smoke Tests', () => {
 
     // 1. Visit sign-in page
     await page.goto('/login');
+    await page.waitForLoadState('networkidle');
 
     // 2. Perform dev bypass login using the seeded candidate's credentials
     await page.fill('input[type="email"]', 'rajajeevankumar@gmail.com');

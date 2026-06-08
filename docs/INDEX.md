@@ -6,7 +6,7 @@ All canonical documentation for CareerPropel. Start here.
 
 ## Getting Started
 
-- [Setup Guide](getting-started.md) — local dev environment
+- [Setup Guide](../wiki/runbooks/local-dev.md) — local dev environment
 - [CONTRIBUTING.md](../CONTRIBUTING.md) — contribution workflow
 - [AI-Assisted Workflow](ai-assisted-sdlc-workflow.md) — using AI assistants with the spec kit
 

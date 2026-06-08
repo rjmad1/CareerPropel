@@ -2,6 +2,7 @@ import { recordProviderExecution, recordProviderRetry, recordProviderCircuitOpen
 import { recordProviderObservation } from '@/lib/observability/provider-health';
 import { ProviderCircuitOpenError } from '@/lib/queue/retry-policy';
 import { runtimeSettings } from '@/lib/runtime/settings';
+import { trace as otelTrace, SpanStatusCode } from '@opentelemetry/api';
 
 type ProviderState = {
   consecutiveFailures: number;
@@ -57,7 +58,21 @@ export async function runWithProviderResilience<T>(
   providerId: string,
   operation: () => Promise<T>
 ): Promise<T> {
-  enforceCircuit(providerId);
+  const otelTracer = otelTrace.getTracer('career-propel');
+  const span = otelTracer.startSpan(`resilience.${providerId}.execute`, {
+    attributes: {
+      'provider.id': providerId,
+    }
+  });
+
+  try {
+    enforceCircuit(providerId);
+  } catch (err) {
+    span.setStatus({ code: SpanStatusCode.ERROR, message: err instanceof Error ? err.message : String(err) });
+    span.end();
+    throw err;
+  }
+
   const startedAt = Date.now();
 
   try {
@@ -66,6 +81,7 @@ export async function runWithProviderResilience<T>(
     onProviderSuccess(providerId);
     recordProviderExecution(providerId, durationMs, true);
     recordProviderObservation(providerId, durationMs, true);
+    span.setStatus({ code: SpanStatusCode.OK });
     return result;
   } catch (error) {
     const durationMs = Date.now() - startedAt;
@@ -74,7 +90,11 @@ export async function runWithProviderResilience<T>(
     recordProviderObservation(providerId, durationMs, false, {
       isTimeout: durationMs > 10_000,
     });
+    span.setStatus({ code: SpanStatusCode.ERROR, message: error instanceof Error ? error.message : String(error) });
+    span.recordException(error instanceof Error ? error : new Error(String(error)));
     throw error;
+  } finally {
+    span.end();
   }
 }
 
@@ -82,7 +102,21 @@ export async function* runStreamWithProviderResilience<T>(
   providerId: string,
   operation: () => AsyncIterable<T>
 ): AsyncIterable<T> {
-  enforceCircuit(providerId);
+  const otelTracer = otelTrace.getTracer('career-propel');
+  const span = otelTracer.startSpan(`resilience.${providerId}.stream`, {
+    attributes: {
+      'provider.id': providerId,
+    }
+  });
+
+  try {
+    enforceCircuit(providerId);
+  } catch (err) {
+    span.setStatus({ code: SpanStatusCode.ERROR, message: err instanceof Error ? err.message : String(err) });
+    span.end();
+    throw err;
+  }
+
   const startedAt = Date.now();
 
   try {
@@ -93,6 +127,7 @@ export async function* runStreamWithProviderResilience<T>(
     onProviderSuccess(providerId);
     recordProviderExecution(providerId, durationMs, true);
     recordProviderObservation(providerId, durationMs, true);
+    span.setStatus({ code: SpanStatusCode.OK });
   } catch (error) {
     const durationMs = Date.now() - startedAt;
     onProviderFailure(providerId);
@@ -100,6 +135,10 @@ export async function* runStreamWithProviderResilience<T>(
     recordProviderObservation(providerId, durationMs, false, {
       isTimeout: durationMs > 10_000,
     });
+    span.setStatus({ code: SpanStatusCode.ERROR, message: error instanceof Error ? error.message : String(error) });
+    span.recordException(error instanceof Error ? error : new Error(String(error)));
     throw error;
+  } finally {
+    span.end();
   }
 }

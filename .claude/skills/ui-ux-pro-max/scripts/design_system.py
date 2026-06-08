@@ -506,7 +506,18 @@ def persist_design_system(design_system: dict, page: str = None, output_dir: str
     Returns:
         dict with created file paths and status
     """
-    base_dir = Path(output_dir) if output_dir else Path.cwd()
+    # Securely resolve base_dir to prevent path traversal
+    base_dir = Path.cwd()
+    if output_dir:
+        try:
+            cwd = Path.cwd().resolve()
+            target_path = Path(output_dir).resolve()
+            if target_path == cwd or cwd in target_path.parents:
+                base_dir = target_path
+            else:
+                base_dir = cwd
+        except Exception:
+            base_dir = Path.cwd()
     
     # Use project name for project-specific folder
     project_name = design_system.get("project_name", "default")
@@ -531,9 +542,15 @@ def persist_design_system(design_system: dict, page: str = None, output_dir: str
         f.write(master_content)
     created_files.append(str(master_file))
     
-    # If page is specified, create page override file with intelligent content
+    # Strictly sanitize page to prevent path traversal in override files
+    safe_page_name = None
     if page:
-        page_file = pages_dir / f"{page.lower().replace(' ', '-')}.md"
+        base_page = os.path.basename(page)
+        safe_page_name = "".join(c for c in base_page.lower() if c.isalnum() or c in ('-', '_')).strip()
+    
+    # If page is specified, create page override file with intelligent content
+    if safe_page_name:
+        page_file = pages_dir / f"{safe_page_name}.md"
         page_content = format_page_override_md(design_system, page, page_query)
         with open(page_file, 'w', encoding='utf-8') as f:
             f.write(page_content)

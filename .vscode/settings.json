@@ -26,5 +26,17 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "snyk.advanced.organization": "cdd1c847-d2a7-4c82-af9e-8f3b7a93bd03",
   "snyk.advanced.autoSelectOrganization": true,
-  "prisma.pinToPrisma6": true
+  "prisma.pinToPrisma6": true,
+
+  "editor.inlineSuggest.enabled": true,
+  "editor.minimap.enabled": false,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  "explorer.compactFolders": false,
+  "git.autofetch": true,
+  "search.followSymlinks": false,
+
+  "errorLens.excludeBySource": ["cSpell"],
+  "errorLens.severity": ["error", "warning"],
+  "errorLens.followCursor": "active"
 }

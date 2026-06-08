@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/db';
+import * as otel from '@/platform/telemetry/metrics';
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -95,6 +96,8 @@ export function recordQueueMetric(queueName: string, durationMs: number, success
   metric.maxDurationMs = Math.max(metric.maxDurationMs, durationMs);
   pushLatencySample(metric.latencySamples, durationMs);
   if (!success) metric.failures += 1;
+
+  otel.queueLatency.record(durationMs, { queueName, success: String(success) });
 }
 
 // ── Worker ─────────────────────────────────────────────────────────────────
@@ -102,6 +105,8 @@ export function recordQueueMetric(queueName: string, durationMs: number, success
 export function recordWorkerRetry(workerName: string) {
   const metric = getAggregate(workerMetrics, workerName);
   metric.retries += 1;
+
+  otel.workerRetries.add(1, { workerName });
 }
 
 export function recordWorkerExecution(workerName: string, durationMs: number, success: boolean) {
@@ -111,6 +116,8 @@ export function recordWorkerExecution(workerName: string, durationMs: number, su
   metric.maxDurationMs = Math.max(metric.maxDurationMs, durationMs);
   pushLatencySample(metric.latencySamples, durationMs);
   if (!success) metric.failures += 1;
+
+  otel.workerLatency.record(durationMs, { workerName, success: String(success) });
 }
 
 // ── Provider ───────────────────────────────────────────────────────────────
@@ -137,6 +144,8 @@ export function recordProviderExecution(providerId: string, durationMs: number, 
   }
 
   providerMetrics.set(providerId, metric);
+
+  otel.providerLatency.record(durationMs, { providerId, success: String(success) });
 }
 
 export function recordProviderRetry(providerId: string) {
@@ -152,6 +161,8 @@ export function recordProviderRetry(providerId: string) {
   };
   metric.retries += 1;
   providerMetrics.set(providerId, metric);
+
+  otel.providerRetries.add(1, { providerId });
 }
 
 export function recordProviderCircuitOpen(providerId: string) {
@@ -167,6 +178,8 @@ export function recordProviderCircuitOpen(providerId: string) {
   };
   metric.circuitOpenCount += 1;
   providerMetrics.set(providerId, metric);
+
+  otel.providerCircuitOpens.add(1, { providerId });
 }
 
 // ── Concurrency gauge ──────────────────────────────────────────────────────
@@ -174,12 +187,16 @@ export function recordProviderCircuitOpen(providerId: string) {
 export function incrementConcurrency(userId: string, agentType: string) {
   const key = `${userId}:${agentType}`;
   concurrencyGauge.set(key, (concurrencyGauge.get(key) ?? 0) + 1);
+
+  otel.activeConcurrency.add(1, { userId, agentType });
 }
 
 export function decrementConcurrency(userId: string, agentType: string) {
   const key = `${userId}:${agentType}`;
   const current = concurrencyGauge.get(key) ?? 0;
   concurrencyGauge.set(key, Math.max(0, current - 1));
+
+  otel.activeConcurrency.add(-1, { userId, agentType });
 }
 
 export function getTotalActiveConcurrency(): number {
@@ -190,25 +207,54 @@ export function getTotalActiveConcurrency(): number {
 
 // ── SSE gauge ──────────────────────────────────────────────────────────────
 
-export function incrementSseStreams()         { sseActiveStreams += 1; }
-export function decrementSseStreams()         { sseActiveStreams = Math.max(0, sseActiveStreams - 1); }
-export function recordSseDisconnect()        { sseDisconnects += 1; decrementSseStreams(); }
-export function recordSseHeartbeatFailure()  { sseHeartbeatFailures += 1; }
+export function incrementSseStreams() {
+  sseActiveStreams += 1;
+  otel.sseActiveStreams.add(1);
+}
+
+export function decrementSseStreams() {
+  sseActiveStreams = Math.max(0, sseActiveStreams - 1);
+  otel.sseActiveStreams.add(-1);
+}
+
+export function recordSseDisconnect() {
+  sseDisconnects += 1;
+  decrementSseStreams();
+  otel.sseDisconnects.add(1);
+}
+
+export function recordSseHeartbeatFailure() {
+  sseHeartbeatFailures += 1;
+  otel.sseHeartbeatFailures.add(1);
+}
 
 // ── DLQ depth ──────────────────────────────────────────────────────────────
 
-export function updateDlqDepth(depth: number) { dlqDepth = depth; }
+export function updateDlqDepth(depth: number) {
+  const delta = depth - dlqDepth;
+  dlqDepth = depth;
+  otel.dlqDepth.add(delta);
+}
 
 // ── Product Funnel Analytics ───────────────────────────────────────────────
 
-export function recordOnboardingCompletion() { onboardingCompletions += 1; }
+export function recordOnboardingCompletion() {
+  onboardingCompletions += 1;
+  otel.onboardingCompletions.add(1);
+}
+
 export function recordResumeUpload(success: boolean) {
   if (success) resumeUploadSuccesses += 1;
   else resumeUploadFailures += 1;
+
+  otel.resumeUploads.add(1, { success: String(success) });
 }
+
 export function recordAiExtraction(source: 'ai' | 'fallback') {
   if (source === 'ai') aiExtractionSuccesses += 1;
   else aiExtractionFallbackDegraded += 1;
+
+  otel.aiExtractions.add(1, { source });
 }
 
 // ── Snapshot ───────────────────────────────────────────────────────────────

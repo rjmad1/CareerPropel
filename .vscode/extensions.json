@@ -2,10 +2,30 @@
   "recommendations": [
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
-    "prisma.prisma",
     "bradlc.vscode-tailwindcss",
+    "prisma.prisma",
     "eamodio.gitlens",
     "ms-azuretools.vscode-docker",
-    "rangav.vscode-thunder-client"
+    "rangav.vscode-thunder-client",
+    "Continue.continue",
+    "GitHub.copilot",
+    "GitHub.copilot-chat",
+    "RooManiac.roo-cline",
+    "EFanZh.graphviz-preview",
+    "shd101wyy.markdown-preview-enhanced",
+    "rbbit.typescript-hero",
+    "usernamehw.errorlens",
+    "mtxr.sqltools",
+    "mtxr.sqltools-driver-pg",
+    "cweijan.vscode-redis-client",
+    "aquasecurityofficial.trivy-vulnerability-scanner",
+    "SonarSource.sonarlint-vscode",
+    "ms-playwright.playwright",
+    "firsttris.vscode-jest-runner",
+    "bierner.markdown-mermaid",
+    "hediet.vscode-drawio",
+    "ms-azuretools.vscode-opentelemetry",
+    "christian-kohler.npm-intellisense",
+    "pflannery.vscode-versionlens"
   ]
 }

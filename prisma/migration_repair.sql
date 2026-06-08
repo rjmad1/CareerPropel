@@ -8,6 +8,9 @@ BEGIN
   IF NOT EXISTS (
     SELECT 1 FROM information_schema.tables 
     WHERE table_schema = 'public' AND table_name = 'WorkflowDefinition'
+  ) OR NOT EXISTS (
+    SELECT 1 FROM information_schema.tables 
+    WHERE table_schema = 'public' AND table_name = 'AiProviderConfig'
   ) THEN
     DELETE FROM "_prisma_migrations" WHERE "migration_name" = '20260529000000_stabilization_and_orchestration';
   END IF;

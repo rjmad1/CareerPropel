@@ -5,7 +5,7 @@ export const dynamic = 'force-dynamic';
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { getNotificationManager } from '@/lib/notifications/manager';
 import { NavLayout } from '@/components/Layout/NavLayout';
-import { sanitizeUrl, sanitizeText } from '@/lib/security/sanitizeContent';
+import { sanitizeText } from '@/lib/security/sanitizeContent';
 import { Button, Input, Textarea, Card, Modal, ModalHeader, ModalTitle, ModalBody, ModalFooter, Select } from '@/components/ui';
 import {
   Plus, Users, Mail, Link2, Building2, Briefcase, MessageSquare, Edit3, Trash2,
@@ -468,10 +468,8 @@ function ContactsTab() {
                     <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 border border-slate-200">{TYPE_LABELS[contact.type]}</span>
                   </div>
                   {(() => {
-                    const mailtoUrl = contact.email ? sanitizeUrl(`mailto:${contact.email}`) : null;
-                    const safeMailto = mailtoUrl && mailtoUrl.startsWith('mailto:') ? mailtoUrl : undefined;
-                    const linkedInUrl = contact.linkedInUrl ? sanitizeUrl(contact.linkedInUrl) : null;
-                    const safeLinkedIn = linkedInUrl && (linkedInUrl.startsWith('http://') || linkedInUrl.startsWith('https://')) ? linkedInUrl : undefined;
+                    const safeMailto = contact.email && /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(contact.email) ? `mailto:${contact.email}` : undefined;
+                    const safeLinkedIn = contact.linkedInUrl && /^https:\/\/(www\.)?linkedin\.com\/[a-zA-Z0-9\-_./?&=]+$/.test(contact.linkedInUrl) ? contact.linkedInUrl : undefined;
                     return (
                       <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500 mb-2">
                         {contact.company && <span className="flex items-center gap-1"><Building2 className="w-3.5 h-3.5" />{contact.company}</span>}

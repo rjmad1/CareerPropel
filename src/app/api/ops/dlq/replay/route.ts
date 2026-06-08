@@ -7,7 +7,7 @@ import { getProviderHealthReport } from '@/lib/observability/provider-health';
 import { enqueueExecution } from '@/lib/queue/queues';
 import { transitionExecutionState } from '@/lib/runtime/execution-state-machine';
 import { logAuditEvent, AuditAction } from '@/lib/logging/auditLog';
-import { startTraceSpan } from '@/lib/observability/tracing';
+import { startTraceSpan } from '@/platform/telemetry/trace';
 
 export const dynamic = 'force-dynamic';
 

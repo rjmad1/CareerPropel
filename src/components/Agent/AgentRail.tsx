@@ -245,70 +245,72 @@ export const AgentRail: React.FC = () => {
         </div>
       </div>
 
-      {/* Right Panel: Agent Details (flex-1) */}
-      <div className="flex-1 flex flex-col">
-        {selectedAgent ? (
-          <>
-            {/* Agent Details */}
-            <div className="flex-1 overflow-y-auto">
-              <AgentCard
-                agent={selectedAgent}
-                isCompact={false}
-                onExecute={() => handleExecute(selectedAgent.id)}
-                onCancel={() => handleCancel(selectedAgent.id)}
-                onPause={() => handlePause(selectedAgent.id)}
-                onResume={() => handleResume(selectedAgent.id)}
-              />
-            </div>
-
-            {/* Logs Section */}
-            <div className="border-t border-gray-200">
-              {/* Logs Header */}
-              <div
-                onClick={() => setExpandedLogs(!expandedLogs)}
-                className="px-8 py-6 bg-gray-50 cursor-pointer hover:bg-gray-100 flex items-center justify-between"
-              >
-                <h3 className="font-semibold text-sm text-gray-900">
-                  Activity Log ({selectedAgentLogs.length})
-                </h3>
-                <span className="text-xs text-gray-500">
-                  {expandedLogs ? '▼' : '▶'}
-                </span>
-              </div>
-
-              {/* Logs List */}
-              {expandedLogs && (
-                <div className="max-h-64 overflow-y-auto border-t border-gray-200">
-                  {selectedAgentLogs.length > 0 ? (
-                    <div className="space-y-2 p-6">
-                      {selectedAgentLogs.map((log, idx) => (
-                        <AgentLog
-                          key={`${log.timestamp}-${idx}`}
-                          log={log}
-                        />
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="p-8 text-center text-sm text-gray-500">
-                      No logs yet
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-          </>
-        ) : (
-          // No agent selected
-          <div className="flex items-center justify-center h-full">
-            <div className="text-center">
-              <div className="text-4xl mb-4">🤖</div>
-              <p className="text-gray-500 text-sm">
-                Select an agent to view details
-              </p>
-            </div>
+      {/* Right Panel: Agent Details (Absolute slide-out drawer) */}
+      {selectedAgent && (
+        <div
+          className="absolute left-64 top-0 bottom-0 w-[450px] bg-white border-r border-gray-200 flex flex-col shadow-2xl z-50 transition-all duration-300"
+          data-testid="agent-details-drawer"
+        >
+          {/* Header with Close Button */}
+          <div className="px-8 py-4 border-b border-gray-200 flex justify-between items-center bg-gray-50 flex-shrink-0">
+            <span className="font-semibold text-gray-900 text-sm">Agent Control Panel</span>
+            <button
+              onClick={() => setSelectedAgentId(null)}
+              className="text-gray-500 hover:text-gray-700 text-sm font-medium cursor-pointer"
+            >
+              ✕ Close
+            </button>
           </div>
-        )}
-      </div>
+
+          {/* Agent Details - Scrollable */}
+          <div className="flex-1 overflow-y-auto">
+            <AgentCard
+              agent={selectedAgent}
+              isCompact={false}
+              onExecute={() => handleExecute(selectedAgent.id)}
+              onCancel={() => handleCancel(selectedAgent.id)}
+              onPause={() => handlePause(selectedAgent.id)}
+              onResume={() => handleResume(selectedAgent.id)}
+            />
+          </div>
+
+          {/* Logs Section */}
+          <div className="border-t border-gray-200 flex-shrink-0 bg-gray-50">
+            {/* Logs Header */}
+            <div
+              onClick={() => setExpandedLogs(!expandedLogs)}
+              className="px-8 py-4 cursor-pointer hover:bg-gray-100 flex items-center justify-between"
+            >
+              <h3 className="font-semibold text-sm text-gray-900">
+                Activity Log ({selectedAgentLogs.length})
+              </h3>
+              <span className="text-xs text-gray-500">
+                {expandedLogs ? '▼' : '▶'}
+              </span>
+            </div>
+
+            {/* Logs List */}
+            {expandedLogs && (
+              <div className="max-h-60 overflow-y-auto border-t border-gray-200 bg-white">
+                {selectedAgentLogs.length > 0 ? (
+                  <div className="space-y-2 p-6">
+                    {selectedAgentLogs.map((log, idx) => (
+                      <AgentLog
+                        key={`${log.timestamp}-${idx}`}
+                        log={log}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="p-8 text-center text-sm text-gray-500">
+                    No logs yet
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

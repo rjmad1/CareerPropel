@@ -4,7 +4,30 @@
 
 Step-by-step operational guide for common local development tasks.
 
-## Starting the Full Stack Locally
+## Prerequisites
+
+- Node.js 20+
+- PostgreSQL 15+ (local or Docker)
+- Redis 7+ (local or Docker)
+- `npm` (package manager)
+
+## 1. Install Dependencies
+
+```bash
+npm install
+```
+
+## 2. Configure Environment
+
+Copy the example env file and populate required values:
+
+```bash
+cp .env.local.example .env.local
+```
+
+See [Environment Reference](#environment-reference) below for details on required and optional configuration keys.
+
+## 3. Starting the Full Stack Locally
 
 ```bash
 # 1. Start infrastructure (PostgreSQL + Redis)
@@ -161,7 +184,44 @@ await rollbackPromptVersion('interview-prep', '1.0.0')
 
 ## Environment Reference
 
-See [Getting Started](../../docs/getting-started.md) for full env variable list.
+### Required Variables
+
+| Variable | Description | Default / Example |
+|---|---|---|
+| `DATABASE_URL` | PostgreSQL connection string | `postgresql://user:pass@localhost:5432/careerpropel` |
+| `REDIS_URL` | Redis connection string | `redis://127.0.0.1:6379` |
+| `NEXTAUTH_URL` | Auth callback base URL | `http://localhost:3000` |
+| `NEXTAUTH_SECRET` | NextAuth JWT secret | — (required) |
+| `ANTHROPIC_API_KEY` | Anthropic API key for agent execution | — (required for agents) |
+
+### Optional Runtime Tuning
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `PORT` | `3000` | Web server port |
+| `EXECUTION_TIMEOUT_MS` | `900000` | Agent execution TTL (15 min) |
+| `QUEUE_CONCURRENCY` | `5` | Worker concurrency |
+| `QUEUE_ATTEMPTS` | `4` | Max retry attempts per job |
+| `SSE_HEARTBEAT_MS` | `15000` | SSE heartbeat interval |
+| `USER_CONCURRENCY_LIMIT` | `2` | Max concurrent executions per user |
+| `LOG_LEVEL` | `info` | Pino log level |
+
+## Useful Scripts
+
+```bash
+npm run lint          # ESLint syntax check
+npm run type-check    # TypeScript compilation strict check
+npm run test          # Jest unit tests
+npm run test:e2e      # Playwright/Cypress E2E tests
+npm run db:studio     # Prisma Studio database GUI
+```
+
+## Health Checks
+
+```bash
+curl http://localhost:3000/health   # Liveness check (status ok)
+curl http://localhost:3000/ready    # Readiness check (DB & Redis connections)
+```
 
 ## Last Updated
-2026-05-27
+2026-06-07

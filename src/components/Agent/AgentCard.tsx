@@ -73,10 +73,10 @@ export const AgentCard: React.FC<AgentCardProps> = ({
             </div>
             {agent.status === 'running' && agent.progress !== undefined && (
               <div className="mt-4">
-                <div className="w-full bg-gray-200 rounded-full h-3">
+                <div className="w-full bg-gray-200 rounded-full h-3" style={{ height: '12px' }}>
                   <div
                     className="bg-green-500 h-3 rounded-full transition-all duration-300"
-                    style={{ width: `${Math.min(agent.progress, 100)}%` }}
+                    style={{ width: `${Math.min(agent.progress, 100)}%`, minWidth: '4px', height: '12px' }}
                     data-testid="agent-progress-bar"
                   />
                 </div>
@@ -135,10 +135,10 @@ export const AgentCard: React.FC<AgentCardProps> = ({
             <p className="text-xs text-gray-600 font-semibold">Progress</p>
             <span className="text-sm font-medium text-gray-900">{agent.progress}%</span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-4">
+          <div className="w-full bg-gray-200 rounded-full h-4" style={{ height: '16px' }}>
             <div
               className="bg-green-500 h-4 rounded-full transition-all duration-300"
-              style={{ width: `${Math.min(agent.progress, 100)}%` }}
+              style={{ width: `${Math.min(agent.progress, 100)}%`, minWidth: '4px', height: '16px' }}
             />
           </div>
         </div>

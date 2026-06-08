@@ -1,51 +1,45 @@
-import React from 'react'
-import { cn } from '@/lib/utils'
+import * as React from "react"
+import { cn } from "@/lib/utils"
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
   error?: string
   hint?: string
 }
 
-/**
- * Input Component
- * Text input field with optional label, error, and hint text.
- * WCAG 2.1 AA compliant: explicit htmlFor label, aria-invalid, aria-describedby.
- */
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, hint, className, id, ...props }, ref) => {
-    const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`
-
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, type, label, error, hint, id, ...props }, ref) => {
+    const generatedId = React.useId()
+    const inputId = id || generatedId
     return (
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-1.5 w-full">
         {label && (
-          <label htmlFor={inputId} className="text-sm font-medium text-slate-700 leading-none">
+          <label htmlFor={inputId} className="text-sm font-medium text-slate-700 dark:text-slate-300 leading-none">
             {label}
             {props.required && <span className="text-red-500 ml-1" aria-hidden="true">*</span>}
           </label>
         )}
         <input
-          ref={ref}
-          id={inputId}
+          type={type}
           className={cn(
-            'h-9 px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white transition-colors duration-150',
-            'placeholder:text-slate-400 text-slate-900',
-            'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:border-blue-500',
-            'disabled:bg-slate-50 disabled:text-slate-500 disabled:cursor-not-allowed',
-            error && 'border-red-500 focus:ring-red-500 focus:border-red-500',
+            "flex h-9 w-full rounded-lg border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+            error && "border-destructive focus-visible:ring-destructive",
             className
           )}
+          ref={ref}
+          id={inputId}
           aria-invalid={!!error}
           aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
           {...props}
         />
         {error && (
-          <p id={`${inputId}-error`} role="alert" className="text-xs text-red-600 font-medium">
+          <p id={`${inputId}-error`} role="alert" className="text-xs text-red-600 dark:text-red-400 font-medium">
             {error}
           </p>
         )}
         {hint && !error && (
-          <p id={`${inputId}-hint`} className="text-xs text-slate-500">
+          <p id={`${inputId}-hint`} className="text-xs text-muted-foreground">
             {hint}
           </p>
         )}
@@ -53,53 +47,46 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     )
   }
 )
+Input.displayName = "Input"
 
-Input.displayName = 'Input'
-
-export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface TextareaProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string
   error?: string
   hint?: string
 }
 
-/**
- * Textarea Component
- * Multi-line text input with optional label, error, and hint text.
- */
-export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ label, error, hint, className, id, ...props }, ref) => {
-    const textareaId = id || `textarea-${Math.random().toString(36).substr(2, 9)}`
-
+const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({ className, label, error, hint, id, ...props }, ref) => {
+    const generatedId = React.useId()
+    const textareaId = id || generatedId
     return (
-      <div className="flex flex-col gap-1.5">
+      <div className="flex flex-col gap-1.5 w-full">
         {label && (
-          <label htmlFor={textareaId} className="text-sm font-medium text-slate-700 leading-none">
+          <label htmlFor={textareaId} className="text-sm font-medium text-slate-700 dark:text-slate-300 leading-none">
             {label}
             {props.required && <span className="text-red-500 ml-1" aria-hidden="true">*</span>}
           </label>
         )}
         <textarea
-          ref={ref}
-          id={textareaId}
           className={cn(
-            'min-h-24 px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white transition-colors duration-150 resize-none',
-            'placeholder:text-slate-400 text-slate-900',
-            'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-0 focus:border-blue-500',
-            'disabled:bg-slate-50 disabled:text-slate-500 disabled:cursor-not-allowed',
-            error && 'border-red-500 focus:ring-red-500 focus:border-red-500',
+            "flex min-h-[80px] w-full rounded-lg border border-input bg-background px-3 py-2 text-sm shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+            error && "border-destructive focus-visible:ring-destructive",
             className
           )}
+          ref={ref}
+          id={textareaId}
           aria-invalid={!!error}
           aria-describedby={error ? `${textareaId}-error` : hint ? `${textareaId}-hint` : undefined}
           {...props}
         />
         {error && (
-          <p id={`${textareaId}-error`} role="alert" className="text-xs text-red-600 font-medium">
+          <p id={`${textareaId}-error`} role="alert" className="text-xs text-red-600 dark:text-red-400 font-medium">
             {error}
           </p>
         )}
         {hint && !error && (
-          <p id={`${textareaId}-hint`} className="text-xs text-slate-500">
+          <p id={`${textareaId}-hint`} className="text-xs text-muted-foreground">
             {hint}
           </p>
         )}
@@ -107,5 +94,6 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     )
   }
 )
+Textarea.displayName = "Textarea"
 
-Textarea.displayName = 'Textarea'
+export { Input, Textarea }

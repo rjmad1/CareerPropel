@@ -263,9 +263,9 @@ export default function IntegrationsPage() {
 
               {items.map((integration) => {
                 const infoUrl = integration.infoHref ? sanitizeUrl(integration.infoHref) : null;
-                const safeInfoUrl = infoUrl && (infoUrl.startsWith('/') || infoUrl.startsWith('http://') || infoUrl.startsWith('https://')) ? infoUrl : undefined;
+                const safeInfoUrl = infoUrl && (/^\/[a-zA-Z0-9\-_/]*$/.test(infoUrl) || /^https?:\/\/[a-zA-Z0-9\-_.]+\.[a-zA-Z]{2,}\b[a-zA-Z0-9\-_./?&=]*$/.test(infoUrl)) ? infoUrl : undefined;
                 const connectUrl = integration.connectHref ? sanitizeUrl(integration.connectHref) : null;
-                const safeConnectUrl = connectUrl && (connectUrl.startsWith('/') || connectUrl.startsWith('http://') || connectUrl.startsWith('https://')) ? connectUrl : undefined;
+                const safeConnectUrl = connectUrl && (/^\/[a-zA-Z0-9\-_/]*$/.test(connectUrl) || /^https?:\/\/[a-zA-Z0-9\-_.]+\.[a-zA-Z]{2,}\b[a-zA-Z0-9\-_./?&=]*$/.test(connectUrl)) ? connectUrl : undefined;
                 return (
                   <Card key={integration.id}>
                     <CardBody className="p-5 flex items-center gap-4 justify-between flex-wrap sm:flex-nowrap">

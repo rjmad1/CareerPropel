@@ -24,7 +24,7 @@ All three must be running for full functionality.
 
 ## Environment Variables
 
-See [Getting Started](../../docs/getting-started.md) for the full variable list.
+See [Local Development Runbook](../runbooks/local-dev.md) for the full variable list.
 
 Critical production values:
 - `DATABASE_URL` — PostgreSQL connection string

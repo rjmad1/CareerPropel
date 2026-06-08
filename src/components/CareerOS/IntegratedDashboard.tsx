@@ -19,7 +19,7 @@ export const IntegratedDashboard: React.FC<{ candidateId: string }> = ({
   return (
     <div className="flex h-screen bg-gray-900 text-gray-100">
       {/* Left: Agent Rail */}
-      <div className="w-64 border-r border-gray-700 overflow-y-auto bg-gray-800 flex-shrink-0">
+      <div className="w-64 border-r border-gray-700 bg-gray-800 flex-shrink-0 relative">
         <AgentRail />
       </div>
 

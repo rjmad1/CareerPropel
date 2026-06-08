@@ -71,7 +71,7 @@ npm run format          # Prettier format
 
 ## Environment Variables
 
-Never commit `.env.local`. Add new variables to `.env.local.example` with a placeholder value and document them in [getting-started.md](getting-started.md).
+Never commit `.env.local`. Add new variables to `.env.local.example` with a placeholder value and document them in the [Local Development Runbook](../wiki/runbooks/local-dev.md).
 
 ## Migrations
 
@@ -88,7 +88,7 @@ Never commit `.env.local`. Add new variables to `.env.local.example` with a plac
 
 ## Related
 
-- [Getting Started](getting-started.md)
+- [Getting Started](../wiki/runbooks/local-dev.md)
 - [Agent System](../wiki/components/agent-system.md)
 - [Governance Layer](../wiki/components/governance.md)
 

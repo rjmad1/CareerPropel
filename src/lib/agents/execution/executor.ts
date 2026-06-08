@@ -30,6 +30,8 @@ import { inspectForHallucinations, inspectInputForInjection } from '@/lib/govern
 import { checkExecutionPolicy, estimateCostUsd, getPolicy } from '@/lib/governance/policyEngine';
 
 import { transitionExecutionState } from '@/lib/runtime/execution-state-machine';
+import { trace as otelTrace, SpanStatusCode } from '@opentelemetry/api';
+import { getLangfuse } from '@/platform/ai-observability/langfuse';
 
 const executionLogger = createLogger({ component: 'agent-executor' });
 
@@ -47,7 +49,35 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
   const executionStartedAt = Date.now();
   const logContext = { executionId, agentType, userId, correlationId, requestId };
 
+  const otelTracer = otelTrace.getTracer('career-propel');
+  const agentSpan = otelTracer.startSpan(`agent.${agentType}`, {
+    attributes: {
+      'agent.type': agentType,
+      'execution.id': executionId,
+      'user.id': userId,
+      'correlation.id': correlationId || '',
+      'request.id': requestId || '',
+    }
+  });
+
+  const langfuse = getLangfuse();
+  let lfTrace = null;
+  let lfGeneration = null;
+
+  if (langfuse) {
+    lfTrace = langfuse.trace({
+      id: executionId,
+      name: `agent:${agentType}`,
+      userId,
+      metadata: {
+        correlationId,
+        requestId,
+      },
+    });
+  }
+
   try {
+    try {
     // Transition to running state via state machine
     await transitionExecutionState(executionId, 'running', {
       actor: 'agent-executor',
@@ -131,6 +161,26 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
     let usedProvider: LLMProviderName | undefined;
     let usedModel: string | undefined;
 
+    const providerSpan = otelTracer.startSpan('provider.call', {
+      attributes: {
+        'llm.provider': 'anthropic',
+        'llm.model': process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6',
+      }
+    });
+
+    if (lfTrace) {
+      lfGeneration = lfTrace.generation({
+        name: `call:${agentType}`,
+        model: process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6',
+        input: userPrompt,
+        modelParameters: {
+          temperature: 0.7,
+          maxTokens: 4096,
+          systemPrompt,
+        },
+      });
+    }
+
     try {
       // Use callLLM for first pass (gets token counts); falls back to stream if needed
       const result = await callLLM(
@@ -152,12 +202,47 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       usedProvider = providerClient.name as LLMProviderName;
       usedModel = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6';
 
+      providerSpan.setAttributes({
+        'llm.provider': usedProvider,
+        'llm.model': usedModel,
+        'llm.usage.input_tokens': inputTokens,
+        'llm.usage.output_tokens': outputTokens,
+        'llm.usage.total_tokens': tokenCount,
+      });
+      providerSpan.setStatus({ code: SpanStatusCode.OK });
+
+      if (lfGeneration) {
+        lfGeneration.update({
+          output: fullResponse,
+          model: usedModel,
+          usage: {
+            input: inputTokens,
+            output: outputTokens,
+            total: tokenCount,
+          },
+        });
+      }
+
       // Assert provider qualification before accepting the result
       assertQualified(agentType, usedProvider, usedModel);
     } catch (streamError) {
-      throw new Error(
-        `LLM call failed: ${streamError instanceof Error ? streamError.message : String(streamError)}`
-      );
+      const llmErrMsg = streamError instanceof Error ? streamError.message : String(streamError);
+      providerSpan.setStatus({
+        code: SpanStatusCode.ERROR,
+        message: llmErrMsg,
+      });
+      providerSpan.recordException(streamError instanceof Error ? streamError : new Error(llmErrMsg));
+
+      if (lfGeneration) {
+        lfGeneration.update({
+          statusMessage: llmErrMsg,
+          level: 'ERROR',
+        });
+      }
+
+      throw new Error(`LLM call failed: ${llmErrMsg}`);
+    } finally {
+      providerSpan.end();
     }
 
     const elapsedMs = Date.now() - startTime;
@@ -602,6 +687,14 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       }
     }
 
+    if (lfTrace) {
+      lfTrace.update({
+        output: JSON.stringify(finalOutput),
+      });
+    }
+
+    agentSpan.setStatus({ code: SpanStatusCode.OK });
+
     await appendExecutionLog(
       executionId,
       userId,
@@ -640,82 +733,103 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       { ...logContext, tokenCount, durationMs: elapsedMs, validationPassed: validationResult.passed },
       'Agent execution completed'
     );
-  } catch (error) {
-    const errorMessage =
-      error instanceof Error ? error.message : String(error);
-    const failure = classifyError(error, { executionId, agentType, userId, correlationId });
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      const failure = classifyError(error, { executionId, agentType, userId, correlationId });
 
-    executionLogger.error(
-      { ...logContext, err: error, failureType: failure.failureType, retryable: failure.retryable },
-      'Agent execution failed'
-    );
-
-    const currentExecution = await prisma.agentExecution.findUnique({
-      where: { id: executionId },
-      select: { status: true, errorMessage: true },
-    });
-
-    if (currentExecution?.status === 'failed' && currentExecution.errorMessage === 'Execution was cancelled by user') {
-      executionLogger.warn(
-        { executionId },
-        'executeAgent: Skipping failure update because execution was already cancelled by user'
-      );
-      return;
-    }
-
-    // Transition to failed state via state machine
-    try {
-      await transitionExecutionState(executionId, 'failed', {
-        actor: 'agent-executor',
-        correlationId,
-        requestId,
-        userId,
-        justification: errorMessage,
+      agentSpan.setStatus({
+        code: SpanStatusCode.ERROR,
+        message: errorMessage,
       });
-    } catch (transErr) {
-      executionLogger.error({ executionId, err: transErr }, 'Failed to transition to failed state during crash recovery');
-    }
+      agentSpan.recordException(error instanceof Error ? error : new Error(errorMessage));
 
-    await prisma.agentExecution.update({
-      where: { id: executionId },
-      data: {
-        errorMessage,
-      },
-    });
-
-    await appendExecutionLog(
-      executionId,
-      userId,
-      agentType,
-      'ERROR',
-      `Agent execution failed: ${errorMessage}`,
-      {
-        failureType: failure.failureType,
-        retryable: failure.retryable,
-        errorClass: failure.errorClass,
-        correlationId,
-        requestId,
+      if (lfGeneration) {
+        lfGeneration.update({
+          statusMessage: errorMessage,
+          level: 'ERROR',
+        });
       }
-    );
+      if (lfTrace) {
+        lfTrace.update({
+          output: errorMessage,
+        });
+      }
 
-    await publishAgentCompleted(
-      userId,
-      executionId,
-      agentType,
-      'failed',
-      undefined,
-      errorMessage,
-      0,
-      Date.now() - executionStartedAt
-    );
-    await publishAgentStatus(
-      userId,
-      executionId,
-      agentType,
-      'failed',
-      0,
-      'Failed'
-    );
+      executionLogger.error(
+        { ...logContext, err: error, failureType: failure.failureType, retryable: failure.retryable },
+        'Agent execution failed'
+      );
+
+      const currentExecution = await prisma.agentExecution.findUnique({
+        where: { id: executionId },
+        select: { status: true, errorMessage: true },
+      });
+
+      if (currentExecution?.status === 'failed' && currentExecution.errorMessage === 'Execution was cancelled by user') {
+        executionLogger.warn(
+          { executionId },
+          'executeAgent: Skipping failure update because execution was already cancelled by user'
+        );
+        return;
+      }
+
+      // Transition to failed state via state machine
+      try {
+        await transitionExecutionState(executionId, 'failed', {
+          actor: 'agent-executor',
+          correlationId,
+          requestId,
+          userId,
+          justification: errorMessage,
+        });
+      } catch (transErr) {
+        executionLogger.error({ executionId, err: transErr }, 'Failed to transition to failed state during crash recovery');
+      }
+
+      await prisma.agentExecution.update({
+        where: { id: executionId },
+        data: {
+          errorMessage,
+        },
+      });
+
+      await appendExecutionLog(
+        executionId,
+        userId,
+        agentType,
+        'ERROR',
+        `Agent execution failed: ${errorMessage}`,
+        {
+          failureType: failure.failureType,
+          retryable: failure.retryable,
+          errorClass: failure.errorClass,
+          correlationId,
+          requestId,
+        }
+      );
+
+      await publishAgentCompleted(
+        userId,
+        executionId,
+        agentType,
+        'failed',
+        undefined,
+        errorMessage,
+        0,
+        Date.now() - executionStartedAt
+      );
+      await publishAgentStatus(
+        userId,
+        executionId,
+        agentType,
+        'failed',
+        0,
+        'Failed'
+      );
+    }
+  } finally {
+    agentSpan.end();
   }
 }
 

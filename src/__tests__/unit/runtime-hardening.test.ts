@@ -26,6 +26,37 @@ describe('Phase 2 — Runtime Hardening & Operational Determinism Integration Te
         name: 'Test Hardening Candidate',
       },
     });
+
+    // Initial cleanup of any residual test data from previous aborts
+    const executions = await prisma.agentExecution.findMany({
+      where: { userId: testUserId },
+      select: { id: true },
+    });
+    const ids = executions.map((e) => e.id);
+    if (ids.length > 0) {
+      await prisma.eventLog.deleteMany({
+        where: { executionId: { in: ids } },
+      });
+      await prisma.agentExecution.deleteMany({
+        where: { id: { in: ids } },
+      });
+    }
+  });
+
+  afterEach(async () => {
+    const executions = await prisma.agentExecution.findMany({
+      where: { userId: testUserId },
+      select: { id: true },
+    });
+    const ids = executions.map((e) => e.id);
+    if (ids.length > 0) {
+      await prisma.eventLog.deleteMany({
+        where: { executionId: { in: ids } },
+      });
+      await prisma.agentExecution.deleteMany({
+        where: { id: { in: ids } },
+      });
+    }
   });
 
   describe('1. Execution State Machine Enforcement', () => {

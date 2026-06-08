@@ -4,7 +4,7 @@ import { executeAgent } from '@/lib/agents/execution/executor';
 import { createLogger } from '@/lib/logging/logger';
 import { recordQueueMetric, recordWorkerExecution, recordWorkerRetry } from '@/lib/observability/metrics';
 import { classifyError } from '@/lib/observability/failure-classification';
-import { startTraceSpan } from '@/lib/observability/tracing';
+import { startTraceSpan } from '@/platform/telemetry/trace';
 import { acquireExecutionSlots, releaseExecutionSlots } from '@/lib/queue/concurrency';
 import { enqueueDeadLetter, PARTITIONED_QUEUES, QueuePartition } from '@/lib/queue/queues';
 import { publishRealtimeEvent } from '@/lib/queue/events';

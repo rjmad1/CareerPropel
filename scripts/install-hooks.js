@@ -10,8 +10,8 @@ function main() {
   console.log('--- Career Propel Git Hook Installer ---');
 
   if (!fs.existsSync(GIT_DIR)) {
-    console.error('Error: .git directory not found. Are you sure this is a Git repository?');
-    process.exit(1);
+    console.warn('Warning: .git directory not found. Skipping Git hook installation (expected in non-git environments like Vercel).');
+    process.exit(0);
   }
 
   if (!fs.existsSync(HOOKS_DIR)) {
