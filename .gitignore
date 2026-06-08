@@ -68,3 +68,7 @@ test-results
 # IDE Internals
 .antigravity/
 
+# Local build artifacts and caches
+.vercel/
+careerpropel-db/
+vercel_build_logs*.txt

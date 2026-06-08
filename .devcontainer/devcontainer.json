@@ -1,0 +1,75 @@
+{
+  "name": "CareerPropel Development Workspace",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        },
+        "typescript.updateImportsOnFileMove.enabled": "always",
+        "editor.inlineSuggest.enabled": true,
+        "editor.minimap.enabled": false,
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true,
+        "editor.rulers": [80, 100],
+        "editor.bracketPairColorization.enabled": true,
+        "editor.guides.bracketPairs": true,
+        "explorer.compactFolders": false,
+        "git.autofetch": true,
+        "search.followSymlinks": false
+      },
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "bradlc.vscode-tailwindcss",
+        "prisma.prisma",
+        "eamodio.gitlens",
+        "ms-azuretools.vscode-docker",
+        "rangav.vscode-thunder-client",
+        "Continue.continue",
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "RooManiac.roo-cline",
+        "EFanZh.graphviz-preview",
+        "shd101wyy.markdown-preview-enhanced",
+        "rbbit.typescript-hero",
+        "usernamehw.errorlens",
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg",
+        "cweijan.vscode-redis-client",
+        "aquasecurityofficial.trivy-vulnerability-scanner",
+        "SonarSource.sonarlint-vscode",
+        "ms-playwright.playwright",
+        "firsttris.vscode-jest-runner",
+        "bierner.markdown-mermaid",
+        "hediet.vscode-drawio",
+        "ms-azuretools.vscode-opentelemetry",
+        "christian-kohler.npm-intellisense",
+        "pflannery.vscode-versionlens"
+      ]
+    }
+  },
+  "forwardPorts": [3000, 5432, 6379],
+  "portsAttributes": {
+    "3000": {
+      "label": "Next.js Web Service",
+      "onAutoForward": "notify"
+    },
+    "5432": {
+      "label": "PostgreSQL Database",
+      "onAutoForward": "silent"
+    },
+    "6379": {
+      "label": "Redis Cache & BullMQ",
+      "onAutoForward": "silent"
+    }
+  },
+  "postCreateCommand": "npm install && npx prisma generate",
+  "remoteUser": "node"
+}

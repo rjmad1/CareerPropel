@@ -124,6 +124,31 @@ npm run db:migrate
 - Migrations in `prisma/migrations/` are applied in order
 - Always test in staging first
 
+### Troubleshooting: Vercel Build Failures & Schema Drift
+
+If Vercel builds fail with database schema drift errors or database errors like:
+*   `ERROR: relation "AiProviderConfig" does not exist`
+*   `ERROR: type "AgentExecutionStatus" does not exist`
+
+This indicates that a database migration (e.g., `20260529000000_stabilization_and_orchestration`) was marked as applied in the `_prisma_migrations` metadata table on the target database (e.g., Neon), but the physical DDL SQL statements were never executed or failed midway.
+
+#### Recovery Runbook:
+1.  **Verify Physical Table Existence**:
+    Connect to the target database and check if tables like `AiProviderConfig` or `WorkflowDefinition` exist physically.
+2.  **Clean Up Failed Migration Metadata**:
+    If the migration record exists in `_prisma_migrations` but tables are missing, delete the record to force Prisma to re-apply it:
+    ```sql
+    DELETE FROM "_prisma_migrations" WHERE "migration_name" = '20260529000000_stabilization_and_orchestration';
+    ```
+3.  **Run Self-Healing Repair Script**:
+    The build script executes `prisma/migration_repair.sql` automatically. Ensure this script is up to date and contains the correct condition checks to automatically prune desynced metadata.
+4.  **Manual Synchronization**:
+    If schema drift persists, perform a safe dry-run or force alignment:
+    ```bash
+    npx prisma db push
+    ```
+    *Caution*: Avoid using `db push` in production if it causes data loss. Ensure backups are taken beforehand.
+
 ---
 
 ## Maintenance: Prompt Version Rollback
