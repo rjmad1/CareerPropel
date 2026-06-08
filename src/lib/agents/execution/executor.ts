@@ -135,8 +135,13 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
 
     // ── Prompt Governance: resolve active versioned prompt ────────────────────
     const promptVersion = await getActivePromptVersion(agentType);
-    const systemPrompt = getAgentSystemPrompt(agentType);
-    const userPrompt = buildAgentUserPrompt(agentType, promptContext);
+    const rawSystemPrompt = getAgentSystemPrompt(agentType);
+    const rawUserPrompt = buildAgentUserPrompt(agentType, promptContext);
+
+    const { compressPrompt } = await import('../prompts/compression');
+    const systemPrompt = compressPrompt(rawSystemPrompt);
+    const userPrompt = compressPrompt(rawUserPrompt);
+
     const promptHash = crypto.createHash('sha256').update(userPrompt, 'utf8').digest('hex');
 
     // Record prompt version on execution record
