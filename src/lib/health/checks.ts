@@ -1,7 +1,8 @@
 import { prisma } from '@/lib/db';
 import { redis } from '@/lib/redis/redisClient';
 import { log } from '@/lib/logging/logger';
-import { createBullMQRedisConnection } from '@/lib/queue/job-definitions';
+import { createBullMQRedisConnection } from '@/lib/redis/redisClient';
+import { runtimeSettings } from '@/lib/runtime/settings';
 
 export type HealthStatus = 'healthy' | 'degraded' | 'unavailable';
 
@@ -58,8 +59,7 @@ export async function checkQueueHealth(): Promise<SubsystemHealth> {
   const conn = createBullMQRedisConnection();
   try {
     const { Queue } = await import('bullmq');
-    const { AGENT_QUEUE_NAME } = await import('@/lib/queue/job-definitions');
-    const q = new Queue(AGENT_QUEUE_NAME, { connection: conn });
+    const q = new Queue(runtimeSettings.executionQueueName, { connection: conn });
     const counts = await q.getJobCounts('waiting', 'active', 'failed');
     const paused = await q.isPaused();
     await q.close();

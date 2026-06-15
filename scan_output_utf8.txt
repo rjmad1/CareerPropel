@@ -1,0 +1,144 @@
+﻿≡ƒöì [Governance scanner] Beginning security route coverage scan...
+Γä╣∩╕Å [Governance scanner] Skipping system exempt route: api/auth/2fa/disable
+Γä╣∩╕Å [Governance scanner] Skipping system exempt route: api/auth/2fa/enable
+Γä╣∩╕Å [Governance scanner] Skipping system exempt route: api/auth/2fa/setup
+Γä╣∩╕Å [Governance scanner] Skipping system exempt route: api/auth/2fa/status
+Γä╣∩╕Å [Governance scanner] Skipping system exempt route: api/auth/forgot-password
+Γä╣∩╕Å [Governance scanner] Skipping system exempt route: api/auth/register
+Γä╣∩╕Å [Governance scanner] Skipping system exempt route: api/auth/reset-password
+Γä╣∩╕Å [Governance scanner] Skipping system exempt route: api/auth/verify-email
+Γä╣∩╕Å [Governance scanner] Skipping system exempt route: api/auth/[...nextauth]
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/calendar/authorize/outlook
+   - Reason: Google Calendar OAuth initialization handler, processes redirect logic.
+   - Owner: Integrations Team | Expiration: 2026-09-30
+   - Safeguards: Strict state token validation in parameters.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/calendar/authorize
+   - Reason: Google Calendar OAuth initialization handler, processes redirect logic.
+   - Owner: Integrations Team | Expiration: 2026-09-30
+   - Safeguards: Strict state token validation in parameters.
+Γä╣∩╕Å [Governance scanner] Skipping system exempt route: api/calendar/callback/outlook
+Γä╣∩╕Å [Governance scanner] Skipping system exempt route: api/calendar/callback
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/calendar/events
+   - Reason: Fetches synced calendar events.
+   - Owner: Product Team | Expiration: 2026-07-31
+   - Safeguards: Manual getAuthContext session extraction inside handler.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/calendar/sync
+   - Reason: Syncs and triggers background calendar syncing.
+   - Owner: Product Team | Expiration: 2026-07-31
+   - Safeguards: Manual context verification.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/debug/auth-config
+   - Reason: Exposes internal auth configuration for debugging.
+   - Owner: Security Lead | Expiration: 2026-06-30
+   - Safeguards: Protected by strict production build exclusions; manual environment guards.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/debug/db-check
+   - Reason: Exposes DB connection check status.
+   - Owner: DevOps Lead | Expiration: 2026-06-30
+   - Safeguards: Fails automatically in production environments.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/documents/generate
+   - Reason: User candidate resumes and document attachments.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Manual getAuthContext() execution inside GET and POST.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/documents
+   - Reason: User candidate resumes and document attachments.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Manual getAuthContext() execution inside GET and POST.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/documents/[id]
+   - Reason: User candidate resumes and document attachments.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Manual getAuthContext() execution inside GET and POST.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/emails/generate
+   - Reason: Generates outreach emails using LLM models.
+   - Owner: AI Team | Expiration: 2026-07-31
+   - Safeguards: OpenAI/Gemini gateway rate limit budgets.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/interview-prep/mock/feedback
+   - Reason: Generates or lists interview prep materials.
+   - Owner: AI Prep Team | Expiration: 2026-07-31
+   - Safeguards: Session validation check.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/interview-prep/mock
+   - Reason: Generates or lists interview prep materials.
+   - Owner: AI Prep Team | Expiration: 2026-07-31
+   - Safeguards: Session validation check.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/interview-prep
+   - Reason: Generates or lists interview prep materials.
+   - Owner: AI Prep Team | Expiration: 2026-07-31
+   - Safeguards: Session validation check.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/interview-prep/[jobId]/generate
+   - Reason: Generates or lists interview prep materials.
+   - Owner: AI Prep Team | Expiration: 2026-07-31
+   - Safeguards: Session validation check.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/interview-prep/[jobId]
+   - Reason: Generates or lists interview prep materials.
+   - Owner: AI Prep Team | Expiration: 2026-07-31
+   - Safeguards: Session validation check.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/interviews
+   - Reason: Lists scheduled interviews and statuses.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Auth check validation.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/interviews/[id]
+   - Reason: Lists scheduled interviews and statuses.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Auth check validation.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/jobs/import
+   - Reason: Imports job results saved from search results.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Checks candidate account existence.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/jobs/[id]/activities
+   - Reason: Gets, updates, or deletes a specific job record.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Manual checkOwnership check linking user to resource.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/jobs/[id]
+   - Reason: Gets, updates, or deletes a specific job record.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Manual checkOwnership check linking user to resource.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/offers
+   - Reason: List and tracks offers.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Manual auth verify.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/offers/[id]/negotiate
+   - Reason: List and tracks offers.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Manual auth verify.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/offers/[id]
+   - Reason: List and tracks offers.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Manual auth verify.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/offers/[id]/script
+   - Reason: List and tracks offers.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Manual auth verify.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/onboarding
+   - Reason: Updates onboarding status during registration.
+   - Owner: Onboarding Team | Expiration: 2026-07-31
+   - Safeguards: Manual session verification.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/profile/ats-check
+   - Reason: Retrieves or updates user/candidate core profile details.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Manual getAuthContext() execution.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/profile/completeness
+   - Reason: Retrieves or updates user/candidate core profile details.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Manual getAuthContext() execution.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/profile/entities
+   - Reason: Retrieves or updates user/candidate core profile details.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Manual getAuthContext() execution.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/profile/narrative
+   - Reason: Retrieves or updates user/candidate core profile details.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Manual getAuthContext() execution.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/profile/recommendations
+   - Reason: Retrieves or updates user/candidate core profile details.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Manual getAuthContext() execution.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/profile
+   - Reason: Retrieves or updates user/candidate core profile details.
+   - Owner: Core App Team | Expiration: 2026-07-31
+   - Safeguards: Manual getAuthContext() execution.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/settings/ai-providers/scan
+   - Reason: Performs a dynamic testing scan for valid LLM keys.
+   - Owner: Security Lead | Expiration: 2026-06-30
+   - Safeguards: Direct key parameters restricted inside server container.
+ΓÜá∩╕Å [Governed Exception Registered] Route: api/ws
+   - Reason: Next.js API route fallback for WebSocket clients.
+   - Owner: DevOps Lead | Expiration: 2026-08-31
+   - Safeguards: Fails gracefully if socket protocols are not matched.

@@ -16,10 +16,11 @@
 import { prisma } from '@/lib/db';
 import { callLLM } from '@/lib/llm/provider';
 import { createLogger } from '@/lib/logging/logger';
-import type { JobDeconstructionResult, InferredRole, DeconstructedRequirement, BusinessProblemInference, OperationalSignal } from '@/lib/fit-engine/types';
-import { FIT_ENGINE_PROMPT_VERSIONS, CURRENT_ANALYSIS_VERSION } from '@/lib/fit-engine/constants';
+import { Prisma } from '@prisma/client';
+import type { JobDeconstructionResult } from '@/lib/fit-engine/types';
+import { CURRENT_ANALYSIS_VERSION } from '@/lib/fit-engine/constants';
 import { buildDeconstructionPrompt } from './prompts';
-import { parseDeconstructionResponse, validateDeconstructionResult } from './validation';
+import { parseDeconstructionResponse } from './validation';
 
 const logger = createLogger({ component: 'fit-engine:job-deconstruction' });
 
@@ -144,18 +145,18 @@ async function persistDeconstruction(opts: {
       candidateId,
       inferredRole: result.inferredRole.title,
       roleArchetype: result.inferredRole.archetype,
-      archetypeWeights: result.inferredRole.archetypeWeights,
+      archetypeWeights: result.inferredRole.archetypeWeights as unknown as Prisma.InputJsonValue,
       roleClarityScore: result.inferredRole.clarityScore,
-      hardRequirements: result.hardRequirements,
-      softRequirements: result.softRequirements,
+      hardRequirements: result.hardRequirements as unknown as Prisma.InputJsonValue,
+      softRequirements: result.softRequirements as unknown as Prisma.InputJsonValue,
       operationalDomain: result.operationalDomain,
-      recurringResponsibilities: result.recurringResponsibilities,
+      recurringResponsibilities: result.recurringResponsibilities as unknown as Prisma.InputJsonValue,
       decisionOwnership: result.decisionOwnership,
       operationalScope: result.operationalScope,
       executionComplexity: result.executionComplexity,
       systemsResponsibility: result.systemsResponsibility,
       crossFunctionalCoordination: result.crossFunctionalCoordination,
-      reportingStructure: result.reportingStructure,
+      reportingStructure: result.reportingStructure as unknown as Prisma.InputJsonValue,
       organizationalLeverage: result.organizationalLeverage,
       analysisVersion: CURRENT_ANALYSIS_VERSION,
       analyzedAt: new Date(),
@@ -163,18 +164,18 @@ async function persistDeconstruction(opts: {
     update: {
       inferredRole: result.inferredRole.title,
       roleArchetype: result.inferredRole.archetype,
-      archetypeWeights: result.inferredRole.archetypeWeights,
+      archetypeWeights: result.inferredRole.archetypeWeights as unknown as Prisma.InputJsonValue,
       roleClarityScore: result.inferredRole.clarityScore,
-      hardRequirements: result.hardRequirements,
-      softRequirements: result.softRequirements,
+      hardRequirements: result.hardRequirements as unknown as Prisma.InputJsonValue,
+      softRequirements: result.softRequirements as unknown as Prisma.InputJsonValue,
       operationalDomain: result.operationalDomain,
-      recurringResponsibilities: result.recurringResponsibilities,
+      recurringResponsibilities: result.recurringResponsibilities as unknown as Prisma.InputJsonValue,
       decisionOwnership: result.decisionOwnership,
       operationalScope: result.operationalScope,
       executionComplexity: result.executionComplexity,
       systemsResponsibility: result.systemsResponsibility,
       crossFunctionalCoordination: result.crossFunctionalCoordination,
-      reportingStructure: result.reportingStructure,
+      reportingStructure: result.reportingStructure as unknown as Prisma.InputJsonValue,
       organizationalLeverage: result.organizationalLeverage,
       analysisVersion: CURRENT_ANALYSIS_VERSION,
       analyzedAt: new Date(),
@@ -252,7 +253,7 @@ async function persistDeconstruction(opts: {
       candidateId,
       jobId,
       analysisType: 'role_intelligence',
-      results: result as unknown as Record<string, unknown>,
+      results: result as unknown as Prisma.InputJsonValue,
       executionId: opts.executionId,
       agentType: 'role-deconstruction',
       modelVersion: 'claude-sonnet-4-6',

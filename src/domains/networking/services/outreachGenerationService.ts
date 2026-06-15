@@ -26,10 +26,11 @@ Output JSON schema:
 }`;
 
 export class OutreachGenerationService {
-  private llm: AnthropicProvider;
+  private _llm: AnthropicProvider | null = null;
 
-  constructor() {
-    this.llm = new AnthropicProvider();
+  private get llm(): AnthropicProvider {
+    this._llm ??= new AnthropicProvider();
+    return this._llm;
   }
 
   async generateOutreach(req: OutreachRequest): Promise<GeneratedOutreach> {

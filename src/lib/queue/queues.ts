@@ -4,6 +4,7 @@ import { createRedisClient } from '@/lib/redis/redisClient';
 import { runtimeSettings } from '@/lib/runtime/settings';
 import { createDeadLetterQueue, DeadLetterPayload } from '@/lib/queue/dead-letter';
 import { createQueueJobOptions } from '@/lib/queue/retry-policy';
+import { executionJobDataSchema } from '@/lib/validation/runtimeSchemas';
 
 const queueLogger = createLogger({ component: 'queue' });
 const connection = createRedisClient('career-propel:queue');
@@ -17,6 +18,7 @@ export interface ExecutionJobData {
   correlationId: string;
   submittedAt: string;
   jobId?: string;
+  payloadVersion?: string;
 }
 
 const executionQueue = new Queue<ExecutionJobData>(runtimeSettings.executionQueueName, {
@@ -35,19 +37,26 @@ export function getDeadLetterQueue() {
 }
 
 export async function enqueueExecution(data: ExecutionJobData) {
+  // Enforce contract validation at the boundary
+  const validatedData = executionJobDataSchema.parse(data);
+
   queueLogger.info(
     {
-      executionId: data.executionId,
-      userId: data.userId,
-      agentType: data.agentType,
-      correlationId: data.correlationId,
+      executionId: validatedData.executionId,
+      userId: validatedData.userId,
+      agentType: validatedData.agentType,
+      correlationId: validatedData.correlationId,
     },
     'Enqueueing execution'
   );
 
-  return executionQueue.add('execute-agent', data, {
+  return executionQueue.add('execute-agent', {
+    ...validatedData,
+    promptContext: validatedData.promptContext as Record<string, string | undefined>,
+    jobId: validatedData.jobId || undefined,
+  }, {
     ...createQueueJobOptions({
-      jobId: data.executionId,
+      jobId: validatedData.executionId,
     }),
   });
 }

@@ -445,9 +445,10 @@ export function buildAgentUserPrompt(
   agentType: AgentType,
   context: AgentPromptContext
 ): string {
-  switch (agentType) {
-    case 'resume-tailor':
-      return `Resume Tailoring Task:
+  const basePrompt = (() => {
+    switch (agentType) {
+      case 'resume-tailor':
+        return `Resume Tailoring Task:
 Job Description:
 ${context.jobDescription || '[No job description provided]'}
 
@@ -464,8 +465,8 @@ Please tailor the resume for this job opportunity. Focus on:
 4. Highlighting relevant experience
 5. Maintaining authenticity`;
 
-    case 'job-match':
-      return `Job Matching Task:
+      case 'job-match':
+        return `Job Matching Task:
 Candidate Profile:
 ${context.userProfile || '[No profile provided]'}
 
@@ -477,8 +478,8 @@ ${context.companyInfo ? `Company Info: ${context.companyInfo}` : ''}
 
 Please evaluate the alignment between this candidate and job opportunity. Consider skill match, experience level, compensation expectations, and growth potential.`;
 
-    case 'interview-prep':
-      return `Interview Preparation Task:
+      case 'interview-prep':
+        return `Interview Preparation Task:
 Candidate Background:
 ${context.userProfile || '[No profile provided]'}
 
@@ -492,8 +493,8 @@ ${context.previousInterviews ? `Previous Interview Experience: ${context.previou
 
 Please generate comprehensive interview preparation materials including likely questions, STAR stories, technical topics, and company-specific talking points.`;
 
-    case 'research':
-      return `Research Task:
+      case 'research':
+        return `Research Task:
 Company: ${context.companyName || '[Unknown]'}
 
 ${context.companyInfo ? `Available Information: ${context.companyInfo}` : ''}
@@ -503,8 +504,8 @@ ${context.jobDescription || '[No job description provided]'}
 
 Please research and synthesize information about this company. Include culture analysis, leadership overview, competitive position, and any notable signals (positive or concerning).`;
 
-    case 'follow-up':
-      return `Follow-up Communication Task:
+      case 'follow-up':
+        return `Follow-up Communication Task:
 Job Title: [Extracted from job description]
 Company: ${context.companyName || '[Unknown]'}
 
@@ -516,8 +517,8 @@ ${context.userProfile || '[No profile provided]'}
 
 Please craft a personalized follow-up email that references specific conversation points, reiterates genuine interest, and provides clear next steps.`;
 
-    case 'networking':
-      return `Networking Strategy Task:
+      case 'networking':
+        return `Networking Strategy Task:
 Candidate Background:
 ${context.userProfile || '[No profile provided]'}
 
@@ -529,8 +530,8 @@ ${context.companyName || '[No specific company]'}
 
 Please analyze the candidate's network, identify high-value outreach opportunities, and develop a prioritized networking strategy.`;
 
-    case 'role-intelligence':
-      return `Role Intelligence Task:
+      case 'role-intelligence':
+        return `Role Intelligence Task:
 Job Description:
 ${context.jobDescription || '[No job description provided]'}
 
@@ -538,8 +539,8 @@ Company: ${context.companyName || '[Unknown]'}
 
 Please deconstruct this job description. Stripping away recruiter inflation, identify the actual operational title, deconstruct requirements into specific tools, decisions, outputs, metrics, and risk levels, and classify the weighted archetypes.`;
 
-    case 'fit-analysis':
-      return `Fit Analysis Task:
+      case 'fit-analysis':
+        return `Fit Analysis Task:
 Candidate Profile:
 ${context.userProfile || '[No candidate profile provided]'}
 
@@ -550,8 +551,8 @@ Company: ${context.companyName || '[Unknown]'}
 
 Please translate candidate achievements into the employer's operational language and analyze overall capability alignment.`;
 
-    case 'strength-mapper':
-      return `Strength Mapping Task:
+      case 'strength-mapper':
+        return `Strength Mapping Task:
 Candidate Profile:
 ${context.userProfile || '[No candidate profile provided]'}
 
@@ -562,8 +563,8 @@ Company: ${context.companyName || '[Unknown]'}
 
 Please pair candidate achievements with the employer's business problems. Show Translated interpretations and assign priority levels.`;
 
-    case 'gap-analyzer':
-      return `Gap Analysis Task:
+      case 'gap-analyzer':
+        return `Gap Analysis Task:
 Candidate Profile:
 ${context.userProfile || '[No candidate profile provided]'}
 
@@ -572,8 +573,8 @@ ${context.jobDescription || '[No job description provided]'}
 
 Please perform gap analysis. Identify missing tools/context and classify into trainable (low penalty), credibility-killing (severe penalty), or domain depth (critical penalty) gaps.`;
 
-    case 'conversion-scorer':
-      return `Conversion Scoring Task:
+      case 'conversion-scorer':
+        return `Conversion Scoring Task:
 Candidate Profile:
 ${context.userProfile || '[No candidate profile provided]'}
 
@@ -582,8 +583,8 @@ ${context.jobDescription || '[No job description provided]'}
 
 Please calculate fit scores across the 11 dimensions. Apply multiplicative gates for critical gaps and produce a deterministic overall fit and conversion probability score.`;
 
-    case 'pattern-miner':
-      return `Pattern Miner Task:
+      case 'pattern-miner':
+        return `Pattern Miner Task:
 Candidate Profile:
 ${context.userProfile || '[No candidate profile provided]'}
 
@@ -592,7 +593,13 @@ ${context.jobDescription || '[No job description provided]'}
 
 Please mine successful patterns and language markers based on successful match outcomes for this candidate.`;
 
-    default:
-      return 'Unknown agent type.';
+      default:
+        return 'Unknown agent type.';
+    }
+  })();
+
+  if (context.criticFeedback) {
+    return `${basePrompt}\n\n=== SELF-CORRECTION PROTOCOL ===\nYour previous response failed our automatic audit. Please correct the following issues:\n${context.criticFeedback}`;
   }
+  return basePrompt;
 }

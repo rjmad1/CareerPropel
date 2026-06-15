@@ -4,6 +4,7 @@ import { enqueueAgentExecution } from '@/lib/queue/enqueue';
 import type { AgentType } from '@/lib/agents/prompts';
 import { findCachedExecution } from './ai-coordinator';
 import { createApprovalRequest } from './approval-manager';
+import { ValidationCritic } from '@/lib/orchestration/critic';
 import type {
   WorkflowStepDefinition,
   WorkflowContext,
@@ -184,7 +185,78 @@ async function executeAgentCallStep(
   const result = await waitForAgentExecution(executionId);
 
   if (result.status === 'completed') {
-    return { success: true, output: result.output ?? {}, agentExecutionId: executionId };
+    const output = result.output ?? {};
+    
+    // Wire the ValidationCritic audit loop
+    log.info({ stepKey: step.key, agentType }, 'Orchestration step execution: Auditing step output with ValidationCritic');
+    const audit = await ValidationCritic.auditStepOutput(
+      step.key,
+      agentType,
+      output,
+      wfContext.userId
+    );
+
+    if (audit.passed) {
+      return { success: true, output, agentExecutionId: executionId };
+    }
+
+    // ── Self-Correction Protocol ────────────────────────────────────────────
+    log.warn(
+      { stepKey: step.key, errors: audit.errors },
+      'Critic audit failed. Initiating self-correction retry.'
+    );
+
+    const retryContext = {
+      ...stepContext,
+      criticFeedback: audit.errors.join('\n'),
+    };
+
+    let retryExecutionId: string;
+    try {
+      retryExecutionId = await enqueueAgentExecution(agentType, wfContext.userId, retryContext);
+    } catch (err: unknown) {
+      log.warn({ err, stepKey: step.key }, 'executeStep retry: enqueue failed');
+      const errObj = err as { code?: string; message?: string };
+      return {
+        success: false,
+        error: `Critic audit failed (${audit.errors.join('; ')}). Retry enqueue failed: ${errObj.message}`,
+        agentExecutionId: executionId,
+      };
+    }
+
+    const retryResult = await waitForAgentExecution(retryExecutionId);
+
+    if (retryResult.status === 'completed') {
+      const retryOutput = retryResult.output ?? {};
+      const retryAudit = await ValidationCritic.auditStepOutput(
+        step.key,
+        agentType,
+        retryOutput,
+        wfContext.userId
+      );
+
+      if (retryAudit.passed) {
+        log.info({ stepKey: step.key }, 'Critic audit passed after self-correction retry.');
+        return { success: true, output: retryOutput, agentExecutionId: retryExecutionId };
+      }
+
+      log.error(
+        { stepKey: step.key, errors: retryAudit.errors },
+        'Critic audit failed again after self-correction retry.'
+      );
+
+      return {
+        success: false,
+        error: `Agent ${agentType} failed Critic audit after self-correction retry: ${retryAudit.errors.join('; ')}`,
+        agentExecutionId: retryExecutionId,
+      };
+    }
+
+    return {
+      success: false,
+      error: `Agent ${agentType} retry failed with status: ${retryResult.status}. Initial audit errors: ${audit.errors.join('; ')}`,
+      agentExecutionId: retryExecutionId,
+    };
   }
 
   if (step.optional && result.status === 'not_found') {

@@ -6,9 +6,7 @@
 
 import { NextRequest } from 'next/server';
 import { getAuthContext } from '@/lib/middleware/auth';
-// Real-time agent status updates are pushed via Redis pub/sub — no wsServer needed
-import { REDIS_CHANNELS, parseEvent } from '@/lib/realtime/events';
-import Redis from 'ioredis';
+import { subscribeToUser, keepAliveConnection } from '@/lib/realtime/sharedSubscriber';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,47 +32,36 @@ export async function GET(_request: NextRequest) {
       // Send initial empty snapshot (realtime updates arrive via Redis pub/sub)
       send('snapshot', {});
 
-      // Dedicated subscriber connection (ioredis subscriber mode)
-      const sub = new Redis({
-        host: process.env.REDIS_HOST || 'localhost',
-        port: parseInt(process.env.REDIS_PORT || '6379'),
-        password: process.env.REDIS_PASSWORD,
-        enableReadyCheck: false,
-        lazyConnect: true,
-      });
-
-      const channels = [
-        REDIS_CHANNELS.AGENT_STATUS(userEmail),
-        REDIS_CHANNELS.AGENT_EXECUTIONS(userEmail),
-        REDIS_CHANNELS.QUEUE_STATS(userEmail),
-      ];
-
-      sub.on('message', (_channel: string, message: string) => {
-        const event = parseEvent(message);
-        if (event) send(event.type, event);
-      });
+      let unsubscribe: (() => void) | null = null;
 
       try {
-        await sub.connect();
-        await sub.subscribe(...channels);
-      } catch {
-        // Redis unavailable — SSE stays open, client gets snapshot only
+        unsubscribe = await subscribeToUser(userEmail, (event) => {
+          send(event.type, event);
+        });
+      } catch (error) {
+        // Redis or subscription error - client gets snapshot only
       }
 
       // Heartbeat keeps the connection alive through proxies
       const heartbeat = setInterval(() => {
         try {
           controller.enqueue(encoder.encode(': heartbeat\n\n'));
+          // Assert active connection health in shared subscriber connection map
+          keepAliveConnection(userEmail);
         } catch {
           clearInterval(heartbeat);
-          sub.disconnect();
+          if (unsubscribe) {
+            unsubscribe();
+          }
         }
       }, HEARTBEAT_MS);
 
       // Cleanup when client closes
       return () => {
         clearInterval(heartbeat);
-        sub.disconnect();
+        if (unsubscribe) {
+          unsubscribe();
+        }
       };
     },
   });

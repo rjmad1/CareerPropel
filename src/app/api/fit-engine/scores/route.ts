@@ -62,7 +62,7 @@ export async function GET(request: NextRequest) {
 
     const [scores, total] = await Promise.all([
       prisma.fitScoringSnapshot.findMany({
-        where: where as Parameters<typeof prisma.fitScoringSnapshot.findMany>[0],
+        where: where as any,
         orderBy: { fitScore: 'desc' },
         skip: (page - 1) * limit,
         take: limit,
@@ -72,7 +72,7 @@ export async function GET(request: NextRequest) {
           },
         },
       }),
-      prisma.fitScoringSnapshot.count({ where: where as Parameters<typeof prisma.fitScoringSnapshot.count>[0] }),
+      prisma.fitScoringSnapshot.count({ where: where as any }),
     ]);
 
     return NextResponse.json({

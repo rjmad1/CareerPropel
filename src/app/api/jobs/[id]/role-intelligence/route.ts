@@ -35,37 +35,35 @@ export async function GET(
 
     const candidateId = job.candidate.id;
 
-    // Fetch JobIntelligence
+    // Fetch JobIntelligence using correct relations
     const intelligence = await prisma.jobIntelligence.findUnique({
       where: { jobId },
       include: {
-        archetypes: true,
-        requirements: true,
+        requirementBreakdowns: true,
         businessProblems: true,
-        signals: true,
+        operationalSignals: true,
       }
     });
 
-    // Fetch RoleFitAnalysis
-    let fitAnalysis = null;
-    if (intelligence) {
-      fitAnalysis = await prisma.roleFitAnalysis.findUnique({
-        where: {
-          candidateId_jobIntelligenceId: {
-            candidateId,
-            jobIntelligenceId: intelligence.id
-          }
-        },
-        include: {
-          strengths: {
-            include: {
-              businessProblem: true
-            }
-          },
-          gaps: true
-        }
-      });
-    }
+    // Fetch Strengths, Gaps, and Fit Scores directly linked to candidate and job
+    const strengths = await prisma.strengthEvidence.findMany({
+      where: { candidateId, jobId }
+    });
+
+    const gaps = await prisma.fitGap.findMany({
+      where: { candidateId, jobId }
+    });
+
+    const fitScoring = await prisma.fitScoringSnapshot.findUnique({
+      where: { jobId }
+    });
+
+    // Fetch history of role fit analyses
+    const fitAnalysisHistory = await prisma.roleFitAnalysis.findMany({
+      where: { candidateId, jobId },
+      orderBy: { createdAt: 'desc' },
+      take: 10
+    });
 
     // Fetch PatternLibraryEntry
     const patterns = await prisma.patternLibraryEntry.findMany({
@@ -85,6 +83,14 @@ export async function GET(
       orderBy: { createdAt: 'desc' },
       take: 12
     });
+
+    // Backwards compatible payload structure for the frontend
+    const fitAnalysis = {
+      strengths,
+      gaps,
+      scoring: fitScoring,
+      history: fitAnalysisHistory
+    };
 
     return NextResponse.json({
       intelligence,

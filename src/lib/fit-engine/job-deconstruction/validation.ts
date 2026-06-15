@@ -7,7 +7,6 @@
 import { RoleArchetype } from '@prisma/client';
 import { createLogger } from '@/lib/logging/logger';
 import type { JobDeconstructionResult, InferredRole, DeconstructedRequirement, BusinessProblemInference, OperationalSignal } from '@/lib/fit-engine/types';
-import { MIN_CONFIDENCE } from '@/lib/fit-engine/constants';
 
 const logger = createLogger({ component: 'fit-engine:deconstruction-validation' });
 

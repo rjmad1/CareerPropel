@@ -3,7 +3,7 @@
  * These weights are calibrated — they can be overridden per-user or per-job.
  */
 
-import { FitDimension } from '@prisma/client';
+import { FitDimension } from '../types';
 
 /**
  * Default scoring dimension weights.

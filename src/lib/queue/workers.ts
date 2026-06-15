@@ -12,6 +12,7 @@ import { getExecutionQueue, type ExecutionJobData } from '@/lib/queue/queues';
 import { ConcurrencyLimitError, NonRetryableExecutionError } from '@/lib/queue/retry-policy';
 import { createRedisClient, disconnectRedisClient } from '@/lib/redis/redisClient';
 import { runtimeSettings } from '@/lib/runtime/settings';
+import { executionJobDataSchema } from '@/lib/validation/runtimeSchemas';
 
 const workerLogger = createLogger({ component: 'worker' });
 const workerConnection = createRedisClient('career-propel:worker');
@@ -40,7 +41,9 @@ function withTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
 
 async function processExecution(job: Job<ExecutionJobData>) {
   const startedAt = Date.now();
-  const { executionId, userId, agentType, promptContext, correlationId, requestId } = job.data;
+  // Enforce contract validation before executing
+  const validatedData = executionJobDataSchema.parse(job.data);
+  const { executionId, userId, agentType, promptContext, correlationId, requestId } = validatedData;
   const trace = startTraceSpan('queue.execute-agent', {
     executionId,
     userId,
@@ -83,11 +86,16 @@ async function processExecution(job: Job<ExecutionJobData>) {
       timestamp: new Date().toISOString(),
     });
 
+    const cleanPromptContext: Record<string, string | undefined> = {};
+    for (const [key, val] of Object.entries(promptContext)) {
+      cleanPromptContext[key] = val === null ? undefined : val;
+    }
+
     await withTimeout(
       executeAgent({
         executionId,
         agentType: agentType as never,
-        promptContext,
+        promptContext: cleanPromptContext,
         userId,
         correlationId,
         requestId,

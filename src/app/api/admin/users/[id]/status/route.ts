@@ -15,8 +15,9 @@ const StatusBody = z.object({
 })
 
 /** PATCH /api/admin/users/[id]/status — enable or disable a user account */
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await context.params
     const { userEmail, userId } = await getAuthContext()
     await requirePermission(userEmail, 'users.disable', { actorId: userId })
 
@@ -26,7 +27,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
 
     const { action, justification } = parsed.data
 
-    const target = await prisma.candidate.findUnique({ where: { id: params.id } })
+    const target = await prisma.candidate.findUnique({ where: { id } })
     if (!target) throw ApiErrors.NOT_FOUND('user')
 
     // Self-disable guard
@@ -34,13 +35,13 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
 
     // Toggle email verification as a proxy for active/disabled state
     const emailVerified = action === 'enable'
-    await prisma.candidate.update({ where: { id: params.id }, data: { emailVerified } })
+    await prisma.candidate.update({ where: { id }, data: { emailVerified } })
 
     await logAuditEvent({
       email: userEmail,
       action: AuditAction.SETTINGS_UPDATED,
       resourceType: 'candidate',
-      resourceId: params.id,
+      resourceId: id,
       changes: { op: action, targetEmail: target.email, justification },
       status: 'SUCCESS',
     })

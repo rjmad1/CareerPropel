@@ -10,8 +10,8 @@
  *  - Recommendations with suppression indicators
  */
 
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
+import { useState } from 'react';
+import { Card, CardBody, CardHeader } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Spinner } from '@/components/ui/Spinner';
 import { Skeleton } from '@/components/ui/Skeleton';
@@ -86,8 +86,8 @@ function ScoreOverviewCard({ score, job }: { score: FitScoringSnapshot; job: { t
       <CardHeader className="pb-2">
         <div className="flex justify-between items-start">
           <div>
-            <CardTitle className="text-base">{job.title}</CardTitle>
-            <CardDescription>{job.company}</CardDescription>
+            <h3 className="text-base font-semibold text-gray-900 leading-none tracking-tight">{job.title}</h3>
+            <p className="text-sm text-gray-500">{job.company}</p>
           </div>
           <div className="flex items-center gap-2">
             <ScoreBadge score={totalScore} size="md" />
@@ -100,7 +100,7 @@ function ScoreOverviewCard({ score, job }: { score: FitScoringSnapshot; job: { t
       </CardHeader>
 
       {expanded && score.dimensionScores && (
-        <CardContent className="animate-slideDown">
+        <CardBody className="animate-slideDown">
           <div className="border-t pt-4 mt-2">
             <h4 className="text-sm font-semibold text-gray-600 mb-3">11-Dimension Breakdown</h4>
 
@@ -141,7 +141,7 @@ function ScoreOverviewCard({ score, job }: { score: FitScoringSnapshot; job: { t
               <p className="text-xs text-gray-500 italic mt-3 border-t pt-2">{score.recommendationRationale}</p>
             )}
           </div>
-        </CardContent>
+        </CardBody>
       )}
     </Card>
   );
@@ -152,10 +152,10 @@ function RoleIntelligenceCard({ deconstruction }: { deconstruction: any }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-sm">Role Intelligence</CardTitle>
-        <CardDescription>Deconstructed operational reality</CardDescription>
+        <h3 className="text-sm font-semibold text-gray-900 leading-none tracking-tight">Role Intelligence</h3>
+        <p className="text-xs text-gray-500">Deconstructed operational reality</p>
       </CardHeader>
-      <CardContent className="text-sm space-y-3">
+      <CardBody className="text-sm space-y-3">
         <div className="flex justify-between">
           <span className="text-gray-500">Inferred Role:</span>
           <span className="font-semibold">{deconstruction.inferredRole?.title || 'Unknown'}</span>
@@ -201,12 +201,12 @@ function RoleIntelligenceCard({ deconstruction }: { deconstruction: any }) {
             ))}
           </div>
         )}
-      </CardContent>
+      </CardBody>
     </Card>
   );
 }
 
-function GapSummaryCard({ gaps, jobId, onReanalyze }: { gaps: any[]; jobId: string; onReanalyze: (stages: string[]) => void }) {
+function GapSummaryCard({ gaps, onReanalyze }: { gaps: any[]; _jobId: string | null; onReanalyze: (stages: string[]) => void }) {
   if (!gaps || gaps.length === 0) return null;
 
   const credibilityGaps = gaps.filter((g: any) => g.classification === 'CREDIBILITY_KILLING');
@@ -218,8 +218,8 @@ function GapSummaryCard({ gaps, jobId, onReanalyze }: { gaps: any[]; jobId: stri
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
-          <CardTitle className="text-sm">Gap Analysis</CardTitle>
-          <CardDescription>{gaps.length} identified gaps</CardDescription>
+          <h3 className="text-sm font-semibold text-gray-900 leading-none tracking-tight">Gap Analysis</h3>
+          <p className="text-xs text-gray-500">{gaps.length} identified gaps</p>
         </div>
         <button
           className="text-xs text-blue-600 hover:text-blue-800 underline"
@@ -228,7 +228,7 @@ function GapSummaryCard({ gaps, jobId, onReanalyze }: { gaps: any[]; jobId: stri
           Re-analyze
         </button>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardBody className="space-y-3">
         <div className="flex gap-2 text-xs">
           <Badge className="bg-red-100 text-red-800">{credibilityGaps.length} Credibility</Badge>
           <Badge className="bg-amber-100 text-amber-800">{trainableGaps.length} Trainable</Badge>
@@ -256,7 +256,7 @@ function GapSummaryCard({ gaps, jobId, onReanalyze }: { gaps: any[]; jobId: stri
           );
         })}
         {gaps.length > 5 && <p className="text-xs text-gray-400">+ {gaps.length - 5} more gaps</p>}
-      </CardContent>
+      </CardBody>
     </Card>
   );
 }
@@ -339,7 +339,7 @@ export function FitScoreWorkspace() {
       {/* Error State */}
       {scoresError && (
         <Card className="bg-red-50 border-red-200">
-          <CardContent className="py-4">
+          <CardBody className="py-4">
             <p className="text-red-700 text-sm">
               Failed to load fit scores: {scoresError instanceof Error ? scoresError.message : 'Unknown error'}
             </p>
@@ -349,14 +349,14 @@ export function FitScoreWorkspace() {
             >
               Retry
             </button>
-          </CardContent>
+          </CardBody>
         </Card>
       )}
 
       {/* Empty State */}
       {!scoresLoading && !scoresError && scores.length === 0 && (
         <Card>
-          <CardContent className="py-12 text-center">
+          <CardBody className="py-12 text-center">
             <div className="text-4xl mb-4">🔍</div>
             <h3 className="text-lg font-semibold text-gray-700 mb-2">No Fit Scores Yet</h3>
             <p className="text-sm text-gray-500 mb-4">
@@ -373,7 +373,7 @@ export function FitScoreWorkspace() {
             >
               Analyze a Job
             </button>
-          </CardContent>
+          </CardBody>
         </Card>
       )}
 
@@ -429,8 +429,8 @@ export function FitScoreWorkspace() {
                   <CardHeader>
                     <div className="flex justify-between items-center">
                       <div>
-                        <CardTitle>{scoreDetail.data.job.title}</CardTitle>
-                        <CardDescription>{scoreDetail.data.job.company}</CardDescription>
+                        <h3 className="text-lg font-bold text-gray-900 leading-none tracking-tight">{scoreDetail.data.job.title}</h3>
+                        <p className="text-sm text-gray-500 mt-1">{scoreDetail.data.job.company}</p>
                       </div>
                       <div className="flex items-center gap-3">
                         <Badge className={`${RECOMMENDATION_COLORS[scoreDetail.data.recommendation]?.bg || 'bg-gray-100'} ${RECOMMENDATION_COLORS[scoreDetail.data.recommendation]?.text || 'text-gray-700'} text-sm px-3 py-1`}>
@@ -445,7 +445,7 @@ export function FitScoreWorkspace() {
                       </Badge>
                     )}
                   </CardHeader>
-                  <CardContent>
+                  <CardBody>
                     {/* Conversion Probability */}
                     <div className="mb-4 p-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg">
                       <div className="flex justify-between items-center">
@@ -503,28 +503,28 @@ export function FitScoreWorkspace() {
                         {scoreDetail.data.recommendationRationale}
                       </div>
                     )}
-                  </CardContent>
+                  </CardBody>
                 </Card>
               </>
             ) : (
               <Card>
-                <CardContent className="py-8 text-center text-gray-500">
+                <CardBody className="py-8 text-center text-gray-500">
                   No score data available for this job.
-                </CardContent>
+                </CardBody>
               </Card>
             )}
           </div>
 
           {/* Sidebar */}
           <div className="space-y-4">
-            {deconstructionData?.data && (
-              <RoleIntelligenceCard deconstruction={deconstructionData.data} />
+            {!!deconstructionData?.data && (
+              <RoleIntelligenceCard deconstruction={deconstructionData.data as any} />
             )}
 
-            {deconstructionData?.data && (
+            {!!deconstructionData?.data && (
               <GapSummaryCard
-                gaps={deconstructionData.data.businessProblems || []}
-                jobId={selectedJobId}
+                gaps={(deconstructionData.data as any).businessProblems || []}
+                _jobId={selectedJobId}
                 onReanalyze={handleReanalyze}
               />
             )}
@@ -532,9 +532,9 @@ export function FitScoreWorkspace() {
             {/* Quick Actions */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-sm">Actions</CardTitle>
+                <h3 className="text-sm font-semibold text-gray-900 leading-none tracking-tight">Actions</h3>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardBody className="space-y-2">
                 <button
                   className="w-full text-sm px-3 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100"
                   onClick={() => handleReanalyze(['fit-scoring'])}
@@ -549,7 +549,7 @@ export function FitScoreWorkspace() {
                 >
                   {reanalyze.isPending ? 'Running...' : '🔍 Full Re-analysis'}
                 </button>
-              </CardContent>
+              </CardBody>
             </Card>
           </div>
         </div>

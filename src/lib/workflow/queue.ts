@@ -1,5 +1,5 @@
 import { Queue } from 'bullmq';
-import { createBullMQRedisConnection } from '@/lib/queue/job-definitions';
+import { createBullMQRedisConnection } from '@/lib/redis/redisClient';
 import type { WorkflowJobData } from './types';
 
 export const WORKFLOW_QUEUE_NAME = 'workflow-step';

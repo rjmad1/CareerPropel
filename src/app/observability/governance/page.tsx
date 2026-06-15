@@ -1,11 +1,8 @@
+'use client';
 import { useState, useEffect } from 'react';
 import { TelemetryApiClient } from '@/observability-platform/packages/api-client/client';
 import { AuditLog } from '@/observability-platform/packages/telemetry-sdk/types';
-import { 
-  ShieldCheck, 
-  Database, 
-  UserCheck
-} from 'lucide-react';
+import { ShieldCheck, Database, UserCheck } from 'lucide-react';
 
 const client = new TelemetryApiClient();
 
@@ -25,8 +22,13 @@ export default function GovernanceConsole() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-white">Governance & Audit Dashboard</h2>
-          <p className="text-slate-400 text-sm">Monitor enterprise-grade PII compliance scrubbing, tenant isolation rules, and logs retention policies</p>
+          <h2 className="text-2xl font-bold tracking-tight text-white">
+            Governance & Audit Dashboard
+          </h2>
+          <p className="text-slate-400 text-sm">
+            Monitor enterprise-grade PII compliance scrubbing, tenant isolation rules, and logs
+            retention policies
+          </p>
         </div>
       </div>
 
@@ -42,15 +44,21 @@ export default function GovernanceConsole() {
             <div className="space-y-3.5 text-xs font-mono">
               <div className="flex items-center justify-between border-b border-slate-900 pb-2.5">
                 <span className="text-slate-500">PII Redaction Engine</span>
-                <span className="font-bold text-emerald-400 bg-emerald-950/40 border border-emerald-900/60 px-2 py-0.5 rounded">Active</span>
+                <span className="font-bold text-emerald-400 bg-emerald-950/40 border border-emerald-900/60 px-2 py-0.5 rounded">
+                  Active
+                </span>
               </div>
               <div className="flex items-center justify-between border-b border-slate-900 pb-2.5">
                 <span className="text-slate-500">GDPR Compliance Scope</span>
-                <span className="font-bold text-emerald-400 bg-emerald-950/40 border border-emerald-900/60 px-2 py-0.5 rounded">Passed</span>
+                <span className="font-bold text-emerald-400 bg-emerald-950/40 border border-emerald-900/60 px-2 py-0.5 rounded">
+                  Passed
+                </span>
               </div>
               <div className="flex items-center justify-between border-b border-slate-900 pb-2.5">
                 <span className="text-slate-500">SOC-2 Audit Readiness</span>
-                <span className="font-bold text-emerald-400 bg-emerald-950/40 border border-emerald-900/60 px-2 py-0.5 rounded">100% compliant</span>
+                <span className="font-bold text-emerald-400 bg-emerald-950/40 border border-emerald-900/60 px-2 py-0.5 rounded">
+                  100% compliant
+                </span>
               </div>
             </div>
           </div>
@@ -100,7 +108,9 @@ export default function GovernanceConsole() {
                 {logs.map((log) => (
                   <tr key={log.id} className="hover:bg-slate-900/40 transition-colors">
                     <td className="py-3.5 text-slate-400 font-semibold">{log.id}</td>
-                    <td className="py-3.5 text-slate-500">{new Date(log.timestamp).toLocaleTimeString()}</td>
+                    <td className="py-3.5 text-slate-500">
+                      {new Date(log.timestamp).toLocaleTimeString()}
+                    </td>
                     <td className="py-3.5">
                       <span className="px-2.5 py-0.5 rounded bg-purple-950/40 text-purple-400 border border-purple-900/40 font-bold">
                         {log.action}

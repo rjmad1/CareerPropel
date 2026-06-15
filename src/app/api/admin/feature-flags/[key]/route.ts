@@ -21,8 +21,9 @@ const FlagUpdateBody = z.object({
 })
 
 /** PATCH /api/admin/feature-flags/[key] — update a feature flag */
-export async function PATCH(request: NextRequest, { params }: { params: { key: string } }) {
+export async function PATCH(request: NextRequest, context: { params: Promise<{ key: string }> }) {
   try {
+    const { key } = await context.params
     const { userEmail, userId } = await getAuthContext()
     await requirePermission(userEmail, 'system.feature-flags.manage', { actorId: userId })
 
@@ -31,10 +32,10 @@ export async function PATCH(request: NextRequest, { params }: { params: { key: s
     if (!parsed.success) throw ApiErrors.VALIDATION_ERROR('Invalid flag update payload')
 
     const flag = await prisma.featureFlag.upsert({
-      where: { key: params.key },
+      where: { key },
       update: { ...parsed.data, updatedBy: userEmail },
       create: {
-        key: params.key,
+        key,
         enabled: parsed.data.enabled ?? false,
         rolloutStrategy: parsed.data.rolloutStrategy ?? 'disabled',
         rolloutPercent: parsed.data.rolloutPercent,
@@ -47,13 +48,13 @@ export async function PATCH(request: NextRequest, { params }: { params: { key: s
       },
     })
 
-    await invalidateFeatureFlagCache(params.key)
+    await invalidateFeatureFlagCache(key)
 
     await logAuditEvent({
       email: userEmail,
       action: AuditAction.SETTINGS_UPDATED,
       resourceType: 'feature_flag',
-      resourceId: params.key,
+      resourceId: key,
       changes: { op: 'update', updates: parsed.data },
       status: 'SUCCESS',
     })

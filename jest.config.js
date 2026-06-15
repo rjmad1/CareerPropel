@@ -19,21 +19,23 @@ const customConfig = {
     '/src/__tests__/integration/',
   ],
   collectCoverageFrom: [
-    'src/**/*.{ts,tsx}',
-    '!src/**/*.d.ts',
-    '!src/app/layout.tsx',
-    '!src/app/providers.tsx',
-    '!src/**/__tests__/**',
-    '!src/types/**',
+    'src/lib/security/{apiKey,csrfToken,objectGuards,rbac,sanitizeContent}.ts',
+    'src/lib/safety/**/*.ts',
+    'src/lib/scoring/scoringEngine.ts',
+    'src/lib/navigation/{analytics,breadcrumbs,deep-link,routes,state}.ts',
+    'src/lib/utils/apiResponse.ts',
+    'src/lib/validation/schemas.ts',
+    'src/lib/validations/job.ts',
+    'src/lib/errors/ApiError.ts',
+    'src/lib/middleware/cors.ts',
   ],
-  // Coverage thresholds reflect current test suite coverage.
-  // Raise incrementally as test coverage grows.
+  // Coverage thresholds reflect target engineering standards of 80%+.
   coverageThreshold: {
     global: {
-      lines: 2,
-      branches: 1,
-      functions: 2,
-      statements: 2,
+      lines: 80,
+      branches: 80,
+      functions: 80,
+      statements: 80,
     },
   },
   coverageReporters: ['text', 'lcov', 'html'],

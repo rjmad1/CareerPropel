@@ -9,6 +9,7 @@ import { prisma } from '@/lib/db';
 import { callLLM } from '@/lib/llm/provider';
 import { createLogger } from '@/lib/logging/logger';
 import { classifyError } from '@/lib/observability/failure-classification';
+import { RoleArchetype, GapClassification, PatternCategory, Prisma } from '@prisma/client';
 import {
   AgentType,
   AgentPromptContext,
@@ -295,38 +296,52 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
         where: { jobId },
         create: {
           jobId,
-          inferredRoleTitle: data.inferredRoleTitle,
-          overallConfidence: data.overallConfidence ?? 0.0,
+          candidateId: candidateId || '',
+          inferredRole: data.inferredRoleTitle || '',
+          roleArchetype: (data.archetypes?.[0]?.archetype as RoleArchetype) || RoleArchetype.BUILDER,
+          archetypeWeights: (data.archetypes ? Object.fromEntries(data.archetypes.map((a: any) => [a.archetype, a.weight])) : {}) as Prisma.InputJsonValue,
+          roleClarityScore: (data.overallConfidence ?? 50) / 100,
+          hardRequirements: (data.requirements?.filter((r: any) => r.type === 'hard') || []) as Prisma.InputJsonValue,
+          softRequirements: (data.requirements?.filter((r: any) => r.type === 'soft') || []) as Prisma.InputJsonValue,
+          operationalDomain: data.signals?.find((s: any) => s.type === 'operational_domain')?.description || 'engineering',
+          recurringResponsibilities: [] as Prisma.InputJsonValue,
+          decisionOwnership: [],
+          operationalScope: '',
+          executionComplexity: 5,
+          organizationalLeverage: 5,
         },
         update: {
-          inferredRoleTitle: data.inferredRoleTitle,
-          overallConfidence: data.overallConfidence ?? 0.0,
+          inferredRole: data.inferredRoleTitle || '',
+          roleArchetype: (data.archetypes?.[0]?.archetype as RoleArchetype) || RoleArchetype.BUILDER,
+          archetypeWeights: (data.archetypes ? Object.fromEntries(data.archetypes.map((a: any) => [a.archetype, a.weight])) : {}) as Prisma.InputJsonValue,
+          roleClarityScore: (data.overallConfidence ?? 50) / 100,
+          hardRequirements: (data.requirements?.filter((r: any) => r.type === 'hard') || []) as Prisma.InputJsonValue,
+          softRequirements: (data.requirements?.filter((r: any) => r.type === 'soft') || []) as Prisma.InputJsonValue,
         },
       });
 
-      await prisma.roleArchetype.deleteMany({ where: { jobIntelligenceId: jobIntel.id } });
-      if (Array.isArray(data.archetypes)) {
-        await prisma.roleArchetype.createMany({
-          data: data.archetypes.map((a: any) => ({
-            jobIntelligenceId: jobIntel.id,
-            archetype: a.archetype,
-            weight: a.weight ?? 0.0,
-          })),
-        });
-      }
-
       await prisma.requirementBreakdown.deleteMany({ where: { jobIntelligenceId: jobIntel.id } });
       if (Array.isArray(data.requirements)) {
-        await prisma.requirementBreakdown.createMany({
-          data: data.requirements.map((r: any) => ({
-            jobIntelligenceId: jobIntel.id,
-            type: r.type,
-            originalText: r.originalText,
-            normalizedText: r.normalizedText,
-            confidence: r.confidence ?? 1.0,
-            deconstruction: r.deconstruction ?? {},
-          })),
-        });
+        for (const r of data.requirements) {
+          await prisma.requirementBreakdown.create({
+            data: {
+              jobIntelligenceId: jobIntel.id,
+              requirement: r.originalText || r.normalizedText || '',
+              classification: r.type || 'hard',
+              confidenceScore: (r.confidence ?? 100) / 100,
+              tools: r.deconstruction?.tools || [],
+              decisions: r.deconstruction?.decisions || [],
+              outputs: r.deconstruction?.outputs || [],
+              metrics: r.deconstruction?.metrics || [],
+              ownership: r.deconstruction?.ownership || '',
+              operationalComplexity: r.deconstruction?.operationalComplexity === 'high' ? 8 : r.deconstruction?.operationalComplexity === 'medium' ? 5 : 2,
+              collaborationSurface: r.deconstruction?.collaborationSurfaceArea || [],
+              businessImpact: r.deconstruction?.businessImpact || '',
+              executionCadence: r.deconstruction?.executionCadence || '',
+              riskLevel: r.deconstruction?.riskLevel === 'HIGH' ? 8 : r.deconstruction?.riskLevel === 'MEDIUM' ? 5 : 2,
+            }
+          });
+        }
       }
 
       await prisma.businessProblem.deleteMany({ where: { jobIntelligenceId: jobIntel.id } });
@@ -334,10 +349,10 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
         await prisma.businessProblem.createMany({
           data: data.businessProblems.map((p: any) => ({
             jobIntelligenceId: jobIntel.id,
-            problemArea: p.problemArea,
-            description: p.description,
-            inferredFriction: p.inferredFriction,
-            urgencySignal: p.urgencySignal,
+            problem: p.problemArea || '',
+            category: p.category || 'execution',
+            severity: p.severity || 5,
+            evidence: p.description || '',
           })),
         });
       }
@@ -347,9 +362,11 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
         await prisma.operationalSignal.createMany({
           data: data.signals.map((s: any) => ({
             jobIntelligenceId: jobIntel.id,
-            type: s.type,
-            description: s.description,
-            value: s.value,
+            signal: s.description || '',
+            signalType: s.type || 'recurring_responsibility',
+            frequency: 1.0,
+            weight: 1.0,
+            sourceCompanies: [],
           })),
         });
       }
@@ -360,47 +377,58 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       let jobIntel = await prisma.jobIntelligence.findUnique({ where: { jobId } });
       if (!jobIntel) {
         jobIntel = await prisma.jobIntelligence.create({
-          data: { jobId, inferredRoleTitle: 'Inferred Operational Role', overallConfidence: 50 },
+          data: {
+            jobId,
+            candidateId,
+            inferredRole: 'Inferred Operational Role',
+            roleArchetype: RoleArchetype.BUILDER,
+            archetypeWeights: {},
+            roleClarityScore: 0.5,
+            hardRequirements: [],
+            softRequirements: [],
+            operationalDomain: 'engineering',
+            recurringResponsibilities: [],
+            decisionOwnership: [],
+            operationalScope: '',
+            executionComplexity: 5,
+            organizationalLeverage: 5,
+          },
         });
       }
 
-      const analysis = await prisma.roleFitAnalysis.upsert({
-        where: {
-          candidateId_jobIntelligenceId: {
-            candidateId,
-            jobIntelligenceId: jobIntel.id,
-          },
-        },
-        create: {
+      // Record fit results cleanly in RoleFitAnalysis history log
+      await prisma.roleFitAnalysis.create({
+        data: {
           candidateId,
-          jobIntelligenceId: jobIntel.id,
+          jobId,
+          analysisType: 'fit_analysis',
+          results: data as unknown as Prisma.InputJsonValue,
+          executionId,
+          agentType: 'fit-analysis',
+          modelVersion: 'claude-sonnet-4-6',
         },
-        update: {},
       });
 
-      await prisma.strengthEvidence.deleteMany({ where: { roleFitAnalysisId: analysis.id } });
+      await prisma.strengthEvidence.deleteMany({ where: { jobId, candidateId } });
       if (Array.isArray(data.strengths)) {
-        const problems = await prisma.businessProblem.findMany({ where: { jobIntelligenceId: jobIntel.id } });
-        const problemMap = new Map(problems.map(p => [p.problemArea.toLowerCase(), p.id]));
 
         for (const s of data.strengths) {
-          const businessProblemId = problemMap.get((s.problemArea || '').toLowerCase()) || null;
           await prisma.strengthEvidence.create({
             data: {
-              roleFitAnalysisId: analysis.id,
-              businessProblemId,
-              capabilityName: s.capabilityName,
-              candidateProof: s.candidateProof,
-              employerInterpretation: s.employerInterpretation,
-              measurableOutcome: s.measurableOutcome,
-              businessImpact: s.businessImpact,
-              scale: s.scale || null,
-              decisionOwnership: s.decisionOwnership || null,
-              operationalComplexity: s.operationalComplexity || null,
-              systemsInfluenced: s.systemsInfluenced || null,
-              stakeholderLevel: s.stakeholderLevel || null,
-              repeatability: s.repeatability || null,
-              priorityLevel: s.priorityLevel || 'MEDIUM',
+              candidateId,
+              jobId,
+              source: 'fit-analysis',
+              capability: s.capabilityName,
+              measurableOutcome: s.measurableOutcome || '',
+              businessImpact: s.businessImpact || '',
+              executionContext: s.candidateProof || '',
+              employerInterpretation: s.employerInterpretation || '',
+              rarityScore: s.priorityLevel === 'HIGH' ? 0.8 : s.priorityLevel === 'MEDIUM' ? 0.5 : 0.2,
+              leverageScore: 0.5,
+              replacementCost: 0.5,
+              businessBottleneckScore: 0.5,
+              matchedProblems: s.problemArea ? [s.problemArea] : [],
+              matchConfidence: 0.8,
             },
           });
         }
@@ -412,37 +440,47 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       let jobIntel = await prisma.jobIntelligence.findUnique({ where: { jobId } });
       if (!jobIntel) {
         jobIntel = await prisma.jobIntelligence.create({
-          data: { jobId, inferredRoleTitle: 'Inferred Operational Role', overallConfidence: 50 },
+          data: {
+            jobId,
+            candidateId,
+            inferredRole: 'Inferred Operational Role',
+            roleArchetype: RoleArchetype.BUILDER,
+            archetypeWeights: {} as Prisma.InputJsonValue,
+            roleClarityScore: 0.5,
+            hardRequirements: [] as Prisma.InputJsonValue,
+            softRequirements: [] as Prisma.InputJsonValue,
+            operationalDomain: 'engineering',
+            recurringResponsibilities: [] as Prisma.InputJsonValue,
+            decisionOwnership: [],
+            operationalScope: '',
+            executionComplexity: 5,
+            organizationalLeverage: 5,
+          },
         });
       }
 
-      const analysis = await prisma.roleFitAnalysis.upsert({
-        where: {
-          candidateId_jobIntelligenceId: {
-            candidateId,
-            jobIntelligenceId: jobIntel.id,
-          },
-        },
-        create: {
+      await prisma.roleFitAnalysis.create({
+        data: {
           candidateId,
-          jobIntelligenceId: jobIntel.id,
-          adaptationRiskScore: data.adaptationBurdenScore ?? 0.0,
-        },
-        update: {
-          adaptationRiskScore: data.adaptationBurdenScore ?? 0.0,
+          jobId,
+          analysisType: 'gap_analysis',
+          results: data as unknown as Prisma.InputJsonValue,
+          executionId,
+          agentType: 'gap-analyzer',
+          modelVersion: 'claude-sonnet-4-6',
         },
       });
 
-      await prisma.fitGap.deleteMany({ where: { roleFitAnalysisId: analysis.id } });
+      await prisma.fitGap.deleteMany({ where: { jobId, candidateId } });
       if (Array.isArray(data.gaps)) {
         await prisma.fitGap.createMany({
           data: data.gaps.map((g: any) => ({
-            roleFitAnalysisId: analysis.id,
-            type: g.type,
-            description: g.description,
-            penaltyLevel: g.penaltyLevel || 'LOW',
-            adaptationCost: g.adaptationCost ?? 0.0,
-            mitigationStrategy: g.mitigationStrategy,
+            candidateId,
+            jobId,
+            gap: g.description || '',
+            classification: g.type === 'credibility-killing' ? GapClassification.CREDIBILITY_KILLING : g.type === 'domain-depth' ? GapClassification.DOMAIN_DEPTH : GapClassification.TRAINABLE,
+            severity: g.severity || 5,
+            penaltyMultiplier: g.penaltyLevel === 'CRITICAL' ? 0.5 : g.penaltyLevel === 'SEVERE' ? 0.7 : 0.9,
           })),
         });
       }
@@ -453,59 +491,65 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
       let jobIntel = await prisma.jobIntelligence.findUnique({ where: { jobId } });
       if (!jobIntel) {
         jobIntel = await prisma.jobIntelligence.create({
-          data: { jobId, inferredRoleTitle: 'Inferred Operational Role', overallConfidence: 50 },
+          data: {
+            jobId,
+            candidateId,
+            inferredRole: 'Inferred Operational Role',
+            roleArchetype: RoleArchetype.BUILDER,
+            archetypeWeights: {} as Prisma.InputJsonValue,
+            roleClarityScore: 0.5,
+            hardRequirements: [] as Prisma.InputJsonValue,
+            softRequirements: [] as Prisma.InputJsonValue,
+            operationalDomain: 'engineering',
+            recurringResponsibilities: [] as Prisma.InputJsonValue,
+            decisionOwnership: [],
+            operationalScope: '',
+            executionComplexity: 5,
+            organizationalLeverage: 5,
+          },
         });
       }
-
-      const archetypes = await prisma.roleArchetype.findMany({
-        where: { jobIntelligenceId: jobIntel.id },
-        select: { archetype: true, weight: true }
-      });
 
       const { calculateFitScore } = await import('@/lib/scoring/scoringEngine');
       const scoreResult = calculateFitScore({
         dimensions: data.dimensions || [],
         credibilityRiskLevel: data.credibilityRiskLevel || 'NONE',
         adaptationBurdenLevel: data.adaptationBurdenLevel || 'LOW',
-        archetypes
+        archetypes: [{ archetype: jobIntel.roleArchetype, weight: 1.0 }]
       });
 
       const getScore = (dim: string) => scoreResult.dimensionDetails.find(d => d.dimension === dim)?.score ?? 0;
 
-      await prisma.roleFitAnalysis.upsert({
-        where: {
-          candidateId_jobIntelligenceId: {
-            candidateId,
-            jobIntelligenceId: jobIntel.id,
-          },
-        },
+      await prisma.fitScoringSnapshot.upsert({
+        where: { jobId },
         create: {
           candidateId,
-          jobIntelligenceId: jobIntel.id,
-          overallFitScore: scoreResult.finalScore,
-          conversionProb: scoreResult.finalScore,
-          immediateContribution: getScore('immediateContribution'),
-          credibilityRisk: data.credibilityRiskLevel === 'NONE' ? 0.0 : data.credibilityRiskLevel === 'LOW' ? 15.0 : data.credibilityRiskLevel === 'MODERATE' ? 35.0 : data.credibilityRiskLevel === 'HIGH' ? 65.0 : 85.0,
+          jobId,
+          fitScore: scoreResult.finalScore,
+          interviewConversionProbability: scoreResult.finalScore,
+          immediateContributionScore: getScore('immediateContribution'),
+          credibilityRiskScore: data.credibilityRiskLevel === 'NONE' ? 0.0 : data.credibilityRiskLevel === 'LOW' ? 15.0 : data.credibilityRiskLevel === 'MODERATE' ? 35.0 : data.credibilityRiskLevel === 'HIGH' ? 65.0 : 85.0,
           skillTransferScore: getScore('adjacentSkillTransfer'),
-          businessProbAlign: getScore('businessProblemAlignment'),
-          roleClarityScore: getScore('archetypeAlignment'),
-          painMatchScore: getScore('businessProblemAlignment'),
+          businessProblemAlignmentScore: getScore('businessProblemAlignment'),
           adaptationRiskScore: scoreResult.adaptationMultiplier * 100,
-          scoringSnapshot: scoreResult as any,
-          reasoning: scoreResult.recommendationBand + ': ' + data.reasoning,
+          roleClarityScore: getScore('archetypeAlignment'),
+          employerPainMatchScore: getScore('businessProblemAlignment'),
+          dimensionScores: scoreResult as any as Prisma.InputJsonValue,
+          weights: {} as Prisma.InputJsonValue,
+          recommendation: scoreResult.recommendationBand as any,
         },
         update: {
-          overallFitScore: scoreResult.finalScore,
-          conversionProb: scoreResult.finalScore,
-          immediateContribution: getScore('immediateContribution'),
-          credibilityRisk: data.credibilityRiskLevel === 'NONE' ? 0.0 : data.credibilityRiskLevel === 'LOW' ? 15.0 : data.credibilityRiskLevel === 'MODERATE' ? 35.0 : data.credibilityRiskLevel === 'HIGH' ? 65.0 : 85.0,
+          fitScore: scoreResult.finalScore,
+          interviewConversionProbability: scoreResult.finalScore,
+          immediateContributionScore: getScore('immediateContribution'),
+          credibilityRiskScore: data.credibilityRiskLevel === 'NONE' ? 0.0 : data.credibilityRiskLevel === 'LOW' ? 15.0 : data.credibilityRiskLevel === 'MODERATE' ? 35.0 : data.credibilityRiskLevel === 'HIGH' ? 65.0 : 85.0,
           skillTransferScore: getScore('adjacentSkillTransfer'),
-          businessProbAlign: getScore('businessProblemAlignment'),
-          roleClarityScore: getScore('archetypeAlignment'),
-          painMatchScore: getScore('businessProblemAlignment'),
+          businessProblemAlignmentScore: getScore('businessProblemAlignment'),
           adaptationRiskScore: scoreResult.adaptationMultiplier * 100,
-          scoringSnapshot: scoreResult as any,
-          reasoning: scoreResult.recommendationBand + ': ' + data.reasoning,
+          roleClarityScore: getScore('archetypeAlignment'),
+          employerPainMatchScore: getScore('businessProblemAlignment'),
+          dimensionScores: scoreResult as any as Prisma.InputJsonValue,
+          recommendation: scoreResult.recommendationBand as any,
         },
       });
     }
@@ -517,13 +561,10 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
           await prisma.patternLibraryEntry.create({
             data: {
               candidateId,
-              roleArchetype: entry.roleArchetype,
-              operationalKeywords: entry.operationalKeywords ?? [],
-              businessProblems: entry.businessProblems ?? [],
-              successMetrics: entry.successMetrics ?? [],
-              languagePatterns: entry.languagePatterns ?? [],
-              achievementsMapped: entry.achievementsMapped ?? [],
-              successScore: entry.successScore ?? 0.0,
+              archetypeCorrelation: entry.roleArchetype as RoleArchetype || RoleArchetype.BUILDER,
+              pattern: entry.pattern || entry.operationalKeywords?.join(', ') || 'Auto-pattern',
+              category: PatternCategory.ARCHETYPE_CORRELATION,
+              confidenceScore: (entry.successScore ?? 0.0) / 100,
             },
           });
         }
@@ -623,62 +664,104 @@ export async function executeAgent(context: ExecutionContext): Promise<void> {
   }
 }
 
-/**
- * Find and execute pending agent executions (called by background polling)
- * Returns number of executions processed
- */
-export async function processPendingExecutions(): Promise<number> {
-  const pending = await prisma.agentExecution.findMany({
-    where: { status: 'queued' },
-    orderBy: { createdAt: 'asc' },
-    take: 5,
+const STUCK_EXECUTION_THRESHOLD_MS = 10 * 60 * 1000; // 10 minutes
+
+async function recoverStuckExecutions(): Promise<number> {
+  const stuckBefore = new Date(Date.now() - STUCK_EXECUTION_THRESHOLD_MS);
+  const result = await prisma.agentExecution.updateMany({
+    where: {
+      status: 'running',
+      startedAt: { lt: stuckBefore },
+    },
+    data: {
+      status: 'queued',
+      startedAt: null,
+      errorMessage: 'Automatically reset from stuck running state',
+    },
   });
 
-  let processed = 0;
-
-  for (const execution of pending) {
-    try {
-      const running = await prisma.agentExecution.count({
-        where: {
-          userId: execution.userId,
-          status: 'running',
-        },
-      });
-
-      if (running >= 5) {
-        executionLogger.warn(
-          { executionId: execution.id, userId: execution.userId },
-          'Execution deferred due to legacy concurrency gate'
-        );
-        continue;
-      }
-
-      const promptContext = execution.input
-        ? (JSON.parse(execution.input) as AgentPromptContext)
-        : {};
-
-      await executeAgent({
-        executionId: execution.id,
-        agentType: execution.agentType as AgentType,
-        promptContext,
-        userId: execution.userId,
-      });
-
-      processed++;
-    } catch (error) {
-      executionLogger.error({ executionId: execution.id, err: error }, 'Failed to process pending execution');
-      await prisma.agentExecution.update({
-        where: { id: execution.id },
-        data: {
-          status: 'failed',
-          errorMessage:
-            error instanceof Error
-              ? error.message
-              : 'Unknown error occurred',
-        },
-      });
-    }
+  if (result.count > 0) {
+    executionLogger.warn(
+      { recoveredCount: result.count },
+      'Recovered stuck agent executions back to queued state'
+    );
   }
 
-  return processed;
+  return result.count;
 }
+
+async function claimExecution(id: string): Promise<boolean> {
+  try {
+    const result = await prisma.$executeRawUnsafe(
+      `UPDATE "AgentExecution" SET "status" = 'running', "startedAt" = NOW() WHERE "id" = $1 AND "status" = 'queued'`,
+      id
+    );
+    return result > 0;
+  } catch (error) {
+    executionLogger.error({ err: error, executionId: id }, 'Failed to atomically claim execution');
+    return false;
+  }
+}
+
+export async function processPendingExecutions(): Promise<number> {
+  await recoverStuckExecutions();
+
+  const pending = await prisma.agentExecution.findFirst({
+    where: { status: 'queued' },
+    orderBy: { createdAt: 'asc' },
+  });
+
+  if (!pending) {
+    return 0;
+  }
+
+  const running = await prisma.agentExecution.count({
+    where: {
+      userId: pending.userId,
+      status: 'running',
+    },
+  });
+
+  if (running >= 5) {
+    executionLogger.warn(
+      { executionId: pending.id, userId: pending.userId },
+      'Execution deferred due to legacy concurrency gate'
+    );
+    return 0;
+  }
+
+  const claimed = await claimExecution(pending.id);
+  if (!claimed) {
+    return 0;
+  }
+
+  const promptContext = pending.input
+    ? (JSON.parse(pending.input) as AgentPromptContext)
+    : {};
+
+  try {
+    await executeAgent({
+      executionId: pending.id,
+      agentType: pending.agentType as AgentType,
+      promptContext,
+      userId: pending.userId,
+    });
+    return 1;
+  } catch (error) {
+    executionLogger.error({ executionId: pending.id, err: error }, 'Failed to process pending execution');
+    await prisma.agentExecution.update({
+      where: { id: pending.id },
+      data: {
+        status: 'failed',
+        errorMessage:
+          error instanceof Error
+            ? error.message
+            : 'Unknown error occurred',
+      },
+    });
+    return 0;
+  }
+}
+
+
+
