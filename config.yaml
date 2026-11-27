@@ -2,7 +2,7 @@ model_list:
   - model_name: deepseek-chat
     litellm_params:
       model: deepseek/deepseek-chat
-      api_key: 'sk-2e0dbdb8d0554e13aec81f287d1cfe49'
+      api_key: os.environ/DEEPSEEK_API_KEY
 
 general_settings:
   master_key: 'nimbalyst-local'
