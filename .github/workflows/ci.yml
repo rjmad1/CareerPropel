@@ -84,6 +84,9 @@ jobs:
   spec-check:
     name: Spec Governance Check
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
     if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v4
