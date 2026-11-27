@@ -5,4 +5,4 @@ model_list:
       api_key: os.environ/DEEPSEEK_API_KEY
 
 general_settings:
-  master_key: 'nimbalyst-local'
+  master_key: os.environ/LITELLM_MASTER_KEY
