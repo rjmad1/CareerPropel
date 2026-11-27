@@ -57,3 +57,7 @@ graphify-out/
 # ESLint temporary report files
 eslint-*.json
 
+
+
+# Vercel CLI env pull (contains a token)
+.env.vercel.local
